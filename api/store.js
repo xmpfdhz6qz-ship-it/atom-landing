@@ -10,10 +10,26 @@ export default async function handler(req, res) {
       `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
     );
 
-    const data = await response.json();
+    const text = await response.text();
 
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch data" });
+    console.log("RAW:", text);
+
+    // 👇 pokud vrací HTML nebo XML, vezmeme jen první objekt
+    const match = text.match(/{[\s\S]*}/);
+
+    if (!match) {
+      return res.status(500).json({
+        error: "No JSON found",
+        raw: text
+      });
+    }
+
+    const data = JSON.parse(match[0]);
+
+    return res.status(200).json(data);
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Fetch failed" });
   }
 }
