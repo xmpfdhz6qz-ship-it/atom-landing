@@ -1,45 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Atom Foundry</title>
+  <meta charset="UTF-8">
+  <title>Atom Foundry – AI Conversion Scan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin:0;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
+      background:#0f172a;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+    }
+
+    .box {
+      background:#111827;
+      padding:40px;
+      border-radius:16px;
+      width:100%;
+      max-width:420px;
+      text-align:center;
+    }
+
+    input {
+      width:100%;
+      padding:14px;
+      margin-top:10px;
+      border-radius:8px;
+      border:none;
+      font-size:16px;
+    }
+
+    button {
+      margin-top:16px;
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:8px;
+      background:#22c55e;
+      color:black;
+      font-weight:bold;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    h1 {
+      margin-bottom:10px;
+    }
+
+    p {
+      color:#94a3b8;
+      font-size:14px;
+    }
+  </style>
 </head>
 
-<body style="font-family: Arial; padding: 40px;">
+<body>
 
-  <h1>We analyze your store like a $10,000 CRO expert — in 60 seconds</h1>
+<div class="box">
 
-  <p>
-    Get your Conversion Score, biggest revenue leak, and a fix you can apply today.
-  </p>
+<h1>Your store may be losing customers</h1>
+<p>Get AI conversion analysis in 60 seconds</p>
 
-  <form 
-    <form 
-  action="https://n8n-production-0a8f.up.railway.app/webhook/store-score" 
-  method="POST"
-  target="_blank"
-  >
+<form id="scanForm">
+  <input type="text" id="url" placeholder="Enter your store URL" required />
+  <input type="email" id="email" placeholder="Enter your email" required />
+  <button type="submit">Get Free Scan</button>
+</form>
 
-    <input 
-      type="text" 
-      name="url"
-      placeholder="Enter your website URL" 
-      style="display:block; margin-bottom:10px; padding:10px; width:300px;"
-      required
-    >
+<p id="status" style="margin-top:12px;"></p>
 
-    <input 
-      type="email" 
-      name="email"
-      placeholder="Enter your email" 
-      style="display:block; margin-bottom:10px; padding:10px; width:300px;"
-      required
-    >
+</div>
 
-    <button type="submit" style="padding:10px 20px;">
-      Analyze My Store
-    </button>
+<script>
+document.getElementById("scanForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  </form>
+  const url = document.getElementById("url").value;
+  const email = document.getElementById("email").value;
+
+  document.getElementById("status").innerText = "Analyzing your store...";
+
+  try {
+    await fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url, email })
+    });
+
+    document.getElementById("status").innerText = "Check your email in 30–60 seconds.";
+  } catch (err) {
+    document.getElementById("status").innerText = "Something went wrong.";
+  }
+});
+</script>
 
 </body>
 </html>
