@@ -4,63 +4,114 @@
   <meta charset="UTF-8">
   <title>Store Analysis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
+      background: #0f172a;
+      color: white;
+      padding: 40px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .cta {
+      display: block;
+      margin-top: 24px;
+      padding: 16px;
+      text-align: center;
+      background: #22c55e;
+      color: black;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .loading {
+      opacity: 0.7;
+    }
+  </style>
 </head>
 
-<body style="font-family:sans-serif; padding:40px;">
+<body>
 
-<h1 id="title">Loading...</h1>
+<h1 id="title" class="loading">Analyzing store...</h1>
 
-<p id="main"></p>
-<p id="fix"></p>
+<div class="card">
+  <p id="main">Loading analysis...</p>
+  <p id="fix"></p>
+</div>
 
-<a href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
+<a class="cta" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
   Get Full Audit ($399)
 </a>
 
 <script>
 (async function () {
 
-  // 👉 vezme domain z URL (např. ?domain=levne-gastro.cz)
+  const titleEl = document.getElementById("title");
+  const mainEl = document.getElementById("main");
+  const fixEl = document.getElementById("fix");
+
   const params = new URLSearchParams(window.location.search);
   const domain = params.get("domain");
 
-  // 👉 fallback když někdo přijde bez parametru
   if (!domain) {
-    document.getElementById("title").innerText = "Missing domain";
+    titleEl.innerText = "Missing domain";
     return;
   }
 
   try {
-    const res = await fetch(`/api/store?domain=${domain}`);
+    const res = await fetch(
+      `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
+    );
 
-if (!res.ok) {
-  throw new Error("API error");
-}
+    if (!res.ok) {
+      throw new Error("API error");
+    }
 
-const data = await res.json();
+    const data = await res.json();
 
-    console.log("DATA:", data); // debug
+    console.log("DATA:", data);
 
-    // 👉 fallback pokud nic nevrátí
     if (!data || Object.keys(data).length === 0) {
-      document.getElementById("title").innerText =
-        `${domain} (no data yet)`;
+      titleEl.innerText = `${domain} (no data yet)`;
+      mainEl.innerText = "We haven't analyzed this store yet.";
+      fixEl.innerText = "";
       return;
     }
 
-    // 👉 render
-    document.getElementById("title").innerText =
-      `${data.normalized_store || domain} Score: ${data.score || "N/A"}`;
+    // 👉 odstranění loading stylu
+    titleEl.classList.remove("loading");
 
-    document.getElementById("main").innerText =
+    // 👉 render
+    titleEl.innerText =
+      `${data.normalized_store || domain} — Score: ${data.score || "N/A"}`;
+
+    mainEl.innerText =
       "Main issue: " + (data.main_leak || "Not detected");
 
-    document.getElementById("fix").innerText =
+    fixEl.innerText =
       "Quick fix: " + (data.quick_fix || "Not available");
 
   } catch (err) {
     console.error(err);
-    document.getElementById("title").innerText = "Error loading data";
+
+    titleEl.innerText = "Error loading data";
+    mainEl.innerText = "Please try again later.";
+    fixEl.innerText = "";
   }
 
 })();
