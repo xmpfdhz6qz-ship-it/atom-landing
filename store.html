@@ -1,118 +1,169 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Store Analysis</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
-      background: #0f172a;
-      color: white;
-      padding: 40px;
-      max-width: 700px;
-      margin: auto;
-    }
+<title>Store Analysis</title>
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
+  background: #0f172a;
+  color: white;
+  padding: 40px;
+  max-width: 720px;
+  margin: auto;
+}
 
-    .card {
-      background: #111827;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
 
-    .cta {
-      display: block;
-      margin-top: 24px;
-      padding: 16px;
-      text-align: center;
-      background: #22c55e;
-      color: black;
-      border-radius: 10px;
-      font-weight: bold;
-      text-decoration: none;
-    }
+.score {
+  font-size: 20px;
+  font-weight: bold;
+  color: #38bdf8;
+  margin-bottom: 20px;
+}
 
-    .loading {
-      opacity: 0.7;
-    }
-  </style>
+.badge {
+  display:inline-block;
+  padding:6px 10px;
+  background:#f59e0b;
+  border-radius:6px;
+  font-size:12px;
+  margin-bottom:15px;
+}
+
+.card {
+  background:#111827;
+  padding:20px;
+  border-radius:12px;
+  margin-top:20px;
+}
+
+.section-title {
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.cta-primary {
+  display:block;
+  margin-top:30px;
+  padding:18px;
+  text-align:center;
+  background:#22c55e;
+  color:black;
+  border-radius:12px;
+  font-weight:bold;
+  font-size:16px;
+  text-decoration:none;
+}
+
+.cta-secondary {
+  display:block;
+  margin-top:12px;
+  padding:14px;
+  text-align:center;
+  border:1px solid #38bdf8;
+  color:#38bdf8;
+  border-radius:10px;
+  text-decoration:none;
+}
+
+.small {
+  opacity:0.6;
+  font-size:12px;
+  margin-top:10px;
+}
+</style>
 </head>
 
 <body>
 
-<h1 id="title" class="loading">Analyzing store...</h1>
+<h1 id="title">Analyzing store...</h1>
+
+<div class="score" id="score"></div>
+
+<div class="badge">High Conversion Risk</div>
+
+<p>
+Stores with similar issues typically lose 10–30% of conversions
+</p>
+
+<p class="small">
+Based on AI analysis of similar e-commerce stores
+</p>
 
 <div class="card">
-  <p id="main">Loading analysis...</p>
+  <div class="section-title">Main Issue</div>
+  <p id="main"></p>
+</div>
+
+<div class="card">
+  <div class="section-title">Recommended Fix</div>
   <p id="fix"></p>
 </div>
 
-<a class="cta" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
-  Get Full Audit ($399)
+<div class="card">
+  <div class="section-title">What this means</div>
+  <p>
+  Visitors hesitate, leave early, and don’t trust the offer enough to buy.
+  This directly impacts conversion rate and revenue growth.
+  </p>
+</div>
+
+<p style="margin-top:30px;">
+Want this analysis for your own store?
+</p>
+
+<a class="cta-primary" href="/">
+Run Free Scan on My Store
+</a>
+
+<a class="cta-secondary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
+Unlock Full AI Audit ($399)
 </a>
 
 <script>
 (async function () {
 
-  const titleEl = document.getElementById("title");
-  const mainEl = document.getElementById("main");
-  const fixEl = document.getElementById("fix");
+const params = new URLSearchParams(window.location.search);
+const domain = params.get("domain");
 
-  const params = new URLSearchParams(window.location.search);
-  const domain = params.get("domain");
+const titleEl = document.getElementById("title");
+const scoreEl = document.getElementById("score");
+const mainEl = document.getElementById("main");
+const fixEl = document.getElementById("fix");
 
-  if (!domain) {
-    titleEl.innerText = "Missing domain";
+if (!domain) {
+  titleEl.innerText = "Missing domain";
+  return;
+}
+
+try {
+  const res = await fetch(
+    `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
+  );
+
+  const data = await res.json();
+
+  if (!data || Object.keys(data).length === 0) {
+    titleEl.innerText = `${domain} (no data yet)`;
     return;
   }
 
-  try {
-    const res = await fetch(
-      `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
-    );
+  titleEl.innerText = data.normalized_store;
+  scoreEl.innerText = `Conversion Score: ${data.score}`;
 
-    if (!res.ok) {
-      throw new Error("API error");
-    }
+  mainEl.innerText = data.main_leak || "Not detected";
+  fixEl.innerText = data.quick_fix || "Not available";
 
-    const data = await res.json();
-
-    console.log("DATA:", data);
-
-    if (!data || Object.keys(data).length === 0) {
-      titleEl.innerText = `${domain} (no data yet)`;
-      mainEl.innerText = "We haven't analyzed this store yet.";
-      fixEl.innerText = "";
-      return;
-    }
-
-    // 👉 odstranění loading stylu
-    titleEl.classList.remove("loading");
-
-    // 👉 render
-    titleEl.innerText =
-      `${data.normalized_store || domain} — Score: ${data.score || "N/A"}`;
-
-    mainEl.innerText =
-      "Main issue: " + (data.main_leak || "Not detected");
-
-    fixEl.innerText =
-      "Quick fix: " + (data.quick_fix || "Not available");
-
-  } catch (err) {
-    console.error(err);
-
-    titleEl.innerText = "Error loading data";
-    mainEl.innerText = "Please try again later.";
-    fixEl.innerText = "";
-  }
+} catch (e) {
+  titleEl.innerText = "Error loading data";
+}
 
 })();
 </script>
