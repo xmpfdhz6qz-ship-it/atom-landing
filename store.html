@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Store Analysis</title>
+</head>
+
+<body style="font-family:sans-serif; padding:40px;">
+
+<h1 id="title">Loading...</h1>
+
+<p id="main"></p>
+<p id="fix"></p>
+
+<a href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
+  Get Full Audit ($399)
+</a>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const domain = params.get("domain");
+
+fetch(`https://YOUR-N8N-API/store?domain=${domain}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("title").innerText =
+      `${data.normalized_store} Score: ${data.score}`;
+
+    document.getElementById("main").innerText =
+      "Main issue: " + data.main_leak;
+
+    document.getElementById("fix").innerText =
+      "Quick fix: " + data.quick_fix;
+  });
+</script>
+
+</body>
+</html>
