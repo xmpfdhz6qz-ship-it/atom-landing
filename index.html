@@ -1,68 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Atom Foundry</title>
-</head>
-
-<body style="font-family: Arial; padding: 40px;">
-
-  <h1>We analyze your store like a $10,000 CRO expert — in 60 seconds</h1>
-
-  <p>
-    Get your Conversion Score, biggest revenue leak, and a fix you can apply today.
-  </p>
-
-  <form id="form">
-
-    <input 
-      type="text" 
-      name="url"
-      placeholder="Enter your website URL" 
-      style="display:block; margin-bottom:10px; padding:10px; width:300px;"
-      required
-    >
-
-    <input 
-      type="email" 
-      name="email"
-      placeholder="Enter your email" 
-      style="display:block; margin-bottom:10px; padding:10px; width:300px;"
-      required
-    >
-
-    <button type="submit" style="padding:10px 20px;">
-      Analyze My Store
-    </button>
-
-  </form>
-
-  <script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("form");
+
+    if (!form) {
+      console.error("FORM NOT FOUND");
+      return;
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const url = form.url.value;
-      const email = form.email.value;
+      const url = form.querySelector('input[name="url"]').value;
+      const email = form.querySelector('input[name="email"]').value;
+
+      console.log("SENDING:", url, email);
 
       try {
-        await fetch("https://n8n-production-0a8f.up.railway.app/webhook/scan-store", {
+        const res = await fetch("https://n8n-production-0a8f.up.railway.app/webhook/scan-store", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            url,
-            email
-          })
+          body: JSON.stringify({ url, email })
         });
 
-        alert("Analysis started. Check your email.");
-      } catch (error) {
-        alert("Something went wrong. Try again.");
+        console.log("RESPONSE:", res.status);
+
+        alert("Analysis started");
+      } catch (err) {
+        console.error("ERROR:", err);
+        alert("Error sending request");
       }
     });
-  </script>
-
-</body>
-</html>
+  });
+</script>
