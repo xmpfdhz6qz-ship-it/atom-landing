@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Store Analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body style="font-family:sans-serif; padding:40px;">
@@ -17,21 +18,50 @@
 </a>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const domain = params.get("domain");
+(async function () {
 
-fetch(`https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`)
-  .then(res => res.json())
-  .then(data => {
+  // 👉 vezme domain z URL (např. ?domain=levne-gastro.cz)
+  const params = new URLSearchParams(window.location.search);
+  const domain = params.get("domain");
+
+  // 👉 fallback když někdo přijde bez parametru
+  if (!domain) {
+    document.getElementById("title").innerText = "Missing domain";
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
+    );
+
+    const data = await res.json();
+
+    console.log("DATA:", data); // debug
+
+    // 👉 fallback pokud nic nevrátí
+    if (!data || Object.keys(data).length === 0) {
+      document.getElementById("title").innerText =
+        `${domain} (no data yet)`;
+      return;
+    }
+
+    // 👉 render
     document.getElementById("title").innerText =
-      `${data.normalized_store} Score: ${data.score}`;
+      `${data.normalized_store || domain} Score: ${data.score || "N/A"}`;
 
     document.getElementById("main").innerText =
-      "Main issue: " + data.main_leak;
+      "Main issue: " + (data.main_leak || "Not detected");
 
     document.getElementById("fix").innerText =
-      "Quick fix: " + data.quick_fix;
-  });
+      "Quick fix: " + (data.quick_fix || "Not available");
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("title").innerText = "Error loading data";
+  }
+
+})();
 </script>
 
 </body>
