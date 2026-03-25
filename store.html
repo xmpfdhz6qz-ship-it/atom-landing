@@ -172,24 +172,15 @@ Stores with similar issues typically lose 10–30% of conversions
 Based on AI analysis of similar e-commerce stores
 </p>
 
-
-<!-- MAIN ISSUE (RED) -->
-
 <div class="card card-problem">
   <div class="section-title">Main Issue</div>
   <p id="main"></p>
 </div>
 
-
-<!-- FIX (GREEN) -->
-
 <div class="card card-fix">
   <div class="section-title">Recommended Fix</div>
   <p id="fix"></p>
 </div>
-
-
-<!-- WHAT IT MEANS -->
 
 <div class="card card-neutral">
   <div class="section-title">What this means</div>
@@ -199,65 +190,71 @@ Based on AI analysis of similar e-commerce stores
   </p>
 </div>
 
-
 <p style="margin-top:30px;font-weight:600;">
 Want this analysis for your own store?
 </p>
-
-
-<!-- FREE CTA -->
 
 <a class="cta-primary" href="/">
 Run Free Scan on Your Store
 </a>
 
-
-<!-- PAID CTA (FIXED COPY) -->
-
 <a class="cta-secondary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
 Get Full AI Audit for Your Store — $399
 </a>
-
 
 </div>
 
 <script>
 (async function () {
 
-const params = new URLSearchParams(window.location.search);
-const domain = params.get("domain");
+  let domain;
 
-const titleEl = document.getElementById("title");
-const scoreEl = document.getElementById("score");
-const mainEl = document.getElementById("main");
-const fixEl = document.getElementById("fix");
+  const params = new URLSearchParams(window.location.search);
+  domain = params.get("domain");
 
-if (!domain) {
-  titleEl.innerText = "Missing domain";
-  return;
-}
+  // 👉 NEW: support /store/xxx URL
+  if (!domain) {
+    const parts = window.location.pathname.split("/");
+    domain = parts[parts.length - 1];
+  }
 
-try {
-  const res = await fetch(
-    `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
-  );
-
-  const data = await res.json();
-
-  if (!data || Object.keys(data).length === 0) {
-    titleEl.innerText = `${domain} (no data yet)`;
+  // 👉 ochrana
+  if (!domain || domain === "store") {
+    document.getElementById("title").innerText = "Missing domain";
     return;
   }
 
-  titleEl.innerText = data.normalized_store;
-  scoreEl.innerText = `Conversion Score: ${data.score}/100`;
+  const titleEl = document.getElementById("title");
+  const scoreEl = document.getElementById("score");
+  const mainEl = document.getElementById("main");
+  const fixEl = document.getElementById("fix");
 
-  mainEl.innerText = data.main_leak || "Not detected";
-  fixEl.innerText = data.quick_fix || "Not available";
+  try {
+    const res = await fetch(
+      `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
+    );
 
-} catch (e) {
-  titleEl.innerText = "Error loading data";
-}
+    if (!res.ok) throw new Error("API error");
+
+    const data = await res.json();
+
+    console.log("DATA:", data);
+
+    if (!data || Object.keys(data).length === 0) {
+      titleEl.innerText = `${domain} (no data yet)`;
+      return;
+    }
+
+    titleEl.innerText = data.normalized_store || domain;
+    scoreEl.innerText = `${data.score || "N/A"}`;
+
+    mainEl.innerText = data.main_leak || "Not detected";
+    fixEl.innerText = data.quick_fix || "Not available";
+
+  } catch (e) {
+    console.error(e);
+    titleEl.innerText = "Error loading data";
+  }
 
 })();
 </script>
