@@ -12,7 +12,10 @@
     Get your Conversion Score, biggest revenue leak, and a fix you can apply today.
   </p>
 
-  <form id="form">
+  <form 
+    action="https://n8n-production-0a8f.up.railway.app/webhook/scan-store" 
+    method="POST"
+  >
 
     <input 
       type="text" 
@@ -35,43 +38,6 @@
     </button>
 
   </form>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById("form");
-
-      if (!form) {
-        console.error("FORM NOT FOUND");
-        return;
-      }
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const url = form.querySelector('input[name="url"]').value;
-        const email = form.querySelector('input[name="email"]').value;
-
-        console.log("SENDING:", url, email);
-
-        try {
-          const res = await fetch("https://n8n-production-0a8f.up.railway.app/webhook/scan-store", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ url, email })
-          });
-
-          console.log("RESPONSE:", res.status);
-
-          alert("Analysis started");
-        } catch (err) {
-          console.error("ERROR:", err);
-          alert("Error sending request");
-        }
-      });
-    });
-  </script>
 
 </body>
 </html>
