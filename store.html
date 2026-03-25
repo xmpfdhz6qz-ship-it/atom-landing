@@ -31,11 +31,13 @@
   }
 
   try {
-    const res = await fetch(
-      `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
-    );
+    const res = await fetch(`/api/store?domain=${domain}`);
 
-    const data = await res.json();
+if (!res.ok) {
+  throw new Error("API error");
+}
+
+const data = await res.json();
 
     console.log("DATA:", data); // debug
 
