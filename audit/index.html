@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Full Conversion Audit</title>
+<title>Conversion Audit Report</title>
 
 <style>
 
@@ -22,7 +22,7 @@ body {
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 26px;
   margin-bottom: 6px;
 }
 
@@ -33,10 +33,23 @@ h1 {
   margin-top: 10px;
 }
 
+.bad {
+  color: #dc2626;
+}
+
 .meta {
   margin-top:6px;
-  font-size:13px;
+  font-size:14px;
   color:#64748b;
+}
+
+.alert {
+  margin-top:16px;
+  padding:18px;
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  border-radius:14px;
+  font-weight:600;
 }
 
 .card {
@@ -44,34 +57,40 @@ h1 {
   border-radius:18px;
   margin-top:18px;
   border:1px solid #e2e8f0;
-  box-shadow:0 10px 30px rgba(15,23,42,0.05);
+  background:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
 }
 
-.card-red { background:#fef2f2; border:1px solid #fecaca; }
-.card-green { background:#ecfdf5; border:1px solid #bbf7d0; }
-.card-neutral { background:#ffffff; }
-
 .section-title {
-  font-weight:600;
-  font-size:13px;
+  font-weight:700;
+  font-size:14px;
   color:#64748b;
   text-transform:uppercase;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .leak {
   margin-top:14px;
 }
 
-.priority {
-  font-size:12px;
-  font-weight:600;
-  color:#dc2626;
+.tag {
+  display:inline-block;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#fee2e2;
+  color:#991b1b;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.plan {
+  margin-top:14px;
 }
 
 .cta {
   display:block;
-  margin-top:24px;
+  margin-top:30px;
   padding:20px;
   text-align:center;
   background:linear-gradient(135deg,#7c3aed,#6d28d9);
@@ -83,6 +102,20 @@ h1 {
   box-shadow:0 12px 30px rgba(124,58,237,0.35);
 }
 
+.subtext {
+  text-align:center;
+  font-weight:600;
+  margin-top:12px;
+}
+
+.small {
+  font-size:12px;
+  color:#94a3b8;
+  margin-top:10px;
+  line-height:1.6;
+  text-align:center;
+}
+
 </style>
 </head>
 
@@ -90,36 +123,92 @@ h1 {
 
 <div class="container">
 
-<h1 id="title">Loading audit...</h1>
+<h1 id="title">Analyzing store...</h1>
+
 <div class="score" id="score"></div>
 
 <div class="meta">
-Full AI Conversion Audit Report
+Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
 </div>
 
-<div class="card card-red">
-  <div class="section-title">Main Conversion Leak</div>
+<div class="alert">
+⚠️ This store is likely losing a significant portion of potential revenue due to hidden conversion issues
+</div>
+
+<div class="small">
+Based on AI analysis of high-performing e-commerce benchmarks
+</div>
+
+<!-- VALUE BLOCK -->
+<div class="card">
+  <div class="section-title">What You Just Unlocked ($499 Audit)</div>
+
+  <p><strong>Revenue Loss Breakdown</strong><br>
+  Identify exactly where customers drop off</p>
+
+  <p><strong>Top Conversion Leaks</strong><br>
+  The biggest blockers killing your revenue</p>
+
+  <p><strong>Exact Fixes You Can Apply</strong><br>
+  No guessing — just actionable steps</p>
+
+  <p><strong>AI-Rewritten Messaging</strong><br>
+  Improved headlines, CTAs and product copy</p>
+
+  <p><strong>Quick Wins</strong><br>
+  Easy fixes with immediate impact</p>
+
+  <p><strong>Priority Fix Roadmap</strong><br>
+  What to fix first to increase revenue fastest</p>
+
+  <p><strong>Expected Impact</strong><br>
+  Typical improvement: +10–35% conversion rate</p>
+</div>
+
+<!-- MAIN LEAK -->
+<div class="card">
+  <div class="section-title">Primary Revenue Leak</div>
+  <div class="tag">CRITICAL • HIGH IMPACT</div>
   <p id="main"></p>
 </div>
 
-<div class="card card-green">
-  <div class="section-title">Quick Win Fix</div>
+<!-- FIX -->
+<div class="card">
+  <div class="section-title">Highest Impact Fix</div>
   <p id="fix"></p>
 </div>
 
-<div class="card card-neutral">
-  <div class="section-title">All Detected Issues</div>
+<!-- LEAKS -->
+<div class="card">
+  <div class="section-title">All Conversion Issues</div>
   <div id="leaks"></div>
 </div>
 
-<div class="card card-neutral">
+<!-- PLAN -->
+<div class="card">
   <div class="section-title">Revenue Growth Plan</div>
   <div id="plan"></div>
 </div>
 
+<!-- CTA -->
 <a class="cta" href="#">
-Start Continuous Conversion Monitoring — $89/month
+Fix These Issues Automatically — Start Monitoring ($89/month)
 </a>
+
+<div class="subtext">
+Your store changes every week. Your optimization should too.
+</div>
+
+<div class="small">
+<strong>What happens after you start monitoring:</strong><br><br>
+
+• Continuous scanning of your store for new conversion issues<br>
+• Instant alerts when revenue leaks are detected<br>
+• AI recommendations updated as your store evolves<br>
+• Track improvements and conversion score over time<br>
+• Identify new opportunities to increase revenue<br>
+• Stay ahead of competitors with ongoing optimization insights
+</div>
 
 </div>
 
@@ -143,11 +232,11 @@ const res = await fetch(
 );
 
 const data = await res.json();
-
 const report = data.report_json || data;
 
-titleEl.innerText = data.store_domain || "Store Audit";
-scoreEl.innerText = `${data.score || 62}/100`;
+titleEl.innerText = `${data.store_domain || "Store"} Conversion Audit`;
+
+scoreEl.innerHTML = `${data.score || 62}/100 <span class="bad">— Needs Improvement</span>`;
 
 mainEl.innerText = report.main_leak;
 fixEl.innerText = report.quick_fix;
@@ -157,8 +246,8 @@ fixEl.innerText = report.quick_fix;
   const div = document.createElement("div");
   div.className = "leak";
   div.innerHTML = `
+    <div class="tag">${l.priority}</div>
     <strong>${l.title}</strong><br>
-    <span class="priority">${l.priority}</span><br>
     ${l.impact}<br>
     <em>${l.fix}</em>
   `;
@@ -168,10 +257,10 @@ fixEl.innerText = report.quick_fix;
 // plan
 (report.revenue_plan || []).forEach(p => {
   const div = document.createElement("div");
-  div.className = "leak";
+  div.className = "plan";
   div.innerHTML = `
-    <strong>${p.priority}</strong><br>
-    ${p.fix}<br>
+    <div class="tag">${p.priority}</div>
+    <strong>${p.fix}</strong><br>
     <em>${p.expected_impact}</em>
   `;
   planEl.appendChild(div);
