@@ -13,12 +13,12 @@ body {
   background: linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%);
   color: #0f172a;
   margin: 0;
-  padding: 24px 16px;
+  padding: 14px;
 }
 
 .container {
-  max-width: 760px;
-  margin: 0 auto;
+  max-width: 720px;
+  margin: auto;
 }
 
 /* HERO */
@@ -28,7 +28,6 @@ body {
   padding:18px;
   border-radius:18px;
   box-shadow:0 20px 60px rgba(15,23,42,0.08);
-  margin-bottom:16px;
 }
 
 h1 {
@@ -111,7 +110,6 @@ h1 {
   margin-top:16px;
   background:white;
   border:1px solid #e2e8f0;
-  break-inside: avoid;
 }
 
 .card-problem {
@@ -146,6 +144,21 @@ h1 {
 
 .after {
   background:#f0fdf4;
+}
+
+/* VALUE */
+
+.value-list {
+  list-style:none;
+  padding-left:0;
+}
+
+.value-list li {
+  margin-bottom:12px;
+}
+
+.value-list strong {
+  display:block;
 }
 
 /* LEAK */
@@ -222,8 +235,8 @@ h1 {
 @media print {
 
   @page {
-    size:A4;
-    margin:20mm;
+    size: A4;
+    margin: 20mm;
   }
 
   body {
@@ -276,6 +289,7 @@ h1 {
   .alert {
     box-shadow:none;
     border:1px solid #e2e8f0;
+    break-inside:avoid;
   }
 
   .print-footer {
@@ -341,6 +355,19 @@ Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
   <div class="daily" id="daily"></div>
 </div>
 
+<div class="card">
+  <div class="section-title">What You Get</div>
+  <ul class="value-list">
+    <li><strong>Revenue Loss Breakdown</strong>Where customers drop off</li>
+    <li><strong>Top Conversion Leaks</strong>Main revenue blockers</li>
+    <li><strong>Exact Fixes</strong>Clear actions to implement</li>
+    <li><strong>AI-Rewritten Messaging</strong>Better headlines & CTAs</li>
+    <li><strong>Quick Wins</strong>Fast improvements</li>
+    <li><strong>Priority Roadmap</strong>What to fix first</li>
+    <li><strong>Expected Impact</strong>+10–35% conversion rate</li>
+  </ul>
+</div>
+
 <div class="card card-problem">
   <div class="section-title">Primary Revenue Leak</div>
   <p id="main"></p>
@@ -351,11 +378,54 @@ Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
   <p id="fix"></p>
 </div>
 
+<div class="card">
+  <div class="section-title">Before vs Optimized</div>
+
+  <div class="compare-box before">
+    <strong>Before</strong><br>
+    <span id="before"></span>
+  </div>
+
+  <div class="compare-box after">
+    <strong>After</strong><br>
+    <span id="after"></span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">All Conversion Issues</div>
+  <div id="leaks"></div>
+</div>
+
+<div class="card card-fix">
+  <div class="section-title">Revenue Growth Plan</div>
+  <div id="plan"></div>
+</div>
+
 <div class="cta-box">
+
+<h3>Your store keeps changing. New leaks appear every week.</h3>
+
+<a class="cta" href="#">
+Stop Losing Revenue Automatically — Start Monitoring ($89/month)
+</a>
+
+<div class="benefits">
+• Continuous scanning of your store for new conversion issues<br>
+• Instant alerts when revenue leaks are detected<br>
+• AI recommendations updated as your store evolves<br>
+• Track improvements and conversion score over time<br>
+• Identify new opportunities to increase revenue<br>
+• Stay ahead of competitors with ongoing optimization insights
+</div>
 
 <button onclick="window.print()" class="download">
 Download PDF
 </button>
+
+<div class="small">
+Your store changes constantly. Your optimization should too.
+</div>
 
 </div>
 
@@ -375,6 +445,10 @@ const scoreEl = document.getElementById("score");
 const storeEl = document.getElementById("storeName");
 const mainEl = document.getElementById("main");
 const fixEl = document.getElementById("fix");
+const leaksEl = document.getElementById("leaks");
+const planEl = document.getElementById("plan");
+const beforeEl = document.getElementById("before");
+const afterEl = document.getElementById("after");
 const dailyEl = document.getElementById("daily");
 
 try {
@@ -386,25 +460,36 @@ const res = await fetch(
 const data = await res.json();
 const report = data.report_json || data;
 
-const domain =
-  data.store_domain ||
-  data.domain ||
-  data.normalized_store ||
-  "Store";
-
-storeEl.innerText = domain;
-document.getElementById("printDomain").innerText = domain;
-document.getElementById("printDate").innerText = new Date().toLocaleDateString();
-
+storeEl.innerText = data.store_domain || "";
 scoreEl.innerText = `${data.score || 62}/100`;
+
+document.getElementById("printDomain").innerText = data.store_domain || "";
+document.getElementById("printDate").innerText = new Date().toLocaleDateString();
 
 mainEl.innerText = report.main_leak;
 fixEl.innerText = report.quick_fix;
+
+beforeEl.innerText = report.before_after?.before || "";
+afterEl.innerText = report.before_after?.after || "";
 
 const low = 2000;
 const high = 8000;
 
 dailyEl.innerText = `Estimated daily loss: ~$${Math.round(low/30)}–$${Math.round(high/30)}`;
+
+(report.leaks || []).forEach(l => {
+  const div = document.createElement("div");
+  div.className = "leak-item";
+  div.innerHTML = `<strong>${l.title}</strong><br>${l.impact}<br><em>${l.fix}</em>`;
+  leaksEl.appendChild(div);
+});
+
+(report.revenue_plan || []).forEach(p => {
+  const div = document.createElement("div");
+  div.className = "plan-item";
+  div.innerHTML = `<strong>${p.fix}</strong><br><em>${p.expected_impact}</em>`;
+  planEl.appendChild(div);
+});
 
 } catch(e){
   scoreEl.innerText = "Error";
