@@ -150,17 +150,29 @@ Detected Issues: <strong>3 critical conversion leaks</strong>
 </div>
 
 <p style="margin-top:16px;">
-This store is likely losing 10–30% of potential revenue due to hidden conversion leaks
+This store is losing 10–30% of potential revenue due to hidden conversion leaks
+</p>
+
+<p style="font-weight:600;">
+You are losing customers right now due to this issue.
 </p>
 
 <p class="small">
-Based on AI analysis of similar e-commerce stores
+Most stores never detect these leaks — and keep losing revenue every single day.
+</p>
+
+<p class="small">
+Based on AI analysis of patterns from 1,000+ e-commerce stores
 </p>
 
 <div class="card card-problem">
   <div class="section-title">Top Conversion Leak Identified</div>
   <div class="tags">Critical • High Impact • Quick Fix</div>
   <p id="main"></p>
+
+  <a class="cta-primary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03" style="margin-top:12px;">
+  Fix This Issue Now — $399
+  </a>
 </div>
 
 <div class="card card-fix">
@@ -176,6 +188,16 @@ Based on AI analysis of similar e-commerce stores
   </p>
 </div>
 
+<p style="margin-top:24px;font-weight:600;">
+What you’ll get:
+</p>
+
+<p class="small">
+✔ Full conversion audit (3–5 critical leaks)<br>
+✔ Exact fixes you can implement immediately<br>
+✔ Revenue-focused recommendations
+</p>
+
 <p style="margin-top:30px;font-weight:600;">
 Want this analysis for your own store?
 </p>
@@ -185,8 +207,17 @@ Run Free Scan on Your Store
 </a>
 
 <a class="cta-secondary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
-Get Full AI Audit for Your Store — $399
+Show Me What’s Killing My Revenue — $399
 </a>
+
+<p class="small" style="margin-top:12px;">
+Trusted by growing e-commerce brands
+</p>
+
+<p class="small" style="margin-top:20px;">
+Most stores fix only 20% of their conversion leaks.  
+The rest continue silently killing revenue.
+</p>
 
 </div>
 
@@ -212,7 +243,7 @@ Get Full AI Audit for Your Store — $399
   const fixEl = document.getElementById("fix");
 
   function fallbackContent() {
-    titleEl.innerText = `${domain} Conversion Score`;
+    titleEl.innerText = `${domain} is underperforming`;
     scoreEl.innerText = "62/100 — Needs Improvement";
 
     mainEl.innerText = "Weak value proposition above the fold. Visitors don’t immediately understand why they should buy.";
@@ -234,7 +265,7 @@ Get Full AI Audit for Your Store — $399
       return;
     }
 
-    titleEl.innerText = data.normalized_store || domain;
+    titleEl.innerText = `${data.normalized_store || domain} is underperforming`;
     scoreEl.innerText = `${data.score || 62}/100 — Needs Improvement`;
 
     mainEl.innerText = data.main_leak || "Weak messaging and unclear value proposition.";
