@@ -13,7 +13,7 @@ body {
   background: linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%);
   color: #0f172a;
   margin: 0;
-  padding: 16px;
+  padding: 14px;
 }
 
 .container {
@@ -25,30 +25,33 @@ body {
 
 .hero {
   background:white;
-  padding:20px;
-  border-radius:20px;
+  padding:18px;
+  border-radius:18px;
   box-shadow:0 20px 60px rgba(15,23,42,0.08);
 }
 
 h1 {
-  font-size:22px;
-  margin-bottom:4px;
+  font-size:20px;
+  line-height:1.3;
+  margin-bottom:6px;
 }
 
 .score {
-  font-size:60px;
+  font-size:52px;
   font-weight:900;
   color:#16a34a;
 }
 
 .bad {
   color:#dc2626;
-  font-weight:700;
+  font-weight:600;
   font-size:14px;
+  display:block;
+  margin-top:4px;
 }
 
 .meta {
-  margin-top:8px;
+  margin-top:10px;
   font-size:13px;
   color:#64748b;
 }
@@ -57,7 +60,7 @@ h1 {
 
 .alert {
   margin-top:16px;
-  padding:16px;
+  padding:14px;
   background:#fef2f2;
   border:1px solid #fecaca;
   border-radius:14px;
@@ -68,7 +71,7 @@ h1 {
 
 .money {
   margin-top:16px;
-  padding:20px;
+  padding:18px;
   border-radius:16px;
   background:#fff1f2;
   border:1px solid #fecaca;
@@ -76,14 +79,29 @@ h1 {
 }
 
 .money strong {
-  font-size:26px;
+  font-size:28px;
+  color:#dc2626;
+  display:block;
+}
+
+.money span {
+  display:block;
+  font-size:13px;
+  color:#64748b;
+  margin-top:6px;
+}
+
+.daily {
+  margin-top:10px;
+  font-size:14px;
+  font-weight:600;
   color:#dc2626;
 }
 
 /* CARDS */
 
 .card {
-  padding:18px;
+  padding:16px;
   border-radius:16px;
   margin-top:16px;
   background:white;
@@ -92,12 +110,10 @@ h1 {
 
 .card-problem {
   background:#fff1f2;
-  border:1px solid #fecaca;
 }
 
 .card-fix {
   background:#f0fdf4;
-  border:1px solid #bbf7d0;
 }
 
 /* SECTION */
@@ -107,31 +123,15 @@ h1 {
   font-size:12px;
   color:#64748b;
   text-transform:uppercase;
-  margin-bottom:8px;
-}
-
-.tag {
-  display:inline-block;
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:999px;
-  background:#fee2e2;
-  color:#991b1b;
-  font-weight:700;
   margin-bottom:6px;
 }
 
 /* BEFORE AFTER */
 
-.compare {
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
 .compare-box {
-  padding:14px;
+  padding:12px;
   border-radius:12px;
+  margin-top:8px;
 }
 
 .before {
@@ -142,7 +142,7 @@ h1 {
   background:#f0fdf4;
 }
 
-/* VALUE LIST */
+/* VALUE */
 
 .value-list {
   margin-top:12px;
@@ -151,14 +151,14 @@ h1 {
 }
 
 .value-list li {
-  margin-bottom:12px;
+  margin-bottom:14px;
 }
 
 .value-list strong {
   display:block;
 }
 
-/* LEAK ITEMS */
+/* LEAK */
 
 .leak-item {
   margin-top:10px;
@@ -167,7 +167,7 @@ h1 {
   background:#fff1f2;
 }
 
-/* PLAN ITEMS */
+/* PLAN */
 
 .plan-item {
   margin-top:10px;
@@ -176,11 +176,11 @@ h1 {
   background:#f0fdf4;
 }
 
-/* CTA BLOCK */
+/* CTA */
 
 .cta-box {
-  margin-top:30px;
-  padding:20px;
+  margin-top:28px;
+  padding:18px;
   background:white;
   border-radius:18px;
   text-align:center;
@@ -189,9 +189,8 @@ h1 {
 
 .cta {
   display:block;
-  margin-top:14px;
-  padding:18px;
-  text-align:center;
+  margin-top:12px;
+  padding:16px;
   background:linear-gradient(135deg,#059669,#047857);
   color:white;
   border-radius:14px;
@@ -201,22 +200,124 @@ h1 {
 }
 
 .download {
-  margin-top:12px;
+  margin-top:10px;
   width:100%;
   padding:14px;
   border:none;
   border-radius:12px;
   background:#0f172a;
   color:white;
-  font-weight:600;
 }
 
 .small {
   font-size:12px;
   color:#94a3b8;
   margin-top:10px;
-  line-height:1.6;
   text-align:center;
+  line-height:1.6;
+}
+
+.benefits {
+  margin-top:12px;
+  font-size:13px;
+  color:#334155;
+  text-align:left;
+}
+
+/* PRINT COVER */
+
+.print-cover {
+  display:none;
+}
+
+.print-footer {
+  display:none;
+}
+
+/* PRINT MODE */
+
+@media print {
+
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
+  body {
+    background:white;
+    padding:0;
+  }
+
+  .container {
+    max-width:100%;
+  }
+
+  .print-cover {
+    display:block;
+    margin-bottom:30px;
+  }
+
+  .print-brand {
+    font-size:14px;
+    letter-spacing:2px;
+    font-weight:700;
+    color:#64748b;
+    margin-bottom:10px;
+  }
+
+  .print-title {
+    font-size:28px;
+    font-weight:800;
+    margin-bottom:10px;
+  }
+
+  .print-domain {
+    font-size:18px;
+    font-weight:600;
+  }
+
+  .print-date {
+    font-size:12px;
+    color:#64748b;
+    margin-top:4px;
+  }
+
+  .cta-box,
+  .download,
+  .cta {
+    display:none !important;
+  }
+
+  .card,
+  .hero,
+  .money,
+  .alert {
+    box-shadow:none;
+    border:1px solid #e2e8f0;
+    break-inside:avoid;
+  }
+
+  .print-footer {
+    display:block;
+    margin-top:40px;
+    font-size:11px;
+    color:#94a3b8;
+    text-align:center;
+  }
+
+  /* WATERMARK */
+
+  body::after {
+    content:"ATOM FOUNDRY";
+    position:fixed;
+    opacity:0.03;
+    font-size:120px;
+    transform:rotate(-30deg);
+    top:40%;
+    left:10%;
+    z-index:0;
+  }
+
 }
 
 </style>
@@ -226,11 +327,21 @@ h1 {
 
 <div class="container">
 
+<!-- PRINT HEADER -->
+
+<div class="print-cover">
+  <div class="print-brand">ATOM FOUNDRY</div>
+  <div class="print-title">AI Conversion Audit Report</div>
+  <div class="print-domain" id="print-domain"></div>
+  <div class="print-date" id="print-date"></div>
+</div>
+
 <div class="hero">
 
 <h1 id="title">Analyzing store...</h1>
 
 <div class="score" id="score"></div>
+<div class="bad">Needs Improvement</div>
 
 <div class="meta">
 Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
@@ -244,18 +355,17 @@ Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
 
 <div class="money">
   <div class="section-title">Estimated Monthly Revenue Loss</div>
-  <p><strong id="money">$2,000 – $8,000 / month</strong></p>
+  <strong id="money">$2,000 – $8,000</strong>
+  <span>This is an estimate based on typical store performance</span>
+  <div class="daily" id="daily"></div>
 </div>
 
 <div class="small">
 Based on AI analysis of high-performing stores
 </div>
 
-<!-- VALUE -->
-
 <div class="card">
   <div class="section-title">What You Get</div>
-
   <ul class="value-list">
     <li><strong>Revenue Loss Breakdown</strong>Where customers drop off</li>
     <li><strong>Top Conversion Leaks</strong>Main revenue blockers</li>
@@ -267,62 +377,56 @@ Based on AI analysis of high-performing stores
   </ul>
 </div>
 
-<!-- MAIN -->
-
 <div class="card card-problem">
   <div class="section-title">Primary Revenue Leak</div>
-  <div class="tag">CRITICAL • HIGH IMPACT</div>
   <p id="main"></p>
 </div>
-
-<!-- FIX -->
 
 <div class="card card-fix">
   <div class="section-title">Highest Impact Fix</div>
   <p id="fix"></p>
 </div>
 
-<!-- BEFORE AFTER -->
-
 <div class="card">
   <div class="section-title">Before vs Optimized</div>
 
-  <div class="compare">
-    <div class="compare-box before">
-      <strong>Before</strong><br>
-      <span id="before"></span>
-    </div>
+  <div class="compare-box before">
+    <strong>Before</strong><br>
+    <span id="before"></span>
+  </div>
 
-    <div class="compare-box after">
-      <strong>After</strong><br>
-      <span id="after"></span>
-    </div>
+  <div class="compare-box after">
+    <strong>After</strong><br>
+    <span id="after"></span>
   </div>
 </div>
-
-<!-- LEAKS -->
 
 <div class="card">
   <div class="section-title">All Conversion Issues</div>
   <div id="leaks"></div>
 </div>
 
-<!-- PLAN -->
-
 <div class="card card-fix">
   <div class="section-title">Revenue Growth Plan</div>
   <div id="plan"></div>
 </div>
 
-<!-- CTA -->
-
 <div class="cta-box">
 
-<h3>Fix these issues automatically</h3>
+<h3>Your store keeps changing. New leaks appear every week.</h3>
 
 <a class="cta" href="#">
-Start Monitoring — $89/month
+Start Monitoring $89/month
 </a>
+
+<div class="benefits">
+• Continuous scanning of your store for new conversion issues<br>
+• Instant alerts when revenue leaks are detected<br>
+• AI recommendations updated as your store evolves<br>
+• Track improvements and conversion score over time<br>
+• Identify new opportunities to increase revenue<br>
+• Stay ahead of competitors with ongoing optimization insights
+</div>
 
 <button onclick="window.print()" class="download">
 Download PDF
@@ -332,6 +436,10 @@ Download PDF
 Your store changes constantly. Your optimization should too.
 </div>
 
+</div>
+
+<div class="print-footer">
+Generated by Atom Foundry — AI Conversion Intelligence
 </div>
 
 </div>
@@ -350,6 +458,7 @@ const leaksEl = document.getElementById("leaks");
 const planEl = document.getElementById("plan");
 const beforeEl = document.getElementById("before");
 const afterEl = document.getElementById("after");
+const dailyEl = document.getElementById("daily");
 
 try {
 
@@ -361,7 +470,10 @@ const data = await res.json();
 const report = data.report_json || data;
 
 titleEl.innerText = `${data.store_domain || "Store"} Conversion Audit`;
-scoreEl.innerHTML = `${data.score || 62}/100 <span class="bad">Needs Improvement</span>`;
+scoreEl.innerText = `${data.score || 62}/100`;
+
+document.getElementById("print-domain").innerText = data.store_domain || "";
+document.getElementById("print-date").innerText = new Date().toLocaleDateString();
 
 mainEl.innerText = report.main_leak;
 fixEl.innerText = report.quick_fix;
@@ -369,26 +481,26 @@ fixEl.innerText = report.quick_fix;
 beforeEl.innerText = report.before_after?.before || "";
 afterEl.innerText = report.before_after?.after || "";
 
+/* DAILY LOSS */
+const low = 2000;
+const high = 8000;
+
+const dailyLow = Math.round(low / 30);
+const dailyHigh = Math.round(high / 30);
+
+dailyEl.innerText = `Estimated daily loss: ~$${dailyLow}–$${dailyHigh}`;
+
 (report.leaks || []).forEach(l => {
   const div = document.createElement("div");
   div.className = "leak-item";
-  div.innerHTML = `
-    <div class="tag">${l.priority}</div>
-    <strong>${l.title}</strong><br>
-    ${l.impact}<br>
-    <em>${l.fix}</em>
-  `;
+  div.innerHTML = `<strong>${l.title}</strong><br>${l.impact}<br><em>${l.fix}</em>`;
   leaksEl.appendChild(div);
 });
 
 (report.revenue_plan || []).forEach(p => {
   const div = document.createElement("div");
   div.className = "plan-item";
-  div.innerHTML = `
-    <div class="tag">${p.priority}</div>
-    <strong>${p.fix}</strong><br>
-    <em>${p.expected_impact}</em>
-  `;
+  div.innerHTML = `<strong>${p.fix}</strong><br><em>${p.expected_impact}</em>`;
   planEl.appendChild(div);
 });
 
