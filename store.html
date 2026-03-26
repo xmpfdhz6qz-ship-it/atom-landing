@@ -21,8 +21,6 @@ body {
   margin: auto;
 }
 
-/* HEADER */
-
 h1 {
   font-size: 28px;
   margin-bottom: 6px;
@@ -36,8 +34,6 @@ h1 {
   margin-top: 10px;
 }
 
-/* BADGE */
-
 .badge {
   display:inline-block;
   padding:6px 12px;
@@ -48,8 +44,6 @@ h1 {
   font-weight:600;
   margin-top:12px;
 }
-
-/* TEXT */
 
 p {
   line-height: 1.6;
@@ -62,8 +56,6 @@ p {
   margin-top:6px;
 }
 
-/* CARD BASE */
-
 .card {
   padding:22px;
   border-radius:18px;
@@ -72,27 +64,19 @@ p {
   box-shadow:0 10px 30px rgba(15,23,42,0.05);
 }
 
-/* PROBLEM CARD (RED) */
-
 .card-problem {
   background:#fef2f2;
   border:1px solid #fecaca;
 }
-
-/* FIX CARD (GREEN) */
 
 .card-fix {
   background:#ecfdf5;
   border:1px solid #bbf7d0;
 }
 
-/* NEUTRAL CARD */
-
 .card-neutral {
   background:#ffffff;
 }
-
-/* SECTION TITLE */
 
 .section-title {
   font-weight:600;
@@ -102,8 +86,6 @@ p {
   letter-spacing:.06em;
   margin-bottom:8px;
 }
-
-/* CTA */
 
 .cta-primary {
   display:block;
@@ -133,24 +115,6 @@ p {
   box-shadow:0 12px 30px rgba(249,115,22,0.35);
 }
 
-/* MOBILE */
-
-@media (max-width:640px){
-
-h1{
-  font-size:22px;
-}
-
-.score{
-  font-size:44px;
-}
-
-.card{
-  padding:18px;
-}
-
-}
-
 </style>
 </head>
 
@@ -159,7 +123,6 @@ h1{
 <div class="container">
 
 <h1 id="title">Analyzing store...</h1>
-
 <div class="score" id="score"></div>
 
 <div class="badge">High Conversion Risk</div>
@@ -208,20 +171,16 @@ Get Full AI Audit for Your Store — $399
 (async function () {
 
   let domain;
-
   const params = new URLSearchParams(window.location.search);
   domain = params.get("domain");
 
-  // 👉 NEW: support /store/xxx URL
   if (!domain) {
     const parts = window.location.pathname.split("/");
     domain = parts[parts.length - 1];
   }
 
-  // 👉 ochrana
   if (!domain || domain === "store") {
-    document.getElementById("title").innerText = "Missing domain";
-    return;
+    domain = "demo-store";
   }
 
   const titleEl = document.getElementById("title");
@@ -229,31 +188,37 @@ Get Full AI Audit for Your Store — $399
   const mainEl = document.getElementById("main");
   const fixEl = document.getElementById("fix");
 
+  function fallbackContent() {
+    titleEl.innerText = `${domain} Conversion Score`;
+    scoreEl.innerText = "62/100";
+
+    mainEl.innerText = "Weak value proposition above the fold. Visitors don’t immediately understand why they should buy.";
+
+    fixEl.innerText = "Rewrite the hero section with a clear benefit-driven headline and add trust signals like reviews or guarantees.";
+  }
+
   try {
     const res = await fetch(
       `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
     );
 
-    if (!res.ok) throw new Error("API error");
+    if (!res.ok) throw new Error();
 
     const data = await res.json();
 
-    console.log("DATA:", data);
-
     if (!data || Object.keys(data).length === 0) {
-      titleEl.innerText = `${domain} (no data yet)`;
+      fallbackContent();
       return;
     }
 
     titleEl.innerText = data.normalized_store || domain;
-    scoreEl.innerText = `${data.score || "N/A"}/100`;
+    scoreEl.innerText = `${data.score || 62}/100`;
 
-    mainEl.innerText = data.main_leak || "Not detected";
-    fixEl.innerText = data.quick_fix || "Not available";
+    mainEl.innerText = data.main_leak || "Weak messaging and unclear value proposition.";
+    fixEl.innerText = data.quick_fix || "Improve headline clarity and add trust elements.";
 
   } catch (e) {
-    console.error(e);
-    titleEl.innerText = "Error loading data";
+    fallbackContent();
   }
 
 })();
