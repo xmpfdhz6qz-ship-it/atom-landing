@@ -10,28 +10,51 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial;
-  background: #f8fafc;
+  background: linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%);
   color: #0f172a;
   margin: 0;
-  padding: 24px 16px;
+  padding: 16px;
 }
 
 .container {
-  max-width: 720px;
+  max-width: 680px;
   margin: auto;
 }
 
+/* HERO */
+
+.hero {
+  padding:20px;
+  border-radius:20px;
+  background:white;
+  box-shadow:0 20px 60px rgba(15,23,42,0.08);
+  margin-bottom:18px;
+}
+
 h1 {
-  font-size: 28px;
-  margin-bottom: 6px;
+  font-size: 22px;
+  line-height: 1.3;
+  margin-bottom: 4px;
 }
 
 .score {
-  font-size: 56px;
-  font-weight: 800;
+  font-size: 64px;
+  font-weight: 900;
   color: #16a34a;
   line-height: 1;
-  margin-top: 10px;
+  margin-top: 12px;
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  from {transform: scale(0.85); opacity:0;}
+  to {transform: scale(1); opacity:1;}
+}
+
+.meta {
+  margin-top:8px;
+  font-size:13px;
+  color:#64748b;
 }
 
 .badge {
@@ -41,15 +64,11 @@ h1 {
   color:#991b1b;
   border-radius:999px;
   font-size:12px;
-  font-weight:600;
+  font-weight:700;
   margin-top:12px;
 }
 
-.meta {
-  margin-top:6px;
-  font-size:13px;
-  color:#64748b;
-}
+/* TEXT */
 
 p {
   line-height: 1.6;
@@ -62,21 +81,23 @@ p {
   margin-top:6px;
 }
 
+/* CARDS */
+
 .card {
-  padding:22px;
+  padding:20px;
   border-radius:18px;
-  margin-top:18px;
+  margin-top:16px;
   border:1px solid #e2e8f0;
-  box-shadow:0 10px 30px rgba(15,23,42,0.05);
+  box-shadow:0 8px 24px rgba(15,23,42,0.06);
 }
 
 .card-problem {
-  background:#fef2f2;
+  background:#ffffff;
   border:1px solid #fecaca;
 }
 
 .card-fix {
-  background:#ecfdf5;
+  background:#f0fdf4;
   border:1px solid #bbf7d0;
 }
 
@@ -84,34 +105,38 @@ p {
   background:#ffffff;
 }
 
+/* SECTION */
+
 .section-title {
-  font-weight:600;
-  font-size:13px;
+  font-weight:700;
+  font-size:12px;
   color:#64748b;
   text-transform:uppercase;
-  letter-spacing:.06em;
+  letter-spacing:.08em;
   margin-bottom:8px;
 }
 
 .tags {
   margin-top:6px;
   font-size:12px;
-  color:#991b1b;
-  font-weight:600;
+  color:#dc2626;
+  font-weight:700;
 }
+
+/* CTA */
 
 .cta-primary {
   display:block;
-  margin-top:28px;
+  margin-top:20px;
   padding:18px;
   text-align:center;
   background:linear-gradient(135deg,#22c55e,#16a34a);
   color:white;
   border-radius:14px;
-  font-weight:700;
+  font-weight:800;
   font-size:16px;
   text-decoration:none;
-  box-shadow:0 12px 30px rgba(34,197,94,0.35);
+  box-shadow:0 10px 30px rgba(34,197,94,0.35);
 }
 
 .cta-secondary {
@@ -123,9 +148,27 @@ p {
   color:white;
   border-radius:14px;
   text-decoration:none;
-  font-weight:700;
+  font-weight:800;
   font-size:16px;
-  box-shadow:0 12px 30px rgba(249,115,22,0.35);
+  box-shadow:0 10px 30px rgba(249,115,22,0.35);
+}
+
+/* STICKY CTA */
+
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  background: white;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+
+/* SPACER FOR STICKY */
+
+.spacer {
+  height:80px;
 }
 
 </style>
@@ -135,71 +178,71 @@ p {
 
 <div class="container">
 
+<div class="hero">
+
+<p class="small">AI-driven analysis • Conversion pattern detection</p>
+
 <h1 id="title">Analyzing store...</h1>
 
 <div class="score" id="score"></div>
 
 <div class="meta">
-Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
+Estimated Revenue Loss: <strong>10–30% of sales</strong>
 </div>
 
 <div class="badge">High Conversion Risk</div>
 
 <div class="meta">
-Detected Issues: <strong>3 critical conversion leaks</strong>
+Detected Issues: <strong>3 critical leaks</strong>
 </div>
 
-<p style="margin-top:16px;">
-This store is losing 10–30% of potential revenue due to hidden conversion leaks
+<p style="margin-top:14px;">
+This store is silently losing revenue due to hidden conversion leaks.
 </p>
 
-<p style="font-weight:600;">
-You are losing customers right now due to this issue.
-</p>
-
-<p class="small">
-Most stores never detect these leaks — and keep losing revenue every single day.
+<p style="font-weight:700;">
+Customers are leaving right now.
 </p>
 
 <p class="small">
-Based on AI analysis of patterns from 1,000+ e-commerce stores
+Most stores never detect these issues.
 </p>
+
+</div>
 
 <div class="card card-problem">
-  <div class="section-title">Top Conversion Leak Identified</div>
-  <div class="tags">Critical • High Impact • Quick Fix</div>
+  <div class="section-title">Top Conversion Leak</div>
+  <div class="tags">Critical • High Impact • Fast Fix</div>
   <p id="main"></p>
 
-  <a class="cta-primary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03" style="margin-top:12px;">
-  Fix This Issue Now — $399
+  <a class="cta-secondary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
+  Fix This Leak Now $399
   </a>
+
+  <p class="small">Every day this stays unfixed, you lose customers.</p>
 </div>
 
 <div class="card card-fix">
-  <div class="section-title">Recommended Action</div>
+  <div class="section-title">Recommended Fix</div>
   <p id="fix"></p>
 </div>
 
 <div class="card card-neutral">
-  <div class="section-title">What this means</div>
+  <div class="section-title">Impact</div>
   <p>
-  Visitors hesitate, leave early, and don’t trust the offer enough to buy.
-  This directly impacts conversion rate and revenue growth.
+  Visitors hesitate, lose trust, and leave before buying.
+  This directly reduces conversion rate and revenue.
   </p>
 </div>
 
-<p style="margin-top:24px;font-weight:600;">
+<p style="margin-top:24px;font-weight:700;">
 What you’ll get:
 </p>
 
 <p class="small">
-✔ Full conversion audit (3–5 critical leaks)<br>
-✔ Exact fixes you can implement immediately<br>
-✔ Revenue-focused recommendations
-</p>
-
-<p style="margin-top:30px;font-weight:600;">
-Want this analysis for your own store?
+✔ 3–5 critical leaks<br>
+✔ Exact fixes<br>
+✔ Revenue-focused improvements
 </p>
 
 <a class="cta-primary" href="/">
@@ -207,18 +250,23 @@ Run Free Scan on Your Store
 </a>
 
 <a class="cta-secondary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
-Show Me What’s Killing My Revenue — $399
+Show Me Full Revenue Audit $399
 </a>
 
-<p class="small" style="margin-top:12px;">
-Trusted by growing e-commerce brands
+<p class="small" style="margin-top:14px;">
+Used by e-commerce stores to uncover hidden revenue leaks
 </p>
 
-<p class="small" style="margin-top:20px;">
-Most stores fix only 20% of their conversion leaks.  
-The rest continue silently killing revenue.
-</p>
+<div class="spacer"></div>
 
+</div>
+
+<!-- STICKY CTA -->
+
+<div class="sticky-cta">
+  <a class="cta-secondary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
+  Unlock Full Audit $399
+  </a>
 </div>
 
 <script>
@@ -244,11 +292,10 @@ The rest continue silently killing revenue.
 
   function fallbackContent() {
     titleEl.innerText = `${domain} is underperforming`;
-    scoreEl.innerText = "62/100 — Needs Improvement";
+    scoreEl.innerText = "62/100 Needs Improvement";
 
-    mainEl.innerText = "Weak value proposition above the fold. Visitors don’t immediately understand why they should buy.";
-
-    fixEl.innerText = "Rewrite the hero section with a clear benefit-driven headline and add trust signals like reviews or guarantees.";
+    mainEl.innerText = "Weak value proposition above the fold.";
+    fixEl.innerText = "Improve headline clarity and trust signals.";
   }
 
   try {
@@ -266,10 +313,10 @@ The rest continue silently killing revenue.
     }
 
     titleEl.innerText = `${data.normalized_store || domain} is underperforming`;
-    scoreEl.innerText = `${data.score || 62}/100 — Needs Improvement`;
+    scoreEl.innerText = `${data.score || 62}/100 Needs Improvement`;
 
-    mainEl.innerText = data.main_leak || "Weak messaging and unclear value proposition.";
-    fixEl.innerText = data.quick_fix || "Improve headline clarity and add trust elements.";
+    mainEl.innerText = data.main_leak || "Weak messaging.";
+    fixEl.innerText = data.quick_fix || "Improve clarity.";
 
   } catch (e) {
     fallbackContent();
