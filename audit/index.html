@@ -10,10 +10,10 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial;
-  background: #f8fafc;
+  background: linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%);
   color: #0f172a;
   margin: 0;
-  padding: 24px 16px;
+  padding: 16px;
 }
 
 .container {
@@ -21,56 +21,93 @@ body {
   margin: auto;
 }
 
+/* HERO */
+
+.hero {
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(15,23,42,0.08);
+}
+
 h1 {
-  font-size: 26px;
-  margin-bottom: 6px;
+  font-size:22px;
+  margin-bottom:4px;
 }
 
 .score {
-  font-size: 56px;
-  font-weight: 800;
-  color: #16a34a;
-  margin-top: 10px;
+  font-size:60px;
+  font-weight:900;
+  color:#16a34a;
 }
 
 .bad {
-  color: #dc2626;
+  color:#dc2626;
+  font-weight:700;
+  font-size:14px;
 }
 
 .meta {
-  margin-top:6px;
-  font-size:14px;
+  margin-top:8px;
+  font-size:13px;
   color:#64748b;
 }
 
+/* ALERT */
+
 .alert {
   margin-top:16px;
-  padding:18px;
+  padding:16px;
   background:#fef2f2;
   border:1px solid #fecaca;
   border-radius:14px;
   font-weight:600;
 }
 
-.card {
-  padding:22px;
-  border-radius:18px;
-  margin-top:18px;
-  border:1px solid #e2e8f0;
-  background:#fff;
-  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+/* MONEY */
+
+.money {
+  margin-top:16px;
+  padding:20px;
+  border-radius:16px;
+  background:#fff1f2;
+  border:1px solid #fecaca;
+  text-align:center;
 }
+
+.money strong {
+  font-size:26px;
+  color:#dc2626;
+}
+
+/* CARDS */
+
+.card {
+  padding:18px;
+  border-radius:16px;
+  margin-top:16px;
+  background:white;
+  border:1px solid #e2e8f0;
+}
+
+.card-problem {
+  background:#fff1f2;
+  border:1px solid #fecaca;
+}
+
+.card-fix {
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+}
+
+/* SECTION */
 
 .section-title {
   font-weight:700;
-  font-size:14px;
+  font-size:12px;
   color:#64748b;
   text-transform:uppercase;
-  margin-bottom:10px;
-}
-
-.leak {
-  margin-top:14px;
+  margin-bottom:8px;
 }
 
 .tag {
@@ -84,41 +121,94 @@ h1 {
   margin-bottom:6px;
 }
 
-.plan {
-  margin-top:14px;
+/* BEFORE AFTER */
+
+.compare {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.compare-box {
+  padding:14px;
+  border-radius:12px;
+}
+
+.before {
+  background:#fff1f2;
+}
+
+.after {
+  background:#f0fdf4;
+}
+
+/* VALUE LIST */
+
+.value-list {
+  margin-top:12px;
+  padding-left:0;
+  list-style:none;
+}
+
+.value-list li {
+  margin-bottom:12px;
+}
+
+.value-list strong {
+  display:block;
+}
+
+/* LEAK ITEMS */
+
+.leak-item {
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:#fff1f2;
+}
+
+/* PLAN ITEMS */
+
+.plan-item {
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:#f0fdf4;
+}
+
+/* CTA BLOCK */
+
+.cta-box {
+  margin-top:30px;
+  padding:20px;
+  background:white;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,0.06);
 }
 
 .cta {
   display:block;
-  margin-top:30px;
-  padding:20px;
+  margin-top:14px;
+  padding:18px;
   text-align:center;
-  background:linear-gradient(135deg,#7c3aed,#6d28d9);
+  background:linear-gradient(135deg,#059669,#047857);
   color:white;
   border-radius:14px;
-  font-weight:700;
-  font-size:18px;
+  font-weight:800;
+  font-size:16px;
   text-decoration:none;
-  box-shadow:0 12px 30px rgba(124,58,237,0.35);
 }
 
 .download {
-  margin-top:14px;
+  margin-top:12px;
   width:100%;
-  padding:16px;
+  padding:14px;
   border:none;
   border-radius:12px;
   background:#0f172a;
   color:white;
   font-weight:600;
-  font-size:15px;
-  cursor:pointer;
-}
-
-.subtext {
-  text-align:center;
-  font-weight:600;
-  margin-top:12px;
 }
 
 .small {
@@ -129,27 +219,14 @@ h1 {
   text-align:center;
 }
 
-/* PRINT MODE */
-@media print {
-  .cta, .download, .subtext {
-    display: none;
-  }
-
-  body {
-    background:white;
-  }
-
-  .card {
-    box-shadow:none;
-  }
-}
-
 </style>
 </head>
 
 <body>
 
 <div class="container">
+
+<div class="hero">
 
 <h1 id="title">Analyzing store...</h1>
 
@@ -159,87 +236,102 @@ h1 {
 Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
 </div>
 
+</div>
+
 <div class="alert">
-⚠️ This store is likely losing a significant portion of potential revenue due to hidden conversion issues
+⚠️ This store is losing revenue due to hidden conversion issues
+</div>
+
+<div class="money">
+  <div class="section-title">Estimated Monthly Revenue Loss</div>
+  <p><strong id="money">$2,000 – $8,000 / month</strong></p>
 </div>
 
 <div class="small">
-Based on AI analysis of high-performing e-commerce benchmarks
+Based on AI analysis of high-performing stores
 </div>
 
 <!-- VALUE -->
+
 <div class="card">
-  <div class="section-title">What You Just Unlocked</div>
+  <div class="section-title">What You Get</div>
 
-  <p><strong>Revenue Loss Breakdown</strong><br>
-  Identify exactly where customers drop off</p>
-
-  <p><strong>Top Conversion Leaks</strong><br>
-  The biggest blockers killing your revenue</p>
-
-  <p><strong>Exact Fixes You Can Apply</strong><br>
-  No guessing — just actionable steps</p>
-
-  <p><strong>AI-Rewritten Messaging</strong><br>
-  Improved headlines, CTAs and product copy</p>
-
-  <p><strong>Quick Wins</strong><br>
-  Easy fixes with immediate impact</p>
-
-  <p><strong>Priority Roadmap</strong><br>
-  What to fix first to increase revenue fastest</p>
-
-  <p><strong>Expected Impact</strong><br>
-  Typical improvement: +10–35% conversion rate</p>
+  <ul class="value-list">
+    <li><strong>Revenue Loss Breakdown</strong>Where customers drop off</li>
+    <li><strong>Top Conversion Leaks</strong>Main revenue blockers</li>
+    <li><strong>Exact Fixes</strong>Clear actions to implement</li>
+    <li><strong>AI-Rewritten Messaging</strong>Better headlines & CTAs</li>
+    <li><strong>Quick Wins</strong>Fast improvements</li>
+    <li><strong>Priority Roadmap</strong>What to fix first</li>
+    <li><strong>Expected Impact</strong>+10–35% conversion rate</li>
+  </ul>
 </div>
 
 <!-- MAIN -->
-<div class="card">
+
+<div class="card card-problem">
   <div class="section-title">Primary Revenue Leak</div>
   <div class="tag">CRITICAL • HIGH IMPACT</div>
   <p id="main"></p>
 </div>
 
 <!-- FIX -->
-<div class="card">
+
+<div class="card card-fix">
   <div class="section-title">Highest Impact Fix</div>
   <p id="fix"></p>
 </div>
 
+<!-- BEFORE AFTER -->
+
+<div class="card">
+  <div class="section-title">Before vs Optimized</div>
+
+  <div class="compare">
+    <div class="compare-box before">
+      <strong>Before</strong><br>
+      <span id="before"></span>
+    </div>
+
+    <div class="compare-box after">
+      <strong>After</strong><br>
+      <span id="after"></span>
+    </div>
+  </div>
+</div>
+
 <!-- LEAKS -->
+
 <div class="card">
   <div class="section-title">All Conversion Issues</div>
   <div id="leaks"></div>
 </div>
 
 <!-- PLAN -->
-<div class="card">
+
+<div class="card card-fix">
   <div class="section-title">Revenue Growth Plan</div>
   <div id="plan"></div>
 </div>
 
 <!-- CTA -->
+
+<div class="cta-box">
+
+<h3>Fix these issues automatically</h3>
+
 <a class="cta" href="#">
-Fix These Issues Automatically — Start Monitoring ($89/month)
+Start Monitoring — $89/month
 </a>
 
 <button onclick="window.print()" class="download">
-Download This Audit (PDF)
+Download PDF
 </button>
 
-<div class="subtext">
-Your store changes every week. Your optimization should too.
+<div class="small">
+Your store changes constantly. Your optimization should too.
 </div>
 
-<div class="small">
-<strong>What happens after you start monitoring:</strong><br><br>
-
-• Continuous scanning of your store for new conversion issues<br>
-• Instant alerts when revenue leaks are detected<br>
-• AI recommendations updated as your store evolves<br>
-• Track improvements and conversion score over time<br>
-• Identify new opportunities to increase revenue<br>
-• Stay ahead of competitors with ongoing optimization insights
 </div>
 
 </div>
@@ -256,6 +348,8 @@ const mainEl = document.getElementById("main");
 const fixEl = document.getElementById("fix");
 const leaksEl = document.getElementById("leaks");
 const planEl = document.getElementById("plan");
+const beforeEl = document.getElementById("before");
+const afterEl = document.getElementById("after");
 
 try {
 
@@ -267,14 +361,17 @@ const data = await res.json();
 const report = data.report_json || data;
 
 titleEl.innerText = `${data.store_domain || "Store"} Conversion Audit`;
-scoreEl.innerHTML = `${data.score || 62}/100 <span class="bad">— Needs Improvement</span>`;
+scoreEl.innerHTML = `${data.score || 62}/100 <span class="bad">Needs Improvement</span>`;
 
 mainEl.innerText = report.main_leak;
 fixEl.innerText = report.quick_fix;
 
+beforeEl.innerText = report.before_after?.before || "";
+afterEl.innerText = report.before_after?.after || "";
+
 (report.leaks || []).forEach(l => {
   const div = document.createElement("div");
-  div.className = "leak";
+  div.className = "leak-item";
   div.innerHTML = `
     <div class="tag">${l.priority}</div>
     <strong>${l.title}</strong><br>
@@ -286,7 +383,7 @@ fixEl.innerText = report.quick_fix;
 
 (report.revenue_plan || []).forEach(p => {
   const div = document.createElement("div");
-  div.className = "plan";
+  div.className = "plan-item";
   div.innerHTML = `
     <div class="tag">${p.priority}</div>
     <strong>${p.fix}</strong><br>
