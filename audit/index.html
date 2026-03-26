@@ -102,6 +102,19 @@ h1 {
   box-shadow:0 12px 30px rgba(124,58,237,0.35);
 }
 
+.download {
+  margin-top:14px;
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:12px;
+  background:#0f172a;
+  color:white;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+}
+
 .subtext {
   text-align:center;
   font-weight:600;
@@ -114,6 +127,21 @@ h1 {
   margin-top:10px;
   line-height:1.6;
   text-align:center;
+}
+
+/* PRINT MODE */
+@media print {
+  .cta, .download, .subtext {
+    display: none;
+  }
+
+  body {
+    background:white;
+  }
+
+  .card {
+    box-shadow:none;
+  }
 }
 
 </style>
@@ -139,7 +167,7 @@ Estimated Revenue Loss: <strong>10–30% of potential sales</strong>
 Based on AI analysis of high-performing e-commerce benchmarks
 </div>
 
-<!-- VALUE BLOCK -->
+<!-- VALUE -->
 <div class="card">
   <div class="section-title">What You Just Unlocked</div>
 
@@ -158,14 +186,14 @@ Based on AI analysis of high-performing e-commerce benchmarks
   <p><strong>Quick Wins</strong><br>
   Easy fixes with immediate impact</p>
 
-  <p><strong>Priority Fix Roadmap</strong><br>
+  <p><strong>Priority Roadmap</strong><br>
   What to fix first to increase revenue fastest</p>
 
   <p><strong>Expected Impact</strong><br>
   Typical improvement: +10–35% conversion rate</p>
 </div>
 
-<!-- MAIN LEAK -->
+<!-- MAIN -->
 <div class="card">
   <div class="section-title">Primary Revenue Leak</div>
   <div class="tag">CRITICAL • HIGH IMPACT</div>
@@ -194,6 +222,10 @@ Based on AI analysis of high-performing e-commerce benchmarks
 <a class="cta" href="#">
 Fix These Issues Automatically — Start Monitoring ($89/month)
 </a>
+
+<button onclick="window.print()" class="download">
+Download This Audit (PDF)
+</button>
 
 <div class="subtext">
 Your store changes every week. Your optimization should too.
@@ -235,13 +267,11 @@ const data = await res.json();
 const report = data.report_json || data;
 
 titleEl.innerText = `${data.store_domain || "Store"} Conversion Audit`;
-
 scoreEl.innerHTML = `${data.score || 62}/100 <span class="bad">— Needs Improvement</span>`;
 
 mainEl.innerText = report.main_leak;
 fixEl.innerText = report.quick_fix;
 
-// leaks
 (report.leaks || []).forEach(l => {
   const div = document.createElement("div");
   div.className = "leak";
@@ -254,7 +284,6 @@ fixEl.innerText = report.quick_fix;
   leaksEl.appendChild(div);
 });
 
-// plan
 (report.revenue_plan || []).forEach(p => {
   const div = document.createElement("div");
   div.className = "plan";
