@@ -1,187 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Atom Foundry – Revenue Leaks</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
+    background:#0f172a;
+    color:white;
+  }
 
-  <style>
-    body {
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
-      background:#0f172a;
-      color:white;
+  .container {
+    max-width:720px;
+    width:100%;
+    margin:0 auto;
+    padding:60px 20px 40px;
+    text-align:center;
+  }
 
-      display:flex;
-      justify-content:center;
-      align-items:center;
+  h1 {
+    font-size:40px;
+    line-height:1.2;
+    margin-bottom:16px;
+    letter-spacing:-0.5px;
+  }
 
-      min-height:100vh;
+  .sub {
+    font-size:17px;
+    color:#94a3b8;
+    margin-bottom:36px;
+  }
+
+  .box {
+    background:#1e293b;
+    padding:28px;
+    border-radius:20px;
+    border:1px solid #334155;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    max-width:500px;
+    margin:0 auto;
+  }
+
+  input {
+    width:100%;
+    padding:16px;
+    margin-top:14px;
+    border-radius:12px;
+    border:1px solid #334155;
+    background:#0f172a;
+    color:white;
+    font-size:16px;
+    outline:none;
+  }
+
+  input:focus {
+    border-color:#475569;
+  }
+
+  .checkbox {
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-top:18px;
+    font-size:13px;
+    color:#94a3b8;
+    text-align:left;
+  }
+
+  .checkbox input {
+    width:auto;
+    margin-top:3px;
+  }
+
+  button {
+    margin-top:22px;
+    width:100%;
+    padding:18px;
+    border-radius:14px;
+    border:1.5px solid #ff3b30;
+    background:linear-gradient(135deg,#ff7a18,#ff5a00);
+    color:white;
+    font-weight:800;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 12px 35px rgba(255,90,0,0.35);
+    transition:all 0.2s ease;
+  }
+
+  button:hover {
+    transform:translateY(-1px);
+    box-shadow:0 16px 45px rgba(255,90,0,0.45);
+  }
+
+  a {
+    color:#60a5fa;
+    text-decoration:none;
+  }
+
+  .proof {
+    margin-top:36px;
+    font-size:13px;
+    color:#64748b;
+  }
+
+  #status {
+    margin-top:12px;
+    font-size:13px;
+    color:#94a3b8;
+  }
+
+  @media (max-width:600px) {
+    h1 {
+      font-size:30px;
     }
 
     .container {
-      max-width:720px;
-      width:100%;
-      text-align:center;
-      padding:40px 20px;
-    }
-
-    h1 {
-      font-size:42px;
-      line-height:1.2;
-      margin-bottom:16px;
-    }
-
-    .sub {
-      font-size:18px;
-      color:#94a3b8;
-      margin-bottom:40px;
+      padding:40px 16px 30px;
     }
 
     .box {
-      background:#1e293b;
-      padding:32px;
-      border-radius:20px;
-      border:1px solid #334155;
-      box-shadow:0 25px 80px rgba(0,0,0,0.4);
-      max-width:520px;
-      margin:0 auto;
+      padding:22px;
     }
-
-    input {
-      width:100%;
-      padding:16px;
-      margin-top:12px;
-      border-radius:12px;
-      border:1px solid #334155;
-      background:#0f172a;
-      color:white;
-      font-size:16px;
-    }
-
-    .checkbox {
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-top:16px;
-      font-size:14px;
-      color:#94a3b8;
-      text-align:left;
-    }
-
-    .checkbox input {
-      width:auto;
-    }
-
-    button {
-      margin-top:20px;
-      width:100%;
-      padding:18px;
-      border-radius:14px;
-      border:2px solid #ff3b30;
-      background:#ff6a00;
-      color:white;
-      font-weight:700;
-      font-size:17px;
-      cursor:pointer;
-    }
-
-    button:hover {
-      opacity:0.9;
-    }
-
-    a {
-      color:#60a5fa;
-      text-decoration:none;
-    }
-
-    .proof {
-      margin-top:40px;
-      font-size:14px;
-      color:#64748b;
-    }
-
-    #status {
-      margin-top:10px;
-      font-size:13px;
-      color:#94a3b8;
-    }
-
-  </style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <h1>
-    You don’t have a traffic problem.<br>
-    You have a revenue leak.
-  </h1>
-
-  <p class="sub">
-    We scan your store and show exactly where you're losing money — and how to fix it.
-  </p>
-
-  <div class="box">
-
-    <form id="scanForm">
-
-      <input type="text" id="url" placeholder="yourstore.com" required />
-      <input type="email" id="email" placeholder="your@email.com" required />
-
-      <div class="checkbox">
-        <input type="checkbox" required />
-        <span>
-          I agree to the 
-          <a href="/terms-of-service">Terms</a> and 
-          <a href="/privacy-policy">Privacy Policy</a>
-        </span>
-      </div>
-
-      <button type="submit">
-        Get My Free Store Score
-      </button>
-
-    </form>
-
-    <p id="status"></p>
-
-  </div>
-
-  <div class="proof">
-    Most stores lose 20–40% of revenue due to hidden conversion leaks.
-  </div>
-
-</div>
-
-<script>
-document.getElementById("scanForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  let url = document.getElementById("url").value.trim();
-  const email = document.getElementById("email").value.trim();
-
-  if (!url.startsWith("http")) {
-    url = "https://" + url;
   }
-
-  document.getElementById("status").innerText = "Scanning your store...";
-
-  try {
-    await fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, email })
-    });
-
-    window.location.href = "/success";
-
-  } catch (err) {
-    document.getElementById("status").innerText = "Something went wrong.";
-  }
-});
-</script>
-
-</body>
-</html>
+</style>
