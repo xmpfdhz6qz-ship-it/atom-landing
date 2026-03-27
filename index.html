@@ -1,100 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Atom Foundry – Ecommerce Conversion Audit & Revenue Analysis</title>
+  <title>Atom Foundry – Find Revenue Leaks in Your Store</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO -->
-  <meta name="description" content="Analyze ecommerce stores and discover hidden conversion issues reducing revenue. AI-powered conversion audits with actionable fixes.">
+  <meta name="description" content="Your store is leaking revenue. Discover hidden conversion issues and fix them with AI-powered analysis.">
 
   <style>
     body {
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;
-      background:#f8fafc;
-      color:#0f172a;
+      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
+      background:#0f172a;
+      color:white;
       display:flex;
       flex-direction:column;
       align-items:center;
-      min-height:100vh;
       padding:20px;
     }
 
-    .seo-links {
+    .container {
       max-width:420px;
       width:100%;
-      margin-bottom:24px;
       text-align:center;
-    }
-
-    .seo-links h2 {
-      font-size:14px;
-      margin-bottom:10px;
-      color:#64748b;
-    }
-
-    .seo-links p {
-      font-size:13px;
-      color:#64748b;
-      margin-bottom:12px;
-      line-height:1.5;
-    }
-
-    .seo-links ul {
-      padding:0;
-      list-style:none;
-    }
-
-    .seo-links li {
-      margin:6px 0;
-      font-size:13px;
-    }
-
-    .seo-links a {
-      color:#475569;
-      text-decoration:none;
-    }
-
-    .seo-links a:hover {
-      text-decoration:underline;
-    }
-
-    .box {
-      background:#ffffff;
-      padding:28px;
-      border-radius:20px;
-      width:100%;
-      max-width:420px;
-      text-align:center;
-      border:1px solid #e2e8f0;
-      box-shadow:0 20px 60px rgba(15,23,42,0.08);
     }
 
     h1 {
-      font-size:24px;
-      margin-bottom:8px;
+      font-size:28px;
+      line-height:1.3;
+      margin-bottom:12px;
     }
 
     .sub {
-      color:#64748b;
-      font-size:14px;
-      margin-bottom:16px;
+      color:#94a3b8;
+      font-size:15px;
+      margin-bottom:20px;
     }
 
-    .trust {
-      font-size:12px;
-      color:#94a3b8;
-      margin-bottom:14px;
+    .box {
+      background:#1e293b;
+      padding:24px;
+      border-radius:16px;
+      border:1px solid #334155;
     }
 
     input {
       width:100%;
-      padding:16px;
+      padding:14px;
       margin-top:10px;
-      border-radius:12px;
-      border:1px solid #e2e8f0;
+      border-radius:10px;
+      border:1px solid #334155;
+      background:#0f172a;
+      color:white;
       font-size:15px;
     }
 
@@ -102,17 +60,39 @@
       margin-top:14px;
       width:100%;
       padding:16px;
-      border:none;
-      border-radius:12px;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
+      border-radius:10px;
+      border:2px solid #ff3b30;
+      background:#ff6a00;
       color:white;
       font-weight:700;
-      font-size:16px;
       cursor:pointer;
+      font-size:16px;
+    }
+
+    button:hover {
+      opacity:0.9;
+    }
+
+    .legal {
+      font-size:12px;
+      color:#94a3b8;
+      margin-top:12px;
+      text-align:left;
+    }
+
+    a {
+      color:#60a5fa;
+      text-decoration:none;
     }
 
     #status {
       margin-top:12px;
+      font-size:13px;
+      color:#94a3b8;
+    }
+
+    .proof {
+      margin-top:30px;
       font-size:13px;
       color:#64748b;
     }
@@ -121,103 +101,44 @@
 
 <body>
 
-<!-- 🔥 SEO SECTION -->
+<div class="container">
 
-<div class="seo-links">
+  <h1>
+    You don’t have a traffic problem.<br>
+    You have a revenue leak.
+  </h1>
 
-  <h2>Recently Analyzed Ecommerce Stores</h2>
-
-  <p>
-    Browse real ecommerce stores and discover hidden conversion issues that reduce revenue.
-    Each store includes an AI-powered conversion audit with actionable fixes.
+  <p class="sub">
+    We scan your store and show exactly where you're losing money — and how to fix it.
   </p>
 
-  <ul>
+  <div class="box">
 
-    <li><a href="/store.html?domain=demo-store-1.com">Demo Store 1 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-2.com">Demo Store 2 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-3.com">Demo Store 3 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-4.com">Demo Store 4 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-5.com">Demo Store 5 – Conversion Audit</a></li>
+    <form id="scanForm">
 
-    <li><a href="/store.html?domain=demo-store-6.com">Demo Store 6 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-7.com">Demo Store 7 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-8.com">Demo Store 8 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-9.com">Demo Store 9 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-10.com">Demo Store 10 – Conversion Audit</a></li>
+      <input type="text" id="url" placeholder="yourstore.com" required />
+      <input type="email" id="email" placeholder="your@email.com" required />
 
-    <li><a href="/store.html?domain=demo-store-11.com">Demo Store 11 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-12.com">Demo Store 12 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-13.com">Demo Store 13 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-14.com">Demo Store 14 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-15.com">Demo Store 15 – Conversion Audit</a></li>
+      <div class="legal">
+        <label>
+          <input type="checkbox" required />
+          I agree to the 
+          <a href="/terms-of-service">Terms</a> and 
+          <a href="/privacy-policy">Privacy Policy</a>
+        </label>
+      </div>
 
-    <li><a href="/store.html?domain=demo-store-16.com">Demo Store 16 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-17.com">Demo Store 17 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-18.com">Demo Store 18 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-19.com">Demo Store 19 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-20.com">Demo Store 20 – Conversion Audit</a></li>
+      <button type="submit">Get My Free Store Score</button>
 
-    <li><a href="/store.html?domain=demo-store-21.com">Demo Store 21 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-22.com">Demo Store 22 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-23.com">Demo Store 23 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-24.com">Demo Store 24 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-25.com">Demo Store 25 – Conversion Audit</a></li>
+    </form>
 
-    <li><a href="/store.html?domain=demo-store-26.com">Demo Store 26 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-27.com">Demo Store 27 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-28.com">Demo Store 28 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-29.com">Demo Store 29 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-30.com">Demo Store 30 – Conversion Audit</a></li>
+    <p id="status"></p>
 
-    <li><a href="/store.html?domain=demo-store-31.com">Demo Store 31 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-32.com">Demo Store 32 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-33.com">Demo Store 33 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-34.com">Demo Store 34 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-35.com">Demo Store 35 – Conversion Audit</a></li>
+  </div>
 
-    <li><a href="/store.html?domain=demo-store-36.com">Demo Store 36 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-37.com">Demo Store 37 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-38.com">Demo Store 38 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-39.com">Demo Store 39 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-40.com">Demo Store 40 – Conversion Audit</a></li>
-
-    <li><a href="/store.html?domain=demo-store-41.com">Demo Store 41 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-42.com">Demo Store 42 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-43.com">Demo Store 43 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-44.com">Demo Store 44 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-45.com">Demo Store 45 – Conversion Audit</a></li>
-
-    <li><a href="/store.html?domain=demo-store-46.com">Demo Store 46 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-47.com">Demo Store 47 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-48.com">Demo Store 48 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-49.com">Demo Store 49 – Conversion Audit</a></li>
-    <li><a href="/store.html?domain=demo-store-50.com">Demo Store 50 – Conversion Audit</a></li>
-
-  </ul>
-</div>
-
-<!-- MAIN APP -->
-
-<div class="box">
-
-<h1>Find hidden revenue leaks in your store</h1>
-
-<p class="sub">
-AI-powered conversion analysis in under 60 seconds
-</p>
-
-<p class="trust">
-Free scan • No signup • Instant results
-</p>
-
-<form id="scanForm">
-  <input type="text" id="url" placeholder="Enter your store URL" required />
-  <input type="email" id="email" placeholder="Enter your email" required />
-  <button type="submit">Analyze My Store</button>
-</form>
-
-<p id="status"></p>
+  <div class="proof">
+    Most stores lose 20–40% of revenue due to hidden conversion leaks.
+  </div>
 
 </div>
 
@@ -232,17 +153,16 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     url = "https://" + url;
   }
 
-  document.getElementById("status").innerText = "Analyzing your store...";
+  document.getElementById("status").innerText = "Scanning your store...";
 
   try {
-    const res = await fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
+    await fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url, email })
     });
 
-    const html = await res.text();
-    document.body.innerHTML = html;
+    window.location.href = "/success";
 
   } catch (err) {
     document.getElementById("status").innerText = "Something went wrong.";
