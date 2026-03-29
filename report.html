@@ -1,16 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Store Report – Atom Foundry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
+      background:#0f172a;
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+    }
+
+    .container {
+      max-width:600px;
+      width:100%;
+      padding:20px;
+      text-align:center;
+    }
+
+    .card {
+      background:#1e293b;
+      padding:20px;
+      border-radius:16px;
+      margin-top:16px;
+      border:1px solid #334155;
+    }
+
+    .score {
+      font-size:42px;
+      font-weight:800;
+      margin-top:10px;
+    }
+
+    .red {
+      border-color:#ef4444;
+    }
+
+    .green {
+      border-color:#22c55e;
+    }
+
+    .cta {
+      display:block;
+      margin-top:24px;
+      padding:16px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#ff7a18,#ff5a00);
+      color:white;
+      text-decoration:none;
+      font-weight:700;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div id="app">Loading report...</div>
+</div>
+
 <script>
 const params = new URLSearchParams(window.location.search);
 const domain = params.get("domain");
 
-if (!domain) {
-  document.getElementById("app").innerText = "Missing domain";
+const app = document.getElementById("app");
+
+if (!app) {
+  console.error("Missing #app element");
+} else if (!domain) {
+  app.innerText = "Missing domain";
 } else {
 
   fetch(`https://n8n-production-0a8f.up.railway.app/webhook/get-report?domain=${domain}`)
     .then(res => res.json())
     .then(data => {
 
-      document.getElementById("app").innerHTML = `
+      if (!data || !data.score) {
+        app.innerText = "No data found";
+        return;
+      }
+
+      app.innerHTML = `
         <h1>${domain}</h1>
 
         <div class="card">
@@ -19,13 +95,13 @@ if (!domain) {
         </div>
 
         <div class="card red">
-          <strong>Main Leak:</strong><br>
-          ${data.main_leak}
+          <strong>Main Leak:</strong><br><br>
+          ${data.main_leak || "N/A"}
         </div>
 
         <div class="card green">
-          <strong>Quick Fix:</strong><br>
-          ${data.quick_fix}
+          <strong>Quick Fix:</strong><br><br>
+          ${data.quick_fix || "N/A"}
         </div>
 
         <a href="/audit" class="cta">
@@ -35,8 +111,11 @@ if (!domain) {
     })
     .catch((err) => {
       console.error(err);
-      document.getElementById("app").innerText = "Error loading report";
+      app.innerText = "Error loading report";
     });
 
 }
 </script>
+
+</body>
+</html>
