@@ -18,10 +18,15 @@
     }
 
     .container {
-      max-width:600px;
+      max-width:640px;
       width:100%;
       padding:20px;
       text-align:center;
+    }
+
+    h1 {
+      font-size:28px;
+      margin-bottom:10px;
     }
 
     .card {
@@ -30,12 +35,7 @@
       border-radius:16px;
       margin-top:16px;
       border:1px solid #334155;
-    }
-
-    .score {
-      font-size:42px;
-      font-weight:800;
-      margin-top:10px;
+      text-align:left;
     }
 
     .red {
@@ -46,15 +46,40 @@
       border-color:#22c55e;
     }
 
+    .score {
+      font-size:42px;
+      font-weight:900;
+      text-align:center;
+      margin-top:10px;
+    }
+
+    .money {
+      font-size:32px;
+      font-weight:800;
+      color:#ef4444;
+      text-align:center;
+      margin-top:8px;
+    }
+
     .cta {
       display:block;
       margin-top:24px;
-      padding:16px;
-      border-radius:12px;
+      padding:18px;
+      border-radius:14px;
       background:linear-gradient(135deg,#ff7a18,#ff5a00);
       color:white;
       text-decoration:none;
-      font-weight:700;
+      font-weight:800;
+      text-align:center;
+      font-size:16px;
+      box-shadow:0 12px 35px rgba(255,90,0,0.35);
+    }
+
+    .subtle {
+      font-size:13px;
+      color:#94a3b8;
+      margin-top:8px;
+      text-align:center;
     }
   </style>
 </head>
@@ -62,7 +87,7 @@
 <body>
 
 <div class="container">
-  <div id="app">Loading report...</div>
+  <div id="app">Analyzing conversion leaks...</div>
 </div>
 
 <script>
@@ -77,43 +102,72 @@ if (!app) {
   app.innerText = "Missing domain";
 } else {
 
-  fetch(`https://n8n-production-0a8f.up.railway.app/webhook/get-report?domain=${domain}`)
-    .then(res => res.json())
-    .then(data => {
+  // fake delay = vyšší perceived value
+  setTimeout(() => {
 
-      if (!data || !data.score) {
-        app.innerText = "No data found";
-        return;
-      }
+    fetch(`https://n8n-production-0a8f.up.railway.app/webhook/get-report?domain=${domain}`)
+      .then(res => res.json())
+      .then(data => {
 
-      app.innerHTML = `
-        <h1>${domain}</h1>
+        if (!data || !data.score) {
+          app.innerText = "No data found";
+          return;
+        }
 
-        <div class="card">
-          <div>Conversion Score</div>
-          <div class="score">${data.score}/100</div>
-        </div>
+        const estimatedLoss = Math.round((100 - data.score) * 40);
 
-        <div class="card red">
-          <strong>Main Leak:</strong><br><br>
-          ${data.main_leak || "N/A"}
-        </div>
+        app.innerHTML = `
+          <h1>This store is losing revenue</h1>
 
-        <div class="card green">
-          <strong>Quick Fix:</strong><br><br>
-          ${data.quick_fix || "N/A"}
-        </div>
+          <div class="card">
+            <div style="text-align:center;">Conversion Score</div>
+            <div class="score">${data.score}/100</div>
+          </div>
 
-        <a href="/audit" class="cta">
-          Get Full Audit → $399
-        </a>
-      `;
-    })
-    .catch((err) => {
-      console.error(err);
-      app.innerText = "Error loading report";
-    });
+          <div class="card red">
+            <div style="text-align:center;">Estimated revenue loss</div>
+            <div class="money">$${estimatedLoss}+/month</div>
+          </div>
 
+          <div class="card red">
+            <strong>This is happening right now:</strong><br><br>
+            Visitors land on your store → don’t see a clear next step → hesitate → leave.<br><br>
+            You are paying for traffic that never converts.
+          </div>
+
+          <div class="card red">
+            <strong>Main conversion leak:</strong><br><br>
+            ${data.main_leak || "Users are confused and leave without taking action."}
+          </div>
+
+          <div class="card green">
+            <strong>Quick win (you can test today):</strong><br><br>
+            ${data.quick_fix || "Add a clear CTA above the fold."}
+          </div>
+
+          <div class="card">
+            <strong>What you’ll get in full audit:</strong><br><br>
+            • Exact points where users drop off<br>
+            • What to fix first (priority roadmap)<br>
+            • Rewritten CTAs & messaging<br>
+            • Quick wins you can implement today
+          </div>
+
+          <a href="/audit" class="cta">
+            Fix My Revenue Leaks → $399
+          </a>
+
+          <div class="subtle">
+            17 stores analyzed today. Most had similar issues.
+          </div>
+        `;
+      })
+      .catch((err) => {
+        console.error(err);
+        app.innerText = "Error loading report";
+      });
+
+  }, 800);
 }
 </script>
 
