@@ -201,22 +201,17 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     url = "https://" + url;
   }
 
-  document.getElementById("status").innerText = "Scanning your store...";
+document.getElementById("status").innerText = "Scanning your store...";
 
-  try {
-    await fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, email })
-    });
+try {
+  fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url, email })
+  });
 
-    window.location.href = "/success";
+  window.location.href = "/success";
 
-  } catch (err) {
-    document.getElementById("status").innerText = "Something went wrong.";
-  }
-});
-</script>
-
-</body>
-</html>
+} catch (err) {
+  document.getElementById("status").innerText = "Something went wrong.";
+}
