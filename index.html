@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -137,7 +136,6 @@
         padding:22px;
       }
     }
-
   </style>
 </head>
 
@@ -191,7 +189,7 @@
 </div>
 
 <script>
-document.getElementById("scanForm").addEventListener("submit", async (e) => {
+document.getElementById("scanForm").addEventListener("submit", (e) => {
   e.preventDefault();
 
   let url = document.getElementById("url").value.trim();
@@ -201,17 +199,21 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     url = "https://" + url;
   }
 
-document.getElementById("status").innerText = "Scanning your store...";
+  document.getElementById("status").innerText = "Scanning your store...";
 
-try {
   fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url, email })
+  })
+  .then(() => {
+    window.location.href = "/success";
+  })
+  .catch(() => {
+    document.getElementById("status").innerText = "Something went wrong.";
   });
+});
+</script>
 
-  window.location.href = "/success";
-
-} catch (err) {
-  document.getElementById("status").innerText = "Something went wrong.";
-}
+</body>
+</html>
