@@ -189,7 +189,7 @@
 </div>
 
 <script>
-document.getElementById("scanForm").addEventListener("submit", (e) => {
+document.getElementById("scanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   let url = document.getElementById("url").value.trim();
@@ -201,17 +201,27 @@ document.getElementById("scanForm").addEventListener("submit", (e) => {
 
   document.getElementById("status").innerText = "Scanning your store...";
 
-  fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url, email })
-  })
-  .then(() => {
+  try {
+    const res = await fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url, email })
+    });
+
+    const data = await res.json();
+
+    // 🔥 LIMIT → redirect na audit
+    if (data.redirect) {
+      window.location.href = data.redirect;
+      return;
+    }
+
+    // normální flow
     window.location.href = "/success";
-  })
-  .catch(() => {
+
+  } catch (err) {
     document.getElementById("status").innerText = "Something went wrong.";
-  });
+  }
 });
 </script>
 
