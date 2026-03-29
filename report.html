@@ -11,75 +11,94 @@
       font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
       background:#0f172a;
       color:white;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      min-height:100vh;
     }
 
     .container {
       max-width:640px;
       width:100%;
-      padding:20px;
+      margin:0 auto;
+      padding:40px 16px;
       text-align:center;
     }
 
     h1 {
-      font-size:28px;
+      font-size:24px;
       margin-bottom:10px;
     }
 
     .card {
       background:#1e293b;
-      padding:20px;
-      border-radius:16px;
-      margin-top:16px;
+      padding:16px;
+      border-radius:14px;
+      margin-top:14px;
       border:1px solid #334155;
       text-align:left;
     }
 
     .red {
       border-color:#ef4444;
+      background:#2a1a1a;
     }
 
     .green {
       border-color:#22c55e;
+      background:#162a1f;
+    }
+
+    .highlight {
+      text-align:center;
     }
 
     .score {
-      font-size:42px;
+      font-size:36px;
       font-weight:900;
-      text-align:center;
-      margin-top:10px;
+      margin-top:6px;
     }
 
     .money {
-      font-size:32px;
-      font-weight:800;
+      font-size:28px;
+      font-weight:900;
       color:#ef4444;
-      text-align:center;
-      margin-top:8px;
+      margin-top:6px;
     }
 
     .cta {
       display:block;
-      margin-top:24px;
+      margin-top:22px;
       padding:18px;
       border-radius:14px;
       background:linear-gradient(135deg,#ff7a18,#ff5a00);
       color:white;
       text-decoration:none;
-      font-weight:800;
+      font-weight:900;
       text-align:center;
       font-size:16px;
-      box-shadow:0 12px 35px rgba(255,90,0,0.35);
+      border:1px solid #ff3b30;
+      box-shadow:0 14px 40px rgba(255,90,0,0.35);
     }
 
     .subtle {
-      font-size:13px;
+      font-size:12px;
       color:#94a3b8;
-      margin-top:8px;
+      margin-top:10px;
       text-align:center;
+    }
+
+    .small {
+      font-size:13px;
+      color:#cbd5f5;
+    }
+
+    .warning {
+      color:#f87171;
+      font-size:13px;
+      margin-top:6px;
+    }
+
+    @media (max-width:600px) {
+      h1 {
+        font-size:22px;
+      }
     }
   </style>
 </head>
@@ -121,21 +140,24 @@ if (!app) {
         const estimatedLoss = formatMoney(estimatedLossRaw);
 
         app.innerHTML = `
-          <h1>This store is losing revenue</h1>
+          <h1>Free scan limit reached</h1>
+          <div class="subtle">You can scan this store again in 30 days</div>
+
+          <div class="card red highlight">
+            <div class="small">Estimated revenue loss</div>
+            <div class="money">$${estimatedLoss}+ / month</div>
+            <div class="warning">This is happening right now</div>
+          </div>
+
+          <div class="card highlight">
+            <div class="small">Conversion Score</div>
+            <div class="score">${data.score}/100</div>
+            <div class="warning">Below high-performing stores (85+)</div>
+          </div>
 
           <div class="card">
-            <div style="text-align:center;">Conversion Score</div>
-            <div class="score">${data.score}/100</div>
-          </div>
-
-          <div class="card red">
-            <div style="text-align:center;">Estimated revenue loss</div>
-            <div class="money">$${estimatedLoss}+ / month</div>
-          </div>
-
-          <div class="card red">
-            <strong>This is happening right now:</strong><br><br>
-            Visitors land on your store → don’t see a clear next step → hesitate → leave.<br><br>
+            <strong>What’s happening:</strong><br><br>
+            Visitors land → don’t see what to do → hesitate → leave.<br><br>
             You are paying for traffic that never converts.
           </div>
 
@@ -147,21 +169,27 @@ if (!app) {
           <div class="card green">
             <strong>Quick win (you can test today):</strong><br><br>
             ${data.quick_fix || "Add a clear CTA above the fold."}
+            <br><br>
+            <span class="small">This alone can improve conversions</span>
           </div>
 
           <div class="card">
-            <strong>What you’ll get in full audit:</strong><br><br>
-            • Exact points where users drop off (critical leaks)<br>
-            • Priority fix roadmap (what to fix first)<br>
-            • Rewritten CTAs & messaging (conversion-focused)<br>
-            • Immediate action steps you can implement today
+            <strong>More issues detected:</strong><br><br>
+            → Conversion blockers across your funnel<br>
+            → Trust & UX gaps reducing sales<br>
+            → Missed revenue opportunities<br><br>
+            <span class="warning">Full analysis not shown here</span>
           </div>
 
           <a href="/audit" class="cta">
-            Fix My Revenue Leaks → $399
+            Unlock Full Conversion Audit → $399
           </a>
 
           <div class="subtle">
+            Full breakdown of all revenue leaks + exact fixes
+          </div>
+
+          <div class="subtle" style="margin-top:12px;">
             17 stores analyzed today. Most had similar issues.
           </div>
         `;
