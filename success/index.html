@@ -144,7 +144,7 @@
     </div>
 
     <!-- CTA -->
-    <a href="https://atomfoundry.dev/audit" class="cta">
+    <a id="ctaLink" href="#" class="cta">
       Fix My Revenue Leaks → $399
     </a>
 
@@ -153,6 +153,17 @@
     </div>
 
   </div>
+
+  <!-- 🔥 STRIPE + EMAIL PREFILL -->
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email") || "";
+
+    const stripeLink = "https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03";
+
+    document.getElementById("ctaLink").href =
+      stripeLink + (email ? `?prefilled_email=${email}` : "");
+  </script>
 
 </body>
 </html>
