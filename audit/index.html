@@ -85,11 +85,8 @@ h1 { font-size:20px; margin-bottom:4px; }
 
 console.log("AUDIT INDEX LOADED");
 
-const path = window.location.pathname;
-
-// ✅ FIX: token z URL (/audit/xxx)
-const path = window.location.pathname;
-const token = path.split("/").pop();
+// token z URL
+const token = window.location.pathname.split("/").pop();
 
 if (!token) {
   console.error("No token found");
@@ -105,12 +102,13 @@ const res = await fetch(
 const data = await res.json();
 const report = data.report_json || data;
 
-// fallback pro naming
+// ✅ jednotný zdroj
+const score = report.score || data.score || 0;
 const mainLeak = report.main_leak || report.main_leak_1 || "";
 const quickFix = report.quick_fix || report.quick_fix_1 || "";
 
-document.getElementById("storeName").innerText = data.store_domain || data.domain || "";
-document.getElementById("score").innerText = `${data.score || 0}/100`;
+document.getElementById("storeName").innerText = data.domain || "";
+document.getElementById("score").innerText = `${score}/100`;
 document.getElementById("main").innerText = mainLeak;
 document.getElementById("fix").innerText = quickFix;
 
