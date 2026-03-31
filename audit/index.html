@@ -25,7 +25,6 @@ h1 { font-size:20px; margin-bottom:4px; }
 .alert { margin-top:16px; padding:14px; background:#fef2f2; border:1px solid #fecaca; border-radius:14px; font-weight:600; }
 .money { margin-top:16px; padding:18px; border-radius:16px; background:#fff1f2; border:1px solid #fecaca; text-align:center; }
 .money strong { font-size:28px; color:#dc2626; display:block; }
-.money span { display:block; font-size:13px; color:#64748b; margin-top:6px; }
 .daily { margin-top:10px; font-size:14px; font-weight:700; color:#dc2626; }
 .card { padding:16px; border-radius:16px; margin-top:16px; background:white; border:1px solid #e2e8f0; }
 .card-problem { background:#fff1f2; }
@@ -34,18 +33,10 @@ h1 { font-size:20px; margin-bottom:4px; }
 .compare-box { padding:12px; border-radius:12px; margin-top:8px; }
 .before { background:#fff1f2; }
 .after { background:#f0fdf4; }
-.value-list { list-style:none; padding-left:0; }
-.value-list li { margin-bottom:12px; }
-.value-list strong { display:block; }
 .leak-item { margin-top:10px; padding:12px; border-radius:12px; background:#fff1f2; }
 .plan-item { margin-top:10px; padding:12px; border-radius:12px; background:#f0fdf4; }
 .cta-box { margin-top:28px; padding:18px; background:white; border-radius:18px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.06); }
 .cta { display:block; margin-top:12px; padding:16px; background:linear-gradient(135deg,#059669,#047857); color:white; border-radius:14px; font-weight:800; font-size:16px; text-decoration:none; }
-.download { margin-top:10px; width:100%; padding:14px; border:none; border-radius:12px; background:#0f172a; color:white; }
-.small { font-size:12px; color:#94a3b8; margin-top:10px; text-align:center; line-height:1.6; }
-.benefits { margin-top:12px; font-size:13px; color:#334155; text-align:left; }
-.print-cover { display:none; }
-.print-footer { display:none; }
 </style>
 </head>
 
@@ -78,49 +69,105 @@ h1 { font-size:20px; margin-bottom:4px; }
 <p id="fix"></p>
 </div>
 
+<!-- 🔥 LEAKS -->
+<div class="card">
+<div class="section-title">Top Conversion Leaks</div>
+<div id="leaks"></div>
+</div>
+
+<!-- 🔥 BEFORE AFTER -->
+<div class="card">
+<div class="section-title">Before vs After</div>
+<div class="compare-box before" id="before"></div>
+<div class="compare-box after" id="after"></div>
+</div>
+
+<!-- 🔥 PLAN -->
+<div class="card">
+<div class="section-title">Revenue Growth Plan</div>
+<div id="plan"></div>
+</div>
+
+<!-- 🔥 MONITORING CTA -->
+<div class="cta-box">
+<div class="section-title">Continuous Monitoring</div>
+
+<p style="font-size:14px;color:#334155;">
+Your store is losing revenue every day.  
+We monitor it continuously and alert you when new leaks appear.
+</p>
+
+<ul style="text-align:left;font-size:14px;color:#334155;line-height:1.6;">
+<li>✔ Weekly automated conversion scans</li>
+<li>✔ New revenue leaks detection</li>
+<li>✔ AI-generated fixes</li>
+<li>✔ Conversion score tracking</li>
+<li>✔ Priority alerts (high-impact issues)</li>
+</ul>
+
+<a href="#" class="cta">
+Start Conversion Monitoring — $89/month
+</a>
+
+</div>
+
 </div>
 
 <script>
 (async function(){
 
-console.log("AUDIT INDEX LOADED");
-
-// token z URL
 const token = window.location.pathname.split("/").pop();
 
-if (!token) {
-  console.error("No token found");
-  return;
-}
+if (!token) return;
 
-try {
-
-const res = await fetch(
-`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`
-);
-
+const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 const report = data.report_json || data;
 
-// ✅ jednotný zdroj
 const score = report.score || data.score || 0;
-const mainLeak = report.main_leak || report.main_leak_1 || "";
-const quickFix = report.quick_fix || report.quick_fix_1 || "";
 
 document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = `${score}/100`;
-document.getElementById("main").innerText = mainLeak;
-document.getElementById("fix").innerText = quickFix;
 
-const low = 2000;
-const high = 8000;
+document.getElementById("main").innerText =
+report.main_leak || "";
+
+document.getElementById("fix").innerText =
+report.quick_fix || "";
 
 document.getElementById("daily").innerText =
-`Estimated daily loss: ~$${Math.round(low/30)}–$${Math.round(high/30)}`;
+`Estimated daily loss: ~$67–$267`;
 
-} catch(e){
-  console.error(e);
-  document.getElementById("score").innerText = "Error";
+
+// 🔥 leaks
+const leaks = document.getElementById("leaks");
+if (report.leaks?.length) {
+  leaks.innerHTML = report.leaks.map(l => `
+    <div class="leak-item">
+      <strong>${l.title}</strong>
+      <p>${l.impact}</p>
+      <div><b>Fix:</b> ${l.fix}</div>
+    </div>
+  `).join("");
+}
+
+
+// 🔥 before after
+if (report.before_after) {
+  document.getElementById("before").innerText = report.before_after.before || "";
+  document.getElementById("after").innerText = report.before_after.after || "";
+}
+
+
+// 🔥 plan
+const plan = document.getElementById("plan");
+if (report.revenue_plan?.length) {
+  plan.innerHTML = report.revenue_plan.map(p => `
+    <div class="plan-item">
+      <strong>${p.fix}</strong>
+      <p>${p.expected_impact}</p>
+    </div>
+  `).join("");
 }
 
 })();
