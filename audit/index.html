@@ -4,42 +4,158 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Conversion Audit Report</title>
+<title>AI Conversion Intelligence Report</title>
 
 <style>
+
+/* ===== BASE ===== */
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial;
-  background: linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%);
-  color: #0f172a;
-  margin: 0;
-  padding: 14px;
+  background:#0A0A0A;
+  color:#ffffff;
+  margin:0;
+  padding:16px;
 }
-.container { max-width: 720px; margin: auto; }
-.hero { background:white; padding:18px; border-radius:18px; box-shadow:0 20px 60px rgba(15,23,42,0.08); }
 
-h1 { font-size:20px; margin-bottom:4px; }
-.store { font-size:16px; color:#64748b; margin-bottom:8px; }
+.container {
+  max-width:640px;
+  margin:auto;
+}
 
-.score { font-size:52px; font-weight:900; color:#16a34a; }
-.bad { color:#dc2626; font-weight:700; font-size:16px; margin-top:4px; }
-.meta { margin-top:10px; font-size:13px; color:#64748b; }
+/* ===== CARD ===== */
+.card {
+  background:#111;
+  border:1px solid #222;
+  border-radius:16px;
+  padding:20px;
+  margin-top:16px;
+}
 
-.metrics { display:flex; gap:10px; margin-top:10px; font-size:12px; }
-.metric { background:#f1f5f9; padding:6px 10px; border-radius:10px; }
+/* ===== TYPO ===== */
+h1 {
+  font-size:18px;
+  color:#888;
+  margin:0 0 6px 0;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
 
-.alert { margin-top:16px; padding:14px; background:#fef2f2; border:1px solid #fecaca; border-radius:14px; font-weight:600; }
+.store {
+  font-size:16px;
+  color:#ccc;
+  margin-bottom:10px;
+}
 
-.money { margin-top:16px; padding:18px; border-radius:16px; background:#fff1f2; border:1px solid #fecaca; text-align:center; }
-.money strong { font-size:28px; color:#dc2626; display:block; }
+.score {
+  font-size:56px;
+  font-weight:900;
+  color:#22c55e;
+}
 
-.card { padding:16px; border-radius:16px; margin-top:16px; background:white; border:1px solid #e2e8f0; }
-.section-title { font-weight:700; font-size:12px; color:#64748b; text-transform:uppercase; margin-bottom:6px; }
+.sub {
+  color:#999;
+  margin-top:6px;
+}
 
-.issue { margin-top:10px; padding:12px; border-radius:12px; background:#fff1f2; }
-.badge { font-size:11px; padding:3px 6px; border-radius:6px; margin-right:6px; }
+.section-title {
+  font-size:11px;
+  text-transform:uppercase;
+  color:#666;
+  margin-bottom:6px;
+  letter-spacing:1px;
+}
 
-.cta-box { margin-top:28px; padding:18px; background:white; border-radius:18px; text-align:center; }
-.cta { display:block; margin-top:12px; padding:16px; background:linear-gradient(135deg,#059669,#047857); color:white; border-radius:14px; font-weight:800; text-decoration:none; }
+/* ===== ALERT ===== */
+.alert {
+  background:#1a0f0f;
+  border:1px solid #7f1d1d;
+  border-radius:14px;
+  padding:14px;
+  margin-top:16px;
+  color:#fca5a5;
+  font-weight:600;
+}
+
+/* ===== MONEY ===== */
+.money {
+  text-align:center;
+  padding:20px;
+}
+
+.money strong {
+  font-size:32px;
+  color:#ef4444;
+  display:block;
+}
+
+.money small {
+  color:#888;
+}
+
+/* ===== FIX ===== */
+.highlight {
+  background:#1f1a0a;
+  border:1px solid #92400e;
+  border-radius:14px;
+  padding:16px;
+}
+
+/* ===== ISSUE ===== */
+.issue {
+  border-top:1px solid #222;
+  padding:12px 0;
+}
+
+.badge {
+  font-size:10px;
+  padding:4px 6px;
+  border-radius:6px;
+  margin-right:6px;
+}
+
+/* ===== CTA ===== */
+.cta-box {
+  text-align:center;
+}
+
+.cta {
+  display:block;
+  margin-top:16px;
+  padding:16px;
+  background:white;
+  color:black;
+  font-weight:800;
+  border-radius:10px;
+  text-decoration:none;
+}
+
+/* ===== PDF BUTTON ===== */
+.pdf-btn {
+  display:block;
+  margin-top:12px;
+  padding:12px;
+  border:1px solid #333;
+  border-radius:10px;
+  text-align:center;
+  color:#aaa;
+  text-decoration:none;
+}
+
+/* ===== PRINT ===== */
+@media print {
+  body {
+    background:white;
+    color:black;
+  }
+  .card {
+    border:1px solid #ddd;
+    page-break-inside:avoid;
+  }
+  .cta, .pdf-btn {
+    display:none;
+  }
+}
+
 </style>
 </head>
 
@@ -47,75 +163,80 @@ h1 { font-size:20px; margin-bottom:4px; }
 
 <div class="container">
 
-<div class="hero">
-<h1>Store Conversion Audit</h1>
-<div id="storeName" class="store"></div>
-<div class="score" id="score"></div>
+<!-- HERO -->
+<div class="card">
+  <h1>AI Conversion Intelligence</h1>
+  <div id="storeName" class="store"></div>
 
-<div class="metrics">
-<div class="metric">Clarity: <span id="clarity"></span></div>
-<div class="metric">Trust: <span id="trust"></span></div>
-<div class="metric">Friction: <span id="friction"></span></div>
+  <div class="score" id="score"></div>
+  <div class="sub">Revenue leaking detected</div>
+
+  <div class="sub" style="margin-top:10px;">
+    You are losing revenue every single day
+  </div>
 </div>
 
-<div class="meta" id="summary"></div>
-</div>
-
+<!-- ALERT -->
 <div class="alert">
-⚠️ Visitors are leaving without buying — revenue is being lost right now
+Your store is actively leaking revenue right now. This is not theoretical.
 </div>
 
-<div class="money">
-<strong id="loss"></strong>
+<!-- MONEY -->
+<div class="card money">
+  <div class="section-title">Estimated Monthly Revenue Loss</div>
+  <strong id="loss"></strong>
+  <small id="yearLoss"></small>
 </div>
 
+<!-- TOP FIX -->
+<div class="highlight">
+  <div class="section-title">🔥 Fastest Revenue Recovery Lever</div>
+  <p id="topfix"></p>
+</div>
+
+<!-- MAIN -->
 <div class="card">
-<div class="section-title">Main Revenue Leak</div>
-<p id="main"></p>
+  <div class="section-title">Main Revenue Leak</div>
+  <p id="main"></p>
 </div>
 
+<!-- QUICK FIX -->
 <div class="card">
-<div class="section-title">Quick Fix</div>
-<p id="fix"></p>
+  <div class="section-title">Recovery Action</div>
+  <p id="fix"></p>
 </div>
 
+<!-- ISSUES -->
 <div class="card">
-<div class="section-title">Priority Issues</div>
-<div id="issues"></div>
+  <div class="section-title">Revenue Leaks Detected</div>
+  <div id="issues"></div>
 </div>
 
+<!-- PLAN -->
 <div class="card">
-<div class="section-title">Implementation Steps</div>
-<div id="implementation"></div>
+  <div class="section-title">Revenue Recovery Plan</div>
+  <div id="plan"></div>
 </div>
 
-<div class="card">
-<div class="section-title">Before vs After</div>
-<p id="before"></p>
-<p id="after"></p>
-</div>
+<!-- CTA -->
+<div class="card cta-box">
 
-<div class="card">
-<div class="section-title">Revenue Plan</div>
-<div id="plan"></div>
-</div>
+  <div class="section-title">Continuous Monitoring</div>
 
-<div class="cta-box">
-<div class="section-title">Continuous Monitoring</div>
+  <p><b>New revenue leaks appear every week.</b></p>
 
-<p>Your store is losing revenue every day.</p>
+  <div class="alert" style="margin-top:10px;">
+  Without monitoring → you keep losing revenue every month
+  </div>
 
-<ul style="text-align:left;">
-<li>✔ Weekly scans</li>
-<li>✔ New leaks detection</li>
-<li>✔ AI fixes</li>
-<li>✔ Score tracking</li>
-<li>✔ Alerts</li>
-</ul>
+  <a href="#" class="cta">
+    Stop Losing Revenue → Activate Monitoring ($89/mo)
+  </a>
 
-<a href="#" class="cta">
-Start Conversion Monitoring — $89/month
-</a>
+  <a href="#" class="pdf-btn" onclick="window.print()">
+    Download Printable PDF
+  </a>
+
 </div>
 
 </div>
@@ -129,126 +250,56 @@ if (!token) return;
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 
-let report = null;
+let report = data.report_json || data;
+const issues = report.issues || [];
 
-// 🔥 FIX: správný parsing
-if (data.text) {
-  try {
-    let clean = data.text
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-
-    report = JSON.parse(clean);
-
-  } catch (e) {
-    console.error("JSON parse error", e);
-  }
-}
-
-// fallback (když budeš později ukládat správně do DB)
-if (!report && data.report_json) {
-  report = data.report_json;
-}
-
-if (!report) {
-  console.error("No report data");
-  return;
-}
-
-// 🔥 SCORING ENGINE
+// SCORE
 function calculateScore(issues) {
   let score = 100;
-
   issues.forEach(i => {
     if (i.severity === "critical") score -= 15;
     if (i.severity === "medium") score -= 8;
     if (i.severity === "low") score -= 3;
-    if (i.quick_win) score += 2;
   });
-
   return Math.max(0, Math.min(100, Math.round(score)));
 }
 
-// 🔥 METRICS FALLBACK
-function calculateMetrics(issues) {
-  let clarity = 100;
-  let trust = 100;
-  let friction = 100;
-
-  issues.forEach(i => {
-    const t = (i.title || "").toLowerCase();
-
-    if (t.includes("headline") || t.includes("copy")) clarity -= 10;
-    if (t.includes("trust") || t.includes("badge")) trust -= 12;
-    if (t.includes("checkout") || t.includes("cta")) friction -= 10;
-  });
-
-  return {
-    clarity: Math.max(0, clarity),
-    trust: Math.max(0, trust),
-    friction: Math.max(0, friction)
-  };
-}
-
-// 🔥 DATA
-const issues = report.issues || [];
 const score = calculateScore(issues);
-const metrics = report.metrics || calculateMetrics(issues);
 
 // BASIC
 document.getElementById("storeName").innerText = data.domain || "";
-document.getElementById("score").innerText = `${score}/100`;
+document.getElementById("score").innerText = score + "/100";
 document.getElementById("main").innerText = report.main_leak || "";
 document.getElementById("fix").innerText = report.quick_fix || "";
 
-// METRICS
-document.getElementById("clarity").innerText = metrics.clarity || "-";
-document.getElementById("trust").innerText = metrics.trust || "-";
-document.getElementById("friction").innerText = metrics.friction || "-";
+// MONEY
+const loss = report.revenue_calculation?.estimated_loss || "$5,000";
+document.getElementById("loss").innerText = loss;
 
-// SUMMARY
-document.getElementById("summary").innerText =
-`${issues.length} issues • ${report.summary?.expected_cr_uplift || "N/A"}`;
+// yearly calc (simple)
+const num = parseInt(loss.replace(/[^0-9]/g,'')) || 5000;
+document.getElementById("yearLoss").innerText = "≈ $" + (num * 12).toLocaleString() + " / year";
 
-// LOSS
-document.getElementById("loss").innerText =
-report.revenue_calculation?.estimated_loss || "$2,000–$8,000";
+// TOP FIX
+const top = issues.find(i => i.severity === "critical");
+document.getElementById("topfix").innerText = top?.fix || "";
 
 // ISSUES
 const severityColor = {
-  critical: "#dc2626",
+  critical: "#ef4444",
   medium: "#f59e0b",
-  low: "#16a34a"
+  low: "#22c55e"
 };
 
-const issuesEl = document.getElementById("issues");
-
-issuesEl.innerHTML = issues.map(i => `
+document.getElementById("issues").innerHTML =
+issues.map(i => `
   <div class="issue">
-    <strong>#${i.id} ${i.title}</strong>
-
-    <div>
-      <span class="badge" style="background:${severityColor[i.severity]}20;color:${severityColor[i.severity]}">
-        ${i.severity}
-      </span>
-      <span class="badge">${i.impact}</span>
-      <span class="badge">${i.effort}</span>
-    </div>
-
+    <strong>${i.title}</strong><br>
+    <span class="badge" style="background:${severityColor[i.severity]}20;color:${severityColor[i.severity]}">${i.severity}</span>
     <p>${i.description}</p>
-    <p><b>Fix:</b> ${i.fix}</p>
-    <p><b>Do this:</b> ${i.exact_change}</p>
+    <p><b>Action:</b> ${i.fix}</p>
   </div>
 `).join("");
-
-// IMPLEMENTATION
-document.getElementById("implementation").innerHTML =
-(report.implementation || []).map(s => `<p>• ${s}</p>`).join("");
-
-// BEFORE AFTER
-document.getElementById("before").innerText = report.before_after?.before || "";
-document.getElementById("after").innerText = report.before_after?.after || "";
 
 // PLAN
 document.getElementById("plan").innerHTML =
