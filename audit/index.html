@@ -128,7 +128,21 @@ if (!token) return;
 
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
-const report = data.report_json || data;
+let report = data.report_json || data;
+
+// 🔥 FIX: parse pokud je to string
+if (typeof report === "string") {
+  try {
+    report = report
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    report = JSON.parse(report);
+  } catch (e) {
+    console.error("JSON parse error", e);
+  }
+}
 
 // BASIC
 document.getElementById("storeName").innerText = data.domain || "";
