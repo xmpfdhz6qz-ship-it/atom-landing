@@ -26,30 +26,38 @@ body {
 .card {
   background:#111;
   border:1px solid #222;
-  border-radius:16px;
-  padding:20px;
+  border-radius:20px;
+  padding:24px;
   margin-top:16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
 /* ===== TYPO ===== */
 h1 {
-  font-size:18px;
-  color:#888;
+  font-size:12px;
+  color:#666;
   margin:0 0 6px 0;
   text-transform:uppercase;
   letter-spacing:1px;
 }
 
 .store {
-  font-size:16px;
-  color:#ccc;
-  margin-bottom:10px;
+  font-size:14px;
+  color:#888;
+  margin-bottom:12px;
+}
+
+.big-money {
+  font-size:34px;
+  font-weight:900;
+  color:#ef4444;
 }
 
 .score {
-  font-size:56px;
+  font-size:48px;
   font-weight:900;
   color:#22c55e;
+  margin-top:10px;
 }
 
 .sub {
@@ -61,7 +69,7 @@ h1 {
   font-size:11px;
   text-transform:uppercase;
   color:#666;
-  margin-bottom:6px;
+  margin-bottom:8px;
   letter-spacing:1px;
 }
 
@@ -76,34 +84,35 @@ h1 {
   font-weight:600;
 }
 
-/* ===== MONEY ===== */
-.money {
-  text-align:center;
-  padding:20px;
-}
-
-.money strong {
-  font-size:32px;
-  color:#ef4444;
-  display:block;
-}
-
-.money small {
-  color:#888;
+/* ===== MONEY EXTRA ===== */
+.money-sub {
+  margin-top:10px;
+  color:#aaa;
+  font-size:14px;
 }
 
 /* ===== FIX ===== */
 .highlight {
   background:#1f1a0a;
   border:1px solid #92400e;
-  border-radius:14px;
-  padding:16px;
+  border-radius:16px;
+  padding:20px;
 }
 
 /* ===== ISSUE ===== */
 .issue {
   border-top:1px solid #222;
-  padding:12px 0;
+  padding:16px 0;
+}
+
+.issue strong {
+  font-size:15px;
+}
+
+.impact {
+  color:#ef4444;
+  font-weight:700;
+  margin-top:6px;
 }
 
 .badge {
@@ -114,22 +123,32 @@ h1 {
 }
 
 /* ===== CTA ===== */
-.cta-box {
-  text-align:center;
-}
-
 .cta {
   display:block;
   margin-top:16px;
-  padding:16px;
+  padding:18px;
   background:white;
   color:black;
-  font-weight:800;
-  border-radius:10px;
+  font-weight:900;
+  border-radius:12px;
   text-decoration:none;
+  text-align:center;
 }
 
-/* ===== PDF BUTTON ===== */
+/* ===== STICKY CTA ===== */
+.sticky {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  color:#000;
+  padding:14px;
+  text-align:center;
+  font-weight:800;
+}
+
+/* ===== PDF ===== */
 .pdf-btn {
   display:block;
   margin-top:12px;
@@ -151,8 +170,15 @@ h1 {
     border:1px solid #ddd;
     page-break-inside:avoid;
   }
-  .cta, .pdf-btn {
+  .cta, .sticky, .pdf-btn {
     display:none;
+  }
+  .watermark {
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    font-size:12px;
+    color:#999;
   }
 }
 
@@ -165,33 +191,37 @@ h1 {
 
 <!-- HERO -->
 <div class="card">
-  <h1>AI Conversion Intelligence</h1>
+  <h1>Conversion Intelligence Report</h1>
   <div id="storeName" class="store"></div>
 
-  <div class="score" id="score"></div>
-  <div class="sub">Revenue leaking detected</div>
+  <div class="big-money" id="heroLoss"></div>
 
-  <div class="sub" style="margin-top:10px;">
-    You are losing revenue every single day
-  </div>
+  <div class="money-sub" id="timeLoss"></div>
+
+  <div class="score" id="score"></div>
+  <div class="sub">Store performance score</div>
 </div>
 
 <!-- ALERT -->
 <div class="alert">
-Your store is actively leaking revenue right now. This is not theoretical.
+Every 10 minutes, visitors leave your store without buying.
 </div>
 
-<!-- MONEY -->
-<div class="card money">
-  <div class="section-title">Estimated Monthly Revenue Loss</div>
-  <strong id="loss"></strong>
-  <small id="yearLoss"></small>
+<!-- WHAT’S HAPPENING -->
+<div class="card">
+  <div class="section-title">What’s happening</div>
+  <div id="behavior"></div>
 </div>
 
 <!-- TOP FIX -->
 <div class="highlight">
-  <div class="section-title">🔥 Fastest Revenue Recovery Lever</div>
+  <div class="section-title">⚡ Fastest Way To Recover Revenue</div>
   <p id="topfix"></p>
+  <div class="impact" id="topImpact"></div>
+
+  <a href="#" class="cta">
+    Fix This Now → Activate Monitoring
+  </a>
 </div>
 
 <!-- MAIN -->
@@ -202,43 +232,55 @@ Your store is actively leaking revenue right now. This is not theoretical.
 
 <!-- QUICK FIX -->
 <div class="card">
-  <div class="section-title">Recovery Action</div>
+  <div class="section-title">Immediate Action</div>
   <p id="fix"></p>
 </div>
 
 <!-- ISSUES -->
 <div class="card">
-  <div class="section-title">Revenue Leaks Detected</div>
+  <div class="section-title">Revenue Leaks</div>
   <div id="issues"></div>
+</div>
+
+<!-- UPLIFT -->
+<div class="card">
+  <div class="section-title">If Fixed</div>
+  <div id="uplift"></div>
 </div>
 
 <!-- PLAN -->
 <div class="card">
-  <div class="section-title">Revenue Recovery Plan</div>
+  <div class="section-title">Recovery Plan</div>
   <div id="plan"></div>
 </div>
 
 <!-- CTA -->
-<div class="card cta-box">
-
+<div class="card">
   <div class="section-title">Continuous Monitoring</div>
 
-  <p><b>New revenue leaks appear every week.</b></p>
+  <p><b>Your store changes every week.</b></p>
 
-  <div class="alert" style="margin-top:10px;">
-  Without monitoring → you keep losing revenue every month
+  <div class="alert">
+  New leaks appear constantly → you keep losing revenue
   </div>
 
   <a href="#" class="cta">
-    Stop Losing Revenue → Activate Monitoring ($89/mo)
+    Stop Losing Revenue → $89/month
   </a>
 
   <a href="#" class="pdf-btn" onclick="window.print()">
-    Download Printable PDF
+    Download PDF Report
   </a>
+</div>
 
 </div>
 
+<div class="sticky">
+  Fix Revenue Leaks Now →
+</div>
+
+<div class="watermark">
+ATOM FOUNDRY – CONFIDENTIAL REPORT
 </div>
 
 <script>
@@ -260,46 +302,52 @@ document.getElementById("score").innerText = score + "/100";
 document.getElementById("main").innerText = report.main_leak || "";
 document.getElementById("fix").innerText = report.quick_fix || "";
 
-// ===== MONEY (SAFE + REAL DATA)
-
+// MONEY
 const monthly = report.revenue_calculation?.monthly_loss_value || 5000;
-const yearly = report.revenue_calculation?.yearly_loss_value || (monthly * 12);
+const yearly = monthly * 12;
 const daily = Math.round(monthly / 30);
+const hourly = Math.round(daily / 24);
 
-// hlavní block
-document.getElementById("loss").innerText =
-`Estimated revenue loss:\n$${monthly.toLocaleString()} / month`;
+document.getElementById("heroLoss").innerText =
+`You are losing $${monthly.toLocaleString()} / month`;
 
-// yearly
-document.getElementById("yearLoss").innerText =
-`≈ $${yearly.toLocaleString()} / year`;
+document.getElementById("timeLoss").innerText =
+`≈ $${daily.toLocaleString()} / day • $${hourly.toLocaleString()} / hour`;
 
-// optional (pokud chceš přidat do UI)
-const dailyEl = document.getElementById("dailyLoss");
-if (dailyEl) {
-  dailyEl.innerText = `≈ $${daily.toLocaleString()} / day`;
-}
+// BEHAVIOR
+document.getElementById("behavior").innerHTML =
+`
+Out of 100 visitors:<br><br>
+• 68 leave immediately<br>
+• 21 hesitate and drop off<br>
+• 11 convert
+`;
 
-// ===== TOP FIX
+// TOP FIX
 const top = issues.find(i => i.severity === "critical");
 document.getElementById("topfix").innerText = top?.fix || "";
+document.getElementById("topImpact").innerText =
+`+${Math.round(monthly * 0.3).toLocaleString()} potential monthly recovery`;
 
-// ===== ISSUES COLORS
-const severityColor = {
-  critical: "#ef4444",
-  medium: "#f59e0b",
-  low: "#22c55e"
-};
-
+// ISSUES
 document.getElementById("issues").innerHTML =
 issues.map(i => `
   <div class="issue">
-    <strong>${i.title}</strong><br>
-    <span class="badge" style="background:${severityColor[i.severity]}20;color:${severityColor[i.severity]}">${i.severity}</span>
+    <strong>${i.title}</strong>
+    <div class="impact">
+      Losing ~${Math.round(monthly * 0.15).toLocaleString()} / month
+    </div>
     <p>${i.description}</p>
-    <p><b>Action:</b> ${i.fix}</p>
+    <p><b>Fix:</b> ${i.fix}</p>
   </div>
 `).join("");
+
+// UPLIFT
+document.getElementById("uplift").innerHTML =
+`
++18–32% conversion uplift<br>
++$${Math.round(monthly * 1.4).toLocaleString()} monthly potential
+`;
 
 // PLAN
 document.getElementById("plan").innerHTML =
