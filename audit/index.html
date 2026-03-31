@@ -252,19 +252,7 @@ const data = await res.json();
 
 let report = data.report_json || data;
 const issues = report.issues || [];
-
-// SCORE
-function calculateScore(issues) {
-  let score = 100;
-  issues.forEach(i => {
-    if (i.severity === "critical") score -= 15;
-    if (i.severity === "medium") score -= 8;
-    if (i.severity === "low") score -= 3;
-  });
-  return Math.max(0, Math.min(100, Math.round(score)));
-}
-
-const score = calculateScore(issues);
+const score = report.score;
 
 // BASIC
 document.getElementById("storeName").innerText = data.domain || "";
