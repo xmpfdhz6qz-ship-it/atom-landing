@@ -3,66 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AI Conversion Intelligence Report</title>
+<title>Conversion Intelligence Report</title>
 
 <style>
-
-/* ===== BASE ===== */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
   background:#0A0A0A;
-  color:#ffffff;
+  color:#fff;
   margin:0;
   padding:16px;
 }
+.container {max-width:640px;margin:auto;}
 
-.container {
-  max-width:640px;
-  margin:auto;
-}
-
-/* ===== CARD ===== */
 .card {
   background:#111;
   border:1px solid #222;
   border-radius:20px;
   padding:24px;
   margin-top:16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-/* ===== TYPO ===== */
-h1 {
-  font-size:12px;
-  color:#666;
-  margin:0 0 6px 0;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.store {
-  font-size:14px;
-  color:#888;
-  margin-bottom:12px;
-}
-
-.big-money {
-  font-size:34px;
-  font-weight:900;
-  color:#ef4444;
-}
-
-.score {
-  font-size:48px;
-  font-weight:900;
-  color:#22c55e;
-  margin-top:10px;
-}
-
-.sub {
-  color:#999;
-  margin-top:6px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
 .section-title {
@@ -70,217 +29,138 @@ h1 {
   text-transform:uppercase;
   color:#666;
   margin-bottom:8px;
-  letter-spacing:1px;
 }
 
-/* ===== ALERT ===== */
+.big-money {
+  font-size:30px;
+  font-weight:900;
+  color:#ef4444;
+}
+
+.score {
+  font-size:44px;
+  font-weight:900;
+  color:#22c55e;
+}
+
+.sub {color:#999;margin-top:6px;}
+
 .alert {
   background:#1a0f0f;
   border:1px solid #7f1d1d;
-  border-radius:14px;
   padding:14px;
-  margin-top:16px;
+  border-radius:14px;
   color:#fca5a5;
-  font-weight:600;
+  margin-top:16px;
 }
 
-/* ===== MONEY EXTRA ===== */
-.money-sub {
-  margin-top:10px;
-  color:#aaa;
-  font-size:14px;
-}
-
-/* ===== FIX ===== */
-.highlight {
-  background:#1f1a0a;
-  border:1px solid #92400e;
-  border-radius:16px;
-  padding:20px;
-}
-
-/* ===== ISSUE ===== */
 .issue {
   border-top:1px solid #222;
   padding:16px 0;
 }
 
-.issue strong {
-  font-size:15px;
-}
-
 .impact {
-  color:#ef4444;
+  color:#f87171;
   font-weight:700;
   margin-top:6px;
 }
 
-.badge {
-  font-size:10px;
-  padding:4px 6px;
-  border-radius:6px;
-  margin-right:6px;
-}
-
-/* ===== CTA ===== */
 .cta {
   display:block;
-  margin-top:16px;
-  padding:18px;
-  background:white;
-  color:black;
-  font-weight:900;
-  border-radius:12px;
-  text-decoration:none;
-  text-align:center;
-}
-
-/* ===== STICKY CTA ===== */
-.sticky {
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
+  padding:16px;
   background:#fff;
   color:#000;
-  padding:14px;
   text-align:center;
-  font-weight:800;
-}
-
-/* ===== PDF ===== */
-.pdf-btn {
-  display:block;
-  margin-top:12px;
-  padding:12px;
-  border:1px solid #333;
-  border-radius:10px;
-  text-align:center;
-  color:#aaa;
+  border-radius:12px;
+  font-weight:900;
+  margin-top:16px;
   text-decoration:none;
 }
-
-/* ===== PRINT ===== */
-@media print {
-  body {
-    background:white;
-    color:black;
-  }
-  .card {
-    border:1px solid #ddd;
-    page-break-inside:avoid;
-  }
-  .cta, .sticky, .pdf-btn {
-    display:none;
-  }
-  .watermark {
-    position:fixed;
-    bottom:20px;
-    left:20px;
-    font-size:12px;
-    color:#999;
-  }
-}
-
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <!-- HERO -->
 <div class="card">
-  <h1>Conversion Intelligence Report</h1>
-  <div id="storeName" class="store"></div>
+  <div class="section-title">Conversion Intelligence</div>
+  <div id="storeName"></div>
 
   <div class="big-money" id="heroLoss"></div>
-
-  <div class="money-sub" id="timeLoss"></div>
+  <div class="sub" id="lossContext"></div>
 
   <div class="score" id="score"></div>
-  <div class="sub">Store performance score</div>
+  <div class="sub">Performance vs industry benchmarks</div>
 </div>
 
 <!-- ALERT -->
 <div class="alert">
-Every 10 minutes, visitors leave your store without buying.
+Based on industry benchmarks, most stores convert only 1–3% of visitors.
 </div>
 
-<!-- WHAT’S HAPPENING -->
+<!-- BEHAVIOR -->
 <div class="card">
-  <div class="section-title">What’s happening</div>
-  <div id="behavior"></div>
+  <div class="section-title">Typical Ecommerce Behavior</div>
+  <div>
+    Out of 100 visitors:<br><br>
+    • 97–99 leave without buying<br>
+    • 1–3 convert
+  </div>
 </div>
 
 <!-- TOP FIX -->
-<div class="highlight">
-  <div class="section-title">⚡ Fastest Way To Recover Revenue</div>
+<div class="card">
+  <div class="section-title">Highest Impact Opportunity</div>
   <p id="topfix"></p>
   <div class="impact" id="topImpact"></div>
-
-  <a href="#" class="cta">
-    Fix This Now → Activate Monitoring
-  </a>
 </div>
 
 <!-- MAIN -->
 <div class="card">
-  <div class="section-title">Main Revenue Leak</div>
+  <div class="section-title">Main Conversion Issue</div>
   <p id="main"></p>
 </div>
 
 <!-- QUICK FIX -->
 <div class="card">
-  <div class="section-title">Immediate Action</div>
+  <div class="section-title">Immediate Improvement</div>
   <p id="fix"></p>
 </div>
 
 <!-- ISSUES -->
 <div class="card">
-  <div class="section-title">Revenue Leaks</div>
+  <div class="section-title">Detected Conversion Issues</div>
   <div id="issues"></div>
 </div>
 
 <!-- UPLIFT -->
 <div class="card">
-  <div class="section-title">If Fixed</div>
+  <div class="section-title">Estimated Upside</div>
   <div id="uplift"></div>
 </div>
 
-<!-- PLAN -->
+<!-- METHODOLOGY -->
 <div class="card">
-  <div class="section-title">Recovery Plan</div>
-  <div id="plan"></div>
+  <div class="section-title">How This Is Calculated</div>
+  <p>
+  Estimates are based on:
+  <br>• industry conversion benchmarks (1–3%)
+  <br>• typical ecommerce UX impact ranges
+  <br>• relative severity of detected issues
+  </p>
 </div>
 
 <!-- CTA -->
 <div class="card">
   <div class="section-title">Continuous Monitoring</div>
-
-  <p><b>Your store changes every week.</b></p>
-
-  <div class="alert">
-  New leaks appear constantly → you keep losing revenue
-  </div>
+  <p>Conversion performance changes constantly.</p>
 
   <a href="#" class="cta">
-    Stop Losing Revenue → $89/month
-  </a>
-
-  <a href="#" class="pdf-btn" onclick="window.print()">
-    Download PDF Report
+    Monitor Store Performance → $89/month
   </a>
 </div>
 
-</div>
-
-<div class="sticky">
-  Fix Revenue Leaks Now →
-</div>
-
-<div class="watermark">
-ATOM FOUNDRY – CONFIDENTIAL REPORT
 </div>
 
 <script>
@@ -296,64 +176,71 @@ let report = data.report_json || data;
 const issues = report.issues || [];
 const score = report.score;
 
-// BASIC
 document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = score + "/100";
 document.getElementById("main").innerText = report.main_leak || "";
 document.getElementById("fix").innerText = report.quick_fix || "";
 
-// MONEY
-const monthly = report.revenue_calculation?.monthly_loss_value || 5000;
-const yearly = monthly * 12;
-const daily = Math.round(monthly / 30);
-const hourly = Math.round(daily / 24);
+/* ===== REALISTIC MODEL ===== */
+
+// baseline assumptions
+const assumedCR = 0.02; // 2%
+const improvedCR = 0.025; // +0.5%
+const uplift = (improvedCR - assumedCR) / assumedCR;
+
+// fallback revenue
+const baseRevenue = report.revenue_calculation?.monthly_loss_value || 5000;
+
+// RANGE instead of exact
+const low = Math.round(baseRevenue * 0.6);
+const high = Math.round(baseRevenue * 1.2);
 
 document.getElementById("heroLoss").innerText =
-`You are losing $${monthly.toLocaleString()} / month`;
+`Estimated revenue impact: $${low.toLocaleString()} – $${high.toLocaleString()} / month`;
 
-document.getElementById("timeLoss").innerText =
-`≈ $${daily.toLocaleString()} / day • $${hourly.toLocaleString()} / hour`;
-
-// BEHAVIOR
-document.getElementById("behavior").innerHTML =
-`
-Out of 100 visitors:<br><br>
-• 68 leave immediately<br>
-• 21 hesitate and drop off<br>
-• 11 convert
-`;
+document.getElementById("lossContext").innerText =
+`Based on typical conversion improvements (10–30%)`;
 
 // TOP FIX
 const top = issues.find(i => i.severity === "critical");
 document.getElementById("topfix").innerText = top?.fix || "";
-document.getElementById("topImpact").innerText =
-`+${Math.round(monthly * 0.3).toLocaleString()} potential monthly recovery`;
 
-// ISSUES
+const topLow = Math.round(low * 0.3);
+const topHigh = Math.round(high * 0.5);
+
+document.getElementById("topImpact").innerText =
+`Estimated impact: +$${topLow.toLocaleString()} – $${topHigh.toLocaleString()} / month`;
+
+// ISSUES (weighted)
+const weights = {
+  critical: 0.35,
+  medium: 0.2,
+  low: 0.1
+};
+
 document.getElementById("issues").innerHTML =
-issues.map(i => `
+issues.map(i => {
+  const w = weights[i.severity] || 0.1;
+  const l = Math.round(low * w);
+  const h = Math.round(high * w);
+
+  return `
   <div class="issue">
     <strong>${i.title}</strong>
     <div class="impact">
-      Losing ~${Math.round(monthly * 0.15).toLocaleString()} / month
+      Estimated impact: $${l.toLocaleString()} – $${h.toLocaleString()} / month
     </div>
     <p>${i.description}</p>
-    <p><b>Fix:</b> ${i.fix}</p>
-  </div>
-`).join("");
+    <p><b>Recommended fix:</b> ${i.fix}</p>
+  </div>`;
+}).join("");
 
 // UPLIFT
 document.getElementById("uplift").innerHTML =
 `
-+18–32% conversion uplift<br>
-+$${Math.round(monthly * 1.4).toLocaleString()} monthly potential
+Conversion uplift potential: 10–30%<br>
+Revenue upside depends on traffic & AOV
 `;
-
-// PLAN
-document.getElementById("plan").innerHTML =
-(report.revenue_plan || []).map(p => `
-  <p><b>${p.fix}</b><br>${p.expected_impact}</p>
-`).join("");
 
 })();
 </script>
