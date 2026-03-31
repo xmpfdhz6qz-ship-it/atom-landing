@@ -260,19 +260,31 @@ document.getElementById("score").innerText = score + "/100";
 document.getElementById("main").innerText = report.main_leak || "";
 document.getElementById("fix").innerText = report.quick_fix || "";
 
-// MONEY
-const loss = report.revenue_calculation?.estimated_loss || "$5,000";
-document.getElementById("loss").innerText = loss;
+// ===== MONEY (SAFE + REAL DATA)
 
-// yearly calc (simple)
-const num = parseInt(loss.replace(/[^0-9]/g,'')) || 5000;
-document.getElementById("yearLoss").innerText = "≈ $" + (num * 12).toLocaleString() + " / year";
+const monthly = report.revenue_calculation?.monthly_loss_value || 5000;
+const yearly = report.revenue_calculation?.yearly_loss_value || (monthly * 12);
+const daily = Math.round(monthly / 30);
 
-// TOP FIX
+// hlavní block
+document.getElementById("loss").innerText =
+`Estimated revenue loss:\n$${monthly.toLocaleString()} / month`;
+
+// yearly
+document.getElementById("yearLoss").innerText =
+`≈ $${yearly.toLocaleString()} / year`;
+
+// optional (pokud chceš přidat do UI)
+const dailyEl = document.getElementById("dailyLoss");
+if (dailyEl) {
+  dailyEl.innerText = `≈ $${daily.toLocaleString()} / day`;
+}
+
+// ===== TOP FIX
 const top = issues.find(i => i.severity === "critical");
 document.getElementById("topfix").innerText = top?.fix || "";
 
-// ISSUES
+// ===== ISSUES COLORS
 const severityColor = {
   critical: "#ef4444",
   medium: "#f59e0b",
