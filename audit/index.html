@@ -128,16 +128,32 @@ if (!token) return;
 
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
-let report = data.report_json || data;
 
-// 🔥 parse JSON pokud je string
-if (typeof report === "string") {
+let report = null;
+
+// 🔥 FIX: správný parsing
+if (data.text) {
   try {
-    report = report.replace(/```json/g, "").replace(/```/g, "").trim();
-    report = JSON.parse(report);
+    let clean = data.text
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    report = JSON.parse(clean);
+
   } catch (e) {
     console.error("JSON parse error", e);
   }
+}
+
+// fallback (když budeš později ukládat správně do DB)
+if (!report && data.report_json) {
+  report = data.report_json;
+}
+
+if (!report) {
+  console.error("No report data");
+  return;
 }
 
 // 🔥 SCORING ENGINE
@@ -161,7 +177,7 @@ function calculateMetrics(issues) {
   let friction = 100;
 
   issues.forEach(i => {
-    const t = i.title.toLowerCase();
+    const t = (i.title || "").toLowerCase();
 
     if (t.includes("headline") || t.includes("copy")) clarity -= 10;
     if (t.includes("trust") || t.includes("badge")) trust -= 12;
@@ -175,9 +191,9 @@ function calculateMetrics(issues) {
   };
 }
 
-// 🔥 USE DATA
+// 🔥 DATA
 const issues = report.issues || [];
-const score = report.score_calculated || calculateScore(report.issues);
+const score = calculateScore(issues);
 const metrics = report.metrics || calculateMetrics(issues);
 
 // BASIC
