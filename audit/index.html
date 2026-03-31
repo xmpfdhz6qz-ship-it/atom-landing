@@ -7,7 +7,6 @@
 <title>Conversion Audit Report</title>
 
 <style>
-/* --- DESIGN BEZE ZMĚN --- */
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial;
   background: linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%);
@@ -17,26 +16,30 @@ body {
 }
 .container { max-width: 720px; margin: auto; }
 .hero { background:white; padding:18px; border-radius:18px; box-shadow:0 20px 60px rgba(15,23,42,0.08); }
+
 h1 { font-size:20px; margin-bottom:4px; }
 .store { font-size:16px; color:#64748b; margin-bottom:8px; }
+
 .score { font-size:52px; font-weight:900; color:#16a34a; }
 .bad { color:#dc2626; font-weight:700; font-size:16px; margin-top:4px; }
 .meta { margin-top:10px; font-size:13px; color:#64748b; }
+
+.metrics { display:flex; gap:10px; margin-top:10px; font-size:12px; }
+.metric { background:#f1f5f9; padding:6px 10px; border-radius:10px; }
+
 .alert { margin-top:16px; padding:14px; background:#fef2f2; border:1px solid #fecaca; border-radius:14px; font-weight:600; }
+
 .money { margin-top:16px; padding:18px; border-radius:16px; background:#fff1f2; border:1px solid #fecaca; text-align:center; }
 .money strong { font-size:28px; color:#dc2626; display:block; }
-.daily { margin-top:10px; font-size:14px; font-weight:700; color:#dc2626; }
+
 .card { padding:16px; border-radius:16px; margin-top:16px; background:white; border:1px solid #e2e8f0; }
-.card-problem { background:#fff1f2; }
-.card-fix { background:#f0fdf4; }
 .section-title { font-weight:700; font-size:12px; color:#64748b; text-transform:uppercase; margin-bottom:6px; }
-.compare-box { padding:12px; border-radius:12px; margin-top:8px; }
-.before { background:#fff1f2; }
-.after { background:#f0fdf4; }
-.leak-item { margin-top:10px; padding:12px; border-radius:12px; background:#fff1f2; }
-.plan-item { margin-top:10px; padding:12px; border-radius:12px; background:#f0fdf4; }
-.cta-box { margin-top:28px; padding:18px; background:white; border-radius:18px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.06); }
-.cta { display:block; margin-top:12px; padding:16px; background:linear-gradient(135deg,#059669,#047857); color:white; border-radius:14px; font-weight:800; font-size:16px; text-decoration:none; }
+
+.issue { margin-top:10px; padding:12px; border-radius:12px; background:#fff1f2; }
+.badge { font-size:11px; padding:3px 6px; border-radius:6px; margin-right:6px; }
+
+.cta-box { margin-top:28px; padding:18px; background:white; border-radius:18px; text-align:center; }
+.cta { display:block; margin-top:12px; padding:16px; background:linear-gradient(135deg,#059669,#047857); color:white; border-radius:14px; font-weight:800; text-decoration:none; }
 </style>
 </head>
 
@@ -48,8 +51,14 @@ h1 { font-size:20px; margin-bottom:4px; }
 <h1>Store Conversion Audit</h1>
 <div id="storeName" class="store"></div>
 <div class="score" id="score"></div>
-<div class="bad">This Store Is Losing Revenue Every Day</div>
-<div class="meta">Estimated Revenue Loss: <strong>10–30%</strong></div>
+
+<div class="metrics">
+<div class="metric">Clarity: <span id="clarity"></span></div>
+<div class="metric">Trust: <span id="trust"></span></div>
+<div class="metric">Friction: <span id="friction"></span></div>
+</div>
+
+<div class="meta" id="summary"></div>
 </div>
 
 <div class="alert">
@@ -57,58 +66,56 @@ h1 { font-size:20px; margin-bottom:4px; }
 </div>
 
 <div class="money">
-<strong>$2,000 – $8,000</strong>
-<div class="daily" id="daily"></div>
+<strong id="loss"></strong>
 </div>
 
-<div class="card card-problem">
+<div class="card">
+<div class="section-title">Main Revenue Leak</div>
 <p id="main"></p>
 </div>
 
-<div class="card card-fix">
+<div class="card">
+<div class="section-title">Quick Fix</div>
 <p id="fix"></p>
 </div>
 
-<!-- 🔥 LEAKS -->
 <div class="card">
-<div class="section-title">Top Conversion Leaks</div>
-<div id="leaks"></div>
+<div class="section-title">Priority Issues</div>
+<div id="issues"></div>
 </div>
 
-<!-- 🔥 BEFORE AFTER -->
+<div class="card">
+<div class="section-title">Implementation Steps</div>
+<div id="implementation"></div>
+</div>
+
 <div class="card">
 <div class="section-title">Before vs After</div>
-<div class="compare-box before" id="before"></div>
-<div class="compare-box after" id="after"></div>
+<p id="before"></p>
+<p id="after"></p>
 </div>
 
-<!-- 🔥 PLAN -->
 <div class="card">
-<div class="section-title">Revenue Growth Plan</div>
+<div class="section-title">Revenue Plan</div>
 <div id="plan"></div>
 </div>
 
-<!-- 🔥 MONITORING CTA -->
 <div class="cta-box">
 <div class="section-title">Continuous Monitoring</div>
 
-<p style="font-size:14px;color:#334155;">
-Your store is losing revenue every day.  
-We monitor it continuously and alert you when new leaks appear.
-</p>
+<p>Your store is losing revenue every day.</p>
 
-<ul style="text-align:left;font-size:14px;color:#334155;line-height:1.6;">
-<li>✔ Weekly automated conversion scans</li>
-<li>✔ New revenue leaks detection</li>
-<li>✔ AI-generated fixes</li>
-<li>✔ Conversion score tracking</li>
-<li>✔ Priority alerts (high-impact issues)</li>
+<ul style="text-align:left;">
+<li>✔ Weekly scans</li>
+<li>✔ New leaks detection</li>
+<li>✔ AI fixes</li>
+<li>✔ Score tracking</li>
+<li>✔ Alerts</li>
 </ul>
 
 <a href="#" class="cta">
 Start Conversion Monitoring — $89/month
 </a>
-
 </div>
 
 </div>
@@ -117,56 +124,75 @@ Start Conversion Monitoring — $89/month
 (async function(){
 
 const token = window.location.pathname.split("/").pop();
-
 if (!token) return;
 
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 const report = data.report_json || data;
 
-const score = report.score || data.score || 0;
-
+// BASIC
 document.getElementById("storeName").innerText = data.domain || "";
-document.getElementById("score").innerText = `${score}/100`;
+document.getElementById("score").innerText = `${report.score}/100`;
+document.getElementById("main").innerText = report.main_leak;
+document.getElementById("fix").innerText = report.quick_fix;
 
-document.getElementById("main").innerText =
-report.main_leak || "";
+// METRICS
+document.getElementById("clarity").innerText = report.metrics?.clarity;
+document.getElementById("trust").innerText = report.metrics?.trust;
+document.getElementById("friction").innerText = report.metrics?.friction;
 
-document.getElementById("fix").innerText =
-report.quick_fix || "";
+// SUMMARY
+document.getElementById("summary").innerText =
+`${report.summary?.issues_found} issues • ${report.summary?.expected_cr_uplift} improvement`;
 
-document.getElementById("daily").innerText =
-`Estimated daily loss: ~$67–$267`;
+// LOSS
+document.getElementById("loss").innerText =
+report.revenue_calculation?.estimated_loss || "$2,000–$8,000";
 
+// ISSUES
+const severityColor = {
+  critical: "#dc2626",
+  medium: "#f59e0b",
+  low: "#16a34a"
+};
 
-// 🔥 leaks
-const leaks = document.getElementById("leaks");
-if (report.leaks?.length) {
-  leaks.innerHTML = report.leaks.map(l => `
-    <div class="leak-item">
-      <strong>${l.title}</strong>
-      <p>${l.impact}</p>
-      <div><b>Fix:</b> ${l.fix}</div>
+const issuesEl = document.getElementById("issues");
+
+if (report.issues?.length) {
+  issuesEl.innerHTML = report.issues.map(i => `
+    <div class="issue">
+      <strong>#${i.id} ${i.title}</strong>
+
+      <div>
+        <span class="badge" style="background:${severityColor[i.severity]}20;color:${severityColor[i.severity]}">
+          ${i.severity}
+        </span>
+        <span class="badge">${i.impact} impact</span>
+        <span class="badge">${i.effort} effort</span>
+      </div>
+
+      <p>${i.description}</p>
+      <p><b>Fix:</b> ${i.fix}</p>
+      <p><b>Do this:</b> ${i.exact_change}</p>
     </div>
   `).join("");
 }
 
-
-// 🔥 before after
-if (report.before_after) {
-  document.getElementById("before").innerText = report.before_after.before || "";
-  document.getElementById("after").innerText = report.before_after.after || "";
+// IMPLEMENTATION
+const impl = document.getElementById("implementation");
+if (report.implementation?.length) {
+  impl.innerHTML = report.implementation.map(step => `<p>• ${step}</p>`).join("");
 }
 
+// BEFORE AFTER
+document.getElementById("before").innerText = report.before_after?.before;
+document.getElementById("after").innerText = report.before_after?.after;
 
-// 🔥 plan
+// PLAN
 const plan = document.getElementById("plan");
 if (report.revenue_plan?.length) {
   plan.innerHTML = report.revenue_plan.map(p => `
-    <div class="plan-item">
-      <strong>${p.fix}</strong>
-      <p>${p.expected_impact}</p>
-    </div>
+    <p><b>${p.fix}</b><br>${p.expected_impact}</p>
   `).join("");
 }
 
