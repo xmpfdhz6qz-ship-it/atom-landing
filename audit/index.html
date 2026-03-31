@@ -130,34 +130,70 @@ const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get
 const data = await res.json();
 let report = data.report_json || data;
 
-// 🔥 FIX: parse pokud je to string
+// 🔥 parse JSON pokud je string
 if (typeof report === "string") {
   try {
-    report = report
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-
+    report = report.replace(/```json/g, "").replace(/```/g, "").trim();
     report = JSON.parse(report);
   } catch (e) {
     console.error("JSON parse error", e);
   }
 }
 
+// 🔥 SCORING ENGINE
+function calculateScore(issues) {
+  let score = 100;
+
+  issues.forEach(i => {
+    if (i.severity === "critical") score -= 15;
+    if (i.severity === "medium") score -= 8;
+    if (i.severity === "low") score -= 3;
+    if (i.quick_win) score += 2;
+  });
+
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+// 🔥 METRICS FALLBACK
+function calculateMetrics(issues) {
+  let clarity = 100;
+  let trust = 100;
+  let friction = 100;
+
+  issues.forEach(i => {
+    const t = i.title.toLowerCase();
+
+    if (t.includes("headline") || t.includes("copy")) clarity -= 10;
+    if (t.includes("trust") || t.includes("badge")) trust -= 12;
+    if (t.includes("checkout") || t.includes("cta")) friction -= 10;
+  });
+
+  return {
+    clarity: Math.max(0, clarity),
+    trust: Math.max(0, trust),
+    friction: Math.max(0, friction)
+  };
+}
+
+// 🔥 USE DATA
+const issues = report.issues || [];
+const score = calculateScore(issues);
+const metrics = report.metrics || calculateMetrics(issues);
+
 // BASIC
 document.getElementById("storeName").innerText = data.domain || "";
-document.getElementById("score").innerText = `${report.score}/100`;
-document.getElementById("main").innerText = report.main_leak;
-document.getElementById("fix").innerText = report.quick_fix;
+document.getElementById("score").innerText = `${score}/100`;
+document.getElementById("main").innerText = report.main_leak || "";
+document.getElementById("fix").innerText = report.quick_fix || "";
 
 // METRICS
-document.getElementById("clarity").innerText = report.metrics?.clarity;
-document.getElementById("trust").innerText = report.metrics?.trust;
-document.getElementById("friction").innerText = report.metrics?.friction;
+document.getElementById("clarity").innerText = metrics.clarity || "-";
+document.getElementById("trust").innerText = metrics.trust || "-";
+document.getElementById("friction").innerText = metrics.friction || "-";
 
 // SUMMARY
 document.getElementById("summary").innerText =
-`${report.summary?.issues_found} issues • ${report.summary?.expected_cr_uplift} improvement`;
+`${issues.length} issues • ${report.summary?.expected_cr_uplift || "N/A"}`;
 
 // LOSS
 document.getElementById("loss").innerText =
@@ -172,43 +208,37 @@ const severityColor = {
 
 const issuesEl = document.getElementById("issues");
 
-if (report.issues?.length) {
-  issuesEl.innerHTML = report.issues.map(i => `
-    <div class="issue">
-      <strong>#${i.id} ${i.title}</strong>
+issuesEl.innerHTML = issues.map(i => `
+  <div class="issue">
+    <strong>#${i.id} ${i.title}</strong>
 
-      <div>
-        <span class="badge" style="background:${severityColor[i.severity]}20;color:${severityColor[i.severity]}">
-          ${i.severity}
-        </span>
-        <span class="badge">${i.impact} impact</span>
-        <span class="badge">${i.effort} effort</span>
-      </div>
-
-      <p>${i.description}</p>
-      <p><b>Fix:</b> ${i.fix}</p>
-      <p><b>Do this:</b> ${i.exact_change}</p>
+    <div>
+      <span class="badge" style="background:${severityColor[i.severity]}20;color:${severityColor[i.severity]}">
+        ${i.severity}
+      </span>
+      <span class="badge">${i.impact}</span>
+      <span class="badge">${i.effort}</span>
     </div>
-  `).join("");
-}
+
+    <p>${i.description}</p>
+    <p><b>Fix:</b> ${i.fix}</p>
+    <p><b>Do this:</b> ${i.exact_change}</p>
+  </div>
+`).join("");
 
 // IMPLEMENTATION
-const impl = document.getElementById("implementation");
-if (report.implementation?.length) {
-  impl.innerHTML = report.implementation.map(step => `<p>• ${step}</p>`).join("");
-}
+document.getElementById("implementation").innerHTML =
+(report.implementation || []).map(s => `<p>• ${s}</p>`).join("");
 
 // BEFORE AFTER
-document.getElementById("before").innerText = report.before_after?.before;
-document.getElementById("after").innerText = report.before_after?.after;
+document.getElementById("before").innerText = report.before_after?.before || "";
+document.getElementById("after").innerText = report.before_after?.after || "";
 
 // PLAN
-const plan = document.getElementById("plan");
-if (report.revenue_plan?.length) {
-  plan.innerHTML = report.revenue_plan.map(p => `
-    <p><b>${p.fix}</b><br>${p.expected_impact}</p>
-  `).join("");
-}
+document.getElementById("plan").innerHTML =
+(report.revenue_plan || []).map(p => `
+  <p><b>${p.fix}</b><br>${p.expected_impact}</p>
+`).join("");
 
 })();
 </script>
