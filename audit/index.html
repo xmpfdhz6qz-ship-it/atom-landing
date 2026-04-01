@@ -21,7 +21,6 @@ body {
   border-radius:20px;
   padding:24px;
   margin-top:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
 
 .section-title {
@@ -52,7 +51,6 @@ body {
   border-radius:14px;
   color:#fca5a5;
   margin-top:16px;
-  font-weight:600;
 }
 
 .issue {
@@ -71,10 +69,9 @@ body {
 .impact {
   color:#f87171;
   font-weight:800;
-  margin-top:6px;
 }
 
-.cta-monitoring {
+.cta {
   display:block;
   padding:18px;
   background:#f97316;
@@ -86,9 +83,9 @@ body {
   text-decoration:none;
 }
 
-@media print {
-  body {background:white;color:black;}
-  .cta-monitoring {display:none;}
+a.audit-link {
+  color:#22c55e;
+  text-decoration:none;
 }
 </style>
 </head>
@@ -96,27 +93,35 @@ body {
 <body>
 <div class="container">
 
+<!-- HERO -->
 <div class="card">
   <div class="section-title">Conversion Intelligence Audit</div>
+  
   <div id="storeName"></div>
+  <div id="analyzedPage" class="sub"></div>
 
   <div class="big-money" id="heroLoss"></div>
-  <div class="sub" id="lossContext"></div>
   <div class="sub" id="dailyLoss"></div>
 
   <div class="score" id="score"></div>
-  <div class="sub">Performance vs benchmarks</div>
+  <div class="sub">Conversion performance score</div>
 
-  <div class="sub" style="margin-top:10px;">
-    Confidence: <b id="confidence"></b> • Based on detected store elements
+  <div class="sub">
+    Confidence: <b id="confidence"></b>
   </div>
 </div>
 
 <div class="alert">
-⚠️ This is a conversion problem, not a traffic problem.
+⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
-<!-- WHERE MONEY IS LOST -->
+<!-- PROOF -->
+<div class="card">
+  <div class="section-title">What We Detected</div>
+  <div id="proof"></div>
+</div>
+
+<!-- FUNNEL -->
 <div class="card">
   <div class="section-title">Where Revenue Is Lost</div>
   <div id="funnel"></div>
@@ -124,15 +129,15 @@ body {
 
 <!-- TOP FIX -->
 <div class="card">
-  <div class="section-title">Critical Revenue Leak (Fix First)</div>
+  <div class="section-title">Critical Revenue Leak</div>
   <p id="topfix"></p>
   <div class="impact" id="topImpact"></div>
 </div>
 
-<!-- MAIN -->
+<!-- BEFORE AFTER -->
 <div class="card">
-  <div class="section-title">Root Cause</div>
-  <p id="main"></p>
+  <div class="section-title">Before vs After (Fix Example)</div>
+  <div id="beforeAfter"></div>
 </div>
 
 <!-- ISSUES -->
@@ -143,19 +148,31 @@ body {
 
 <!-- UPSIDE -->
 <div class="card">
-  <div class="section-title">If You Fix This</div>
+  <div class="section-title">Revenue If Fixed</div>
   <div id="uplift"></div>
 </div>
 
+<!-- LOSS -->
 <div class="card">
-  <div class="section-title">What Happens If You Do Nothing</div>
+  <div class="section-title">If You Ignore This</div>
   <div id="lossFuture"></div>
 </div>
 
+<!-- MONITORING CTA -->
 <div class="card">
-  <a href="#" class="cta-monitoring">
+  <a href="#" class="cta">
     Stop Revenue Loss → Activate Monitoring ($89/month)
   </a>
+
+  <div class="section-title" style="margin-top:16px;">What Monitoring Includes</div>
+
+  <ul class="sub">
+    <li>Weekly store scans</li>
+    <li>New revenue leak detection</li>
+    <li>Conversion score tracking</li>
+    <li>Priority alerts on drops</li>
+    <li>Continuous optimization suggestions</li>
+  </ul>
 </div>
 
 </div>
@@ -171,92 +188,104 @@ const data = await res.json();
 
 let report = data.report_json || data;
 const issues = report.issues || [];
-const score = report.score;
 
-document.getElementById("storeName").innerText = data.domain || "";
-document.getElementById("score").innerText = score + "/100";
-document.getElementById("main").innerText = report.main_leak || "";
+// BASIC
+document.getElementById("storeName").innerText = data.domain;
+document.getElementById("score").innerText = report.score + "/100";
 
-/* ===== CONFIDENCE ===== */
+// URL
+const productUrl = report.product_url || data.product_url;
+
+document.getElementById("analyzedPage").innerHTML =
+  productUrl
+    ? `Analyzed: <a class="audit-link" href="${productUrl}" target="_blank">${productUrl}</a>`
+    : "Analyzed: homepage";
+
+// CONFIDENCE
 document.getElementById("confidence").innerText =
 issues.length >= 5 ? "High" : "Medium";
 
-/* ===== REVENUE ===== */
+// REVENUE
 const base = report.revenue_calculation?.monthly_loss_value || 5000;
 const low = Math.round(base * 0.7);
 const high = Math.round(base * 1.3);
 
 document.getElementById("heroLoss").innerText =
-`$${low.toLocaleString()} – $${high.toLocaleString()} monthly revenue leak`;
-
-document.getElementById("lossContext").innerText =
-`Based on detected UX and conversion issues`;
+`$${low.toLocaleString()} – $${high.toLocaleString()} / month`;
 
 document.getElementById("dailyLoss").innerText =
-`≈ $${Math.round(low/30)} – $${Math.round(high/30)} lost per day`;
+`≈ $${Math.round(low/30)} – $${Math.round(high/30)} / day`;
 
-/* ===== FUNNEL ===== */
-document.getElementById("funnel").innerHTML = `
-1. Visitor lands on product page<br>
-2. Sees unclear value / weak CTA<br>
-3. Missing trust → hesitation<br>
-4. Leaves without purchase<br><br>
-<b>→ Revenue leak happens BEFORE add-to-cart</b>
+// PROOF
+document.getElementById("proof").innerHTML = `
+<b>CTA:</b> ${report.cta_text || "Unknown"}<br>
+<b>Trust:</b> ${report.has_trust ? "Detected" : "NOT detected"}<br>
+<b>Reviews:</b> ${report.has_reviews ? "Detected" : "NOT detected"}<br>
+<b>Shipping:</b> ${report.has_shipping ? "Detected" : "NOT detected"}
 `;
 
-/* ===== TOP FIX ===== */
+// FUNNEL
+document.getElementById("funnel").innerHTML = `
+User lands → evaluates → hesitates → leaves<br><br>
+<b>Leak occurs before purchase decision</b>
+`;
+
+// TOP FIX
 const top = issues.find(i => i.severity === "critical");
 document.getElementById("topfix").innerText = top?.fix || "";
-
 document.getElementById("topImpact").innerText =
-`THIS ISSUE ALONE may be responsible for ~40–60% of lost revenue`;
+"~40–60% of total revenue loss comes from this";
 
-/* ===== ISSUE WEIGHTS ===== */
+// BEFORE AFTER
+document.getElementById("beforeAfter").innerHTML = `
+<b>Before:</b><br>
+${report.cta_text || "Generic CTA"}<br><br>
+
+<b>After:</b><br>
+${report.rewrite?.cta?.[0] || "Improved CTA with value + urgency"}<br><br>
+
+Estimated effort: <b>10–15 minutes</b>
+`;
+
+// ISSUE WEIGHTS
 const weights = {
-  critical: [0.4,0.6],
-  medium: [0.15,0.25],
-  low: [0.05,0.1]
+  critical:[0.4,0.6],
+  medium:[0.15,0.25],
+  low:[0.05,0.1]
 };
 
 document.getElementById("issues").innerHTML =
-issues.map(i => {
-  const w = weights[i.severity] || [0.1,0.2];
-  const l = Math.round(low * w[0]);
-  const h = Math.round(high * w[1]);
+issues.map(i=>{
+  const w = weights[i.severity]||[0.1,0.2];
+  const l = Math.round(low*w[0]);
+  const h = Math.round(high*w[1]);
 
   return `
   <div class="issue">
     <strong>${i.title}</strong>
 
-    <p>${i.description}</p>
+    <p><b>Detected:</b><br>${i.description}</p>
 
     <div class="impact">
-      Impact: $${l.toLocaleString()} – $${h.toLocaleString()} / month
+      $${l.toLocaleString()} – $${h.toLocaleString()} / month
     </div>
 
     <div class="fix">
-      ${i.fix}
+      ${i.fix}<br><br>
+      <b>Estimated time to fix:</b> 15–30 minutes
     </div>
   </div>
   `;
 }).join("");
 
-/* ===== UPSIDE ===== */
+// UPSIDE
 document.getElementById("uplift").innerHTML =
-`
-+10–30% conversion improvement<br>
-≈ $${Math.round(low*1.5).toLocaleString()} – $${Math.round(high*2).toLocaleString()} yearly upside
-`;
+`+$${Math.round(low*1.5).toLocaleString()} – $${Math.round(high*2).toLocaleString()} / year`;
 
-/* ===== FUTURE LOSS ===== */
+// LOSS
 document.getElementById("lossFuture").innerHTML =
-`
-If nothing changes:<br><br>
-You will lose ~$${low.toLocaleString()} – $${high.toLocaleString()} every month<br>
-≈ $${(low*12).toLocaleString()} – $${(high*12).toLocaleString()} per year<br><br>
-This is not theoretical.<br>
-This is happening right now.
-`;
+`You lose ~$${low.toLocaleString()} – $${high.toLocaleString()} monthly<br>
+≈ $${(low*12).toLocaleString()} – $${(high*12).toLocaleString()} yearly`;
 
 })();
 </script>
