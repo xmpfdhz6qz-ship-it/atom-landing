@@ -273,10 +273,20 @@ document.getElementById("priority").innerHTML =
 ).join("<br>");
 
 document.getElementById("plan").innerHTML =
-(r.revenue_plan || []).map(p => `
+(r.revenue_plan || []).map(p => {
+
+  const impact = getImpact(
+    p.impact_value,
+    p.impact,
+    p.monthly_impact
+  );
+
+  return `
 <b>${p.fix}</b><br>
-💰 +$${getImpact(p.impact_value).toLocaleString()}/month<br><br>
-`).join("");
+💰 +$${impact.toLocaleString()}/month<br><br>
+`;
+
+}).join("");
 
 document.getElementById("issues").innerHTML =
 issues.map(i => `
