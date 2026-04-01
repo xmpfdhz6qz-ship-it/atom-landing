@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conversion Intelligence Audit</title>
 
 <style>
 body {
@@ -92,6 +91,7 @@ body {
 <body>
 <div class="container">
 
+<!-- HERO -->
 <div class="card">
   <div class="section-title">Conversion Intelligence Audit</div>
   <div id="storeName"></div>
@@ -109,45 +109,94 @@ body {
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
-<!-- 🔥 BENCHMARK -->
+<!-- BENCHMARK -->
 <div class="card">
   <div class="section-title">Benchmark</div>
   <div id="benchmark"></div>
 </div>
 
+<!-- LIVE LOSS -->
+<div class="card">
+  <div class="section-title">Live Revenue Loss</div>
+  <div id="liveLoss"></div>
+</div>
+
+<!-- REALITY -->
+<div class="card">
+  <div class="section-title">Reality Check</div>
+  Your store is actively losing buyers every single day.<br><br>
+  Not because of traffic.<br>
+  Not because of your product.<br><br>
+  But because users cannot confidently make a purchase decision.
+</div>
+
+<!-- OPPORTUNITY -->
 <div class="card">
   <div class="section-title">Revenue Opportunity</div>
   <div id="dashboard"></div>
 </div>
 
+<!-- PRIMARY -->
 <div class="card">
   <div class="section-title">Primary Failure</div>
   <div id="primary"></div>
 </div>
 
+<!-- DISTRIBUTION -->
 <div class="card">
   <div class="section-title">Where Money Is Lost</div>
   <div id="priority"></div>
 </div>
 
+<!-- BEHAVIOR -->
+<div class="card">
+  <div class="section-title">Buyer Behavior</div>
+  User lands → hesitates → delays decision → leaves → does not return
+</div>
+
+<!-- PLAN -->
+<div class="card">
+  <div class="section-title">Revenue Recovery Plan</div>
+  <div id="plan"></div>
+</div>
+
+<!-- ISSUES -->
 <div class="card">
   <div class="section-title">Conversion Leaks</div>
   <div id="issues"></div>
 </div>
 
+<!-- EXECUTION -->
 <div class="card">
   <div class="section-title">Execution Plan</div>
   <div id="steps"></div>
 </div>
 
+<!-- ASSUMPTIONS -->
 <div class="card">
   <div class="section-title">How This Was Calculated</div>
   <div id="assumptions"></div>
 </div>
 
+<!-- FINAL INSIGHT -->
+<div class="card">
+  <div class="section-title">Final Insight</div>
+  Your store is not broken.<br><br>
+  But it is leaking revenue at every decision point.<br><br>
+  And those leaks compound every single day.
+</div>
+
+<!-- ESCALATION -->
+<div class="card">
+  <div class="section-title">What Happens Next</div>
+  Today: $<span id="lossToday"></span><br>
+  This week: ~$<span id="lossWeek"></span><br>
+  This month: ~$<span id="lossMonth"></span>
+</div>
+
+<!-- CTA -->
 <div class="card">
   <a href="#" class="cta" id="cta"></a>
-
   <div class="sub" style="text-align:center;margin-top:10px;">
     Every day you delay = <span id="daily"></span> lost
   </div>
@@ -169,58 +218,69 @@ const calc = r.revenue_calculation || {};
 const issues = r.issues || [];
 
 const monthly = Number(calc.monthly_loss_value || 10000);
-const daily = Number(calc.daily_loss_value || Math.round(monthly / 30));
+const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 
-// HEADER
+// HERO
 document.getElementById("storeName").innerText = data.domain;
 document.getElementById("score").innerText = r.score + "/100";
-document.getElementById("confidence").innerText = r.analysis_confidence || "High";
+document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
 
-function getScoreLabel(score){
-  if(score>80)return"Strong performance";
-  if(score>60)return"Good foundation but leaking revenue";
-  if(score>40)return"Serious conversion issues";
-  return"Critical revenue loss";
+function label(s){
+if(s>80)return"Strong performance";
+if(s>60)return"Good foundation but leaking revenue";
+if(s>40)return"Serious issues";
+return"Critical leaks";
 }
-
-document.getElementById("scoreLabel").innerText = getScoreLabel(r.score);
+document.getElementById("scoreLabel").innerText = label(r.score);
 
 document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ / month`;
 document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
 document.getElementById("daily").innerText = `$${daily}`;
 
-// 🔥 BENCHMARK
+// BENCHMARK
 const b = r.benchmark || {};
 document.getElementById("benchmark").innerHTML = `
-Your score: <b>${r.score}</b><br>
-Top stores: <b>${b.top_score || 85}+</b><br>
-Average: <b>${b.avg_score || 68}</b><br><br>
-You are performing worse than <b>${100 - (b.percentile || 50)}%</b> of stores
+Your score: ${r.score}<br>
+Top stores: ${b.top_score || 85}+<br>
+Average: ${b.avg_score || 68}<br><br>
+You are performing worse than ${100-(b.percentile||50)}% of stores
+`;
+
+// LIVE LOSS
+document.getElementById("liveLoss").innerHTML = `
+Last 7 days: ~$${(daily*7).toLocaleString()}<br>
+Last 30 days: ~$${(daily*30).toLocaleString()}
 `;
 
 // DASHBOARD
 document.getElementById("dashboard").innerHTML = `
 Current CVR: ${calc.current_cvr}%<br>
 Potential CVR: ${calc.potential_cvr}%<br><br>
-<b>+$${monthly.toLocaleString()}/month</b>
++$${monthly.toLocaleString()}/month
 `;
 
 // PRIMARY
 document.getElementById("primary").innerText = r.primary_failure;
 
-// 🔥 DISTRIBUTION FIX
+// DISTRIBUTION
 document.getElementById("priority").innerHTML =
 (r.revenue_distribution || []).map(d =>
 `${d.name} → ${d.percent}% (~$${d.amount.toLocaleString()})`
 ).join("<br>");
 
-// 🔥 ISSUES FIX
+// PLAN
+document.getElementById("plan").innerHTML =
+(r.revenue_plan || []).map(p => `
+<b>${p.fix}</b><br>
+💰 +$${p.impact_value.toLocaleString()}/month<br><br>
+`).join("");
+
+// ISSUES
 document.getElementById("issues").innerHTML =
 issues.map(i => `
 <div class="issue">
 <strong>${i.title}</strong>
-
-<div class="why">${i.reason}</div>
+<p>${i.reason}</p>
 
 <div class="fix">
 💰 $${i.impact_value.toLocaleString()}/month<br>
@@ -230,7 +290,7 @@ ${i.fix}
 </div>
 `).join("");
 
-// 🔥 EXECUTION FIX
+// EXECUTION
 document.getElementById("steps").innerHTML =
 (r.execution_plan || []).map(s =>
 `• ${s.title} → ${s.impact}`
@@ -239,6 +299,12 @@ document.getElementById("steps").innerHTML =
 document.getElementById("assumptions").innerText =
 calc.assumptions || "";
 
+// ESCALATION
+document.getElementById("lossToday").innerText = daily;
+document.getElementById("lossWeek").innerText = (daily*7).toLocaleString();
+document.getElementById("lossMonth").innerText = (daily*30).toLocaleString();
+
+// CTA
 document.getElementById("cta").innerText =
 `Stop Losing $${daily}/day → Activate Monitoring ($89/month)`;
 
