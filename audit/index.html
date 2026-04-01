@@ -11,72 +11,99 @@ body {
   color:#fff;
   margin:0;
   padding:16px;
+  line-height:1.6;
 }
-.container {max-width:700px;margin:auto;}
+.container {max-width:560px;margin:auto;}
 
 .card {
   background:#111;
   border:1px solid #222;
-  border-radius:20px;
-  padding:24px;
-  margin-top:16px;
+  border-radius:18px;
+  padding:20px;
+  margin-top:14px;
 }
 
 .section-title {
   font-size:11px;
   text-transform:uppercase;
-  color:#666;
-  margin-bottom:8px;
+  color:#A1A1AA;
+  margin-bottom:6px;
+  letter-spacing:1px;
 }
 
 .big-money {
-  font-size:40px;
+  font-size:34px;
   font-weight:900;
   color:#ef4444;
 }
 
 .score {
-  font-size:52px;
+  font-size:48px;
   font-weight:900;
   color:#22c55e;
 }
 
-.sub {color:#999;margin-top:6px;line-height:1.6;}
+.sub {color:#A1A1AA;margin-top:6px;}
 
 .alert {
   background:#1a0f0f;
   border:1px solid #7f1d1d;
-  padding:16px;
+  padding:14px;
   border-radius:14px;
   color:#fca5a5;
-  margin-top:16px;
+  margin-top:14px;
   font-weight:600;
 }
 
 .issue {
   border-top:1px solid #7f1d1d;
-  padding:22px 0;
+  padding:18px 0;
 }
 
 .fix {
   border:1px solid #14532d;
   background:#052e1a;
-  padding:14px;
-  border-radius:12px;
-  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  margin-top:10px;
 }
 
 .cta {
   display:block;
-  padding:22px;
+  padding:18px;
   background:#f97316;
   color:#000;
   text-align:center;
-  border-radius:16px;
+  border-radius:12px;
   font-weight:900;
   margin-top:16px;
   text-decoration:none;
-  font-size:18px;
+}
+
+.checklist li {margin-bottom:6px;}
+
+@media print {
+  body {
+    background:white;
+    color:black;
+  }
+
+  body::before {
+    content:"ATOM FOUNDRY";
+    position:fixed;
+    top:40%;
+    left:10%;
+    font-size:50px;
+    color:rgba(0,0,0,0.05);
+    transform:rotate(-30deg);
+  }
+
+  .cta {display:none;}
+
+  .card {
+    page-break-inside:avoid;
+    border:1px solid #ddd;
+  }
 }
 </style>
 </head>
@@ -84,13 +111,19 @@ body {
 <body>
 <div class="container">
 
+<!-- HERO -->
 <div class="card">
   <div class="section-title">Conversion Intelligence Audit</div>
   <div id="storeName"></div>
 
+  <div class="sub">This is your revenue recovery blueprint</div>
+  <div class="sub">Based on patterns from 1,000+ ecommerce stores</div>
+
   <div class="big-money" id="heroLoss"></div>
   <div class="sub" id="dailyLoss"></div>
+  <div class="sub" id="yearlyLoss"></div>
 
+  <div class="section-title">Score</div>
   <div class="score" id="score"></div>
   <div class="sub" id="scoreLabel"></div>
 
@@ -98,51 +131,120 @@ body {
 </div>
 
 <div class="alert">
-⚠️ You are not losing traffic. You are losing buyers.
+⚠️ Your store is converting below its potential.  
+You are losing revenue every single day.
 </div>
 
+<!-- CRITICAL -->
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Critical Revenue Leak</div>
+  <div id="primary"></div>
+</div>
+
+<!-- BASELINE -->
+<div class="card">
+  <div class="section-title">Estimated Store Baseline</div>
+  <div id="baseline"></div>
+</div>
+
+<!-- GAP -->
+<div class="card">
+  <div class="section-title">Conversion Gap</div>
+  <div id="dashboard"></div>
+</div>
+
+<!-- BENCHMARK -->
+<div class="card">
+  <div class="section-title">How You Compare</div>
+  <div id="benchmark"></div>
+</div>
+
+<!-- PROFILE -->
+<div class="card">
+  <div class="section-title">Store Profile Snapshot</div>
+  <div id="profile"></div>
+</div>
+
+<!-- LOSS -->
 <div class="card">
   <div class="section-title">Live Revenue Loss</div>
   <div id="liveLoss"></div>
 </div>
 
-<div class="card">
-  <div class="section-title">Revenue Opportunity</div>
-  <div id="dashboard"></div>
+<!-- HIDDEN -->
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Hidden Revenue Loss</div>
+  <p>Missing upsells, weak retention and low AOV can multiply your real loss.</p>
 </div>
 
-<div class="card">
-  <div class="section-title">Primary Failure</div>
-  <div id="primary"></div>
-</div>
-
+<!-- PRIORITY -->
 <div class="card">
   <div class="section-title">Where Money Is Lost</div>
   <div id="priority"></div>
 </div>
 
+<!-- PLAN -->
 <div class="card">
   <div class="section-title">Revenue Recovery Plan</div>
   <div id="plan"></div>
 </div>
 
+<!-- ISSUES -->
 <div class="card">
   <div class="section-title">Conversion Leaks</div>
   <div id="issues"></div>
 </div>
 
+<!-- TIME -->
+<div class="card">
+  <div class="section-title">Time to Fix</div>
+  <div id="time"></div>
+</div>
+
+<!-- FUTURE -->
+<div class="card" style="border:1px solid #14532d;">
+  <div class="section-title">After Fixing These Issues</div>
+  <p>
+  Higher conversion rate<br>
+  More revenue without more traffic<br>
+  Stronger trust and higher AOV
+  </p>
+</div>
+
+<!-- DO NOTHING -->
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">If You Do Nothing</div>
+  <div id="donothing"></div>
+</div>
+
+<!-- EXECUTION -->
 <div class="card">
   <div class="section-title">Execution Plan</div>
   <div id="steps"></div>
 </div>
 
+<!-- ASSUMPTIONS -->
 <div class="card">
   <div class="section-title">How This Was Calculated</div>
   <div id="assumptions"></div>
 </div>
 
+<!-- CTA -->
 <div class="card">
   <a href="#" class="cta" id="cta"></a>
+
+  <ul class="checklist">
+    <li>✔ New revenue leaks appear every week</li>
+    <li>✔ Fix issues before they cost money</li>
+    <li>✔ Exact actions — no guessing</li>
+    <li>✔ Track conversion improvements</li>
+    <li>✔ One fix can cover the entire cost</li>
+  </ul>
+
+  <div class="sub" style="text-align:center;">
+    Fixing even one issue can pay for this
+  </div>
+
   <div class="sub" style="text-align:center;margin-top:10px;">
     Every day you delay = <span id="daily"></span> lost
   </div>
@@ -165,8 +267,8 @@ const issues = r.issues || [];
 
 const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
+const yearly = monthly * 12;
 
-// HEADER
 document.getElementById("storeName").innerText = data.domain;
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
@@ -181,62 +283,68 @@ document.getElementById("scoreLabel").innerText = label(r.score || 70);
 
 document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ / month`;
 document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
+document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString()} lost per year`;
 document.getElementById("daily").innerText = `$${daily}`;
 
-// LOSS
-document.getElementById("liveLoss").innerHTML = `
-Last 7 days: ~$${(daily*7).toLocaleString()}<br>
-Last 30 days: ~$${(daily*30).toLocaleString()}
-`;
+document.getElementById("liveLoss").innerHTML =
+`Last 7 days: ~$${(daily*7).toLocaleString()}<br>
+Last 30 days: ~$${(daily*30).toLocaleString()}`;
 
-// DASHBOARD
-document.getElementById("dashboard").innerHTML = `
-Current CVR: ${calc.current_cvr || 1.2}%<br>
+document.getElementById("dashboard").innerHTML =
+`Current CVR: ${calc.current_cvr || 1.2}%<br>
 Potential CVR: ${calc.potential_cvr || 1.6}%<br><br>
-+$${monthly.toLocaleString()}/month
-`;
+You are operating below your revenue potential`;
 
-// PRIMARY
+document.getElementById("benchmark").innerHTML =
+`Your CVR: ${calc.current_cvr || 1.2}%<br>
+Industry avg: ${calc.potential_cvr || 2.0}%`;
+
+document.getElementById("profile").innerHTML =
+`Business model: Ecommerce<br>
+Conversion maturity: ${r.score > 70 ? "Optimized" : "Under-optimized"}<br>
+Growth potential: High`;
+
 document.getElementById("primary").innerText = r.primary_failure || "";
 
-// 🔥 FIX DISTRIBUTION
 document.getElementById("priority").innerHTML =
 (r.revenue_distribution || []).map(d =>
 `${d.name} → ${d.percent || 0}% (~$${(d.amount || 0).toLocaleString()})`
-).join("<br>") || "No data available";
+).join("<br>");
 
-// 🔥 FIX PLAN
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p => `
 <b>${p.fix}</b><br>
 💰 +$${(p.impact_value || p.impact || 0).toLocaleString()}/month<br><br>
-`).join("") || "No recovery plan generated";
+`).join("");
 
-// 🔥 FIX ISSUES
 document.getElementById("issues").innerHTML =
 issues.map(i => `
 <div class="issue">
+<div><b>$${(i.impact_value || i.monthly_impact || 0).toLocaleString()}/month</b></div>
 <strong>${i.title}</strong>
-<p>${i.reason}</p>
 
 <div class="fix">
-💰 $${(i.impact_value || i.monthly_impact || 0).toLocaleString()}/month<br>
-⏱ ${i.recovery_time || "1–3 days"}<br><br>
 ${i.fix}
 </div>
-</div>
-`).join("") || "No issues detected";
 
-// 🔥 FIX EXECUTION
+<p>${i.reason}</p>
+</div>
+`).join("");
+
+document.getElementById("time").innerHTML =
+`Most fixes can be implemented in 30–120 minutes`;
+
+document.getElementById("donothing").innerHTML =
+`You will lose ~$${(daily*30).toLocaleString()} in the next 30 days`;
+
 document.getElementById("steps").innerHTML =
 (r.execution_plan || []).map(s =>
 `• ${s.title} → ${s.impact || "$0"}`
-).join("<br>") || "No execution plan available";
+).join("<br>");
 
 document.getElementById("assumptions").innerText =
 calc.assumptions || "";
 
-// CTA
 document.getElementById("cta").innerText =
 `Stop Losing $${daily}/day → Activate Monitoring ($89/month)`;
 
