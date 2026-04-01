@@ -33,7 +33,6 @@ body {
   letter-spacing:1.2px;
 }
 
-/* SCORE BLOCK */
 .card:first-child .section-title {
   color:#22c55e;
 }
@@ -74,13 +73,11 @@ body {
   box-shadow:0 0 0 1px rgba(127,29,29,0.6);
 }
 
-/* RED DANGER BLOCKS */
 .card[style*="#dc2626"] {
   background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
   box-shadow:0 0 0 1px rgba(220,38,38,0.4);
 }
 
-/* ISSUES */
 .issue {
   border-top:1px solid #7f1d1d;
   padding:20px 0;
@@ -92,7 +89,6 @@ body {
   padding:16px;
 }
 
-/* FIX */
 .fix {
   border:1px solid #22c55e;
   background:#064e3b;
@@ -102,7 +98,6 @@ body {
   color:#d1fae5;
 }
 
-/* CTA BUTTON */
 .cta {
   display:block;
   padding:20px;
@@ -118,7 +113,23 @@ body {
   box-shadow:0 10px 25px rgba(249,115,22,0.4);
 }
 
-/* CTA BLOCK EMPHASIS */
+/* PDF BUTTON (menší + jiná barva) */
+.cta-secondary {
+  display:block;
+  padding:14px;
+  background:linear-gradient(135deg,#1f2937,#111827);
+  color:#fff;
+  text-align:center;
+  border-radius:12px;
+  font-weight:700;
+  margin-top:12px;
+  text-decoration:none;
+  font-size:14px;
+  border:1px solid #374151;
+  box-shadow:0 6px 14px rgba(0,0,0,0.4);
+  opacity:0.9;
+}
+
 .card:last-child {
   box-shadow:0 0 0 1px rgba(249,115,22,0.3);
 }
@@ -137,20 +148,24 @@ body {
   body::before {
     content:"ATOM FOUNDRY";
     position:fixed;
-    top:40%;
-    left:10%;
-    font-size:60px;
-    color:rgba(0,0,0,0.05);
+    top:45%;
+    left:5%;
+    font-size:80px;
+    font-weight:900;
+    color:rgba(0,0,0,0.04);
     transform:rotate(-30deg);
+    letter-spacing:6px;
   }
 
-  .cta {
+  .cta,
+  .cta-secondary {
     display:none;
   }
 
   .card {
     page-break-inside:avoid;
     border:1px solid #ddd;
+    box-shadow:none;
   }
 }
 </style>
@@ -305,13 +320,12 @@ body {
   <div class="sub" style="text-align:center;margin-top:10px;">
     Every day you delay = <span id="daily"></span> lost
   </div>
-</div>
 
-<!-- PRINT BUTTON -->
-<div class="card">
-  <a href="#" class="cta" onclick="window.print()">
+  <!-- PDF BUTTON -->
+  <a href="#" class="cta-secondary" onclick="window.print()">
     Download & Print PDF
   </a>
+
 </div>
 
 </div>
