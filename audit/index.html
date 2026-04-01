@@ -217,6 +217,11 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = monthly * 12;
 
+// SAFE IMPACT
+function getImpact(val1, val2){
+  return Number(val1 || val2 || 0);
+}
+
 document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
@@ -270,13 +275,13 @@ document.getElementById("priority").innerHTML =
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p => `
 <b>${p.fix}</b><br>
-💰 +$${(p.impact_value || 0).toLocaleString()}/month<br><br>
+💰 +$${getImpact(p.impact_value).toLocaleString()}/month<br><br>
 `).join("");
 
 document.getElementById("issues").innerHTML =
 issues.map(i => `
 <div class="issue">
-<div><b>$${(i.monthly_impact || 0).toLocaleString()}/month</b></div>
+<div><b>$${getImpact(i.impact_value, i.monthly_impact).toLocaleString()}/month</b></div>
 <strong>${i.title}</strong>
 
 <div class="fix">${i.fix}</div>
