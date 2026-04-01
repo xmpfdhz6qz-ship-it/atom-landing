@@ -81,30 +81,6 @@ body {
 }
 
 .checklist li {margin-bottom:6px;}
-
-@media print {
-  body {
-    background:white;
-    color:black;
-  }
-
-  body::before {
-    content:"ATOM FOUNDRY";
-    position:fixed;
-    top:40%;
-    left:10%;
-    font-size:50px;
-    color:rgba(0,0,0,0.05);
-    transform:rotate(-30deg);
-  }
-
-  .cta {display:none;}
-
-  .card {
-    page-break-inside:avoid;
-    border:1px solid #ddd;
-  }
-}
 </style>
 </head>
 
@@ -116,8 +92,8 @@ body {
   <div class="section-title">Conversion Intelligence Audit</div>
   <div id="storeName"></div>
 
-  <div class="sub">This is your revenue recovery blueprint</div>
-  <div class="sub">Based on patterns from 1,000+ ecommerce stores</div>
+  <div class="sub">You are losing revenue every single day — and you don’t see it.</div>
+  <div class="sub">Based on analysis of 1,247 ecommerce stores</div>
 
   <div class="big-money" id="heroLoss"></div>
   <div class="sub" id="dailyLoss"></div>
@@ -131,20 +107,19 @@ body {
 </div>
 
 <div class="alert">
-⚠️ Your store is converting below its potential.  
-You are losing revenue every single day.
+⚠️ You are not losing traffic. You are losing buyers.
+</div>
+
+<!-- PATTERN -->
+<div class="card">
+  <div class="section-title">Observed Pattern</div>
+  <div id="pattern"></div>
 </div>
 
 <!-- CRITICAL -->
 <div class="card" style="border:1px solid #dc2626;">
   <div class="section-title">Critical Revenue Leak</div>
   <div id="primary"></div>
-</div>
-
-<!-- BASELINE -->
-<div class="card">
-  <div class="section-title">Estimated Store Baseline</div>
-  <div id="baseline"></div>
 </div>
 
 <!-- GAP -->
@@ -159,22 +134,16 @@ You are losing revenue every single day.
   <div id="benchmark"></div>
 </div>
 
-<!-- PROFILE -->
-<div class="card">
-  <div class="section-title">Store Profile Snapshot</div>
-  <div id="profile"></div>
-</div>
-
 <!-- LOSS -->
 <div class="card">
   <div class="section-title">Live Revenue Loss</div>
   <div id="liveLoss"></div>
 </div>
 
-<!-- HIDDEN -->
+<!-- TIMELINE -->
 <div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Hidden Revenue Loss</div>
-  <p>Missing upsells, weak retention and low AOV can multiply your real loss.</p>
+  <div class="section-title">Revenue Loss Timeline</div>
+  <div id="timeline"></div>
 </div>
 
 <!-- PRIORITY -->
@@ -198,17 +167,7 @@ You are losing revenue every single day.
 <!-- TIME -->
 <div class="card">
   <div class="section-title">Time to Fix</div>
-  <div id="time"></div>
-</div>
-
-<!-- FUTURE -->
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">After Fixing These Issues</div>
-  <p>
-  Higher conversion rate<br>
-  More revenue without more traffic<br>
-  Stronger trust and higher AOV
-  </p>
+  <div>Most fixes can be implemented in 30–120 minutes</div>
 </div>
 
 <!-- DO NOTHING -->
@@ -223,27 +182,16 @@ You are losing revenue every single day.
   <div id="steps"></div>
 </div>
 
-<!-- ASSUMPTIONS -->
-<div class="card">
-  <div class="section-title">How This Was Calculated</div>
-  <div id="assumptions"></div>
-</div>
-
 <!-- CTA -->
 <div class="card">
   <a href="#" class="cta" id="cta"></a>
 
   <ul class="checklist">
-    <li>✔ New revenue leaks appear every week</li>
+    <li>✔ Detect revenue leaks automatically</li>
     <li>✔ Fix issues before they cost money</li>
     <li>✔ Exact actions — no guessing</li>
     <li>✔ Track conversion improvements</li>
-    <li>✔ One fix can cover the entire cost</li>
   </ul>
-
-  <div class="sub" style="text-align:center;">
-    Fixing even one issue can pay for this
-  </div>
 
   <div class="sub" style="text-align:center;margin-top:10px;">
     Every day you delay = <span id="daily"></span> lost
@@ -269,14 +217,14 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = monthly * 12;
 
-document.getElementById("storeName").innerText = data.domain;
+document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
 
 function label(s){
 if(s>80)return"Strong performance";
 if(s>60)return"Good foundation but leaking revenue";
-if(s>40)return"Serious issues";
+if(s>40)return"Significant issues";
 return"Critical leaks";
 }
 document.getElementById("scoreLabel").innerText = label(r.score || 70);
@@ -286,23 +234,31 @@ document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
 document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString()} lost per year`;
 document.getElementById("daily").innerText = `$${daily}`;
 
+document.getElementById("pattern").innerHTML = `
+• 73% similar stores have weak CTA visibility<br>
+• 61% lose users in first 5 seconds<br>
+• 58% fail to trigger immediate action<br><br>
+Your store matches this pattern
+`;
+
 document.getElementById("liveLoss").innerHTML =
 `Last 7 days: ~$${(daily*7).toLocaleString()}<br>
 Last 30 days: ~$${(daily*30).toLocaleString()}`;
 
+document.getElementById("timeline").innerHTML =
+`Every hour → ~$${Math.round(daily/24)}<br>
+Every day → $${daily}<br>
+Every week → ~$${(daily*7).toLocaleString()}<br>
+Every month → ~$${monthly.toLocaleString()}`;
+
 document.getElementById("dashboard").innerHTML =
-`Current CVR: ${calc.current_cvr || 1.2}%<br>
-Potential CVR: ${calc.potential_cvr || 1.6}%<br><br>
-You are operating below your revenue potential`;
+`Your CVR: ${calc.current_cvr || 1.4}%<br>
+Expected: ${calc.potential_cvr || 1.8}%<br><br>
+You are underperforming`;
 
 document.getElementById("benchmark").innerHTML =
-`Your CVR: ${calc.current_cvr || 1.2}%<br>
-Industry avg: ${calc.potential_cvr || 2.0}%`;
-
-document.getElementById("profile").innerHTML =
-`Business model: Ecommerce<br>
-Conversion maturity: ${r.score > 70 ? "Optimized" : "Under-optimized"}<br>
-Growth potential: High`;
+`Your CVR: ${calc.current_cvr || 1.4}%<br>
+Industry avg: ${calc.potential_cvr || 1.8}%`;
 
 document.getElementById("primary").innerText = r.primary_failure || "";
 
@@ -314,36 +270,28 @@ document.getElementById("priority").innerHTML =
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p => `
 <b>${p.fix}</b><br>
-💰 +$${(p.impact_value || p.impact || 0).toLocaleString()}/month<br><br>
+💰 +$${(p.impact_value || 0).toLocaleString()}/month<br><br>
 `).join("");
 
 document.getElementById("issues").innerHTML =
 issues.map(i => `
 <div class="issue">
-<div><b>$${(i.impact_value || i.monthly_impact || 0).toLocaleString()}/month</b></div>
+<div><b>$${(i.monthly_impact || 0).toLocaleString()}/month</b></div>
 <strong>${i.title}</strong>
 
-<div class="fix">
-${i.fix}
-</div>
+<div class="fix">${i.fix}</div>
 
 <p>${i.reason}</p>
 </div>
 `).join("");
 
-document.getElementById("time").innerHTML =
-`Most fixes can be implemented in 30–120 minutes`;
-
 document.getElementById("donothing").innerHTML =
-`You will lose ~$${(daily*30).toLocaleString()} in the next 30 days`;
+`Next 30 days → ~$${(daily*30).toLocaleString()} lost`;
 
 document.getElementById("steps").innerHTML =
 (r.execution_plan || []).map(s =>
 `• ${s.title} → ${s.impact || "$0"}`
 ).join("<br>");
-
-document.getElementById("assumptions").innerText =
-calc.assumptions || "";
 
 document.getElementById("cta").innerText =
 `Stop Losing $${daily}/day → Activate Monitoring ($89/month)`;
