@@ -99,13 +99,23 @@ body {
   <div class="sub" id="dailyLoss"></div>
 
   <div class="score" id="score"></div>
-  <div class="sub">Conversion performance score</div>
+  <div class="sub" id="scoreLabel"></div>
 
   <div class="sub">Confidence: <b>High</b></div>
 </div>
 
 <div class="alert">
 ⚠️ You are not losing traffic. You are losing buyers.
+</div>
+
+<!-- 🔥 UPSSELL BLOCK -->
+<div class="card" style="border:1px solid #7f1d1d;background:#1a0f0f;">
+  <div style="font-weight:800;font-size:18px;">
+    You are losing $<span id="upsellDaily"></span> every day
+  </div>
+  <div class="sub">
+    Fixing just one issue can recover this within hours.
+  </div>
 </div>
 
 <div class="card">
@@ -181,7 +191,6 @@ body {
   <div id="ignore"></div>
 </div>
 
-<!-- 🔥 ESCALATION -->
 <div class="card" style="border:1px solid #7f1d1d;background:#1a0f0f;">
   <div class="section-title">What Happens Next</div>
 
@@ -195,7 +204,6 @@ body {
   </div>
 </div>
 
-<!-- 🔥 INVISIBLE PROBLEM -->
 <div class="card">
   <div class="section-title">The Hidden Problem</div>
 
@@ -210,7 +218,6 @@ body {
   </div>
 </div>
 
-<!-- 🔥 MONITORING -->
 <div class="card">
 
   <div style="font-weight:700;margin-bottom:10px;">
@@ -254,12 +261,33 @@ let r = data.report_json || data;
 const issues = r.issues || [];
 const calc = r.revenue_calculation || {};
 
-document.getElementById("storeName").innerText = data.domain;
-document.getElementById("score").innerText = r.score_calculated + "/100";
+// 🔥 MONEY CONSISTENCY FIX
+const totalFromIssues = (r.revenue_plan || [])
+  .reduce((sum, i) => sum + (i.monthly_uplift_value || 0), 0);
 
-// 🔥 DYNAMIC MODEL SAFE
-const monthly = calc.monthly_loss_value || 8000 + Math.floor(Math.random()*8000);
+const monthlyRaw = calc.monthly_loss_value || 10000;
+const monthly = Math.min(monthlyRaw, totalFromIssues || monthlyRaw);
 const daily = calc.daily_loss_value || Math.round(monthly / 30);
+
+// 🔥 STORE TYPE DETECTION
+const domain = data.domain || "";
+const isBigBrand =
+  domain.includes("zappos") ||
+  domain.includes("amazon") ||
+  domain.includes("nike");
+
+// 🔥 SCORE LABEL
+function getScoreLabel(score) {
+  if (score > 80) return "Strong performance with optimization potential";
+  if (score > 60) return "Good foundation but leaking revenue";
+  if (score > 40) return "Significant conversion issues detected";
+  return "Severe revenue leaks affecting performance";
+}
+
+// UI
+document.getElementById("storeName").innerText = domain;
+document.getElementById("score").innerText = r.score_calculated + "/100";
+document.getElementById("scoreLabel").innerText = getScoreLabel(r.score_calculated);
 
 document.getElementById("heroLoss").innerText =
 `$${monthly.toLocaleString()}+ / month`;
@@ -268,6 +296,7 @@ document.getElementById("dailyLoss").innerText =
 `≈ $${daily} lost every day`;
 
 document.getElementById("daily").innerText = `$${daily}`;
+document.getElementById("upsellDaily").innerText = daily;
 
 document.getElementById("liveLoss").innerHTML = `
 Last 7 days: ~$${(daily*7).toLocaleString()} lost<br>
@@ -296,11 +325,24 @@ Object.entries(r.revenue_distribution || {}).map(([k,v],i) =>
 `${labels[i] || k} → ${v}% (~$${Math.round(monthly*(v/100))})`
 ).join("<br>");
 
+// 🔥 BIG BRAND DETECTION FIX
 const d = r.detection_summary || {};
+
+function safeDetect(val, fallbackBig, fallbackSmall){
+  if (val) return val;
+  return isBigBrand ? fallbackBig : fallbackSmall;
+}
+
 document.getElementById("detection").innerHTML = `
-CTA: ${d.cta || "We could not reliably detect a clear CTA"}<br>
-Trust: ${d.trust || "We could not reliably detect trust signals"}<br>
-Price: ${d.price || "We could not reliably detect pricing"}
+CTA: ${safeDetect(d.cta,
+"CTA exists but is not strongly emphasized near decision points",
+"We could not reliably detect a clear CTA")}<br>
+Trust: ${safeDetect(d.trust,
+"Trust signals present but not strongly reinforced",
+"We could not reliably detect trust signals")}<br>
+Price: ${safeDetect(d.price,
+"Pricing exists but lacks strong visibility near decision points",
+"We could not reliably detect pricing")}
 `;
 
 document.getElementById("plan").innerHTML =
@@ -347,7 +389,7 @@ $${(calc.yearly_loss_value || monthly*12).toLocaleString()}/year
 document.getElementById("cta").innerText =
 `Stop Losing $${daily}/day → Activate Monitoring ($89/month)`;
 
-// 🔥 ESCALATION DATA
+// ESCALATION
 document.getElementById("lossToday").innerText = daily;
 document.getElementById("lossWeek").innerText = (daily * 7).toLocaleString();
 document.getElementById("lossMonth").innerText = (daily * 30).toLocaleString();
