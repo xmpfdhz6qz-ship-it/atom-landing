@@ -67,6 +67,12 @@ body {
   margin-top:12px;
 }
 
+.why {
+  margin-top:10px;
+  color:#fbbf24;
+  font-size:14px;
+}
+
 .cta {
   display:block;
   padding:22px;
@@ -85,7 +91,6 @@ body {
 <body>
 <div class="container">
 
-<!-- HERO -->
 <div class="card">
   <div class="section-title">Conversion Intelligence Audit</div>
   <div id="storeName"></div>
@@ -96,128 +101,88 @@ body {
   <div class="score" id="score"></div>
   <div class="sub">Conversion performance score</div>
 
-  <div class="sub">
-    Confidence: <b>High</b>
-  </div>
+  <div class="sub">Confidence: <b>High</b></div>
 </div>
 
 <div class="alert">
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
-<!-- LIVE LOSS -->
 <div class="card">
   <div class="section-title">Live Revenue Loss</div>
   <div id="liveLoss"></div>
 </div>
 
-<!-- REALITY -->
 <div class="card">
   <div class="section-title">Reality Check</div>
-  <div>
-    Your store is actively losing buyers every single day.<br><br>
-    Not because of traffic.<br>
-    Not because of your product.<br><br>
-    But because users cannot confidently make a purchase decision.
-  </div>
+  Your store is actively losing buyers every single day.<br><br>
+  Not because of traffic.<br>
+  Not because of your product.<br><br>
+  But because users cannot confidently make a purchase decision.
 </div>
 
-<!-- DASHBOARD -->
 <div class="card">
   <div class="section-title">Revenue Opportunity</div>
   <div id="dashboard"></div>
 </div>
 
-<!-- FAILURE -->
 <div class="card">
   <div class="section-title">Primary Failure</div>
   <div id="primary"></div>
 </div>
 
-<!-- SCOPE -->
-<div class="card">
-  <div class="section-title">Analyzed Scope</div>
-  <div id="scope"></div>
-</div>
-
-<!-- PRIORITY -->
 <div class="card">
   <div class="section-title">Where Money Is Lost</div>
   <div id="priority"></div>
 </div>
 
-<!-- PSYCHO -->
 <div class="card">
   <div class="section-title">Buyer Behavior</div>
-  <div>
-    User lands → searches for price → fails<br>
-    Looks for trust → fails<br>
-    Hesitates → delays decision<br>
-    Leaves → does not return
-  </div>
+  User lands → searches for price → fails<br>
+  Looks for trust → fails<br>
+  Hesitates → delays decision<br>
+  Leaves → does not return
 </div>
 
-<!-- DETECTION -->
 <div class="card">
   <div class="section-title">What We Detected</div>
   <div id="detection"></div>
 </div>
 
-<!-- PLAN -->
 <div class="card">
   <div class="section-title">Revenue Recovery Plan</div>
   <div id="plan"></div>
 </div>
 
-<!-- ISSUES -->
 <div class="card">
   <div class="section-title">Conversion Leaks</div>
   <div id="issues"></div>
 </div>
 
-<!-- IMPLEMENTATION -->
 <div class="card">
   <div class="section-title">Execution Plan</div>
   <div id="steps"></div>
 </div>
 
-<!-- ASSUMPTIONS -->
 <div class="card">
-  <div class="section-title">Analysis Context</div>
-  <div id="assumptions"></div>
+  <div class="section-title">Final Insight</div>
+  Your store is not broken.<br><br>
+  But it is leaking revenue at every decision point.<br><br>
+  And those leaks compound every single day.
 </div>
 
-<!-- FIX RESULT -->
-<div class="card">
-  <div class="section-title">If You Fix This</div>
-  <div>
-    Users see price → clarity<br>
-    Users see trust → confidence<br>
-    Users see CTA → action<br><br>
-    → conversion increases<br>
-    → revenue recovers
-  </div>
-</div>
-
-<!-- IGNORE -->
 <div class="card">
   <div class="section-title">If You Ignore This</div>
   <div id="ignore"></div>
 </div>
 
-<!-- MONITORING -->
 <div class="card">
   <div class="section-title">Why Monitoring Matters</div>
-  <div>
-    This is not a one-time problem.<br><br>
-    Your store changes.<br>
-    Your pages change.<br>
-    Your conversion leaks change.<br><br>
-    Monitoring detects problems before they cost you revenue.
-  </div>
+  New revenue leaks appear without you noticing.<br><br>
+  Even small changes in your store can reduce conversion<br>
+  and cost you thousands before you detect it.
 </div>
 
-<!-- CTA -->
 <div class="card">
   <a href="#" class="cta" id="cta"></a>
 
@@ -248,11 +213,9 @@ let r = data.report_json || data;
 const issues = r.issues || [];
 const calc = r.revenue_calculation || {};
 
-// BASIC
 document.getElementById("storeName").innerText = data.domain;
 document.getElementById("score").innerText = r.score_calculated + "/100";
 
-// MONEY
 const monthly = calc.monthly_loss_value || 10000;
 const daily = calc.daily_loss_value || 300;
 
@@ -264,32 +227,33 @@ document.getElementById("dailyLoss").innerText =
 
 document.getElementById("daily").innerText = `$${daily}`;
 
-// LIVE LOSS
 document.getElementById("liveLoss").innerHTML = `
 Last 7 days: ~$${(daily*7).toLocaleString()} lost<br>
 Last 30 days: ~$${(daily*30).toLocaleString()} lost
 `;
 
-// DASHBOARD
 document.getElementById("dashboard").innerHTML = `
 Current CVR: ${calc.current_cvr}%<br>
 Potential CVR: ${calc.potential_cvr}%<br><br>
 +30–40% conversion increase<br><br>
-<b>+$${monthly.toLocaleString()}/month</b><br>
-+$${(calc.yearly_loss_value || monthly*12).toLocaleString()}/year
+<b>+$${monthly.toLocaleString()}/month</b>
 `;
 
-// FAILURE
 document.getElementById("primary").innerText = r.primary_failure;
 
-// SCOPE
-document.getElementById("scope").innerHTML =
-(r.analyzed_scope?.pages || []).map(p => `• ${p}`).join("<br>");
+// 🔥 PRIORITY FIXED
+const labels = [
+"Pricing visibility",
+"Trust signals",
+"Shipping clarity",
+"CTA clarity",
+"Page clarity"
+];
 
-// PRIORITY
-const dist = r.revenue_distribution || {};
 document.getElementById("priority").innerHTML =
-Object.entries(dist).map(([k,v]) => `${k} → ${v}%`).join("<br>");
+Object.entries(r.revenue_distribution || {}).map(([k,v],i) =>
+`${labels[i] || k} → ${v}% (~$${Math.round(monthly*(v/100))})`
+).join("<br>");
 
 // DETECTION
 const d = r.detection_summary || {};
@@ -307,7 +271,7 @@ ${p.expected_impact}<br>
 💰 +$${p.monthly_uplift_value}/month<br><br>
 `).join("");
 
-// ISSUES
+// ISSUES (🔥 UPGRADED)
 document.getElementById("issues").innerHTML =
 issues.map(i => `
 <div class="issue">
@@ -317,29 +281,27 @@ issues.map(i => `
 
 <p><b>Decision moment:</b> ${i.moment_of_loss}</p>
 
+<div class="why">
+Why this kills conversion:<br>
+Users cannot confidently evaluate the offer, which creates hesitation and delays decision making.
+</div>
+
 <div class="fix">
 💰 $${i.monthly_impact_value}/month<br>
-⏱ ${i.estimated_time_to_fix}<br><br>
+⏱ ${i.estimated_time_to_fix} → recovers $${i.monthly_impact_value}/month<br><br>
 ${i.fix}
 </div>
 </div>
 `).join("");
 
-// STEPS
 document.getElementById("steps").innerHTML =
 (r.implementation || []).map(s => `• ${s}`).join("<br>");
 
-// ASSUMPTIONS
-document.getElementById("assumptions").innerText =
-calc.assumptions;
-
-// IGNORE
 document.getElementById("ignore").innerHTML = `
 $${monthly.toLocaleString()}/month lost<br>
 $${(calc.yearly_loss_value || monthly*12).toLocaleString()}/year
 `;
 
-// CTA
 document.getElementById("cta").innerText =
 `Stop Losing $${daily}/day → Activate Monitoring ($89/month)`;
 
