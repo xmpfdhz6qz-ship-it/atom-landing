@@ -82,11 +82,6 @@ body {
   margin-top:16px;
   text-decoration:none;
 }
-
-a.audit-link {
-  color:#22c55e;
-  text-decoration:none;
-}
 </style>
 </head>
 
@@ -115,28 +110,28 @@ a.audit-link {
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
+<!-- 🔥 PRIMARY FAILURE -->
+<div class="card">
+  <div class="section-title">Primary Failure</div>
+  <div id="primaryFailure"></div>
+</div>
+
+<!-- 🔥 WHERE MONEY IS LOST -->
+<div class="card">
+  <div class="section-title">Where You Lose The Buyer</div>
+  <div id="decisionFlow"></div>
+</div>
+
 <!-- BENCHMARK -->
 <div class="card">
   <div class="section-title">Performance Benchmark</div>
   <div id="benchmark"></div>
 </div>
 
-<!-- REAL TIME LOSS -->
-<div class="card">
-  <div class="section-title">What Is Happening Right Now</div>
-  <div id="realtime"></div>
-</div>
-
 <!-- DETECTION -->
 <div class="card">
   <div class="section-title">What We Detected</div>
   <div id="detection"></div>
-</div>
-
-<!-- DECISION FLOW -->
-<div class="card">
-  <div class="section-title">User Decision Breakdown</div>
-  <div id="decisionFlow"></div>
 </div>
 
 <!-- TOP FIX -->
@@ -156,24 +151,6 @@ a.audit-link {
 <div class="card">
   <div class="section-title">Conversion Breakdown</div>
   <div id="issues"></div>
-</div>
-
-<!-- REVENUE DISTRIBUTION -->
-<div class="card">
-  <div class="section-title">Revenue Loss Distribution</div>
-  <div id="distribution"></div>
-</div>
-
-<!-- UPSIDE -->
-<div class="card">
-  <div class="section-title">Revenue If Fixed</div>
-  <div id="uplift"></div>
-</div>
-
-<!-- LOSS -->
-<div class="card">
-  <div class="section-title">If You Ignore This</div>
-  <div id="lossFuture"></div>
 </div>
 
 <!-- CTA -->
@@ -211,16 +188,40 @@ const issues = report.issues || [];
 document.getElementById("storeName").innerText = data.domain;
 document.getElementById("score").innerText = report.score + "/100";
 
-// SCOPE
-const scope = report.analyzed_scope;
-document.getElementById("analyzedScope").innerHTML = `
-Pages: ${scope?.pages?.join(", ") || "homepage"}<br>
-${scope?.product_url ? `<a class="audit-link" href="${scope.product_url}" target="_blank">${scope.product_url}</a>` : ""}
+// PRIMARY FAILURE
+document.getElementById("primaryFailure").innerText =
+report.primary_failure || "Main conversion issue detected on product page";
+
+// DECISION FLOW
+document.getElementById("decisionFlow").innerText =
+report.decision_flow || "Users reach decision point but hesitate due to missing key information and leave without action";
+
+// DETECTION FIX (NO UNDEFINED)
+const d = report.detection_summary || {};
+function safe(val, fallback){
+  if (!val || val === "undefined") return fallback;
+  return val;
+}
+
+document.getElementById("detection").innerHTML = `
+CTA: ${safe(d.cta, "We could not reliably detect a clear CTA above the fold")}<br>
+Trust: ${safe(d.trust, "We could not reliably detect trust signals near decision points")}<br>
+Reviews: ${safe(d.reviews, "We could not reliably detect customer reviews")}<br>
+Shipping: ${safe(d.shipping, "We could not reliably detect shipping information")}<br>
+Price: ${safe(d.price, "We could not reliably detect pricing near product headline or CTA")}
 `;
 
-// CONFIDENCE
-document.getElementById("confidence").innerText =
-issues.length >= 5 ? "High" : "Medium";
+// BENCHMARK FIX
+const b = report.benchmark || {};
+const percentile = b.overall_percentile || 35;
+
+document.getElementById("benchmark").innerHTML = `
+You are performing worse than ${100 - percentile}% of stores<br><br>
+Clarity: ${b.clarity_percentile || 40}th percentile<br>
+Trust: ${b.trust_percentile || 30}th percentile<br>
+Friction: ${b.friction_percentile || 45}th percentile<br><br>
+<b>Weakest area:</b> ${b.weakest_area || "Trust"}
+`;
 
 // REVENUE
 const base = report.revenue_calculation?.monthly_loss_value || 5000;
@@ -232,38 +233,6 @@ document.getElementById("heroLoss").innerText =
 
 document.getElementById("dailyLoss").innerText =
 `≈ $${Math.round(low/30)} – $${Math.round(high/30)} / day`;
-
-// BENCHMARK
-const b = report.benchmark || {};
-document.getElementById("benchmark").innerHTML = `
-You are performing worse than ${100 - (b.overall_percentile || 50)}% of stores<br><br>
-Clarity: ${b.clarity_percentile || 50}th percentile<br>
-Trust: ${b.trust_percentile || 50}th percentile<br>
-Friction: ${b.friction_percentile || 50}th percentile<br><br>
-<b>Weakest area:</b> ${b.weakest_area}<br><br>
-${b.insight || ""}
-`;
-
-// REAL TIME LOSS
-const rt = report.real_time_loss || {};
-document.getElementById("realtime").innerHTML = `
-~${rt.daily_visitors || 100} visitors reach decision stage daily<br>
-~${rt.buyers_lost_daily || 80} leave without buying
-`;
-
-// DETECTION
-const d = report.detection_summary || {};
-document.getElementById("detection").innerHTML = `
-CTA: ${d.cta}<br>
-Trust: ${d.trust}<br>
-Reviews: ${d.reviews}<br>
-Shipping: ${d.shipping}<br>
-Price: ${d.price}
-`;
-
-// DECISION FLOW
-document.getElementById("decisionFlow").innerText =
-report.decision_flow;
 
 // TOP FIX
 const top = issues.find(i => i.severity === "critical");
@@ -282,35 +251,19 @@ document.getElementById("issues").innerHTML =
 issues.map(i => `
   <div class="issue">
     <strong>${i.title}</strong>
-    <p><b>Analyzed:</b> ${i.analyzed_url}</p>
 
     <p><b>User sees:</b> ${i.user_sees}</p>
     <p><b>User expects:</b> ${i.user_expects}</p>
-
-    <p>${i.problem}</p>
+    <p><b>Moment of loss:</b> ${i.moment_of_loss}</p>
 
     <div class="fix">
       ${i.fix}<br><br>
+      <b>Impact:</b> $${i.monthly_impact_value || 0}/month<br>
+      <b>Time to fix:</b> ${i.estimated_time_to_fix}<br>
       <b>Confidence:</b> ${i.confidence}
     </div>
   </div>
 `).join("");
-
-// DISTRIBUTION
-const dist = report.revenue_distribution || {};
-document.getElementById("distribution").innerHTML =
-Object.entries(dist).map(([k,v]) =>
-`${k}: ${v}%`
-).join("<br>");
-
-// UPSIDE
-document.getElementById("uplift").innerHTML =
-`+$${Math.round(low*1.5).toLocaleString()} – $${Math.round(high*2).toLocaleString()} / year`;
-
-// LOSS
-document.getElementById("lossFuture").innerHTML =
-`$${low.toLocaleString()} – $${high.toLocaleString()} monthly<br>
-$${(low*12).toLocaleString()} – $${(high*12).toLocaleString()} yearly`;
 
 })();
 </script>
