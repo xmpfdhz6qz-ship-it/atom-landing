@@ -98,7 +98,7 @@ a.audit-link {
   <div class="section-title">Conversion Intelligence Audit</div>
   
   <div id="storeName"></div>
-  <div id="analyzedPage" class="sub"></div>
+  <div id="analyzedScope" class="sub"></div>
 
   <div class="big-money" id="heroLoss"></div>
   <div class="sub" id="dailyLoss"></div>
@@ -115,16 +115,16 @@ a.audit-link {
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
-<!-- PROOF -->
+<!-- DETECTION -->
 <div class="card">
   <div class="section-title">What We Detected</div>
-  <div id="proof"></div>
+  <div id="detection"></div>
 </div>
 
-<!-- FUNNEL -->
+<!-- DECISION FLOW -->
 <div class="card">
-  <div class="section-title">Where Revenue Is Lost</div>
-  <div id="funnel"></div>
+  <div class="section-title">User Decision Breakdown</div>
+  <div id="decisionFlow"></div>
 </div>
 
 <!-- TOP FIX -->
@@ -136,7 +136,7 @@ a.audit-link {
 
 <!-- BEFORE AFTER -->
 <div class="card">
-  <div class="section-title">Before vs After (Fix Example)</div>
+  <div class="section-title">Before vs After</div>
   <div id="beforeAfter"></div>
 </div>
 
@@ -158,7 +158,7 @@ a.audit-link {
   <div id="lossFuture"></div>
 </div>
 
-<!-- MONITORING CTA -->
+<!-- CTA -->
 <div class="card">
   <a href="#" class="cta">
     Stop Revenue Loss → Activate Monitoring ($89/month)
@@ -193,13 +193,12 @@ const issues = report.issues || [];
 document.getElementById("storeName").innerText = data.domain;
 document.getElementById("score").innerText = report.score + "/100";
 
-// URL
-const productUrl = report.product_url || data.product_url;
-
-document.getElementById("analyzedPage").innerHTML =
-  productUrl
-    ? `Analyzed: <a class="audit-link" href="${productUrl}" target="_blank">${productUrl}</a>`
-    : "Analyzed: homepage";
+// ANALYZED SCOPE
+const scope = report.analyzed_scope;
+document.getElementById("analyzedScope").innerHTML = `
+Pages: ${scope?.pages?.join(", ") || "homepage"}<br>
+${scope?.product_url ? `Product: <a class="audit-link" href="${scope.product_url}" target="_blank">${scope.product_url}</a>` : ""}
+`;
 
 // CONFIDENCE
 document.getElementById("confidence").innerText =
@@ -216,19 +215,20 @@ document.getElementById("heroLoss").innerText =
 document.getElementById("dailyLoss").innerText =
 `≈ $${Math.round(low/30)} – $${Math.round(high/30)} / day`;
 
-// PROOF
-document.getElementById("proof").innerHTML = `
-<b>CTA:</b> ${report.cta_text || "Unknown"}<br>
-<b>Trust:</b> ${report.has_trust ? "Detected" : "NOT detected"}<br>
-<b>Reviews:</b> ${report.has_reviews ? "Detected" : "NOT detected"}<br>
-<b>Shipping:</b> ${report.has_shipping ? "Detected" : "NOT detected"}
+// DETECTION SUMMARY
+const d = report.detection_summary || {};
+
+document.getElementById("detection").innerHTML = `
+<b>CTA:</b> ${d.cta || "Unknown"}<br>
+<b>Trust:</b> ${d.trust || "Unknown"}<br>
+<b>Reviews:</b> ${d.reviews || "Unknown"}<br>
+<b>Shipping:</b> ${d.shipping || "Unknown"}<br>
+<b>Price:</b> ${d.price || "Unknown"}
 `;
 
-// FUNNEL
-document.getElementById("funnel").innerHTML = `
-User lands → evaluates → hesitates → leaves<br><br>
-<b>Leak occurs before purchase decision</b>
-`;
+// DECISION FLOW
+document.getElementById("decisionFlow").innerHTML =
+report.decision_flow || "User lands → evaluates → hesitates → leaves";
 
 // TOP FIX
 const top = issues.find(i => i.severity === "critical");
@@ -238,13 +238,8 @@ document.getElementById("topImpact").innerText =
 
 // BEFORE AFTER
 document.getElementById("beforeAfter").innerHTML = `
-<b>Before:</b><br>
-${report.cta_text || "Generic CTA"}<br><br>
-
-<b>After:</b><br>
-${report.rewrite?.cta?.[0] || "Improved CTA with value + urgency"}<br><br>
-
-Estimated effort: <b>10–15 minutes</b>
+<b>Before:</b><br>${report.before_after?.before || "Weak experience"}<br><br>
+<b>After:</b><br>${report.before_after?.after || "Optimized conversion flow"}<br>
 `;
 
 // ISSUE WEIGHTS
@@ -264,7 +259,10 @@ issues.map(i=>{
   <div class="issue">
     <strong>${i.title}</strong>
 
-    <p><b>Detected:</b><br>${i.description}</p>
+    <p><b>Analyzed:</b> ${i.analyzed_url}</p>
+    <p>${i.description}</p>
+
+    <p><b>User behavior:</b> ${i.user_behavior}</p>
 
     <div class="impact">
       $${l.toLocaleString()} – $${h.toLocaleString()} / month
@@ -272,7 +270,7 @@ issues.map(i=>{
 
     <div class="fix">
       ${i.fix}<br><br>
-      <b>Estimated time to fix:</b> 15–30 minutes
+      <b>Confidence:</b> ${i.confidence}
     </div>
   </div>
   `;
