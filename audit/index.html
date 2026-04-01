@@ -11,76 +11,148 @@ body {
   color:#fff;
   margin:0;
   padding:16px;
-  line-height:1.6;
+  line-height:1.7;
+  font-size:15px;
 }
 .container {max-width:560px;margin:auto;}
 
 .card {
   background:#111;
   border:1px solid #222;
-  border-radius:18px;
-  padding:20px;
+  border-radius:16px;
+  padding:18px;
   margin-top:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.6);
 }
 
 .section-title {
   font-size:11px;
   text-transform:uppercase;
   color:#A1A1AA;
-  margin-bottom:6px;
-  letter-spacing:1px;
+  margin-bottom:4px;
+  letter-spacing:1.2px;
 }
 
-.big-money {
-  font-size:34px;
-  font-weight:900;
-  color:#ef4444;
-}
-
-.score {
-  font-size:48px;
-  font-weight:900;
+/* SCORE BLOCK */
+.card:first-child .section-title {
   color:#22c55e;
 }
 
-.sub {color:#A1A1AA;margin-top:6px;}
+.score {
+  font-size:56px;
+  font-weight:900;
+  letter-spacing:-1px;
+  line-height:1.1;
+  margin-top:2px;
+}
+
+.score + .sub {
+  margin-top:4px;
+}
+
+.big-money {
+  font-size:38px;
+  font-weight:900;
+  color:#ef4444;
+  line-height:1.2;
+}
+
+.sub {
+  color:#A1A1AA;
+  margin-top:6px;
+}
 
 .alert {
   background:#1a0f0f;
   border:1px solid #7f1d1d;
-  padding:14px;
-  border-radius:14px;
+  padding:16px;
+  border-radius:16px;
   color:#fca5a5;
   margin-top:14px;
   font-weight:600;
+  font-size:15px;
+  box-shadow:0 0 0 1px rgba(127,29,29,0.6);
 }
 
+/* RED DANGER BLOCKS */
+.card[style*="#dc2626"] {
+  background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
+  box-shadow:0 0 0 1px rgba(220,38,38,0.4);
+}
+
+/* ISSUES */
 .issue {
   border-top:1px solid #7f1d1d;
-  padding:18px 0;
+  padding:20px 0;
 }
 
+.issue:first-child {
+  background:#1a0f0f;
+  border-radius:12px;
+  padding:16px;
+}
+
+/* FIX */
 .fix {
-  border:1px solid #14532d;
-  background:#052e1a;
+  border:1px solid #22c55e;
+  background:#064e3b;
   padding:12px;
   border-radius:10px;
   margin-top:10px;
+  color:#d1fae5;
 }
 
+/* CTA BUTTON */
 .cta {
   display:block;
-  padding:18px;
-  background:#f97316;
+  padding:20px;
+  background:linear-gradient(135deg,#f97316,#ea580c);
   color:#000;
   text-align:center;
-  border-radius:12px;
+  border-radius:14px;
   font-weight:900;
   margin-top:16px;
   text-decoration:none;
+  font-size:18px;
+  border:2px solid #dc2626;
+  box-shadow:0 10px 25px rgba(249,115,22,0.4);
 }
 
-.checklist li {margin-bottom:6px;}
+/* CTA BLOCK EMPHASIS */
+.card:last-child {
+  box-shadow:0 0 0 1px rgba(249,115,22,0.3);
+}
+
+.checklist li {
+  margin-bottom:6px;
+}
+
+/* PRINT */
+@media print {
+  body {
+    background:white;
+    color:black;
+  }
+
+  body::before {
+    content:"ATOM FOUNDRY";
+    position:fixed;
+    top:40%;
+    left:10%;
+    font-size:60px;
+    color:rgba(0,0,0,0.05);
+    transform:rotate(-30deg);
+  }
+
+  .cta {
+    display:none;
+  }
+
+  .card {
+    page-break-inside:avoid;
+    border:1px solid #ddd;
+  }
+}
 </style>
 </head>
 
