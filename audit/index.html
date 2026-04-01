@@ -94,7 +94,6 @@ body {
 
   <div class="sub">You are losing revenue every single day — and you don’t see it.</div>
 
-  <!-- ✅ TRUST FIX -->
   <div class="sub" style="font-size:12px;color:#6b7280;">
   This analysis is based on visible page signals, not full store data.
   </div>
@@ -109,7 +108,6 @@ body {
   <div class="score" id="score"></div>
   <div class="sub" id="scoreLabel"></div>
 
-  <!-- ✅ BONUS -->
   <div class="sub" style="margin-top:10px;">
   Stores with similar score typically recover 18–32% revenue after fixes
   </div>
@@ -193,7 +191,7 @@ body {
   <div id="steps"></div>
 </div>
 
-<!-- ✅ URGENCY BLOCK -->
+<!-- URGENCY -->
 <div class="card" style="border:1px solid #dc2626;">
   <div class="section-title">Revenue Loss Reality</div>
   <div>
@@ -205,9 +203,26 @@ body {
   </div>
 </div>
 
+<!-- 🔥 NEW: MONITORING VALUE -->
+<div class="card" style="border:1px solid #14532d;">
+  <div class="section-title">Why Monitoring Matters</div>
+  <div>
+    After this audit:<br><br>
+    • New conversion leaks appear as your store evolves<br>
+    • Competitors continuously improve their funnels<br>
+    • Small UX issues compound into revenue loss<br><br>
+    Monitoring prevents this.
+  </div>
+</div>
+
 <!-- CTA -->
 <div class="card">
   <a href="#" class="cta" id="cta"></a>
+
+  <!-- 🔥 NEW: ROI LINE -->
+  <div class="sub" style="text-align:center;margin-top:10px;">
+    Most stores recover the cost of monitoring from a single fix
+  </div>
 
   <ul class="checklist">
     <li>✔ Detect revenue leaks automatically</li>
@@ -260,8 +275,6 @@ document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ /
 document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
 document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString()} lost per year`;
 document.getElementById("daily").innerText = `$${daily}`;
-
-// ✅ SCRIPT FIX
 document.getElementById("daily2").innerText = daily;
 
 document.getElementById("pattern").innerHTML = `
@@ -299,18 +312,8 @@ document.getElementById("priority").innerHTML =
 
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p => {
-
-  const impact = getImpact(
-    p.impact_value,
-    p.impact,
-    p.monthly_impact
-  );
-
-  return `
-<b>${p.fix}</b><br>
-💰 +$${impact.toLocaleString()}/month<br><br>
-`;
-
+  const impact = getImpact(p.impact_value, p.impact, p.monthly_impact);
+  return `<b>${p.fix}</b><br>💰 +$${impact.toLocaleString()}/month<br><br>`;
 }).join("");
 
 document.getElementById("issues").innerHTML =
@@ -318,9 +321,7 @@ issues.map(i => `
 <div class="issue">
 <div><b>$${getImpact(i.impact_value, i.monthly_impact).toLocaleString()}/month</b></div>
 <strong>${i.title}</strong>
-
 <div class="fix">${i.fix}</div>
-
 <p>${i.reason}</p>
 </div>
 `).join("");
