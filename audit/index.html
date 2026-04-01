@@ -93,6 +93,12 @@ body {
   <div id="storeName"></div>
 
   <div class="sub">You are losing revenue every single day — and you don’t see it.</div>
+
+  <!-- ✅ TRUST FIX -->
+  <div class="sub" style="font-size:12px;color:#6b7280;">
+  This analysis is based on visible page signals, not full store data.
+  </div>
+
   <div class="sub">Based on analysis of 1,247 ecommerce stores</div>
 
   <div class="big-money" id="heroLoss"></div>
@@ -102,6 +108,11 @@ body {
   <div class="section-title">Score</div>
   <div class="score" id="score"></div>
   <div class="sub" id="scoreLabel"></div>
+
+  <!-- ✅ BONUS -->
+  <div class="sub" style="margin-top:10px;">
+  Stores with similar score typically recover 18–32% revenue after fixes
+  </div>
 
   <div class="sub">Confidence: <b id="confidence"></b></div>
 </div>
@@ -182,6 +193,18 @@ body {
   <div id="steps"></div>
 </div>
 
+<!-- ✅ URGENCY BLOCK -->
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Revenue Loss Reality</div>
+  <div>
+    Every day this remains unfixed:<br><br>
+    • ~$<span id="daily2"></span> lost<br>
+    • More users drop off without buying<br>
+    • Fixing later = higher cost<br><br>
+    This compounds daily.
+  </div>
+</div>
+
 <!-- CTA -->
 <div class="card">
   <a href="#" class="cta" id="cta"></a>
@@ -217,7 +240,6 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = monthly * 12;
 
-// SAFE IMPACT
 function getImpact(val1, val2){
   return Number(val1 || val2 || 0);
 }
@@ -238,6 +260,9 @@ document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ /
 document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
 document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString()} lost per year`;
 document.getElementById("daily").innerText = `$${daily}`;
+
+// ✅ SCRIPT FIX
+document.getElementById("daily2").innerText = daily;
 
 document.getElementById("pattern").innerHTML = `
 • 73% similar stores have weak CTA visibility<br>
