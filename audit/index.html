@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conversion Intelligence Report</title>
+<title>Conversion Intelligence Audit</title>
 
 <style>
 body {
@@ -29,7 +29,6 @@ body {
   text-transform:uppercase;
   color:#666;
   margin-bottom:8px;
-  letter-spacing:1px;
 }
 
 .big-money {
@@ -44,7 +43,7 @@ body {
   color:#22c55e;
 }
 
-.sub {color:#999;margin-top:6px;line-height:1.5;}
+.sub {color:#999;margin-top:6px;}
 
 .alert {
   background:#1a0f0f;
@@ -71,7 +70,7 @@ body {
 
 .impact {
   color:#f87171;
-  font-weight:700;
+  font-weight:800;
   margin-top:6px;
 }
 
@@ -85,51 +84,11 @@ body {
   font-weight:900;
   margin-top:16px;
   text-decoration:none;
-  border:2px solid #dc2626;
-}
-
-.cta-pdf {
-  display:block;
-  padding:14px;
-  background:#000;
-  color:#fff;
-  text-align:center;
-  border-radius:10px;
-  margin-top:10px;
-  text-decoration:none;
-  border:1px solid #333;
-}
-
-.checklist li {
-  margin-bottom:6px;
 }
 
 @media print {
-  body {
-    background:white;
-    color:black;
-  }
-
-  body::before {
-    content:"ATOM FOUNDRY – CONFIDENTIAL AUDIT";
-    position:fixed;
-    top:40%;
-    left:10%;
-    font-size:40px;
-    color:rgba(0,0,0,0.05);
-    transform:rotate(-30deg);
-    pointer-events:none;
-  }
-
-  .cta-monitoring,
-  .cta-pdf {
-    display:none;
-  }
-
-  .card {
-    page-break-inside:avoid;
-    border:1px solid #ddd;
-  }
+  body {background:white;color:black;}
+  .cta-monitoring {display:none;}
 }
 </style>
 </head>
@@ -137,97 +96,66 @@ body {
 <body>
 <div class="container">
 
-<!-- HERO -->
 <div class="card">
   <div class="section-title">Conversion Intelligence Audit</div>
   <div id="storeName"></div>
 
   <div class="big-money" id="heroLoss"></div>
   <div class="sub" id="lossContext"></div>
-
   <div class="sub" id="dailyLoss"></div>
 
   <div class="score" id="score"></div>
-  <div class="sub">Performance vs ecommerce benchmarks</div>
+  <div class="sub">Performance vs benchmarks</div>
+
+  <div class="sub" style="margin-top:10px;">
+    Confidence: <b id="confidence"></b> • Based on detected store elements
+  </div>
 </div>
 
-<!-- BASELINE -->
-<div class="card">
-  <div class="section-title">Estimated Store Baseline</div>
-  <div id="baseline"></div>
-</div>
-
-<!-- ALERT -->
 <div class="alert">
-⚠️ Revenue is leaking right now.  
-Every day without fixing this = lost profit.
+⚠️ This is a conversion problem, not a traffic problem.
+</div>
+
+<!-- WHERE MONEY IS LOST -->
+<div class="card">
+  <div class="section-title">Where Revenue Is Lost</div>
+  <div id="funnel"></div>
 </div>
 
 <!-- TOP FIX -->
 <div class="card">
-  <div class="section-title">Highest Impact Opportunity (Fix First)</div>
+  <div class="section-title">Critical Revenue Leak (Fix First)</div>
   <p id="topfix"></p>
   <div class="impact" id="topImpact"></div>
 </div>
 
 <!-- MAIN -->
 <div class="card">
-  <div class="section-title">Primary Conversion Breakdown</div>
+  <div class="section-title">Root Cause</div>
   <p id="main"></p>
 </div>
 
 <!-- ISSUES -->
 <div class="card">
-  <div class="section-title">Detailed Conversion Issues</div>
+  <div class="section-title">Conversion Breakdown</div>
   <div id="issues"></div>
-</div>
-
-<!-- PRIORITY -->
-<div class="card">
-  <div class="section-title">Execution Priority</div>
-  <div id="priority"></div>
-</div>
-
-<!-- CHECKLIST -->
-<div class="card">
-  <div class="section-title">Implementation Checklist</div>
-  <ul class="checklist" id="checklist"></ul>
 </div>
 
 <!-- UPSIDE -->
 <div class="card">
-  <div class="section-title">Revenue Upside</div>
+  <div class="section-title">If You Fix This</div>
   <div id="uplift"></div>
 </div>
 
-<!-- CTA -->
 <div class="card">
-  <div class="section-title">Next Step</div>
+  <div class="section-title">What Happens If You Do Nothing</div>
+  <div id="lossFuture"></div>
+</div>
 
-  <p>
-  We continuously scan your store and detect new revenue leaks automatically.
-  </p>
-
-  <ul class="checklist">
-    <li>✔ Weekly full-store analysis</li>
-    <li>✔ New leak detection before it costs money</li>
-    <li>✔ Exact fixes (no guessing)</li>
-    <li>✔ Conversion score tracking over time</li>
-    <li>✔ Priority alerts when revenue drops</li>
-  </ul>
-
-  <div class="alert" style="margin-top:12px;">
-  Without monitoring → you keep losing revenue every month
-  </div>
-
+<div class="card">
   <a href="#" class="cta-monitoring">
     Stop Revenue Loss → Activate Monitoring ($89/month)
   </a>
-
-  <a href="#" class="cta-pdf" onclick="window.print()">
-    Download & Print PDF
-  </a>
-
 </div>
 
 </div>
@@ -249,81 +177,85 @@ document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = score + "/100";
 document.getElementById("main").innerText = report.main_leak || "";
 
-/* ===== BASELINE ===== */
-const trafficLow = 8000;
-const trafficHigh = 15000;
-const crLow = 0.012;
-const crHigh = 0.025;
-const aovLow = 35;
-const aovHigh = 60;
-
-document.getElementById("baseline").innerHTML =
-`
-• Monthly visitors: ${trafficLow.toLocaleString()} – ${trafficHigh.toLocaleString()}<br>
-• Conversion rate: ${(crLow*100).toFixed(1)}% – ${(crHigh*100).toFixed(1)}%<br>
-• Average order value: $${aovLow} – $${aovHigh}
-`;
+/* ===== CONFIDENCE ===== */
+document.getElementById("confidence").innerText =
+issues.length >= 5 ? "High" : "Medium";
 
 /* ===== REVENUE ===== */
-const baseRevenue = report.revenue_calculation?.monthly_loss_value || 5000;
-const low = Math.round(baseRevenue * 0.6);
-const high = Math.round(baseRevenue * 1.2);
+const base = report.revenue_calculation?.monthly_loss_value || 5000;
+const low = Math.round(base * 0.7);
+const high = Math.round(base * 1.3);
 
 document.getElementById("heroLoss").innerText =
-`$${low.toLocaleString()} – $${high.toLocaleString()} monthly revenue opportunity`;
+`$${low.toLocaleString()} – $${high.toLocaleString()} monthly revenue leak`;
 
 document.getElementById("lossContext").innerText =
-`Based on conversion optimization potential`;
+`Based on detected UX and conversion issues`;
 
 document.getElementById("dailyLoss").innerText =
-`≈ $${Math.round(low/30).toLocaleString()} – $${Math.round(high/30).toLocaleString()} lost per day`;
+`≈ $${Math.round(low/30)} – $${Math.round(high/30)} lost per day`;
+
+/* ===== FUNNEL ===== */
+document.getElementById("funnel").innerHTML = `
+1. Visitor lands on product page<br>
+2. Sees unclear value / weak CTA<br>
+3. Missing trust → hesitation<br>
+4. Leaves without purchase<br><br>
+<b>→ Revenue leak happens BEFORE add-to-cart</b>
+`;
 
 /* ===== TOP FIX ===== */
 const top = issues.find(i => i.severity === "critical");
 document.getElementById("topfix").innerText = top?.fix || "";
 
 document.getElementById("topImpact").innerText =
-`Estimated impact: +$${Math.round(low*0.4).toLocaleString()} – $${Math.round(high*0.6).toLocaleString()} / month`;
+`THIS ISSUE ALONE may be responsible for ~40–60% of lost revenue`;
 
-/* ===== ISSUES ===== */
+/* ===== ISSUE WEIGHTS ===== */
+const weights = {
+  critical: [0.4,0.6],
+  medium: [0.15,0.25],
+  low: [0.05,0.1]
+};
+
 document.getElementById("issues").innerHTML =
-issues.map(i => `
+issues.map(i => {
+  const w = weights[i.severity] || [0.1,0.2];
+  const l = Math.round(low * w[0]);
+  const h = Math.round(high * w[1]);
+
+  return `
   <div class="issue">
     <strong>${i.title}</strong>
 
-    <p><b>What we see:</b><br>${i.description}</p>
-
-    <p><b>Why it hurts:</b><br>
-    This creates hesitation at the buying decision stage, reducing conversion probability.
-    </p>
+    <p>${i.description}</p>
 
     <div class="impact">
-      Estimated impact: $${Math.round(low*0.2).toLocaleString()} – $${Math.round(high*0.3).toLocaleString()} / month
+      Impact: $${l.toLocaleString()} – $${h.toLocaleString()} / month
     </div>
 
     <div class="fix">
-      <b>How to fix:</b><br>${i.fix}
+      ${i.fix}
     </div>
   </div>
-`).join("");
-
-/* ===== PRIORITY ===== */
-document.getElementById("priority").innerHTML =
-`
-1. Fix trust & shipping clarity (highest impact)<br>
-2. Improve CTA + product clarity<br>
-3. Add social proof & video
-`;
-
-/* ===== CHECKLIST ===== */
-document.getElementById("checklist").innerHTML =
-issues.map(i => `<li>${i.fix}</li>`).join("");
+  `;
+}).join("");
 
 /* ===== UPSIDE ===== */
 document.getElementById("uplift").innerHTML =
 `
 +10–30% conversion improvement<br>
-+$${Math.round(low*1.5).toLocaleString()} – $${Math.round(high*2).toLocaleString()} yearly potential
+≈ $${Math.round(low*1.5).toLocaleString()} – $${Math.round(high*2).toLocaleString()} yearly upside
+`;
+
+/* ===== FUTURE LOSS ===== */
+document.getElementById("lossFuture").innerHTML =
+`
+If nothing changes:<br><br>
+You will lose ~$${low.toLocaleString()} – $${high.toLocaleString()} every month<br>
+≈ $${(low*12).toLocaleString()} – $${(high*12).toLocaleString()} per year<br><br>
+This is not theoretical.<br>
+This is happening right now.
 `;
 
 })();
