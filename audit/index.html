@@ -101,14 +101,13 @@ body {
   <div class="score" id="score"></div>
   <div class="sub" id="scoreLabel"></div>
 
-  <div class="sub">Confidence: <b>High</b></div>
+  <div class="sub">Confidence: <b id="confidence"></b></div>
 </div>
 
 <div class="alert">
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
-<!-- 🔥 UPSSELL BLOCK -->
 <div class="card" style="border:1px solid #7f1d1d;background:#1a0f0f;">
   <div style="font-weight:800;font-size:18px;">
     You are losing $<span id="upsellDaily"></span> every day
@@ -124,14 +123,6 @@ body {
 </div>
 
 <div class="card">
-  <div class="section-title">Reality Check</div>
-  Your store is actively losing buyers every single day.<br><br>
-  Not because of traffic.<br>
-  Not because of your product.<br><br>
-  But because users cannot confidently make a purchase decision.
-</div>
-
-<div class="card">
   <div class="section-title">Revenue Opportunity</div>
   <div id="dashboard"></div>
 </div>
@@ -144,19 +135,6 @@ body {
 <div class="card">
   <div class="section-title">Where Money Is Lost</div>
   <div id="priority"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Buyer Behavior</div>
-  User lands → searches for price → fails<br>
-  Looks for trust → fails<br>
-  Hesitates → delays decision<br>
-  Leaves → does not return
-</div>
-
-<div class="card">
-  <div class="section-title">What We Detected</div>
-  <div id="detection"></div>
 </div>
 
 <div class="card">
@@ -180,70 +158,10 @@ body {
 </div>
 
 <div class="card">
-  <div class="section-title">Final Insight</div>
-  Your store is not broken.<br><br>
-  But it is leaking revenue at every decision point.<br><br>
-  And those leaks compound every single day.
-</div>
-
-<div class="card">
-  <div class="section-title">If You Ignore This</div>
-  <div id="ignore"></div>
-</div>
-
-<div class="card" style="border:1px solid #7f1d1d;background:#1a0f0f;">
-  <div class="section-title">What Happens Next</div>
-
-  <div style="color:#fca5a5;font-weight:600;line-height:1.6;">
-    Today: You lose $<span id="lossToday"></span><br>
-    This week: ~$<span id="lossWeek"></span><br>
-    This month: ~$<span id="lossMonth"></span><br><br>
-
-    These losses compound.<br>
-    And they happen silently — without any alert.
-  </div>
-</div>
-
-<div class="card">
-  <div class="section-title">The Hidden Problem</div>
-
-  <div class="sub">
-    Conversion issues do not stay static.<br><br>
-
-    Small changes in your store,<br>
-    product updates, layout shifts,<br>
-    or broken elements silently reduce conversion.<br><br>
-
-    You will NOT notice it — until revenue drops.
-  </div>
-</div>
-
-<div class="card">
-
-  <div style="font-weight:700;margin-bottom:10px;">
-    This is not a one-time fix.
-  </div>
-
-  <div class="sub">
-    Without monitoring, new leaks will appear again.<br>
-    And each one will cost you revenue before you detect it.
-  </div>
-
   <a href="#" class="cta" id="cta"></a>
-
   <div class="sub" style="text-align:center;margin-top:10px;">
     Every day you delay = <span id="daily"></span> lost
   </div>
-
-  <div class="sub" style="margin-top:16px;">
-    • Detect new revenue leaks automatically<br>
-    • Get alerts when conversion drops<br>
-    • Identify broken elements instantly<br>
-    • Continuous optimization suggestions<br><br>
-
-    Monitoring pays for itself if it prevents even 1 issue.
-  </div>
-
 </div>
 
 </div>
@@ -257,142 +175,85 @@ if (!token) return;
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 
-let r = data.report_json || data;
-const issues = r.issues || [];
+const r = data.report_json || data;
 const calc = r.revenue_calculation || {};
+const issues = r.issues || [];
 
-// 🔥 MONEY CONSISTENCY FIX
-const totalFromIssues = (r.revenue_plan || [])
-  .reduce((sum, i) => sum + (i.monthly_uplift_value || 0), 0);
+const monthly = Number(calc.monthly_loss_value || 10000);
+const daily = Number(calc.daily_loss_value || Math.round(monthly / 30));
 
-const monthlyRaw = calc.monthly_loss_value || 10000;
-const monthly = Math.min(monthlyRaw, totalFromIssues || monthlyRaw);
-const daily = calc.daily_loss_value || Math.round(monthly / 30);
+document.getElementById("storeName").innerText = data.domain;
+document.getElementById("score").innerText = r.score + "/100";
+document.getElementById("confidence").innerText = r.analysis_confidence || "High";
 
-// 🔥 STORE TYPE DETECTION
-const domain = data.domain || "";
-const isBigBrand =
-  domain.includes("zappos") ||
-  domain.includes("amazon") ||
-  domain.includes("nike");
-
-// 🔥 SCORE LABEL
-function getScoreLabel(score) {
-  if (score > 80) return "Strong performance with optimization potential";
-  if (score > 60) return "Good foundation but leaking revenue";
-  if (score > 40) return "Significant conversion issues detected";
-  return "Severe revenue leaks affecting performance";
+function getScoreLabel(score){
+  if(score>80)return"Strong performance";
+  if(score>60)return"Good foundation but leaking revenue";
+  if(score>40)return"Serious conversion issues";
+  return"Critical revenue loss";
 }
 
-// UI
-document.getElementById("storeName").innerText = domain;
-document.getElementById("score").innerText = r.score_calculated + "/100";
-document.getElementById("scoreLabel").innerText = getScoreLabel(r.score_calculated);
+document.getElementById("scoreLabel").innerText = getScoreLabel(r.score);
 
-document.getElementById("heroLoss").innerText =
-`$${monthly.toLocaleString()}+ / month`;
-
-document.getElementById("dailyLoss").innerText =
-`≈ $${daily} lost every day`;
+document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ / month`;
+document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
 
 document.getElementById("daily").innerText = `$${daily}`;
 document.getElementById("upsellDaily").innerText = daily;
 
 document.getElementById("liveLoss").innerHTML = `
-Last 7 days: ~$${(daily*7).toLocaleString()} lost<br>
-Last 30 days: ~$${(daily*30).toLocaleString()} lost
+Last 7 days: ~$${(daily*7).toLocaleString()}<br>
+Last 30 days: ~$${(daily*30).toLocaleString()}
 `;
 
 document.getElementById("dashboard").innerHTML = `
 Current CVR: ${calc.current_cvr}%<br>
 Potential CVR: ${calc.potential_cvr}%<br><br>
-+30–40% conversion increase<br><br>
 <b>+$${monthly.toLocaleString()}/month</b>
 `;
 
 document.getElementById("primary").innerText = r.primary_failure;
 
-const labels = [
-"Pricing visibility",
-"Trust signals",
-"Shipping clarity",
-"CTA clarity",
-"Page clarity"
-];
-
+// ✅ FIXED DISTRIBUTION
 document.getElementById("priority").innerHTML =
-Object.entries(r.revenue_distribution || {}).map(([k,v],i) =>
-`${labels[i] || k} → ${v}% (~$${Math.round(monthly*(v/100))})`
+(r.revenue_distribution || []).map(d =>
+`${d.name} → ${d.percent}% (~$${d.amount.toLocaleString()})`
 ).join("<br>");
 
-// 🔥 BIG BRAND DETECTION FIX
-const d = r.detection_summary || {};
-
-function safeDetect(val, fallbackBig, fallbackSmall){
-  if (val) return val;
-  return isBigBrand ? fallbackBig : fallbackSmall;
-}
-
-document.getElementById("detection").innerHTML = `
-CTA: ${safeDetect(d.cta,
-"CTA exists but is not strongly emphasized near decision points",
-"We could not reliably detect a clear CTA")}<br>
-Trust: ${safeDetect(d.trust,
-"Trust signals present but not strongly reinforced",
-"We could not reliably detect trust signals")}<br>
-Price: ${safeDetect(d.price,
-"Pricing exists but lacks strong visibility near decision points",
-"We could not reliably detect pricing")}
-`;
-
+// ✅ PLAN
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p => `
 <b>${p.fix}</b><br>
-${p.expected_impact}<br>
-💰 +$${p.monthly_uplift_value}/month<br><br>
+💰 +$${p.impact.toLocaleString()}/month<br><br>
 `).join("");
 
+// ✅ ISSUES
 document.getElementById("issues").innerHTML =
 issues.map(i => `
 <div class="issue">
 <strong>${i.title}</strong>
 
-<p>${i.user_sees}</p>
-
-<p><b>Decision moment:</b> ${i.moment_of_loss}</p>
-
-<div class="why">
-Why this kills conversion:<br>
-Users cannot confidently evaluate the offer, which creates hesitation and delays decision making.
-</div>
+<div class="why">${i.reason}</div>
 
 <div class="fix">
-💰 $${i.monthly_impact_value}/month<br>
-⏱ ${i.estimated_time_to_fix} → recovers $${i.monthly_impact_value}/month<br><br>
+💰 $${i.impact_value.toLocaleString()}/month<br>
+⏱ ${i.recovery_time}<br><br>
 ${i.fix}
 </div>
 </div>
 `).join("");
 
+// ✅ EXECUTION
 document.getElementById("steps").innerHTML =
-(r.implementation || []).map(s => `• ${s}`).join("<br>");
+(r.execution_plan || []).map(s =>
+`• ${s.title} → ${s.impact}`
+).join("<br>");
 
 document.getElementById("assumptions").innerText =
-(calc.assumptions || "Estimated using traffic, conversion rate and order value.") +
-" If your traffic is higher, your real losses are significantly higher.";
-
-document.getElementById("ignore").innerHTML = `
-$${monthly.toLocaleString()}/month lost<br>
-$${(calc.yearly_loss_value || monthly*12).toLocaleString()}/year
-`;
+calc.assumptions || "";
 
 document.getElementById("cta").innerText =
 `Stop Losing $${daily}/day → Activate Monitoring ($89/month)`;
-
-// ESCALATION
-document.getElementById("lossToday").innerText = daily;
-document.getElementById("lossWeek").innerText = (daily * 7).toLocaleString();
-document.getElementById("lossMonth").innerText = (daily * 30).toLocaleString();
 
 })();
 </script>
