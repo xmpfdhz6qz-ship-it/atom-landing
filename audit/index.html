@@ -42,7 +42,7 @@ body {
   color:#22c55e;
 }
 
-.sub {color:#999;margin-top:6px;}
+.sub {color:#999;margin-top:6px;line-height:1.5;}
 
 .alert {
   background:#1a0f0f;
@@ -115,6 +115,18 @@ a.audit-link {
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
+<!-- BENCHMARK -->
+<div class="card">
+  <div class="section-title">Performance Benchmark</div>
+  <div id="benchmark"></div>
+</div>
+
+<!-- REAL TIME LOSS -->
+<div class="card">
+  <div class="section-title">What Is Happening Right Now</div>
+  <div id="realtime"></div>
+</div>
+
 <!-- DETECTION -->
 <div class="card">
   <div class="section-title">What We Detected</div>
@@ -144,6 +156,12 @@ a.audit-link {
 <div class="card">
   <div class="section-title">Conversion Breakdown</div>
   <div id="issues"></div>
+</div>
+
+<!-- REVENUE DISTRIBUTION -->
+<div class="card">
+  <div class="section-title">Revenue Loss Distribution</div>
+  <div id="distribution"></div>
 </div>
 
 <!-- UPSIDE -->
@@ -193,11 +211,11 @@ const issues = report.issues || [];
 document.getElementById("storeName").innerText = data.domain;
 document.getElementById("score").innerText = report.score + "/100";
 
-// ANALYZED SCOPE
+// SCOPE
 const scope = report.analyzed_scope;
 document.getElementById("analyzedScope").innerHTML = `
 Pages: ${scope?.pages?.join(", ") || "homepage"}<br>
-${scope?.product_url ? `Product: <a class="audit-link" href="${scope.product_url}" target="_blank">${scope.product_url}</a>` : ""}
+${scope?.product_url ? `<a class="audit-link" href="${scope.product_url}" target="_blank">${scope.product_url}</a>` : ""}
 `;
 
 // CONFIDENCE
@@ -215,66 +233,75 @@ document.getElementById("heroLoss").innerText =
 document.getElementById("dailyLoss").innerText =
 `≈ $${Math.round(low/30)} – $${Math.round(high/30)} / day`;
 
-// DETECTION SUMMARY
-const d = report.detection_summary || {};
+// BENCHMARK
+const b = report.benchmark || {};
+document.getElementById("benchmark").innerHTML = `
+You are performing worse than ${100 - (b.overall_percentile || 50)}% of stores<br><br>
+Clarity: ${b.clarity_percentile || 50}th percentile<br>
+Trust: ${b.trust_percentile || 50}th percentile<br>
+Friction: ${b.friction_percentile || 50}th percentile<br><br>
+<b>Weakest area:</b> ${b.weakest_area}<br><br>
+${b.insight || ""}
+`;
 
+// REAL TIME LOSS
+const rt = report.real_time_loss || {};
+document.getElementById("realtime").innerHTML = `
+~${rt.daily_visitors || 100} visitors reach decision stage daily<br>
+~${rt.buyers_lost_daily || 80} leave without buying
+`;
+
+// DETECTION
+const d = report.detection_summary || {};
 document.getElementById("detection").innerHTML = `
-<b>CTA:</b> ${d.cta || "Unknown"}<br>
-<b>Trust:</b> ${d.trust || "Unknown"}<br>
-<b>Reviews:</b> ${d.reviews || "Unknown"}<br>
-<b>Shipping:</b> ${d.shipping || "Unknown"}<br>
-<b>Price:</b> ${d.price || "Unknown"}
+CTA: ${d.cta}<br>
+Trust: ${d.trust}<br>
+Reviews: ${d.reviews}<br>
+Shipping: ${d.shipping}<br>
+Price: ${d.price}
 `;
 
 // DECISION FLOW
-document.getElementById("decisionFlow").innerHTML =
-report.decision_flow || "User lands → evaluates → hesitates → leaves";
+document.getElementById("decisionFlow").innerText =
+report.decision_flow;
 
 // TOP FIX
 const top = issues.find(i => i.severity === "critical");
-document.getElementById("topfix").innerText = top?.fix || "";
+document.getElementById("topfix").innerText = top?.fix;
 document.getElementById("topImpact").innerText =
 "~40–60% of total revenue loss comes from this";
 
 // BEFORE AFTER
 document.getElementById("beforeAfter").innerHTML = `
-<b>Before:</b><br>${report.before_after?.before || "Weak experience"}<br><br>
-<b>After:</b><br>${report.before_after?.after || "Optimized conversion flow"}<br>
+Before:<br>${report.before_after?.before}<br><br>
+After:<br>${report.before_after?.after}
 `;
 
-// ISSUE WEIGHTS
-const weights = {
-  critical:[0.4,0.6],
-  medium:[0.15,0.25],
-  low:[0.05,0.1]
-};
-
+// ISSUES
 document.getElementById("issues").innerHTML =
-issues.map(i=>{
-  const w = weights[i.severity]||[0.1,0.2];
-  const l = Math.round(low*w[0]);
-  const h = Math.round(high*w[1]);
-
-  return `
+issues.map(i => `
   <div class="issue">
     <strong>${i.title}</strong>
-
     <p><b>Analyzed:</b> ${i.analyzed_url}</p>
-    <p>${i.description}</p>
 
-    <p><b>User behavior:</b> ${i.user_behavior}</p>
+    <p><b>User sees:</b> ${i.user_sees}</p>
+    <p><b>User expects:</b> ${i.user_expects}</p>
 
-    <div class="impact">
-      $${l.toLocaleString()} – $${h.toLocaleString()} / month
-    </div>
+    <p>${i.problem}</p>
 
     <div class="fix">
       ${i.fix}<br><br>
       <b>Confidence:</b> ${i.confidence}
     </div>
   </div>
-  `;
-}).join("");
+`).join("");
+
+// DISTRIBUTION
+const dist = report.revenue_distribution || {};
+document.getElementById("distribution").innerHTML =
+Object.entries(dist).map(([k,v]) =>
+`${k}: ${v}%`
+).join("<br>");
 
 // UPSIDE
 document.getElementById("uplift").innerHTML =
@@ -282,8 +309,8 @@ document.getElementById("uplift").innerHTML =
 
 // LOSS
 document.getElementById("lossFuture").innerHTML =
-`You lose ~$${low.toLocaleString()} – $${high.toLocaleString()} monthly<br>
-≈ $${(low*12).toLocaleString()} – $${(high*12).toLocaleString()} yearly`;
+`$${low.toLocaleString()} – $${high.toLocaleString()} monthly<br>
+$${(low*12).toLocaleString()} – $${(high*12).toLocaleString()} yearly`;
 
 })();
 </script>
