@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversion Intelligence Audit</title>
 
 <style>
 body {
   font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
   background:#0A0A0A;
   color:#fff;
+  margin:0;
   padding:16px;
 }
-.container {max-width:720px;margin:auto;}
+.container {max-width:700px;margin:auto;}
+
 .card {
   background:#111;
   border:1px solid #222;
@@ -19,18 +22,69 @@ body {
   padding:24px;
   margin-top:16px;
 }
-.big {font-size:42px;font-weight:900;color:#ef4444;}
-.score {font-size:56px;font-weight:900;color:#22c55e;}
-.sub {color:#aaa;margin-top:6px;}
+
+.section-title {
+  font-size:11px;
+  text-transform:uppercase;
+  color:#666;
+  margin-bottom:8px;
+}
+
+.big-money {
+  font-size:40px;
+  font-weight:900;
+  color:#ef4444;
+}
+
+.score {
+  font-size:52px;
+  font-weight:900;
+  color:#22c55e;
+}
+
+.sub {color:#999;margin-top:6px;line-height:1.6;}
+
+.alert {
+  background:#1a0f0f;
+  border:1px solid #7f1d1d;
+  padding:16px;
+  border-radius:14px;
+  color:#fca5a5;
+  margin-top:16px;
+  font-weight:600;
+}
+
+.issue {
+  border-top:1px solid #7f1d1d;
+  padding:22px 0;
+}
+
+.fix {
+  border:1px solid #14532d;
+  background:#052e1a;
+  padding:14px;
+  border-radius:12px;
+  margin-top:12px;
+}
+
+.why {
+  margin-top:10px;
+  color:#fbbf24;
+  font-size:14px;
+}
+
 .cta {
   display:block;
-  padding:20px;
+  padding:22px;
   background:#f97316;
-  border:2px solid #dc2626;
+  color:#000;
   text-align:center;
   border-radius:16px;
   font-weight:900;
   margin-top:16px;
+  text-decoration:none;
+  font-size:18px;
+  border:2px solid #dc2626;
 }
 </style>
 </head>
@@ -39,37 +93,64 @@ body {
 <div class="container">
 
 <div class="card">
-<div id="domain"></div>
-<div class="big" id="monthly"></div>
-<div id="daily"></div>
-<div class="score" id="score"></div>
-<div id="label"></div>
+  <div class="section-title">Conversion Intelligence Audit</div>
+  <div id="storeName"></div>
+
+  <div class="big-money" id="heroLoss"></div>
+  <div class="sub" id="dailyLoss"></div>
+
+  <div class="score" id="score"></div>
+  <div class="sub" id="scoreLabel"></div>
+
+  <div class="sub">Confidence: <b id="confidence"></b></div>
 </div>
 
-<div class="card" id="benchmark"></div>
-
-<div class="card">
-<b>Primary Failure</b>
-<div id="primary"></div>
+<div class="alert">
+⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
+<!-- 🔥 BENCHMARK -->
 <div class="card">
-<b>Where Money Is Lost</b>
-<div id="dist"></div>
-</div>
-
-<div class="card">
-<b>Conversion Leaks</b>
-<div id="issues"></div>
-</div>
-
-<div class="card">
-<b>Execution Plan</b>
-<div id="steps"></div>
+  <div class="section-title">Benchmark</div>
+  <div id="benchmark"></div>
 </div>
 
 <div class="card">
-<a class="cta" id="cta"></a>
+  <div class="section-title">Revenue Opportunity</div>
+  <div id="dashboard"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Primary Failure</div>
+  <div id="primary"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Where Money Is Lost</div>
+  <div id="priority"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Conversion Leaks</div>
+  <div id="issues"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Execution Plan</div>
+  <div id="steps"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">How This Was Calculated</div>
+  <div id="assumptions"></div>
+</div>
+
+<div class="card">
+  <a href="#" class="cta" id="cta"></a>
+
+  <div class="sub" style="text-align:center;margin-top:10px;">
+    Every day you delay = <span id="daily"></span> lost
+  </div>
 </div>
 
 </div>
@@ -77,51 +158,89 @@ body {
 <script>
 (async function(){
 
-const token = location.pathname.split("/").pop();
+const token = window.location.pathname.split("/").pop();
+if (!token) return;
+
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 
 const r = data.report_json || data;
-const calc = r.revenue_calculation;
+const calc = r.revenue_calculation || {};
+const issues = r.issues || [];
 
-const monthly = calc.monthly_loss_value;
-const daily = calc.daily_loss_value;
+const monthly = Number(calc.monthly_loss_value || 10000);
+const daily = Number(calc.daily_loss_value || Math.round(monthly / 30));
 
-document.getElementById("domain").innerText = data.domain;
-document.getElementById("monthly").innerText = `$${monthly.toLocaleString()}/month`;
-document.getElementById("daily").innerText = `≈ $${daily}/day`;
+// HEADER
+document.getElementById("storeName").innerText = data.domain;
+document.getElementById("score").innerText = r.score + "/100";
+document.getElementById("confidence").innerText = r.analysis_confidence || "High";
 
-document.getElementById("score").innerText = r.score;
-document.getElementById("label").innerText = "Revenue leak detected";
+function getScoreLabel(score){
+  if(score>80)return"Strong performance";
+  if(score>60)return"Good foundation but leaking revenue";
+  if(score>40)return"Serious conversion issues";
+  return"Critical revenue loss";
+}
 
+document.getElementById("scoreLabel").innerText = getScoreLabel(r.score);
+
+document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ / month`;
+document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
+document.getElementById("daily").innerText = `$${daily}`;
+
+// 🔥 BENCHMARK
+const b = r.benchmark || {};
 document.getElementById("benchmark").innerHTML = `
-Compared to similar stores:
-<br>Your score: ${r.score}
-<br>Top stores: 80+
-<br>You are underperforming
+Your score: <b>${r.score}</b><br>
+Top stores: <b>${b.top_score || 85}+</b><br>
+Average: <b>${b.avg_score || 68}</b><br><br>
+You are performing worse than <b>${100 - (b.percentile || 50)}%</b> of stores
 `;
 
+// DASHBOARD
+document.getElementById("dashboard").innerHTML = `
+Current CVR: ${calc.current_cvr}%<br>
+Potential CVR: ${calc.potential_cvr}%<br><br>
+<b>+$${monthly.toLocaleString()}/month</b>
+`;
+
+// PRIMARY
 document.getElementById("primary").innerText = r.primary_failure;
 
-document.getElementById("dist").innerHTML =
+// 🔥 DISTRIBUTION FIX
+document.getElementById("priority").innerHTML =
 (r.revenue_distribution || []).map(d =>
-`${d.name} → ${d.percent}% (~$${d.amount})`
+`${d.name} → ${d.percent}% (~$${d.amount.toLocaleString()})`
 ).join("<br>");
 
+// 🔥 ISSUES FIX
 document.getElementById("issues").innerHTML =
-(r.issues || []).map(i => `
-<b>${i.title}</b><br>
-${i.reason}<br>
-💰 $${i.impact_value}/month<br><br>
+issues.map(i => `
+<div class="issue">
+<strong>${i.title}</strong>
+
+<div class="why">${i.reason}</div>
+
+<div class="fix">
+💰 $${i.impact_value.toLocaleString()}/month<br>
+⏱ ${i.recovery_time}<br><br>
+${i.fix}
+</div>
+</div>
 `).join("");
 
+// 🔥 EXECUTION FIX
 document.getElementById("steps").innerHTML =
 (r.execution_plan || []).map(s =>
 `• ${s.title} → ${s.impact}`
 ).join("<br>");
 
+document.getElementById("assumptions").innerText =
+calc.assumptions || "";
+
 document.getElementById("cta").innerText =
-`Stop Losing $${daily}/day`;
+`Stop Losing $${daily}/day → Activate Monitoring ($89/month)`;
 
 })();
 </script>
