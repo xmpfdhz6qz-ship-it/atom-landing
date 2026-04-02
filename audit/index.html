@@ -334,9 +334,24 @@ body {
 (async function(){
 
 const params = new URLSearchParams(window.location.search);
-const token = params.get("token");
+let token = params.get("token");
 
-if (!token) return;
+// fallback na path (pro jistotu)
+if (!token) {
+  const parts = window.location.pathname.split("/");
+  token = parts[parts.length - 1];
+}
+
+// 🔍 DEBUG
+console.log("URL:", window.location.href);
+console.log("PATH:", window.location.pathname);
+console.log("SEARCH:", window.location.search);
+console.log("TOKEN:", token);
+
+if (!token) {
+  document.body.innerHTML = "NO TOKEN";
+  return;
+}
 
 console.log("TOKEN:", token);
 
