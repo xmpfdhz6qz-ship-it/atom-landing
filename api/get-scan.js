@@ -7,14 +7,11 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://n8n-production-0a8f.up.railway.app/webhook/get-report-by-id?id=${id}`
+      `https://n8n-production-d989b.up.railway.app/webhook/get-report-by-id?id=${id}`
     );
 
     const text = await response.text();
 
-    console.log("RAW:", text);
-
-    // 🔥 fallback parser (když n8n vrátí bordel)
     const match = text.match(/{[\s\S]*}/);
 
     if (!match) {
