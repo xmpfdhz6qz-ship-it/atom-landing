@@ -210,10 +210,10 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
   }, 500);
 
   try {
-    const res = await fetch("https://n8n-production-0a8f.up.railway.app/webhook/store-score", {
+    const res = await fetch("https://n8n-production-d989b.up.railway.app/webhook/scan-store", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, email })
+      body: JSON.stringify({ domain: url, email })
     });
 
     const data = await res.json();
