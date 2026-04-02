@@ -113,7 +113,6 @@ body {
   box-shadow:0 10px 25px rgba(249,115,22,0.4);
 }
 
-/* PDF BUTTON (menší + jiná barva) */
 .cta-secondary {
   display:block;
   padding:14px;
@@ -138,7 +137,6 @@ body {
   margin-bottom:6px;
 }
 
-/* PRINT */
 @media print {
   body {
     background:white;
@@ -206,79 +204,66 @@ body {
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
-<!-- PATTERN -->
 <div class="card">
   <div class="section-title">Observed Pattern</div>
   <div id="pattern"></div>
 </div>
 
-<!-- CRITICAL -->
 <div class="card" style="border:1px solid #dc2626;">
   <div class="section-title">Critical Revenue Leak</div>
   <div id="primary"></div>
 </div>
 
-<!-- GAP -->
 <div class="card">
   <div class="section-title">Conversion Gap</div>
   <div id="dashboard"></div>
 </div>
 
-<!-- BENCHMARK -->
 <div class="card">
   <div class="section-title">How You Compare</div>
   <div id="benchmark"></div>
 </div>
 
-<!-- LOSS -->
 <div class="card">
   <div class="section-title">Live Revenue Loss</div>
   <div id="liveLoss"></div>
 </div>
 
-<!-- TIMELINE -->
 <div class="card" style="border:1px solid #dc2626;">
   <div class="section-title">Revenue Loss Timeline</div>
   <div id="timeline"></div>
 </div>
 
-<!-- PRIORITY -->
 <div class="card">
   <div class="section-title">Where Money Is Lost</div>
   <div id="priority"></div>
 </div>
 
-<!-- PLAN -->
 <div class="card">
   <div class="section-title">Revenue Recovery Plan</div>
   <div id="plan"></div>
 </div>
 
-<!-- ISSUES -->
 <div class="card">
   <div class="section-title">Conversion Leaks</div>
   <div id="issues"></div>
 </div>
 
-<!-- TIME -->
 <div class="card">
   <div class="section-title">Time to Fix</div>
   <div>Most fixes can be implemented in 30–120 minutes</div>
 </div>
 
-<!-- DO NOTHING -->
 <div class="card" style="border:1px solid #dc2626;">
   <div class="section-title">If You Do Nothing</div>
   <div id="donothing"></div>
 </div>
 
-<!-- EXECUTION -->
 <div class="card">
   <div class="section-title">Execution Plan</div>
   <div id="steps"></div>
 </div>
 
-<!-- URGENCY -->
 <div class="card" style="border:1px solid #dc2626;">
   <div class="section-title">Revenue Loss Reality</div>
   <div>
@@ -290,7 +275,6 @@ body {
   </div>
 </div>
 
-<!-- MONITORING -->
 <div class="card" style="border:1px solid #14532d;">
   <div class="section-title">Why Monitoring Matters</div>
   <div>
@@ -302,7 +286,6 @@ body {
   </div>
 </div>
 
-<!-- CTA -->
 <div class="card">
   <a href="#" class="cta" id="cta"></a>
 
@@ -321,11 +304,9 @@ body {
     Every day you delay = <span id="daily"></span> lost
   </div>
 
-  <!-- PDF BUTTON -->
   <a href="#" class="cta-secondary" onclick="window.print()">
     Download & Print PDF
   </a>
-
 </div>
 
 </div>
@@ -339,7 +320,12 @@ if (!token) return;
 const res = await fetch(`/api/get-audit?token=${token}`);
 const data = await res.json();
 
-const r = data.report_json || data;
+// 🔥 FIX: sjednocení dat
+const r = {
+  ...(data.report_json || {}),
+  ...data
+};
+
 const calc = r.revenue_calculation || {};
 const issues = r.issues || [];
 
@@ -351,17 +337,9 @@ function getImpact(val1, val2){
   return Number(val1 || val2 || 0);
 }
 
-document.getElementById("storeName").innerText = data.domain || "";
+document.getElementById("storeName").innerText = r.domain || "";
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
-
-function label(s){
-if(s>80)return"Strong performance";
-if(s>60)return"Good foundation but leaking revenue";
-if(s>40)return"Significant issues";
-return"Critical leaks";
-}
-document.getElementById("scoreLabel").innerText = label(r.score || 70);
 
 document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ / month`;
 document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
@@ -369,62 +347,17 @@ document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString(
 document.getElementById("daily").innerText = `$${daily}`;
 document.getElementById("daily2").innerText = daily;
 
-document.getElementById("pattern").innerHTML = `
-• 73% similar stores have weak CTA visibility<br>
-• 61% lose users in first 5 seconds<br>
-• 58% fail to trigger immediate action<br><br>
-Your store matches this pattern
-`;
-
-document.getElementById("liveLoss").innerHTML =
-`Last 7 days: ~$${(daily*7).toLocaleString()}<br>
-Last 30 days: ~$${(daily*30).toLocaleString()}`;
-
-document.getElementById("timeline").innerHTML =
-`Every hour → ~$${Math.round(daily/24)}<br>
-Every day → $${daily}<br>
-Every week → ~$${(daily*7).toLocaleString()}<br>
-Every month → ~$${monthly.toLocaleString()}`;
-
-document.getElementById("dashboard").innerHTML =
-`Your CVR: ${calc.current_cvr || 1.4}%<br>
-Expected: ${calc.potential_cvr || 1.8}%<br><br>
-You are underperforming`;
-
-document.getElementById("benchmark").innerHTML =
-`Your CVR: ${calc.current_cvr || 1.4}%<br>
-Industry avg: ${calc.potential_cvr || 1.8}%`;
-
-document.getElementById("primary").innerText = r.primary_failure || "";
-
-document.getElementById("priority").innerHTML =
-(r.revenue_distribution || []).map(d =>
-`${d.name} → ${d.percent || 0}% (~$${(d.amount || 0).toLocaleString()})`
-).join("<br>");
-
-document.getElementById("plan").innerHTML =
-(r.revenue_plan || []).map(p => {
-  const impact = getImpact(p.impact_value, p.impact, p.monthly_impact);
-  return `<b>${p.fix}</b><br>💰 +$${impact.toLocaleString()}/month<br><br>`;
-}).join("");
+document.getElementById("primary").innerText =
+  r.primary_failure || r.main_leak_1 || r.main_leak || "";
 
 document.getElementById("issues").innerHTML =
 issues.map(i => `
 <div class="issue">
-<div><b>$${getImpact(i.impact_value, i.monthly_impact).toLocaleString()}/month</b></div>
 <strong>${i.title}</strong>
 <div class="fix">${i.fix}</div>
 <p>${i.reason}</p>
 </div>
 `).join("");
-
-document.getElementById("donothing").innerHTML =
-`Next 30 days → ~$${(daily*30).toLocaleString()} lost`;
-
-document.getElementById("steps").innerHTML =
-(r.execution_plan || []).map(s =>
-`• ${s.title} → ${s.impact || "$0"}`
-).join("<br>");
 
 document.getElementById("cta").innerText =
 `Recover up to $${daily}/day → Activate Monitoring ($89/month)`;
