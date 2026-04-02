@@ -105,7 +105,21 @@
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+
+// 👉 1) zkus query (?id=...)
+let id = params.get("id");
+
+// 👉 2) fallback → vezmi z URL (/scan/xxx)
+if (!id) {
+  const pathParts = window.location.pathname.split("/");
+  id = pathParts[pathParts.length - 1];
+}
+
+// 👉 ochrana
+if (!id || id === "scan") {
+  document.getElementById("app").innerText = "Missing scan ID";
+  throw new Error("Missing scan ID");
+}
 
 const app = document.getElementById("app");
 
