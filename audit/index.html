@@ -286,7 +286,9 @@ body {
 </div>
 
 <div class="card">
-  <a href="#" class="cta" id="cta"></a>
+  <a href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" class="cta">
+    Get Full Conversion Audit →
+  </a>
 
   <div class="sub" style="text-align:center;margin-top:10px;">
     Most stores recover the cost of monitoring from a single fix
@@ -314,27 +316,13 @@ body {
 (async function(){
 
 const token = window.location.pathname.split("/").pop();
-if (!token) return;
-
 const res = await fetch(`/api/get-audit?token=${token}`);
 const data = await res.json();
 
-// 🔥 FINAL FIX
 let r = data.report_json || {};
 
-if (typeof r === "string") {
-  try { r = JSON.parse(r); } catch { r = {}; }
-}
-
-if (r.text) {
-  try {
-    const parsed = JSON.parse(r.text);
-    r = { ...r, ...parsed };
-  } catch {}
-}
-
 const calc = r.revenue_calculation || {};
-const issues = Array.isArray(r.issues) ? r.issues : [];
+const issues = r.issues || [];
 
 const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
@@ -355,17 +343,17 @@ document.getElementById("primary").innerText = r.main_leak || "";
 
 document.getElementById("priority").innerHTML =
 (r.revenue_distribution || []).map(d =>
-`${d.name || ""} → ${d.percent || 0}% (~$${(d.amount || 0).toLocaleString()})`
+`${d.name} → ${d.percent}% (~$${d.amount})`
 ).join("<br>");
 
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p =>
-`<b>${p.fix}</b><br>💰 +$${(p.impact_value || 0).toLocaleString()}/month`
+`<b>${p.fix}</b><br>+$${p.impact_value}/month`
 ).join("<br><br>");
 
 document.getElementById("steps").innerHTML =
 (r.execution_plan || []).map(s =>
-`• ${s.title || ""} → ${s.impact || ""}`
+`• ${s.title} → ${s.impact}`
 ).join("<br>");
 
 document.getElementById("issues").innerHTML =
