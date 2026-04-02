@@ -42,30 +42,22 @@ export default async function handler(req, res) {
       } catch {}
     }
 
-    // 🔥 3. fallback STRUKTURA (NEJDŮLEŽITĚJŠÍ)
+    // 🔥 3. KLÍČOVÝ FIX — NEPŘEPISUJ, ALE ROZŠIŘUJ
     data.report_json = {
+      ...report, // 🔥 TOTO JE TEN FIX
+
       score: report?.score || data.score || 70,
       main_leak: report?.main_leak || data.main_leak_1 || "",
       quick_fix: report?.quick_fix || data.quick_fix_1 || "",
       primary_failure: report?.primary_failure || "",
 
-      // 🔥 TADY JE KLÍČ
-      issues: Array.isArray(report?.issues) ? report.issues : [
-        {
-          title: "Conversion friction detected",
-          fix: "Improve CTA clarity and trust signals",
-          reason: "Users may hesitate before purchase"
-        }
-      ],
-
+      issues: Array.isArray(report?.issues) ? report.issues : [],
       revenue_distribution: Array.isArray(report?.revenue_distribution)
         ? report.revenue_distribution
         : [],
-
       revenue_plan: Array.isArray(report?.revenue_plan)
         ? report.revenue_plan
         : [],
-
       execution_plan: Array.isArray(report?.execution_plan)
         ? report.execution_plan
         : [],
