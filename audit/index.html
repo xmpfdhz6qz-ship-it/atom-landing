@@ -336,7 +336,7 @@ body {
 const token = window.location.pathname.split("/").pop();
 if (!token) return;
 
-const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
+const res = await fetch(`/api/get-audit?token=${token}`);
 const data = await res.json();
 
 const r = data.report_json || data;
