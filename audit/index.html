@@ -333,29 +333,16 @@ body {
 <script>
 (async function(){
 
-const params = new URLSearchParams(window.location.search);
-let token = params.get("token");
+const token = window.location.pathname.split("/").pop();
+if (!token) return;
 
-// fallback na path (/audit/xxx)
-if (!token) {
-  const parts = window.location.pathname.split("/");
-  token = parts[parts.length - 1];
-}
-
-if (!token) {
-  document.body.innerHTML = "Missing token";
-  return;
-}
-
-// 🔥 FETCH DATA
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 
-const r = data.report_json || {};
+const r = data.report_json || data;
 const calc = r.revenue_calculation || {};
 const issues = r.issues || [];
 
-// SAFE DEFAULTY (aby se to už nikdy nerozbilo)
 const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = monthly * 12;
@@ -364,19 +351,16 @@ function getImpact(val1, val2){
   return Number(val1 || val2 || 0);
 }
 
-// 🔥 RENDER
-
 document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
 
 function label(s){
-  if(s>80)return"Strong performance";
-  if(s>60)return"Good foundation but leaking revenue";
-  if(s>40)return"Significant issues";
-  return"Critical leaks";
+if(s>80)return"Strong performance";
+if(s>60)return"Good foundation but leaking revenue";
+if(s>40)return"Significant issues";
+return"Critical leaks";
 }
-
 document.getElementById("scoreLabel").innerText = label(r.score || 70);
 
 document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ / month`;
