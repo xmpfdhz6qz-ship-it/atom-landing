@@ -326,7 +326,7 @@ const issues = r.issues || [];
 
 const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
-const yearly = monthly * 12;
+const yearly = Number(calc.yearly_loss_value || monthly * 12);
 
 document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = (r.score || 70) + "/100";
@@ -348,7 +348,7 @@ document.getElementById("priority").innerHTML =
 
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p =>
-`<b>${p.fix}</b><br>+$${p.impact_value}/month`
+`${p.fix}<br>+$${p.impact_value}/month`
 ).join("<br><br>");
 
 document.getElementById("steps").innerHTML =
@@ -364,6 +364,25 @@ issues.map(i => `
 <p>${i.reason}</p>
 </div>
 `).join("");
+
+// AUTO SECTIONS
+const score = r.score || 70;
+const gap = Math.round((100 - score) * 0.6);
+
+document.getElementById("dashboard").innerHTML =
+`Estimated conversion gap: <b>${gap}%</b><br>Users drop before purchase`;
+
+document.getElementById("benchmark").innerHTML =
+`Worse than ${100 - score}% of stores<br>Top stores score 85+`;
+
+document.getElementById("liveLoss").innerHTML =
+`$${daily}/day<br>$${monthly}/month<br>$${yearly}/year`;
+
+document.getElementById("timeline").innerHTML =
+`Day 1 → loss<br>Week 1 → compounding<br>Month → serious revenue leak`;
+
+document.getElementById("donothing").innerHTML =
+`$${daily} lost daily<br>Conversion stagnates<br>Competitors win`;
 
 })();
 </script>
