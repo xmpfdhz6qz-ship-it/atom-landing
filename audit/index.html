@@ -336,10 +336,28 @@ body {
 const params = new URLSearchParams(window.location.search);
 let token = params.get("token");
 
-// fallback na path (pro jistotu)
+// fallback na path
 if (!token) {
   const parts = window.location.pathname.split("/");
   token = parts[parts.length - 1];
+}
+
+// 🔥 DEBUG NA OBRAZOVKU
+document.body.innerHTML = `
+<div style="padding:20px;font-family:monospace;color:white;background:black">
+URL: ${window.location.href}<br><br>
+PATH: ${window.location.pathname}<br><br>
+SEARCH: ${window.location.search}<br><br>
+TOKEN: ${token}
+</div>
+`;
+
+if (!token) return;
+
+// STOP TADY (zatím nech fetch vypnutý)
+return;
+
+})();
 }
 
 // 🔍 DEBUG
