@@ -172,7 +172,6 @@ body {
 <body>
 <div class="container">
 
-<!-- HERO -->
 <div class="card">
   <div class="section-title">Conversion Intelligence Audit</div>
   <div id="storeName"></div>
@@ -320,11 +319,17 @@ if (!token) return;
 const res = await fetch(`/api/get-audit?token=${token}`);
 const data = await res.json();
 
-// 🔥 FIX: sjednocení dat
-const r = {
-  ...(data.report_json || {}),
-  ...data
-};
+let r = data.report_json || {};
+
+// 🔥 KLÍČOVÝ FIX — PARSE STRING JSON
+if (r.text) {
+  try {
+    const parsed = JSON.parse(r.text);
+    r = { ...r, ...parsed };
+  } catch (e) {
+    console.error("Parse error:", e);
+  }
+}
 
 const calc = r.revenue_calculation || {};
 const issues = r.issues || [];
@@ -333,11 +338,7 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = monthly * 12;
 
-function getImpact(val1, val2){
-  return Number(val1 || val2 || 0);
-}
-
-document.getElementById("storeName").innerText = r.domain || "";
+document.getElementById("storeName").innerText = data.domain || "";
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
 
@@ -347,8 +348,24 @@ document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString(
 document.getElementById("daily").innerText = `$${daily}`;
 document.getElementById("daily2").innerText = daily;
 
+// 🔥 teď už funguje
 document.getElementById("primary").innerText =
-  r.primary_failure || r.main_leak_1 || r.main_leak || "";
+  r.primary_failure || r.main_leak || "";
+
+document.getElementById("priority").innerHTML =
+(r.revenue_distribution || []).map(d =>
+`${d.name} → ${d.percent || 0}% (~$${(d.amount || 0).toLocaleString()})`
+).join("<br>");
+
+document.getElementById("plan").innerHTML =
+(r.revenue_plan || []).map(p =>
+`<b>${p.fix}</b><br>💰 +$${(p.impact_value || 0).toLocaleString()}/month`
+).join("<br><br>");
+
+document.getElementById("steps").innerHTML =
+(r.execution_plan || []).map(s =>
+`• ${s.title} → ${s.impact || ""}`
+).join("<br>");
 
 document.getElementById("issues").innerHTML =
 issues.map(i => `
@@ -358,9 +375,6 @@ issues.map(i => `
 <p>${i.reason}</p>
 </div>
 `).join("");
-
-document.getElementById("cta").innerText =
-`Recover up to $${daily}/day → Activate Monitoring ($89/month)`;
 
 })();
 </script>
