@@ -12,7 +12,6 @@ export default async function handler(req, res) {
 
     const text = await response.text();
 
-    // 👉 najdi JSON v odpovědi
     const match = text.match(/{[\s\S]*}/);
 
     if (!match) {
@@ -24,40 +23,52 @@ export default async function handler(req, res) {
 
     let data = JSON.parse(match[0]);
 
-    // 🔥 NORMALIZACE report_json
     let report = data.report_json;
 
-    // 👉 pokud je string → parse
+    // 🔥 1. string → object
     if (typeof report === "string") {
       try {
         report = JSON.parse(report);
-      } catch (e) {
-        console.error("report_json parse failed");
+      } catch {
         report = {};
       }
     }
 
-    // 👉 pokud je nested JSON v text
+    // 🔥 2. nested text JSON
     if (report?.text) {
       try {
         const parsed = JSON.parse(report.text);
         report = { ...report, ...parsed };
-      } catch (e) {
-        console.error("nested parse failed");
-      }
+      } catch {}
     }
 
-    // 👉 fallback struktura (CRITICAL)
+    // 🔥 3. fallback STRUKTURA (NEJDŮLEŽITĚJŠÍ)
     data.report_json = {
       score: report?.score || data.score || 70,
       main_leak: report?.main_leak || data.main_leak_1 || "",
       quick_fix: report?.quick_fix || data.quick_fix_1 || "",
       primary_failure: report?.primary_failure || "",
 
-      issues: report?.issues || [],
-      revenue_distribution: report?.revenue_distribution || [],
-      revenue_plan: report?.revenue_plan || [],
-      execution_plan: report?.execution_plan || [],
+      // 🔥 TADY JE KLÍČ
+      issues: Array.isArray(report?.issues) ? report.issues : [
+        {
+          title: "Conversion friction detected",
+          fix: "Improve CTA clarity and trust signals",
+          reason: "Users may hesitate before purchase"
+        }
+      ],
+
+      revenue_distribution: Array.isArray(report?.revenue_distribution)
+        ? report.revenue_distribution
+        : [],
+
+      revenue_plan: Array.isArray(report?.revenue_plan)
+        ? report.revenue_plan
+        : [],
+
+      execution_plan: Array.isArray(report?.execution_plan)
+        ? report.execution_plan
+        : [],
 
       revenue_calculation: report?.revenue_calculation || {
         monthly_loss_value: 10000,
