@@ -94,24 +94,18 @@
       font-size:13px;
       margin-top:6px;
     }
-
-    @media (max-width:600px) {
-      h1 {
-        font-size:22px;
-      }
-    }
   </style>
 </head>
 
 <body>
 
 <div class="container">
-  <div id="app">Analyzing conversion leaks...</div>
+  <div id="app">Analyzing your store...</div>
 </div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const domain = params.get("domain");
+const id = params.get("id");
 
 const app = document.getElementById("app");
 
@@ -121,85 +115,72 @@ function formatMoney(num) {
 
 if (!app) {
   console.error("Missing #app element");
-} else if (!domain) {
-  app.innerText = "Missing domain";
+} else if (!id) {
+  app.innerText = "Missing scan ID";
 } else {
 
-  setTimeout(() => {
+  fetch(`https://n8n-production-0a8f.up.railway.app/webhook/get-report-by-id?id=${id}`)
+    .then(res => res.json())
+    .then(data => {
 
-    fetch(`https://n8n-production-0a8f.up.railway.app/webhook/get-report?domain=${domain}`)
-      .then(res => res.json())
-      .then(data => {
+      if (!data || !data.score) {
+        app.innerText = "Report not found";
+        return;
+      }
 
-        if (!data || !data.score) {
-          app.innerText = "No data found";
-          return;
-        }
+      const estimatedLossRaw = Math.round((100 - data.score) * 40);
+      const estimatedLoss = formatMoney(estimatedLossRaw);
 
-        const estimatedLossRaw = Math.round((100 - data.score) * 40);
-        const estimatedLoss = formatMoney(estimatedLossRaw);
+      app.innerHTML = `
+        <h1>Your store is leaking revenue</h1>
 
-        app.innerHTML = `
-          <h1>Free scan limit reached</h1>
-          <div class="subtle">You can scan this store again in 30 days</div>
+        <div class="card red highlight">
+          <div class="small">Estimated revenue loss</div>
+          <div class="money">$${estimatedLoss}+ / month</div>
+          <div class="warning">This is happening right now</div>
+        </div>
 
-          <div class="card red highlight">
-            <div class="small">Estimated revenue loss</div>
-            <div class="money">$${estimatedLoss}+ / month</div>
-            <div class="warning">This is happening right now</div>
-          </div>
+        <div class="card highlight">
+          <div class="small">Conversion Score</div>
+          <div class="score">${data.score}/100</div>
+          <div class="warning">Below high-performing stores (85+)</div>
+        </div>
 
-          <div class="card highlight">
-            <div class="small">Conversion Score</div>
-            <div class="score">${data.score}/100</div>
-            <div class="warning">Below high-performing stores (85+)</div>
-          </div>
+        <div class="card red">
+          <strong>Main conversion leak:</strong><br><br>
+          ${data.main_leak_1 || "Users are confused and leave without taking action."}
+        </div>
 
-          <div class="card">
-            <strong>What’s happening:</strong><br><br>
-            Visitors land → don’t see what to do → hesitate → leave.<br><br>
-            You are paying for traffic that never converts.
-          </div>
+        <div class="card green">
+          <strong>Quick fix (you can test today):</strong><br><br>
+          ${data.quick_fix_1 || "Add a clear CTA above the fold."}
+        </div>
 
-          <div class="card red">
-            <strong>Main conversion leak:</strong><br><br>
-            ${data.main_leak || "Users are confused and leave without taking action."}
-          </div>
+        <div class="card">
+          <strong>More issues detected:</strong><br><br>
+          → Conversion blockers across your funnel<br>
+          → Trust & UX gaps reducing sales<br>
+          → Missed revenue opportunities<br><br>
+          <span class="warning">Full analysis hidden</span>
+        </div>
 
-          <div class="card green">
-            <strong>Quick win (you can test today):</strong><br><br>
-            ${data.quick_fix || "Add a clear CTA above the fold."}
-            <br><br>
-            <span class="small">This alone can improve conversions</span>
-          </div>
+        <a href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03" class="cta">
+          Unlock Full Conversion Audit → $399
+        </a>
 
-          <div class="card">
-            <strong>More issues detected:</strong><br><br>
-            → Conversion blockers across your funnel<br>
-            → Trust & UX gaps reducing sales<br>
-            → Missed revenue opportunities<br><br>
-            <span class="warning">Full analysis not shown here</span>
-          </div>
+        <div class="subtle">
+          Full breakdown of all revenue leaks + exact fixes
+        </div>
 
-          <a href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03" class="cta">
-            Unlock Full Conversion Audit → $399
-          </a>
-
-          <div class="subtle">
-            Full breakdown of all revenue leaks + exact fixes
-          </div>
-
-          <div class="subtle" style="margin-top:12px;">
-            17 stores analyzed today. Most had similar issues.
-          </div>
-        `;
-      })
-      .catch((err) => {
-        console.error(err);
-        app.innerText = "Error loading report";
-      });
-
-  }, 800);
+        <div class="subtle" style="margin-top:12px;">
+          ⚡ Generated instantly • No calls • No fluff
+        </div>
+      `;
+    })
+    .catch((err) => {
+      console.error(err);
+      app.innerText = "Error loading report";
+    });
 }
 </script>
 
