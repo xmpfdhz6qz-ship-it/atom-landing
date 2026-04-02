@@ -333,8 +333,12 @@ body {
 <script>
 (async function(){
 
-const token = window.location.pathname.split("/").pop();
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+
 if (!token) return;
+
+console.log("TOKEN:", token);
 
 const res = await fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
