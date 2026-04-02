@@ -200,7 +200,6 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     url = "https://" + url;
   }
 
-  // 🔥 animované tečky
   let dots = 0;
   statusEl.innerText = "Scanning your store";
 
@@ -213,7 +212,7 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     const res = await fetch("https://n8n-production-d989b.up.railway.app/webhook/scan-store", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ domain: url, email })
+      body: JSON.stringify({ url, email }) // ✅ FIX
     });
 
     const data = await res.json();
@@ -225,7 +224,7 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
       return;
     }
 
-    window.location.href = "/success?email=" + encodeURIComponent(email);
+    window.location.href = "/thank-you?email=" + encodeURIComponent(email); // ✅ sjednoceno
 
   } catch (err) {
     clearInterval(interval);
