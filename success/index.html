@@ -25,7 +25,7 @@
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 22px;
       margin-bottom: 10px;
     }
 
@@ -42,6 +42,7 @@
       border-radius: 14px;
       padding: 16px;
       margin: 18px 0;
+      box-shadow: 0 0 0 2px rgba(34,197,94,0.2);
     }
 
     .email-box strong {
@@ -55,6 +56,7 @@
       margin-top: 10px;
       min-height: 22px;
       font-weight: 500;
+      transition: color 0.3s ease;
     }
 
     .warning {
@@ -107,6 +109,11 @@
       → Go check your email now
     </div>
 
+    <!-- MICRO URGENCY -->
+    <p class="muted">
+      ⚠️ Report may already be waiting in your inbox
+    </p>
+
     <div class="progress" id="progressText">
       Analyzing homepage…
     </div>
@@ -147,7 +154,7 @@
       "Generating your report…"
     ];
 
-    const finalText = "✅ Your report is ready — check your email now";
+    const finalText = "🔥 Your audit is ready — open your email now";
 
     let i = 0;
 
@@ -158,7 +165,9 @@
         setTimeout(runSteps, 700);
       } else {
         setTimeout(() => {
-          document.getElementById("progressText").innerText = finalText;
+          const el = document.getElementById("progressText");
+          el.innerText = finalText;
+          el.style.color = "#22c55e";
         }, 500);
       }
     }
