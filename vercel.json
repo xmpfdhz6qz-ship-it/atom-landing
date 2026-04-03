@@ -1,32 +1,34 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/scan/:id",
-      "destination": "/report.html?id=:id"
+      "src": "/scan/(.*)",
+      "dest": "/report.html?id=$1"
     },
     {
-      "source": "/store/:domain",
-      "destination": "/store.html?domain=:domain"
+      "src": "/store/(.*)",
+      "dest": "/store.html?domain=$1"
     },
     {
-      "source": "/report",
-      "destination": "/report.html"
+      "src": "/report",
+      "dest": "/report.html"
     },
     {
-      "source": "/audit/:token",
-      "destination": "/audit/index.html?token=:token"
+      "src": "/audit/(.*)",
+      "dest": "/audit/index.html?token=$1"
     },
     {
-      "source": "/audit-in-progress",
-      "destination": "/audit-in-progress.html"
+      "src": "/audit-in-progress",
+      "dest": "/audit-in-progress.html"
     },
+
     {
-      "source": "/success",
-      "destination": "/success/index.html"
+      "src": "/success",
+      "dest": "/success/index.html"
     },
+
     {
-      "source": "/thank-you",
-      "destination": "/thank-you/index.html"
+      "src": "/thank-you",
+      "dest": "/success/index.html"
     }
   ]
 }
