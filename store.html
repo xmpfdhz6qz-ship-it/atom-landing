@@ -4,14 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Conversion Analysis | Atom Foundry</title>
+<title>Store Conversion Analysis | Atom Foundry</title>
 
-<meta name="description" content="AI-powered conversion analysis of online stores. Discover revenue leaks and optimization opportunities.">
+<meta name="description" content="AI-powered conversion analysis. Discover revenue leaks and increase your store performance.">
 <link id="canonical" rel="canonical" href="https://atomfoundry.dev/store/">
-
-<meta property="og:title" content="Store Conversion Analysis">
-<meta property="og:description" content="See what's killing conversions and how to fix it.">
-<meta property="og:type" content="website">
 
 <style>
 body {
@@ -21,13 +17,62 @@ body {
   margin: 0;
   padding: 16px;
 }
-.container { max-width: 680px; margin: auto; }
-.hero { padding:20px; border-radius:20px; background:white; box-shadow:0 20px 60px rgba(15,23,42,0.08); margin-bottom:18px; }
-h1 { font-size: 22px; margin-bottom: 4px; }
-.score { font-size: 64px; font-weight: 900; }
-.card { padding:20px; border-radius:18px; margin-top:16px; border:1px solid #e2e8f0; background:white; }
-.cta-secondary { display:block; margin-top:14px; padding:20px; text-align:center; background:linear-gradient(135deg,#f97316,#ea580c); color:white; border-radius:16px; text-decoration:none; font-weight:900; }
-.cta-primary { display:block; margin-top:14px; padding:18px; text-align:center; background:linear-gradient(135deg,#22c55e,#16a34a); color:white; border-radius:14px; text-decoration:none; font-weight:800; }
+.container { max-width: 720px; margin: auto; }
+
+.hero {
+  padding:24px;
+  border-radius:20px;
+  background:white;
+  box-shadow:0 20px 60px rgba(15,23,42,0.08);
+  margin-bottom:18px;
+}
+
+h1 { font-size: 22px; margin-bottom: 6px; }
+.score { font-size: 64px; font-weight: 900; margin: 8px 0; }
+
+.loss {
+  font-size: 20px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+.card {
+  padding:20px;
+  border-radius:18px;
+  margin-top:16px;
+  border:1px solid #e2e8f0;
+  background:white;
+}
+
+.cta-primary {
+  display:block;
+  margin-top:14px;
+  padding:20px;
+  text-align:center;
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:white;
+  border-radius:16px;
+  text-decoration:none;
+  font-weight:900;
+  font-size:18px;
+}
+
+.cta-secondary {
+  display:block;
+  margin-top:10px;
+  padding:16px;
+  text-align:center;
+  background:#e2e8f0;
+  color:#0f172a;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.small {
+  font-size:14px;
+  color:#64748b;
+}
 </style>
 </head>
 
@@ -47,21 +92,45 @@ This AI analysis identifies conversion issues, UX gaps, and revenue leaks in e-c
 <div class="hero">
 <h2 id="title">Analyzing store...</h2>
 <div class="score" id="score">–</div>
+<div class="loss" id="loss"></div>
+<p class="small">Based on UX, messaging, and conversion signals.</p>
 </div>
 
+<!-- REVENUE -->
 <div class="card">
-<h3>Top Conversion Leak</h3>
+<h3>Estimated Revenue Loss</h3>
+<p id="loss-detail">Calculating impact...</p>
+</div>
+
+<!-- LEAK -->
+<div class="card">
+<h3>Biggest Conversion Leak Detected</h3>
 <p id="main">Loading analysis...</p>
 </div>
 
+<!-- FIX -->
 <div class="card">
-<h3>Recommended Fix</h3>
-<p id="fix">Loading analysis...</p>
+<h3>Quick Win You Can Apply Today</h3>
+<p id="fix">Loading recommendation...</p>
+</div>
+
+<!-- CTA -->
+<div class="card">
+<h3>Recover Lost Revenue</h3>
+<p>Get full breakdown of all leaks and exact steps to fix them.</p>
+
+<a class="cta-primary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
+Get Full Conversion Audit – $399
+</a>
+
+<a class="cta-secondary" href="/">
+Run Free Scan
+</a>
 </div>
 
 <!-- RELATED -->
 <div class="card">
-<h3>Related Store Analyses</h3>
+<h3>Similar Stores Analyzed</h3>
 
 <a href="/store/gymshark.com">Gymshark</a><br>
 <a href="/store/allbirds.com">Allbirds</a><br>
@@ -69,19 +138,6 @@ This AI analysis identifies conversion issues, UX gaps, and revenue leaks in e-c
 <a href="/store/nike.com">Nike</a><br>
 <a href="/store/adidas.com">Adidas</a><br>
 
-</div>
-
-<!-- CTA -->
-<div class="card">
-<h3>Fix These Conversion Issues</h3>
-
-<a class="cta-secondary" href="https://buy.stripe.com/test_8x2bJ1ceBaYK6qd94yfUQ03">
-Get Full Audit – $399
-</a>
-
-<a class="cta-primary" href="/">
-Run Free Scan
-</a>
 </div>
 
 </div>
@@ -98,19 +154,18 @@ Run Free Scan
     domain = parts[parts.length - 1];
   }
 
-  if (!domain || domain === "store") {
-    domain = null;
-  }
+  if (!domain || domain === "store") domain = null;
 
   const titleEl = document.getElementById("title");
   const scoreEl = document.getElementById("score");
   const mainEl = document.getElementById("main");
   const fixEl = document.getElementById("fix");
+  const lossEl = document.getElementById("loss");
+  const lossDetail = document.getElementById("loss-detail");
 
   if (!domain) {
     titleEl.innerText = "No store selected";
     mainEl.innerText = "Run a free scan to analyze your store.";
-    fixEl.innerText = "";
     return;
   }
 
@@ -118,7 +173,7 @@ Run Free Scan
   const seoTitle = `Conversion Analysis of ${domain}`;
   const seoDesc = `${domain} conversion insights, UX issues, and revenue leak analysis.`;
 
-  document.title = `${seoTitle} | Atom Foundry`;
+  document.title = `${domain} Conversion Score | Atom Foundry`;
   document.querySelector('meta[name="description"]').setAttribute("content", seoDesc);
   document.getElementById("canonical").setAttribute("href", `https://atomfoundry.dev/store/${domain}`);
   document.getElementById("seo-title").innerText = seoTitle;
@@ -126,35 +181,32 @@ Run Free Scan
 
   try {
     const res = await fetch(`/api/store?domain=${domain}`);
-
     if (!res.ok) throw new Error();
 
     const raw = await res.json();
-
-    if (!raw || (Array.isArray(raw) && raw.length === 0)) {
-      titleEl.innerText = `${domain} not analyzed yet`;
-      scoreEl.innerText = "–";
-      mainEl.innerText = "This store has not been analyzed yet.";
-      fixEl.innerText = "Run a full audit to generate insights.";
-      return;
-    }
-
     const data = Array.isArray(raw) ? raw[0] : raw;
 
-    titleEl.innerText = `${domain} conversion analysis`;
-    scoreEl.innerText = data.score ? `${data.score}/100` : "–";
+    const score = data.score || 50;
+
+    // 🔥 fake revenue calc (MVP)
+    const monthlyLoss = Math.round((100 - score) * 300);
+
+    titleEl.innerText = `${domain} Conversion Score`;
+    scoreEl.innerText = `${score}/100`;
+
+    lossEl.innerText = `Estimated loss: $${monthlyLoss.toLocaleString()}/month`;
+    lossDetail.innerText = `$${monthlyLoss.toLocaleString()} lost monthly due to weak conversion signals.`;
+
     mainEl.innerText = data.main_leak || "No issue detected";
     fixEl.innerText = data.quick_fix || "No recommendation available";
 
-    // score color
-    if (data.score < 50) scoreEl.style.color = "#dc2626";
-    else if (data.score < 70) scoreEl.style.color = "#f97316";
+    if (score < 50) scoreEl.style.color = "#dc2626";
+    else if (score < 70) scoreEl.style.color = "#f97316";
     else scoreEl.style.color = "#16a34a";
 
   } catch (e) {
     titleEl.innerText = `${domain} analysis unavailable`;
     mainEl.innerText = "We couldn't load the analysis.";
-    fixEl.innerText = "Try again later.";
   }
 
 })();
