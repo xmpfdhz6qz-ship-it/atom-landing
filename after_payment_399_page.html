@@ -81,6 +81,7 @@
       text-decoration: none;
       font-weight: bold;
       transition: 0.2s;
+      cursor: pointer;
     }
 
     .btn:hover {
@@ -98,6 +99,13 @@
       margin-top: 15px;
       font-size: 12px;
       color: #475569;
+      text-align: center;
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #64748b;
       text-align: center;
     }
   </style>
@@ -127,10 +135,14 @@
         </p>
 
         <div class="cta">
-          <a href="https://mail.google.com" target="_blank" class="btn">
-            Open Email
-          </a>
+          <div class="btn" onclick="showHint()">
+            Check Your Inbox →
+          </div>
         </div>
+
+        <p class="note">
+          Delivery usually takes 1–2 minutes
+        </p>
       </div>
 
       <ul class="steps">
@@ -158,9 +170,19 @@
   </div>
 
   <script>
-    // jednoduché generování "Audit ID"
+    // Audit ID
     const id = Date.now().toString().slice(-6);
     document.getElementById("auditId").innerText = id;
+
+    // UX hint místo redirectu
+    function showHint() {
+      alert("Open your email inbox (Gmail, Outlook, etc.) to view your audit.");
+    }
+
+    // OPTIONAL: redirect po 15s (doporučeno místo close)
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 15000);
   </script>
 </body>
 </html>
