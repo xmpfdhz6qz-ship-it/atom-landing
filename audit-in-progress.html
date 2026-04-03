@@ -14,23 +14,23 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 40px 20px;
+      padding: 20px;
     }
 
     .container {
-      max-width: 680px;
+      max-width: 520px;
       width: 100%;
     }
 
     .card {
       background: #111827;
-      border-radius: 20px;
-      padding: 32px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 24px;
       margin-bottom: 10px;
       color: #22c55e;
     }
@@ -38,6 +38,7 @@
     p {
       color: #94a3b8;
       line-height: 1.6;
+      font-size: 15px;
     }
 
     .highlight {
@@ -45,67 +46,76 @@
       font-weight: 600;
     }
 
+    /* EMAIL BLOCK */
     .email-box {
-      margin-top: 25px;
-      padding: 20px;
+      margin-top: 20px;
+      padding: 18px;
       border-radius: 14px;
       background: #020617;
-      border: 1px solid #1e293b;
+      border: 1px solid #22c55e;
+      text-align: center;
     }
 
     .email-box h3 {
-      margin: 0 0 10px;
-      color: #38bdf8;
+      margin: 0 0 8px;
+      color: #22c55e;
+      font-size: 16px;
     }
 
-    .steps {
-      margin-top: 25px;
-      padding-left: 20px;
-    }
-
-    .steps li {
-      margin-bottom: 10px;
-    }
-
+    /* CTA */
     .cta {
-      margin-top: 25px;
-      text-align: center;
+      margin-top: 14px;
     }
 
     .btn {
       display: inline-block;
-      padding: 14px 22px;
+      padding: 14px 20px;
       background: #22c55e;
       color: #020617;
       border-radius: 10px;
       text-decoration: none;
       font-weight: bold;
-      transition: 0.2s;
+      font-size: 15px;
       cursor: pointer;
     }
 
-    .btn:hover {
-      background: #16a34a;
+    /* STEPS */
+    .steps {
+      margin-top: 20px;
+      padding-left: 18px;
+      font-size: 14px;
     }
 
-    .footer {
-      margin-top: 25px;
+    .steps li {
+      margin-bottom: 8px;
+    }
+
+    /* PROGRESS */
+    .progress {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #93c5fd;
+    }
+
+    /* NOTE */
+    .note {
+      margin-top: 10px;
       font-size: 13px;
       color: #64748b;
       text-align: center;
     }
 
-    .id {
-      margin-top: 15px;
+    .footer {
+      margin-top: 20px;
       font-size: 12px;
-      color: #475569;
+      color: #64748b;
       text-align: center;
     }
 
-    .note {
+    .id {
       margin-top: 10px;
-      font-size: 14px;
-      color: #64748b;
+      font-size: 11px;
+      color: #475569;
       text-align: center;
     }
   </style>
@@ -115,41 +125,47 @@
   <div class="container">
     <div class="card">
 
-      <h1>✅ Your Conversion Audit Is Being Prepared</h1>
+      <h1>✅ Payment Received — Your Audit Is Being Prepared</h1>
 
       <p>
-        We’re analyzing your store right now.  
-        Your full report will be delivered within the next 
+        Great decision. We’re now analyzing your store in depth.
+      </p>
+
+      <p>
+        Your full audit will arrive within  
         <span class="highlight">15–30 minutes</span>.
       </p>
 
+      <!-- EMAIL BLOCK -->
       <div class="email-box">
-        <h3>📩 Check your email now</h3>
+        <h3>📩 Your audit is on the way</h3>
+
         <p>
-          Your audit report will be sent to your inbox shortly.
-        </p>
-        <p>
-          If you don’t see it:
-          <br>– Check Promotions or Spam  
-          <br>– Search for <span class="highlight">"Conversion Audit"</span>
+          Go check your email now — it may already be there.
         </p>
 
         <div class="cta">
           <div class="btn" onclick="showHint()">
-            Check Your Inbox →
+            Open Your Inbox →
           </div>
         </div>
 
         <p class="note">
-          Delivery usually takes 1–2 minutes
+          Check Promotions / Spam if you don’t see it
         </p>
       </div>
 
+      <!-- PROGRESS -->
+      <div class="progress" id="progressText">
+        Analyzing store structure…
+      </div>
+
+      <!-- STEPS -->
       <ul class="steps">
-        <li>🔍 We scan your store structure</li>
-        <li>⚠️ We detect revenue leaks</li>
-        <li>📉 We estimate lost revenue</li>
-        <li>🚀 We generate actionable fixes</li>
+        <li>🔍 Scanning store structure</li>
+        <li>⚠️ Detecting conversion leaks</li>
+        <li>📉 Measuring performance gaps</li>
+        <li>🚀 Generating fixes</li>
       </ul>
 
       <p>
@@ -170,16 +186,26 @@
   </div>
 
   <script>
-    // Audit ID
     const id = Date.now().toString().slice(-6);
     document.getElementById("auditId").innerText = id;
 
-    // UX hint místo redirectu
     function showHint() {
       alert("Open your email inbox (Gmail, Outlook, etc.) to view your audit.");
     }
 
-    // OPTIONAL: redirect po 15s (doporučeno místo close)
+    const steps = [
+      "Analyzing store structure…",
+      "Detecting conversion leaks…",
+      "Measuring performance gaps…",
+      "Generating actionable fixes…"
+    ];
+
+    let i = 0;
+    setInterval(() => {
+      document.getElementById("progressText").innerText = steps[i];
+      i = (i + 1) % steps.length;
+    }, 1500);
+
     setTimeout(() => {
       window.location.href = "/";
     }, 15000);
