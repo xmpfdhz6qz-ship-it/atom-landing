@@ -75,6 +75,11 @@
       color: #cbd5f5;
     }
 
+    .preview ul {
+      padding-left: 18px;
+      margin-top: 8px;
+    }
+
     .preview li {
       margin-bottom: 6px;
     }
@@ -97,76 +102,69 @@
       We're analyzing your store right now.
     </p>
 
-    <!-- EMAIL CTA -->
     <div class="email-box">
       <strong>📩 Your report is on the way</strong><br><br>
       → Go check your email now
     </div>
 
-    <!-- PROGRESS -->
     <div class="progress" id="progressText">
       Analyzing homepage…
     </div>
 
-    <!-- DELIVERY INFO -->
     <p>
       You’ll receive your report in the next 1–2 minutes.<br>
       <b>Check Promotions / Spam if you don’t see it</b>
     </p>
 
-    <!-- WARNING -->
     <div class="warning">
       ⚠️ Most stores lose 15–35% of potential revenue due to hidden conversion issues
     </div>
 
-    <!-- PREVIEW -->
     <div class="preview">
       <b>Your report includes:</b>
       <ul>
-        <li>• Hidden conversion leaks</li>
-        <li>• Estimated performance gap</li>
-        <li>• Quick fixes you can apply immediately</li>
+        <li>Hidden conversion leaks</li>
+        <li>Estimated performance gap</li>
+        <li>Quick fixes you can apply immediately</li>
       </ul>
     </div>
 
-    <!-- MOBILE TIP -->
     <p class="muted">
       Best experience → open your email on mobile
     </p>
 
-    <!-- FINAL PUSH -->
     <p class="muted">
       👉 Your report is almost ready — check your inbox now
     </p>
 
   </div>
 
-<script>
-const steps = [
-  "Analyzing homepage…",
-  "Detecting conversion leaks…",
-  "Measuring performance gaps…",
-  "Generating your report…"
-];
+  <script>
+    const steps = [
+      "Analyzing homepage…",
+      "Detecting conversion leaks…",
+      "Measuring performance gaps…",
+      "Generating your report…"
+    ];
 
-const finalText = "✅ Your report is ready — check your email now";
+    const finalText = "✅ Your report is ready — check your email now";
 
-let i = 0;
+    let i = 0;
 
-function runSteps() {
-  if (i < steps.length) {
-    document.getElementById("progressText").innerText = steps[i];
-    i++;
-    setTimeout(runSteps, 700);
-  } else {
-    setTimeout(() => {
-      document.getElementById("progressText").innerText = finalText;
-    }, 500);
-  }
-}
+    function runSteps() {
+      if (i < steps.length) {
+        document.getElementById("progressText").innerText = steps[i];
+        i++;
+        setTimeout(runSteps, 700);
+      } else {
+        setTimeout(() => {
+          document.getElementById("progressText").innerText = finalText;
+        }, 500);
+      }
+    }
 
-runSteps();
-</script>
+    runSteps();
+  </script>
 
 </body>
 </html>
