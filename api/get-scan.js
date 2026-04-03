@@ -7,23 +7,18 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://n8n-production-d989b.up.railway.app/webhook/get-report-by-id?id=${id}`
+      `https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`
     );
 
-    const text = await response.text();
+    const data = await response.json();
 
-    const match = text.match(/{[\s\S]*}/);
+    return res.status(200).json({
+      ...data,
 
-    if (!match) {
-      return res.status(500).json({
-        error: "No JSON found",
-        raw: text
-      });
-    }
-
-    const data = JSON.parse(match[0]);
-
-    return res.status(200).json(data);
+      // 🔥 mapping pro frontend
+      main_leak: data.main_leak_1,
+      quick_fix: data.quick_fix_1
+    });
 
   } catch (err) {
     console.error(err);
