@@ -7,29 +7,15 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://n8n-production-0a8f.up.railway.app/webhook/store-get?domain=${domain}`
+      `https://n8n-production-d989b.up.railway.app/webhook/store-get?domain=${domain}`
     );
 
-    const text = await response.text();
-
-    console.log("RAW:", text);
-
-    // 👇 pokud vrací HTML nebo XML, vezmeme jen první objekt
-    const match = text.match(/{[\s\S]*}/);
-
-    if (!match) {
-      return res.status(500).json({
-        error: "No JSON found",
-        raw: text
-      });
-    }
-
-    const data = JSON.parse(match[0]);
+    const data = await response.json();
 
     return res.status(200).json(data);
 
   } catch (err) {
-    console.error(err);
+    console.error("API ERROR:", err);
     return res.status(500).json({ error: "Fetch failed" });
   }
 }
