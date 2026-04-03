@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title id="pageTitle">Conversion Analysis | Atom Foundry</title>
+<title>Conversion Analysis | Atom Foundry</title>
 
 <meta name="description" content="AI-powered conversion analysis of online stores. Discover revenue leaks and optimization opportunities.">
 <link id="canonical" rel="canonical" href="https://atomfoundry.dev/store/">
@@ -118,23 +118,20 @@ Run Free Scan
   const seoTitle = `Conversion Analysis of ${domain}`;
   const seoDesc = `${domain} conversion insights, UX issues, and revenue leak analysis.`;
 
-  document.getElementById("pageTitle").innerText = `${seoTitle} | Atom Foundry`;
+  document.title = `${seoTitle} | Atom Foundry`;
   document.querySelector('meta[name="description"]').setAttribute("content", seoDesc);
   document.getElementById("canonical").setAttribute("href", `https://atomfoundry.dev/store/${domain}`);
   document.getElementById("seo-title").innerText = seoTitle;
   document.getElementById("seo-desc").innerText = seoDesc;
 
   try {
-    const res = await fetch(
-      `https://n8n-production-d989b.up.railway.app/webhook/store-get?domain=${domain}`
-    );
+    const res = await fetch(`/api/store?domain=${domain}`);
 
     if (!res.ok) throw new Error();
 
     const raw = await res.json();
 
-    // 🔥 správný handling array
-    if (!raw || raw.length === 0) {
+    if (!raw || (Array.isArray(raw) && raw.length === 0)) {
       titleEl.innerText = `${domain} not analyzed yet`;
       scoreEl.innerText = "–";
       mainEl.innerText = "This store has not been analyzed yet.";
@@ -142,14 +139,14 @@ Run Free Scan
       return;
     }
 
-    const data = raw[0];
+    const data = Array.isArray(raw) ? raw[0] : raw;
 
     titleEl.innerText = `${domain} conversion analysis`;
-    scoreEl.innerText = `${data.score}/100`;
-    mainEl.innerText = data.main_leak;
-    fixEl.innerText = data.quick_fix;
+    scoreEl.innerText = data.score ? `${data.score}/100` : "–";
+    mainEl.innerText = data.main_leak || "No issue detected";
+    fixEl.innerText = data.quick_fix || "No recommendation available";
 
-    // 🔥 score color
+    // score color
     if (data.score < 50) scoreEl.style.color = "#dc2626";
     else if (data.score < 70) scoreEl.style.color = "#f97316";
     else scoreEl.style.color = "#16a34a";
