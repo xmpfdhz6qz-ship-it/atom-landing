@@ -9,7 +9,6 @@
 <meta name="description" content="AI-powered conversion analysis of online stores. Discover revenue leaks and optimization opportunities.">
 <link id="canonical" rel="canonical" href="https://atomfoundry.dev/store/">
 
-<!-- OPEN GRAPH -->
 <meta property="og:title" content="Store Conversion Analysis">
 <meta property="og:description" content="See what's killing conversions and how to fix it.">
 <meta property="og:type" content="website">
@@ -47,20 +46,20 @@ This AI analysis identifies conversion issues, UX gaps, and revenue leaks in e-c
 <!-- HERO -->
 <div class="hero">
 <h2 id="title">Analyzing store...</h2>
-<div class="score" id="score"></div>
+<div class="score" id="score">–</div>
 </div>
 
 <div class="card">
 <h3>Top Conversion Leak</h3>
-<p id="main"></p>
+<p id="main">Loading analysis...</p>
 </div>
 
 <div class="card">
 <h3>Recommended Fix</h3>
-<p id="fix"></p>
+<p id="fix">Loading analysis...</p>
 </div>
 
-<!-- 🔥 RELATED (INDEX SPREAD ENGINE) -->
+<!-- RELATED -->
 <div class="card">
 <h3>Related Store Analyses</h3>
 
@@ -100,31 +99,30 @@ Run Free Scan
   }
 
   if (!domain || domain === "store") {
-    domain = "demo-store";
+    domain = null;
   }
-
-  // 🔥 SEO DYNAMIC
-  const seoTitle = `Conversion Analysis of ${domain}`;
-  const seoDesc = `${domain} has conversion issues causing revenue loss due to UX friction, weak messaging, and missing trust signals.`;
-
-  document.title = `${seoTitle} | Atom Foundry`;
-  document.querySelector('meta[name="description"]').setAttribute("content", seoDesc);
-  document.getElementById("canonical").setAttribute("href", `https://atomfoundry.dev/store/${domain}`);
-
-  document.getElementById("seo-title").innerText = seoTitle;
-  document.getElementById("seo-desc").innerText = seoDesc;
 
   const titleEl = document.getElementById("title");
   const scoreEl = document.getElementById("score");
   const mainEl = document.getElementById("main");
   const fixEl = document.getElementById("fix");
 
-  function fallbackContent() {
-    titleEl.innerText = `${domain} is underperforming`;
-    scoreEl.innerText = "62/100";
-    mainEl.innerText = "Weak value proposition above the fold.";
-    fixEl.innerText = "Improve headline clarity and trust signals.";
+  if (!domain) {
+    titleEl.innerText = "No store selected";
+    mainEl.innerText = "Run a free scan to analyze your store.";
+    fixEl.innerText = "";
+    return;
   }
+
+  // SEO dynamic
+  const seoTitle = `Conversion Analysis of ${domain}`;
+  const seoDesc = `${domain} conversion insights, UX issues, and revenue leak analysis.`;
+
+  document.title = `${seoTitle} | Atom Foundry`;
+  document.querySelector('meta[name="description"]').setAttribute("content", seoDesc);
+  document.getElementById("canonical").setAttribute("href", `https://atomfoundry.dev/store/${domain}`);
+  document.getElementById("seo-title").innerText = seoTitle;
+  document.getElementById("seo-desc").innerText = seoDesc;
 
   try {
     const res = await fetch(
@@ -135,13 +133,24 @@ Run Free Scan
 
     const data = await res.json();
 
+    // 🔥 KLÍČOVÉ: žádná fake data
+    if (!data || !data.main_leak) {
+      titleEl.innerText = `${domain} not analyzed yet`;
+      scoreEl.innerText = "–";
+      mainEl.innerText = "This store has not been analyzed yet.";
+      fixEl.innerText = "Run a full audit to generate insights.";
+      return;
+    }
+
     titleEl.innerText = `${domain} conversion analysis`;
-    scoreEl.innerText = `${data.score || 62}/100`;
-    mainEl.innerText = data.main_leak || "Weak messaging.";
-    fixEl.innerText = data.quick_fix || "Improve clarity.";
+    scoreEl.innerText = `${data.score}/100`;
+    mainEl.innerText = data.main_leak;
+    fixEl.innerText = data.quick_fix;
 
   } catch (e) {
-    fallbackContent();
+    titleEl.innerText = `${domain} analysis unavailable`;
+    mainEl.innerText = "We couldn't load the analysis.";
+    fixEl.innerText = "Try again later.";
   }
 
 })();
