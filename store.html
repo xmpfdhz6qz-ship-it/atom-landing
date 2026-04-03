@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Conversion Analysis | Atom Foundry</title>
+<title id="pageTitle">Conversion Analysis | Atom Foundry</title>
 
 <meta name="description" content="AI-powered conversion analysis of online stores. Discover revenue leaks and optimization opportunities.">
 <link id="canonical" rel="canonical" href="https://atomfoundry.dev/store/">
@@ -24,8 +24,8 @@ body {
 .container { max-width: 680px; margin: auto; }
 .hero { padding:20px; border-radius:20px; background:white; box-shadow:0 20px 60px rgba(15,23,42,0.08); margin-bottom:18px; }
 h1 { font-size: 22px; margin-bottom: 4px; }
-.score { font-size: 64px; font-weight: 900; color: #16a34a; }
-.card { padding:20px; border-radius:18px; margin-top:16px; border:1px solid #e2e8f0; }
+.score { font-size: 64px; font-weight: 900; }
+.card { padding:20px; border-radius:18px; margin-top:16px; border:1px solid #e2e8f0; background:white; }
 .cta-secondary { display:block; margin-top:14px; padding:20px; text-align:center; background:linear-gradient(135deg,#f97316,#ea580c); color:white; border-radius:16px; text-decoration:none; font-weight:900; }
 .cta-primary { display:block; margin-top:14px; padding:18px; text-align:center; background:linear-gradient(135deg,#22c55e,#16a34a); color:white; border-radius:14px; text-decoration:none; font-weight:800; }
 </style>
@@ -118,7 +118,7 @@ Run Free Scan
   const seoTitle = `Conversion Analysis of ${domain}`;
   const seoDesc = `${domain} conversion insights, UX issues, and revenue leak analysis.`;
 
-  document.title = `${seoTitle} | Atom Foundry`;
+  document.getElementById("pageTitle").innerText = `${seoTitle} | Atom Foundry`;
   document.querySelector('meta[name="description"]').setAttribute("content", seoDesc);
   document.getElementById("canonical").setAttribute("href", `https://atomfoundry.dev/store/${domain}`);
   document.getElementById("seo-title").innerText = seoTitle;
@@ -131,10 +131,10 @@ Run Free Scan
 
     if (!res.ok) throw new Error();
 
-    const data = await res.json();
+    const raw = await res.json();
 
-    // 🔥 KLÍČOVÉ: žádná fake data
-    if (!data || !data.main_leak) {
+    // 🔥 správný handling array
+    if (!raw || raw.length === 0) {
       titleEl.innerText = `${domain} not analyzed yet`;
       scoreEl.innerText = "–";
       mainEl.innerText = "This store has not been analyzed yet.";
@@ -142,10 +142,17 @@ Run Free Scan
       return;
     }
 
+    const data = raw[0];
+
     titleEl.innerText = `${domain} conversion analysis`;
     scoreEl.innerText = `${data.score}/100`;
     mainEl.innerText = data.main_leak;
     fixEl.innerText = data.quick_fix;
+
+    // 🔥 score color
+    if (data.score < 50) scoreEl.style.color = "#dc2626";
+    else if (data.score < 70) scoreEl.style.color = "#f97316";
+    else scoreEl.style.color = "#16a34a";
 
   } catch (e) {
     titleEl.innerText = `${domain} analysis unavailable`;
