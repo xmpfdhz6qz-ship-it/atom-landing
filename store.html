@@ -280,15 +280,10 @@ Every day you delay = lost revenue you will never recover
 
 </div>
 
-<!-- RELATED -->
+<!-- 🔥 PROGRAMMATIC SEO LOOP -->
 <div class="card">
-<h3>Similar Stores Analyzed</h3>
-
-<a href="/store/gymshark.com">Gymshark</a><br>
-<a href="/store/allbirds.com">Allbirds</a><br>
-<a href="/store/glossier.com">Glossier</a><br>
-<a href="/store/nike.com">Nike</a><br>
-<a href="/store/adidas.com">Adidas</a><br>
+<h3>More Stores Analyzed</h3>
+<div id="internal-links"></div>
 </div>
 
 </div>
@@ -320,8 +315,25 @@ Every day you delay = lost revenue you will never recover
     return;
   }
 
-  // 🔥 SEO DOMAIN INJECTION
   document.getElementById("seo-domain").innerText = domain;
+
+  // 🔥 INTERNAL LINK ENGINE
+  const linksContainer = document.getElementById("internal-links");
+
+  const related = [
+    "nike.com",
+    "gymshark.com",
+    "allbirds.com",
+    "glossier.com",
+    "adidas.com",
+    "zara.com",
+    "boohoo.com",
+    "asos.com"
+  ];
+
+  linksContainer.innerHTML = related
+    .map(d => `<a href="/store/${d}">${d}</a><br>`)
+    .join("");
 
   const seoTitle = `Conversion Analysis of ${domain}`;
   const seoDesc = `${domain} conversion insights, UX issues, and revenue leak analysis.`;
