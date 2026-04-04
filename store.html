@@ -6,7 +6,7 @@
 
 <title>Store Conversion Analysis | Atom Foundry</title>
 
-<meta name="description" content="AI-powered conversion analysis. Discover revenue leaks and increase your store performance.">
+<meta name="description" content="AI-powered conversion analysis. Discover hidden revenue leaks, UX issues, and lost conversion opportunities.">
 <link id="canonical" rel="canonical" href="https://atomfoundry.dev/store/">
 
 <style>
@@ -147,7 +147,7 @@ h1 { font-size: 22px; margin-bottom: 6px; }
 <div id="seo-block">
 <h1 id="seo-title">Conversion Analysis</h1>
 <p id="seo-desc">
-This AI analysis identifies conversion issues, UX gaps, and revenue leaks in e-commerce stores.
+This AI analysis reveals hidden conversion issues and revenue leaks affecting ecommerce performance.
 </p>
 </div>
 
@@ -209,7 +209,7 @@ These problems are often invisible without structured analysis.
 <h3>Recover Lost Revenue</h3>
 
 <a class="cta-primary" href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" target="_blank">
-Reveal Where Your Store Is Losing Money → $399 (Secure)
+Reveal Hidden Revenue Leaks → $399
 </a>
 
 <div class="subtle">
@@ -317,11 +317,20 @@ Every day you delay = lost revenue you will never recover
     titleEl.innerText = `${domain} Conversion Score`;
     scoreEl.innerText = `${score}/100`;
 
-    lossEl.innerText = `Estimated loss: $${monthlyLoss.toLocaleString()}/month`;
-    lossDetail.innerText = `$${monthlyLoss.toLocaleString()} lost monthly due to weak conversion signals.`;
+    // 🔥 BLOCKED UX (NOVÉ)
+    if (data.status === "blocked") {
+      lossEl.innerText = "High-value store detected";
+      lossDetail.innerText = "This store is protected — typically indicating higher traffic and revenue.";
 
-    mainEl.innerText = data.main_leak || "No issue detected";
-    fixEl.innerText = data.quick_fix || "No recommendation available";
+      mainEl.innerText = "This store is protected — likely hiding high-impact conversion issues.";
+      fixEl.innerText = "Run a full audit to uncover hidden revenue leaks and missed opportunities.";
+    } else {
+      lossEl.innerText = `Estimated loss: $${monthlyLoss.toLocaleString()}/month`;
+      lossDetail.innerText = `$${monthlyLoss.toLocaleString()} lost monthly due to weak conversion signals.`;
+
+      mainEl.innerText = data.main_leak || "No issue detected";
+      fixEl.innerText = data.quick_fix || "No recommendation available";
+    }
 
     if (score < 50) scoreEl.style.color = "#dc2626";
     else if (score < 70) scoreEl.style.color = "#f97316";
