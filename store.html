@@ -19,7 +19,6 @@ body {
 }
 .container { max-width: 720px; margin: auto; }
 
-/* HERO */
 .hero {
   padding:24px;
   border-radius:20px;
@@ -48,7 +47,6 @@ h1 { font-size: 22px; margin-bottom: 6px; }
   color:#94a3b8;
 }
 
-/* CARDS */
 .card {
   padding:18px;
   border-radius:16px;
@@ -67,7 +65,6 @@ h1 { font-size: 22px; margin-bottom: 6px; }
   background:#052e1a;
 }
 
-/* CTA BLOCK */
 .cta-box {
   padding:22px;
   border-radius:18px;
@@ -76,7 +73,6 @@ h1 { font-size: 22px; margin-bottom: 6px; }
   border:1px solid #334155;
 }
 
-/* CTA BUTTONS */
 .cta-primary {
   display:block;
   margin-top:14px;
@@ -129,7 +125,6 @@ h1 { font-size: 22px; margin-bottom: 6px; }
   margin-top:8px;
 }
 
-/* VALUE BLOCK */
 .value-list {
   margin-top:10px;
   font-size:14px;
@@ -149,6 +144,38 @@ h1 { font-size: 22px; margin-bottom: 6px; }
 <p id="seo-desc">
 This AI analysis reveals hidden conversion issues and revenue leaks affecting ecommerce performance.
 </p>
+</div>
+
+<!-- 🔥 SEO STATIC CONTENT -->
+<div class="card">
+<h2>Conversion Issues Found on <span id="seo-domain">this store</span></h2>
+
+<p>
+Most ecommerce stores struggle with unclear messaging, weak value propositions,
+and missing trust signals — leading to significant revenue loss.
+</p>
+
+<p>
+Our AI analysis identifies conversion leaks based on UX structure, offer clarity,
+and behavioral friction patterns across high-performing ecommerce brands.
+</p>
+
+<p>
+Even small improvements in homepage clarity can increase conversion rates by 10–30%.
+</p>
+</div>
+
+<!-- 🔥 SEO KEYWORDS BLOCK -->
+<div class="card">
+<h3>Common Conversion Issues in Ecommerce Stores</h3>
+
+<ul class="value-list">
+<li>Poor above-the-fold messaging</li>
+<li>Weak product differentiation</li>
+<li>Lack of trust signals</li>
+<li>Confusing navigation</li>
+<li>No urgency or conversion triggers</li>
+</ul>
 </div>
 
 <!-- HERO -->
@@ -228,7 +255,6 @@ Get My Store Free Scan →
 You are losing money right now
 </div>
 
-<!-- VALUE STACK -->
 <div class="value-list">
 <br><strong>Full Conversion Audit includes:</strong><br><br>
 
@@ -263,7 +289,6 @@ Every day you delay = lost revenue you will never recover
 <a href="/store/glossier.com">Glossier</a><br>
 <a href="/store/nike.com">Nike</a><br>
 <a href="/store/adidas.com">Adidas</a><br>
-
 </div>
 
 </div>
@@ -295,6 +320,9 @@ Every day you delay = lost revenue you will never recover
     return;
   }
 
+  // 🔥 SEO DOMAIN INJECTION
+  document.getElementById("seo-domain").innerText = domain;
+
   const seoTitle = `Conversion Analysis of ${domain}`;
   const seoDesc = `${domain} conversion insights, UX issues, and revenue leak analysis.`;
 
@@ -317,7 +345,6 @@ Every day you delay = lost revenue you will never recover
     titleEl.innerText = `${domain} Conversion Score`;
     scoreEl.innerText = `${score}/100`;
 
-    // 🔥 BLOCKED UX (NOVÉ)
     if (data.status === "blocked") {
       lossEl.innerText = "High-value store detected";
       lossDetail.innerText = "This store is protected — typically indicating higher traffic and revenue.";
