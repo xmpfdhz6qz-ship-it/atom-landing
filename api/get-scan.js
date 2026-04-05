@@ -12,12 +12,18 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
+    // ✅ pokud nic nenajde
+    if (!data || data.error) {
+      return res.status(404).json({ error: "not_found" });
+    }
+
+    // ✅ vracíme data TAK JAK JSOU (bez rozbití struktury)
     return res.status(200).json({
       ...data,
 
-      // 🔥 mapping pro frontend
-      main_leak: data.main_leak_1,
-      quick_fix: data.quick_fix_1
+      // optional mapping (pro jistotu kompatibility)
+      main_leak: data.report_json?.main_leak || null,
+      quick_fix: data.report_json?.quick_fix || null,
     });
 
   } catch (err) {
