@@ -4,7 +4,6 @@
       "src": "/sitemap.xml",
       "dest": "https://n8n-production-d989b.up.railway.app/webhook/sitemap"
     },
-
     {
       "src": "/scan/(.*)",
       "dest": "/report.html?id=$1"
@@ -34,9 +33,16 @@
       "dest": "/success/index.html"
     },
 
+    // 👇 PŮVODNÍ (NECHAT)
     {
       "src": "/monitoring/(.*)",
       "dest": "/monitoring.html"
+    },
+
+    // 👇 NOVÉ (ALERT PAGE)
+    {
+      "src": "/monitoring-report/(.*)",
+      "dest": "/monitoring-report.html?token=$1"
     }
   ]
 }
