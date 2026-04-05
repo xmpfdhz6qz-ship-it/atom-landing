@@ -14,14 +14,16 @@
   <ul id="issues"></ul>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const token = params.get("token");
+// ✅ FIX: vezmeme token z URL path (/monitoring-report/{token})
+const pathParts = window.location.pathname.split("/");
+const token = pathParts[pathParts.length - 1];
 
 // DEBUG
-if (!token) {
+if (!token || token === "undefined") {
   document.body.innerHTML = "Missing token";
 }
 
+// FETCH
 fetch(`https://n8n-production-d989b.up.railway.app/webhook/monitoring?token=${token}`)
   .then(res => res.json())
   .then(data => {
@@ -36,11 +38,13 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/monitoring?token=${to
     document.getElementById("store").innerText = data.store;
     document.getElementById("score").innerText = "Score: " + (data.score ?? 0);
     document.getElementById("loss").innerText = "Estimated loss: $" + (data.monthly_loss ?? 0);
+
     document.getElementById("drop").innerText = data.drop 
-      ? "Recent drop: -" + data.drop + " points ⚠️"
+      ? "Recent drop: -" + data.drop + " points"
       : "";
 
     const issues = document.getElementById("issues");
+    issues.innerHTML = "";
 
     if (data.issues && data.issues.length > 0) {
       data.issues.forEach(i => {
