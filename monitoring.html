@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monitoring</title>
+</head>
+<body style="font-family: Arial; padding: 20px; max-width: 800px; margin: auto;">
+
+  <h1 id="store"></h1>
+  <h2 id="score"></h2>
+  <p id="loss"></p>
+
+  <h3>Issues:</h3>
+  <ul id="issues"></ul>
+
+  <h3>History:</h3>
+  <ul id="history"></ul>
+
+  <a href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05"
+     style="display:inline-block;margin-top:20px;padding:15px 25px;background:orange;color:white;text-decoration:none;">
+    Fix all issues → Get full audit
+  </a>
+
+<script>
+const url = window.location.pathname.split("/");
+const token = url[url.length - 1];
+
+fetch(`https://n8n-production-d989b.up.railway.app/webhook/monitoring?token=${token}`)
+  .then(res => res.json())
+  .then(data => {
+
+    document.getElementById("store").innerText = data.store;
+    document.getElementById("score").innerText = "Score: " + data.score;
+    document.getElementById("loss").innerText = "Loss: $" + data.monthly_loss;
+
+    const issues = document.getElementById("issues");
+    data.issues.forEach(i => {
+      const li = document.createElement("li");
+      li.innerText = i;
+      issues.appendChild(li);
+    });
+
+    const history = document.getElementById("history");
+    data.history.forEach(h => {
+      const li = document.createElement("li");
+      li.innerText = new Date(h.created_at).toLocaleDateString() + " → " + h.score;
+      history.appendChild(li);
+    });
+
+  });
+</script>
+
+</body>
+</html>
