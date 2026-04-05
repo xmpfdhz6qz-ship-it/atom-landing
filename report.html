@@ -106,21 +106,8 @@
 </div>
 
 <script>
-
-// ✅ FIX 1: robust ID parsing
-const params = new URLSearchParams(window.location.search);
-
-let id = params.get("id");
-
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
-
-if (!id) {
-  document.getElementById("app").innerText = "Missing scan ID";
-  throw new Error("Missing scan ID");
-}
-  }
-}
 
 if (!id) {
   document.getElementById("app").innerText = "Missing scan ID";
@@ -133,15 +120,54 @@ function formatMoney(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-fetch(`/api/get-scan?id=${id}`)
+// ✅ SPRÁVNÝ ENDPOINT
+fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
   .then(res => res.json())
   .then(data => {
 
-    // ✅ FIX 2: score check
+    console.log("DATA:", data); // debug
+
     if (!data || data.score === undefined) {
       app.innerText = "Report not found";
       return;
     }
+
+    const estimatedLossRaw = Math.round((100 - data.score) * 40);
+    const estimatedLoss = formatMoney(estimatedLossRaw);
+
+    app.innerHTML = `
+      <h1>Your store is leaking revenue</h1>
+
+      <div class="card red highlight">
+        <div class="small">Estimated revenue loss</div>
+        <div class="money">$${estimatedLoss}+ / month</div>
+      </div>
+
+      <div class="card highlight">
+        <div class="small">Conversion Score</div>
+        <div class="score">${data.score}/100</div>
+      </div>
+
+      <div class="card red">
+        <strong>Main conversion leak:</strong><br><br>
+        ${data.report_json?.main_leak || "Users are confused and leave without taking action."}
+      </div>
+
+      <div class="card green">
+        <strong>Quick fix:</strong><br><br>
+        ${data.report_json?.quick_fix || "Add a clear CTA above the fold."}
+      </div>
+
+      <a href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" class="cta">
+        Find What’s Killing Your Conversions → $399
+      </a>
+    `;
+  })
+  .catch((err) => {
+    console.error(err);
+    app.innerText = "Error loading report";
+  });
+</script>
 
     const estimatedLossRaw = Math.round((100 - data.score) * 40);
     const estimatedLoss = formatMoney(estimatedLossRaw);
