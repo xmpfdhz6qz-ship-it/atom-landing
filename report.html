@@ -106,16 +106,20 @@
 </div>
 
 <script>
+
+// ✅ FIX 1: robust ID parsing
 const params = new URLSearchParams(window.location.search);
 
 let id = params.get("id");
 
 if (!id) {
-  const pathParts = window.location.pathname.split("/");
-  id = pathParts[pathParts.length - 1];
+  const match = window.location.pathname.match(/\/scan\/([^\/]+)/);
+  if (match && match[1]) {
+    id = match[1];
+  }
 }
 
-if (!id || id === "scan") {
+if (!id) {
   document.getElementById("app").innerText = "Missing scan ID";
   throw new Error("Missing scan ID");
 }
@@ -126,154 +130,141 @@ function formatMoney(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-if (!app) {
-  console.error("Missing #app element");
-} else if (!id) {
-  app.innerText = "Missing scan ID";
-} else {
+fetch(`/api/get-scan?id=${id}`)
+  .then(res => res.json())
+  .then(data => {
 
-  fetch(`/api/get-scan?id=${id}`)
-    .then(res => res.json())
-    .then(data => {
+    // ✅ FIX 2: score check
+    if (!data || data.score === undefined) {
+      app.innerText = "Report not found";
+      return;
+    }
 
-      if (!data || !data.score) {
-        app.innerText = "Report not found";
-        return;
-      }
+    const estimatedLossRaw = Math.round((100 - data.score) * 40);
+    const estimatedLoss = formatMoney(estimatedLossRaw);
 
-      const estimatedLossRaw = Math.round((100 - data.score) * 40);
-      const estimatedLoss = formatMoney(estimatedLossRaw);
+    app.innerHTML = `
+      <h1>Your store is leaking revenue</h1>
 
-      app.innerHTML = `
-        <h1>Your store is leaking revenue</h1>
+      <div class="card red highlight">
+        <div class="small">Estimated revenue loss</div>
+        <div class="money">$${estimatedLoss}+ / month</div>
+        <div class="warning">This is happening right now</div>
+        <div class="warning">+$${Math.round(estimatedLossRaw/30/24)} lost every hour</div>
+      </div>
 
-        <div class="card red highlight">
-          <div class="small">Estimated revenue loss</div>
-          <div class="money">$${estimatedLoss}+ / month</div>
-          <div class="warning">This is happening right now</div>
-          <div class="warning">+$${Math.round(estimatedLossRaw/30/24)} lost every hour</div>
+      <div class="card highlight">
+        <div class="small">Conversion Score</div>
+        <div class="score">${data.score}/100</div>
+        <div class="warning">Below high-performing stores (85+)</div>
+      </div>
+
+      <div class="card">
+        <strong>How this analysis works:</strong><br><br>
+        → Based on 1,000+ ecommerce stores<br>
+        → Real conversion behavior patterns<br>
+        → Revenue-driven signals<br><br>
+        <span class="small">This is not a generic AI scan</span>
+      </div>
+
+      <div class="card">
+        <strong>What we see in similar stores:</strong><br><br>
+        → 73% weak first impression<br>
+        → 61% lose users in 5 seconds<br>
+        → 58% fail to trigger action<br><br>
+        <span class="warning">Your store shows the same pattern</span>
+      </div>
+
+      <div class="card red">
+        <strong>Main conversion leak:</strong><br><br>
+        ${data.report_json?.main_leak || "Users are confused and leave without taking action."}
+      </div>
+
+      <div class="card green">
+        <strong>Quick fix (you can test today):</strong><br><br>
+        ${data.report_json?.quick_fix || "Add a clear CTA above the fold."}
+      </div>
+
+      <div class="card red">
+        <strong>Example hidden issue:</strong><br><br>
+        <div style="opacity:0.6;">
+          Users hesitate before buying due to missing trust signals...
         </div>
-
-        <div class="card highlight">
-          <div class="small">Conversion Score</div>
-          <div class="score">${data.score}/100</div>
-          <div class="warning">Below high-performing stores (85+)</div>
+        <div style="margin-top:10px;font-weight:700;color:#f87171;">
+          🔒 Full fix hidden
         </div>
+      </div>
 
-        <!-- TRUST -->
-        <div class="card">
-          <strong>How this analysis works:</strong><br><br>
-          → Based on 1,000+ ecommerce stores<br>
-          → Real conversion behavior patterns<br>
-          → Revenue-driven signals<br><br>
-          <span class="small">This is not a generic AI scan</span>
+      <div class="card">
+        <strong>Analysis completeness:</strong>
+        <div style="margin-top:10px;background:#1e293b;border-radius:10px;">
+          <div style="width:32%;background:#f97316;height:10px;"></div>
         </div>
+        <div class="small">32% visible • 68% locked</div>
+      </div>
 
-        <!-- PATTERN -->
-        <div class="card">
-          <strong>What we see in similar stores:</strong><br><br>
-          → 73% weak first impression<br>
-          → 61% lose users in 5 seconds<br>
-          → 58% fail to trigger action<br><br>
-          <span class="warning">Your store shows the same pattern</span>
+      <div class="card">
+        <strong>Full audit reveals:</strong><br><br>
+        → Conversion gap analysis<br>
+        → Revenue timeline<br>
+        → All hidden leaks<br>
+        → Step-by-step plan<br>
+        → Prioritized fixes<br><br>
+        <span class="warning">⚠️ Not included in free scan</span>
+      </div>
+
+      <div class="card">
+        <strong>What this means:</strong><br><br>
+        Most stores lose $2,000–$10,000/month<br><br>
+        Audit cost: $399 one-time<br><br>
+        <span class="warning">Fixing one issue can recover this</span>
+      </div>
+
+      <div class="small" style="text-align:center;">
+        ≈ $13/day for 30 days of insights
+      </div>
+
+      <div class="card red">
+        <strong>If you do nothing:</strong><br><br>
+        → ~$${Math.round(estimatedLossRaw/30)} / day lost<br>
+        → ~$${estimatedLoss} / month lost<br><br>
+        <div class="green" style="padding:10px;border-radius:10px;">
+          One-time $399 → fix leaks
         </div>
+      </div>
 
-        <div class="card red">
-          <strong>Main conversion leak:</strong><br><br>
-          ${data.main_leak_1 || "Users are confused and leave without taking action."}
-        </div>
+      <div class="card green">
+        <strong>No fluff. No theory.</strong><br><br>
+        → Actionable fixes<br>
+        → Revenue-focused<br>
+        → Immediate implementation<br>
+      </div>
 
-        <div class="card green">
-          <strong>Quick fix (you can test today):</strong><br><br>
-          ${data.quick_fix_1 || "Add a clear CTA above the fold."}
-        </div>
+      <div class="card">
+        <strong>Serious stores fix this early</strong><br><br>
+        → Identify leaks fast<br>
+        → Act immediately<br>
+        → Optimize continuously
+      </div>
 
-        <!-- PARTIAL REVEAL -->
-        <div class="card red">
-          <strong>Example hidden issue:</strong><br><br>
-          <div style="opacity:0.6;">
-            Users hesitate before buying due to missing trust signals...
-          </div>
-          <div style="margin-top:10px;font-weight:700;color:#f87171;">
-            🔒 Full fix hidden
-          </div>
-        </div>
+      <a href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" class="cta">
+        Find What’s Killing Your Conversions → $399
+      </a>
 
-        <!-- PROGRESS -->
-        <div class="card">
-          <strong>Analysis completeness:</strong>
-          <div style="margin-top:10px;background:#1e293b;border-radius:10px;">
-            <div style="width:32%;background:#f97316;height:10px;"></div>
-          </div>
-          <div class="small">32% visible • 68% locked</div>
-        </div>
+      <div class="subtle">
+        Most stores recover the cost from one fix
+      </div>
 
-        <!-- VALUE -->
-        <div class="card">
-          <strong>Full audit reveals:</strong><br><br>
-          → Conversion gap analysis<br>
-          → Revenue timeline<br>
-          → All hidden leaks<br>
-          → Step-by-step plan<br>
-          → Prioritized fixes<br><br>
-          <span class="warning">⚠️ Not included in free scan</span>
-        </div>
+      <div class="subtle">
+        ⚡ Instant access • No calls • No commitment
+      </div>
+    `;
+  })
+  .catch((err) => {
+    console.error(err);
+    app.innerText = "Error loading report";
+  });
 
-        <!-- PRICING PSYCHOLOGY -->
-        <div class="card">
-          <strong>What this means:</strong><br><br>
-          Most stores lose $2,000–$10,000/month<br><br>
-          Audit cost: $399 one-time<br><br>
-          <span class="warning">Fixing one issue can recover this</span>
-        </div>
-
-        <div class="small" style="text-align:center;">
-          ≈ $13/day for 30 days of insights
-        </div>
-
-        <div class="card red">
-          <strong>If you do nothing:</strong><br><br>
-          → ~$${Math.round(estimatedLossRaw/30)} / day lost<br>
-          → ~$${estimatedLoss} / month lost<br><br>
-          <div class="green" style="padding:10px;border-radius:10px;">
-            One-time $399 → fix leaks
-          </div>
-        </div>
-
-        <!-- GUARANTEE -->
-        <div class="card green">
-          <strong>No fluff. No theory.</strong><br><br>
-          → Actionable fixes<br>
-          → Revenue-focused<br>
-          → Immediate implementation<br>
-        </div>
-
-        <!-- IDENTITY -->
-        <div class="card">
-          <strong>Serious stores fix this early</strong><br><br>
-          → Identify leaks fast<br>
-          → Act immediately<br>
-          → Optimize continuously
-        </div>
-
-        <a href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" class="cta">
-         Find What’s Killing Your Conversions → $399
-        </a>
-
-        <div class="subtle">
-          Most stores recover the cost from one fix
-        </div>
-
-        <div class="subtle">
-          ⚡ Instant access • No calls • No commitment
-        </div>
-      `;
-    })
-    .catch((err) => {
-      console.error(err);
-      app.innerText = "Error loading report";
-    });
-}
 </script>
 
 </body>
