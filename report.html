@@ -112,10 +112,13 @@ const params = new URLSearchParams(window.location.search);
 
 let id = params.get("id");
 
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
 if (!id) {
-  const match = window.location.pathname.match(/\/scan\/([^\/]+)/);
-  if (match && match[1]) {
-    id = match[1];
+  document.getElementById("app").innerText = "Missing scan ID";
+  throw new Error("Missing scan ID");
+}
   }
 }
 
