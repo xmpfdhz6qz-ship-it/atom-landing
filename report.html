@@ -106,6 +106,8 @@
 </div>
 
 <script>
+const app = document.getElementById("app");
+
 const params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 
@@ -117,20 +119,27 @@ if (!id) {
 
 // pokud pořád nic → error
 if (!id || id === "scan") {
-  document.getElementById("app").innerText = "Missing scan ID";
+  app.innerText = "Missing scan ID";
   throw new Error("Missing scan ID");
+}
+
+function formatMoney(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
   .then(res => res.json())
   .then(data => {
 
-    if (!data || data.score === undefined) {
+    // 🔥 FIX: array vs object
+    const row = Array.isArray(data) ? data[0] : data;
+
+    if (!row || row.score === undefined) {
       app.innerText = "Report not found";
       return;
     }
 
-    const estimatedLossRaw = Math.round((100 - data.score) * 40);
+    const estimatedLossRaw = Math.round((100 - row.score) * 40);
     const estimatedLoss = formatMoney(estimatedLossRaw);
 
     app.innerHTML = `
@@ -145,7 +154,7 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
 
       <div class="card highlight">
         <div class="small">Conversion Score</div>
-        <div class="score">${data.score}/100</div>
+        <div class="score">${row.score}/100</div>
         <div class="warning">Below high-performing stores (85+)</div>
       </div>
 
@@ -167,12 +176,12 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
 
       <div class="card red">
         <strong>Main conversion leak:</strong><br><br>
-        ${data.report_json?.main_leak || "Users are confused and leave without taking action."}
+        ${row.report_json?.main_leak || "Users are confused and leave without taking action."}
       </div>
 
       <div class="card green">
         <strong>Quick fix (you can test today):</strong><br><br>
-        ${data.report_json?.quick_fix || "Add a clear CTA above the fold."}
+        ${row.report_json?.quick_fix || "Add a clear CTA above the fold."}
       </div>
 
       <div class="card red">
