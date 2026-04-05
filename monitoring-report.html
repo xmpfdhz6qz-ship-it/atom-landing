@@ -17,22 +17,47 @@
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
 
-fetch(`https://n8n-production-d989b.up.railway.app/webhook/report?token=${token}`)
+// DEBUG
+if (!token) {
+  document.body.innerHTML = "Missing token";
+}
+
+fetch(`https://n8n-production-d989b.up.railway.app/webhook/monitoring?token=${token}`)
   .then(res => res.json())
   .then(data => {
 
+    console.log("DATA:", data);
+
+    if (!data || !data.store) {
+      document.body.innerHTML = "No data found";
+      return;
+    }
+
     document.getElementById("store").innerText = data.store;
-    document.getElementById("score").innerText = "Score: " + data.score;
-    document.getElementById("loss").innerText = "Estimated loss: $" + data.monthly_loss;
-    document.getElementById("drop").innerText = "Recent drop: -" + data.drop + " points ⚠️";
+    document.getElementById("score").innerText = "Score: " + (data.score ?? 0);
+    document.getElementById("loss").innerText = "Estimated loss: $" + (data.monthly_loss ?? 0);
+    document.getElementById("drop").innerText = data.drop 
+      ? "Recent drop: -" + data.drop + " points ⚠️"
+      : "";
 
     const issues = document.getElementById("issues");
-    data.issues.forEach(i => {
-      const li = document.createElement("li");
-      li.innerText = i;
-      issues.appendChild(li);
-    });
 
+    if (data.issues && data.issues.length > 0) {
+      data.issues.forEach(i => {
+        const li = document.createElement("li");
+        li.innerText = i;
+        issues.appendChild(li);
+      });
+    } else {
+      const li = document.createElement("li");
+      li.innerText = "No major issues detected";
+      issues.appendChild(li);
+    }
+
+  })
+  .catch(err => {
+    console.error(err);
+    document.body.innerHTML = "Error loading data";
   });
 </script>
 
