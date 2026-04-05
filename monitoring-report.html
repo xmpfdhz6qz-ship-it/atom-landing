@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Atom Foundry Report</title>
+</head>
+<body style="font-family: Arial; padding: 20px; max-width: 800px; margin: auto;">
+
+  <h1 id="store"></h1>
+  <h2 id="score"></h2>
+  <p id="loss"></p>
+  <p id="drop"></p>
+
+  <h3>Issues:</h3>
+  <ul id="issues"></ul>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+
+fetch(`https://n8n-production-d989b.up.railway.app/webhook/report?token=${token}`)
+  .then(res => res.json())
+  .then(data => {
+
+    document.getElementById("store").innerText = data.store;
+    document.getElementById("score").innerText = "Score: " + data.score;
+    document.getElementById("loss").innerText = "Estimated loss: $" + data.monthly_loss;
+    document.getElementById("drop").innerText = "Recent drop: -" + data.drop + " points ⚠️";
+
+    const issues = document.getElementById("issues");
+    data.issues.forEach(i => {
+      const li = document.createElement("li");
+      li.innerText = i;
+      issues.appendChild(li);
+    });
+
+  });
+</script>
+
+</body>
+</html>
