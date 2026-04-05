@@ -138,45 +138,6 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
       <div class="card red highlight">
         <div class="small">Estimated revenue loss</div>
         <div class="money">$${estimatedLoss}+ / month</div>
-      </div>
-
-      <div class="card highlight">
-        <div class="small">Conversion Score</div>
-        <div class="score">${data.score}/100</div>
-      </div>
-
-      <div class="card red">
-        <strong>Main conversion leak:</strong><br><br>
-        ${data.report_json?.main_leak || "Users are confused and leave without taking action."}
-      </div>
-
-      <div class="card green">
-        <strong>Quick fix:</strong><br><br>
-        ${data.report_json?.quick_fix || "Add a clear CTA above the fold."}
-      </div>
-
-      <a href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" class="cta">
-        Find What’s Killing Your Conversions → $399
-      </a>
-    `;
-  })
-  .catch((err) => {
-    console.error(err);
-    app.innerText = "Error loading report";
-  });
-</script>
-      return;
-    }
-
-    const estimatedLossRaw = Math.round((100 - data.score) * 40);
-    const estimatedLoss = formatMoney(estimatedLossRaw);
-
-    app.innerHTML = `
-      <h1>Your store is leaking revenue</h1>
-
-      <div class="card red highlight">
-        <div class="small">Estimated revenue loss</div>
-        <div class="money">$${estimatedLoss}+ / month</div>
         <div class="warning">This is happening right now</div>
         <div class="warning">+$${Math.round(estimatedLossRaw/30/24)} lost every hour</div>
       </div>
@@ -203,7 +164,6 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
         <span class="warning">Your store shows the same pattern</span>
       </div>
 
-      <!-- ✅ FIX: report_json -->
       <div class="card red">
         <strong>Main conversion leak:</strong><br><br>
         ${data.report_json?.main_leak || "Users are confused and leave without taking action."}
