@@ -124,8 +124,6 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
   .then(res => res.json())
   .then(data => {
 
-    console.log("DATA:", data);
-
     if (!data || data.score === undefined) {
       app.innerText = "Report not found";
       return;
@@ -140,20 +138,11 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
       <div class="card red highlight">
         <div class="small">Estimated revenue loss</div>
         <div class="money">$${estimatedLoss}+ / month</div>
-        <div class="warning">This is happening right now</div>
       </div>
 
       <div class="card highlight">
         <div class="small">Conversion Score</div>
         <div class="score">${data.score}/100</div>
-        <div class="warning">Below high-performing stores (85+)</div>
-      </div>
-
-      <div class="card">
-        <strong>How this analysis works:</strong><br><br>
-        → Based on 1,000+ ecommerce stores<br>
-        → Real conversion behavior patterns<br>
-        → Revenue-driven signals<br>
       </div>
 
       <div class="card red">
@@ -166,25 +155,9 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
         ${data.report_json?.quick_fix || "Add a clear CTA above the fold."}
       </div>
 
-      <div class="card">
-        <strong>What this means:</strong><br><br>
-        Most stores lose $2,000–$10,000/month<br><br>
-        Audit cost: $399 one-time
-      </div>
-
-      <div class="card red">
-        <strong>If you do nothing:</strong><br><br>
-        → ~$${Math.round(estimatedLossRaw/30)} / day lost<br>
-        → ~$${estimatedLoss} / month lost
-      </div>
-
       <a href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" class="cta">
         Find What’s Killing Your Conversions → $399
       </a>
-
-      <div class="subtle">
-        ⚡ Instant access • No calls • No commitment
-      </div>
     `;
   })
   .catch((err) => {
