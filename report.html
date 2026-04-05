@@ -107,17 +107,18 @@
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+let id = params.get("id");
 
+// fallback z URL
 if (!id) {
-  document.getElementById("app").innerText = "Missing scan ID";
-  throw new Error("Missing scan ID");
+  const parts = window.location.pathname.split("/");
+  id = parts[parts.length - 1];
 }
 
-const app = document.getElementById("app");
-
-function formatMoney(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// pokud pořád nic → error
+if (!id || id === "scan") {
+  document.getElementById("app").innerText = "Missing scan ID";
+  throw new Error("Missing scan ID");
 }
 
 fetch(`https://n8n-production-d989b.up.railway.app/webhook/get-scan?id=${id}`)
