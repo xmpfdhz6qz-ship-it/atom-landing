@@ -6,7 +6,9 @@
 <body style="font-family: Arial; padding: 20px; max-width: 800px; margin: auto;">
 
   <h1 id="store"></h1>
+
   <h2 id="score"></h2>
+  <p id="status" style="font-weight: bold;"></p>
   <p id="loss"></p>
 
   <h3>Issues:</h3>
@@ -27,14 +29,34 @@ fetch(`https://n8n-production-d989b.up.railway.app/webhook/monitoring?token=${to
     document.getElementById("score").innerText = "Score: " + data.score;
     document.getElementById("loss").innerText = "Loss: $" + data.monthly_loss;
 
+    // 🔥 STATUS
+    const statusEl = document.getElementById("status");
+
+    if (data.status === "improving") {
+      statusEl.innerText = "Status: improving 📈";
+      statusEl.style.color = "green";
+    } else if (data.status === "declining") {
+      statusEl.innerText = "Status: declining 📉";
+      statusEl.style.color = "red";
+    } else {
+      statusEl.innerText = "Status: stable";
+      statusEl.style.color = "gray";
+    }
+
+    // Issues
     const issues = document.getElementById("issues");
+    issues.innerHTML = "";
+
     data.issues.forEach(i => {
       const li = document.createElement("li");
       li.innerText = i;
       issues.appendChild(li);
     });
 
+    // History
     const history = document.getElementById("history");
+    history.innerHTML = "";
+
     data.history.forEach(h => {
       const li = document.createElement("li");
       li.innerText = new Date(h.created_at).toLocaleDateString() + " → " + h.score;
