@@ -285,30 +285,30 @@ body {
   </div>
 </div>
 
-<a href="https://n8n-production-d989b.up.railway.app/webhook/create-monitoring?audit_id={{$json.scan_id}}" class="cta">
+<a id="monitoring-btn" class="cta">
   Stop Losing Revenue Every Week → $89/month
 </a>
 
-  <div class="sub" style="text-align:center;margin-top:10px;">
-    Most stores recover the cost of monitoring from a single fix
-  </div>
-
-  <ul class="checklist">
-    <li>✔ Detect revenue leaks automatically</li>
-    <li>✔ Fix issues before they cost money</li>
-    <li>✔ Exact actions — no guessing</li>
-    <li>✔ Track conversion improvements</li>
-  </ul>
-
-  <div class="sub" style="text-align:center;margin-top:10px;">
-    Every day you delay = <span id="daily"></span> lost
-  </div>
-
-  <a href="#" class="cta-secondary" onclick="window.print()">
-    Download & Print PDF
-  </a>
+<div class="sub" style="text-align:center;margin-top:10px;">
+  Most stores recover the cost of monitoring from a single fix
 </div>
 
+<ul class="checklist">
+  <li>✔ Detect revenue leaks automatically</li>
+  <li>✔ Fix issues before they cost money</li>
+  <li>✔ Exact actions — no guessing</li>
+  <li>✔ Track conversion improvements</li>
+</ul>
+
+<div class="sub" style="text-align:center;margin-top:10px;">
+  Every day you delay = <span id="daily"></span> lost
+</div>
+
+<a href="#" class="cta-secondary" onclick="window.print()">
+  Download & Print PDF
+</a>
+
+</div>
 </div>
 
 <script>
@@ -382,6 +382,15 @@ document.getElementById("timeline").innerHTML =
 
 document.getElementById("donothing").innerHTML =
 `$${daily} lost daily<br>Conversion stagnates<br>Competitors win`;
+
+// ✅ FIX — napojení tlačítka na audit_id z URL
+const params = new URLSearchParams(window.location.search);
+const auditId = params.get("audit_id") || params.get("id");
+
+if (auditId) {
+  document.getElementById("monitoring-btn").href =
+    `https://n8n-production-d989b.up.railway.app/webhook/create-monitoring?audit_id=${auditId}`;
+}
 
 })();
 </script>
