@@ -383,12 +383,12 @@ document.getElementById("timeline").innerHTML =
 document.getElementById("donothing").innerHTML =
 `$${daily} lost daily<br>Conversion stagnates<br>Competitors win`;
 
-// ✅ FIX — napojení tlačítka na audit_id z URL
-const params = new URLSearchParams(window.location.search);
-const auditId = token;
+const monitoringBtn = document.getElementById("monitoring-btn");
 
-document.getElementById("monitoring-btn").href =
-  `https://n8n-production-d989b.up.railway.app/webhook/create-monitoring?audit_id=${auditId}`;
+if (data.id) {
+  monitoringBtn.href =
+    `https://n8n-production-d989b.up.railway.app/webhook/create-monitoring?audit_id=${data.id}`;
+}
 
 })();
 </script>
