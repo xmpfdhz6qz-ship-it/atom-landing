@@ -385,12 +385,10 @@ document.getElementById("donothing").innerHTML =
 
 // ✅ FIX — napojení tlačítka na audit_id z URL
 const params = new URLSearchParams(window.location.search);
-const auditId = params.get("audit_id") || params.get("id");
+const auditId = token;
 
-if (auditId) {
-  document.getElementById("monitoring-btn").href =
-    `https://n8n-production-d989b.up.railway.app/webhook/create-monitoring?audit_id=${auditId}`;
-}
+document.getElementById("monitoring-btn").href =
+  `https://n8n-production-d989b.up.railway.app/webhook/create-monitoring?audit_id=${auditId}`;
 
 })();
 </script>
