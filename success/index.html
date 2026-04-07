@@ -109,7 +109,6 @@
       → Go check your email now
     </div>
 
-    <!-- MICRO URGENCY -->
     <p class="muted">
       ⚠️ Report may already be waiting in your inbox
     </p>
@@ -147,6 +146,7 @@
   </div>
 
   <script>
+    // 🔥 PROGRESS ANIMATION
     const steps = [
       "Analyzing homepage…",
       "Detecting conversion leaks…",
@@ -173,6 +173,38 @@
     }
 
     runSteps();
+
+    // 🔥 STRIPE → N8N TRIGGER
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id");
+
+      console.log("SESSION ID:", sessionId);
+
+      if (!sessionId) {
+        console.error("❌ Missing session_id");
+        return;
+      }
+
+      // 🧠 zabrání duplicitnímu triggeru
+      const key = "audit_triggered_" + sessionId;
+
+      if (localStorage.getItem(key)) {
+        console.log("⚠️ Already triggered");
+        return;
+      }
+
+      fetch("https://n8n-production-d989b.up.railway.app/webhook/stripe-paid-audit?session_id=" + sessionId)
+        .then(res => res.text())
+        .then(data => {
+          console.log("✅ Webhook response:", data);
+          localStorage.setItem(key, "1");
+        })
+        .catch(err => {
+          console.error("❌ Webhook error:", err);
+        });
+
+    })();
   </script>
 
 </body>
