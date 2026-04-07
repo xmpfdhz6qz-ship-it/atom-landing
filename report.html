@@ -246,23 +246,51 @@ fetch(`/api/get-scan?id=${id}`)
         → Optimize continuously
       </div>
 
-      <a href="<a href="<a href="https://n8n-production-d989b.up.railway.app/webhook/create-audit-v3?email=${encodeURIComponent(row.email)}&domain=${encodeURIComponent(row.store_domain)}" class="cta">
-        Find What’s Killing Your Conversions → $399
-      </a>
+     <a id="auditBtn" class="cta">
+  Find What’s Killing Your Conversions → $399
+</a>
 
-      <div class="subtle">
-        Most stores recover the cost from one fix
-      </div>
+<div class="subtle">
+  Most stores recover the cost from one fix
+</div>
 
-      <div class="subtle">
-        ⚡ Instant access • No calls • No commitment
-      </div>
-    `;
-  })
-  .catch((err) => {
-    console.error(err);
-    app.innerText = "Error loading report";
-  });
+<div class="subtle">
+  ⚡ Instant access • No calls • No commitment
+</div>
+
+<script>
+(function () {
+  const email = row?.email;
+  const domain = row?.store_domain;
+
+  if (!email || !domain) {
+    <script>
+(function () {
+  try {
+    const email = data?.email;
+    const domain = data?.store_domain;
+
+    if (!email || !domain) {
+      console.error("❌ Missing email or domain", { email, domain });
+      return;
+    }
+
+    const url = "https://n8n-production-d989b.up.railway.app/webhook/create-audit-v3"
+      + "?email=" + encodeURIComponent(email)
+      + "&domain=" + encodeURIComponent(domain);
+
+    const btn = document.getElementById("auditBtn");
+
+    if (btn) {
+      btn.href = url;
+    }
+
+    console.log("✅ CTA URL:", url);
+
+  } catch (e) {
+    console.error("❌ Script error:", e);
+  }
+})();
 </script>
 
 </body>
