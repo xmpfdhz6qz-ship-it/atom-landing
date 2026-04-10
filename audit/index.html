@@ -385,9 +385,22 @@ document.getElementById("donothing").innerHTML =
 
 const monitoringBtn = document.getElementById("monitoring-btn");
 
-if (monitoringBtn && domain && data?.email) {
+// 🔥 FIX: vždy definuj domain + email
+const domain =
+  data.domain ||
+  new URLSearchParams(window.location.search).get("domain") ||
+  "fallback-store.com";
+
+const email = data.email || "unknown@atomfoundry.dev";
+
+// DEBUG (klidně pak smaž)
+console.log("DOMAIN:", domain);
+console.log("EMAIL:", email);
+
+// 🔥 CTA vždy nastav
+if (monitoringBtn) {
   monitoringBtn.href =
-    `https://n8n-production-43ab.up.railway.app/webhook/create-monitoring?domain=${domain}&email=${data.email}`;
+    `https://n8n-production-43ab.up.railway.app/webhook/create-monitoring?domain=${domain}&email=${email}`;
 }
 
 })();
