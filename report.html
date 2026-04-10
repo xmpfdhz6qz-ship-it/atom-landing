@@ -258,25 +258,26 @@ fetch(`/api/get-scan?id=${id}`)
       </div>
     `;
 
-    // ✅ CTA LINK FIX
-    const email = row?.email;
-    const domain = row?.store_domain;
+   // ✅ CTA LINK FIX (Stripe version)
+const email = row?.email || "";
 
-    if (!email || !domain) {
-      console.error("❌ Missing email or domain", { email, domain });
-    } else {
-      const url = "https://n8n-production-d989b.up.railway.app/webhook/create-audit-v3"
-        + "?email=" + encodeURIComponent(email)
-        + "&domain=" + encodeURIComponent(domain);
+if (!email) {
+  console.error("❌ Missing email");
+} else {
+  const stripeUrl = "https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05";
 
-      const btn = document.getElementById("auditBtn");
+  const url =
+    stripeUrl +
+    "?prefilled_email=" + encodeURIComponent(email);
 
-      if (btn) {
-        btn.href = url;
-      }
+  const btn = document.getElementById("auditBtn");
 
-      console.log("✅ CTA URL:", url);
-    }
+  if (btn) {
+    btn.href = url;
+  }
+
+  console.log("✅ CTA URL:", url);
+}
 
   })
   .catch((err) => {
