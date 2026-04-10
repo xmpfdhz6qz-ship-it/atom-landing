@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://n8n-production-d989b.up.railway.app/webhook/get-audit?token=${token}`
+      `https://n8n-production-43ab.up.railway.app/webhook/get-audit?token=${token}`
     );
 
     const text = await response.text();
