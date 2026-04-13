@@ -399,8 +399,29 @@ console.log("EMAIL:", email);
 
 // 🔥 CTA vždy nastav
 if (monitoringBtn) {
-  monitoringBtn.href =
-    `https://n8n-production-43ab.up.railway.app/webhook/create-monitoring?domain=${domain}&email=${email}`;
+ monitoringBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch(
+      `https://n8n-production-43ab.up.railway.app/webhook/create-monitoring?domain=${domain}&email=${email}`
+    );
+
+    const data = await res.json();
+
+    if (!data.url) {
+      console.error("NO URL RETURNED", data);
+      alert("Something went wrong. Try again.");
+      return;
+    }
+
+    window.location.href = data.url;
+
+  } catch (err) {
+    console.error("FETCH ERROR", err);
+    alert("Connection error. Try again.");
+  }
+});
 }
 
 })();
