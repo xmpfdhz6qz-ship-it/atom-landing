@@ -413,6 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   } catch (e) {
    // vezmi domain + email z URL
+// vezmi domain + email z URL (bez závislosti na data)
 const params = new URLSearchParams(window.location.search);
 const domain = params.get("domain") || "fallback-store.com";
 const email = params.get("email") || "unknown@atomfoundry.dev";
@@ -420,14 +421,19 @@ const email = params.get("email") || "unknown@atomfoundry.dev";
 console.log("DOMAIN:", domain);
 console.log("EMAIL:", email);
 
+// najdi tlačítko
 const monitoringBtn = document.getElementById("monitoring-btn");
 
-if (monitoringBtn) {
-  monitoringBtn.onclick = async (e) => {
+if (!monitoringBtn) {
+  console.error("monitoring button not found");
+} else {
+  monitoringBtn.onclick = async function (e) {
     e.preventDefault();
 
     try {
-      const url = `https://n8n-production-43ab.up.railway.app/webhook/create-monitoring?domain=${encodeURIComponent(domain)}&email=${encodeURIComponent(email)}`;
+      const url = "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring"
+        + "?domain=" + encodeURIComponent(domain)
+        + "&email=" + encodeURIComponent(email);
 
       console.log("CALLING:", url);
 
@@ -438,19 +444,16 @@ if (monitoringBtn) {
 
       if (!result.url) {
         alert("Error creating checkout");
-        console.error(result);
         return;
       }
 
       window.location.href = result.url;
 
     } catch (err) {
-      console.error("FETCH ERROR", err);
+      console.error("FETCH ERROR:", err);
       alert("Connection error");
     }
   };
-} else {
-  console.error("monitoring button not found");
 }
 </script>
 
