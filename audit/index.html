@@ -385,23 +385,23 @@ document.getElementById("donothing").innerHTML =
 
 const monitoringBtn = document.getElementById("monitoring-btn");
 
-// 🔥 DOMAIN + EMAIL (jedna pravda, žádné duplikace)
+// 🔥 DOMAIN + EMAIL (jednoduché, bez chaosu)
+const params = new URLSearchParams(window.location.search);
+
 const domain =
   data.domain ||
-  new URLSearchParams(window.location.search).get("domain") ||
+  params.get("domain") ||
   "fallback-store.com";
 
 const email =
   data.email ||
-  new URLSearchParams(window.location.search).get("email") ||
+  params.get("email") ||
   "unknown@atomfoundry.dev";
 
 console.log("DOMAIN:", domain);
 console.log("EMAIL:", email);
 
-// 🔥 BUTTON HANDLER (bez DOMContentLoaded – už jsi v DOMu)
-const monitoringBtn = document.getElementById("monitoring-btn");
-
+// 🔥 BUTTON HANDLER (čistý, bez DOMContentLoaded)
 if (!monitoringBtn) {
   console.error("monitoring button not found");
 } else {
@@ -422,12 +422,11 @@ if (!monitoringBtn) {
       console.log("RESPONSE:", result);
 
       if (!result.url) {
-        alert("Error creating checkout");
+        alert("Stripe error");
         console.error(result);
         return;
       }
 
-      // 🔥 REDIRECT NA STRIPE
       window.location.href = result.url;
 
     } catch (err) {
@@ -436,6 +435,9 @@ if (!monitoringBtn) {
     }
   };
 }
+
+// 🔥 KRITICKÉ – uzavření async funkce
+})();
 </script>
 
 </body>
