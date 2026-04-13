@@ -393,11 +393,32 @@ const domain =
 
 const email = data.email || "unknown@atomfoundry.dev";
 
-// DEBUG (klidně pak smaž)
-console.log("DOMAIN:", domain);
-console.log("EMAIL:", email);
-
+// počkej na DOM
 document.addEventListener("DOMContentLoaded", () => {
+
+  // bezpečné načtení domain + email
+  let domain = null;
+  let email = null;
+
+  try {
+    domain =
+      (typeof data !== "undefined" && data?.domain) ||
+      new URLSearchParams(window.location.search).get("domain") ||
+      "fallback-store.com";
+
+    email =
+      (typeof data !== "undefined" && data?.email) ||
+      new URLSearchParams(window.location.search).get("email") ||
+      "unknown@atomfoundry.dev";
+
+  } catch (e) {
+    console.error("DOMAIN/EMAIL PARSE ERROR", e);
+    domain = "fallback-store.com";
+    email = "unknown@atomfoundry.dev";
+  }
+
+  console.log("DOMAIN:", domain);
+  console.log("EMAIL:", email);
 
   const monitoringBtn = document.getElementById("monitoring-btn");
 
@@ -410,19 +431,23 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(
-        `https://n8n-production-43ab.up.railway.app/webhook/create-monitoring?domain=${domain}&email=${email}`
-      );
+      const url = `https://n8n-production-43ab.up.railway.app/webhook/create-monitoring?domain=${encodeURIComponent(domain)}&email=${encodeURIComponent(email)}`;
 
-      const data = await res.json();
+      console.log("CALLING:", url);
 
-      if (!data.url) {
-        console.error("NO URL RETURNED", data);
+      const res = await fetch(url);
+
+      const result = await res.json();
+
+      console.log("RESPONSE:", result);
+
+      if (!result.url) {
+        console.error("NO URL RETURNED", result);
         alert("Something went wrong. Try again.");
         return;
       }
 
-      window.location.href = data.url;
+      window.location.href = result.url;
 
     } catch (err) {
       console.error("FETCH ERROR", err);
