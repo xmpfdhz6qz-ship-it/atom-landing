@@ -412,22 +412,18 @@ document.addEventListener("DOMContentLoaded", () => {
       "unknown@atomfoundry.dev";
 
   } catch (e) {
-    console.error("DOMAIN/EMAIL PARSE ERROR", e);
-    domain = "fallback-store.com";
-    email = "unknown@atomfoundry.dev";
-  }
+   // vezmi domain + email z URL
+const params = new URLSearchParams(window.location.search);
+const domain = params.get("domain") || "fallback-store.com";
+const email = params.get("email") || "unknown@atomfoundry.dev";
 
-  console.log("DOMAIN:", domain);
-  console.log("EMAIL:", email);
+console.log("DOMAIN:", domain);
+console.log("EMAIL:", email);
 
-  const monitoringBtn = document.getElementById("monitoring-btn");
+const monitoringBtn = document.getElementById("monitoring-btn");
 
-  if (!monitoringBtn) {
-    console.error("monitoring button not found");
-    return;
-  }
-
-  monitoringBtn.addEventListener("click", async (e) => {
+if (monitoringBtn) {
+  monitoringBtn.onclick = async (e) => {
     e.preventDefault();
 
     try {
@@ -436,14 +432,13 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("CALLING:", url);
 
       const res = await fetch(url);
-
       const result = await res.json();
 
       console.log("RESPONSE:", result);
 
       if (!result.url) {
-        console.error("NO URL RETURNED", result);
-        alert("Something went wrong. Try again.");
+        alert("Error creating checkout");
+        console.error(result);
         return;
       }
 
@@ -451,12 +446,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } catch (err) {
       console.error("FETCH ERROR", err);
-      alert("Connection error. Try again.");
+      alert("Connection error");
     }
-  });
-
-});
-
+  };
+} else {
+  console.error("monitoring button not found");
+}
 </script>
 
 </body>
