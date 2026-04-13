@@ -385,43 +385,21 @@ document.getElementById("donothing").innerHTML =
 
 const monitoringBtn = document.getElementById("monitoring-btn");
 
-// 🔥 FIX: vždy definuj domain + email
+// 🔥 DOMAIN + EMAIL (jedna pravda, žádné duplikace)
 const domain =
   data.domain ||
   new URLSearchParams(window.location.search).get("domain") ||
   "fallback-store.com";
 
-const email = data.email || "unknown@atomfoundry.dev";
-
-// počkej na DOM
-document.addEventListener("DOMContentLoaded", () => {
-
-  // bezpečné načtení domain + email
-  let domain = null;
-  let email = null;
-
-  try {
-    domain =
-      (typeof data !== "undefined" && data?.domain) ||
-      new URLSearchParams(window.location.search).get("domain") ||
-      "fallback-store.com";
-
-    email =
-      (typeof data !== "undefined" && data?.email) ||
-      new URLSearchParams(window.location.search).get("email") ||
-      "unknown@atomfoundry.dev";
-
-  } catch (e) {
-   // vezmi domain + email z URL
-// vezmi domain + email z URL (bez závislosti na data)
-const params = new URLSearchParams(window.location.search);
-const domain = params.get("domain") || "fallback-store.com";
-const email = params.get("email") || "unknown@atomfoundry.dev";
+const email =
+  data.email ||
+  new URLSearchParams(window.location.search).get("email") ||
+  "unknown@atomfoundry.dev";
 
 console.log("DOMAIN:", domain);
 console.log("EMAIL:", email);
 
-// najdi tlačítko
+// 🔥 BUTTON HANDLER (bez DOMContentLoaded – už jsi v DOMu)
 const monitoringBtn = document.getElementById("monitoring-btn");
 
 if (!monitoringBtn) {
@@ -431,9 +409,10 @@ if (!monitoringBtn) {
     e.preventDefault();
 
     try {
-      const url = "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring"
-        + "?domain=" + encodeURIComponent(domain)
-        + "&email=" + encodeURIComponent(email);
+      const url =
+        "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
+        "?domain=" + encodeURIComponent(domain) +
+        "&email=" + encodeURIComponent(email);
 
       console.log("CALLING:", url);
 
@@ -444,9 +423,11 @@ if (!monitoringBtn) {
 
       if (!result.url) {
         alert("Error creating checkout");
+        console.error(result);
         return;
       }
 
+      // 🔥 REDIRECT NA STRIPE
       window.location.href = result.url;
 
     } catch (err) {
