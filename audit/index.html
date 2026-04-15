@@ -192,6 +192,12 @@ body {
   <div class="score" id="score"></div>
   <div class="sub" id="scoreLabel"></div>
 
+  <!-- 🔥 NOVĚ PŘIDÁNO -->
+  <div class="sub" style="margin-top:8px;font-size:13px;color:#9ca3af;">
+  This score differs from your free scan because this audit analyzes deeper conversion signals,
+  including UX structure, trust gaps, and revenue impact — not just surface issues.
+  </div>
+
   <div class="sub" style="margin-top:10px;">
   Stores with similar score typically recover 18–32% revenue after fixes
   </div>
@@ -327,7 +333,14 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = Number(calc.yearly_loss_value || monthly * 12);
 
-document.getElementById("storeName").innerText = data.domain || "";
+// 🔥 FIX
+const storeDomain = data.store_domain || data.domain || "";
+
+if (!storeDomain) {
+  console.error("NO DOMAIN FROM API", data);
+}
+
+document.getElementById("storeName").innerText = storeDomain;
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
 
@@ -385,23 +398,25 @@ document.getElementById("donothing").innerHTML =
 
 const monitoringBtn = document.getElementById("monitoring-btn");
 
-// 🔥 DOMAIN + EMAIL (jednoduché, bez chaosu)
+// 🔥 FIXED DOMAIN + EMAIL
 const params = new URLSearchParams(window.location.search);
 
 const domain =
-  data.domain ||
-  params.get("domain") ||
-  "fallback-store.com";
+  storeDomain ||
+  params.get("domain");
 
 const email =
   data.email ||
-  params.get("email") ||
-  "unknown@atomfoundry.dev";
+  params.get("email");
 
 console.log("DOMAIN:", domain);
 console.log("EMAIL:", email);
 
-// 🔥 BUTTON HANDLER (čistý, bez DOMContentLoaded)
+// 🔥 GUARD
+if (!domain) {
+  console.error("NO DOMAIN FOR MONITORING", data);
+}
+
 if (!monitoringBtn) {
   console.error("monitoring button not found");
 } else {
@@ -412,7 +427,7 @@ if (!monitoringBtn) {
       const url =
         "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
         "?domain=" + encodeURIComponent(domain) +
-        "&email=" + encodeURIComponent(email);
+        "&email=" + encodeURIComponent(email || "");
 
       console.log("CALLING:", url);
 
@@ -436,7 +451,6 @@ if (!monitoringBtn) {
   };
 }
 
-// 🔥 KRITICKÉ – uzavření async funkce
 })();
 </script>
 
