@@ -123,6 +123,41 @@
       color:#94a3b8;
     }
 
+    /* COOKIE BANNER */
+    #cookie-banner {
+      position:fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      background:#020617;
+      color:#e2e8f0;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      z-index:9999;
+      border-top:1px solid #1e293b;
+    }
+
+    #cookie-banner button {
+      width:auto;
+      padding:10px 16px;
+      font-size:14px;
+      border:none;
+      border-radius:8px;
+      background:#ff6a00;
+      cursor:pointer;
+      font-weight:bold;
+    }
+
+    @media (min-width:600px) {
+      #cookie-banner {
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+      }
+    }
+
     @media (max-width:600px) {
       h1 {
         font-size:30px;
@@ -188,6 +223,26 @@
 
 </div>
 
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <span>
+    We use cookies to improve your experience. See our 
+    <a href="/privacy-policy.html" target="_blank">Privacy Policy</a>.
+  </span>
+  <button onclick="acceptCookies()">Accept</button>
+</div>
+
+<script>
+function acceptCookies() {
+  localStorage.setItem("cookiesAccepted", "true");
+  document.getElementById("cookie-banner").style.display = "none";
+}
+
+if (localStorage.getItem("cookiesAccepted") === "true") {
+  document.getElementById("cookie-banner").style.display = "none";
+}
+</script>
+
 <script>
 document.getElementById("scanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -212,7 +267,7 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, email }) // ✅ FIX
+      body: JSON.stringify({ url, email })
     });
 
     const data = await res.json();
@@ -224,7 +279,7 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
       return;
     }
 
-    window.location.href = "/thank-you?email=" + encodeURIComponent(email); // ✅ sjednoceno
+    window.location.href = "/thank-you?email=" + encodeURIComponent(email);
 
   } catch (err) {
     clearInterval(interval);
