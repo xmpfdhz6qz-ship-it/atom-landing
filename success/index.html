@@ -60,8 +60,8 @@
     }
 
     .warning {
-      background: #1f0a0a;
-      border: 1px solid #dc2626;
+      background: rgba(248,113,113,0.08);
+      border: 1px solid rgba(248,113,113,0.2);
       border-radius: 12px;
       padding: 12px;
       margin-top: 18px;
@@ -101,25 +101,24 @@
     <h1>🔍 Your scan is running…</h1>
 
     <p>
-      We're analyzing your store right now.
+      We're activating your monitoring and analyzing your store.
     </p>
 
     <div class="email-box">
-      <strong>📩 Your report is on the way</strong><br><br>
-      → Go check your email now
+      <strong>📩 Monitoring activated</strong><br><br>
+      → You’ll receive alerts when something changes
     </div>
 
     <p class="muted">
-      ⚠️ Report may already be waiting in your inbox
+      ⚠️ First analysis is starting now
     </p>
 
     <div class="progress" id="progressText">
-      Analyzing homepage…
+      Initializing monitoring…
     </div>
 
     <p>
-      You’ll receive your report in the next 1–2 minutes.<br>
-      <b>Check Promotions / Spam if you don’t see it</b>
+      You’ll be redirected in a moment.
     </p>
 
     <div class="warning">
@@ -127,20 +126,16 @@
     </div>
 
     <div class="preview">
-      <b>Your report includes:</b>
+      <b>What happens next:</b>
       <ul>
-        <li>Hidden conversion leaks</li>
-        <li>Estimated performance gap</li>
-        <li>Quick fixes you can apply immediately</li>
+        <li>Your store will be checked automatically</li>
+        <li>We detect new conversion issues</li>
+        <li>You get alerts only when something changes</li>
       </ul>
     </div>
 
     <p class="muted">
-      Best experience → open your email on mobile
-    </p>
-
-    <p class="muted">
-      👉 Your report is almost ready — check your inbox now
+      👉 Monitoring is being activated…
     </p>
 
   </div>
@@ -148,13 +143,13 @@
   <script>
     // 🔥 PROGRESS ANIMATION
     const steps = [
-      "Analyzing homepage…",
-      "Detecting conversion leaks…",
-      "Measuring performance gaps…",
-      "Generating your report…"
+      "Initializing monitoring…",
+      "Connecting to your store…",
+      "Preparing analysis engine…",
+      "Finalizing setup…"
     ];
 
-    const finalText = "🔥 Your audit is ready — open your email now";
+    const finalText = "✅ Monitoring active — redirecting…";
 
     let i = 0;
 
@@ -162,7 +157,7 @@
       if (i < steps.length) {
         document.getElementById("progressText").innerText = steps[i];
         i++;
-        setTimeout(runSteps, 700);
+        setTimeout(runSteps, 600);
       } else {
         setTimeout(() => {
           const el = document.getElementById("progressText");
@@ -174,7 +169,7 @@
 
     runSteps();
 
-    // 🔥 STRIPE → N8N TRIGGER
+    // 🔥 STRIPE → N8N TRIGGER + REDIRECT
     (function () {
       const params = new URLSearchParams(window.location.search);
       const sessionId = params.get("session_id");
@@ -186,11 +181,16 @@
         return;
       }
 
-      // 🧠 zabrání duplicitnímu triggeru
-      const key = "audit_triggered_" + sessionId;
+      const key = "monitoring_triggered_" + sessionId;
 
       if (localStorage.getItem(key)) {
         console.log("⚠️ Already triggered");
+
+        // 👉 fallback redirect (když už byl trigger)
+        setTimeout(() => {
+          window.location.href = "/monitoring-info";
+        }, 1500);
+
         return;
       }
 
@@ -199,9 +199,19 @@
         .then(data => {
           console.log("✅ Webhook response:", data);
           localStorage.setItem(key, "1");
+
+          // 👉 KLÍČOVÝ REDIRECT
+          setTimeout(() => {
+            window.location.href = "/monitoring-info";
+          }, 1500);
         })
         .catch(err => {
           console.error("❌ Webhook error:", err);
+
+          // 👉 i při chybě redirect (UX > perfektní stav)
+          setTimeout(() => {
+            window.location.href = "/monitoring-info";
+          }, 2000);
         });
 
     })();
