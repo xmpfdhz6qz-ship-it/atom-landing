@@ -1,56 +1,48 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "/index.html"
+      "source": "/api/get-scan",
+      "destination": "https://n8n-production-43ab.up.railway.app/webhook/get-scan"
     },
     {
-      "src": "/api/get-scan",
-      "dest": "https://n8n-production-43ab.up.railway.app/webhook/get-scan"
+      "source": "/sitemap.xml",
+      "destination": "https://n8n-production-43ab.up.railway.app/webhook/sitemap"
     },
     {
-      "src": "/sitemap.xml",
-      "dest": "https://n8n-production-43ab.up.railway.app/webhook/sitemap"
+      "source": "/report/(.*)",
+      "destination": "/report.html?token=$1"
     },
     {
-      "src": "/report/(.*)",
-      "dest": "/report.html?token=$1"
+      "source": "/store/(.*)",
+      "destination": "/store.html?domain=$1"
     },
     {
-      "src": "/store/(.*)",
-      "dest": "/store.html?domain=$1"
+      "source": "/audit/(.*)",
+      "destination": "/audit/index.html?token=$1"
     },
     {
-      "src": "/report",
-      "dest": "/report.html"
+      "source": "/audit-in-progress",
+      "destination": "/audit-in-progress.html"
     },
     {
-      "src": "/audit/(.*)",
-      "dest": "/audit/index.html?token=$1"
+      "source": "/success",
+      "destination": "/success/index.html"
     },
     {
-      "src": "/audit-in-progress",
-      "dest": "/audit-in-progress.html"
+      "source": "/thank-you",
+      "destination": "/success/index.html"
     },
     {
-      "src": "/success",
-      "dest": "/success/index.html"
+      "source": "/monitoring-info",
+      "destination": "/monitoring/index.html"
     },
     {
-      "src": "/thank-you",
-      "dest": "/success/index.html"
+      "source": "/monitoring/(.*)",
+      "destination": "/monitoring.html"
     },
     {
-      "src": "/monitoring-info",
-      "dest": "/monitoring/index.html"
-    },
-    {
-      "src": "/monitoring/(.*)",
-      "dest": "/monitoring.html"
-    },
-    {
-      "src": "/monitoring-report/(.*)",
-      "dest": "/monitoring-report.html?token=$1"
+      "source": "/monitoring-report/(.*)",
+      "destination": "/monitoring-report.html?token=$1"
     }
   ]
 }
