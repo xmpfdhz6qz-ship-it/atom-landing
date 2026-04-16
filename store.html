@@ -102,6 +102,14 @@ h1 {
   background:#111;
   border:1px solid #222;
   box-shadow:0 8px 24px rgba(0,0,0,0.6);
+  opacity:0;
+  transform:translateY(10px);
+  transition:all 0.6s ease;
+}
+
+.cta-box.show {
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* 🔥 CTA PRIMARY */
@@ -173,11 +181,16 @@ h1 {
   line-height:1.6;
 }
 
-/* 🔥 MOBILE */
-@media (max-width:600px){
-  .container{
-    padding:0 2px;
-  }
+/* 🔥 REVEAL */
+.reveal {
+  opacity:0;
+  transform:translateY(10px);
+  transition:all 0.6s ease;
+}
+
+.reveal.show {
+  opacity:1;
+  transform:translateY(0);
 }
 </style>
 </head>
@@ -196,32 +209,7 @@ This AI analysis reveals hidden conversion issues and revenue leaks affecting ec
 
 <div class="card">
 <h2>Conversion Issues Found on <span id="seo-domain">this store</span></h2>
-
-<p>
-Most ecommerce stores struggle with unclear messaging, weak value propositions,
-and missing trust signals — leading to significant revenue loss.
-</p>
-
-<p>
-Our AI analysis identifies conversion leaks based on UX structure, offer clarity,
-and behavioral friction patterns across high-performing ecommerce brands.
-</p>
-
-<p>
-Even small improvements in homepage clarity can increase conversion rates by 10–30%.
-</p>
-</div>
-
-<div class="card">
-<h3>Common Conversion Issues in Ecommerce Stores</h3>
-
-<ul class="value-list">
-<li>Poor above-the-fold messaging</li>
-<li>Weak product differentiation</li>
-<li>Lack of trust signals</li>
-<li>Confusing navigation</li>
-<li>No urgency or conversion triggers</li>
-</ul>
+<p>Most ecommerce stores struggle with unclear messaging...</p>
 </div>
 
 <div class="hero">
@@ -229,9 +217,9 @@ Even small improvements in homepage clarity can increase conversion rates by 10�
 
 <div class="small">This pattern is common across similar ecommerce stores</div>
 
-<div class="loss" id="loss"></div>
+<div class="loss reveal" id="loss"></div>
 
-<div class="score" id="score">–</div>
+<div class="score reveal" id="score">–</div>
 
 <p class="small">Based on UX, messaging, and conversion signals.</p>
 </div>
@@ -244,85 +232,21 @@ Even small improvements in homepage clarity can increase conversion rates by 10�
 <div class="card red">
 <h3>Biggest Conversion Leak Detected</h3>
 <p id="main">Loading analysis...</p>
-
-<div class="warning">
-Similar issues are found in most underperforming stores
-</div>
 </div>
 
 <div class="card green">
 <h3>Quick Win You Can Apply Today</h3>
 <p id="fix">Loading recommendation...</p>
-
-<div class="small">
-This is one of the highest-impact improvements across ecommerce stores
-</div>
-</div>
-
-<div class="card">
-<h3>What this means for most stores</h3>
-
-<p class="small">
-Most ecommerce stores lose 15–35% of potential revenue due to similar conversion issues.
-</p>
-
-<p class="small">
-These problems are often invisible without structured analysis.
-</p>
 </div>
 
 <div class="cta-box">
-
 <h3>Recover Lost Revenue</h3>
 
-<a class="cta-primary" href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05" target="_blank">
+<a class="cta-primary" href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05">
 See Exactly What’s Killing Your Conversions → $399
 </a>
 
-<div class="subtle">
-Secure payment powered by Stripe • Instant access
-</div>
-
-<div class="subtle">
-No calls • No commitment • One-time payment
-</div>
-
-<a class="cta-secondary" href="/">
-Get My Store Free Scan →
-</a>
-
-<div class="subtle">
-You are losing money right now
-</div>
-
-<div class="value-list">
-<br><strong>Full Conversion Audit includes:</strong><br><br>
-
-→ Full revenue loss breakdown (daily, monthly, yearly)<br>
-→ Conversion score + performance benchmark<br>
-→ Critical revenue leaks identified<br>
-→ Exact reasons why users don’t convert<br>
-→ Step-by-step revenue recovery plan<br>
-→ Prioritized fixes by impact ($ value)<br>
-→ Estimated conversion gap<br>
-→ Execution roadmap (what to fix first)<br>
-→ Time-to-fix estimation<br>
-→ Long-term revenue risk analysis
-</div>
-
-<div class="subtle">
-This is the same framework used to identify high-performing ecommerce stores
-</div>
-
-<div class="warning">
-Every day you delay = lost revenue you will never recover
-</div>
-
-</div>
-
-<div class="card">
-<h3>More Stores Analyzed</h3>
-<div id="internal-links"></div>
+<div class="subtle">Secure payment powered by Stripe</div>
 </div>
 
 </div>
@@ -330,93 +254,51 @@ Every day you delay = lost revenue you will never recover
 <script>
 (async function () {
 
-  let domain;
-  const params = new URLSearchParams(window.location.search);
-  domain = params.get("domain");
+let domain = new URLSearchParams(window.location.search).get("domain");
+if (!domain) domain = location.pathname.split("/").pop();
 
-  if (!domain) {
-    const parts = window.location.pathname.split("/");
-    domain = parts[parts.length - 1];
-  }
+const scoreEl = document.getElementById("score");
+const lossEl = document.getElementById("loss");
+const mainEl = document.getElementById("main");
+const fixEl = document.getElementById("fix");
 
-  if (!domain || domain === "store") domain = null;
+const res = await fetch(`/api/store?domain=${domain}`);
+const data = await res.json();
 
-  const titleEl = document.getElementById("title");
-  const scoreEl = document.getElementById("score");
-  const mainEl = document.getElementById("main");
-  const fixEl = document.getElementById("fix");
-  const lossEl = document.getElementById("loss");
-  const lossDetail = document.getElementById("loss-detail");
+const score = data.score || 60;
+const loss = Math.round((100-score)*300);
 
-  if (!domain) {
-    titleEl.innerText = "No store selected";
-    mainEl.innerText = "Run a free scan to analyze your store.";
-    return;
-  }
+// LOSS FIRST
+setTimeout(()=>{
+  lossEl.innerText = `$${loss.toLocaleString()} / month lost`;
+  lossEl.classList.add("show");
+},300);
 
-  document.getElementById("seo-domain").innerText = domain;
+// SCORE ANIMATION
+setTimeout(()=>{
+  let s=0;
+  const i=setInterval(()=>{
+    s++;
+    scoreEl.innerText=s+"/100";
+    if(s>=score) clearInterval(i);
+  },20);
+  scoreEl.classList.add("show");
+},900);
 
-  const linksContainer = document.getElementById("internal-links");
+// LEAK
+setTimeout(()=>{
+  mainEl.innerText=data.main_leak;
+},1600);
 
-  const related = [
-    "nike.com",
-    "gymshark.com",
-    "allbirds.com",
-    "glossier.com",
-    "adidas.com",
-    "zara.com",
-    "boohoo.com",
-    "asos.com"
-  ];
+// FIX
+setTimeout(()=>{
+  fixEl.innerText=data.quick_fix;
+},2200);
 
-  linksContainer.innerHTML = related
-    .map(d => `<a href="/store/${d}">${d}</a><br>`)
-    .join("");
-
-  const seoTitle = `Conversion Analysis of ${domain}`;
-  const seoDesc = `${domain} conversion insights, UX issues, and revenue leak analysis.`;
-
-  document.title = `${domain} Conversion Score | Atom Foundry`;
-  document.querySelector('meta[name="description"]').setAttribute("content", seoDesc);
-  document.getElementById("canonical").setAttribute("href", `https://atomfoundry.dev/store/${domain}`);
-  document.getElementById("seo-title").innerText = seoTitle;
-  document.getElementById("seo-desc").innerText = seoDesc;
-
-  try {
-    const res = await fetch(`/api/store?domain=${domain}`);
-    if (!res.ok) throw new Error();
-
-    const raw = await res.json();
-    const data = Array.isArray(raw) ? raw[0] : raw;
-
-    const score = data.score || 50;
-    const monthlyLoss = Math.round((100 - score) * 300);
-
-    titleEl.innerText = `${domain} Conversion Score`;
-    scoreEl.innerText = `${score}/100`;
-
-    if (data.status === "blocked") {
-      lossEl.innerText = "High-value store detected";
-      lossDetail.innerText = "This store is protected — typically indicating higher traffic and revenue.";
-
-      mainEl.innerText = "This store is protected — likely hiding high-impact conversion issues.";
-      fixEl.innerText = "Run a full audit to uncover hidden revenue leaks and missed opportunities.";
-    } else {
-      lossEl.innerText = `Estimated loss: $${monthlyLoss.toLocaleString()}/month`;
-      lossDetail.innerText = `$${monthlyLoss.toLocaleString()} lost monthly due to weak conversion signals.`;
-
-      mainEl.innerText = data.main_leak || "No issue detected";
-      fixEl.innerText = data.quick_fix || "No recommendation available";
-    }
-
-    if (score < 50) scoreEl.style.color = "#dc2626";
-    else if (score < 70) scoreEl.style.color = "#f97316";
-    else scoreEl.style.color = "#16a34a";
-
-  } catch (e) {
-    titleEl.innerText = `${domain} analysis unavailable`;
-    mainEl.innerText = "We couldn't load the analysis.";
-  }
+// CTA
+setTimeout(()=>{
+  document.querySelector(".cta-box").classList.add("show");
+},3000);
 
 })();
 </script>
