@@ -11,40 +11,66 @@
     body {
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
-      background:#0f172a;
+      background:#0A0A0A;
       color:white;
+      -webkit-font-smoothing:antialiased;
+      padding:16px;
+      line-height:1.7;
     }
 
     .container {
-      max-width:640px;
+      max-width:560px;
       width:100%;
       margin:0 auto;
-      padding:40px 16px;
       text-align:center;
+    }
+
+    /* 🔥 PREMIUM BACKGROUND */
+    .container::before {
+      content:"";
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
+      pointer-events:none;
+      z-index:0;
     }
 
     h1 {
       font-size:24px;
       margin-bottom:10px;
+      line-height:1.3;
     }
 
     .card {
-      background:#1e293b;
-      padding:16px;
-      border-radius:14px;
+      background:#111;
+      padding:18px;
+      border-radius:16px;
       margin-top:14px;
-      border:1px solid #334155;
+      border:1px solid #222;
       text-align:left;
+      box-shadow:0 8px 24px rgba(0,0,0,0.6);
+      position:relative;
+      z-index:1;
+      transition:all 0.3s ease;
+    }
+
+    .card:hover {
+      transform:translateY(-2px);
+      box-shadow:0 12px 30px rgba(0,0,0,0.8);
     }
 
     .red {
-      border-color:#ef4444;
-      background:#2a1a1a;
+      border-color:#dc2626;
+      background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
+      box-shadow:0 0 0 1px rgba(220,38,38,0.4);
     }
 
     .green {
-      border-color:#22c55e;
-      background:#162a1f;
+      border-color:#14532d;
+      background:#052e16;
     }
 
     .highlight {
@@ -52,31 +78,52 @@
     }
 
     .score {
-      font-size:36px;
+      font-size:48px;
       font-weight:900;
       margin-top:6px;
     }
 
     .money {
-      font-size:28px;
+      font-size:36px;
       font-weight:900;
       color:#ef4444;
       margin-top:6px;
+      text-shadow:0 0 20px rgba(239,68,68,0.3);
+    }
+
+    .cta-zone {
+      margin-top:20px;
+      padding:18px;
+      border-radius:16px;
+      background:linear-gradient(180deg,rgba(249,115,22,0.08),rgba(0,0,0,0));
+      border:1px solid rgba(249,115,22,0.3);
+      box-shadow:0 0 30px rgba(249,115,22,0.1);
     }
 
     .cta {
       display:block;
-      margin-top:22px;
-      padding:18px;
+      margin-top:0;
+      padding:20px;
       border-radius:14px;
-      background:linear-gradient(135deg,#ff7a18,#ff5a00);
-      color:white;
+      background:linear-gradient(135deg,#f97316,#ea580c);
+      color:black;
       text-decoration:none;
       font-weight:900;
       text-align:center;
-      font-size:16px;
-      border:1px solid #ff3b30;
-      box-shadow:0 14px 40px rgba(255,90,0,0.35);
+      font-size:18px;
+      border:2px solid #dc2626;
+      box-shadow:0 10px 25px rgba(249,115,22,0.4);
+      transition:all 0.25s ease;
+      cursor:pointer;
+    }
+
+    .cta:hover {
+      transform:translateY(-3px);
+      box-shadow:0 15px 35px rgba(249,115,22,0.6);
+    }
+
+    .cta:active {
+      transform:scale(0.97);
     }
 
     .subtle {
@@ -96,6 +143,23 @@
       font-size:13px;
       margin-top:6px;
     }
+
+    @media print {
+      body {
+        background:white;
+        color:black;
+      }
+
+      .card {
+        page-break-inside:avoid;
+        box-shadow:none;
+        border:1px solid #ddd;
+      }
+
+      .cta {
+        display:none;
+      }
+    }
   </style>
 </head>
 
@@ -111,13 +175,11 @@ const app = document.getElementById("app");
 const params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 
-// fallback z URL
 if (!id) {
   const parts = window.location.pathname.split("/");
   id = parts[parts.length - 1];
 }
 
-// pokud pořád nic → error
 if (!id || id === "scan") {
   app.innerText = "Missing scan ID";
   throw new Error("Missing scan ID");
@@ -196,7 +258,7 @@ fetch(`/api/get-scan?id=${id}`)
       <div class="card">
         <strong>Analysis completeness:</strong>
         <div style="margin-top:10px;background:#1e293b;border-radius:10px;">
-          <div style="width:32%;background:#f97316;height:10px;"></div>
+          <div style="width:32%;background:#f97316;height:10px;border-radius:10px;"></div>
         </div>
         <div class="small">32% visible • 68% locked</div>
       </div>
@@ -245,20 +307,21 @@ fetch(`/api/get-scan?id=${id}`)
         → Optimize continuously
       </div>
 
-      <a id="auditBtn" class="cta">
-        Find What’s Killing Your Conversions → $399
-      </a>
+      <div class="cta-zone">
+        <a id="auditBtn" class="cta">
+          Find What’s Killing Your Conversions → $399
+        </a>
 
-      <div class="subtle">
-        Most stores recover the cost from one fix
-      </div>
+        <div class="subtle">
+          Most stores recover the cost from one fix
+        </div>
 
-      <div class="subtle">
-        ⚡ Instant access • No calls • No commitment
+        <div class="subtle">
+          ⚡ Instant access • No calls • No commitment
+        </div>
       </div>
     `;
 
-   // ✅ CTA LINK FIX (Stripe version)
 const email = row?.email || "";
 
 if (!email) {
