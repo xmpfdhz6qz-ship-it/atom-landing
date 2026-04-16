@@ -16,6 +16,7 @@ body{
   color:#fff;
   margin:0;
   padding:16px;
+  line-height:1.7;
 }
 
 body::before{
@@ -23,11 +24,12 @@ body::before{
   position:fixed;
   width:100%;height:100%;
   background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
+  z-index:0;
 }
 
-.container{max-width:560px;margin:auto;}
+.container{max-width:560px;margin:auto;position:relative;z-index:1;}
 
-/* 🔥 HOVER EFFECT */
+/* cards */
 .card{
   padding:18px;
   border-radius:16px;
@@ -41,17 +43,9 @@ body::before{
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
 
-/* 🔴 LEAK */
-.card.red{
-  border:1px solid #dc2626;
-  background:#1a0f0f;
-}
-
-/* 🟢 FIX */
-.card.green{
-  border:1px solid #14532d;
-  background:#052e16;
-}
+/* leak/fix */
+.card.red{border:1px solid #dc2626;background:#1a0f0f;}
+.card.green{border:1px solid #14532d;background:#052e16;}
 
 .hero{
   padding:20px;
@@ -64,7 +58,6 @@ body::before{
 .loss{font-size:28px;color:#ef4444;font-weight:900;}
 .small{font-size:13px;color:#A1A1AA;}
 
-/* CTA */
 .cta-primary{
   display:block;
   margin-top:14px;
@@ -76,8 +69,8 @@ body::before{
   font-weight:900;
   border:2px solid #dc2626;
   text-decoration:none;
-  animation:pulse 2s infinite;
   cursor:pointer;
+  animation:pulse 2s infinite;
 }
 .cta-primary:hover{transform:translateY(-2px);}
 
@@ -103,13 +96,6 @@ body::before{
 .subtle{font-size:12px;color:#6b7280;}
 .warning{color:#f87171;font-size:13px;}
 
-.benchmark{
-  margin-top:10px;
-  color:#f97316;
-  font-weight:700;
-  font-size:14px;
-}
-
 .links a{
   display:block;
   color:#60a5fa;
@@ -122,23 +108,29 @@ body::before{
 
 <div class="container">
 
-<!-- SEO -->
+<!-- 🔥 SEO TEXT -->
 <div id="seo-block">
 <h1 id="seo-title">Conversion Analysis</h1>
 
 <p id="seo-desc">
-AI-powered analysis revealing hidden conversion leaks and UX issues.
+This AI-powered ecommerce analysis reveals hidden conversion leaks,
+UX friction, and revenue loss affecting your store performance.
 </p>
 
 <p>
-Most stores lose <strong>20–40% revenue</strong> due to invisible problems.
+Most ecommerce stores lose <strong>20–40% of revenue</strong> due to
+unclear messaging, weak trust signals, and poor conversion flow.
+</p>
+
+<p>
+This report shows exactly where users drop off — and what to fix.
 </p>
 </div>
 
 <!-- TRUST -->
 <div class="card">
 <h2>Analysis for <span id="seo-domain">this store</span></h2>
-<p>This store shows patterns typical for underperforming funnels.</p>
+<p>This store shows patterns typical for underperforming ecommerce funnels.</p>
 </div>
 
 <!-- HERO -->
@@ -147,9 +139,7 @@ Most stores lose <strong>20–40% revenue</strong> due to invisible problems.
 
 <div class="loss" id="loss"></div>
 <div class="score" id="score">–</div>
-<div class="benchmark" id="benchmark"></div>
-
-<p class="small">Based on real conversion data</p>
+<p class="small">Based on real conversion behavior patterns</p>
 </div>
 
 <!-- LOSS -->
@@ -173,7 +163,9 @@ Most stores lose <strong>20–40% revenue</strong> due to invisible problems.
 <!-- FREE SCAN -->
 <div class="card">
 <h3>Scan Another Store</h3>
-<a class="cta-secondary" href="/">Scan My Store for Free →</a>
+<a class="cta-secondary" href="/">
+Scan My Store for Free →
+</a>
 </div>
 
 <!-- MONEY -->
@@ -184,7 +176,7 @@ Most stores lose <strong>20–40% revenue</strong> due to invisible problems.
 See Full Conversion Audit → $399
 </a>
 
-<div class="subtle">Instant access • No calls</div>
+<div class="subtle">Instant access • No calls • One-time</div>
 
 <div class="value-list">
 <br><strong>Full audit reveals:</strong><br><br>
@@ -197,7 +189,6 @@ See Full Conversion Audit → $399
 <div class="warning">
 Every second you wait = lost revenue
 </div>
-
 </div>
 
 <!-- 🔥 INTERNAL LINKS -->
@@ -212,7 +203,13 @@ Every second you wait = lost revenue
 (async function(){
 
 let domain = new URLSearchParams(window.location.search).get("domain");
-if(!domain) domain = location.pathname.split("/").pop();
+
+if(!domain){
+  const parts = window.location.pathname.split("/");
+  domain = parts[parts.length - 1];
+}
+
+if(!domain || domain==="store") domain="yourstore.com";
 
 domain = domain.replace(/^https?:\/\//,"");
 
@@ -220,8 +217,8 @@ document.getElementById("seo-domain").innerText = domain;
 document.getElementById("seo-title").innerText = "Conversion Analysis of " + domain;
 document.getElementById("page-title").innerText = domain + " Conversion Score";
 
-// internal links
-const related = ["nike.com","gymshark.com","zara.com","asos.com"];
+/* internal links */
+const related = ["nike.com","gymshark.com","zara.com","asos.com","glossier.com"];
 document.getElementById("links").innerHTML =
 related.map(d=>`<a href="/store/${d}">${d}</a>`).join("");
 
@@ -230,7 +227,6 @@ const lossEl=document.getElementById("loss");
 const mainEl=document.getElementById("main");
 const fixEl=document.getElementById("fix");
 const lossDetail=document.getElementById("loss-detail");
-const benchmarkEl=document.getElementById("benchmark");
 
 try{
 const res=await fetch(`/api/store?domain=${domain}`);
@@ -240,7 +236,7 @@ const data=Array.isArray(raw)?raw[0]:raw;
 const score=data.score||60;
 let monthlyLoss=Math.round((100-score)*300);
 
-// score
+/* score */
 let s=0;
 const i=setInterval(()=>{
 s++;
@@ -248,12 +244,7 @@ scoreEl.innerText=s+"/100";
 if(s>=score)clearInterval(i);
 },20);
 
-// benchmark
-setTimeout(()=>{
-benchmarkEl.innerText="Worse than "+(100-score)+"% of stores";
-},800);
-
-// loss counter
+/* loss counter */
 setTimeout(()=>{
 let current=monthlyLoss;
 setInterval(()=>{
@@ -261,17 +252,17 @@ current+=Math.random()*2;
 lossEl.innerText="$"+Math.round(current).toLocaleString()+"/month";
 lossDetail.innerText="≈ $"+Math.round(current)+" lost monthly";
 },1000);
-},1200);
+},800);
 
-// leak
+/* leak */
 setTimeout(()=>{
 mainEl.innerText=data.main_leak||"Users leave without taking action.";
-},1800);
+},1200);
 
-// fix
+/* fix */
 setTimeout(()=>{
 fixEl.innerText=data.quick_fix||"Improve clarity above the fold.";
-},2300);
+},1600);
 
 }catch(e){
 mainEl.innerText="Analysis unavailable";
