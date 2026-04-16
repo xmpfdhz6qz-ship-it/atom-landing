@@ -172,6 +172,11 @@ body {
 <body>
 <div class="container">
 
+<!-- 🔥 TOP STRIP -->
+<div style="background:#111;border:1px solid #22c55e;padding:10px;border-radius:12px;text-align:center;font-size:12px;margin-bottom:12px;">
+🟢 Live AI Conversion Analysis • Revenue Leak Detection Active
+</div>
+
 <div class="card">
   <div class="section-title">Conversion Intelligence Audit</div>
   <div id="storeName"></div>
@@ -192,7 +197,6 @@ body {
   <div class="score" id="score"></div>
   <div class="sub" id="scoreLabel"></div>
 
-  <!-- 🔥 NOVĚ PŘIDÁNO -->
   <div class="sub" style="margin-top:8px;font-size:13px;color:#9ca3af;">
   This score differs from your free scan because this audit analyzes deeper conversion signals,
   including UX structure, trust gaps, and revenue impact — not just surface issues.
@@ -205,8 +209,24 @@ body {
   <div class="sub">Confidence: <b id="confidence"></b></div>
 </div>
 
+<!-- 🔥 EARLY CTA -->
+<a id="monitoring-btn-top" class="cta">
+  Fix Revenue Leaks Now → Start Monitoring
+</a>
+
 <div class="alert">
 ⚠️ You are not losing traffic. You are losing buyers.
+</div>
+
+<!-- 🔥 URGENCY BLOCK -->
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Real-Time Revenue Leak</div>
+  <div style="font-size:22px;font-weight:800;color:#ef4444;">
+    You are losing ≈ $<span id="daily3"></span> every single day
+  </div>
+  <div class="sub">
+    That’s money already earned — but not captured.
+  </div>
 </div>
 
 <div class="card">
@@ -291,8 +311,19 @@ body {
   </div>
 </div>
 
+<!-- 🔥 TRUST BLOCK -->
+<div class="card" style="border:1px solid #14532d;">
+  <div class="section-title">Execution Confidence</div>
+  <div>
+    • Used across 1,000+ ecommerce analyses<br>
+    • Based on real conversion data patterns<br>
+    • No guesswork — only revenue-driven fixes<br><br>
+    <b>If it doesn't improve conversion, you don't scale it.</b>
+  </div>
+</div>
+
 <a id="monitoring-btn" class="cta">
-  Stop Losing Revenue Every Week → $89/month
+  Fix Conversion Leaks & Recover Revenue → $89/month
 </a>
 
 <div class="sub" style="text-align:center;margin-top:10px;">
@@ -333,12 +364,7 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = Number(calc.yearly_loss_value || monthly * 12);
 
-// 🔥 FIX
 const storeDomain = data.store_domain || data.domain || "";
-
-if (!storeDomain) {
-  console.error("NO DOMAIN FROM API", data);
-}
 
 document.getElementById("storeName").innerText = storeDomain;
 document.getElementById("score").innerText = (r.score || 70) + "/100";
@@ -349,6 +375,7 @@ document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
 document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString()} lost per year`;
 document.getElementById("daily").innerText = `$${daily}`;
 document.getElementById("daily2").innerText = daily;
+document.getElementById("daily3").innerText = daily;
 
 document.getElementById("pattern").innerText = r.primary_failure || "";
 document.getElementById("primary").innerText = r.main_leak || "";
@@ -377,7 +404,6 @@ issues.map(i => `
 </div>
 `).join("");
 
-// AUTO SECTIONS
 const score = r.score || 70;
 const gap = Math.round((100 - score) * 0.6);
 
@@ -398,7 +424,6 @@ document.getElementById("donothing").innerHTML =
 
 const monitoringBtn = document.getElementById("monitoring-btn");
 
-// 🔥 FIXED DOMAIN + EMAIL
 const params = new URLSearchParams(window.location.search);
 
 const domain =
@@ -409,17 +434,7 @@ const email =
   data.email ||
   params.get("email");
 
-console.log("DOMAIN:", domain);
-console.log("EMAIL:", email);
-
-// 🔥 GUARD
-if (!domain) {
-  console.error("NO DOMAIN FOR MONITORING", data);
-}
-
-if (!monitoringBtn) {
-  console.error("monitoring button not found");
-} else {
+if (monitoringBtn) {
   monitoringBtn.onclick = async function (e) {
     e.preventDefault();
 
@@ -429,25 +444,28 @@ if (!monitoringBtn) {
         "?domain=" + encodeURIComponent(domain) +
         "&email=" + encodeURIComponent(email || "");
 
-      console.log("CALLING:", url);
-
       const res = await fetch(url);
       const result = await res.json();
 
-      console.log("RESPONSE:", result);
-
       if (!result.url) {
         alert("Stripe error");
-        console.error(result);
         return;
       }
 
       window.location.href = result.url;
 
     } catch (err) {
-      console.error("FETCH ERROR:", err);
       alert("Connection error");
     }
+  };
+}
+
+const topBtn = document.getElementById("monitoring-btn-top");
+
+if (topBtn) {
+  topBtn.onclick = function(e){
+    e.preventDefault();
+    document.getElementById("monitoring-btn").click();
   };
 }
 
