@@ -136,7 +136,7 @@
 
 <body>
 
-  <h1>✅ Payment successful</h1>
+  <h1>✅ Monitoring active for <span id="domainName">your store</span></h1>
 
   <p class="sub">
     Your conversion monitoring is now active.
@@ -190,6 +190,21 @@
   <div class="note">
     You’ll only receive alerts when something changes. No noise.
   </div>
+
+  <!-- 🔥 NEW: DYNAMIC DATA SCRIPT -->
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const domain = params.get("domain");
+    const email = params.get("email");
+
+    console.log("DOMAIN:", domain);
+    console.log("EMAIL:", email);
+
+    if (domain) {
+      document.getElementById("domainName").innerText = domain;
+    }
+  </script>
 
 </body>
 </html>
