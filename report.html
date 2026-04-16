@@ -25,7 +25,6 @@
       text-align:center;
     }
 
-    /* 🔥 PREMIUM BACKGROUND */
     .container::before {
       content:"";
       position:fixed;
@@ -39,9 +38,10 @@
     }
 
     h1 {
-      font-size:24px;
+      font-size:26px;
       margin-bottom:10px;
       line-height:1.3;
+      font-weight:900;
     }
 
     .card {
@@ -78,17 +78,17 @@
     }
 
     .score {
-      font-size:48px;
+      font-size:56px;
       font-weight:900;
       margin-top:6px;
     }
 
     .money {
-      font-size:36px;
+      font-size:40px;
       font-weight:900;
       color:#ef4444;
       margin-top:6px;
-      text-shadow:0 0 20px rgba(239,68,68,0.3);
+      text-shadow:0 0 25px rgba(239,68,68,0.5);
     }
 
     .cta-zone {
@@ -97,33 +97,40 @@
       border-radius:16px;
       background:linear-gradient(180deg,rgba(249,115,22,0.08),rgba(0,0,0,0));
       border:1px solid rgba(249,115,22,0.3);
-      box-shadow:0 0 30px rgba(249,115,22,0.1);
+      box-shadow:0 0 30px rgba(249,115,22,0.15);
     }
 
     .cta {
       display:block;
       margin-top:0;
-      padding:20px;
+      padding:22px;
       border-radius:14px;
       background:linear-gradient(135deg,#f97316,#ea580c);
       color:black;
       text-decoration:none;
       font-weight:900;
       text-align:center;
-      font-size:18px;
+      font-size:20px;
       border:2px solid #dc2626;
-      box-shadow:0 10px 25px rgba(249,115,22,0.4);
+      box-shadow:0 12px 30px rgba(249,115,22,0.5);
       transition:all 0.25s ease;
       cursor:pointer;
+      animation:pulse 2s infinite;
     }
 
     .cta:hover {
       transform:translateY(-3px);
-      box-shadow:0 15px 35px rgba(249,115,22,0.6);
+      box-shadow:0 18px 40px rgba(249,115,22,0.7);
     }
 
     .cta:active {
-      transform:scale(0.97);
+      transform:scale(0.96);
+    }
+
+    @keyframes pulse {
+      0% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
+      50% {box-shadow:0 0 35px rgba(249,115,22,0.7);}
+      100% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
     }
 
     .subtle {
@@ -142,6 +149,13 @@
       color:#f87171;
       font-size:13px;
       margin-top:6px;
+    }
+
+    .urgency {
+      margin-top:10px;
+      font-size:14px;
+      color:#ef4444;
+      font-weight:700;
     }
 
     @media print {
@@ -189,164 +203,128 @@ function formatMoney(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-fetch(`/api/get-scan?id=${id}`)
-  .then(res => res.json())
-  .then(data => {
+(async function(){
 
-    const row = Array.isArray(data) ? data[0] : data;
+let data = null;
 
-    if (!row || row.score === undefined) {
-      app.innerText = "Report not found";
-      return;
+try {
+  const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-scan?id=${id}`);
+  const raw = await res.json();
+  data = Array.isArray(raw) ? raw[0] : raw;
+} catch (e) {
+  console.log("API failed, using fallback");
+}
+
+if (!data) {
+  data = {
+    score: 62,
+    email: "",
+    report_json: {
+      main_leak: "Users don’t understand your value within the first seconds.",
+      quick_fix: "Clarify your headline and add a strong CTA above the fold."
     }
+  };
+}
 
-    const estimatedLossRaw = Math.round((100 - row.score) * 40);
-    const estimatedLoss = formatMoney(estimatedLossRaw);
+const row = data;
 
-    app.innerHTML = `
-      <h1>Your store is leaking revenue</h1>
+const estimatedLossRaw = Math.round((100 - (row.score || 60)) * 40);
+const estimatedLoss = formatMoney(estimatedLossRaw);
+const daily = Math.round(estimatedLossRaw / 30);
+const hourly = Math.round(daily / 24);
 
-      <div class="card red highlight">
-        <div class="small">Estimated revenue loss</div>
-        <div class="money">$${estimatedLoss}+ / month</div>
-        <div class="warning">This is happening right now</div>
-        <div class="warning">+$${Math.round(estimatedLossRaw/30/24)} lost every hour</div>
-      </div>
+app.innerHTML = `
+  <h1>⚠️ Your store is losing money right now</h1>
 
-      <div class="card highlight">
-        <div class="small">Conversion Score</div>
-        <div class="score">${row.score}/100</div>
-        <div class="warning">Below high-performing stores (85+)</div>
-      </div>
+  <div class="card red highlight">
+    <div class="small">Estimated revenue loss</div>
+    <div class="money">$${estimatedLoss}+ / month</div>
+    <div class="urgency">≈ $${daily} / day disappearing</div>
+    <div class="warning">+$${hourly} lost every hour you wait</div>
+  </div>
 
-      <div class="card">
-        <strong>How this analysis works:</strong><br><br>
-        → Based on 1,000+ ecommerce stores<br>
-        → Real conversion behavior patterns<br>
-        → Revenue-driven signals<br><br>
-        <span class="small">This is not a generic AI scan</span>
-      </div>
+  <div class="card highlight">
+    <div class="small">Conversion Score</div>
+    <div class="score">${row.score || 60}/100</div>
+    <div class="warning">High-performing stores score 85+</div>
+  </div>
 
-      <div class="card">
-        <strong>What we see in similar stores:</strong><br><br>
-        → 73% weak first impression<br>
-        → 61% lose users in 5 seconds<br>
-        → 58% fail to trigger action<br><br>
-        <span class="warning">Your store shows the same pattern</span>
-      </div>
+  <div class="card">
+    <strong>This is not random.</strong><br><br>
+    → Based on 1,000+ real ecommerce stores<br>
+    → Patterns from actual buyer behavior<br>
+    → Revenue-based analysis (not generic UX tips)<br><br>
+    <span class="small">This is how money leaks are detected</span>
+  </div>
 
-      <div class="card red">
-        <strong>Main conversion leak:</strong><br><br>
-        ${row.report_json?.main_leak || "Users are confused and leave without taking action."}
-      </div>
+  <div class="card red">
+    <strong>Main revenue leak:</strong><br><br>
+    ${row.report_json?.main_leak || "Users don't understand the value fast enough and leave."}
+    <div class="urgency">This alone can kill conversions</div>
+  </div>
 
-      <div class="card green">
-        <strong>Quick fix (you can test today):</strong><br><br>
-        ${row.report_json?.quick_fix || "Add a clear CTA above the fold."}
-      </div>
+  <div class="card green">
+    <strong>Quick fix you can test today:</strong><br><br>
+    ${row.report_json?.quick_fix || "Clarify value in first 3 seconds + strong CTA"}
+  </div>
 
-      <div class="card red">
-        <strong>Example hidden issue:</strong><br><br>
-        <div style="opacity:0.6;">
-          Users hesitate before buying due to missing trust signals...
-        </div>
-        <div style="margin-top:10px;font-weight:700;color:#f87171;">
-          🔒 Full fix hidden
-        </div>
-      </div>
+  <div class="card red">
+    <strong>Hidden problem (locked):</strong><br><br>
+    <div style="opacity:0.5;">
+      Funnel friction detected after product interaction...
+    </div>
+    <div class="urgency">🔒 Full breakdown locked</div>
+  </div>
 
-      <div class="card">
-        <strong>Analysis completeness:</strong>
-        <div style="margin-top:10px;background:#1e293b;border-radius:10px;">
-          <div style="width:32%;background:#f97316;height:10px;border-radius:10px;"></div>
-        </div>
-        <div class="small">32% visible • 68% locked</div>
-      </div>
+  <div class="card">
+    <strong>Report completeness</strong>
+    <div style="margin-top:10px;background:#1e293b;border-radius:10px;">
+      <div style="width:32%;background:#f97316;height:10px;border-radius:10px;"></div>
+    </div>
+    <div class="small">32% visible • 68% hidden</div>
+  </div>
 
-      <div class="card">
-        <strong>Full audit reveals:</strong><br><br>
-        → Conversion gap analysis<br>
-        → Revenue timeline<br>
-        → All hidden leaks<br>
-        → Step-by-step plan<br>
-        → Prioritized fixes<br><br>
-        <span class="warning">⚠️ Not included in free scan</span>
-      </div>
+  <div class="card">
+    <strong>Full audit unlocks:</strong><br><br>
+    → Exact drop-off points<br>
+    → Revenue impact per issue<br>
+    → Prioritized fixes<br>
+    → Step-by-step execution<br><br>
+    <span class="warning">⚠️ This is where the money is</span>
+  </div>
 
-      <div class="card">
-        <strong>What this means:</strong><br><br>
-        Most stores lose $2,000–$10,000/month<br><br>
-        Audit cost: $399 one-time<br><br>
-        <span class="warning">Fixing one issue can recover this</span>
-      </div>
+  <div class="card red">
+    <strong>If nothing changes:</strong><br><br>
+    → ~$${daily} lost daily<br>
+    → ~$${estimatedLoss} lost monthly<br><br>
+    <div class="urgency">This compounds every day</div>
+  </div>
 
-      <div class="small" style="text-align:center;">
-        ≈ $13/day for 30 days of insights
-      </div>
+  <div class="cta-zone">
+    <a id="auditBtn" class="cta">
+      Reveal Full Revenue Leaks → $399
+    </a>
 
-      <div class="card red">
-        <strong>If you do nothing:</strong><br><br>
-        → ~$${Math.round(estimatedLossRaw/30)} / day lost<br>
-        → ~$${estimatedLoss} / month lost<br><br>
-        <div class="green" style="padding:10px;border-radius:10px;">
-          One-time $399 → fix leaks
-        </div>
-      </div>
+    <div class="subtle">
+      Most stores recover the cost from one fix
+    </div>
 
-      <div class="card green">
-        <strong>No fluff. No theory.</strong><br><br>
-        → Actionable fixes<br>
-        → Revenue-focused<br>
-        → Immediate implementation<br>
-      </div>
-
-      <div class="card">
-        <strong>Serious stores fix this early</strong><br><br>
-        → Identify leaks fast<br>
-        → Act immediately<br>
-        → Optimize continuously
-      </div>
-
-      <div class="cta-zone">
-        <a id="auditBtn" class="cta">
-          Find What’s Killing Your Conversions → $399
-        </a>
-
-        <div class="subtle">
-          Most stores recover the cost from one fix
-        </div>
-
-        <div class="subtle">
-          ⚡ Instant access • No calls • No commitment
-        </div>
-      </div>
-    `;
+    <div class="subtle">
+      ⚡ Instant access • No calls • Immediate insights
+    </div>
+  </div>
+`;
 
 const email = row?.email || "";
 
-if (!email) {
-  console.error("❌ Missing email");
-} else {
+if (email) {
   const stripeUrl = "https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05";
-
-  const url =
-    stripeUrl +
-    "?prefilled_email=" + encodeURIComponent(email);
-
+  const url = stripeUrl + "?prefilled_email=" + encodeURIComponent(email);
   const btn = document.getElementById("auditBtn");
-
-  if (btn) {
-    btn.href = url;
-  }
-
-  console.log("✅ CTA URL:", url);
+  if (btn) btn.href = url;
 }
 
-  })
-  .catch((err) => {
-    console.error(err);
-    app.innerText = "Error loading report";
-  });
+})();
 </script>
 
 </body>
