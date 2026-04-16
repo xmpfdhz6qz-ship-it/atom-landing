@@ -238,11 +238,16 @@
       i = (i + 1) % steps.length;
     }, 1500);
 
+    // 🔥 REDIRECT AFTER 10s TO FREE SCAN PAGE
     setTimeout(() => {
       const params = new URLSearchParams(window.location.search);
-      const domain = params.get("domain") || "";
-      window.location.href = "/store/" + domain;
-    }, 8000);
+      let domain = params.get("domain") || "";
+
+      // odstraní https:// nebo http://
+      domain = domain.replace(/^https?:\/\//, "");
+
+      window.location.href = "https://atomfoundry.dev/store/" + domain;
+    }, 10000);
   </script>
 </body>
 </html>
