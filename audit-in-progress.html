@@ -1,253 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Scan in Progress | Atom Foundry</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Scan in Progress | Atom Foundry</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0A0A0A;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      line-height:1.7;
-      -webkit-font-smoothing:antialiased;
-    }
+<style>
+body {
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  background:#0A0A0A;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
 
-    body::before {
-      content:"";
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
-      pointer-events:none;
-      z-index:0;
-    }
+body::before {
+  content:"";
+  position:fixed;
+  width:100%;height:100%;
+  background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
+}
 
-    .container {
-      max-width: 520px;
-      width: 100%;
-      position:relative;
-      z-index:1;
-    }
+.container {
+  max-width:520px;
+  width:100%;
+  z-index:1;
+}
 
-    .card {
-      background: #111;
-      border-radius: 18px;
-      padding: 22px;
-      border:1px solid #222;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    }
+.card {
+  background:#111;
+  border-radius:18px;
+  padding:22px;
+  border:1px solid #222;
+  box-shadow:0 8px 24px rgba(0,0,0,0.6);
+}
 
-    h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
-      color: #22c55e;
-    }
+/* 🔥 LIVE STRIP */
+.live {
+  font-size:12px;
+  color:#22c55e;
+  margin-bottom:10px;
+  animation:pulse 2s infinite;
+}
 
-    p {
-      color: #A1A1AA;
-      line-height: 1.6;
-      font-size: 15px;
-    }
+@keyframes pulse {
+  0% {opacity:0.6;}
+  50% {opacity:1;}
+  100% {opacity:0.6;}
+}
 
-    .highlight {
-      color: #fff;
-      font-weight: 600;
-    }
+h1 {
+  font-size:22px;
+  margin-bottom:10px;
+  color:#22c55e;
+}
 
-    .email-box {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 14px;
-      background: #052e16;
-      border: 1px solid #14532d;
-      text-align: center;
-      box-shadow:0 0 0 1px rgba(34,197,94,0.2);
-    }
+p {
+  color:#A1A1AA;
+  font-size:15px;
+}
 
-    .email-box h3 {
-      margin: 0 0 8px;
-      color: #22c55e;
-      font-size: 15px;
-    }
+.highlight {
+  color:#fff;
+  font-weight:600;
+}
 
-    .cta {
-      margin-top: 14px;
-    }
+/* 🔥 PROGRESS BAR */
+.progress-bar {
+  margin-top:16px;
+  height:8px;
+  background:#1f1f1f;
+  border-radius:999px;
+  overflow:hidden;
+}
 
-    .btn {
-      display: inline-block;
-      padding: 16px 20px;
-      background: linear-gradient(135deg,#f97316,#ea580c);
-      color: #000;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 15px;
-      cursor: pointer;
-      border:2px solid #dc2626;
-      box-shadow:0 10px 25px rgba(249,115,22,0.4);
-      transition:all 0.25s ease;
-    }
+.progress-fill {
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#f97316,#ea580c);
+  transition:width 0.4s ease;
+}
 
-    .btn:hover {
-      transform:translateY(-2px);
-      box-shadow:0 15px 35px rgba(249,115,22,0.6);
-    }
+/* 🔥 EMAIL BOX */
+.email-box {
+  margin-top:18px;
+  padding:16px;
+  border-radius:14px;
+  background:#052e16;
+  border:1px solid #14532d;
+  text-align:center;
+}
 
-    .btn:active {
-      transform:scale(0.97);
-    }
+.email-box h3 {
+  margin:0 0 8px;
+  color:#22c55e;
+  font-size:15px;
+}
 
-    .steps {
-      margin-top: 18px;
-      padding-left: 18px;
-      font-size: 14px;
-      color:#cbd5f5;
-    }
+/* CTA */
+.btn {
+  display:inline-block;
+  margin-top:10px;
+  padding:14px 18px;
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:#000;
+  border-radius:12px;
+  font-weight:900;
+  font-size:14px;
+  border:2px solid #dc2626;
+  cursor:pointer;
+}
 
-    .steps li {
-      margin-bottom: 8px;
-    }
+.progress-text {
+  margin-top:12px;
+  font-size:13px;
+  color:#f97316;
+  font-weight:600;
+  text-align:center;
+}
 
-    .progress {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #f97316;
-      font-weight:600;
-    }
+/* 🔥 DATA LINE */
+.data-line {
+  margin-top:8px;
+  font-size:12px;
+  color:#6b7280;
+  text-align:center;
+}
 
-    .note {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #6b7280;
-      text-align: center;
-    }
+.footer {
+  margin-top:18px;
+  font-size:12px;
+  color:#6b7280;
+  text-align:center;
+}
 
-    .footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #6b7280;
-      text-align: center;
-    }
+.id {
+  margin-top:10px;
+  font-size:11px;
+  color:#475569;
+  text-align:center;
+}
 
-    .id {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #475569;
-      text-align: center;
-    }
-
-    .live {
-      margin-bottom:10px;
-      font-size:12px;
-      color:#22c55e;
-    }
-
-  </style>
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="card">
 
-      <div class="live">🟢 Live AI Analysis Running</div>
+<div class="container">
+<div class="card">
 
-      <h1>🚀 Your Store Is Being Analyzed</h1>
+<div class="live">🟢 Live AI Analysis Running</div>
 
-      <p>
-        We’re scanning your store for hidden <span class="highlight">revenue leaks</span>.
-      </p>
+<h1>🚀 Your Store Is Being Analyzed</h1>
 
-      <p>
-        This takes about <span class="highlight">10–15 seconds</span>.
-      </p>
+<p>
+We’re scanning your store for hidden <span class="highlight">revenue leaks</span>.
+</p>
 
-      <div class="email-box">
-        <h3>⚡ Real-time scan in progress</h3>
+<p>
+This takes about <span class="highlight">10–15 seconds</span>.
+</p>
 
-        <p>
-          We’re analyzing how users behave, where they drop off, and what’s killing conversions.
-        </p>
+<!-- 🔥 EMAIL BOX -->
+<div class="email-box">
+<h3>⚡ Real-time scan in progress</h3>
 
-        <div class="cta">
-          <div class="btn" onclick="showHint()">
-            What are you analyzing? →
-          </div>
-        </div>
+<p id="aiMessage">
+Analyzing store structure...
+</p>
 
-        <p class="note">
-          UX • Messaging • Trust • Conversion Flow
-        </p>
-      </div>
+<div class="btn" onclick="showHint()">
+What are you analyzing? →
+</div>
 
-      <div class="progress" id="progressText">
-        Analyzing first impression…
-      </div>
+<div class="data-line" id="storeCount">
+Comparing with 1,284 ecommerce stores
+</div>
 
-      <ul class="steps">
-        <li>🔍 Checking first 3 seconds impression</li>
-        <li>⚠️ Detecting conversion friction</li>
-        <li>📉 Measuring drop-off points</li>
-        <li>💰 Estimating revenue loss</li>
-      </ul>
+</div>
 
-      <p>
-        💡 Most stores lose 
-        <span class="highlight">20–40% of revenue</span> 
-        due to hidden conversion issues.
-      </p>
+<!-- 🔥 PROGRESS BAR -->
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
 
-      <div class="id">
-        Scan ID: AF-<span id="auditId"></span>
-      </div>
+<div class="progress-text" id="progressText">
+Initializing scan...
+</div>
 
-      <div class="footer">
-        Atom Foundry · Conversion Intelligence Engine
-      </div>
+<p style="margin-top:14px;text-align:center;">
+💡 Most stores lose 
+<span class="highlight">20–40% of revenue</span> 
+due to hidden conversion issues.
+</p>
 
-    </div>
-  </div>
+<div class="id">
+Scan ID: AF-<span id="auditId"></span>
+</div>
 
-  <script>
-    const id = Date.now().toString().slice(-6);
-    document.getElementById("auditId").innerText = id;
+<div class="footer">
+Atom Foundry · Conversion Intelligence Engine
+</div>
 
-    function showHint() {
-      alert("We analyze UX, messaging clarity, trust signals, and conversion friction.");
-    }
+</div>
+</div>
 
-    const steps = [
-      "Analyzing first impression…",
-      "Scanning messaging clarity…",
-      "Detecting conversion friction…",
-      "Calculating revenue leaks…"
-    ];
+<script>
 
-    let i = 0;
-    setInterval(() => {
-      document.getElementById("progressText").innerText = steps[i];
-      i = (i + 1) % steps.length;
-    }, 1500);
+// ID
+document.getElementById("auditId").innerText =
+Date.now().toString().slice(-6);
 
-    // 🔥 REDIRECT AFTER 10s TO FREE SCAN PAGE
-    setTimeout(() => {
-      const params = new URLSearchParams(window.location.search);
-      let domain = params.get("domain") || "";
+// 🔥 AI messages
+const messages = [
+"Analyzing store structure...",
+"Scanning first impression...",
+"Detecting conversion leaks...",
+"Comparing with high-performing stores...",
+"Evaluating user behavior patterns...",
+"Generating insights..."
+];
 
-      // odstraní https:// nebo http://
-      domain = domain.replace(/^https?:\/\//, "");
+// 🔥 progress text
+const steps = [
+"Initializing scan...",
+"Reading page structure...",
+"Analyzing messaging...",
+"Detecting friction points...",
+"Calculating revenue loss...",
+"Finalizing analysis..."
+];
 
-      window.location.href = "https://atomfoundry.dev/store/" + domain;
-    }, 10000);
-  </script>
+// 🔥 rotating messages
+let i = 0;
+setInterval(() => {
+  document.getElementById("aiMessage").innerText = messages[i % messages.length];
+  document.getElementById("progressText").innerText = steps[i % steps.length];
+  i++;
+}, 1500);
+
+// 🔥 fake progress bar
+let progress = 0;
+const bar = document.getElementById("progressFill");
+
+const progressInterval = setInterval(() => {
+  progress += Math.random() * 12;
+
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(progressInterval);
+  }
+
+  bar.style.width = progress + "%";
+}, 700);
+
+// 🔥 store counter (subtle)
+let count = 1284;
+setInterval(() => {
+  count += Math.floor(Math.random()*2);
+  document.getElementById("storeCount").innerText =
+  "Comparing with " + count.toLocaleString() + " ecommerce stores";
+}, 2000);
+
+// CTA hint
+function showHint() {
+  alert("We analyze UX, messaging clarity, trust signals, and conversion friction.");
+}
+
+// 🔥 redirect
+setTimeout(() => {
+  const params = new URLSearchParams(window.location.search);
+  let domain = params.get("domain") || "";
+  domain = domain.replace(/^https?:\/\//, "");
+  window.location.href = "https://atomfoundry.dev/store/" + domain;
+}, 10000);
+
+</script>
+
 </body>
 </html>
