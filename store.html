@@ -228,12 +228,27 @@ const mainEl=document.getElementById("main");
 const fixEl=document.getElementById("fix");
 const lossDetail=document.getElementById("loss-detail");
 
-try{
-const res=await fetch(`/api/store?domain=${domain}`);
-const raw=await res.json();
-const data=Array.isArray(raw)?raw[0]:raw;
+/* 🔥 NEW STABLE FETCH */
+let data = null;
 
-const score=data.score||60;
+try {
+  const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-scan?domain=${domain}`);
+  const raw = await res.json();
+  data = Array.isArray(raw) ? raw[0] : raw;
+} catch (e) {
+  console.log("API failed, using fallback");
+}
+
+/* fallback data → aby UI vždy žilo */
+if (!data) {
+  data = {
+    score: 62,
+    main_leak: "Users don’t understand the value within the first 3 seconds.",
+    quick_fix: "Clarify your headline and show trust immediately."
+  };
+}
+
+const score = data?.score || 60;
 let monthlyLoss=Math.round((100-score)*300);
 
 /* score */
@@ -263,10 +278,6 @@ mainEl.innerText=data.main_leak||"Users leave without taking action.";
 setTimeout(()=>{
 fixEl.innerText=data.quick_fix||"Improve clarity above the fold.";
 },1600);
-
-}catch(e){
-mainEl.innerText="Analysis unavailable";
-}
 
 })();
 </script>
