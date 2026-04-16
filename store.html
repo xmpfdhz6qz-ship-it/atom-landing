@@ -102,6 +102,8 @@ h1 {
   background:#111;
   border:1px solid #222;
   box-shadow:0 8px 24px rgba(0,0,0,0.6);
+
+  /* 🔥 ADD */
   opacity:0;
   transform:translateY(10px);
   transition:all 0.6s ease;
@@ -181,7 +183,7 @@ h1 {
   line-height:1.6;
 }
 
-/* 🔥 REVEAL */
+/* 🔥 REVEAL ADD */
 .reveal {
   opacity:0;
   transform:translateY(10px);
@@ -209,7 +211,7 @@ This AI analysis reveals hidden conversion issues and revenue leaks affecting ec
 
 <div class="card">
 <h2>Conversion Issues Found on <span id="seo-domain">this store</span></h2>
-<p>Most ecommerce stores struggle with unclear messaging...</p>
+<p>Most ecommerce stores struggle...</p>
 </div>
 
 <div class="hero">
@@ -218,7 +220,6 @@ This AI analysis reveals hidden conversion issues and revenue leaks affecting ec
 <div class="small">This pattern is common across similar ecommerce stores</div>
 
 <div class="loss reveal" id="loss"></div>
-
 <div class="score reveal" id="score">–</div>
 
 <p class="small">Based on UX, messaging, and conversion signals.</p>
@@ -245,8 +246,6 @@ This AI analysis reveals hidden conversion issues and revenue leaks affecting ec
 <a class="cta-primary" href="https://buy.stripe.com/test_eVq7sLceB5Eq8ylfsWfUQ05">
 See Exactly What’s Killing Your Conversions → $399
 </a>
-
-<div class="subtle">Secure payment powered by Stripe</div>
 </div>
 
 </div>
@@ -261,20 +260,22 @@ const scoreEl = document.getElementById("score");
 const lossEl = document.getElementById("loss");
 const mainEl = document.getElementById("main");
 const fixEl = document.getElementById("fix");
+const lossDetail = document.getElementById("loss-detail");
 
 const res = await fetch(`/api/store?domain=${domain}`);
 const data = await res.json();
 
 const score = data.score || 60;
-const loss = Math.round((100-score)*300);
+const monthlyLoss = Math.round((100-score)*300);
 
-// LOSS FIRST
+// 🔥 LOSS FIRST
 setTimeout(()=>{
-  lossEl.innerText = `$${loss.toLocaleString()} / month lost`;
+  lossEl.innerText = `Estimated loss: $${monthlyLoss.toLocaleString()}/month`;
+  lossDetail.innerText = `$${monthlyLoss.toLocaleString()} lost monthly due to weak conversion signals.`;
   lossEl.classList.add("show");
 },300);
 
-// SCORE ANIMATION
+// 🔥 SCORE
 setTimeout(()=>{
   let s=0;
   const i=setInterval(()=>{
@@ -285,17 +286,17 @@ setTimeout(()=>{
   scoreEl.classList.add("show");
 },900);
 
-// LEAK
+// 🔥 LEAK
 setTimeout(()=>{
   mainEl.innerText=data.main_leak;
 },1600);
 
-// FIX
+// 🔥 FIX
 setTimeout(()=>{
   fixEl.innerText=data.quick_fix;
 },2200);
 
-// CTA
+// 🔥 CTA
 setTimeout(()=>{
   document.querySelector(".cta-box").classList.add("show");
 },3000);
