@@ -74,14 +74,13 @@
     }
 
     .box {
-      background:#151515; /* 🔥 světlejší než předtím */
+      background:#151515;
       padding:22px;
       border-radius:16px;
       border:1px solid #2a2a2a;
       box-shadow:0 10px 30px rgba(0,0,0,0.7);
       max-width:500px;
       margin:0 auto;
-      /* ❌ odstraněn hover movement */
     }
 
     input {
@@ -118,7 +117,6 @@
       margin-top:3px;
     }
 
-    /* ❌ odstraněn oranžový box kolem CTA */
     button {
       margin-top:22px;
       width:100%;
@@ -246,8 +244,8 @@
 
     <form id="scanForm">
 
-      <input type="text" id="url" placeholder="yourstore.com" required />
-      <input type="email" id="email" placeholder="your@email.com" required />
+      <input type="text" id="url" name="store" placeholder="yourstore.com" required />
+      <input type="email" id="email" name="email" placeholder="your@email.com" required />
 
       <div class="checkbox">
         <input type="checkbox" required />
@@ -305,8 +303,10 @@ if (localStorage.getItem("cookiesAccepted") === "true") {
 document.getElementById("scanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  let url = document.getElementById("url").value.trim();
-  const email = document.getElementById("email").value.trim();
+  const formData = new FormData(e.target);
+
+  let url = formData.get("store").trim();
+  const email = formData.get("email").trim();
   const statusEl = document.getElementById("status");
 
   if (!url.startsWith("http")) {
@@ -321,28 +321,15 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     statusEl.innerText = "Scanning your store" + ".".repeat(dots);
   }, 500);
 
-  try {
-    const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, email })
-    });
+  clearInterval(interval);
 
-    const data = await res.json();
+  const params = new URLSearchParams({
+    domain: url,
+    email: email
+  });
 
-    clearInterval(interval);
+  window.location.href = "/audit-in-progress?" + params.toString();
 
-    if (data.redirect) {
-      window.location.href = data.redirect;
-      return;
-    }
-
-    window.location.href = "/thank-you?email=" + encodeURIComponent(email);
-
-  } catch (err) {
-    clearInterval(interval);
-    statusEl.innerText = "Something went wrong.";
-  }
 });
 </script>
 
