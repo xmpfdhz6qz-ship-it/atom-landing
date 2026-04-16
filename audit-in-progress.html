@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Audit in Progress | Atom Foundry</title>
+  <title>Scan in Progress | Atom Foundry</title>
 
   <style>
     body {
@@ -19,7 +19,6 @@
       -webkit-font-smoothing:antialiased;
     }
 
-    /* 🔥 GLOBAL GLOW */
     body::before {
       content:"";
       position:fixed;
@@ -64,7 +63,6 @@
       font-weight: 600;
     }
 
-    /* EMAIL BLOCK */
     .email-box {
       margin-top: 18px;
       padding: 16px;
@@ -81,7 +79,6 @@
       font-size: 15px;
     }
 
-    /* CTA */
     .cta {
       margin-top: 14px;
     }
@@ -110,7 +107,6 @@
       transform:scale(0.97);
     }
 
-    /* STEPS */
     .steps {
       margin-top: 18px;
       padding-left: 18px;
@@ -122,7 +118,6 @@
       margin-bottom: 8px;
     }
 
-    /* PROGRESS */
     .progress {
       margin-top: 10px;
       font-size: 13px;
@@ -130,7 +125,6 @@
       font-weight:600;
     }
 
-    /* NOTE */
     .note {
       margin-top: 10px;
       font-size: 12px;
@@ -151,6 +145,13 @@
       color: #475569;
       text-align: center;
     }
+
+    .live {
+      margin-bottom:10px;
+      font-size:12px;
+      color:#22c55e;
+    }
+
   </style>
 </head>
 
@@ -158,61 +159,59 @@
   <div class="container">
     <div class="card">
 
-      <h1>✅ Payment Received — Your Audit Is Being Prepared</h1>
+      <div class="live">🟢 Live AI Analysis Running</div>
+
+      <h1>🚀 Your Store Is Being Analyzed</h1>
 
       <p>
-        Great decision. We’re now analyzing your store in depth.
+        We’re scanning your store for hidden <span class="highlight">revenue leaks</span>.
       </p>
 
       <p>
-        Your full audit will arrive within  
-        <span class="highlight">15–30 minutes</span>.
+        This takes about <span class="highlight">10–15 seconds</span>.
       </p>
 
-      <!-- EMAIL BLOCK -->
       <div class="email-box">
-        <h3>📩 Your audit is on the way</h3>
+        <h3>⚡ Real-time scan in progress</h3>
 
         <p>
-          Go check your email now — it may already be there.
+          We’re analyzing how users behave, where they drop off, and what’s killing conversions.
         </p>
 
         <div class="cta">
           <div class="btn" onclick="showHint()">
-            Open Your Inbox →
+            What are you analyzing? →
           </div>
         </div>
 
         <p class="note">
-          Check Promotions / Spam if you don’t see it
+          UX • Messaging • Trust • Conversion Flow
         </p>
       </div>
 
-      <!-- PROGRESS -->
       <div class="progress" id="progressText">
-        Analyzing store structure…
+        Analyzing first impression…
       </div>
 
-      <!-- STEPS -->
       <ul class="steps">
-        <li>🔍 Scanning store structure</li>
-        <li>⚠️ Detecting conversion leaks</li>
-        <li>📉 Measuring performance gaps</li>
-        <li>🚀 Generating fixes</li>
+        <li>🔍 Checking first 3 seconds impression</li>
+        <li>⚠️ Detecting conversion friction</li>
+        <li>📉 Measuring drop-off points</li>
+        <li>💰 Estimating revenue loss</li>
       </ul>
 
       <p>
-        💡 Most stores we analyze lose 
-        <span class="highlight">15–35% of potential revenue</span> 
+        💡 Most stores lose 
+        <span class="highlight">20–40% of revenue</span> 
         due to hidden conversion issues.
       </p>
 
       <div class="id">
-        Audit ID: AF-<span id="auditId"></span>
+        Scan ID: AF-<span id="auditId"></span>
       </div>
 
       <div class="footer">
-        Atom Foundry · Conversion Intelligence System
+        Atom Foundry · Conversion Intelligence Engine
       </div>
 
     </div>
@@ -223,14 +222,14 @@
     document.getElementById("auditId").innerText = id;
 
     function showHint() {
-      alert("Open your email inbox (Gmail, Outlook, etc.) to view your audit.");
+      alert("We analyze UX, messaging clarity, trust signals, and conversion friction.");
     }
 
     const steps = [
-      "Analyzing store structure…",
-      "Detecting conversion leaks…",
-      "Measuring performance gaps…",
-      "Generating actionable fixes…"
+      "Analyzing first impression…",
+      "Scanning messaging clarity…",
+      "Detecting conversion friction…",
+      "Calculating revenue leaks…"
     ];
 
     let i = 0;
@@ -240,8 +239,10 @@
     }, 1500);
 
     setTimeout(() => {
-      window.location.href = "/";
-    }, 10000);
+      const params = new URLSearchParams(window.location.search);
+      const domain = params.get("domain") || "";
+      window.location.href = "/store/" + domain;
+    }, 8000);
   </script>
 </body>
 </html>
