@@ -157,7 +157,7 @@ body {
   border:2px solid #dc2626;
   box-shadow:0 10px 25px rgba(249,115,22,0.4);
   transition:all 0.25s ease;
-  cursor:pointer; /* 🔥 POINTER FIX */
+  cursor:pointer;
 }
 
 .cta:hover {
@@ -184,7 +184,7 @@ body {
   box-shadow:0 6px 14px rgba(0,0,0,0.4);
   opacity:0.9;
   transition:all 0.2s ease;
-  cursor:pointer; /* 🔥 POINTER FIX */
+  cursor:pointer;
 }
 
 .cta-secondary:hover {
@@ -439,7 +439,9 @@ body {
 (async function(){
 
 const token = window.location.pathname.split("/").pop();
-const res = await fetch(`/api/get-audit?token=${token}`);
+
+/* 🔥 ONLY CHANGE */
+const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 
 let r = data.report_json || {};
