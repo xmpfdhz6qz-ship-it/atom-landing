@@ -16,7 +16,6 @@ body {
 }
 .container {max-width:560px;margin:auto;}
 
-/* 🔥 ORIGINAL */
 .card {
   background:#111;
   border:1px solid #222;
@@ -24,15 +23,6 @@ body {
   padding:18px;
   margin-top:14px;
   box-shadow:0 8px 24px rgba(0,0,0,0.6);
-}
-
-/* 🔥 NEW: PREMIUM LIFT */
-.card {
-  transition: all 0.25s ease;
-}
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow:0 18px 50px rgba(0,0,0,0.9);
 }
 
 .section-title {
@@ -83,12 +73,9 @@ body {
   box-shadow:0 0 0 1px rgba(127,29,29,0.6);
 }
 
-/* 🔥 STRONGER RED CARDS */
 .card[style*="#dc2626"] {
   background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
-  box-shadow:
-    0 0 0 1px rgba(220,38,38,0.5),
-    0 12px 35px rgba(220,38,38,0.25);
+  box-shadow:0 0 0 1px rgba(220,38,38,0.4);
 }
 
 .issue {
@@ -102,7 +89,6 @@ body {
   padding:16px;
 }
 
-/* 🔥 FIX BOOST */
 .fix {
   border:1px solid #22c55e;
   background:#064e3b;
@@ -110,10 +96,8 @@ body {
   border-radius:10px;
   margin-top:10px;
   color:#d1fae5;
-  box-shadow:0 0 0 1px rgba(34,197,94,0.3);
 }
 
-/* 🔥 CTA */
 .cta {
   display:block;
   padding:20px;
@@ -127,21 +111,8 @@ body {
   font-size:18px;
   border:2px solid #dc2626;
   box-shadow:0 10px 25px rgba(249,115,22,0.4);
-  transition:all 0.25s ease;
 }
 
-/* 🔥 HOVER (KLÍČOVÉ) */
-.cta:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow:0 20px 60px rgba(249,115,22,0.7);
-}
-
-/* 🔥 CLICK FEEL */
-.cta:active {
-  transform: scale(0.96);
-}
-
-/* SECONDARY */
 .cta-secondary {
   display:block;
   padding:14px;
@@ -156,12 +127,6 @@ body {
   border:1px solid #374151;
   box-shadow:0 6px 14px rgba(0,0,0,0.4);
   opacity:0.9;
-  transition:all 0.2s ease;
-}
-
-.cta-secondary:hover {
-  opacity:1;
-  transform:translateY(-1px);
 }
 
 .card:last-child {
@@ -170,15 +135,6 @@ body {
 
 .checklist li {
   margin-bottom:6px;
-}
-
-/* 🔥 CTA ZONE (NOVÁ VRSTVA) */
-.cta-zone {
-  margin-top:20px;
-  padding:18px;
-  border-radius:16px;
-  background:linear-gradient(180deg,#111,#000);
-  box-shadow:0 0 0 1px rgba(249,115,22,0.25);
 }
 
 @media print {
@@ -262,8 +218,109 @@ body {
 ⚠️ You are not losing traffic. You are losing buyers.
 </div>
 
-<!-- 🔥 CTA ZONE (PŘIDÁNO NAVÍC, NIC NESMAZÁNO) -->
-<div class="cta-zone">
+<!-- 🔥 URGENCY BLOCK -->
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Real-Time Revenue Leak</div>
+  <div style="font-size:22px;font-weight:800;color:#ef4444;">
+    You are losing ≈ $<span id="daily3"></span> every single day
+  </div>
+  <div class="sub">
+    That’s money already earned — but not captured.
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">Observed Pattern</div>
+  <div id="pattern"></div>
+</div>
+
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Critical Revenue Leak</div>
+  <div id="primary"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Conversion Gap</div>
+  <div id="dashboard"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">How You Compare</div>
+  <div id="benchmark"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Live Revenue Loss</div>
+  <div id="liveLoss"></div>
+</div>
+
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Revenue Loss Timeline</div>
+  <div id="timeline"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Where Money Is Lost</div>
+  <div id="priority"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Revenue Recovery Plan</div>
+  <div id="plan"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Conversion Leaks</div>
+  <div id="issues"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Time to Fix</div>
+  <div>Most fixes can be implemented in 30–120 minutes</div>
+</div>
+
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">If You Do Nothing</div>
+  <div id="donothing"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Execution Plan</div>
+  <div id="steps"></div>
+</div>
+
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Revenue Loss Reality</div>
+  <div>
+    Every day this remains unfixed:<br><br>
+    • ~$<span id="daily2"></span> lost<br>
+    • More users drop off without buying<br>
+    • Fixing later = higher cost<br><br>
+    This compounds daily.
+  </div>
+</div>
+
+<div class="card" style="border:1px solid #14532d;">
+  <div class="section-title">Why Monitoring Matters</div>
+  <div>
+    After this audit:<br><br>
+    • New conversion leaks appear as your store evolves<br>
+    • Competitors continuously improve their funnels<br>
+    • Small UX issues compound into revenue loss<br><br>
+    Monitoring prevents this.
+  </div>
+</div>
+
+<!-- 🔥 TRUST BLOCK -->
+<div class="card" style="border:1px solid #14532d;">
+  <div class="section-title">Execution Confidence</div>
+  <div>
+    • Used across 1,000+ ecommerce analyses<br>
+    • Based on real conversion data patterns<br>
+    • No guesswork — only revenue-driven fixes<br><br>
+    <b>If it doesn't improve conversion, you don't scale it.</b>
+  </div>
+</div>
 
 <a id="monitoring-btn" class="cta">
   Fix Conversion Leaks & Recover Revenue → $89/month
@@ -287,8 +344,6 @@ body {
 <a href="#" class="cta-secondary" onclick="window.print()">
   Download & Print PDF
 </a>
-
-</div>
 
 </div>
 </div>
