@@ -273,22 +273,15 @@ function showHint() {
 // 🔥 redirect (FIXED)
 setTimeout(() => {
   const params = new URLSearchParams(window.location.search);
-  let domain = params.get("domain") || "";
+  const token = params.get("token");
 
-  domain = domain
-    .replace(/^https?:\/\//, "")
-    .replace(/\/$/, "")
-    .trim();
-
-  if (!domain) {
-    console.error("Missing domain for redirect");
-
-    // 🔥 fallback → homepage
+  if (!token) {
+    console.error("Missing token for redirect");
     window.location.href = "https://atomfoundry.dev";
     return;
   }
 
-  window.location.href = "https://atomfoundry.dev/store/" + domain;
+  window.location.href = "https://atomfoundry.dev/report/" + token;
 
 }, 10000);
 
