@@ -171,18 +171,19 @@ body {
 
 .cta-secondary {
   display:block;
-  padding:10px;
+  width:100%; /* 🔥 FIX: same width as primary CTA */
+  padding:14px;
   background:linear-gradient(135deg,#1f2937,#111827);
   color:#9ca3af;
   text-align:center;
-  border-radius:10px;
+  border-radius:12px;
   font-weight:600;
-  margin-top:10px;
+  margin-top:12px;
   text-decoration:none;
-  font-size:12px;
+  font-size:14px;
   border:1px solid #374151;
   box-shadow:0 4px 10px rgba(0,0,0,0.3);
-  opacity:0.7;
+  opacity:0.9;
   transition:all 0.2s ease;
   cursor:pointer;
 }
@@ -190,6 +191,10 @@ body {
 .cta-secondary:hover {
   opacity:1;
   transform:translateY(-1px);
+}
+
+.cta-secondary:active {
+  transform:scale(0.98);
 }
 
 .card:last-child {
@@ -456,30 +461,32 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = Number(calc.yearly_loss_value || monthly * 12);
 
+const format = (n) => Number(n || 0).toLocaleString("en-US"); /* 🔥 FIX: commas */
+
 const storeDomain = data.store_domain || data.domain || "";
 
 document.getElementById("storeName").innerText = storeDomain;
 document.getElementById("score").innerText = (r.score || 70) + "/100";
 document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
 
-document.getElementById("heroLoss").innerText = `$${monthly.toLocaleString()}+ / month`;
-document.getElementById("dailyLoss").innerText = `≈ $${daily} lost every day`;
-document.getElementById("yearlyLoss").innerText = `≈ $${yearly.toLocaleString()} lost per year`;
-document.getElementById("daily").innerText = `$${daily}`;
-document.getElementById("daily2").innerText = daily;
-document.getElementById("daily3").innerText = daily;
+document.getElementById("heroLoss").innerText = `$${format(monthly)}+ / month`;
+document.getElementById("dailyLoss").innerText = `≈ $${format(daily)} lost every day`;
+document.getElementById("yearlyLoss").innerText = `≈ $${format(yearly)} lost per year`;
+document.getElementById("daily").innerText = `$${format(daily)}`;
+document.getElementById("daily2").innerText = format(daily);
+document.getElementById("daily3").innerText = format(daily);
 
 document.getElementById("pattern").innerText = r.primary_failure || "";
 document.getElementById("primary").innerText = r.main_leak || "";
 
 document.getElementById("priority").innerHTML =
 (r.revenue_distribution || []).map(d =>
-`${d.name} → ${d.percent}% (~$${d.amount})`
+`${d.name} → ${d.percent}% (~$${format(d.amount)})`
 ).join("<br>");
 
 document.getElementById("plan").innerHTML =
 (r.revenue_plan || []).map(p =>
-`${p.fix}<br>+$${p.impact_value}/month`
+`${p.fix}<br>+$${format(p.impact_value)}/month`
 ).join("<br><br>");
 
 document.getElementById("steps").innerHTML =
@@ -506,13 +513,13 @@ document.getElementById("benchmark").innerHTML =
 `Worse than ${100 - score}% of stores<br>Top stores score 85+`;
 
 document.getElementById("liveLoss").innerHTML =
-`$${daily}/day<br>$${monthly}/month<br>$${yearly}/year`;
+`$${format(daily)}/day<br>$${format(monthly)}/month<br>$${format(yearly)}/year`;
 
 document.getElementById("timeline").innerHTML =
 `Day 1 → loss<br>Week 1 → compounding<br>Month → serious revenue leak`;
 
 document.getElementById("donothing").innerHTML =
-`$${daily} lost daily<br>Conversion stagnates<br>Competitors win`;
+`$${format(daily)} lost daily<br>Conversion stagnates<br>Competitors win`;
 
 const monitoringBtn = document.getElementById("monitoring-btn");
 
@@ -526,7 +533,6 @@ const email =
   data.email ||
   params.get("email");
 
-/* EMAIL GUARD */
 if (!email) {
   alert("Missing email — please re-run scan");
   return;
@@ -572,7 +578,6 @@ if (topBtn) {
 
 })();
 
-/* 🔥 NEW BILLING PORTAL LOGIC */
 async function openBillingPortal() {
   const params = new URLSearchParams(window.location.search);
   const email = params.get("email");
