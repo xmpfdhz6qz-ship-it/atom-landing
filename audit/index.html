@@ -440,7 +440,6 @@ body {
 
 const token = window.location.pathname.split("/").pop();
 
-/* 🔥 ONLY CHANGE */
 const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-audit?token=${token}`);
 const data = await res.json();
 
@@ -523,9 +522,19 @@ const email =
   data.email ||
   params.get("email");
 
+/* ✅ EMAIL GUARD */
+if (!email) {
+  alert("Missing email — please re-run scan");
+  return;
+}
+
 if (monitoringBtn) {
   monitoringBtn.onclick = async function (e) {
     e.preventDefault();
+
+    /* ✅ LOADING STATE */
+    monitoringBtn.innerText = "Redirecting...";
+    monitoringBtn.style.opacity = "0.7";
 
     try {
       const url =
@@ -533,7 +542,11 @@ if (monitoringBtn) {
         "?domain=" + encodeURIComponent(domain) +
         "&email=" + encodeURIComponent(email || "");
 
-      const res = await fetch(url);
+      /* ✅ EXPLICIT METHOD */
+      const res = await fetch(url, {
+        method: "GET"
+      });
+
       const result = await res.json();
 
       if (!result.url) {
