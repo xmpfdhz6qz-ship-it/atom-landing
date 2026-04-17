@@ -22,7 +22,6 @@ body {
   line-height:1.7;
 }
 
-/* 🔥 GLOBAL GLOW */
 body::before {
   content:"";
   position:fixed;
@@ -39,7 +38,6 @@ body::before {
   text-align:center;
 }
 
-/* 🔥 LIVE STRIP (ANIMATED) */
 .live-strip {
   display:inline-block;
   background:#111;
@@ -51,20 +49,10 @@ body::before {
   animation:liveGlow 2.2s ease-in-out infinite;
 }
 
-/* jemný “live breathing” efekt */
 @keyframes liveGlow {
-  0% {
-    box-shadow:0 0 0 rgba(34,197,94,0.0);
-    opacity:0.7;
-  }
-  50% {
-    box-shadow:0 0 12px rgba(34,197,94,0.5);
-    opacity:1;
-  }
-  100% {
-    box-shadow:0 0 0 rgba(34,197,94,0.0);
-    opacity:0.7;
-  }
+  0% { box-shadow:0 0 0 rgba(34,197,94,0.0); opacity:0.7; }
+  50% { box-shadow:0 0 12px rgba(34,197,94,0.5); opacity:1; }
+  100% { box-shadow:0 0 0 rgba(34,197,94,0.0); opacity:0.7; }
 }
 
 h1 {
@@ -87,7 +75,6 @@ h1 {
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
 
-/* INPUT */
 input[type="text"],
 input[type="email"] {
   width:100%;
@@ -108,7 +95,6 @@ input:focus {
              0 0 12px rgba(249,115,22,0.3);
 }
 
-/* CHECKBOX */
 .checkbox {
   display:flex;
   align-items:center;
@@ -119,11 +105,6 @@ input:focus {
   color:#A1A1AA;
 }
 
-.checkbox input {
-  transform:scale(1.1);
-}
-
-/* CTA */
 button {
   margin-top:18px;
   width:100%;
@@ -164,10 +145,6 @@ button:active {
   margin-top:10px;
   font-size:12px;
   color:#6b7280;
-}
-
-@media (min-width:600px){
-  h1 { font-size:34px; }
 }
 </style>
 </head>
@@ -232,14 +209,23 @@ button:active {
 document.getElementById("scanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  /* 🔥 LOADING STATE */
+  const btn = e.target.querySelector("button");
+  btn.innerText = "Scanning...";
+  btn.disabled = true;
+
   const formData = new FormData(e.target);
 
   let url = formData.get("store").trim();
   const email = formData.get("email").trim();
 
-  if (!url.startsWith("http")) {
-    url = "https://" + url;
-  }
+  /* 🔥 FIX URL NORMALIZATION */
+  url = url
+    .replace(/^https?:\/\//, "")
+    .replace(/\/$/, "")
+    .trim();
+
+  url = "https://" + url;
 
   try {
     const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
@@ -250,17 +236,28 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
 
     const data = await res.json();
 
-    if (!data.token) {
-      console.error("Missing token from backend");
+    /* DEBUG */
+    console.log("RESPONSE:", data);
+
+    /* 🔥 SAFE TOKEN EXTRACTION */
+    let token =
+      data?.token ||
+      data?.data?.token ||
+      (Array.isArray(data) ? data[0]?.token : null);
+
+    if (!token) {
+      console.error("Missing token from backend", data);
       alert("Something went wrong. Try again.");
       return;
     }
 
-    window.location.href = "/audit-in-progress?token=" + data.token;
+    window.location.href = "/audit-in-progress?token=" + token;
 
   } catch (err) {
     console.error("Scan failed", err);
-    alert("Scan failed. Please try again.");
+
+    /* 🔥 FAIL SAFE */
+    window.location.href = "/audit-in-progress";
   }
 });
 </script>
