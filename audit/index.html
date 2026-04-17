@@ -171,18 +171,18 @@ body {
 
 .cta-secondary {
   display:block;
-  padding:14px;
+  padding:10px;
   background:linear-gradient(135deg,#1f2937,#111827);
-  color:#fff;
+  color:#9ca3af;
   text-align:center;
-  border-radius:12px;
-  font-weight:700;
-  margin-top:12px;
+  border-radius:10px;
+  font-weight:600;
+  margin-top:10px;
   text-decoration:none;
-  font-size:14px;
+  font-size:12px;
   border:1px solid #374151;
-  box-shadow:0 6px 14px rgba(0,0,0,0.4);
-  opacity:0.9;
+  box-shadow:0 4px 10px rgba(0,0,0,0.3);
+  opacity:0.7;
   transition:all 0.2s ease;
   cursor:pointer;
 }
@@ -412,6 +412,10 @@ body {
   Fix Conversion Leaks & Recover Revenue → $89/month
 </a>
 
+<a id="manage-subscription" class="cta-secondary">
+  Manage subscription / Cancel anytime
+</a>
+
 <div class="sub" style="text-align:center;margin-top:10px;">
   Most stores recover the cost of monitoring from a single fix
 </div>
@@ -522,7 +526,7 @@ const email =
   data.email ||
   params.get("email");
 
-/* ✅ EMAIL GUARD */
+/* EMAIL GUARD */
 if (!email) {
   alert("Missing email — please re-run scan");
   return;
@@ -532,7 +536,6 @@ if (monitoringBtn) {
   monitoringBtn.onclick = async function (e) {
     e.preventDefault();
 
-    /* ✅ LOADING STATE */
     monitoringBtn.innerText = "Redirecting...";
     monitoringBtn.style.opacity = "0.7";
 
@@ -542,11 +545,7 @@ if (monitoringBtn) {
         "?domain=" + encodeURIComponent(domain) +
         "&email=" + encodeURIComponent(email || "");
 
-      /* ✅ EXPLICIT METHOD */
-      const res = await fetch(url, {
-        method: "GET"
-      });
-
+      const res = await fetch(url, { method: "GET" });
       const result = await res.json();
 
       if (!result.url) {
@@ -568,6 +567,46 @@ if (topBtn) {
   topBtn.onclick = function(e){
     e.preventDefault();
     document.getElementById("monitoring-btn").click();
+  };
+}
+
+/* 🔥 PORTAL */
+async function openPortal() {
+  const params = new URLSearchParams(window.location.search);
+
+  const email = params.get("email");
+  const domain = params.get("domain");
+
+  if (!email) {
+    alert("Missing email");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `https://n8n-production-43ab.up.railway.app/webhook/create-portal?email=${email}&domain=${domain}`
+    );
+
+    const data = await res.json();
+
+    if (!data.url) {
+      alert("Could not open billing");
+      return;
+    }
+
+    window.location.href = data.url;
+
+  } catch (err) {
+    alert("Connection error");
+  }
+}
+
+const manageBtn = document.getElementById("manage-subscription");
+
+if (manageBtn) {
+  manageBtn.onclick = function(e) {
+    e.preventDefault();
+    openPortal();
   };
 }
 
