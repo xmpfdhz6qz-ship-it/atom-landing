@@ -98,17 +98,6 @@
       background:linear-gradient(180deg,rgba(249,115,22,0.08),rgba(0,0,0,0));
       border:1px solid rgba(249,115,22,0.3);
       box-shadow:0 0 30px rgba(249,115,22,0.15);
-      position:relative;
-    }
-
-    .cta-zone::before {
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:16px;
-      background:radial-gradient(circle, rgba(249,115,22,0.15), transparent 70%);
-      opacity:0.6;
-      pointer-events:none;
     }
 
     .cta {
@@ -187,7 +176,6 @@
       font-size:14px;
       color:#e5e7eb;
     }
-
   </style>
 </head>
 
@@ -201,8 +189,6 @@
 const app = document.getElementById("app");
 
 const params = new URLSearchParams(window.location.search);
-
-/* ✅ FIX: TOKEN místo ID */
 let id = params.get("token");
 
 if (!id) {
@@ -271,20 +257,13 @@ app.innerHTML = `
     <strong>This is not random.</strong><br><br>
     → Based on real ecommerce store patterns<br>
     → Derived from actual user behavior signals<br>
-    → Focused on revenue impact (not design opinions)<br><br>
-    <span class="small">This is how conversion leaks are detected</span>
+    → Focused on revenue impact (not design opinions)<br>
   </div>
 
   <div class="card red">
     <strong>Main revenue leak:</strong><br><br>
     ${row.report_json?.main_leak || ""}
-    <div class="urgency">This directly affects your conversions</div>
-  </div>
-
-  <div class="cta-zone">
-    <a id="auditBtnMid" class="cta" href="#">
-      Fix This Issue → Unlock Full Breakdown
-    </a>
+    <div class="urgency">This directly impacts your conversions</div>
   </div>
 
   <div class="card green">
@@ -292,25 +271,20 @@ app.innerHTML = `
     ${row.report_json?.quick_fix || ""}
   </div>
 
-  <div class="card">
-    <strong>What you don’t see yet:</strong><br><br>
-    → Full leak breakdown across your store<br>
-    → Revenue impact of each issue<br>
-    → Step-by-step fixes prioritized by impact<br>
-    → What to fix first for fastest revenue lift
-  </div>
-
-  <div class="card">
-    <strong>Trusted analysis logic:</strong><br><br>
-    → Patterns from multiple store analyses<br>
-    → Conversion-focused evaluation model<br>
-    → Built to identify real revenue blockers<br>
-    <div class="trust">Not generic advice — data-driven signals</div>
+  <div class="card red">
+    <strong>Full audit reveals:</strong><br><br>
+    → Exact drop-off points killing conversions<br>
+    → Hidden friction across your funnel<br>
+    → Revenue impact in real numbers<br>
+    → Step-by-step fixes (no guessing)<br>
+    <div class="urgency">⚠️ This is where the real money is recovered</div>
   </div>
 
   <div class="card red">
-    <strong>Every day you wait = ~$${daily} lost</strong><br><br>
-    Most stores fix this within 24–48 hours once identified.
+    <strong>If nothing changes:</strong><br><br>
+    → ~$${daily} lost daily<br>
+    → ~$${estimatedLoss} lost monthly<br>
+    <div class="urgency">This compounds every single day</div>
   </div>
 
   <div class="cta-zone">
@@ -318,12 +292,11 @@ app.innerHTML = `
       Fix My Revenue Leaks Now → $399
     </a>
 
-    <div class="subtle">
-      Most stores recover the cost from one fix
-    </div>
+    <div class="subtle">Most stores recover the cost from one fix</div>
+    <div class="subtle">✔ No calls • ✔ No contracts • ✔ Immediate insights</div>
 
-    <div class="subtle">
-      ✔ No calls • ✔ No contracts • ✔ Immediate insights
+    <div class="urgency" style="text-align:center;">
+      Every day you wait = ~$${daily} lost
     </div>
   </div>
 
@@ -339,16 +312,12 @@ app.innerHTML = `
 const email = row?.email || "";
 const stripeUrl = "https://buy.stripe.com/bJebIU8JJfcAfOH8W01RC01";
 
-function setLinks(id){
-  const btn = document.getElementById(id);
+["auditBtn","auditBtnTop"].forEach(id=>{
+  const btn=document.getElementById(id);
   if(btn){
     btn.href = stripeUrl + "?prefilled_email=" + encodeURIComponent(email);
   }
-}
-
-setLinks("auditBtn");
-setLinks("auditBtnTop");
-setLinks("auditBtnMid");
+});
 
 /* LIVE LOSS COUNTER */
 let seconds = 0;
