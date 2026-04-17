@@ -32,18 +32,18 @@ body::before {
 body::after {
   content:"";
   position:fixed;
-  width:300px;
-  height:300px;
-  background:radial-gradient(circle, rgba(249,115,22,0.15), transparent 60%);
-  filter:blur(40px);
+  width:320px;
+  height:320px;
+  background:radial-gradient(circle, rgba(249,115,22,0.2), transparent 60%);
+  filter:blur(50px);
   animation:floatGlow 6s ease-in-out infinite;
   z-index:0;
 }
 
 @keyframes floatGlow {
-  0% {transform:translate(-50px,-40px);}
-  50% {transform:translate(50px,40px);}
-  100% {transform:translate(-50px,-40px);}
+  0% {transform:translate(-60px,-40px);}
+  50% {transform:translate(60px,40px);}
+  100% {transform:translate(-60px,-40px);}
 }
 
 .container {
@@ -53,31 +53,37 @@ body::after {
 }
 
 .card {
-  background:#111;
-  border-radius:18px;
-  padding:22px;
-  border:1px solid #222;
-  box-shadow:0 10px 30px rgba(0,0,0,0.7);
+  background:#0e0e0e;
+  border-radius:20px;
+  padding:24px;
+  border:1px solid #1f1f1f;
+  box-shadow:0 20px 60px rgba(0,0,0,0.9);
   position:relative;
   overflow:hidden;
 }
 
-/* 🔥 FULL BLOCK ORANGE SCAN EFFECT */
+/* 🔥 FULL BORDER ANIMATION (WOW EFFECT) */
 .card::before {
   content:"";
   position:absolute;
-  inset:0;
-  background:linear-gradient(120deg, transparent 30%, rgba(249,115,22,0.25), transparent 70%);
-  transform:translateX(-100%);
-  animation:scanGlow 4s linear infinite;
+  inset:-2px;
+  border-radius:22px;
+  padding:2px;
+  background:linear-gradient(120deg, transparent, #f97316, transparent);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  animation:borderRun 3s linear infinite;
 }
 
-@keyframes scanGlow {
-  0% {transform:translateX(-100%);}
-  100% {transform:translateX(100%);}
+@keyframes borderRun {
+  0% {transform:rotate(0deg);}
+  100% {transform:rotate(360deg);}
 }
 
-/* 🔥 LIVE STRIP */
+/* LIVE */
 .live {
   font-size:12px;
   color:#22c55e;
@@ -108,62 +114,42 @@ p {
   font-weight:600;
 }
 
+/* EMAIL BOX */
+.email-box {
+  margin-top:18px;
+  padding:18px;
+  border-radius:16px;
+  background:linear-gradient(180deg,#052e16,#031a0f);
+  border:1px solid #14532d;
+  text-align:center;
+  box-shadow:0 0 30px rgba(34,197,94,0.15);
+}
+
+.email-box h3 {
+  margin:0 0 10px;
+  color:#22c55e;
+  font-size:15px;
+}
+
 /* 🔥 PROGRESS BAR */
 .progress-bar {
-  margin-top:16px;
-  height:8px;
+  margin-top:20px;
+  height:10px;
   background:#1f1f1f;
   border-radius:999px;
   overflow:hidden;
-  position:relative;
 }
 
 .progress-fill {
   height:100%;
   width:0%;
   background:linear-gradient(90deg,#f97316,#ea580c);
-  transition:width 0.6s ease;
-}
-
-/* 🔥 EMAIL BOX */
-.email-box {
-  margin-top:18px;
-  padding:16px;
-  border-radius:14px;
-  background:#052e16;
-  border:1px solid #14532d;
-  text-align:center;
-  box-shadow:0 0 20px rgba(34,197,94,0.1);
-}
-
-.email-box h3 {
-  margin:0 0 8px;
-  color:#22c55e;
-  font-size:15px;
-}
-
-.btn {
-  display:block;
-  width:100%;
-  margin-top:12px;
-  padding:14px 18px;
-  background:linear-gradient(135deg,#f97316,#ea580c);
-  color:#000;
-  border-radius:12px;
-  font-weight:900;
-  font-size:14px;
-  border:2px solid #dc2626;
-  cursor:pointer;
-  transition:all 0.25s ease;
-}
-
-.btn:hover {
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(249,115,22,0.5);
+  transition:width 0.5s ease;
+  box-shadow:0 0 20px rgba(249,115,22,0.6);
 }
 
 .progress-text {
-  margin-top:12px;
+  margin-top:14px;
   font-size:13px;
   color:#f97316;
   font-weight:600;
@@ -171,21 +157,21 @@ p {
 }
 
 .data-line {
-  margin-top:8px;
+  margin-top:10px;
   font-size:12px;
   color:#6b7280;
   text-align:center;
 }
 
 .footer {
-  margin-top:18px;
+  margin-top:20px;
   font-size:12px;
   color:#6b7280;
   text-align:center;
 }
 
 .id {
-  margin-top:10px;
+  margin-top:12px;
   font-size:11px;
   color:#475569;
   text-align:center;
@@ -197,7 +183,7 @@ p {
 <body>
 
 <div class="container">
-<div class="card" id="card">
+<div class="card">
 
 <div class="live">🟢 Live AI Analysis Running</div>
 
@@ -215,12 +201,8 @@ This will take just a few seconds.
 <h3>⚡ AI audit generation in progress</h3>
 
 <p id="aiMessage">
-Preparing analysis...
+Detecting revenue leaks...
 </p>
-
-<div class="btn" onclick="showHint()">
-What is happening now? →
-</div>
 
 <div class="data-line" id="storeCount">
 Comparing with 1,284 ecommerce stores
@@ -233,7 +215,7 @@ Comparing with 1,284 ecommerce stores
 </div>
 
 <div class="progress-text" id="progressText">
-Initializing secure analysis...
+Analyzing conversion points...
 </div>
 
 <p style="margin-top:14px;text-align:center;color:#9ca3af;font-size:13px;">
@@ -258,17 +240,17 @@ document.getElementById("auditId").innerText =
 Date.now().toString().slice(-6);
 
 const messages = [
-"Preparing analysis...",
-"Reading store structure...",
 "Detecting revenue leaks...",
+"Analyzing store structure...",
+"Evaluating user behavior...",
 "Comparing with top stores...",
 "Calculating revenue impact...",
-"Generating final audit..."
+"Finalizing audit..."
 ];
 
 const steps = [
-"Initializing secure analysis...",
-"Scanning store structure...",
+"Initializing analysis...",
+"Scanning structure...",
 "Analyzing conversion points...",
 "Detecting friction...",
 "Calculating losses...",
@@ -280,14 +262,14 @@ const msgInterval = setInterval(() => {
   document.getElementById("aiMessage").innerText = messages[i % messages.length];
   document.getElementById("progressText").innerText = steps[i % steps.length];
   i++;
-}, 1800);
+}, 2000);
 
 // progress
 let progress = 0;
 const bar = document.getElementById("progressFill");
 
 const progressInterval = setInterval(() => {
-  progress += Math.random() * 8;
+  progress += Math.random() * 7;
 
   if (progress >= 100) {
     progress = 100;
@@ -296,15 +278,12 @@ const progressInterval = setInterval(() => {
     clearInterval(progressInterval);
     clearInterval(msgInterval);
 
-    // stop animation glow
-    document.getElementById("card").style.animation = "none";
-
     setTimeout(() => {
       const params = new URLSearchParams(window.location.search);
       let domain = params.get("domain") || "";
       domain = domain.replace(/^https?:\/\//, "");
       window.location.href = "https://atomfoundry.dev/store/" + domain;
-    }, 1500);
+    }, 1200);
   }
 
   bar.style.width = progress + "%";
@@ -316,11 +295,7 @@ setInterval(() => {
   count += Math.floor(Math.random()*1);
   document.getElementById("storeCount").innerText =
   "Comparing with " + count.toLocaleString() + " ecommerce stores";
-}, 4000);
-
-function showHint() {
-  alert("We are analyzing UX, messaging clarity, trust signals, and conversion leaks.");
-}
+}, 5000);
 
 </script>
 
