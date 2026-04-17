@@ -270,12 +270,26 @@ function showHint() {
   alert("We analyze UX, messaging clarity, trust signals, and conversion friction.");
 }
 
-// 🔥 redirect
+// 🔥 redirect (FIXED)
 setTimeout(() => {
   const params = new URLSearchParams(window.location.search);
   let domain = params.get("domain") || "";
-  domain = domain.replace(/^https?:\/\//, "");
-  window.location.href = "https://atomfoundry.dev/" + domain;
+
+  domain = domain
+    .replace(/^https?:\/\//, "")
+    .replace(/\/$/, "")
+    .trim();
+
+  if (!domain) {
+    console.error("Missing domain for redirect");
+
+    // 🔥 fallback → homepage
+    window.location.href = "https://atomfoundry.dev";
+    return;
+  }
+
+  window.location.href = "https://atomfoundry.dev/store/" + domain;
+
 }, 10000);
 
 </script>
