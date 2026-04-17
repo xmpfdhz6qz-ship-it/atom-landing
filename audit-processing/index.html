@@ -28,7 +28,7 @@ body::before {
   z-index:0;
 }
 
-/* 🔥 floating glow */
+/* glow */
 body::after {
   content:"";
   position:fixed;
@@ -62,25 +62,30 @@ body::after {
   overflow:hidden;
 }
 
-/* 🔥 FULL BORDER ANIMATION (WOW EFFECT) */
+/* 🔥 BORDER RUNNER (TOP → RIGHT → BOTTOM → LEFT) */
 .card::before {
   content:"";
   position:absolute;
-  inset:-2px;
-  border-radius:22px;
-  padding:2px;
-  background:linear-gradient(120deg, transparent, #f97316, transparent);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  animation:borderRun 3s linear infinite;
+  width:80px;
+  height:3px;
+  background:linear-gradient(90deg,#f97316,#ea580c);
+  border-radius:2px;
+  box-shadow:0 0 12px rgba(249,115,22,0.8);
+  animation:borderRun 4s linear infinite;
 }
 
 @keyframes borderRun {
-  0% {transform:rotate(0deg);}
-  100% {transform:rotate(360deg);}
+  0%   { top:0; left:0; width:80px; height:3px; }
+  25%  { top:0; left:calc(100% - 80px); width:80px; height:3px; }
+
+  26%  { top:0; left:100%; width:3px; height:80px; }
+  50%  { top:calc(100% - 80px); left:100%; width:3px; height:80px; }
+
+  51%  { top:100%; left:calc(100% - 80px); width:80px; height:3px; }
+  75%  { top:100%; left:0; width:80px; height:3px; }
+
+  76%  { top:calc(100% - 80px); left:0; width:3px; height:80px; }
+  100% { top:0; left:0; width:3px; height:80px; }
 }
 
 /* LIVE */
@@ -114,7 +119,6 @@ p {
   font-weight:600;
 }
 
-/* EMAIL BOX */
 .email-box {
   margin-top:18px;
   padding:18px;
@@ -131,7 +135,6 @@ p {
   font-size:15px;
 }
 
-/* 🔥 PROGRESS BAR */
 .progress-bar {
   margin-top:20px;
   height:10px;
@@ -235,7 +238,6 @@ Atom Foundry · Conversion Intelligence Engine
 
 <script>
 
-// ID
 document.getElementById("auditId").innerText =
 Date.now().toString().slice(-6);
 
@@ -264,7 +266,6 @@ const msgInterval = setInterval(() => {
   i++;
 }, 2000);
 
-// progress
 let progress = 0;
 const bar = document.getElementById("progressFill");
 
@@ -289,7 +290,6 @@ const progressInterval = setInterval(() => {
   bar.style.width = progress + "%";
 }, 900);
 
-// slower counter
 let count = 1284;
 setInterval(() => {
   count += Math.floor(Math.random()*1);
