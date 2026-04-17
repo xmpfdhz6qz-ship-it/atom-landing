@@ -145,6 +145,7 @@ body {
 
 .cta {
   display:block;
+  width:100%;
   padding:20px;
   background:linear-gradient(135deg,#f97316,#ea580c);
   color:#000;
@@ -171,7 +172,7 @@ body {
 
 .cta-secondary {
   display:block;
-  width:100%; /* 🔥 FIX: same width as primary CTA */
+  width:100%;
   padding:14px;
   background:linear-gradient(135deg,#1f2937,#111827);
   color:#9ca3af;
@@ -195,6 +196,14 @@ body {
 
 .cta-secondary:active {
   transform:scale(0.98);
+}
+
+/* 🔥 FIX: unify ALL secondary buttons including print */
+button.cta-secondary,
+a.cta-secondary {
+  width:100%;
+  display:block;
+  box-sizing:border-box;
 }
 
 .card:last-child {
@@ -461,7 +470,7 @@ const monthly = Number(calc.monthly_loss_value || 10000);
 const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
 const yearly = Number(calc.yearly_loss_value || monthly * 12);
 
-const format = (n) => Number(n || 0).toLocaleString("en-US"); /* 🔥 FIX: commas */
+const format = (n) => Number(n || 0).toLocaleString("en-US");
 
 const storeDomain = data.store_domain || data.domain || "";
 
