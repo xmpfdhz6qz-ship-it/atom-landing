@@ -28,7 +28,6 @@ body::before {
   z-index:0;
 }
 
-/* glow */
 body::after {
   content:"";
   position:fixed;
@@ -62,33 +61,80 @@ body::after {
   overflow:hidden;
 }
 
-/* 🔥 MOVING EDGE LINE (KNIGHT RIDER STYLE AROUND BORDER) */
+/* 🔥 EDGE RUNNER (PERIMETER LINE) */
 .card::before {
   content:"";
   position:absolute;
-  inset:0;
-  border-radius:20px;
-  padding:2px;
-  background:
-    linear-gradient(90deg, transparent, rgba(249,115,22,0.1), #f97316, rgba(249,115,22,0.1), transparent);
-  background-size:200% 100%;
-  animation:edgeRun 3s linear infinite;
-  
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  width:120px;
+  height:3px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(249,115,22,0.3),
+    #f97316,
+    #ea580c,
+    rgba(249,115,22,0.3),
+    transparent
+  );
+  border-radius:2px;
+  box-shadow:0 0 12px rgba(249,115,22,0.7);
+  animation:edgeLoop 4s linear infinite;
 }
 
-@keyframes edgeRun {
+/* 🔥 PATH AROUND CARD */
+@keyframes edgeLoop {
+
+  /* TOP */
   0% {
-    background-position: 0% 0%;
-    transform: rotate(0deg);
+    top:0;
+    left:0;
+    transform:rotate(0deg);
   }
+
+  25% {
+    top:0;
+    left:calc(100% - 120px);
+    transform:rotate(0deg);
+  }
+
+  /* RIGHT */
+  26% {
+    top:0;
+    left:100%;
+    width:3px;
+    height:120px;
+    transform:rotate(0deg);
+  }
+
+  50% {
+    top:calc(100% - 120px);
+    left:100%;
+  }
+
+  /* BOTTOM */
+  51% {
+    top:100%;
+    left:calc(100% - 120px);
+    width:120px;
+    height:3px;
+  }
+
+  75% {
+    top:100%;
+    left:0;
+  }
+
+  /* LEFT */
+  76% {
+    top:calc(100% - 120px);
+    left:0;
+    width:3px;
+    height:120px;
+  }
+
   100% {
-    background-position: 200% 0%;
-    transform: rotate(360deg);
+    top:0;
+    left:0;
   }
 }
 
