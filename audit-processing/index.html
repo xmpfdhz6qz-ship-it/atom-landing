@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Scan in Progress | Atom Foundry</title>
+<title>Processing | Atom Foundry</title>
 
 <style>
 * { box-sizing:border-box; }
@@ -28,7 +28,7 @@ body::before {
   z-index:0;
 }
 
-/* 🔥 subtle animated glow */
+/* 🔥 floating glow */
 body::after {
   content:"";
   position:fixed;
@@ -62,21 +62,19 @@ body::after {
   overflow:hidden;
 }
 
-/* 🔥 top shimmer */
+/* 🔥 FULL BLOCK ORANGE SCAN EFFECT */
 .card::before {
   content:"";
   position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:2px;
-  background:linear-gradient(90deg, transparent, #f97316, transparent);
-  animation:shimmer 3s infinite;
+  inset:0;
+  background:linear-gradient(120deg, transparent 30%, rgba(249,115,22,0.25), transparent 70%);
+  transform:translateX(-100%);
+  animation:scanGlow 4s linear infinite;
 }
 
-@keyframes shimmer {
-  0% {left:-100%;}
-  100% {left:100%;}
+@keyframes scanGlow {
+  0% {transform:translateX(-100%);}
+  100% {transform:translateX(100%);}
 }
 
 /* 🔥 LIVE STRIP */
@@ -124,26 +122,7 @@ p {
   height:100%;
   width:0%;
   background:linear-gradient(90deg,#f97316,#ea580c);
-  transition:width 0.4s ease;
-  position:relative;
-}
-
-/* 🔥 moving glow inside bar */
-.progress-fill::after {
-  content:"";
-  position:absolute;
-  top:0;
-  right:-30px;
-  width:30px;
-  height:100%;
-  background:rgba(255,255,255,0.3);
-  filter:blur(6px);
-  animation:progressGlow 1.5s linear infinite;
-}
-
-@keyframes progressGlow {
-  0% {right:-30px;}
-  100% {right:100%;}
+  transition:width 0.6s ease;
 }
 
 /* 🔥 EMAIL BOX */
@@ -163,7 +142,6 @@ p {
   font-size:15px;
 }
 
-/* CTA */
 .btn {
   display:block;
   width:100%;
@@ -184,10 +162,6 @@ p {
   box-shadow:0 10px 25px rgba(249,115,22,0.5);
 }
 
-.btn:active {
-  transform:scale(0.97);
-}
-
 .progress-text {
   margin-top:12px;
   font-size:13px;
@@ -196,7 +170,6 @@ p {
   text-align:center;
 }
 
-/* 🔥 DATA LINE */
 .data-line {
   margin-top:8px;
   font-size:12px;
@@ -218,48 +191,35 @@ p {
   text-align:center;
 }
 
-/* 🔥 loading dots */
-.dots::after {
-  content:"...";
-  animation:dots 1.5s steps(3, end) infinite;
-}
-
-@keyframes dots {
-  0% {content:".";}
-  33% {content:"..";}
-  66% {content:"...";}
-}
-
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<div class="card">
+<div class="card" id="card">
 
 <div class="live">🟢 Live AI Analysis Running</div>
 
-<h1>🚀 Your Store Is Being Analyzed</h1>
+<h1>✅ Payment received — your audit is being prepared</h1>
 
 <p>
-We’re scanning your store for hidden <span class="highlight">revenue leaks</span>.
+We’re processing your store and generating your <span class="highlight">conversion audit</span>.
 </p>
 
 <p>
-This takes about <span class="highlight">10–15 seconds</span>.
+This will take just a few seconds.
 </p>
 
-<!-- 🔥 EMAIL BOX -->
 <div class="email-box">
-<h3>⚡ Real-time scan in progress</h3>
+<h3>⚡ AI audit generation in progress</h3>
 
-<p id="aiMessage" class="dots">
-Analyzing store structure...
+<p id="aiMessage">
+Preparing analysis...
 </p>
 
 <div class="btn" onclick="showHint()">
-What are you analyzing? →
+What is happening now? →
 </div>
 
 <div class="data-line" id="storeCount">
@@ -268,23 +228,16 @@ Comparing with 1,284 ecommerce stores
 
 </div>
 
-<!-- 🔥 PROGRESS BAR -->
 <div class="progress-bar">
 <div class="progress-fill" id="progressFill"></div>
 </div>
 
 <div class="progress-text" id="progressText">
-Initializing scan...
+Initializing secure analysis...
 </div>
 
 <p style="margin-top:14px;text-align:center;color:#9ca3af;font-size:13px;">
 Your audit will be delivered to your email within 60 seconds.
-</p>
-
-<p style="margin-top:14px;text-align:center;">
-💡 Most stores lose 
-<span class="highlight">20–40% of revenue</span> 
-due to hidden conversion issues.
 </p>
 
 <div class="id">
@@ -304,67 +257,70 @@ Atom Foundry · Conversion Intelligence Engine
 document.getElementById("auditId").innerText =
 Date.now().toString().slice(-6);
 
-// 🔥 AI messages
 const messages = [
-"Analyzing store structure...",
-"Scanning first impression...",
-"Detecting conversion leaks...",
-"Comparing with high-performing stores...",
-"Evaluating user behavior patterns...",
-"Generating insights..."
+"Preparing analysis...",
+"Reading store structure...",
+"Detecting revenue leaks...",
+"Comparing with top stores...",
+"Calculating revenue impact...",
+"Generating final audit..."
 ];
 
-// 🔥 progress text
 const steps = [
-"Initializing scan...",
-"Reading page structure...",
-"Analyzing messaging...",
-"Detecting friction points...",
-"Calculating revenue loss...",
-"Finalizing analysis..."
+"Initializing secure analysis...",
+"Scanning store structure...",
+"Analyzing conversion points...",
+"Detecting friction...",
+"Calculating losses...",
+"Finalizing audit..."
 ];
 
-// 🔥 rotating messages
 let i = 0;
-setInterval(() => {
+const msgInterval = setInterval(() => {
   document.getElementById("aiMessage").innerText = messages[i % messages.length];
   document.getElementById("progressText").innerText = steps[i % steps.length];
   i++;
-}, 1500);
+}, 1800);
 
-// 🔥 fake progress bar
+// progress
 let progress = 0;
 const bar = document.getElementById("progressFill");
 
 const progressInterval = setInterval(() => {
-  progress += Math.random() * 12;
+  progress += Math.random() * 8;
 
   if (progress >= 100) {
     progress = 100;
+    bar.style.width = "100%";
+
     clearInterval(progressInterval);
+    clearInterval(msgInterval);
+
+    // stop animation glow
+    document.getElementById("card").style.animation = "none";
+
+    setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      let domain = params.get("domain") || "";
+      domain = domain.replace(/^https?:\/\//, "");
+      window.location.href = "https://atomfoundry.dev/store/" + domain;
+    }, 1500);
   }
 
   bar.style.width = progress + "%";
-}, 700);
+}, 900);
 
-// 🔥 store counter
+// slower counter
 let count = 1284;
 setInterval(() => {
-  count += Math.floor(Math.random()*2);
+  count += Math.floor(Math.random()*1);
   document.getElementById("storeCount").innerText =
   "Comparing with " + count.toLocaleString() + " ecommerce stores";
-}, 2000);
+}, 4000);
 
-// CTA hint
 function showHint() {
-  alert("We analyze UX, messaging clarity, trust signals, and conversion friction.");
+  alert("We are analyzing UX, messaging clarity, trust signals, and conversion leaks.");
 }
-
-// 🔥 UPDATED FINAL STEP (NO REDIRECT)
-setTimeout(() => {
-  document.getElementById("progressText").innerText =
-    "Finalizing your audit... check your email shortly.";
-}, 10000);
 
 </script>
 
