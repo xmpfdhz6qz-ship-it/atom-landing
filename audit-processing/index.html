@@ -62,30 +62,35 @@ body::after {
   overflow:hidden;
 }
 
-/* 🔥 BORDER RUNNER (TOP → RIGHT → BOTTOM → LEFT) */
+/* 🔥 KNIGHT RIDER BORDER EFFECT */
 .card::before {
   content:"";
   position:absolute;
-  width:80px;
-  height:3px;
-  background:linear-gradient(90deg,#f97316,#ea580c);
-  border-radius:2px;
-  box-shadow:0 0 12px rgba(249,115,22,0.8);
-  animation:borderRun 4s linear infinite;
+  inset:0;
+  border-radius:20px;
+  padding:2px;
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 340deg,
+      rgba(249,115,22,0.0) 345deg,
+      rgba(249,115,22,0.4) 350deg,
+      rgba(249,115,22,0.9) 355deg,
+      #f97316 358deg,
+      #ea580c 360deg
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation:spinBorder 3s linear infinite;
 }
 
-@keyframes borderRun {
-  0%   { top:0; left:0; width:80px; height:3px; }
-  25%  { top:0; left:calc(100% - 80px); width:80px; height:3px; }
-
-  26%  { top:0; left:100%; width:3px; height:80px; }
-  50%  { top:calc(100% - 80px); left:100%; width:3px; height:80px; }
-
-  51%  { top:100%; left:calc(100% - 80px); width:80px; height:3px; }
-  75%  { top:100%; left:0; width:80px; height:3px; }
-
-  76%  { top:calc(100% - 80px); left:0; width:3px; height:80px; }
-  100% { top:0; left:0; width:3px; height:80px; }
+@keyframes spinBorder {
+  0% { transform:rotate(0deg); }
+  100% { transform:rotate(360deg); }
 }
 
 /* LIVE */
