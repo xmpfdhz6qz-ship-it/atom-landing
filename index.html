@@ -206,20 +206,15 @@ button:active {
 </div>
 
 <script>
-document.getElementById("scanForm").addEventListener("submit", async (e) => {
+document.getElementById("scanForm").addEventListener("submit", (e) => {
   e.preventDefault();
-
-  /* 🔥 LOADING STATE */
-  const btn = e.target.querySelector("button");
-  btn.innerText = "Scanning...";
-  btn.disabled = true;
 
   const formData = new FormData(e.target);
 
   let url = formData.get("store").trim();
   const email = formData.get("email").trim();
 
-  /* 🔥 FIX URL NORMALIZATION */
+  // 🔥 normalize
   url = url
     .replace(/^https?:\/\//, "")
     .replace(/\/$/, "")
@@ -227,38 +222,25 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
 
   url = "https://" + url;
 
-  try {
-    const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url, email })
-    });
+  // 🔥 UI feedback
+  const btn = e.target.querySelector("button");
+  btn.innerText = "Scanning...";
+  btn.disabled = true;
 
-    const data = await res.json();
+  // 🔥 SEND (async, nečekáme!)
+  fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url, email })
+  }).catch(() => {});
 
-    /* DEBUG */
-    console.log("RESPONSE:", data);
+  // 🔥 OKAMŽITÝ REDIRECT
+  const params = new URLSearchParams({
+    domain: url,
+    email: email
+  });
 
-    /* 🔥 SAFE TOKEN EXTRACTION */
-    let token =
-      data?.token ||
-      data?.data?.token ||
-      (Array.isArray(data) ? data[0]?.token : null);
-
-    if (!token) {
-      console.error("Missing token from backend", data);
-      alert("Something went wrong. Try again.");
-      return;
-    }
-
-    window.location.href = "/audit-in-progress?token=" + token;
-
-  } catch (err) {
-    console.error("Scan failed", err);
-
-    /* 🔥 FAIL SAFE */
-    window.location.href = "/audit-in-progress";
-  }
+  window.location.href = "/audit-in-progress?" + params.toString();
 });
 </script>
 
