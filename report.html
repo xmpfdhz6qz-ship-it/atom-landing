@@ -310,12 +310,44 @@ app.innerHTML = `
 `;
 
 const email = row?.email || "";
-const stripeUrl = "https://buy.stripe.com/bJebIU8JJfcAfOH8W01RC01";
 
+/* 🔥 NEW CHECKOUT FLOW */
 ["auditBtn","auditBtnTop"].forEach(id=>{
-  const btn=document.getElementById(id);
+  const btn = document.getElementById(id);
+
   if(btn){
-    btn.href = stripeUrl + "?prefilled_email=" + encodeURIComponent(email);
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      btn.innerText = "Redirecting...";
+      btn.style.opacity = "0.7";
+
+      try {
+        const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/create-checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            domain: row.store_domain || "",
+            email: email || ""
+          })
+        });
+
+        const data = await res.json();
+
+        if (!data.url) {
+          alert("Checkout error");
+          return;
+        }
+
+        window.location.href = data.url;
+
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong");
+      }
+    });
   }
 });
 
