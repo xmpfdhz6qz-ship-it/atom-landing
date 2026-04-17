@@ -241,18 +241,27 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     url = "https://" + url;
   }
 
-  fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({ url, email })
-  }).catch(()=>{});
+  try {
+    const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url, email })
+    });
 
-  const params = new URLSearchParams({
-    domain:url,
-    email:email
-  });
+    const data = await res.json();
 
-  window.location.href = "/audit-in-progress?token=" + data.token;
+    if (!data.token) {
+      console.error("Missing token from backend");
+      alert("Something went wrong. Try again.");
+      return;
+    }
+
+    window.location.href = "/audit-in-progress?token=" + data.token;
+
+  } catch (err) {
+    console.error("Scan failed", err);
+    alert("Scan failed. Please try again.");
+  }
 });
 </script>
 
