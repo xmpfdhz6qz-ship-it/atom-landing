@@ -412,9 +412,9 @@ body {
   Fix Conversion Leaks & Recover Revenue → $89/month
 </a>
 
-<a id="manage-subscription" class="cta-secondary">
+<button class="cta-secondary" onclick="openBillingPortal()">
   Manage subscription / Cancel anytime
-</a>
+</button>
 
 <div class="sub" style="text-align:center;margin-top:10px;">
   Most stores recover the cost of monitoring from a single fix
@@ -570,12 +570,12 @@ if (topBtn) {
   };
 }
 
-/* 🔥 PORTAL */
-async function openPortal() {
-  const params = new URLSearchParams(window.location.search);
+})();
 
+/* 🔥 NEW BILLING PORTAL LOGIC */
+async function openBillingPortal() {
+  const params = new URLSearchParams(window.location.search);
   const email = params.get("email");
-  const domain = params.get("domain");
 
   if (!email) {
     alert("Missing email");
@@ -584,33 +584,22 @@ async function openPortal() {
 
   try {
     const res = await fetch(
-      `https://n8n-production-43ab.up.railway.app/webhook/create-portal?email=${email}&domain=${domain}`
+      "https://n8n-production-43ab.up.railway.app/webhook/create-portal?email=" + encodeURIComponent(email)
     );
 
-    const data = await res.json();
+    const result = await res.json();
 
-    if (!data.url) {
-      alert("Could not open billing");
+    if (result.error === "no_subscription") {
+      window.location.href = "/#pricing";
       return;
     }
 
-    window.location.href = data.url;
+    window.location.href = result.url;
 
   } catch (err) {
     alert("Connection error");
   }
 }
-
-const manageBtn = document.getElementById("manage-subscription");
-
-if (manageBtn) {
-  manageBtn.onclick = function(e) {
-    e.preventDefault();
-    openPortal();
-  };
-}
-
-})();
 </script>
 
 </body>
