@@ -224,6 +224,12 @@ if (!data) {
 
 const row = data;
 
+/* 🔥 NEW BACKEND DATA */
+const estimatedLossText = row.report_json?.estimated_loss || "";
+const urgencyText = row.report_json?.urgency || "";
+const impactText = row.report_json?.impact_explanation || "";
+const severity = row.report_json?.severity || "";
+
 const estimatedLossRaw = Math.round((100 - (row.score || 60)) * 40);
 const estimatedLoss = formatMoney(estimatedLossRaw);
 const daily = Math.round(estimatedLossRaw / 30);
@@ -235,14 +241,23 @@ app.innerHTML = `
   <div class="card red highlight">
     <div class="small">Estimated revenue loss</div>
     <div class="money">$${estimatedLoss}+ / month</div>
+    <div style="margin-top:8px;font-size:14px;">
+      ${estimatedLossText}
+    </div>
     <div class="urgency">≈ $${daily} / day disappearing</div>
     <div class="warning">+$${hourly} lost every hour you wait</div>
     <div id="liveLoss" class="live-loss">Calculating live loss...</div>
   </div>
 
+  <div class="card">
+    <strong>What this means:</strong><br><br>
+    ${impactText || "Users hesitate due to unclear decision signals"}
+    <div class="urgency">${urgencyText}</div>
+  </div>
+
   <div class="cta-zone">
     <a id="auditBtnTop" class="cta" href="#">
-      Fix My Revenue Leaks Now → $399
+      Unlock Full Revenue Breakdown → $399
     </a>
     <div class="subtle">⚡ Instant access • No calls • Actionable fixes</div>
   </div>
@@ -251,6 +266,19 @@ app.innerHTML = `
     <div class="small">Conversion Score</div>
     <div class="score">${row.score || 60}/100</div>
     <div class="warning">High-performing stores score 85+</div>
+  </div>
+
+  <div class="card">
+    <div class="small">Issue severity</div>
+    <div class="urgency">
+      ${
+        severity === "high"
+          ? "🔴 High – actively blocking conversions"
+          : severity === "medium"
+          ? "🟠 Medium – causing hesitation"
+          : "🟢 Low – minor friction"
+      }
+    </div>
   </div>
 
   <div class="card">
@@ -289,7 +317,7 @@ app.innerHTML = `
 
   <div class="cta-zone">
     <a id="auditBtn" class="cta" href="#">
-      Fix My Revenue Leaks Now → $399
+      Unlock Full Revenue Breakdown → $399
     </a>
 
     <div class="subtle">Most stores recover the cost from one fix</div>
