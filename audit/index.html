@@ -576,6 +576,55 @@ Most stores recover the cost within 7–14 days
 </div>
 
 <script>
+let email = "";
+let storeDomain = "";
+
+function bindCTA() {
+  const btn1 = document.getElementById("monitoring-btn");
+  const btn2 = document.getElementById("monitoring-btn-top");
+
+  [btn1, btn2].forEach(btn => {
+    if (!btn) return;
+
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      if (!email) {
+        email = localStorage.getItem("email");
+      }
+
+      if (!email) {
+        alert("Missing email");
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
+          "?domain=" + encodeURIComponent(storeDomain) +
+          "&email=" + encodeURIComponent(email)
+        );
+
+        const result = await res.json();
+
+        console.log(result);
+
+        if (!result.url) {
+          alert("Checkout failed");
+          return;
+        }
+
+        window.location.href = result.url;
+
+      } catch (e) {
+        alert("Connection error");
+      }
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", bindCTA);
+
 (async function(){
 
 try {
@@ -626,13 +675,14 @@ const yearly = Number(calc.yearly_loss_value || monthly * 12);
 
 const format = (n) => Number(n || 0).toLocaleString("en-US");
 
-const storeDomain = data.store_domain || data.domain || "";
+storeDomain = data.store_domain || data.domain || "";
 
-// 🔥 EMAIL FIX
+// EMAIL LOAD + SAVE
 const params = new URLSearchParams(window.location.search);
-const email =
-  data.email ||
-  params.get("email");
+email = data.email || params.get("email") || "";
+if (email) {
+  localStorage.setItem("email", email);
+}
 
 // DATA BINDING
 setText("storeName", storeDomain);
@@ -704,49 +754,6 @@ setText("scoreLabel",
   : score < 60 ? "Significant conversion issues"
   : "Optimization opportunity"
 );
-
-// 🔥 FINAL CTA FIX (EMAIL GUARD + DEBUG)
-const monitoringBtn = document.getElementById("monitoring-btn");
-const monitoringBtnTop = document.getElementById("monitoring-btn-top");
-
-async function handleCheckout(e){
-  e.preventDefault();
-
-  if (!email) {
-    alert("Missing email. Please access the report via original email link.");
-    return;
-  }
-
-  try {
-    const url =
-      "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
-      "?domain=" + encodeURIComponent(storeDomain) +
-      "&email=" + encodeURIComponent(email);
-
-    const res = await fetch(url);
-    const result = await res.json();
-
-    console.log("Stripe response:", result);
-
-    if (!result.url) {
-      alert("Checkout failed. Try again.");
-      return;
-    }
-
-    window.location.href = result.url;
-
-  } catch (err) {
-    alert("Connection error");
-  }
-}
-
-if (monitoringBtn) {
-  monitoringBtn.onclick = handleCheckout;
-}
-
-if (monitoringBtnTop) {
-  monitoringBtnTop.onclick = handleCheckout;
-}
 
 } catch (err) {
   console.error("FATAL:", err);
