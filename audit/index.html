@@ -639,12 +639,20 @@ function bindCTA() {
           "&email=" + encodeURIComponent(email)
         );
 
+        if (!res.ok) {
+          console.error("Webhook failed", res.status);
+          alert("Something broke");
+          return;
+        }
+
         const result = await res.json();
 
         console.log(result);
 
+        const fallback = "https://buy.stripe.com/8x2aEQ4tt4xW6e7egk1RC00";
+
         if (!result.url) {
-          alert("Checkout failed");
+          window.location.href = fallback;
           return;
         }
 
