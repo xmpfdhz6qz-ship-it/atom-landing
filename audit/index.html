@@ -38,6 +38,19 @@ body {
   z-index:0;
 }
 
+/* 🔥 NEW: premium glow layer */
+.container::after {
+  content:"";
+  position:fixed;
+  bottom:-20%;
+  right:-10%;
+  width:60%;
+  height:60%;
+  background:radial-gradient(circle, rgba(239,68,68,0.12), transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+
 .card {
   background:#111;
   border:1px solid #222;
@@ -143,16 +156,30 @@ body {
   color:#d1fae5;
 }
 
+/* 🔥 ENHANCED CTA ZONE */
 .cta-zone {
   margin-top:18px;
   padding:18px;
   border-radius:16px;
-  background:linear-gradient(180deg,rgba(249,115,22,0.08),rgba(0,0,0,0));
-  border:1px solid rgba(249,115,22,0.3);
-  box-shadow:0 0 30px rgba(249,115,22,0.1);
+  background:linear-gradient(180deg,rgba(249,115,22,0.12),rgba(0,0,0,0));
+  border:1px solid rgba(249,115,22,0.4);
+  box-shadow:0 0 40px rgba(249,115,22,0.15);
   width:100%;
   position:relative;
   overflow:hidden;
+}
+
+.cta-zone::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent, rgba(249,115,22,0.15), transparent);
+  animation:shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {transform:translateX(-100%);}
+  100% {transform:translateX(100%);}
 }
 
 .cta-zone::after{
@@ -162,13 +189,14 @@ body {
   right:12px;
   font-size:10px;
   color:#f97316;
-  opacity:0.6;
+  opacity:0.7;
 }
 
+/* 🔥 STRONGER CTA */
 .cta {
   display:block;
   width:100%;
-  padding:20px;
+  padding:22px;
   background:linear-gradient(135deg,#f97316,#ea580c);
   color:#000;
   text-align:center;
@@ -176,21 +204,22 @@ body {
   font-weight:900;
   margin-top:16px;
   text-decoration:none;
-  font-size:18px;
+  font-size:19px;
   border:2px solid #dc2626;
-  box-shadow:0 10px 25px rgba(249,115,22,0.4);
+  box-shadow:0 12px 30px rgba(249,115,22,0.5);
   transition:all 0.25s ease;
   cursor:pointer;
   position:relative;
+  z-index:2;
 }
 
 .cta:hover {
-  transform:translateY(-3px) scale(1.01);
-  box-shadow:0 20px 45px rgba(249,115,22,0.7);
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 25px 60px rgba(249,115,22,0.8);
 }
 
 .cta:active {
-  transform:scale(0.96);
+  transform:scale(0.95);
 }
 
 .cta-secondary {
@@ -372,7 +401,7 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
 </div>
 
 <div class="cta-zone">
-<a id="monitoring-btn-top" class="cta">
+<a id="monitoring-btn-top" class="cta" href="#">
   Stop Losing <span id="ctaTopLoss"></span>/day → Recover This Revenue
 </a>
 </div>
@@ -540,7 +569,7 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
 </div>
 
 <div class="cta-zone">
-<a id="monitoring-btn" class="cta">
+<a id="monitoring-btn" class="cta" href="#">
   Stop Losing <span id="ctaLoss"></span>/day → Recover This Revenue
 </a>
 
@@ -598,6 +627,11 @@ function bindCTA() {
         return;
       }
 
+      if (!storeDomain) {
+        alert("Missing domain");
+        return;
+      }
+
       try {
         const res = await fetch(
           "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
@@ -622,8 +656,6 @@ function bindCTA() {
     });
   });
 }
-
-document.addEventListener("DOMContentLoaded", bindCTA);
 
 (async function(){
 
@@ -754,6 +786,9 @@ setText("scoreLabel",
   : score < 60 ? "Significant conversion issues"
   : "Optimization opportunity"
 );
+
+/* 🔥 FIX: bindCTA až po datech */
+bindCTA();
 
 } catch (err) {
   console.error("FATAL:", err);
