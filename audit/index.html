@@ -342,7 +342,7 @@ This is not theoretical — this is based on your current conversion gaps
   </div>
 
   <div class="sub">
-Confidence: <b id="confidence"></b> — based on real ecommerce conversion patterns
+Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ stores)
 </div>
 </div>
 
@@ -361,7 +361,7 @@ Confidence: <b id="confidence"></b> — based on real ecommerce conversion patte
 
 <div class="cta-zone">
 <a id="monitoring-btn-top" class="cta">
-  Fix Revenue Leaks Now → Start Monitoring
+  Stop Losing <span id="ctaTopLoss"></span>/day → Recover This Revenue
 </a>
 </div>
 
@@ -510,6 +510,18 @@ Confidence: <b id="confidence"></b> — based on real ecommerce conversion patte
   </div>
 </div>
 
+<div class="card" style="border:1px solid #dc2626;">
+  <div class="section-title">Decision Point</div>
+  <div>
+    You have two options:<br><br>
+
+    1. Do nothing → continue losing ~$<span id="dailyDecision"></span>/day<br>
+    2. Fix the leaks → recover lost revenue<br><br>
+
+    The difference compounds every day.
+  </div>
+</div>
+
 <div class="card" style="border:1px solid #14532d;">
   <div class="section-title">What Happens Next</div>
   <div id="monitoringHook"></div>
@@ -517,7 +529,7 @@ Confidence: <b id="confidence"></b> — based on real ecommerce conversion patte
 
 <div class="cta-zone">
 <a id="monitoring-btn" class="cta">
-  Stop Losing $<span id="daily"></span>/day → Fix Your Funnel Now
+  Stop Losing <span id="ctaLoss"></span>/day → Recover This Revenue
 </a>
 
 <button class="cta-secondary" onclick="openBillingPortal()">
@@ -540,7 +552,7 @@ Most stores recover the cost within 7–14 days
 </ul>
 
 <div class="sub" style="text-align:center;margin-top:10px;">
-  Every day you delay = <span id="daily"></span> lost
+  Every day you delay = <span id="ctaLossInline"></span> lost
 </div>
 </div>
 
@@ -586,6 +598,11 @@ document.getElementById("yearlyLoss").innerText = `≈ $${format(yearly)} lost p
 document.getElementById("daily").innerText = `$${format(daily)}`;
 document.getElementById("daily2").innerText = format(daily);
 document.getElementById("daily3").innerText = format(daily);
+
+document.getElementById("ctaLoss").innerText = `$${format(daily)}`;
+document.getElementById("ctaTopLoss").innerText = `$${format(daily)}`;
+document.getElementById("ctaLossInline").innerText = `$${format(daily)}`;
+document.getElementById("dailyDecision").innerText = format(daily);
 
 document.getElementById("pattern").innerText =
 r.core_insight || r.primary_failure || "";
