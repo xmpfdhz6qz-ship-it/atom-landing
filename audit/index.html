@@ -152,6 +152,18 @@ body {
   border:1px solid rgba(249,115,22,0.3);
   box-shadow:0 0 30px rgba(249,115,22,0.1);
   width:100%;
+  position:relative;
+  overflow:hidden;
+}
+
+.cta-zone::after{
+  content:"LIVE RECOVERY AVAILABLE";
+  position:absolute;
+  top:10px;
+  right:12px;
+  font-size:10px;
+  color:#f97316;
+  opacity:0.6;
 }
 
 .cta {
@@ -170,6 +182,7 @@ body {
   box-shadow:0 10px 25px rgba(249,115,22,0.4);
   transition:all 0.25s ease;
   cursor:pointer;
+  position:relative;
 }
 
 .cta:hover {
@@ -570,7 +583,6 @@ try {
 
 const token = window.location.pathname.split("/").pop();
 
-// FIX 1: token guard
 if (!token || token.length < 6) {
   console.error("Invalid token");
   return;
@@ -578,7 +590,6 @@ if (!token || token.length < 6) {
 
 const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-audit?token=${token}`);
 
-// FIX 2: response guard
 if (!res.ok) {
   console.error("API error:", res.status);
   return;
@@ -586,7 +597,6 @@ if (!res.ok) {
 
 const data = await res.json();
 
-// FIX 3: parse report_json safely
 let r = data.report_json || {};
 
 if (typeof r === "string") {
@@ -598,7 +608,6 @@ if (typeof r === "string") {
   }
 }
 
-// SAFE setters
 function setText(id, val) {
   const el = document.getElementById(id);
   if (el) el.innerText = val;
@@ -620,7 +629,13 @@ const format = (n) => Number(n || 0).toLocaleString("en-US");
 
 const storeDomain = data.store_domain || data.domain || "";
 
-// DATA BINDING (safe)
+// 🔥 EMAIL FIX (CRITICAL)
+const params = new URLSearchParams(window.location.search);
+const email =
+  data.email ||
+  params.get("email");
+
+// DATA BINDING
 setText("storeName", storeDomain);
 setText("score", (r.score || 70) + "/100");
 setText("confidence", r.analysis_confidence || "medium");
@@ -640,37 +655,38 @@ setText("ctaTopLoss", `$${format(daily)}`);
 setText("ctaLossInline", `$${format(daily)}`);
 setText("dailyDecision", format(daily));
 
-setText("pattern", r.core_insight || r.primary_failure || "");
-setText("primary", r.main_leak ? r.main_leak + " — this directly impacts your conversions" : "");
-setText("urgencyBlock", r.urgency_block || "");
-setText("recoveryBlock", r.recovery_potential || "");
+setText("pattern", r.core_insight || r.primary_failure || "Users are dropping before reaching purchase intent.");
+setText("primary", r.main_leak ? r.main_leak + " — this directly impacts your conversions" : "Key conversion leak detected in decision stage.");
+setText("urgencyBlock", r.urgency_block || `You may be losing ~$${format(daily)}/day`);
+setText("recoveryBlock", r.recovery_potential || "Fixing this can unlock immediate revenue recovery.");
+setText("monitoringHook", r.monitoring_hook || "Continuous monitoring ensures new leaks are detected early.");
 
 setHTML("priority",
   (r.revenue_distribution || []).map(d =>
-    `${d.name} → ${d.percent}% (~$${format(d.amount)})`
+    `${String(d.name).replace(/</g,"&lt;")} → ${d.percent}% (~$${format(d.amount)})`
   ).join("<br>")
 );
 
 setHTML("plan",
   (r.revenue_plan || []).map(p =>
-    `${p.fix}<br>+$${format(p.impact_value)}/month`
+    `${String(p.fix).replace(/</g,"&lt;")}<br>+$${format(p.impact_value)}/month`
   ).join("<br><br>")
 );
 
 setHTML("steps",
   (r.execution_plan || []).map(s =>
-    `• ${s.title} → ${s.impact}`
+    `• ${String(s.title).replace(/</g,"&lt;")} → ${String(s.impact).replace(/</g,"&lt;")}`
   ).join("<br>")
 );
 
 setHTML("issues",
   issues.map(i => `
   <div class="issue">
-  <strong>${i.title}</strong>
-  <div class="fix">${i.fix}</div>
-  <p>${i.reason}</p>
-  <div class="sub">${i.why_it_matters || ""}</div>
-  <ul>${(i.fix_steps || []).map(s => `<li>${s}</li>`).join("")}</ul>
+  <strong>${String(i.title).replace(/</g,"&lt;")}</strong>
+  <div class="fix">${String(i.fix).replace(/</g,"&lt;")}</div>
+  <p>${String(i.reason).replace(/</g,"&lt;")}</p>
+  <div class="sub">${String(i.why_it_matters || "").replace(/</g,"&lt;")}</div>
+  <ul>${(i.fix_steps || []).map(s => `<li>${String(s).replace(/</g,"&lt;")}</li>`).join("")}</ul>
   </div>
   `).join("")
 );
@@ -684,7 +700,45 @@ setHTML("liveLoss", `$${format(daily)}/day<br>$${format(monthly)}/month<br>$${fo
 setHTML("timeline", `Day 1 → loss<br>Week 1 → compounding<br>Month → serious revenue leak`);
 setHTML("donothing", `$${format(daily)} lost daily<br>Conversion stagnates<br>Competitors win`);
 
-setText("monitoringHook", r.monitoring_hook || "");
+// 🔥 SCORE LABEL FIX
+setText("scoreLabel",
+  score < 40 ? "Critical revenue leakage"
+  : score < 60 ? "Significant conversion issues"
+  : "Optimization opportunity"
+);
+
+// 🔥 CTA FIX (CRITICAL STRIPE FLOW)
+const monitoringBtn = document.getElementById("monitoring-btn");
+const monitoringBtnTop = document.getElementById("monitoring-btn-top");
+
+async function handleCheckout(e){
+  e.preventDefault();
+
+  try {
+    const url =
+      "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
+      "?domain=" + encodeURIComponent(storeDomain) +
+      "&email=" + encodeURIComponent(email || "");
+
+    const res = await fetch(url);
+    const result = await res.json();
+
+    if (result.url) {
+      window.location.href = result.url;
+    }
+
+  } catch (err) {
+    alert("Connection error");
+  }
+}
+
+if (monitoringBtn) {
+  monitoringBtn.onclick = handleCheckout;
+}
+
+if (monitoringBtnTop) {
+  monitoringBtnTop.onclick = handleCheckout;
+}
 
 } catch (err) {
   console.error("FATAL:", err);
