@@ -566,12 +566,48 @@ Most stores recover the cost within 7–14 days
 <script>
 (async function(){
 
+try {
+
 const token = window.location.pathname.split("/").pop();
 
+// FIX 1: token guard
+if (!token || token.length < 6) {
+  console.error("Invalid token");
+  return;
+}
+
 const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-audit?token=${token}`);
+
+// FIX 2: response guard
+if (!res.ok) {
+  console.error("API error:", res.status);
+  return;
+}
+
 const data = await res.json();
 
+// FIX 3: parse report_json safely
 let r = data.report_json || {};
+
+if (typeof r === "string") {
+  try {
+    r = JSON.parse(r);
+  } catch(e) {
+    console.error("JSON parse error", e);
+    r = {};
+  }
+}
+
+// SAFE setters
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.innerText = val;
+}
+
+function setHTML(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = val;
+}
 
 const calc = r.revenue_calculation || {};
 const issues = r.issues || [];
@@ -584,149 +620,74 @@ const format = (n) => Number(n || 0).toLocaleString("en-US");
 
 const storeDomain = data.store_domain || data.domain || "";
 
-document.getElementById("storeName").innerText = storeDomain;
-document.getElementById("score").innerText = (r.score || 70) + "/100";
-document.getElementById("confidence").innerText = r.analysis_confidence || "medium";
+// DATA BINDING (safe)
+setText("storeName", storeDomain);
+setText("score", (r.score || 70) + "/100");
+setText("confidence", r.analysis_confidence || "medium");
 
-document.getElementById("ownerMessage").innerText =
-r.owner_message || "Your store is likely losing revenue without clear visibility.";
+setText("ownerMessage",
+  r.owner_message || "Your store is likely losing revenue without clear visibility."
+);
 
-document.getElementById("heroLoss").innerText = `$${format(monthly)}/month is currently slipping through your funnel`;
+setText("heroLoss", `$${format(monthly)}/month is currently slipping through your funnel`);
+setText("dailyLoss", `≈ $${format(daily)} lost every day`);
+setText("yearlyLoss", `≈ $${format(yearly)} lost per year`);
 
-document.getElementById("dailyLoss").innerText = `≈ $${format(daily)} lost every day`;
-document.getElementById("yearlyLoss").innerText = `≈ $${format(yearly)} lost per year`;
-document.getElementById("daily").innerText = `$${format(daily)}`;
-document.getElementById("daily2").innerText = format(daily);
-document.getElementById("daily3").innerText = format(daily);
+setText("daily2", format(daily));
+setText("daily3", format(daily));
+setText("ctaLoss", `$${format(daily)}`);
+setText("ctaTopLoss", `$${format(daily)}`);
+setText("ctaLossInline", `$${format(daily)}`);
+setText("dailyDecision", format(daily));
 
-document.getElementById("ctaLoss").innerText = `$${format(daily)}`;
-document.getElementById("ctaTopLoss").innerText = `$${format(daily)}`;
-document.getElementById("ctaLossInline").innerText = `$${format(daily)}`;
-document.getElementById("dailyDecision").innerText = format(daily);
+setText("pattern", r.core_insight || r.primary_failure || "");
+setText("primary", r.main_leak ? r.main_leak + " — this directly impacts your conversions" : "");
+setText("urgencyBlock", r.urgency_block || "");
+setText("recoveryBlock", r.recovery_potential || "");
 
-document.getElementById("pattern").innerText =
-r.core_insight || r.primary_failure || "";
+setHTML("priority",
+  (r.revenue_distribution || []).map(d =>
+    `${d.name} → ${d.percent}% (~$${format(d.amount)})`
+  ).join("<br>")
+);
 
-document.getElementById("primary").innerText =
-r.main_leak
-  ? r.main_leak + " — this directly impacts your conversions"
-  : "";
+setHTML("plan",
+  (r.revenue_plan || []).map(p =>
+    `${p.fix}<br>+$${format(p.impact_value)}/month`
+  ).join("<br><br>")
+);
 
-document.getElementById("urgencyBlock").innerText =
-r.urgency_block || "";
+setHTML("steps",
+  (r.execution_plan || []).map(s =>
+    `• ${s.title} → ${s.impact}`
+  ).join("<br>")
+);
 
-document.getElementById("recoveryBlock").innerText =
-r.recovery_potential || "";
-
-document.getElementById("priority").innerHTML =
-(r.revenue_distribution || []).map(d =>
-`${d.name} → ${d.percent}% (~$${format(d.amount)})`
-).join("<br>");
-
-document.getElementById("plan").innerHTML =
-(r.revenue_plan || []).map(p =>
-`${p.fix}<br>+$${format(p.impact_value)}/month`
-).join("<br><br>");
-
-document.getElementById("steps").innerHTML =
-(r.execution_plan || []).map(s =>
-`• ${s.title} → ${s.impact}`
-).join("<br>");
-
-document.getElementById("issues").innerHTML =
-issues.map(i => `
-<div class="issue">
-<strong>${i.title}</strong>
-
-<div class="fix">${i.fix}</div>
-
-<p>${i.reason}</p>
-
-<div class="sub" style="margin-top:6px;color:#fca5a5;">
-${i.why_it_matters || ""}
-</div>
-
-<ul class="sub" style="margin-top:8px;padding-left:16px;">
-${(i.fix_steps || []).map(s => `<li>${s}</li>`).join("")}
-</ul>
-
-</div>
-`).join("");
+setHTML("issues",
+  issues.map(i => `
+  <div class="issue">
+  <strong>${i.title}</strong>
+  <div class="fix">${i.fix}</div>
+  <p>${i.reason}</p>
+  <div class="sub">${i.why_it_matters || ""}</div>
+  <ul>${(i.fix_steps || []).map(s => `<li>${s}</li>`).join("")}</ul>
+  </div>
+  `).join("")
+);
 
 const score = r.score || 70;
 const gap = Math.round((100 - score) * 0.6);
 
-document.getElementById("dashboard").innerHTML =
-`Estimated conversion gap: <b>${gap}%</b><br>Users drop before purchase`;
+setHTML("dashboard", `Estimated conversion gap: <b>${gap}%</b><br>Users drop before purchase`);
+setHTML("benchmark", `Worse than ${100 - score}% of stores<br>Top stores score 85+`);
+setHTML("liveLoss", `$${format(daily)}/day<br>$${format(monthly)}/month<br>$${format(yearly)}/year`);
+setHTML("timeline", `Day 1 → loss<br>Week 1 → compounding<br>Month → serious revenue leak`);
+setHTML("donothing", `$${format(daily)} lost daily<br>Conversion stagnates<br>Competitors win`);
 
-document.getElementById("benchmark").innerHTML =
-`Worse than ${100 - score}% of stores<br>Top stores score 85+`;
+setText("monitoringHook", r.monitoring_hook || "");
 
-document.getElementById("liveLoss").innerHTML =
-`$${format(daily)}/day<br>$${format(monthly)}/month<br>$${format(yearly)}/year`;
-
-document.getElementById("timeline").innerHTML =
-`Day 1 → loss<br>Week 1 → compounding<br>Month → serious revenue leak`;
-
-document.getElementById("donothing").innerHTML =
-`$${format(daily)} lost daily<br>Conversion stagnates<br>Competitors win`;
-
-document.getElementById("monitoringHook").innerText =
-r.monitoring_hook || "";
-
-const monitoringBtn = document.getElementById("monitoring-btn");
-
-const params = new URLSearchParams(window.location.search);
-
-const domain =
-  storeDomain ||
-  params.get("domain");
-
-const email =
-  data.email ||
-  params.get("email");
-
-if (!email) {
-  alert("Missing email — please re-run scan");
-  return;
-}
-
-if (monitoringBtn) {
-  monitoringBtn.onclick = async function (e) {
-    e.preventDefault();
-
-    monitoringBtn.innerText = "Redirecting...";
-    monitoringBtn.style.opacity = "0.7";
-
-    try {
-      const url =
-        "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
-        "?domain=" + encodeURIComponent(domain) +
-        "&email=" + encodeURIComponent(email || "");
-
-      const res = await fetch(url, { method: "GET" });
-      const result = await res.json();
-
-      if (!result.url) {
-        alert("Stripe error");
-        return;
-      }
-
-      window.location.href = result.url;
-
-    } catch (err) {
-      alert("Connection error");
-    }
-  };
-}
-
-const topBtn = document.getElementById("monitoring-btn-top");
-
-if (topBtn) {
-  topBtn.onclick = function(e){
-    e.preventDefault();
-    document.getElementById("monitoring-btn").click();
-  };
+} catch (err) {
+  console.error("FATAL:", err);
 }
 
 })();
