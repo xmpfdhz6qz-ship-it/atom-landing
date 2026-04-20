@@ -16,7 +16,6 @@ body {
   -webkit-font-smoothing:antialiased;
 }
 
-/* 🔥 FIX: ensure perfect symmetry with padding included */
 * {
   box-sizing:border-box;
 }
@@ -629,7 +628,7 @@ const format = (n) => Number(n || 0).toLocaleString("en-US");
 
 const storeDomain = data.store_domain || data.domain || "";
 
-// 🔥 EMAIL FIX (CRITICAL)
+// 🔥 EMAIL FIX
 const params = new URLSearchParams(window.location.search);
 const email =
   data.email ||
@@ -700,32 +699,41 @@ setHTML("liveLoss", `$${format(daily)}/day<br>$${format(monthly)}/month<br>$${fo
 setHTML("timeline", `Day 1 → loss<br>Week 1 → compounding<br>Month → serious revenue leak`);
 setHTML("donothing", `$${format(daily)} lost daily<br>Conversion stagnates<br>Competitors win`);
 
-// 🔥 SCORE LABEL FIX
 setText("scoreLabel",
   score < 40 ? "Critical revenue leakage"
   : score < 60 ? "Significant conversion issues"
   : "Optimization opportunity"
 );
 
-// 🔥 CTA FIX (CRITICAL STRIPE FLOW)
+// 🔥 FINAL CTA FIX (EMAIL GUARD + DEBUG)
 const monitoringBtn = document.getElementById("monitoring-btn");
 const monitoringBtnTop = document.getElementById("monitoring-btn-top");
 
 async function handleCheckout(e){
   e.preventDefault();
 
+  if (!email) {
+    alert("Missing email. Please access the report via original email link.");
+    return;
+  }
+
   try {
     const url =
       "https://n8n-production-43ab.up.railway.app/webhook/create-monitoring" +
       "?domain=" + encodeURIComponent(storeDomain) +
-      "&email=" + encodeURIComponent(email || "");
+      "&email=" + encodeURIComponent(email);
 
     const res = await fetch(url);
     const result = await res.json();
 
-    if (result.url) {
-      window.location.href = result.url;
+    console.log("Stripe response:", result);
+
+    if (!result.url) {
+      alert("Checkout failed. Try again.");
+      return;
     }
+
+    window.location.href = result.url;
 
   } catch (err) {
     alert("Connection error");
