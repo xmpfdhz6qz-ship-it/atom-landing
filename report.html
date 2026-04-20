@@ -222,17 +222,16 @@ if (!data) {
 }
 
 const row = data;
+const report = row.report_json || {};
 
-/* 🔥 NEW BACKEND DATA */
-const estimatedLossText = row.report_json?.estimated_loss || "";
-const urgencyText = row.report_json?.urgency || "";
-const impactText =
-  row.report_json?.impact_explanation ||
-  "Users cannot confidently decide whether to proceed";
-const severity = row.report_json?.severity || "";
-const decisionStage = row.report_json?.decision_stage || "improvement";
+/* DATA */
+const estimatedLossText = report.estimated_loss || "";
+const urgencyText = report.urgency || "";
+const impactText = report.impact_explanation || "Users cannot confidently decide whether to proceed";
+const severity = report.severity || "";
+const decisionStage = report.decision_stage || "improvement";
 
-/* 🔥 DYNAMIC HEADLINE */
+/* HEADLINE */
 const headline =
   decisionStage === "critical"
     ? "⚠️ Your store is losing revenue right now"
@@ -240,7 +239,7 @@ const headline =
     ? "You are leaving revenue on the table"
     : "You have untapped revenue potential";
 
-/* 🔥 CTA PERSONALIZATION */
+/* CTA */
 const ctaText =
   decisionStage === "critical"
     ? "Fix revenue leaks now →"
@@ -248,7 +247,7 @@ const ctaText =
     ? "Increase your conversion rate →"
     : "Unlock hidden revenue opportunities →";
 
-/* 🔥 URGENCY COLOR */
+/* COLOR */
 const urgencyColor =
   decisionStage === "critical"
     ? "#ef4444"
@@ -319,7 +318,7 @@ app.innerHTML = `
 
   <div class="card red">
     <strong>Main revenue leak:</strong><br><br>
-    ${row.report_json?.main_leak || ""}
+    ${report.main_leak || ""}
     <div class="urgency" style="color:${urgencyColor}">
       This affects how users make decisions on your store
     </div>
@@ -327,7 +326,7 @@ app.innerHTML = `
 
   <div class="card green">
     <strong>Quick fix you can test today:</strong><br><br>
-    ${row.report_json?.quick_fix || ""}
+    ${report.quick_fix || ""}
   </div>
 
   <div class="card red">
@@ -370,7 +369,7 @@ app.innerHTML = `
 
 const email = row?.email || "";
 
-/* 🔥 CHECKOUT FLOW */
+/* CHECKOUT */
 ["auditBtn","auditBtnTop"].forEach(id=>{
   const btn = document.getElementById(id);
 
@@ -410,7 +409,7 @@ const email = row?.email || "";
   }
 });
 
-/* LIVE LOSS COUNTER */
+/* LIVE LOSS */
 let seconds = 0;
 const live = document.getElementById("liveLoss");
 
@@ -418,7 +417,7 @@ setInterval(() => {
   seconds++;
   const liveLoss = Math.round((hourly / 3600) * seconds);
   if (live) {
-    live.innerText = \`~$\${liveLoss} lost since you opened this report\`;
+    live.innerText = `~$${liveLoss} lost since you opened this report`;
   }
 }, 1000);
 
