@@ -153,7 +153,6 @@
     .urgency {
       margin-top:10px;
       font-size:14px;
-      color:#ef4444;
       font-weight:700;
     }
 
@@ -227,8 +226,35 @@ const row = data;
 /* 🔥 NEW BACKEND DATA */
 const estimatedLossText = row.report_json?.estimated_loss || "";
 const urgencyText = row.report_json?.urgency || "";
-const impactText = row.report_json?.impact_explanation || "";
+const impactText =
+  row.report_json?.impact_explanation ||
+  "Users cannot confidently decide whether to proceed";
 const severity = row.report_json?.severity || "";
+const decisionStage = row.report_json?.decision_stage || "improvement";
+
+/* 🔥 DYNAMIC HEADLINE */
+const headline =
+  decisionStage === "critical"
+    ? "⚠️ Your store is losing revenue right now"
+    : decisionStage === "improvement"
+    ? "You are leaving revenue on the table"
+    : "You have untapped revenue potential";
+
+/* 🔥 CTA PERSONALIZATION */
+const ctaText =
+  decisionStage === "critical"
+    ? "Fix revenue leaks now →"
+    : decisionStage === "improvement"
+    ? "Increase your conversion rate →"
+    : "Unlock hidden revenue opportunities →";
+
+/* 🔥 URGENCY COLOR */
+const urgencyColor =
+  decisionStage === "critical"
+    ? "#ef4444"
+    : decisionStage === "improvement"
+    ? "#f59e0b"
+    : "#22c55e";
 
 const estimatedLossRaw = Math.round((100 - (row.score || 60)) * 40);
 const estimatedLoss = formatMoney(estimatedLossRaw);
@@ -236,7 +262,7 @@ const daily = Math.round(estimatedLossRaw / 30);
 const hourly = Math.round(daily / 24);
 
 app.innerHTML = `
-  <h1>⚠️ Your store is losing money right now</h1>
+  <h1>${headline}</h1>
 
   <div class="card red highlight">
     <div class="small">Estimated revenue loss</div>
@@ -244,20 +270,20 @@ app.innerHTML = `
     <div style="margin-top:8px;font-size:14px;">
       ${estimatedLossText}
     </div>
-    <div class="urgency">≈ $${daily} / day disappearing</div>
+    <div class="urgency" style="color:${urgencyColor}">≈ $${daily} / day disappearing</div>
     <div class="warning">+$${hourly} lost every hour you wait</div>
     <div id="liveLoss" class="live-loss">Calculating live loss...</div>
   </div>
 
   <div class="card">
     <strong>What this means:</strong><br><br>
-    ${impactText || "Users hesitate due to unclear decision signals"}
-    <div class="urgency">${urgencyText}</div>
+    ${impactText}
+    <div class="urgency" style="color:${urgencyColor}">${urgencyText}</div>
   </div>
 
   <div class="cta-zone">
     <a id="auditBtnTop" class="cta" href="#">
-      Unlock Full Revenue Breakdown → $399
+      ${ctaText} $399
     </a>
     <div class="subtle">⚡ Instant access • No calls • Actionable fixes</div>
   </div>
@@ -270,7 +296,7 @@ app.innerHTML = `
 
   <div class="card">
     <div class="small">Issue severity</div>
-    <div class="urgency">
+    <div class="urgency" style="color:${urgencyColor}">
       ${
         severity === "high"
           ? "🔴 High – actively blocking conversions"
@@ -281,17 +307,22 @@ app.innerHTML = `
     </div>
   </div>
 
+  <div class="trust">
+    Based on analysis of similar ecommerce stores
+  </div>
+
   <div class="card">
     <strong>This is not random.</strong><br><br>
-    → Based on real ecommerce store patterns<br>
-    → Derived from actual user behavior signals<br>
-    → Focused on revenue impact (not design opinions)<br>
+    → Based on real ecommerce store data<br>
+    → Focused on revenue impact<br>
   </div>
 
   <div class="card red">
     <strong>Main revenue leak:</strong><br><br>
     ${row.report_json?.main_leak || ""}
-    <div class="urgency">This directly impacts your conversions</div>
+    <div class="urgency" style="color:${urgencyColor}">
+      This affects how users make decisions on your store
+    </div>
   </div>
 
   <div class="card green">
@@ -312,18 +343,18 @@ app.innerHTML = `
     <strong>If nothing changes:</strong><br><br>
     → ~$${daily} lost daily<br>
     → ~$${estimatedLoss} lost monthly<br>
-    <div class="urgency">This compounds every single day</div>
+    <div class="urgency">This loss compounds every single day you wait</div>
   </div>
 
   <div class="cta-zone">
     <a id="auditBtn" class="cta" href="#">
-      Unlock Full Revenue Breakdown → $399
+      ${ctaText} $399
     </a>
 
     <div class="subtle">Most stores recover the cost from one fix</div>
     <div class="subtle">✔ No calls • ✔ No contracts • ✔ Immediate insights</div>
 
-    <div class="urgency" style="text-align:center;">
+    <div class="urgency" style="text-align:center;color:${urgencyColor};">
       Every day you wait = ~$${daily} lost
     </div>
   </div>
@@ -339,7 +370,7 @@ app.innerHTML = `
 
 const email = row?.email || "";
 
-/* 🔥 NEW CHECKOUT FLOW */
+/* 🔥 CHECKOUT FLOW */
 ["auditBtn","auditBtnTop"].forEach(id=>{
   const btn = document.getElementById(id);
 
@@ -387,7 +418,7 @@ setInterval(() => {
   seconds++;
   const liveLoss = Math.round((hourly / 3600) * seconds);
   if (live) {
-    live.innerText = `~$${liveLoss} lost since you opened this report`;
+    live.innerText = \`~$\${liveLoss} lost since you opened this report\`;
   }
 }, 1000);
 
