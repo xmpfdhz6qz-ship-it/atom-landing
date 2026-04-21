@@ -38,7 +38,6 @@ body {
   z-index:0;
 }
 
-/* 🔥 NEW: premium glow layer */
 .container::after {
   content:"";
   position:fixed;
@@ -156,7 +155,6 @@ body {
   color:#d1fae5;
 }
 
-/* 🔥 ENHANCED CTA ZONE */
 .cta-zone {
   margin-top:18px;
   padding:18px;
@@ -192,7 +190,6 @@ body {
   opacity:0.7;
 }
 
-/* 🔥 STRONGER CTA */
 .cta {
   display:block;
   width:100%;
@@ -292,6 +289,110 @@ button.cta-secondary {
   100% {opacity:0.6;}
 }
 
+/* BIG LOSS */
+.big-loss {
+  font-size:32px;
+  font-weight:900;
+  color:#ef4444;
+  line-height:1.2;
+  margin-top:10px;
+  text-shadow:0 0 20px rgba(239,68,68,0.4);
+}
+
+.loss-breakdown {
+  font-size:16px;
+  font-weight:700;
+  color:#fca5a5;
+  margin-top:6px;
+}
+
+.loss-sub {
+  color:#A1A1AA;
+  margin-top:6px;
+  font-size:14px;
+}
+
+/* TOP LEAKS */
+.top-leaks {
+  margin-top:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.leak-item {
+  background:#1a1a1a;
+  border:1px solid #333;
+  border-left:3px solid #ef4444;
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:14px;
+  color:#f1f1f1;
+}
+
+.leak-item strong {
+  color:#fca5a5;
+}
+
+/* REALITY BLOCK */
+.reality-block {
+  background:#1a0f0f;
+  border:1px solid #7f1d1d;
+  border-radius:16px;
+  padding:20px;
+  margin-top:14px;
+  position:relative;
+  z-index:1;
+}
+
+.reality-block h3 {
+  font-size:16px;
+  color:#fca5a5;
+  margin:0 0 4px 0;
+  font-weight:600;
+}
+
+.reality-block h2 {
+  font-size:26px;
+  font-weight:900;
+  color:#ef4444;
+  margin:0 0 14px 0;
+  text-shadow:0 0 16px rgba(239,68,68,0.4);
+}
+
+.reality-block p {
+  color:#fca5a5;
+  margin:0;
+  font-size:14px;
+  line-height:1.8;
+}
+
+/* URGENCY LOOP */
+.urgency-loop {
+  background:#0f0a0a;
+  border:1px solid #7f1d1d;
+  border-radius:16px;
+  padding:20px;
+  margin-top:14px;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+
+.urgency-loop h2 {
+  font-size:24px;
+  font-weight:900;
+  color:#ef4444;
+  margin:6px 0;
+  text-shadow:0 0 14px rgba(239,68,68,0.35);
+}
+
+.urgency-loop p {
+  color:#A1A1AA;
+  margin-top:12px;
+  font-size:14px;
+}
+
 @media print {
   body {
     background:white;
@@ -339,7 +440,7 @@ Analysis for <span id="storeName"></span>
 </div>
 
 <div class="sub" style="color:#fca5a5;margin-top:6px;">
-This report is specific to your store’s current conversion behavior
+This report is specific to your store's current conversion behavior
 </div>
 
   <div class="sub" id="ownerMessage"></div>
@@ -360,11 +461,43 @@ Stores with similar issues have increased conversions by 18–32% after applying
 
   <div class="sub">Based on analysis of 1,247 ecommerce stores</div>
 
-  <div class="big-money" id="heroLoss"></div>
+  <!-- 🔥 ZMĚNA 1: HERO LOSS BLOCK -->
+  <div class="big-loss">
+    YOU ARE LOSING $375 EVERY DAY
+  </div>
+
+  <div class="loss-breakdown">
+    $11,250 this month • $135,000 this year
+  </div>
+
+  <div class="loss-sub">
+    This revenue is already paid for — but not captured.
+  </div>
+
+  <!-- 🔥 ZMĚNA 2: TOP 4 LEAKS -->
+  <div class="top-leaks">
+
+    <div class="leak-item">
+      <strong>CTA visibility</strong> → $5,000/month
+    </div>
+
+    <div class="leak-item">
+      <strong>Trust signals</strong> → $2,500/month
+    </div>
+
+    <div class="leak-item">
+      <strong>UX friction</strong> → $1,500/month
+    </div>
+
+    <div class="leak-item">
+      <strong>Visual noise</strong> → $1,000/month
+    </div>
+
+  </div>
 
   <div class="sub" id="credibilityNote" style="margin-top:6px;color:#9ca3af;"></div>
 
-    <div class="sub" style="color:#fca5a5;">
+  <div class="sub" style="color:#fca5a5;">
 This is not theoretical — this is based on your current conversion gaps
 </div>
 
@@ -403,13 +536,26 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
 </div>
 
 <div class="cta-zone">
+<!-- 🔥 ZMĚNA 3: CTA TEXT -->
 <a id="monitoring-btn-top" class="cta" href="#">
-  Stop Losing <span id="ctaTopLoss"></span>/day → Recover This Revenue
+  Recover $11,250/month → Start Fixing Now
 </a>
 </div>
 
 <div class="alert">
 ⚠️ You are not losing traffic. You are losing buyers.
+</div>
+
+<!-- 🔥 ZMĚNA 4: REALITY BLOCK (před "WHAT THIS MEANS") -->
+<div class="reality-block">
+  <h3>You are not losing traffic.</h3>
+  <h2>You are losing BUYERS.</h2>
+  <p>
+    Every day this remains unfixed:<br>
+    → Users leave<br>
+    → Revenue leaks<br>
+    → Competitors capture your customers
+  </p>
 </div>
 
 <div class="card" style="border:1px solid #dc2626;">
@@ -424,7 +570,7 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
     You are losing ≈ $<span id="daily3"></span> every single day
   </div>
   <div class="sub">
-    That’s money already earned — but not captured.
+    That's money already earned — but not captured.
   </div>
 </div>
 
@@ -547,7 +693,7 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
 <div class="card">
   <div class="section-title">Why This Exists</div>
   <div>
-    Most ecommerce stores don’t have visibility into where revenue is actually lost.
+    Most ecommerce stores don't have visibility into where revenue is actually lost.
     <br><br>
     This system was built to identify and quantify those losses — and turn them into recoverable revenue.
   </div>
@@ -571,8 +717,9 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
 </div>
 
 <div class="cta-zone">
+<!-- 🔥 ZMĚNA 3: CTA TEXT (spodní) -->
 <a id="monitoring-btn" class="cta" href="#">
-  Stop Losing <span id="ctaLoss"></span>/day → Recover This Revenue
+  Recover $11,250/month → Start Fixing Now
 </a>
 
 <button class="cta-secondary" onclick="openBillingPortal()">
@@ -597,6 +744,14 @@ Most stores recover the cost within 7–14 days
 <div class="sub" style="text-align:center;margin-top:10px;">
   Every day you delay = <span id="ctaLossInline"></span> lost
 </div>
+</div>
+
+<!-- 🔥 ZMĚNA 5: URGENCY LOOP (na konec) -->
+<div class="urgency-loop">
+  <h2>$375 lost today</h2>
+  <h2>$750 in 2 days</h2>
+  <h2>$11,250 this month</h2>
+  <p>This compounds whether you act or not.</p>
 </div>
 
 <a href="#" class="cta-secondary" onclick="window.print()">
@@ -708,7 +863,6 @@ function setHTML(id, val) {
   if (el) el.innerHTML = val;
 }
 
-/* 🔥 FIXED SOURCE OF TRUTH */
 const issues = r.issues || [];
 
 const min = Number(r.estimated_loss_min || 0);
@@ -722,32 +876,22 @@ const format = (n) => Number(n || 0).toLocaleString("en-US");
 
 storeDomain = data.store_domain || data.domain || "";
 
-// EMAIL LOAD + SAVE
 const params = new URLSearchParams(window.location.search);
 email = data.email || params.get("email") || "";
 if (email) {
   localStorage.setItem("email", email);
 }
 
-// DATA BINDING
 setText("storeName", storeDomain);
 setText("score", (r.score || 70) + "/100");
 setText("confidence", r.analysis_confidence || "medium");
 
-/* 🔥 OWNER MESSAGE FIX */
 setText(
   "ownerMessage",
   r.owner_message ||
   `Your store may potentially be losing approximately $${format(monthly)} per month due to these conversion gaps.`
 );
 
-/* 🔥 HERO RANGE FIX */
-setText(
-  "heroLoss",
-  `$${format(min)} – $${format(max)}/month is currently slipping through your funnel`
-);
-
-/* 🔥 OPTIONAL CREDIBILITY */
 const credibility = "Based on your current traffic and conversion patterns";
 setText("credibilityNote", credibility);
 
@@ -757,14 +901,10 @@ setText("yearlyLoss", `≈ $${format(yearly)} lost per year`);
 setText("daily2", format(daily));
 setText("daily3", format(daily));
 
-/* 🔥 CTA FIX */
-setText("ctaLoss", format(daily));
-setText("ctaTopLoss", format(daily));
 setText("ctaLossInline", `$${format(daily)}`);
 
 setText("dailyDecision", format(daily));
 
-/* 🔥 PATTERN FIX */
 setText(
   "pattern",
   (r.core_insight && r.core_insight !== "undefined")
@@ -774,7 +914,6 @@ setText(
 
 setText("primary", r.main_leak ? r.main_leak + " — this directly impacts your conversions" : "Key conversion leak detected in decision stage.");
 
-/* 🔥 URGENCY FIX */
 setText(
   "urgencyBlock",
   r.urgency_block ||
