@@ -117,7 +117,23 @@ See everything that is holding your store back.
   </div>
 </div>
 
-<a id="cta" class="cta">Fix this before it costs you more → $399</a>
+<button onclick="startCheckout()"
+  style="
+  display:block;
+  margin-top:18px;
+  padding:18px;
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:#ffffff;
+  text-align:center;
+  border-radius:14px;
+  border:none;
+  font-weight:900;
+  font-size:16px;
+  cursor:pointer;
+  width:100%;
+  ">
+  Fix this before it costs you more → $399
+</button>
 
 <p style="font-size:12px;color:#fca5a5;text-align:center;margin-top:8px;">
   Every day this issue remains = lost revenue
@@ -141,11 +157,34 @@ const fix = params.get("fix") || "Improve clarity and CTA";
 document.getElementById("store").innerText = store;
 document.getElementById("problem").innerText = problem;
 document.getElementById("fix").innerText = fix;
+</script>
 
-// STRIPE LINK
-document.getElementById("cta").href =
-"https://buy.stripe.com/YOUR_LINK?client_reference_id=" + store;
+<script>
+async function startCheckout() {
+  const params = new URLSearchParams(window.location.search);
 
+  const domain = params.get("store") || "";
+  const email = params.get("email") || "";
+
+  const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/create-checkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      domain: domain,
+      email: email
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.url) {
+    window.location.href = data.url;
+  } else {
+    alert("Checkout failed");
+  }
+}
 </script>
 
 </body>
