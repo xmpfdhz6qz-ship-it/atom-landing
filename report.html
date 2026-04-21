@@ -238,16 +238,43 @@ const impactText = report.impact_explanation || "Users cannot confidently decide
 const severity = report.severity || "";
 
 /* CTA */
-const ctaText = "Stop losing revenue now →";
+const ctaText = "See Full Revenue Breakdown →";
 
 /* COLOR */
 const urgencyColor = "#ef4444";
 
 app.innerHTML = `
-<h1>You're potentially losing ${lossRange} every month</h1>
+
+<!-- 🔥 ZMĚNA 1: HERO -->
+<h1>YOU ARE LOSING</h1>
+
+<div class="money">${lossRange}/month</div>
+
+<div class="live-loss">
+  $${daily}/day • $${hourly}/hour
+</div>
+
+<div class="warning">
+  This is happening right now.
+</div>
+
+<!-- 🔥 ZMĚNA 2: REALITY SLAP -->
+<div class="card red">
+  <strong>Right now:</strong><br><br>
+
+  Users are visiting your store.<br>
+  They are ready to buy.<br><br>
+
+  <b>They don't.</b><br><br>
+
+  Not because of your product.<br>
+  Not because of price.<br><br>
+
+  Because something in your funnel breaks their decision.
+</div>
 
 <div class="card red highlight">
-  <div class="small">Estimated potential revenue loss</div>
+  <div class="small">Estimated revenue loss</div>
   <div class="money">${lossRange}</div>
 
   <div style="margin-top:8px;font-size:14px;">
@@ -255,7 +282,7 @@ app.innerHTML = `
   </div>
 
   <div class="urgency" style="color:${urgencyColor}">
-    ≈ $${daily} / day at risk
+    $${daily} / day at risk
   </div>
 
   <div class="warning">+$${hourly} at risk every hour</div>
@@ -267,9 +294,16 @@ app.innerHTML = `
   </div>
 </div>
 
+<!-- 🔥 ZMĚNA 3: WHAT THIS MEANS -->
 <div class="card">
-  <strong>What this means:</strong><br><br>
-  ${impactText}
+  <strong>What is actually happening:</strong><br><br>
+
+  Users reach the decision moment<br>
+  → hesitate<br>
+  → leave<br><br>
+
+  This repeats every day.
+
   <div class="urgency" style="color:${urgencyColor}">
     ${urgencyText}
   </div>
@@ -282,9 +316,12 @@ app.innerHTML = `
 
 <div class="cta-zone">
   <a id="auditBtnTop" class="cta" href="#">
-    ${ctaText} $399
+    Reveal Full Audit → $399
   </a>
   <div class="subtle">⚡ Instant access • No calls • Actionable fixes</div>
+  <div class="subtle" style="color:#22c55e;">
+    Most stores recover this from ONE fix
+  </div>
 </div>
 
 <div class="card highlight">
@@ -316,29 +353,41 @@ app.innerHTML = `
   → Focused on revenue impact<br>
 </div>
 
+<!-- 🔥 ZMĚNA 4: MAIN LEAK -->
 <div class="card red">
-  <strong>Main revenue leak:</strong><br><br>
+  <strong>This is where you lose buyers:</strong><br><br>
   ${report.main_leak || ""}
   <div class="urgency" style="color:${urgencyColor}">
-    This directly affects how visitors decide to buy
+    This is happening at the exact moment users decide whether to buy or leave
   </div>
 </div>
 
+<!-- 🔥 ZMĚNA 5: QUICK FIX DOWNGRADE -->
 <div class="card green">
-  <strong>Quick fix you can test today:</strong><br><br>
+  <strong>One possible fix:</strong><br><br>
   ${report.quick_fix || ""}
   <div class="urgency">
     Fixing this can immediately improve conversion rate
   </div>
+  <div class="warning">
+    This is only a surface-level fix
+  </div>
 </div>
 
+<!-- 🔥 ZMĚNA 6: FULL AUDIT TEASE -->
 <div class="card red">
-  <strong>Full audit reveals:</strong><br><br>
+  <strong>You are only seeing a fraction of the problem:</strong><br><br>
+
+  The full audit uncovers:<br><br>
+
   → Exact drop-off points killing conversions<br>
-  → Hidden friction across your funnel<br>
-  → Revenue impact in real numbers<br>
-  → Step-by-step fixes (no guessing)<br>
-  <div class="urgency">⚠️ This is where the real money is recovered</div>
+  → Hidden UX friction you can't see<br>
+  → Real revenue impact per issue<br>
+  → Prioritized fix plan<br><br>
+
+  <div class="urgency">
+    ⚠️ Most stores have 3–5 additional leaks not visible here
+  </div>
 </div>
 
 <div class="card red">
@@ -350,24 +399,38 @@ app.innerHTML = `
   </div>
 </div>
 
+<!-- 🔥 ZMĚNA 9: TIME PRESSURE LOOP -->
+<div class="card red">
+  <strong>Every second this continues:</strong><br><br>
+
+  → users leave<br>
+  → revenue is lost<br><br>
+
+  <b>This does not stop.</b>
+</div>
+
 <div class="cta-zone">
   <a id="auditBtn" class="cta" href="#">
-    ${ctaText} $399
+    Reveal Full Audit → $399
   </a>
 
   <div class="subtle">Most stores recover the cost from one fix</div>
   <div class="subtle">✔ No calls • ✔ No contracts • ✔ Immediate insights</div>
+  <div class="subtle" style="color:#22c55e;">
+    Most stores recover this from ONE fix
+  </div>
 
   <div class="urgency" style="text-align:center;color:${urgencyColor};">
     Every day you wait = ~$${daily} at risk
   </div>
 </div>
 
+<!-- 🔥 ZMĚNA 10: DECISION HARDER -->
 <div class="card">
   <div class="decision">
-    <strong>You have 2 options:</strong><br><br>
-    1) Do nothing → keep losing ${lossRange}/month<br>
-    2) Fix it → recover lost revenue starting now
+    <strong>Your decision:</strong><br><br>
+    1) Ignore this → continue losing ${lossRange}/month<br>
+    2) Fix it → recover this revenue starting today
   </div>
 </div>
 `;
@@ -414,7 +477,7 @@ const email = row?.email || "";
   }
 });
 
-/* LIVE LOSS */
+/* 🔥 ZMĚNA 11: LIVE LOSS ZESÍLENÍ */
 let seconds = 0;
 const live = document.getElementById("liveLoss");
 
@@ -423,7 +486,7 @@ setInterval(() => {
   const liveLoss = Math.round((hourly / 3600) * seconds);
 
   if (live) {
-    live.innerText = `~$${liveLoss} potential loss since you opened this report`;
+    live.innerText = `$${liveLoss} lost while you are reading this`;
   }
 }, 1000);
 
