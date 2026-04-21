@@ -219,28 +219,16 @@ if (!data) {
 const row = data;
 const report = row.report_json || {};
 
-/* 🔥 NEW REALISTIC MODEL */
-const score = row.score || 60;
-const gap = 100 - score;
-
-let monthlyVisitors = 3000;
-
-if (score < 30) monthlyVisitors = 8000;
-if (score < 50) monthlyVisitors = 5000;
-if (score > 70) monthlyVisitors = 2000;
-
-const lostVisitors = Math.round(monthlyVisitors * (gap / 100));
-const aov = 60 + (gap * 0.8);
-
-const minLoss = Math.round(lostVisitors * aov * 0.2);
-const maxLoss = Math.round(lostVisitors * aov * 0.6);
+/* 🔥 NEW LOSS FROM BACKEND */
+const min = report.estimated_loss_min || 0;
+const max = report.estimated_loss_max || 0;
 
 function formatMoney(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const lossRange = `$${formatMoney(minLoss)} – $${formatMoney(maxLoss)}`;
-const daily = Math.round(minLoss / 30);
+const lossRange = `$${formatMoney(min)} – $${formatMoney(max)}`;
+const daily = Math.round(min / 30);
 const hourly = Math.round(daily / 24);
 
 /* DATA */
