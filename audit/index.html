@@ -263,6 +263,12 @@ button.cta-secondary {
   box-shadow:0 0 0 1px rgba(249,115,22,0.3);
 }
 
+.checklist {
+  list-style:none;
+  padding:0;
+  margin:14px 0 0 0;
+}
+
 .checklist li {
   margin-bottom:6px;
 }
@@ -291,12 +297,13 @@ button.cta-secondary {
 
 /* BIG LOSS */
 .big-loss {
-  font-size:32px;
+  font-size:clamp(26px, 7vw, 36px);
   font-weight:900;
   color:#ef4444;
   line-height:1.2;
-  margin-top:10px;
+  margin-top:14px;
   text-shadow:0 0 20px rgba(239,68,68,0.4);
+  letter-spacing:-0.5px;
 }
 
 .loss-breakdown {
@@ -334,6 +341,37 @@ button.cta-secondary {
   color:#fca5a5;
 }
 
+/* PERSONAL BLAME MOMENT */
+.blame-block {
+  background:#0f0a0a;
+  border:1px solid #7f1d1d;
+  border-radius:16px;
+  padding:22px 20px;
+  margin-top:14px;
+  position:relative;
+  z-index:1;
+}
+
+.blame-block p {
+  margin:0 0 10px 0;
+  font-size:16px;
+  line-height:1.9;
+  color:#f1f1f1;
+}
+
+.blame-block p:last-child {
+  margin-bottom:0;
+}
+
+.blame-block .blame-highlight {
+  font-size:17px;
+  font-weight:700;
+  color:#ef4444;
+  display:block;
+  margin-top:14px;
+  line-height:1.7;
+}
+
 /* REALITY BLOCK */
 .reality-block {
   background:#1a0f0f;
@@ -353,18 +391,37 @@ button.cta-secondary {
 }
 
 .reality-block h2 {
-  font-size:26px;
+  font-size:clamp(20px, 6vw, 26px);
   font-weight:900;
   color:#ef4444;
-  margin:0 0 14px 0;
+  margin:0 0 0 0;
   text-shadow:0 0 16px rgba(239,68,68,0.4);
 }
 
-.reality-block p {
-  color:#fca5a5;
-  margin:0;
+/* INEVITABLE OUTCOME */
+.inevitable-block {
+  background:#0a0a0a;
+  border:1px solid #333;
+  border-left:3px solid #ef4444;
+  border-radius:16px;
+  padding:22px 20px;
+  margin-top:14px;
+  position:relative;
+  z-index:1;
+}
+
+.inevitable-block p {
+  margin:0 0 8px 0;
+  font-size:15px;
+  color:#d1d5db;
+  line-height:1.9;
+}
+
+.inevitable-block .inevitable-repeat {
   font-size:14px;
-  line-height:1.8;
+  color:#6b7280;
+  margin-top:10px;
+  font-style:italic;
 }
 
 /* URGENCY LOOP */
@@ -380,7 +437,7 @@ button.cta-secondary {
 }
 
 .urgency-loop h2 {
-  font-size:24px;
+  font-size:clamp(20px, 6vw, 24px);
   font-weight:900;
   color:#ef4444;
   margin:6px 0;
@@ -391,6 +448,33 @@ button.cta-secondary {
   color:#A1A1AA;
   margin-top:12px;
   font-size:14px;
+}
+
+/* POINT OF NO RETURN */
+.no-return-block {
+  background:#0f0f0f;
+  border:1px solid rgba(249,115,22,0.4);
+  border-radius:16px;
+  padding:24px 20px;
+  margin-top:14px;
+  position:relative;
+  z-index:1;
+  text-align:center;
+}
+
+.no-return-block p {
+  margin:0 0 10px 0;
+  font-size:15px;
+  color:#d1d5db;
+  line-height:1.9;
+}
+
+.no-return-block .no-return-q {
+  font-size:clamp(17px, 5vw, 20px);
+  font-weight:800;
+  color:#f97316;
+  margin-top:16px;
+  line-height:1.6;
 }
 
 @media print {
@@ -436,32 +520,26 @@ button.cta-secondary {
   <div class="section-title">Conversion Intelligence Audit</div>
 
   <div style="font-size:18px;font-weight:700;">
-Analysis for <span id="storeName"></span>
-</div>
+    Analysis for <span id="storeName"></span>
+  </div>
 
-<div class="sub" style="color:#fca5a5;margin-top:6px;">
-This report is specific to your store's current conversion behavior
-</div>
+  <div class="sub" style="color:#fca5a5;margin-top:6px;">
+    This report is specific to your store's current conversion behavior
+  </div>
 
   <div class="sub" id="ownerMessage"></div>
-
-  <div class="sub" style="color:#fca5a5;font-weight:600;">
-This is revenue you already paid for — but are not capturing.
-</div>
 
   <div class="trust-badge">Data-backed • 1,247 stores analyzed</div>
 
   <div class="sub" style="margin-top:10px;color:#9ca3af;">
-Stores with similar issues have increased conversions by 18–32% after applying these fixes
-</div>
-
-  <div class="sub" style="font-size:12px;color:#6b7280;">
-  This analysis is based on visible page signals, not full store data.
+    Stores with similar issues have increased conversions by 18–32% after applying these fixes
   </div>
 
-  <div class="sub">Based on analysis of 1,247 ecommerce stores</div>
+  <div class="sub" style="font-size:12px;color:#6b7280;">
+    This analysis is based on visible page signals, not full store data.
+  </div>
 
-  <!-- 🔥 ZMĚNA 1: HERO LOSS BLOCK -->
+  <!-- HARD HIT — only once -->
   <div class="big-loss">
     YOU ARE LOSING $375 EVERY DAY
   </div>
@@ -474,52 +552,61 @@ Stores with similar issues have increased conversions by 18–32% after applying
     This revenue is already paid for — but not captured.
   </div>
 
-  <!-- 🔥 ZMĚNA 2: TOP 4 LEAKS -->
+  <!-- TOP 4 LEAKS — behavior language -->
   <div class="top-leaks">
-
     <div class="leak-item">
-      <strong>CTA visibility</strong> → $5,000/month
+      <strong>Users don't click</strong> → $5,000/month lost
     </div>
-
     <div class="leak-item">
-      <strong>Trust signals</strong> → $2,500/month
+      <strong>Users don't trust</strong> → $2,500/month lost
     </div>
-
     <div class="leak-item">
-      <strong>UX friction</strong> → $1,500/month
+      <strong>Users get distracted</strong> → $1,500/month lost
     </div>
-
     <div class="leak-item">
-      <strong>Visual noise</strong> → $1,000/month
+      <strong>Users hesitate</strong> → $1,000/month lost
     </div>
-
   </div>
 
-  <div class="sub" id="credibilityNote" style="margin-top:6px;color:#9ca3af;"></div>
-
-  <div class="sub" style="color:#fca5a5;">
-This is not theoretical — this is based on your current conversion gaps
-</div>
+  <div class="sub" id="credibilityNote" style="margin-top:10px;color:#9ca3af;"></div>
 
   <div class="sub" id="dailyLoss"></div>
   <div class="sub" id="yearlyLoss"></div>
 
-  <div class="section-title">Score</div>
+  <div class="section-title" style="margin-top:14px;">Score</div>
   <div class="score" id="score"></div>
   <div class="sub" id="scoreLabel"></div>
 
   <div class="sub" style="margin-top:8px;font-size:13px;color:#9ca3af;">
-  This score differs from your free scan because this audit analyzes deeper conversion signals,
-  including UX structure, trust gaps, and revenue impact — not just surface issues.
+    This score differs from your free scan because this audit analyzes deeper conversion signals,
+    including UX structure, trust gaps, and revenue impact — not just surface issues.
   </div>
 
   <div class="sub" style="margin-top:10px;">
-  Stores with similar score typically recover 18–32% revenue after fixes
+    Stores with similar score typically recover 18–32% revenue after fixes
   </div>
 
   <div class="sub">
-Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ stores)
+    Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ stores)
+  </div>
 </div>
+
+<!-- PERSONAL BLAME MOMENT -->
+<div class="blame-block">
+  <p>Right now, users are on your store.</p>
+  <p>They want to buy.</p>
+  <p>They don't.</p>
+  <span class="blame-highlight">
+    Not because of price.<br>
+    Not because of product.<br><br>
+    Because your page does not guide them to act.
+  </span>
+</div>
+
+<!-- REALITY — only once -->
+<div class="reality-block">
+  <h3>You are not losing traffic.</h3>
+  <h2>You are losing BUYERS.</h2>
 </div>
 
 <div class="card" style="border:1px solid #14532d;">
@@ -530,48 +617,31 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
     • Priority-based fix plan (what to fix first)<br>
     • Execution steps for each issue<br>
     • Benchmark vs 1,000+ ecommerce stores<br><br>
-
     <b>Typical cost of this analysis: $600–$1,200</b>
   </div>
 </div>
 
 <div class="cta-zone">
-<!-- 🔥 ZMĚNA 3: CTA TEXT -->
-<a id="monitoring-btn-top" class="cta" href="#">
-  Recover $11,250/month → Start Fixing Now
-</a>
+  <a id="monitoring-btn-top" class="cta" href="#">
+    Fix These 4 Leaks → Recover $11,250/month
+  </a>
+  <div class="sub" style="text-align:center;margin-top:10px;color:#22c55e;font-weight:600;">
+    Most stores recover this from ONE fix within days
+  </div>
 </div>
 
-<div class="alert">
-⚠️ You are not losing traffic. You are losing buyers.
-</div>
-
-<!-- 🔥 ZMĚNA 4: REALITY BLOCK (před "WHAT THIS MEANS") -->
-<div class="reality-block">
-  <h3>You are not losing traffic.</h3>
-  <h2>You are losing BUYERS.</h2>
-  <p>
-    Every day this remains unfixed:<br>
-    → Users leave<br>
-    → Revenue leaks<br>
-    → Competitors capture your customers
-  </p>
+<!-- INEVITABLE OUTCOME -->
+<div class="inevitable-block">
+  <p>This is happening right now.</p>
+  <p>Users are visiting your store.<br>They are reaching the decision point.</p>
+  <p>And leaving.</p>
+  <p class="inevitable-repeat">This repeats every day.</p>
 </div>
 
 <div class="card" style="border:1px solid #dc2626;">
   <div class="section-title">Immediate Impact</div>
   <div id="urgencyBlock"></div>
   <div class="sub" id="recoveryBlock"></div>
-</div>
-
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Real-Time Revenue Leak</div>
-  <div style="font-size:22px;font-weight:800;color:#ef4444;">
-    You are losing ≈ $<span id="daily3"></span> every single day
-  </div>
-  <div class="sub">
-    That's money already earned — but not captured.
-  </div>
 </div>
 
 <div class="card">
@@ -594,7 +664,6 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
   <div>
     You are not missing traffic.<br>
     You are losing conversions inside your current funnel.<br><br>
-
     This means fixing these issues does not require more ads —
     it unlocks revenue from traffic you already have.
   </div>
@@ -653,7 +722,6 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
     • Directly actionable (no guesswork)<br>
     • Testable (A/B or immediate validation)<br>
     • Focused on revenue, not design<br><br>
-
     <b>This is not advice — this is an execution plan.</b>
   </div>
 </div>
@@ -703,10 +771,8 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
   <div class="section-title">Decision Point</div>
   <div>
     You have two options:<br><br>
-
     1. Do nothing → continue losing ~$<span id="dailyDecision"></span>/day<br>
     2. Fix the leaks → recover lost revenue<br><br>
-
     The difference compounds every day.
   </div>
 </div>
@@ -716,37 +782,7 @@ Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ sto
   <div id="monitoringHook"></div>
 </div>
 
-<div class="cta-zone">
-<!-- 🔥 ZMĚNA 3: CTA TEXT (spodní) -->
-<a id="monitoring-btn" class="cta" href="#">
-  Recover $11,250/month → Start Fixing Now
-</a>
-
-<button class="cta-secondary" onclick="openBillingPortal()">
-  Manage subscription / Cancel anytime
-</button>
-
-<div class="sub" style="text-align:center;margin-top:10px;">
-  Most stores recover the cost of monitoring from a single fix
-</div>
-
-<div class="sub" style="text-align:center;margin-top:8px;color:#22c55e;">
-Most stores recover the cost within 7–14 days
-</div>
-
-<ul class="checklist">
-  <li>✔ Detect revenue leaks automatically</li>
-  <li>✔ Fix issues before they cost money</li>
-  <li>✔ Exact actions — no guessing</li>
-  <li>✔ Track conversion improvements</li>
-</ul>
-
-<div class="sub" style="text-align:center;margin-top:10px;">
-  Every day you delay = <span id="ctaLossInline"></span> lost
-</div>
-</div>
-
-<!-- 🔥 ZMĚNA 5: URGENCY LOOP (na konec) -->
+<!-- URGENCY LOOP -->
 <div class="urgency-loop">
   <h2>$375 lost today</h2>
   <h2>$750 in 2 days</h2>
@@ -754,11 +790,50 @@ Most stores recover the cost within 7–14 days
   <p>This compounds whether you act or not.</p>
 </div>
 
+<!-- POINT OF NO RETURN -->
+<div class="no-return-block">
+  <p>You already paid for this traffic.</p>
+  <p>You already brought users to your store.</p>
+  <p class="no-return-q">
+    The only question is:<br><br>
+    Will you capture this revenue<br>
+    or continue losing it every day?
+  </p>
+</div>
+
+<div class="cta-zone">
+  <a id="monitoring-btn" class="cta" href="#">
+    Fix These 4 Leaks → Recover $11,250/month
+  </a>
+
+  <div class="sub" style="text-align:center;margin-top:10px;color:#22c55e;font-weight:600;">
+    Most stores recover this from ONE fix within days
+  </div>
+
+  <button class="cta-secondary" onclick="openBillingPortal()">
+    Manage subscription / Cancel anytime
+  </button>
+
+  <div class="sub" style="text-align:center;margin-top:10px;">
+    Most stores recover the cost of monitoring from a single fix
+  </div>
+
+  <ul class="checklist">
+    <li>✔ Detect revenue leaks automatically</li>
+    <li>✔ Fix issues before they cost money</li>
+    <li>✔ Exact actions — no guessing</li>
+    <li>✔ Track conversion improvements</li>
+  </ul>
+
+  <div class="sub" style="text-align:center;margin-top:10px;">
+    Every day you delay = <span id="ctaLossInline"></span> lost
+  </div>
+</div>
+
 <a href="#" class="cta-secondary" onclick="window.print()">
-  Download & Print PDF
+  Download Full Execution Plan (PDF)
 </a>
 
-</div>
 </div>
 
 <script>
@@ -899,10 +974,8 @@ setText("dailyLoss", `≈ $${format(daily)} lost every day`);
 setText("yearlyLoss", `≈ $${format(yearly)} lost per year`);
 
 setText("daily2", format(daily));
-setText("daily3", format(daily));
 
 setText("ctaLossInline", `$${format(daily)}`);
-
 setText("dailyDecision", format(daily));
 
 setText(
