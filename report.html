@@ -1,187 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="robots" content="noindex, nofollow">
-  
-  <meta charset="UTF-8">
-  <title>Store Report – Atom Foundry</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Store Report – Atom Foundry</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
-      background:#0A0A0A;
-      color:white;
-      -webkit-font-smoothing:antialiased;
-      padding:16px;
-      line-height:1.7;
-    }
+<style>
+body {
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
+  background:#0A0A0A;
+  color:white;
+  -webkit-font-smoothing:antialiased;
+  padding:16px;
+  line-height:1.7;
+}
 
-    .container {
-      max-width:560px;
-      width:100%;
-      margin:0 auto;
-      text-align:center;
-    }
+.container {
+  max-width:560px;
+  width:100%;
+  margin:0 auto;
+  text-align:center;
+}
 
-    .container::before {
-      content:"";
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
-      pointer-events:none;
-      z-index:0;
-    }
+.container::before {
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
+  pointer-events:none;
+  z-index:0;
+}
 
-    h1 {
-      font-size:26px;
-      margin-bottom:10px;
-      line-height:1.3;
-      font-weight:900;
-    }
+h1 {
+  font-size:26px;
+  margin-bottom:10px;
+  line-height:1.3;
+  font-weight:900;
+}
 
-    .card {
-      background:#111;
-      padding:18px;
-      border-radius:16px;
-      margin-top:14px;
-      border:1px solid #222;
-      text-align:left;
-      box-shadow:0 8px 24px rgba(0,0,0,0.6);
-      position:relative;
-      z-index:1;
-      transition:all 0.3s ease;
-    }
+.card {
+  background:#111;
+  padding:18px;
+  border-radius:16px;
+  margin-top:14px;
+  border:1px solid #222;
+  text-align:left;
+  box-shadow:0 8px 24px rgba(0,0,0,0.6);
+  position:relative;
+  z-index:1;
+  transition:all 0.3s ease;
+}
 
-    .card:hover {
-      transform:translateY(-2px);
-      box-shadow:0 12px 30px rgba(0,0,0,0.8);
-    }
+.card:hover {
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.8);
+}
 
-    .red {
-      border-color:#dc2626;
-      background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
-      box-shadow:0 0 0 1px rgba(220,38,38,0.4);
-    }
+.red {
+  border-color:#dc2626;
+  background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
+  box-shadow:0 0 0 1px rgba(220,38,38,0.4);
+}
 
-    .green {
-      border-color:#14532d;
-      background:#052e16;
-    }
+.green {
+  border-color:#14532d;
+  background:#052e16;
+}
 
-    .highlight {
-      text-align:center;
-    }
+.highlight {
+  text-align:center;
+}
 
-    .score {
-      font-size:56px;
-      font-weight:900;
-      margin-top:6px;
-    }
+.score {
+  font-size:56px;
+  font-weight:900;
+  margin-top:6px;
+}
 
-    .money {
-      font-size:40px;
-      font-weight:900;
-      color:#ef4444;
-      margin-top:6px;
-      text-shadow:0 0 25px rgba(239,68,68,0.5);
-    }
+.money {
+  font-size:40px;
+  font-weight:900;
+  color:#ef4444;
+  margin-top:6px;
+  text-shadow:0 0 25px rgba(239,68,68,0.5);
+}
 
-    .cta-zone {
-      margin-top:20px;
-      padding:18px;
-      border-radius:16px;
-      background:linear-gradient(180deg,rgba(249,115,22,0.08),rgba(0,0,0,0));
-      border:1px solid rgba(249,115,22,0.3);
-      box-shadow:0 0 30px rgba(249,115,22,0.15);
-    }
+.cta-zone {
+  margin-top:20px;
+  padding:18px;
+  border-radius:16px;
+  background:linear-gradient(180deg,rgba(249,115,22,0.08),rgba(0,0,0,0));
+  border:1px solid rgba(249,115,22,0.3);
+  box-shadow:0 0 30px rgba(249,115,22,0.15);
+}
 
-    .cta {
-      display:block;
-      padding:22px;
-      border-radius:14px;
-      background:linear-gradient(135deg,#f97316,#ea580c);
-      color:black;
-      text-decoration:none;
-      font-weight:900;
-      text-align:center;
-      font-size:20px;
-      border:2px solid #dc2626;
-      box-shadow:0 12px 30px rgba(249,115,22,0.5);
-      transition:all 0.25s ease;
-      cursor:pointer;
-      animation:pulse 2s infinite;
-    }
+.cta {
+  display:block;
+  padding:22px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:black;
+  text-decoration:none;
+  font-weight:900;
+  text-align:center;
+  font-size:20px;
+  border:2px solid #dc2626;
+  box-shadow:0 12px 30px rgba(249,115,22,0.5);
+  transition:all 0.25s ease;
+  cursor:pointer;
+  animation:pulse 2s infinite;
+}
 
-    .cta:hover {
-      transform:translateY(-3px) scale(1.02);
-      box-shadow:0 20px 50px rgba(249,115,22,0.8);
-    }
+.cta:hover {
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 20px 50px rgba(249,115,22,0.8);
+}
 
-    .cta:active {
-      transform:scale(0.95);
-    }
+.cta:active {
+  transform:scale(0.95);
+}
 
-    @keyframes pulse {
-      0% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
-      50% {box-shadow:0 0 35px rgba(249,115,22,0.7);}
-      100% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
-    }
+@keyframes pulse {
+  0% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
+  50% {box-shadow:0 0 35px rgba(249,115,22,0.7);}
+  100% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
+}
 
-    .subtle {
-      font-size:12px;
-      color:#94a3b8;
-      margin-top:10px;
-      text-align:center;
-    }
+.subtle {
+  font-size:12px;
+  color:#94a3b8;
+  margin-top:10px;
+  text-align:center;
+}
 
-    .small {
-      font-size:13px;
-      color:#cbd5f5;
-    }
+.small {
+  font-size:13px;
+  color:#cbd5f5;
+}
 
-    .warning {
-      color:#f87171;
-      font-size:13px;
-      margin-top:6px;
-    }
+.warning {
+  color:#f87171;
+  font-size:13px;
+  margin-top:6px;
+}
 
-    .urgency {
-      margin-top:10px;
-      font-size:14px;
-      font-weight:700;
-    }
+.urgency {
+  margin-top:10px;
+  font-size:14px;
+  font-weight:700;
+}
 
-    .live-loss {
-      font-size:18px;
-      font-weight:700;
-      color:#f87171;
-      margin-top:10px;
-      text-align:center;
-    }
+.live-loss {
+  font-size:18px;
+  font-weight:700;
+  color:#f87171;
+  margin-top:10px;
+  text-align:center;
+}
 
-    .trust {
-      font-size:13px;
-      color:#9ca3af;
-      margin-top:8px;
-    }
+.trust {
+  font-size:13px;
+  color:#9ca3af;
+  margin-top:8px;
+}
 
-    .decision {
-      margin-top:14px;
-      font-size:14px;
-      color:#e5e7eb;
-    }
-  </style>
+.decision {
+  margin-top:14px;
+  font-size:14px;
+  color:#e5e7eb;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
-  <div id="app">Analyzing your store...</div>
+<div id="app">Analyzing your store...</div>
 </div>
 
 <script>
@@ -198,10 +197,6 @@ if (!id) {
 if (!id || id === "scan") {
   app.innerText = "Missing scan token";
   throw new Error("Missing token");
-}
-
-function formatMoney(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 (async function(){
@@ -224,147 +219,169 @@ if (!data) {
 const row = data;
 const report = row.report_json || {};
 
+/* 🔥 NEW REALISTIC MODEL */
+const score = row.score || 60;
+const gap = 100 - score;
+
+let monthlyVisitors = 3000;
+
+if (score < 30) monthlyVisitors = 8000;
+if (score < 50) monthlyVisitors = 5000;
+if (score > 70) monthlyVisitors = 2000;
+
+const lostVisitors = Math.round(monthlyVisitors * (gap / 100));
+const aov = 60 + (gap * 0.8);
+
+const minLoss = Math.round(lostVisitors * aov * 0.2);
+const maxLoss = Math.round(lostVisitors * aov * 0.6);
+
+function formatMoney(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const lossRange = `$${formatMoney(minLoss)} – $${formatMoney(maxLoss)}`;
+const daily = Math.round(minLoss / 30);
+const hourly = Math.round(daily / 24);
+
 /* DATA */
 const estimatedLossText = report.estimated_loss || "";
 const urgencyText = report.urgency || "";
 const impactText = report.impact_explanation || "Users cannot confidently decide whether to proceed";
 const severity = report.severity || "";
-const decisionStage = report.decision_stage || "improvement";
-
-/* HEADLINE */
-const headline =
-  decisionStage === "critical"
-    ? "⚠️ Your store is losing revenue right now"
-    : decisionStage === "improvement"
-    ? "You are leaving revenue on the table"
-    : "You have untapped revenue potential";
 
 /* CTA */
-const ctaText =
-  decisionStage === "critical"
-    ? "Fix revenue leaks now →"
-    : decisionStage === "improvement"
-    ? "Increase your conversion rate →"
-    : "Unlock hidden revenue opportunities →";
+const ctaText = "Stop losing revenue now →";
 
 /* COLOR */
-const urgencyColor =
-  decisionStage === "critical"
-    ? "#ef4444"
-    : decisionStage === "improvement"
-    ? "#f59e0b"
-    : "#22c55e";
-
-const estimatedLossRaw = Math.round((100 - (row.score || 60)) * 40);
-const estimatedLoss = formatMoney(estimatedLossRaw);
-const daily = Math.round(estimatedLossRaw / 30);
-const hourly = Math.round(daily / 24);
+const urgencyColor = "#ef4444";
 
 app.innerHTML = `
-  <h1>${headline}</h1>
+<h1>You're potentially losing ${lossRange} every month</h1>
 
-  <div class="card red highlight">
-    <div class="small">Estimated revenue loss</div>
-    <div class="money">$${estimatedLoss}+ / month</div>
-    <div style="margin-top:8px;font-size:14px;">
-      ${estimatedLossText}
-    </div>
-    <div class="urgency" style="color:${urgencyColor}">≈ $${daily} / day disappearing</div>
-    <div class="warning">+$${hourly} lost every hour you wait</div>
-    <div id="liveLoss" class="live-loss">Calculating live loss...</div>
+<div class="card red highlight">
+  <div class="small">Estimated potential revenue loss</div>
+  <div class="money">${lossRange}</div>
+
+  <div style="margin-top:8px;font-size:14px;">
+    ${estimatedLossText}
   </div>
 
-  <div class="card">
-    <strong>What this means:</strong><br><br>
-    ${impactText}
-    <div class="urgency" style="color:${urgencyColor}">${urgencyText}</div>
+  <div class="urgency" style="color:${urgencyColor}">
+    ≈ $${daily} / day at risk
   </div>
 
-  <div class="cta-zone">
-    <a id="auditBtnTop" class="cta" href="#">
-      ${ctaText} $399
-    </a>
-    <div class="subtle">⚡ Instant access • No calls • Actionable fixes</div>
+  <div class="warning">+$${hourly} at risk every hour</div>
+
+  <div id="liveLoss" class="live-loss">Calculating...</div>
+
+  <div class="subtle">
+    Based on observed patterns and estimated traffic — actual impact may vary
   </div>
+</div>
 
-  <div class="card highlight">
-    <div class="small">Conversion Score</div>
-    <div class="score">${row.score || 60}/100</div>
-    <div class="warning">High-performing stores score 85+</div>
+<div class="card">
+  <strong>What this means:</strong><br><br>
+  ${impactText}
+  <div class="urgency" style="color:${urgencyColor}">
+    ${urgencyText}
   </div>
+</div>
 
-  <div class="card">
-    <div class="small">Issue severity</div>
-    <div class="urgency" style="color:${urgencyColor}">
-      ${
-        severity === "high"
-          ? "🔴 High – actively blocking conversions"
-          : severity === "medium"
-          ? "🟠 Medium – causing hesitation"
-          : "🟢 Low – minor friction"
-      }
-    </div>
+<div class="card red" style="text-align:center;">
+  <strong>This issue is likely impacting your conversions right now</strong><br><br>
+  Even small improvements can recover significant revenue over time
+</div>
+
+<div class="cta-zone">
+  <a id="auditBtnTop" class="cta" href="#">
+    ${ctaText} $399
+  </a>
+  <div class="subtle">⚡ Instant access • No calls • Actionable fixes</div>
+</div>
+
+<div class="card highlight">
+  <div class="small">Conversion Score</div>
+  <div class="score">${row.score || 60}/100</div>
+  <div class="warning">High-performing stores score 85+</div>
+</div>
+
+<div class="card">
+  <div class="small">Issue severity</div>
+  <div class="urgency" style="color:${urgencyColor}">
+    ${
+      severity === "high"
+        ? "🔴 High – actively blocking conversions"
+        : severity === "medium"
+        ? "🟠 Medium – causing hesitation"
+        : "🟢 Low – minor friction"
+    }
   </div>
+</div>
 
-  <div class="trust">
-    Based on analysis of similar ecommerce stores
+<div class="trust">
+  Based on patterns across 1,000+ ecommerce stores
+</div>
+
+<div class="card">
+  <strong>This is not random.</strong><br><br>
+  → Based on real ecommerce store data<br>
+  → Focused on revenue impact<br>
+</div>
+
+<div class="card red">
+  <strong>Main revenue leak:</strong><br><br>
+  ${report.main_leak || ""}
+  <div class="urgency" style="color:${urgencyColor}">
+    This directly affects how visitors decide to buy
   </div>
+</div>
 
-  <div class="card">
-    <strong>This is not random.</strong><br><br>
-    → Based on real ecommerce store data<br>
-    → Focused on revenue impact<br>
+<div class="card green">
+  <strong>Quick fix you can test today:</strong><br><br>
+  ${report.quick_fix || ""}
+  <div class="urgency">
+    Fixing this can immediately improve conversion rate
   </div>
+</div>
 
-  <div class="card red">
-    <strong>Main revenue leak:</strong><br><br>
-    ${report.main_leak || ""}
-    <div class="urgency" style="color:${urgencyColor}">
-      This affects how users make decisions on your store
-    </div>
+<div class="card red">
+  <strong>Full audit reveals:</strong><br><br>
+  → Exact drop-off points killing conversions<br>
+  → Hidden friction across your funnel<br>
+  → Revenue impact in real numbers<br>
+  → Step-by-step fixes (no guessing)<br>
+  <div class="urgency">⚠️ This is where the real money is recovered</div>
+</div>
+
+<div class="card red">
+  <strong>If nothing changes:</strong><br><br>
+  → ~$${daily} at risk daily<br>
+  → ${lossRange} at risk monthly<br>
+  <div class="urgency">
+    Visitors are leaving instead of converting
   </div>
+</div>
 
-  <div class="card green">
-    <strong>Quick fix you can test today:</strong><br><br>
-    ${report.quick_fix || ""}
+<div class="cta-zone">
+  <a id="auditBtn" class="cta" href="#">
+    ${ctaText} $399
+  </a>
+
+  <div class="subtle">Most stores recover the cost from one fix</div>
+  <div class="subtle">✔ No calls • ✔ No contracts • ✔ Immediate insights</div>
+
+  <div class="urgency" style="text-align:center;color:${urgencyColor};">
+    Every day you wait = ~$${daily} at risk
   </div>
+</div>
 
-  <div class="card red">
-    <strong>Full audit reveals:</strong><br><br>
-    → Exact drop-off points killing conversions<br>
-    → Hidden friction across your funnel<br>
-    → Revenue impact in real numbers<br>
-    → Step-by-step fixes (no guessing)<br>
-    <div class="urgency">⚠️ This is where the real money is recovered</div>
+<div class="card">
+  <div class="decision">
+    <strong>You have 2 options:</strong><br><br>
+    1) Do nothing → keep losing ${lossRange}/month<br>
+    2) Fix it → recover lost revenue starting now
   </div>
-
-  <div class="card red">
-    <strong>If nothing changes:</strong><br><br>
-    → ~$${daily} lost daily<br>
-    → ~$${estimatedLoss} lost monthly<br>
-    <div class="urgency">This loss compounds every single day you wait</div>
-  </div>
-
-  <div class="cta-zone">
-    <a id="auditBtn" class="cta" href="#">
-      ${ctaText} $399
-    </a>
-
-    <div class="subtle">Most stores recover the cost from one fix</div>
-    <div class="subtle">✔ No calls • ✔ No contracts • ✔ Immediate insights</div>
-
-    <div class="urgency" style="text-align:center;color:${urgencyColor};">
-      Every day you wait = ~$${daily} lost
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="decision">
-      <strong>You have 2 options:</strong><br><br>
-      1) Do nothing → keep losing ~$${estimatedLoss}/month<br>
-      2) Fix it → recover lost revenue starting now
-    </div>
-  </div>
+</div>
 `;
 
 const email = row?.email || "";
@@ -416,8 +433,9 @@ const live = document.getElementById("liveLoss");
 setInterval(() => {
   seconds++;
   const liveLoss = Math.round((hourly / 3600) * seconds);
+
   if (live) {
-    live.innerText = `~$${liveLoss} lost since you opened this report`;
+    live.innerText = `~$${liveLoss} potential loss since you opened this report`;
   }
 }, 1000);
 
