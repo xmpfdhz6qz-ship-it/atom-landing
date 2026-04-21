@@ -362,7 +362,9 @@ Stores with similar issues have increased conversions by 18–32% after applying
 
   <div class="big-money" id="heroLoss"></div>
 
-  <div class="sub" style="color:#fca5a5;">
+  <div class="sub" id="credibilityNote" style="margin-top:6px;color:#9ca3af;"></div>
+
+    <div class="sub" style="color:#fca5a5;">
 This is not theoretical — this is based on your current conversion gaps
 </div>
 
@@ -706,12 +708,15 @@ function setHTML(id, val) {
   if (el) el.innerHTML = val;
 }
 
-const calc = r.revenue_calculation || {};
+/* 🔥 FIXED SOURCE OF TRUTH */
 const issues = r.issues || [];
 
-const monthly = Number(calc.monthly_loss_value || 10000);
-const daily = Number(calc.daily_loss_value || Math.round(monthly/30));
-const yearly = Number(calc.yearly_loss_value || monthly * 12);
+const min = Number(r.estimated_loss_min || 0);
+const max = Number(r.estimated_loss_max || 0);
+
+const monthly = Math.round((min + max) / 2);
+const daily = Math.round(monthly / 30);
+const yearly = monthly * 12;
 
 const format = (n) => Number(n || 0).toLocaleString("en-US");
 
@@ -729,24 +734,53 @@ setText("storeName", storeDomain);
 setText("score", (r.score || 70) + "/100");
 setText("confidence", r.analysis_confidence || "medium");
 
-setText("ownerMessage",
-  r.owner_message || "Your store is likely losing revenue without clear visibility."
+/* 🔥 OWNER MESSAGE FIX */
+setText(
+  "ownerMessage",
+  r.owner_message ||
+  `Your store may potentially be losing approximately $${format(monthly)} per month due to these conversion gaps.`
 );
 
-setText("heroLoss", `$${format(monthly)}/month is currently slipping through your funnel`);
+/* 🔥 HERO RANGE FIX */
+setText(
+  "heroLoss",
+  `$${format(min)} – $${format(max)}/month is currently slipping through your funnel`
+);
+
+/* 🔥 OPTIONAL CREDIBILITY */
+const credibility = "Based on your current traffic and conversion patterns";
+setText("credibilityNote", credibility);
+
 setText("dailyLoss", `≈ $${format(daily)} lost every day`);
 setText("yearlyLoss", `≈ $${format(yearly)} lost per year`);
 
 setText("daily2", format(daily));
 setText("daily3", format(daily));
-setText("ctaLoss", `$${format(daily)}`);
-setText("ctaTopLoss", `$${format(daily)}`);
+
+/* 🔥 CTA FIX */
+setText("ctaLoss", format(daily));
+setText("ctaTopLoss", format(daily));
 setText("ctaLossInline", `$${format(daily)}`);
+
 setText("dailyDecision", format(daily));
 
-setText("pattern", r.core_insight || r.primary_failure || "Users are dropping before reaching purchase intent.");
+/* 🔥 PATTERN FIX */
+setText(
+  "pattern",
+  (r.core_insight && r.core_insight !== "undefined")
+    ? r.core_insight
+    : (r.primary_failure || "Users are dropping before reaching purchase intent.")
+);
+
 setText("primary", r.main_leak ? r.main_leak + " — this directly impacts your conversions" : "Key conversion leak detected in decision stage.");
-setText("urgencyBlock", r.urgency_block || `You may be losing ~$${format(daily)}/day`);
+
+/* 🔥 URGENCY FIX */
+setText(
+  "urgencyBlock",
+  r.urgency_block ||
+  `You may be losing approximately $${format(daily)}/day due to these issues`
+);
+
 setText("recoveryBlock", r.recovery_potential || "Fixing this can unlock immediate revenue recovery.");
 setText("monitoringHook", r.monitoring_hook || "Continuous monitoring ensures new leaks are detected early.");
 
@@ -795,7 +829,6 @@ setText("scoreLabel",
   : "Optimization opportunity"
 );
 
-/* 🔥 FIX: bindCTA až po datech */
 bindCTA();
 
 } catch (err) {
