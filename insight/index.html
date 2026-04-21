@@ -10,28 +10,61 @@ body {
   color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
   margin:0;
+  line-height:1.6;
 }
 .container {
   max-width:520px;
   margin:auto;
-  padding:24px;
+  padding:20px;
 }
 .card {
   background:#111;
   border-radius:16px;
   padding:20px;
   margin-top:16px;
+  border:1px solid #222;
+  box-shadow:0 8px 24px rgba(0,0,0,0.6);
+  transition:all 0.3s ease;
 }
+.card:hover {
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.8);
+}
+
+/* 🔥 PREMIUM CTA */
 .cta {
   display:block;
   margin-top:20px;
-  padding:18px;
+  padding:20px;
   text-align:center;
   background:linear-gradient(135deg,#f97316,#ea580c);
   border-radius:14px;
-  font-weight:800;
+  font-weight:900;
   text-decoration:none;
-  color:#fff;
+  color:#000;
+  font-size:18px;
+  border:2px solid #dc2626;
+  box-shadow:0 12px 30px rgba(249,115,22,0.5);
+  transition:all 0.25s ease;
+}
+.cta:hover {
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 20px 50px rgba(249,115,22,0.8);
+}
+.cta:active {
+  transform:scale(0.96);
+}
+
+/* subtle glow background */
+.container::before {
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
+  pointer-events:none;
 }
 </style>
 </head>
@@ -40,7 +73,7 @@ body {
 
 <div class="container">
 
-<h2>New conversion issue detected</h2>
+<h2>You are losing conversions right now</h2>
 <p id="store" style="color:#aaa;"></p>
 
 <div class="card">
@@ -71,7 +104,28 @@ We detected additional conversion leaks affecting your revenue:
 See everything that is holding your store back.
 </p>
 
-<a id="cta" class="cta">Get full audit → $399</a>
+<!-- 🔥 LOSS BLOCK -->
+<div style="margin-top:16px;padding:16px;background:#7f1d1d;border-radius:12px;text-align:center;">
+  <div style="color:#fecaca;font-size:13px;font-weight:700;">
+    ⚠️ Estimated revenue loss
+  </div>
+  <div style="color:#fff;font-size:20px;font-weight:900;margin-top:6px;">
+    Losing ~2–5% of visitors daily
+  </div>
+  <div style="color:#fecaca;font-size:12px;margin-top:6px;">
+    This compounds every single day
+  </div>
+</div>
+
+<a id="cta" class="cta">Fix this before it costs you more → $399</a>
+
+<p style="font-size:12px;color:#fca5a5;text-align:center;margin-top:8px;">
+  Every day this issue remains = lost revenue
+</p>
+
+<div style="margin-top:14px;font-size:12px;color:#94a3b8;text-align:center;">
+  Based on 1,000+ analyzed ecommerce stores
+</div>
 
 </div>
 
