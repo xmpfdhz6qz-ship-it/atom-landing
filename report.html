@@ -219,6 +219,15 @@ if (!data) {
 const row = data;
 const report = row.report_json || {};
 
+/* 🔥 ZMĚNA 6: DOMAIN FALLBACK + SANITIZE */
+const domain = (row.store_domain || "")
+  .replace("https://","")
+  .replace("http://","")
+  .trim();
+const displayDomain = (domain && domain !== "undefined" && domain !== "null")
+  ? domain
+  : "Your store";
+
 /* 🔥 FIXED LOSS FROM BACKEND */
 const min = report.estimated_loss_min || 0;
 const max = report.estimated_loss_max || 0;
@@ -245,8 +254,12 @@ const urgencyColor = "#ef4444";
 
 app.innerHTML = `
 
-<!-- 🔥 ZMĚNA 1: HERO -->
-<h1>YOU ARE LOSING</h1>
+<!-- 🔥 ZMĚNA 1: HERO S PERSONALIZACÍ -->
+<h1>${displayDomain} IS LOSING</h1>
+
+<div class="subtle">
+  Analysis for: <b>${displayDomain}</b>
+</div>
 
 <div class="money">${lossRange}/month</div>
 
@@ -258,7 +271,7 @@ app.innerHTML = `
   This is happening right now.
 </div>
 
-<!-- 🔥 ZMĚNA 2: REALITY SLAP -->
+<!-- REALITY SLAP -->
 <div class="card red">
   <strong>Right now:</strong><br><br>
 
@@ -294,7 +307,7 @@ app.innerHTML = `
   </div>
 </div>
 
-<!-- 🔥 ZMĚNA 3: WHAT THIS MEANS -->
+<!-- WHAT IS ACTUALLY HAPPENING -->
 <div class="card">
   <strong>What is actually happening:</strong><br><br>
 
@@ -322,6 +335,10 @@ app.innerHTML = `
   <div class="subtle" style="color:#22c55e;">
     Most stores recover this from ONE fix
   </div>
+  <!-- 🔥 ZMĚNA 3: STRIPE TRUST -->
+  <div class="subtle" style="margin-top:8px;">
+    🔒 Secure checkout powered by Stripe
+  </div>
 </div>
 
 <div class="card highlight">
@@ -343,8 +360,9 @@ app.innerHTML = `
   </div>
 </div>
 
+<!-- 🔥 ZMĚNA 2: MICRO TRUST BOOST -->
 <div class="trust">
-  Based on patterns across 1,000+ ecommerce stores
+  Based on patterns across 1,000+ ecommerce stores • AI-powered analysis
 </div>
 
 <div class="card">
@@ -353,7 +371,17 @@ app.innerHTML = `
   → Focused on revenue impact<br>
 </div>
 
-<!-- 🔥 ZMĚNA 4: MAIN LEAK -->
+<!-- 🔥 ZMĚNA 4: PSYCHO TRIGGER -->
+<div class="card red">
+  <strong>Most founders don't see this:</strong><br><br>
+
+  You are not losing traffic.<br>
+  You are losing buyers who were ready to convert.<br><br>
+
+  <b>This is the most expensive type of loss.</b>
+</div>
+
+<!-- MAIN LEAK -->
 <div class="card red">
   <strong>This is where you lose buyers:</strong><br><br>
   ${report.main_leak || ""}
@@ -362,7 +390,7 @@ app.innerHTML = `
   </div>
 </div>
 
-<!-- 🔥 ZMĚNA 5: QUICK FIX DOWNGRADE -->
+<!-- QUICK FIX DOWNGRADE -->
 <div class="card green">
   <strong>One possible fix:</strong><br><br>
   ${report.quick_fix || ""}
@@ -374,7 +402,7 @@ app.innerHTML = `
   </div>
 </div>
 
-<!-- 🔥 ZMĚNA 6: FULL AUDIT TEASE -->
+<!-- FULL AUDIT TEASE -->
 <div class="card red">
   <strong>You are only seeing a fraction of the problem:</strong><br><br>
 
@@ -399,7 +427,7 @@ app.innerHTML = `
   </div>
 </div>
 
-<!-- 🔥 ZMĚNA 9: TIME PRESSURE LOOP -->
+<!-- TIME PRESSURE LOOP -->
 <div class="card red">
   <strong>Every second this continues:</strong><br><br>
 
@@ -407,6 +435,17 @@ app.innerHTML = `
   → revenue is lost<br><br>
 
   <b>This does not stop.</b>
+</div>
+
+<!-- 🔥 ZMĚNA 5: WHY NOW TRIGGER -->
+<div class="card red">
+  <strong>Why this matters now:</strong><br><br>
+
+  Every day you delay:<br>
+  → more data is lost<br>
+  → more buyers leave<br><br>
+
+  <b>This compounds.</b>
 </div>
 
 <div class="cta-zone">
@@ -419,13 +458,17 @@ app.innerHTML = `
   <div class="subtle" style="color:#22c55e;">
     Most stores recover this from ONE fix
   </div>
+  <!-- 🔥 ZMĚNA 3: STRIPE TRUST -->
+  <div class="subtle" style="margin-top:8px;">
+    🔒 Secure checkout powered by Stripe
+  </div>
 
   <div class="urgency" style="text-align:center;color:${urgencyColor};">
     Every day you wait = ~$${daily} at risk
   </div>
 </div>
 
-<!-- 🔥 ZMĚNA 10: DECISION HARDER -->
+<!-- DECISION -->
 <div class="card">
   <div class="decision">
     <strong>Your decision:</strong><br><br>
@@ -477,7 +520,7 @@ const email = row?.email || "";
   }
 });
 
-/* 🔥 ZMĚNA 11: LIVE LOSS ZESÍLENÍ */
+/* LIVE LOSS */
 let seconds = 0;
 const live = document.getElementById("liveLoss");
 
