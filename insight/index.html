@@ -31,7 +31,6 @@ body {
   box-shadow:0 12px 30px rgba(0,0,0,0.8);
 }
 
-/* subtle glow background */
 .container::before {
   content:"";
   position:fixed;
@@ -43,7 +42,7 @@ body {
   pointer-events:none;
 }
 
-/* 🔥 CTA HOVER UPGRADE */
+/* 🔥 CTA */
 button.cta-btn {
   display:block;
   margin-top:18px;
@@ -69,6 +68,14 @@ button.cta-btn:hover {
 button.cta-btn:active {
   transform:scale(0.96);
 }
+
+.loss {
+  font-size:28px;
+  font-weight:900;
+  color:#f87171;
+  text-align:center;
+  margin-top:10px;
+}
 </style>
 </head>
 
@@ -76,8 +83,27 @@ button.cta-btn:active {
 
 <div class="container">
 
-<h2>A new conversion issue appeared on your store</h2>
-<p id="store" style="color:#aaa;"></p>
+<!-- 🔥 HERO UPGRADE -->
+<h2 style="text-align:center;">
+  Revenue leak detected on<br>
+  <span id="store" style="color:#f97316;"></span>
+</h2>
+
+<div class="loss" id="lossAmount">$0 / month</div>
+
+<div style="text-align:center;color:#fca5a5;font-size:13px;">
+  This is happening right now
+</div>
+
+<!-- 🔥 REALITY SLAP -->
+<div class="card" style="border-color:#dc2626;background:#1a0f0f;">
+  <b>What just happened:</b><br><br>
+
+  Something changed in your store.<br>
+  Your conversion flow is now breaking.<br><br>
+
+  <b>Users are visiting → but not buying.</b>
+</div>
 
 <div class="card">
 <b style="color:#f87171;">Issue</b>
@@ -87,61 +113,73 @@ button.cta-btn:active {
 <div class="card">
 <b style="color:#4ade80;">Recommended fix</b>
 <p id="fix"></p>
+
+<div style="margin-top:10px;color:#fca5a5;font-size:13px;">
+  This is only a surface-level fix
+</div>
 </div>
 
 <!-- 🔥 CHANGE MOMENT -->
 <div style="margin-top:14px;padding:12px;background:#111827;border-radius:10px;font-size:13px;color:#cbd5f5;">
-  This issue appeared after your last scan and is currently affecting your conversion flow.
+  This issue appeared after your last scan → your conversion rate likely dropped
+</div>
+
+<!-- 🔥 MONEY BLOCK -->
+<div class="card" style="border-color:#dc2626;">
+  <b style="color:#f87171;">What this means</b><br><br>
+
+  You are losing buyers who were ready to purchase.<br><br>
+
+  This is not traffic loss.<br>
+  This is <b>revenue leakage</b>.
 </div>
 
 <div class="card">
 <b style="color:#f97316;">This is not the only problem</b>
 <p style="color:#bbb;">
-We detected additional conversion leaks affecting your revenue:
-<br><br>
+We detected additional conversion leaks:<br><br>
 • weak trust signals<br>
 • unclear messaging<br>
 • missing urgency<br>
 • friction in checkout<br>
 </p>
+
+<div style="color:#fca5a5;font-size:13px;">
+Most stores have 3–5 hidden issues
+</div>
 </div>
 
 <div class="card">
 <b>Unlock full conversion audit</b>
 <p style="color:#bbb;">
-See everything that is holding your store back.
+See exactly where users drop off and how much revenue each issue costs.
 </p>
 
-<!-- 🔥 LOSS BLOCK -->
+<!-- 🔥 LOSS BLOCK UPGRADE -->
 <div style="margin-top:16px;padding:16px;background:#7f1d1d;border-radius:12px;text-align:center;">
   <div style="color:#fecaca;font-size:13px;font-weight:700;">
     ⚠️ Estimated revenue loss
   </div>
-  <div style="color:#fff;font-size:20px;font-weight:900;margin-top:6px;">
-    Losing ~2–5% of visitors daily
+  <div id="lossText" style="color:#fff;font-size:20px;font-weight:900;margin-top:6px;">
+    Loading...
   </div>
-  <div style="color:#fecaca;font-size:12px;margin-top:6px;">
-    This compounds every single day
+  <div id="dailyLoss" style="color:#fecaca;font-size:12px;margin-top:6px;">
   </div>
 </div>
 
 <button class="cta-btn" onclick="startCheckout()">
-  Analyze this issue in full detail → $399
+  Fix this leak → Get Full Audit ($399)
 </button>
 
-<div style="margin-top:10px;font-size:12px;color:#fca5a5;text-align:center;">
-  Most stores ignore this stage and keep losing revenue without realizing it
+<div style="margin-top:10px;font-size:12px;color:#94a3b8;text-align:center;">
+  🔒 Secure checkout • No calls • Instant access
 </div>
 
-<p style="font-size:12px;color:#fca5a5;text-align:center;margin-top:8px;">
-  Every day this issue remains = lost revenue
-</p>
+<div style="margin-top:10px;font-size:12px;color:#fca5a5;text-align:center;">
+  Every day you wait = more lost revenue
+</div>
 
 <div style="margin-top:12px;font-size:12px;color:#94a3b8;text-align:center;">
-  This issue was not part of your previous audit
-</div>
-
-<div style="margin-top:14px;font-size:12px;color:#94a3b8;text-align:center;">
   Based on 1,247+ analyzed ecommerce stores
 </div>
 
@@ -152,13 +190,26 @@ See everything that is holding your store back.
 <script>
 const params = new URLSearchParams(window.location.search);
 
-const store = params.get("store") || "your store";
+const storeRaw = params.get("store") || "your store";
 const problem = params.get("problem") || "Conversion issue detected";
 const fix = params.get("fix") || "Improve clarity and CTA";
 
+// 🔥 CLEAN DOMAIN
+const store = storeRaw.replace("https://","").replace("http://","");
 document.getElementById("store").innerText = store;
+
 document.getElementById("problem").innerText = problem;
 document.getElementById("fix").innerText = fix;
+
+// 🔥 FAKE RANGE (MVP → později napojíš na real data)
+const min = 500;
+const max = 2000;
+
+const daily = Math.round(min / 30);
+
+document.getElementById("lossAmount").innerText = `$${min}–$${max} / month`;
+document.getElementById("lossText").innerText = `$${min}–$${max} / month`;
+document.getElementById("dailyLoss").innerText = `~$${daily}/day at risk`;
 </script>
 
 <script>
