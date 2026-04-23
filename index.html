@@ -111,8 +111,14 @@ input:focus {
   color:#A1A1AA;
 }
 
+.no-friction {
+  margin-top:14px;
+  font-size:12px;
+  color:#6b7280;
+}
+
 button {
-  margin-top:18px;
+  margin-top:10px;
   width:100%;
   padding:18px;
   border-radius:14px;
@@ -199,6 +205,10 @@ button:active {
         </span>
       </div>
 
+      <div class="no-friction">
+        No signup. No setup. Just paste your store.
+      </div>
+
       <button type="submit">
         Find My #1 Leak
       </button>
@@ -216,9 +226,9 @@ button:active {
   </div>
 
   <div class="value-list">
-    ✔ Identify the biggest conversion leak on your store<br>
-    ✔ See why visitors hesitate in the first seconds<br>
-    ✔ Get a quick fix you can apply immediately
+    ✔ Identify the biggest conversion leak<br>
+    ✔ Understand why visitors don't convert<br>
+    ✔ Fix it with a clear next step
   </div>
 
   <div class="urgency">
@@ -236,7 +246,6 @@ document.getElementById("scanForm").addEventListener("submit", (e) => {
   let url = formData.get("store").trim();
   const email = formData.get("email").trim();
 
-  // 🔥 normalize
   url = url
     .replace(/^https?:\/\//, "")
     .replace(/\/$/, "")
@@ -244,19 +253,16 @@ document.getElementById("scanForm").addEventListener("submit", (e) => {
 
   url = "https://" + url;
 
-  // 🔥 UI feedback
   const btn = e.target.querySelector("button");
   btn.innerText = "Scanning...";
   btn.disabled = true;
 
-  // 🔥 SEND (async, nečekáme!)
   fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url, email })
   }).catch(() => {});
 
-  // 🔥 OKAMŽITÝ REDIRECT
   const params = new URLSearchParams({
     domain: url,
     email: email
