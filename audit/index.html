@@ -1,858 +1,333 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revenue Audit – Atom Foundry</title>
+<meta name="robots" content="noindex, nofollow">
 
 <style>
+* { box-sizing: border-box; }
+
 body {
-  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
-  background:#0A0A0A;
-  color:#fff;
-  margin:0;
-  padding:16px;
-  line-height:1.7;
-  font-size:15px;
-  -webkit-font-smoothing:antialiased;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
+  background: #0A0A0A;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
 }
 
-* {
-  box-sizing:border-box;
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .container {
-  max-width:560px;
-  margin:auto;
-  padding:0 2px;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+  position: relative;
+  z-index: 1;
 }
 
-.container::before {
-  content:"";
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
-  pointer-events:none;
-  z-index:0;
+/* ── HEADER BADGE ── */
+.audit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.audit-badge-dot {
+  width: 6px; height: 6px;
+  background: #1D9E75;
+  border-radius: 50%;
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
-.container::after {
-  content:"";
-  position:fixed;
-  bottom:-20%;
-  right:-10%;
-  width:60%;
-  height:60%;
-  background:radial-gradient(circle, rgba(239,68,68,0.12), transparent 60%);
-  pointer-events:none;
-  z-index:0;
+/* ── DOMAIN + HERO ── */
+.domain-label { font-size: 14px; color: #aaa; margin-bottom: 8px; font-weight: 500; }
+
+.loss-number {
+  font-size: 64px;
+  font-weight: 800;
+  color: #E24B4A;
+  line-height: 1;
+  margin-bottom: 4px;
+  text-shadow: 0 0 40px rgba(226,75,74,0.3);
+  letter-spacing: -0.02em;
 }
 
-.card {
-  background:#111;
-  border:1px solid #222;
-  border-radius:16px;
-  padding:18px;
-  margin-top:14px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.6);
-  position:relative;
-  z-index:1;
-  transition:all 0.3s ease;
-  width:100%;
+.loss-label { font-size: 14px; color: #aaa; margin-bottom: 16px; }
+
+.daily-loss { font-size: 18px; color: #EF9F27; font-weight: 600; margin-bottom: 6px; }
+.live-counter { font-size: 14px; color: #777; margin-bottom: 24px; min-height: 22px; }
+
+/* ── SCORE BARS ── */
+.scores-section {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 8px;
+}
+.score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+.score-label { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; min-width: 110px; }
+.score-num { font-size: 22px; font-weight: 700; min-width: 65px; line-height: 1; }
+.score-bar-wrap { flex: 1; height: 7px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 999px; transition: width 1.2s ease; }
+.score-verdict { font-size: 12px; font-weight: 600; padding-left: 124px; margin-bottom: 12px; line-height: 1.4; }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-size: 10px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #1a1a1a;
 }
 
-.card:hover {
-  transform:translateY(-2px);
-  box-shadow:0 12px 30px rgba(0,0,0,0.8);
+/* ── MAIN LEAK ── */
+.main-leak-box {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-left: 3px solid #E24B4A;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+.main-leak-text { font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.6; }
+
+/* ── EXECUTION CARDS ── */
+.execution-cards { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+
+.exec-card {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.25s ease;
 }
 
-.section-title {
-  font-size:11px;
-  text-transform:uppercase;
-  color:#A1A1AA;
-  margin-bottom:4px;
-  letter-spacing:1.2px;
+.exec-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.6); }
+
+.exec-card-header {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid #1a1a1a;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
 }
 
-.card:first-child .section-title {
-  color:#22c55e;
+.exec-num {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  background: #1a1a1a;
+  font-size: 13px;
+  font-weight: 700;
+  color: #f97316;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
-.score {
-  font-size:56px;
-  font-weight:900;
-  letter-spacing:-1px;
-  line-height:1.1;
-  margin-top:2px;
+.exec-card:nth-child(1) .exec-num { background: rgba(226,75,74,0.12); color: #E24B4A; }
+.exec-card:nth-child(2) .exec-num { background: rgba(239,159,39,0.12); color: #EF9F27; }
+.exec-card:nth-child(3) .exec-num { background: rgba(249,115,22,0.12); color: #f97316; }
+.exec-card:nth-child(4) .exec-num { background: rgba(29,158,117,0.12); color: #1D9E75; }
+
+.exec-card-title { font-size: 15px; font-weight: 600; color: #e8e8e8; line-height: 1.4; margin-bottom: 4px; }
+.exec-card-impact { font-size: 13px; font-weight: 700; }
+.exec-card:nth-child(1) .exec-card-impact { color: #E24B4A; }
+.exec-card:nth-child(2) .exec-card-impact { color: #EF9F27; }
+.exec-card:nth-child(3) .exec-card-impact { color: #f97316; }
+.exec-card:nth-child(4) .exec-card-impact { color: #1D9E75; }
+
+.exec-card-body { padding: 14px 18px; }
+
+.exec-reason {
+  font-size: 13px;
+  color: #999;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1a1a1a;
 }
 
-.score + .sub {
-  margin-top:4px;
+.exec-fix-label {
+  font-size: 10px;
+  color: #1D9E75;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
-.big-money {
-  font-size:38px;
-  font-weight:900;
-  color:#ef4444;
-  line-height:1.2;
-  text-shadow:0 0 20px rgba(239,68,68,0.3);
+.exec-fix-text {
+  font-size: 14px;
+  color: #4ade80;
+  line-height: 1.6;
+  margin-bottom: 12px;
 }
 
-.sub {
-  color:#A1A1AA;
-  margin-top:6px;
+.exec-steps { list-style: none; padding: 0; margin: 0 0 12px 0; }
+.exec-step {
+  font-size: 13px;
+  color: #888;
+  padding: 5px 0 5px 20px;
+  position: relative;
+  line-height: 1.5;
+  border-bottom: 1px solid #141414;
 }
-
-.alert {
-  background:#1a0f0f;
-  border:1px solid #7f1d1d;
-  padding:16px;
-  border-radius:16px;
-  color:#fca5a5;
-  margin-top:14px;
-  font-weight:600;
-  font-size:15px;
-  box-shadow:0 0 0 1px rgba(127,29,29,0.6);
-  position:relative;
+.exec-step:last-child { border-bottom: none; }
+.exec-step::before {
+  content: counter(step-counter);
+  counter-increment: step-counter;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #444;
+  width: 16px;
+  height: 16px;
+  background: #1a1a1a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.exec-steps { counter-reset: step-counter; }
 
-.alert::before {
-  content:"LIVE ISSUE";
-  position:absolute;
-  top:-8px;
-  left:12px;
-  font-size:10px;
-  background:#dc2626;
-  padding:3px 6px;
-  border-radius:6px;
-  font-weight:700;
+.exec-footer {
+  padding: 10px 18px;
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+.exec-timeline { font-size: 11px; color: #555; font-weight: 500; }
+.exec-priority { font-size: 11px; font-weight: 700; }
+.priority-critical { color: #E24B4A; }
+.priority-high { color: #EF9F27; }
+.priority-medium { color: #f97316; }
+.priority-low { color: #1D9E75; }
 
-.card[style*="#dc2626"] {
-  background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
-  box-shadow:0 0 0 1px rgba(220,38,38,0.4);
+/* ── MONITORING UPSELL ── */
+.monitoring-box {
+  background: #0d1a0d;
+  border: 1px solid #1a2e1a;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
 }
+.monitoring-title { font-size: 14px; font-weight: 700; color: #4ade80; margin-bottom: 6px; }
+.monitoring-desc { font-size: 13px; color: #888; line-height: 1.6; margin-bottom: 14px; }
+.monitoring-features { list-style: none; padding: 0; margin: 0 0 16px 0; }
+.monitoring-feature { font-size: 13px; color: #666; padding: 4px 0; }
+.monitoring-feature::before { content: "✓ "; color: #1D9E75; font-weight: 700; }
 
-.issue {
-  border-top:1px solid #7f1d1d;
-  padding:20px 0;
+.monitoring-cta {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: #0a1a0a;
+  border: 1px solid #1a3a1a;
+  color: #4ade80;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
+.monitoring-cta:hover { background: #0f2a0f; transform: translateY(-1px); }
 
-.issue:first-child {
-  background:#1a0f0f;
-  border-radius:12px;
-  padding:16px;
+/* ── PDF DOWNLOAD ── */
+.pdf-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: #111;
+  border: 1px solid #222;
+  color: #666;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 24px;
+  text-decoration: none;
 }
+.pdf-btn:hover { color: #888; border-color: #333; }
 
-.fix {
-  border:1px solid #22c55e;
-  background:#064e3b;
-  padding:12px;
-  border-radius:10px;
-  margin-top:10px;
-  color:#d1fae5;
-}
+/* ── FOOTER ── */
+.footer { padding-top: 20px; border-top: 1px solid #1e1e1e; text-align: center; }
+.footer-scan-line { font-size: 12px; color: #555; margin-bottom: 10px; line-height: 1.6; }
+.footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
 
-.cta-zone {
-  margin-top:18px;
-  padding:18px;
-  border-radius:16px;
-  background:linear-gradient(180deg,rgba(249,115,22,0.12),rgba(0,0,0,0));
-  border:1px solid rgba(249,115,22,0.4);
-  box-shadow:0 0 40px rgba(249,115,22,0.15);
-  width:100%;
-  position:relative;
-  overflow:hidden;
-}
+/* ── LOADING ── */
+#loadingState { text-align: center; padding: 80px 20px; font-size: 15px; color: #555; }
 
-.cta-zone::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg, transparent, rgba(249,115,22,0.15), transparent);
-  animation:shine 3s infinite;
-}
-
-@keyframes shine {
-  0% {transform:translateX(-100%);}
-  100% {transform:translateX(100%);}
-}
-
-.cta-zone::after{
-  content:"LIVE RECOVERY AVAILABLE";
-  position:absolute;
-  top:10px;
-  right:12px;
-  font-size:10px;
-  color:#f97316;
-  opacity:0.7;
-}
-
-.cta {
-  display:block;
-  width:100%;
-  padding:22px;
-  background:linear-gradient(135deg,#f97316,#ea580c);
-  color:#000;
-  text-align:center;
-  border-radius:14px;
-  font-weight:900;
-  margin-top:16px;
-  text-decoration:none;
-  font-size:19px;
-  border:2px solid #dc2626;
-  box-shadow:0 12px 30px rgba(249,115,22,0.5);
-  transition:all 0.25s ease;
-  cursor:pointer;
-  position:relative;
-  z-index:2;
-}
-
-.cta:hover {
-  transform:translateY(-4px) scale(1.02);
-  box-shadow:0 25px 60px rgba(249,115,22,0.8);
-}
-
-.cta:active {
-  transform:scale(0.95);
-}
-
-.cta-secondary {
-  display:block;
-  width:100%;
-  padding:14px;
-  background:linear-gradient(135deg,#1f2937,#111827);
-  color:#9ca3af;
-  text-align:center;
-  border-radius:12px;
-  font-weight:600;
-  margin-top:12px;
-  text-decoration:none;
-  font-size:14px;
-  border:1px solid #374151;
-  box-shadow:0 4px 10px rgba(0,0,0,0.3);
-  opacity:0.95;
-  transition:all 0.2s ease;
-  cursor:pointer;
-}
-
-.cta,
-.cta-secondary {
-  width:100%;
-  max-width:100%;
-}
-
-a.cta-secondary,
-button.cta-secondary {
-  display:block;
-  width:100%;
-}
-
-.cta-secondary:hover {
-  opacity:1;
-  transform:translateY(-1px);
-}
-
-.cta-secondary:active {
-  transform:scale(0.98);
-}
-
-.card:last-child {
-  box-shadow:0 0 0 1px rgba(249,115,22,0.3);
-}
-
-.checklist {
-  list-style:none;
-  padding:0;
-  margin:14px 0 0 0;
-}
-
-.checklist li {
-  margin-bottom:6px;
-}
-
-.trust-badge {
-  display:inline-block;
-  background:#052e16;
-  color:#22c55e;
-  padding:6px 10px;
-  border-radius:8px;
-  font-size:11px;
-  font-weight:700;
-  margin-top:8px;
-  border:1px solid #14532d;
-}
-
-.pulse {
-  animation:pulse 1.8s infinite;
-}
-
-@keyframes pulse {
-  0% {opacity:0.6;}
-  50% {opacity:1;}
-  100% {opacity:0.6;}
-}
-
-.big-loss {
-  font-size:clamp(26px, 7vw, 36px);
-  font-weight:900;
-  color:#ef4444;
-  line-height:1.2;
-  margin-top:14px;
-  text-shadow:0 0 20px rgba(239,68,68,0.4);
-  letter-spacing:-0.5px;
-}
-
-.loss-breakdown {
-  font-size:16px;
-  font-weight:700;
-  color:#fca5a5;
-  margin-top:6px;
-}
-
-.loss-sub {
-  color:#A1A1AA;
-  margin-top:6px;
-  font-size:14px;
-}
-
-.top-leaks {
-  margin-top:16px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.leak-item {
-  background:#1a1a1a;
-  border:1px solid #333;
-  border-left:3px solid #ef4444;
-  padding:10px 14px;
-  border-radius:10px;
-  font-size:14px;
-  color:#f1f1f1;
-}
-
-.leak-item strong {
-  color:#fca5a5;
-}
-
-.blame-block {
-  background:#0f0a0a;
-  border:1px solid #7f1d1d;
-  border-radius:16px;
-  padding:22px 20px;
-  margin-top:14px;
-  position:relative;
-  z-index:1;
-}
-
-.blame-block p {
-  margin:0 0 10px 0;
-  font-size:16px;
-  line-height:1.9;
-  color:#f1f1f1;
-}
-
-.blame-block p:last-child {
-  margin-bottom:0;
-}
-
-.blame-block .blame-highlight {
-  font-size:17px;
-  font-weight:700;
-  color:#ef4444;
-  display:block;
-  margin-top:14px;
-  line-height:1.7;
-}
-
-.reality-block {
-  background:#1a0f0f;
-  border:1px solid #7f1d1d;
-  border-radius:16px;
-  padding:20px;
-  margin-top:14px;
-  position:relative;
-  z-index:1;
-}
-
-.reality-block h3 {
-  font-size:16px;
-  color:#fca5a5;
-  margin:0 0 4px 0;
-  font-weight:600;
-}
-
-.reality-block h2 {
-  font-size:clamp(20px, 6vw, 26px);
-  font-weight:900;
-  color:#ef4444;
-  margin:0 0 0 0;
-  text-shadow:0 0 16px rgba(239,68,68,0.4);
-}
-
-.inevitable-block {
-  background:#0a0a0a;
-  border:1px solid #333;
-  border-left:3px solid #ef4444;
-  border-radius:16px;
-  padding:22px 20px;
-  margin-top:14px;
-  position:relative;
-  z-index:1;
-}
-
-.inevitable-block p {
-  margin:0 0 8px 0;
-  font-size:15px;
-  color:#d1d5db;
-  line-height:1.9;
-}
-
-.inevitable-block .inevitable-repeat {
-  font-size:14px;
-  color:#6b7280;
-  margin-top:10px;
-  font-style:italic;
-}
-
-.urgency-loop {
-  background:#0f0a0a;
-  border:1px solid #7f1d1d;
-  border-radius:16px;
-  padding:20px;
-  margin-top:14px;
-  text-align:center;
-  position:relative;
-  z-index:1;
-}
-
-.urgency-loop h2 {
-  font-size:clamp(20px, 6vw, 24px);
-  font-weight:900;
-  color:#ef4444;
-  margin:6px 0;
-  text-shadow:0 0 14px rgba(239,68,68,0.35);
-}
-
-.urgency-loop p {
-  color:#A1A1AA;
-  margin-top:12px;
-  font-size:14px;
-}
-
-.no-return-block {
-  background:#0f0f0f;
-  border:1px solid rgba(249,115,22,0.4);
-  border-radius:16px;
-  padding:24px 20px;
-  margin-top:14px;
-  position:relative;
-  z-index:1;
-  text-align:center;
-}
-
-.no-return-block p {
-  margin:0 0 10px 0;
-  font-size:15px;
-  color:#d1d5db;
-  line-height:1.9;
-}
-
-.no-return-block .no-return-q {
-  font-size:clamp(17px, 5vw, 20px);
-  font-weight:800;
-  color:#f97316;
-  margin-top:16px;
-  line-height:1.6;
-}
-
+/* ── PRINT ── */
 @media print {
-  body {
-    background:white;
-    color:black;
-  }
+  body { background: white; color: black; }
+  body::before { display: none; }
+  .monitoring-box, .pdf-btn, .monitoring-cta { display: none; }
+  .exec-card { border: 1px solid #ddd; page-break-inside: avoid; }
+  .footer-tagline { color: #f97316; }
+}
 
-  body::before {
-    content:"ATOM FOUNDRY · CONVERSION INTELLIGENCE";
-    position:fixed;
-    top:40%;
-    left:10%;
-    font-size:40px;
-    font-weight:900;
-    color:rgba(0,0,0,0.05);
-    transform:rotate(-25deg);
-    letter-spacing:4px;
-  }
-
-  .cta,
-  .cta-secondary {
-    display:none;
-  }
-
-  .card {
-    page-break-inside:avoid;
-    border:1px solid #ddd;
-    box-shadow:none;
-  }
+/* ── MOBILE ── */
+@media (max-width: 480px) {
+  .loss-number { font-size: 52px; }
+  .daily-loss { font-size: 17px; }
+  .score-label { min-width: 90px; font-size: 11px; }
+  .score-num { font-size: 20px; min-width: 55px; }
+  .score-verdict { padding-left: 100px; }
+  .exec-card-title { font-size: 14px; }
+  .exec-fix-text { font-size: 13px; }
 }
 </style>
 </head>
 
 <body>
 <div class="container">
-
-<div style="background:#111;border:1px solid #22c55e;padding:10px;border-radius:12px;text-align:center;font-size:12px;margin-bottom:12px;">
-🟢 <span class="pulse">Live AI Conversion Analysis</span> • Revenue Leak Detection Active
-</div>
-
-<div class="card">
-  <div class="section-title">Conversion Intelligence Audit</div>
-
-  <div style="font-size:18px;font-weight:700;">
-    Analysis for <span id="storeName"></span>
-  </div>
-
-  <div class="sub" style="color:#fca5a5;margin-top:6px;">
-    This report is specific to your store's current conversion behavior
-  </div>
-
-  <div class="sub" id="ownerMessage"></div>
-
-  <div class="trust-badge">Data-backed • 1,247 stores analyzed</div>
-
-  <div class="sub" style="margin-top:10px;color:#9ca3af;">
-    Stores with similar issues have increased conversions by 18–32% after applying these fixes
-  </div>
-
-  <div class="sub" style="font-size:12px;color:#6b7280;">
-    This analysis is based on visible page signals, not full store data.
-  </div>
-
-  <div class="big-loss">
-    YOU ARE LOSING $375 EVERY DAY
-  </div>
-
-  <div class="loss-breakdown">
-    $11,250 this month • $135,000 this year
-  </div>
-
-  <div class="loss-sub">
-    This revenue is already paid for — but not captured.
-  </div>
-
-  <div class="top-leaks">
-    <div class="leak-item">
-      <strong>Users don't click</strong> → $5,000/month lost
-    </div>
-    <div class="leak-item">
-      <strong>Users don't trust</strong> → $2,500/month lost
-    </div>
-    <div class="leak-item">
-      <strong>Users get distracted</strong> → $1,500/month lost
-    </div>
-    <div class="leak-item">
-      <strong>Users hesitate</strong> → $1,000/month lost
-    </div>
-  </div>
-
-  <div class="sub" id="credibilityNote" style="margin-top:10px;color:#9ca3af;"></div>
-
-  <div class="sub" id="dailyLoss"></div>
-  <div class="sub" id="yearlyLoss"></div>
-
-  <div class="section-title" style="margin-top:14px;">Score</div>
-  <div class="score" id="score"></div>
-  <div class="sub" id="scoreLabel"></div>
-
-  <div class="sub" style="margin-top:8px;font-size:13px;color:#9ca3af;">
-    This score differs from your free scan because this audit analyzes deeper conversion signals,
-    including UX structure, trust gaps, and revenue impact — not just surface issues.
-  </div>
-
-  <div class="sub" style="margin-top:10px;">
-    Stores with similar score typically recover 18–32% revenue after fixes
-  </div>
-
-  <div class="sub">
-    Confidence: <b id="confidence"></b> (based on pattern-matching across 1,000+ stores)
-  </div>
-</div>
-
-<div class="blame-block">
-  <p>Right now, users are on your store.</p>
-  <p>They want to buy.</p>
-  <p>They don't.</p>
-  <span class="blame-highlight">
-    Not because of price.<br>
-    Not because of product.<br><br>
-    Because your page does not guide them to act.
-  </span>
-</div>
-
-<div class="reality-block">
-  <h3>You are not losing traffic.</h3>
-  <h2>You are losing BUYERS.</h2>
-</div>
-
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">What This Audit Includes</div>
-  <div class="sub">
-    • Conversion leak detection (UX + decision flow)<br>
-    • Revenue impact modeling (monthly + yearly loss)<br>
-    • Priority-based fix plan (what to fix first)<br>
-    • Execution steps for each issue<br>
-    • Benchmark vs 1,000+ ecommerce stores<br><br>
-    <b>Typical cost of this analysis: $600–$1,200</b>
-  </div>
-</div>
-
-<div class="cta-zone">
-  <a id="monitoring-btn-top" class="cta" href="#">
-    Fix These 4 Leaks → Recover $11,250/month (Starting Today)
-  </a>
-  <div class="sub" style="text-align:center;margin-top:10px;color:#22c55e;font-weight:600;">
-    Most stores recover this from ONE fix within days
-  </div>
-  <div class="sub" style="text-align:center;margin-top:6px;color:#22c55e;">
-    No risk: even a single fix can recover the full cost
-  </div>
-</div>
-
-<div class="inevitable-block">
-  <p>This is happening right now.</p>
-  <p>Users are visiting your store.<br>They are reaching the decision point.</p>
-  <p>And leaving.</p>
-  <p class="inevitable-repeat">This repeats every day.</p>
-</div>
-
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Immediate Impact</div>
-  <div id="urgencyBlock"></div>
-  <div class="sub" id="recoveryBlock"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Observed Pattern</div>
-  <div id="pattern"></div>
-</div>
-
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Critical Revenue Leak</div>
-  <div id="primary"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Conversion Gap</div>
-  <div id="dashboard"></div>
-</div>
-
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">What This Means For You</div>
-  <div>
-    You are not missing traffic.<br>
-    You are losing conversions inside your current funnel.<br><br>
-    This means fixing these issues does not require more ads —
-    it unlocks revenue from traffic you already have.
-  </div>
-</div>
-
-<div class="card">
-  <div class="section-title">How You Compare</div>
-  <div id="benchmark"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Live Revenue Loss</div>
-  <div id="liveLoss"></div>
-</div>
-
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Revenue Loss Timeline</div>
-  <div id="timeline"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Where Money Is Lost</div>
-  <div id="priority"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Revenue Recovery Plan</div>
-  <div id="plan"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Conversion Leaks</div>
-  <div id="issues"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Time to Fix</div>
-  <div>Most fixes can be implemented in 30–120 minutes</div>
-</div>
-
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">If You Do Nothing</div>
-  <div id="donothing"></div>
-</div>
-
-<div class="card">
-  <div class="section-title">Execution Plan</div>
-  <div id="steps"></div>
-</div>
-
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">Implementation Value</div>
-  <div>
-    Each fix in this report is designed to be:
-    <br><br>
-    • Directly actionable (no guesswork)<br>
-    • Testable (A/B or immediate validation)<br>
-    • Focused on revenue, not design<br><br>
-    <b>This is not advice — this is an execution plan.</b>
-  </div>
-</div>
-
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Revenue Loss Reality</div>
-  <div>
-    Every day this remains unfixed:<br><br>
-    • ~$<span id="daily2"></span> lost<br>
-    • More users drop off without buying<br>
-    • Fixing later = higher cost<br><br>
-    This compounds daily.
-  </div>
-</div>
-
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">Why Monitoring Matters</div>
-  <div>
-    After this audit:<br><br>
-    • New conversion leaks appear as your store evolves<br>
-    • Competitors continuously improve their funnels<br>
-    • Small UX issues compound into revenue loss<br><br>
-    Monitoring prevents this.
-  </div>
-</div>
-
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">Execution Confidence</div>
-  <div>
-    • Used across 1,000+ ecommerce analyses<br>
-    • Based on real conversion data patterns<br>
-    • No guesswork — only revenue-driven fixes<br><br>
-    <b>If it doesn't improve conversion, you don't scale it.</b>
-  </div>
-</div>
-
-<div class="card">
-  <div class="section-title">Why This Exists</div>
-  <div>
-    Most ecommerce stores don't have visibility into where revenue is actually lost.
-    <br><br>
-    This system was built to identify and quantify those losses — and turn them into recoverable revenue.
-  </div>
-</div>
-
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Decision Point</div>
-  <div>
-    You have two options:<br><br>
-    1. Do nothing → continue losing ~$<span id="dailyDecision"></span>/day<br>
-    2. Fix the leaks → recover lost revenue<br><br>
-    The difference compounds every day.
-  </div>
-</div>
-
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">What Happens Next</div>
-  <div id="monitoringHook"></div>
-</div>
-
-<div class="urgency-loop">
-  <h2>$375 lost today</h2>
-  <h2>$750 in 2 days</h2>
-  <h2>$11,250 this month</h2>
-  <p>This compounds whether you act or not.</p>
-</div>
-
-<div class="no-return-block">
-  <p>You already paid for this traffic.</p>
-  <p>You already brought users to your store.</p>
-  <p class="no-return-q">
-    The only question is:<br><br>
-    Will you capture this revenue<br>
-    or continue losing it every day?
-  </p>
-</div>
-
-<!-- WHY ACT NOW -->
-<div class="card" style="border:1px solid #dc2626;">
-  <div class="section-title">Why Act Now</div>
-  <div>
-    Every day you delay:<br><br>
-    • $375 permanently lost<br>
-    • More users form negative impression<br>
-    • Fixing later becomes harder and more expensive<br><br>
-    <b>This is not a one-time loss.</b><br>
-    This compounds every single day.
-  </div>
-</div>
-
-<!-- THIS WILL HAPPEN AGAIN -->
-<div class="card" style="border:1px solid #14532d;">
-  <div class="section-title">This Will Happen Again</div>
-  <div>
-    Even if you fix everything today:<br><br>
-    • New conversion leaks will appear<br>
-    • User behavior will change<br>
-    • Competitors will improve<br><br>
-    <b>This is not a one-time problem.</b><br>
-    Conversion leaks continuously evolve.
-  </div>
-</div>
-
-<div class="cta-zone">
-  <a id="monitoring-btn" class="cta" href="#">
-    Fix These 4 Leaks → Recover $11,250/month (Starting Today)
-  </a>
-
-  <div class="sub" style="text-align:center;margin-top:10px;color:#22c55e;font-weight:600;">
-    Most stores recover this from ONE fix within days
-  </div>
-
-  <div class="sub" style="text-align:center;margin-top:6px;color:#22c55e;">
-    No risk: even a single fix can recover the full cost
-  </div>
-
-  <button class="cta-secondary" onclick="openBillingPortal()">
-    Manage subscription / Cancel anytime
-  </button>
-
-  <div class="sub" style="text-align:center;margin-top:10px;">
-    Most stores recover the cost of monitoring from a single fix
-  </div>
-
-  <ul class="checklist">
-    <li>✔ Detect revenue leaks automatically</li>
-    <li>✔ Fix issues before they cost money</li>
-    <li>✔ Exact actions — no guessing</li>
-    <li>✔ Track conversion improvements</li>
-  </ul>
-
-  <div class="sub" style="text-align:center;margin-top:10px;">
-    Every day you delay = <span id="ctaLossInline"></span> lost
-  </div>
-</div>
-
-<a href="#" class="cta-secondary" onclick="window.print()">
-  Download Full Execution Plan (PDF)
-</a>
-
+  <div id="loadingState">Loading your audit...</div>
+  <div id="app" style="display:none;"></div>
 </div>
 
 <script>
@@ -898,8 +373,6 @@ function bindCTA() {
 
         const result = await res.json();
 
-        console.log(result);
-
         const fallback = "https://buy.stripe.com/8x2aEQ4tt4xW6e7egk1RC00";
 
         if (!result.url) {
@@ -924,6 +397,7 @@ const token = window.location.pathname.split("/").pop();
 
 if (!token || token.length < 6) {
   console.error("Invalid token");
+  document.getElementById("loadingState").innerText = "Invalid audit token.";
   return;
 }
 
@@ -931,6 +405,7 @@ const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-
 
 if (!res.ok) {
   console.error("API error:", res.status);
+  document.getElementById("loadingState").innerText = "Failed to load audit.";
   return;
 }
 
@@ -939,147 +414,226 @@ const data = await res.json();
 let r = data.report_json || {};
 
 if (typeof r === "string") {
-  try {
-    r = JSON.parse(r);
-  } catch(e) {
-    console.error("JSON parse error", e);
-    r = {};
-  }
+  try { r = JSON.parse(r); } catch(e) { r = {}; }
 }
 
-function setText(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.innerText = val;
-}
-
-function setHTML(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.innerHTML = val;
-}
-
-const issues = r.issues || [];
+const issues = Array.isArray(r.issues) ? r.issues : [];
 
 const min = Number(r.estimated_loss_min || 0);
 const max = Number(r.estimated_loss_max || 0);
-
-const monthly = Math.round((min + max) / 2);
+const monthly = Math.round((min + max) / 2) || Math.round((Number(r.revenue_calculation?.monthly_loss_value || 0)));
 const daily = Math.round(monthly / 30);
 const yearly = monthly * 12;
 
-const format = (n) => Number(n || 0).toLocaleString("en-US");
+const fmt = (n) => Number(n || 0).toLocaleString("en-US");
 
 storeDomain = data.store_domain || data.domain || "";
 
 const params = new URLSearchParams(window.location.search);
 email = data.email || params.get("email") || "";
-if (email) {
-  localStorage.setItem("email", email);
-}
+if (email) localStorage.setItem("email", email);
 
-setText("storeName", storeDomain);
-setText("score", (r.score || 70) + "/100");
-setText("confidence", r.analysis_confidence || "medium");
+const croScore = data.cro_score || data.score || r.score || 65;
+const arsScore = data.ars_score || r.ars_score || Math.round(croScore * 0.65);
 
-setText(
-  "ownerMessage",
-  r.owner_message ||
-  `Your store may potentially be losing approximately $${format(monthly)} per month due to these conversion gaps.`
-);
+const croColor = croScore >= 70 ? "#1D9E75" : croScore >= 50 ? "#EF9F27" : "#E24B4A";
+const arsColor = arsScore >= 70 ? "#1D9E75" : arsScore >= 40 ? "#EF9F27" : "#E24B4A";
 
-const credibility = "Based on your current traffic and conversion patterns";
-setText("credibilityNote", credibility);
+const croVerdictText = croScore >= 75
+  ? `<span style="color:#1D9E75;">✓ Good conversion health — room to optimize</span>`
+  : croScore >= 50
+  ? `<span style="color:#EF9F27;">⚠ Conversion issues are costing you revenue</span>`
+  : `<span style="color:#E24B4A;">✗ Critical conversion problems — buyers are leaving</span>`;
 
-setText("dailyLoss", `$${format(daily)} lost every day`);
-setText("yearlyLoss", `$${format(yearly)} lost per year`);
+const arsVerdictText = arsScore >= 70
+  ? `<span style="color:#1D9E75;">✓ AI agents can find and recommend your store</span>`
+  : arsScore >= 40
+  ? `<span style="color:#EF9F27;">⚠ AI agents may skip your store in recommendations</span>`
+  : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store</span>`;
 
-setText("daily2", format(daily));
+const priorityLabels = ["critical", "high", "medium", "low"];
+const priorityColors = ["priority-critical", "priority-high", "priority-medium", "priority-low"];
+const priorityTexts = ["Critical priority", "High priority", "Medium priority", "Low priority"];
 
-setText("ctaLossInline", `$${format(daily)}`);
-setText("dailyDecision", format(daily));
+const execCardsHTML = issues.map((issue, i) => {
+  const impact = Number(issue.impact_value || 0);
+  const steps = Array.isArray(issue.fix_steps) && issue.fix_steps.length > 0
+    ? issue.fix_steps
+    : [
+        "Identify the exact section where this appears",
+        "Adjust visual hierarchy and element positioning",
+        "Remove competing elements near the decision point",
+        "Test conversion before and after the change"
+      ];
 
-setText(
-  "pattern",
-  (r.core_insight && r.core_insight !== "undefined")
-    ? r.core_insight
-    : (r.primary_failure || "Users are dropping before reaching purchase intent.")
-);
+  const stepsHTML = steps.slice(0, 4).map(s =>
+    `<li class="exec-step">${String(s).replace(/</g, "&lt;")}</li>`
+  ).join("");
 
-setText("primary", r.main_leak ? r.main_leak + " — this directly impacts your conversions" : "Key conversion leak detected in decision stage.");
+  const timeline = issue.recovery_time || "30–60 minutes";
+  const priorityClass = priorityColors[i] || "priority-low";
+  const priorityText = priorityTexts[i] || "Low priority";
 
-setText(
-  "urgencyBlock",
-  r.urgency_block ||
-  `You may be losing approximately $${format(daily)}/day due to these issues`
-);
-
-setText("recoveryBlock", r.recovery_potential || "Fixing this can unlock immediate revenue recovery.");
-setText("monitoringHook", r.monitoring_hook || "Continuous monitoring ensures new leaks are detected early.");
-
-setHTML("priority",
-  (r.revenue_distribution || []).map(d =>
-    `${String(d.name).replace(/</g,"&lt;")} → ${d.percent}% (~$${format(d.amount)})`
-  ).join("<br>")
-);
-
-setHTML("plan",
-  (r.revenue_plan || []).map(p =>
-    `${String(p.fix).replace(/</g,"&lt;")}<br>+$${format(p.impact_value)}/month`
-  ).join("<br><br>")
-);
-
-setHTML("steps",
-  (r.execution_plan || []).map(s =>
-    `• ${String(s.title).replace(/</g,"&lt;")} → ${String(s.impact).replace(/</g,"&lt;")}`
-  ).join("<br>")
-);
-
-setHTML("issues",
-  issues.map(i => `
-  <div class="issue">
-  <strong>${String(i.title).replace(/</g,"&lt;")}</strong>
-  <div class="fix">${String(i.fix).replace(/</g,"&lt;")}</div>
-  <p>${String(i.reason).replace(/</g,"&lt;")}</p>
-  <div class="sub">${String(i.why_it_matters || "").replace(/</g,"&lt;")}</div>
-  <ul>${(i.fix_steps || []).map(s => `<li>${String(s).replace(/</g,"&lt;")}</li>`).join("")}</ul>
+  return `
+  <div class="exec-card">
+    <div class="exec-card-header">
+      <div class="exec-num">${i + 1}</div>
+      <div style="flex:1;">
+        <div class="exec-card-title">${String(issue.title || "Conversion issue").replace(/</g, "&lt;")}</div>
+        <div class="exec-card-impact">${impact > 0 ? "~$" + fmt(impact) + "/month impact" : "Revenue impact detected"}</div>
+      </div>
+    </div>
+    <div class="exec-card-body">
+      <div class="exec-reason">${String(issue.reason || issue.why_it_matters || "This issue slows user decision-making.").replace(/</g, "&lt;")}</div>
+      <div class="exec-fix-label">✓ Exact fix</div>
+      <div class="exec-fix-text">${String(issue.fix || "").replace(/</g, "&lt;")}</div>
+      <ul class="exec-steps">${stepsHTML}</ul>
+    </div>
+    <div class="exec-footer">
+      <div class="exec-timeline">⏱ ${timeline} to implement</div>
+      <div class="exec-priority ${priorityClass}">${priorityText}</div>
+    </div>
   </div>
-  `).join("")
-);
+  `;
+}).join("");
 
-const score = r.score || 70;
-const gap = Math.round((100 - score) * 0.6);
+const mainLeak = r.main_leak || r.primary_failure || "Decision path is not clearly guiding users to purchase.";
 
-setHTML("dashboard", `Estimated conversion gap: <b>${gap}%</b><br>Users drop before purchase`);
-setHTML("benchmark", `Worse than ${100 - score}% of stores<br>Top stores score 85+`);
-setHTML("liveLoss", `$${format(daily)}/day<br>$${format(monthly)}/month<br>$${format(yearly)}/year`);
-setHTML("timeline", `Day 1 → loss<br>Week 1 → compounding<br>Month → serious revenue leak`);
-setHTML("donothing", `$${format(daily)} lost daily<br>Conversion stagnates<br>Competitors win`);
+document.getElementById("loadingState").style.display = "none";
+const app = document.getElementById("app");
+app.style.display = "block";
 
-setText("scoreLabel",
-  score < 40 ? "Critical revenue leakage"
-  : score < 60 ? "Significant conversion issues"
-  : "Optimization opportunity"
-);
+app.innerHTML = `
+
+  <div class="audit-badge">
+    <span class="audit-badge-dot"></span>
+    Full Revenue Audit · atomfoundry.dev
+  </div>
+
+  <div class="domain-label">${storeDomain}</div>
+  <div class="loss-number">$${fmt(monthly)}/month</div>
+  <div class="loss-label">estimated revenue loss · full audit complete</div>
+
+  <div class="daily-loss">⚡ That's $${fmt(daily)} every single day.</div>
+  <div class="live-counter" id="liveCounter"></div>
+
+  <div class="scores-section">
+    <div class="score-row">
+      <div class="score-label">CRO Score</div>
+      <div class="score-num" style="color:${croColor};">${croScore}<span style="font-size:13px;color:#555;">/100</span></div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill" id="croBar" style="width:0%;background:${croColor};"></div>
+      </div>
+    </div>
+    <div class="score-verdict">${croVerdictText}</div>
+
+    <div class="score-row">
+      <div class="score-label">AI Readiness</div>
+      <div class="score-num" style="color:${arsColor};">${arsScore}<span style="font-size:13px;color:#555;">/100</span></div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill" id="arsBar" style="width:0%;background:${arsColor};"></div>
+      </div>
+    </div>
+    <div class="score-verdict">${arsVerdictText}</div>
+  </div>
+
+  <div style="margin-bottom:20px;">
+    <div class="section-label">Primary leak identified</div>
+    <div class="main-leak-box">
+      <div class="main-leak-text">${String(mainLeak).replace(/</g, "&lt;")}</div>
+    </div>
+  </div>
+
+  <div class="section-label">4 Execution fixes</div>
+  <div class="execution-cards">${execCardsHTML}</div>
+
+  <div class="section-label">Revenue summary</div>
+  <div style="background:#111;border:1px solid #1e1e1e;border-radius:12px;padding:16px 18px;margin-bottom:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #1a1a1a;">
+      <span style="font-size:13px;color:#888;">Monthly loss</span>
+      <span style="font-size:16px;font-weight:700;color:#E24B4A;">$${fmt(monthly)}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #1a1a1a;">
+      <span style="font-size:13px;color:#888;">Daily loss</span>
+      <span style="font-size:16px;font-weight:700;color:#EF9F27;">$${fmt(daily)}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:13px;color:#888;">Yearly projection</span>
+      <span style="font-size:16px;font-weight:700;color:#E24B4A;">$${fmt(yearly)}</span>
+    </div>
+  </div>
+
+  <a href="#" class="pdf-btn" onclick="window.print(); return false;">
+    ↓ Download Full Execution Plan (PDF)
+  </a>
+
+  <div class="section-label">Keep your store optimized</div>
+  <div class="monitoring-box">
+    <div class="monitoring-title">⚡ Add Revenue Monitoring — $79/month</div>
+    <div class="monitoring-desc">
+      Conversion leaks evolve. New issues appear as your store grows, competitors improve, and user behavior shifts.
+      Monitoring catches them before they cost you money.
+    </div>
+    <ul class="monitoring-features">
+      <li class="monitoring-feature">Weekly automated store scan</li>
+      <li class="monitoring-feature">Instant alert when new leak is detected</li>
+      <li class="monitoring-feature">Revenue impact tracked over time</li>
+      <li class="monitoring-feature">Monthly benchmark vs top DTC stores</li>
+    </ul>
+    <div id="monitoring-btn" class="monitoring-cta">
+      Add Monitoring — $79/month →
+    </div>
+    <div style="font-size:11px;color:#444;text-align:center;margin-top:8px;">
+      Cancel anytime &nbsp;·&nbsp; No contracts &nbsp;·&nbsp; Instant setup
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-scan-line">
+      Full revenue audit · atomfoundry.dev &nbsp;·&nbsp;
+      <a href="#" onclick="openBillingPortal();return false;" style="color:#444;text-decoration:none;">Manage subscription</a>
+    </div>
+    <div class="footer-tagline">Find → Prove → Fix → Protect</div>
+  </div>
+`;
+
+setTimeout(() => {
+  const croBar = document.getElementById("croBar");
+  const arsBar = document.getElementById("arsBar");
+  if (croBar) croBar.style.width = croScore + "%";
+  if (arsBar) arsBar.style.width = arsScore + "%";
+}, 300);
+
+const hourly = Math.round(daily / 24);
+let seconds = 0;
+const counter = document.getElementById("liveCounter");
+setInterval(() => {
+  seconds++;
+  const lost = Math.round((hourly / 3600) * seconds);
+  if (counter) counter.innerText = `$${lost.toLocaleString()} lost while you are reading this`;
+}, 1000);
 
 bindCTA();
 
 } catch (err) {
   console.error("FATAL:", err);
+  document.getElementById("loadingState").innerText = "Something went wrong. Please refresh.";
 }
 
 })();
 
 async function openBillingPortal() {
   const params = new URLSearchParams(window.location.search);
-  const email = params.get("email");
+  const emailParam = params.get("email") || localStorage.getItem("email");
 
-  if (!email) {
+  if (!emailParam) {
     alert("Missing email");
     return;
   }
 
   try {
     const res = await fetch(
-      "https://n8n-production-43ab.up.railway.app/webhook/create-portal?email=" + encodeURIComponent(email)
+      "https://n8n-production-43ab.up.railway.app/webhook/create-portal?email=" + encodeURIComponent(emailParam)
     );
 
     const result = await res.json();
