@@ -195,6 +195,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const tokenFromUrl = urlParams.get("token");
 const domain = urlParams.get("domain") || "";
 
+// Pokud máme token — přesměruj po 3 sekundách animace
 if (tokenFromUrl) {
   setTimeout(() => {
     redirectToReport(tokenFromUrl);
@@ -255,18 +256,22 @@ function saveEmail() {
     return;
   }
 
-  fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
+  // Pošli email + token na separátní save-email endpoint
+  // NEPOUŠTÍME nový scan — jen ukládáme email k tokenu
+  fetch("https://n8n-production-43ab.up.railway.app/webhook/save-email", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, url: domain })
+    body: JSON.stringify({ email, token: tokenFromUrl })
   }).catch(() => {});
 
+  // Vizuální feedback
   const btn = document.querySelector(".btn");
-  btn.innerText = "✓ Got it — sending your results";
+  btn.innerText = "✓ Got it — loading your results";
   btn.style.background = "#1D9E75";
   btn.style.border = "2px solid #1D9E75";
   btn.style.color = "#fff";
 
+  // Přesměruj na report
   if (tokenFromUrl) {
     setTimeout(() => redirectToReport(tokenFromUrl), 1500);
   }
@@ -274,6 +279,7 @@ function saveEmail() {
 
 function redirectToReport(token) {
   clearInterval(msgInterval);
+  clearInterval(progressInterval);
   bar.style.width = "100%";
   pct.innerText = "100%";
   stepEl.innerText = "Complete — loading your results...";
