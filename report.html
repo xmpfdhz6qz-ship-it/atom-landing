@@ -49,7 +49,6 @@ body::before {
 .daily-loss { font-size: 18px; color: #EF9F27; font-weight: 600; margin-bottom: 6px; }
 .live-counter { font-size: 14px; color: #777; margin-bottom: 24px; min-height: 22px; }
 
-/* SCORE BARS */
 .scores-section {
   background: #111; border: 1px solid #1e1e1e;
   border-radius: 16px; padding: 18px 20px; margin-bottom: 8px;
@@ -66,11 +65,17 @@ body::before {
 .ars-verdict { font-size: 12px; font-weight: 600; margin-bottom: 6px; padding-left: 124px; line-height: 1.4; }
 .cro-verdict { font-size: 12px; font-weight: 600; margin-bottom: 10px; padding-left: 124px; line-height: 1.4; }
 
-/* ARS DETAIL LINK */
+/* ARS DETAIL LINK — opraveno */
 .ars-detail-link {
-  font-size: 11px; color: #f97316; cursor: pointer;
-  padding-left: 124px; margin-bottom: 14px; display: block;
-  text-decoration: none; letter-spacing: 0.01em;
+  font-size: 13px;
+  color: #f97316;
+  cursor: pointer;
+  padding-left: 124px;
+  margin-bottom: 14px;
+  display: block;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  font-weight: 500;
 }
 .ars-detail-link:hover { color: #fb923c; }
 
@@ -86,19 +91,19 @@ body::before {
   display: flex; justify-content: space-between; align-items: center;
   padding: 6px 0; border-bottom: 1px solid #141414;
 }
-.ars-factor:last-child { border-bottom: none; }
+.ars-factor:last-of-type { border-bottom: none; }
 .ars-factor-name { font-size: 12px; color: #888; }
 .ars-factor-weight { font-size: 12px; font-weight: 700; color: #f97316; }
 .ars-factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; margin-top: 3px; }
 .ars-factor-fill { height: 100%; background: #f97316; border-radius: 999px; }
 
-/* EXPLAIN TOGGLE */
 .explain-toggle {
   font-size: 12px; color: #f97316; cursor: pointer;
   text-align: center; padding: 10px; margin-bottom: 16px;
   user-select: none; letter-spacing: 0.02em;
 }
 .explain-toggle:hover { color: #fb923c; }
+
 .explain-box {
   display: none; background: #0d0d0d; border: 1px solid #1e1e1e;
   border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
@@ -122,7 +127,6 @@ body::before {
 }
 .main-leak-text { font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.6; }
 
-/* LOCKED LEAKS */
 .locked-box {
   background: #0d0d0d; border: 1px solid #1e1e1e;
   border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
@@ -139,7 +143,6 @@ body::before {
 .locked-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
 .locked-text { flex: 1; }
 
-/* QUICK FIX */
 .fix-label {
   font-size: 11px; color: #1D9E75; text-transform: uppercase;
   letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px;
@@ -220,7 +223,7 @@ body::before {
   .score-num      { font-size: 20px; min-width: 55px; }
   .ars-verdict    { padding-left: 100px; }
   .cro-verdict    { padding-left: 100px; }
-  .ars-detail-link { padding-left: 100px; }
+  .ars-detail-link { padding-left: 100px; font-size: 13px; }
   .cta-btn        { font-size: 17px; padding: 18px; }
 }
 </style>
@@ -264,7 +267,6 @@ if (!data) {
   return;
 }
 
-// 🔥 TRACK: viewed report
 track("viewed_report");
 
 const row    = data;
@@ -293,14 +295,13 @@ const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.le
 
 const email = row.email || "";
 
-// 🔥 NOVÉ BARVY — zelená až nad 90
+// 🔥 BARVY — zelená až nad 90
 const getCroColor = (s) => s >= 90 ? "#1D9E75" : s >= 60 ? "#EF9F27" : "#E24B4A";
 const getArsColor = (s) => s >= 90 ? "#1D9E75" : s >= 50 ? "#EF9F27" : "#E24B4A";
-
 const croColor = getCroColor(croScore);
 const arsColor = getArsColor(arsScore);
 
-// 🔥 NOVÉ VERDICT TEXTY — urgency first
+// 🔥 VERDICT TEXTY — urgency
 const croVerdictText = croScore >= 90
   ? `<span style="color:#1D9E75;">✓ Strong conversion health — maintain and monitor</span>`
   : croScore >= 60
@@ -313,7 +314,6 @@ const arsVerdictText = arsScore >= 90
   ? `<span style="color:#EF9F27;">⚠ You're partially visible to AI — competitors may outrank you in AI search</span>`
   : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store</span>`;
 
-// Quick fix impact estimate
 const quickFixImpact = Math.round(lossMin * 0.3);
 
 const lockedHTML = lockedLeaks.map(l => `
@@ -339,7 +339,7 @@ app.innerHTML = `
   <div class="scores-section">
     <div class="score-row">
       <div class="score-label">CRO Score</div>
-      <div class="score-num" style="color:${croColor};">${croScore}<span style="font-size:13px;color:#555;">/100</span></div>
+      <div class="score-num" style="color:${croColor};">${croScore}<span style="font-size:13px;color:#888;">/100</span></div>
       <div class="score-bar-wrap">
         <div class="score-bar-fill" id="croBar" style="width:0%;background:${croColor};"></div>
       </div>
@@ -348,70 +348,70 @@ app.innerHTML = `
 
     <div class="score-row">
       <div class="score-label">AI Readiness</div>
-      <div class="score-num" style="color:${arsColor};">${arsScore}<span style="font-size:13px;color:#555;">/100</span></div>
+      <div class="score-num" style="color:${arsColor};">${arsScore}<span style="font-size:13px;color:#888;">/100</span></div>
       <div class="score-bar-wrap">
         <div class="score-bar-fill" id="arsBar" style="width:0%;background:${arsColor};"></div>
       </div>
     </div>
     <div class="ars-verdict">${arsVerdictText}</div>
     <span class="ars-detail-link" onclick="toggleArsPopup()">▸ Why AI agents might skip your store</span>
+
     <div class="ars-popup" id="arsPopup">
       <div class="ars-popup-title">How AI Readiness is calculated</div>
-      <div style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.5;">
+      <div style="font-size:12px;color:#777;margin-bottom:12px;line-height:1.5;">
         AI shopping agents (Google SGE, ChatGPT Shopping, Perplexity) score your store across 6 factors.
         Low scores mean agents skip your store when recommending products to buyers.
       </div>
       <div class="ars-factor">
-        <div>
+        <div style="flex:1;">
           <div class="ars-factor-name">Structured Data (Schema)</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:25%;"></div></div>
         </div>
         <div class="ars-factor-weight">25%</div>
       </div>
       <div class="ars-factor">
-        <div>
+        <div style="flex:1;">
           <div class="ars-factor-name">Content Quality & Specificity</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
         </div>
         <div class="ars-factor-weight">20%</div>
       </div>
       <div class="ars-factor">
-        <div>
+        <div style="flex:1;">
           <div class="ars-factor-name">Trust Signals</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
         </div>
         <div class="ars-factor-weight">20%</div>
       </div>
       <div class="ars-factor">
-        <div>
+        <div style="flex:1;">
           <div class="ars-factor-name">Technical Readability</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:15%;"></div></div>
         </div>
         <div class="ars-factor-weight">15%</div>
       </div>
       <div class="ars-factor">
-        <div>
+        <div style="flex:1;">
           <div class="ars-factor-name">Price Visibility</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:12%;"></div></div>
         </div>
         <div class="ars-factor-weight">12%</div>
       </div>
       <div class="ars-factor">
-        <div>
+        <div style="flex:1;">
           <div class="ars-factor-name">Brand Entity Clarity</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:8%;"></div></div>
         </div>
         <div class="ars-factor-weight">8%</div>
       </div>
-      <div style="font-size:11px;color:#444;margin-top:10px;line-height:1.5;">
-        The full audit includes specific fixes for each factor — structured data implementation, content improvements, and technical optimizations.
+      <div style="font-size:11px;color:#555;margin-top:10px;line-height:1.5;">
+        The full audit includes specific fixes for each factor — structured data implementation,
+        content improvements, and technical optimizations.
       </div>
     </div>
   </div>
 
-  <div class="explain-toggle" onclick="toggleExplain()">
-    ▸ What do these scores mean?
-  </div>
+  <div class="explain-toggle" onclick="toggleExplain()">▸ What do these scores mean?</div>
 
   <div class="explain-box" id="explainBox">
     <div class="explain-title">Understanding your two scores</div>
@@ -500,7 +500,6 @@ setInterval(() => {
   if (counter) counter.innerText = `$${lost.toLocaleString()} lost while you are reading this`;
 }, 1000);
 
-// 🔥 CHECKOUT
 async function goCheckout(btn) {
   if (!btn) return;
   track("clicked_cta");
@@ -546,8 +545,8 @@ function toggleExplain() {
 }
 
 function toggleArsPopup() {
-  const popup  = document.getElementById("arsPopup");
-  const link   = document.querySelector(".ars-detail-link");
+  const popup = document.getElementById("arsPopup");
+  const link  = document.querySelector(".ars-detail-link");
   if (!popup) return;
   const isOpen = popup.classList.contains("open");
   popup.classList.toggle("open");
