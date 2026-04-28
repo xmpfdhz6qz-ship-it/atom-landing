@@ -36,258 +36,136 @@ body::before {
   z-index: 1;
 }
 
-.domain-label {
-  font-size: 14px;
-  color: #aaa;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
+.domain-label { font-size: 14px; color: #aaa; margin-bottom: 8px; font-weight: 500; }
 
 .loss-number {
-  font-size: 64px;
-  font-weight: 800;
-  color: #E24B4A;
-  line-height: 1;
-  margin-bottom: 4px;
+  font-size: 64px; font-weight: 800; color: #E24B4A;
+  line-height: 1; margin-bottom: 4px;
   text-shadow: 0 0 40px rgba(226,75,74,0.3);
   letter-spacing: -0.02em;
 }
 
-.loss-label {
-  font-size: 14px;
-  color: #aaa;
-  margin-bottom: 16px;
-}
+.loss-label { font-size: 14px; color: #aaa; margin-bottom: 16px; }
+.daily-loss { font-size: 18px; color: #EF9F27; font-weight: 600; margin-bottom: 6px; }
+.live-counter { font-size: 14px; color: #777; margin-bottom: 24px; min-height: 22px; }
 
-.daily-loss {
-  font-size: 18px;
-  color: #EF9F27;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.live-counter {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 24px;
-  min-height: 22px;
-}
-
+/* SCORE BARS */
 .scores-section {
-  background: #111;
-  border: 1px solid #1e1e1e;
-  border-radius: 16px;
-  padding: 18px 20px;
-  margin-bottom: 8px;
+  background: #111; border: 1px solid #1e1e1e;
+  border-radius: 16px; padding: 18px 20px; margin-bottom: 8px;
 }
-
-.score-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 6px;
-}
-
+.score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
 .score-label {
-  font-size: 12px;
-  color: #aaa;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: 600;
-  min-width: 110px;
+  font-size: 12px; color: #aaa; text-transform: uppercase;
+  letter-spacing: 0.06em; font-weight: 600; min-width: 110px;
 }
+.score-num { font-size: 22px; font-weight: 700; min-width: 65px; line-height: 1; }
+.score-bar-wrap { flex: 1; height: 7px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
 
-.score-num {
-  font-size: 22px;
-  font-weight: 700;
-  min-width: 65px;
-  line-height: 1;
+.ars-verdict { font-size: 12px; font-weight: 600; margin-bottom: 6px; padding-left: 124px; line-height: 1.4; }
+.cro-verdict { font-size: 12px; font-weight: 600; margin-bottom: 10px; padding-left: 124px; line-height: 1.4; }
+
+/* ARS DETAIL LINK */
+.ars-detail-link {
+  font-size: 11px; color: #f97316; cursor: pointer;
+  padding-left: 124px; margin-bottom: 14px; display: block;
+  text-decoration: none; letter-spacing: 0.01em;
 }
+.ars-detail-link:hover { color: #fb923c; }
 
-.score-bar-wrap {
-  flex: 1;
-  height: 7px;
-  background: #1e1e1e;
-  border-radius: 999px;
-  overflow: hidden;
+/* ARS POPUP */
+.ars-popup {
+  display: none; background: #0d0d0d; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 12px;
+  font-size: 13px; color: #aaa; line-height: 1.8;
 }
-
-.score-bar-fill {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 1s ease;
+.ars-popup.open { display: block; }
+.ars-popup-title { font-size: 13px; font-weight: 700; color: #ccc; margin-bottom: 12px; }
+.ars-factor {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0; border-bottom: 1px solid #141414;
 }
+.ars-factor:last-child { border-bottom: none; }
+.ars-factor-name { font-size: 12px; color: #888; }
+.ars-factor-weight { font-size: 12px; font-weight: 700; color: #f97316; }
+.ars-factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; margin-top: 3px; }
+.ars-factor-fill { height: 100%; background: #f97316; border-radius: 999px; }
 
-.ars-verdict {
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 14px;
-  padding-left: 124px;
-  line-height: 1.4;
-}
-
-.cro-verdict {
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  padding-left: 124px;
-  line-height: 1.4;
-}
-
+/* EXPLAIN TOGGLE */
 .explain-toggle {
-  font-size: 12px;
-  color: #f97316;
-  cursor: pointer;
-  text-align: center;
-  padding: 10px;
-  margin-bottom: 16px;
-  user-select: none;
-  letter-spacing: 0.02em;
+  font-size: 12px; color: #f97316; cursor: pointer;
+  text-align: center; padding: 10px; margin-bottom: 16px;
+  user-select: none; letter-spacing: 0.02em;
 }
-
 .explain-toggle:hover { color: #fb923c; }
-
 .explain-box {
-  display: none;
-  background: #0d0d0d;
-  border: 1px solid #1e1e1e;
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 20px;
-  font-size: 13px;
-  color: #aaa;
-  line-height: 1.8;
+  display: none; background: #0d0d0d; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
+  font-size: 13px; color: #aaa; line-height: 1.8;
 }
-
 .explain-box.open { display: block; }
-
-.explain-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: #ccc;
-  margin-bottom: 10px;
-}
-
-.explain-item {
-  margin-bottom: 8px;
-  padding-left: 4px;
-}
-
+.explain-title { font-size: 13px; font-weight: 700; color: #ccc; margin-bottom: 10px; }
+.explain-item { margin-bottom: 8px; padding-left: 4px; }
 .explain-item:last-child { margin-bottom: 0; }
-
-.explain-highlight {
-  color: #f97316;
-  font-weight: 600;
-}
+.explain-highlight { color: #f97316; font-weight: 600; }
 
 .section-label {
-  font-size: 11px;
-  color: #888;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 11px; color: #888; text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px;
 }
 
 .main-leak-box {
-  background: #111;
-  border: 1px solid #1e1e1e;
-  border-left: 3px solid #E24B4A;
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 20px;
+  background: #111; border: 1px solid #1e1e1e;
+  border-left: 3px solid #E24B4A; border-radius: 12px;
+  padding: 16px 18px; margin-bottom: 20px;
 }
+.main-leak-text { font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.6; }
 
-.main-leak-text {
-  font-size: 16px;
-  color: #e8e8e8;
-  font-weight: 500;
-  line-height: 1.6;
-}
-
+/* LOCKED LEAKS */
 .locked-box {
-  background: #0d0d0d;
-  border: 1px solid #1e1e1e;
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 20px;
+  background: #0d0d0d; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
 }
-
 .locked-title {
-  font-size: 11px;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  margin-bottom: 12px;
-  font-weight: 600;
+  font-size: 11px; color: #666; text-transform: uppercase;
+  letter-spacing: 0.07em; margin-bottom: 12px; font-weight: 600;
 }
-
 .locked-item {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 10px;
-  line-height: 1.5;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  font-size: 14px; color: #888; margin-bottom: 10px;
+  line-height: 1.5; display: flex; align-items: flex-start; gap: 8px;
 }
-
 .locked-item:last-child { margin-bottom: 0; }
 .locked-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
 .locked-text { flex: 1; }
 
+/* QUICK FIX */
 .fix-label {
-  font-size: 11px;
-  color: #1D9E75;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-  margin-bottom: 8px;
+  font-size: 11px; color: #1D9E75; text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px;
 }
-
 .fix-box {
-  background: #0a1a0a;
-  border: 1px solid #1a2e1a;
-  border-left: 3px solid #1D9E75;
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 20px;
+  background: #0a1a0a; border: 1px solid #1a2e1a;
+  border-left: 3px solid #1D9E75; border-radius: 12px;
+  padding: 16px 18px; margin-bottom: 20px;
+}
+.fix-text { font-size: 15px; color: #4ade80; line-height: 1.6; }
+.fix-impact {
+  font-size: 13px; color: #1D9E75; font-weight: 600;
+  margin-top: 8px; padding-top: 8px; border-top: 1px solid #1a2e1a;
 }
 
-.fix-text {
-  font-size: 15px;
-  color: #4ade80;
-  line-height: 1.6;
-}
-
-.expiry-text {
-  font-size: 13px;
-  color: #777;
-  text-align: center;
-  margin-bottom: 14px;
-}
+.expiry-text { font-size: 13px; color: #777; text-align: center; margin-bottom: 14px; }
 
 .cta-section { margin-bottom: 24px; }
-
 .cta-btn {
-  display: block;
-  width: 100%;
-  padding: 20px;
-  border-radius: 14px;
-  border: 2px solid #dc2626;
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  color: black;
-  font-weight: 900;
-  font-size: 18px;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none;
+  display: block; width: 100%; padding: 20px; border-radius: 14px;
+  border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c);
+  color: black; font-weight: 900; font-size: 18px; text-align: center;
+  cursor: pointer; text-decoration: none;
   box-shadow: 0 12px 30px rgba(249,115,22,0.4);
-  transition: all 0.25s ease;
-  animation: ctaPulse 2.5s infinite;
-  margin-bottom: 12px;
+  transition: all 0.25s ease; animation: ctaPulse 2.5s infinite; margin-bottom: 12px;
 }
-
 .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(249,115,22,0.65); }
 .cta-btn:active { transform: scale(0.97); }
 
@@ -301,46 +179,27 @@ body::before {
 .cta-trust-green { font-size: 13px; color: #1D9E75; text-align: center; margin-top: 5px; }
 
 .what-box {
-  background: #111;
-  border: 1px solid #1e1e1e;
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 24px;
+  background: #111; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;
 }
-
 .what-title { font-size: 14px; font-weight: 700; color: #ccc; margin-bottom: 14px; }
 .what-item { font-size: 14px; color: #aaa; margin-bottom: 9px; padding-left: 4px; line-height: 1.5; }
 .what-item:last-child { margin-bottom: 0; }
 
 .decision-box {
-  background: #0d0d0d;
-  border: 1px solid #1e1e1e;
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 24px;
-  font-size: 14px;
-  color: #ccc;
-  line-height: 1.9;
+  background: #0d0d0d; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;
+  font-size: 14px; color: #ccc; line-height: 1.9;
 }
 
 .cta-btn-secondary {
-  display: block;
-  width: 100%;
-  padding: 18px;
-  border-radius: 14px;
-  border: 2px solid #dc2626;
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  color: black;
-  font-weight: 900;
-  font-size: 17px;
-  text-align: center;
-  cursor: pointer;
-  text-decoration: none;
+  display: block; width: 100%; padding: 18px; border-radius: 14px;
+  border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c);
+  color: black; font-weight: 900; font-size: 17px; text-align: center;
+  cursor: pointer; text-decoration: none;
   box-shadow: 0 10px 25px rgba(249,115,22,0.35);
-  transition: all 0.25s ease;
-  margin-bottom: 12px;
+  transition: all 0.25s ease; margin-bottom: 12px;
 }
-
 .cta-btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 16px 35px rgba(249,115,22,0.6); }
 
 .footer { padding-top: 20px; border-top: 1px solid #1e1e1e; text-align: center; margin-top: 8px; }
@@ -361,6 +220,7 @@ body::before {
   .score-num      { font-size: 20px; min-width: 55px; }
   .ars-verdict    { padding-left: 100px; }
   .cro-verdict    { padding-left: 100px; }
+  .ars-detail-link { padding-left: 100px; }
   .cta-btn        { font-size: 17px; padding: 18px; }
 }
 </style>
@@ -381,7 +241,7 @@ if (!id || id === "scan" || id === "report") {
   throw new Error("Missing token");
 }
 
-// ── 🔥 TRACKING ──────────────────────────────────────────────
+// 🔥 TRACKING
 function track(event) {
   fetch("https://n8n-production-43ab.up.railway.app/webhook/track", {
     method: "POST",
@@ -404,7 +264,7 @@ if (!data) {
   return;
 }
 
-// ── 🔥 TRACK: otevřel report ──────────────────────────────────
+// 🔥 TRACK: viewed report
 track("viewed_report");
 
 const row    = data;
@@ -426,33 +286,41 @@ const quickFix = report.quick_fix || "Make the primary action visually dominant 
 const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
   ? report.locked_leaks
   : [
-      { title: "Checkout friction issue", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString() + "/month" },
-      { title: "Mobile UX gap",           est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString() + "/month" },
-      { title: "AI visibility gap",       est_impact: "affecting organic discovery" }
+      { title: "Visitors can't find products fast enough — drop-offs increase", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString() + "/month" },
+      { title: "No urgency triggers — users delay purchase and don't return",   est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString() + "/month" },
+      { title: "Product info unclear — trust drops before checkout",            est_impact: "affecting checkout conversion" }
     ];
 
 const email = row.email || "";
 
-const croColor = croScore >= 70 ? "#1D9E75" : croScore >= 50 ? "#EF9F27" : "#E24B4A";
-const arsColor = arsScore >= 70 ? "#1D9E75" : arsScore >= 40 ? "#EF9F27" : "#E24B4A";
+// 🔥 NOVÉ BARVY — zelená až nad 90
+const getCroColor = (s) => s >= 90 ? "#1D9E75" : s >= 60 ? "#EF9F27" : "#E24B4A";
+const getArsColor = (s) => s >= 90 ? "#1D9E75" : s >= 50 ? "#EF9F27" : "#E24B4A";
 
-const croVerdictText = croScore >= 75
-  ? `<span style="color:#1D9E75;">✓ Good conversion health — room to optimize</span>`
-  : croScore >= 50
-  ? `<span style="color:#EF9F27;">⚠ Conversion issues are costing you revenue</span>`
-  : `<span style="color:#E24B4A;">✗ Critical conversion problems — buyers are leaving</span>`;
+const croColor = getCroColor(croScore);
+const arsColor = getArsColor(arsScore);
 
-const arsVerdictText = arsScore >= 70
-  ? `<span style="color:#1D9E75;">✓ AI agents can find and recommend your store</span>`
-  : arsScore >= 40
-  ? `<span style="color:#EF9F27;">⚠ AI agents may skip your store in recommendations</span>`
+// 🔥 NOVÉ VERDICT TEXTY — urgency first
+const croVerdictText = croScore >= 90
+  ? `<span style="color:#1D9E75;">✓ Strong conversion health — maintain and monitor</span>`
+  : croScore >= 60
+  ? `<span style="color:#EF9F27;">⚠ You're leaving money on the table — competitors scoring 90+ are winning your customers</span>`
+  : `<span style="color:#E24B4A;">✗ Critical conversion problems — buyers are leaving before purchasing</span>`;
+
+const arsVerdictText = arsScore >= 90
+  ? `<span style="color:#1D9E75;">✓ Fully visible to AI agents — strong discovery position</span>`
+  : arsScore >= 50
+  ? `<span style="color:#EF9F27;">⚠ You're partially visible to AI — competitors may outrank you in AI search</span>`
   : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store</span>`;
+
+// Quick fix impact estimate
+const quickFixImpact = Math.round(lossMin * 0.3);
 
 const lockedHTML = lockedLeaks.map(l => `
   <div class="locked-item">
     <span class="locked-icon">🔒</span>
     <span class="locked-text">${l.title}${l.est_impact
-      ? ' <span style="color:#666;">· ' + l.est_impact + '</span>' : ''}</span>
+      ? ' <span style="color:#555;">· ' + l.est_impact + '</span>' : ''}</span>
   </div>`).join("");
 
 document.getElementById("loadingState").style.display = "none";
@@ -486,6 +354,59 @@ app.innerHTML = `
       </div>
     </div>
     <div class="ars-verdict">${arsVerdictText}</div>
+    <span class="ars-detail-link" onclick="toggleArsPopup()">▸ Why AI agents might skip your store</span>
+    <div class="ars-popup" id="arsPopup">
+      <div class="ars-popup-title">How AI Readiness is calculated</div>
+      <div style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.5;">
+        AI shopping agents (Google SGE, ChatGPT Shopping, Perplexity) score your store across 6 factors.
+        Low scores mean agents skip your store when recommending products to buyers.
+      </div>
+      <div class="ars-factor">
+        <div>
+          <div class="ars-factor-name">Structured Data (Schema)</div>
+          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:25%;"></div></div>
+        </div>
+        <div class="ars-factor-weight">25%</div>
+      </div>
+      <div class="ars-factor">
+        <div>
+          <div class="ars-factor-name">Content Quality & Specificity</div>
+          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
+        </div>
+        <div class="ars-factor-weight">20%</div>
+      </div>
+      <div class="ars-factor">
+        <div>
+          <div class="ars-factor-name">Trust Signals</div>
+          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
+        </div>
+        <div class="ars-factor-weight">20%</div>
+      </div>
+      <div class="ars-factor">
+        <div>
+          <div class="ars-factor-name">Technical Readability</div>
+          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:15%;"></div></div>
+        </div>
+        <div class="ars-factor-weight">15%</div>
+      </div>
+      <div class="ars-factor">
+        <div>
+          <div class="ars-factor-name">Price Visibility</div>
+          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:12%;"></div></div>
+        </div>
+        <div class="ars-factor-weight">12%</div>
+      </div>
+      <div class="ars-factor">
+        <div>
+          <div class="ars-factor-name">Brand Entity Clarity</div>
+          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:8%;"></div></div>
+        </div>
+        <div class="ars-factor-weight">8%</div>
+      </div>
+      <div style="font-size:11px;color:#444;margin-top:10px;line-height:1.5;">
+        The full audit includes specific fixes for each factor — structured data implementation, content improvements, and technical optimizations.
+      </div>
+    </div>
   </div>
 
   <div class="explain-toggle" onclick="toggleExplain()">
@@ -494,20 +415,22 @@ app.innerHTML = `
 
   <div class="explain-box" id="explainBox">
     <div class="explain-title">Understanding your two scores</div>
-
     <div class="explain-item">
       <span class="explain-highlight">CRO Score (Conversion Rate Optimization)</span><br>
-      Measures how well your store converts visitors into buyers. A score of 85/100 means your store is solid — but even a 5% conversion improvement on $500k GMV = $25,000 extra revenue per year. Every point matters.
+      Measures how well your store converts visitors into buyers. Top-performing stores score 90+.
+      Even a 5% conversion improvement on $500k GMV = $25,000 extra revenue per year.
+      Every point below 90 is money left on the table.
     </div>
-
     <div class="explain-item">
       <span class="explain-highlight">AI Readiness Score</span><br>
-      Measures whether AI shopping agents — Google SGE, ChatGPT Shopping, Perplexity — can read, understand and recommend your store. When a customer asks "what's the best pet food brand?", AI agents scan thousands of stores and recommend the ones they can read. If your score is low, you're invisible to this growing traffic source.
+      Measures whether AI shopping agents — Google SGE, ChatGPT Shopping, Perplexity — can read,
+      understand and recommend your store. When a customer asks "what's the best pet food brand?",
+      AI agents recommend stores they can fully read. Partial visibility means competitors outrank you.
     </div>
-
     <div class="explain-item">
       <span class="explain-highlight">Why both matter</span><br>
-      CRO fixes convert the traffic you already have. AI Readiness grows new traffic from AI-driven discovery. The full audit addresses both — that's why most stores see compounding returns.
+      CRO fixes convert existing traffic. AI Readiness grows new traffic from AI-driven discovery.
+      The full audit addresses both — compounding revenue recovery.
     </div>
   </div>
 
@@ -524,6 +447,7 @@ app.innerHTML = `
   <div class="fix-label">✓ Quick fix (free)</div>
   <div class="fix-box">
     <div class="fix-text">${quickFix}</div>
+    <div class="fix-impact">→ Estimated impact: +$${quickFixImpact.toLocaleString()}/month</div>
   </div>
 
   <div class="expiry-text">⏳ This analysis expires in 48 hours as your store data changes.</div>
@@ -576,13 +500,10 @@ setInterval(() => {
   if (counter) counter.innerText = `$${lost.toLocaleString()} lost while you are reading this`;
 }, 1000);
 
-// ── CHECKOUT ──────────────────────────────────────────────────
+// 🔥 CHECKOUT
 async function goCheckout(btn) {
   if (!btn) return;
-
-  // ── 🔥 TRACK: klikl na CTA ──────────────────────────────────
   track("clicked_cta");
-
   btn.innerText = "Redirecting to checkout...";
   btn.style.opacity = "0.75";
   try {
@@ -622,6 +543,15 @@ function toggleExplain() {
   const isOpen = box.classList.contains("open");
   box.classList.toggle("open");
   toggle.innerText = isOpen ? "▸ What do these scores mean?" : "▾ What do these scores mean?";
+}
+
+function toggleArsPopup() {
+  const popup  = document.getElementById("arsPopup");
+  const link   = document.querySelector(".ars-detail-link");
+  if (!popup) return;
+  const isOpen = popup.classList.contains("open");
+  popup.classList.toggle("open");
+  link.innerText = isOpen ? "▸ Why AI agents might skip your store" : "▾ Why AI agents might skip your store";
 }
 </script>
 </body>
