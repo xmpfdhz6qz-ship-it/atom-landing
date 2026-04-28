@@ -195,12 +195,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const tokenFromUrl = urlParams.get("token");
 const domain = urlParams.get("domain") || "";
 
-// Pokud máme token — přesměruj po 3 sekundách animace
-if (tokenFromUrl) {
-  setTimeout(() => {
-    redirectToReport(tokenFromUrl);
-  }, 3000);
-}
+// ❌ ŽÁDNÝ automatický redirect — čekáme na email
 
 const messages = [
   "Analyzing homepage structure...",
@@ -233,16 +228,18 @@ const bar = document.getElementById("progressFill");
 const pct = document.getElementById("progressPct");
 const stepEl = document.getElementById("progressText");
 
+// Progress se zastaví na 95% a čeká na email
 const progressInterval = setInterval(() => {
-  const increment = tokenFromUrl ? 20 : Math.random() * 8;
-  progress += increment;
+  progress += Math.random() * 8;
 
-  if (progress >= 95 && !tokenFromUrl) {
+  if (progress >= 95) {
     progress = 95;
     clearInterval(progressInterval);
+    stepEl.innerText = "Ready — enter your email to see results";
+    pct.innerText = "95%";
+    bar.style.width = "95%";
+    return;
   }
-
-  if (progress >= 100) progress = 100;
 
   bar.style.width = progress + "%";
   pct.innerText = Math.round(progress) + "%";
@@ -252,11 +249,12 @@ const progressInterval = setInterval(() => {
 function saveEmail() {
   const email = document.getElementById("emailInput").value.trim();
   if (!email || !email.includes("@")) {
+    document.getElementById("emailInput").style.borderColor = "#E24B4A";
     document.getElementById("emailInput").focus();
     return;
   }
 
-  // Pošli email + token na separátní save-email endpoint
+  // Pošli email + token na save-email endpoint
   // NEPOUŠTÍME nový scan — jen ukládáme email k tokenu
   fetch("https://n8n-production-43ab.up.railway.app/webhook/save-email", {
     method: "POST",
@@ -271,7 +269,7 @@ function saveEmail() {
   btn.style.border = "2px solid #1D9E75";
   btn.style.color = "#fff";
 
-  // Přesměruj na report
+  // Redirect AŽ PO zadání emailu
   if (tokenFromUrl) {
     setTimeout(() => redirectToReport(tokenFromUrl), 1500);
   }
@@ -279,7 +277,6 @@ function saveEmail() {
 
 function redirectToReport(token) {
   clearInterval(msgInterval);
-  clearInterval(progressInterval);
   bar.style.width = "100%";
   pct.innerText = "100%";
   stepEl.innerText = "Complete — loading your results...";
