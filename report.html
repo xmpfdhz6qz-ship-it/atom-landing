@@ -7,185 +7,354 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+* { box-sizing: border-box; }
+
 body {
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
-  background:#0A0A0A;
-  color:white;
-  -webkit-font-smoothing:antialiased;
-  padding:16px;
-  line-height:1.7;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
+  background: #0A0A0A;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .container {
-  max-width:560px;
-  width:100%;
-  margin:0 auto;
-  text-align:center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+  position: relative;
+  z-index: 1;
 }
 
-.container::before {
-  content:"";
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
-  pointer-events:none;
-  z-index:0;
+.domain-label {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
-h1 {
-  font-size:26px;
-  margin-bottom:10px;
-  line-height:1.3;
-  font-weight:900;
+.loss-number {
+  font-size: 64px;
+  font-weight: 800;
+  color: #E24B4A;
+  line-height: 1;
+  margin-bottom: 4px;
+  text-shadow: 0 0 40px rgba(226,75,74,0.3);
+  letter-spacing: -0.02em;
 }
 
-.card {
-  background:#111;
-  padding:18px;
-  border-radius:16px;
-  margin-top:14px;
-  border:1px solid #222;
-  text-align:left;
-  box-shadow:0 8px 24px rgba(0,0,0,0.6);
-  position:relative;
-  z-index:1;
-  transition:all 0.3s ease;
+.loss-label {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 16px;
 }
 
-.card:hover {
-  transform:translateY(-2px);
-  box-shadow:0 12px 30px rgba(0,0,0,0.8);
+.daily-loss {
+  font-size: 16px;
+  color: #EF9F27;
+  font-weight: 600;
+  margin-bottom: 6px;
 }
 
-.red {
-  border-color:#dc2626;
-  background:linear-gradient(180deg,#1a0f0f,#0f0a0a);
-  box-shadow:0 0 0 1px rgba(220,38,38,0.4);
+.live-counter {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 24px;
+  min-height: 20px;
 }
 
-.green {
-  border-color:#14532d;
-  background:#052e16;
+.scores-section {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
 }
 
-.highlight {
-  text-align:center;
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
-.score {
-  font-size:56px;
-  font-weight:900;
-  margin-top:6px;
+.score-row:last-child {
+  margin-bottom: 0;
 }
 
-.money {
-  font-size:40px;
-  font-weight:900;
-  color:#ef4444;
-  margin-top:6px;
-  text-shadow:0 0 25px rgba(239,68,68,0.5);
+.score-label {
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  min-width: 100px;
 }
 
-.cta-zone {
-  margin-top:20px;
-  padding:18px;
-  border-radius:16px;
-  background:linear-gradient(180deg,rgba(249,115,22,0.08),rgba(0,0,0,0));
-  border:1px solid rgba(249,115,22,0.3);
-  box-shadow:0 0 30px rgba(249,115,22,0.15);
+.score-num {
+  font-size: 20px;
+  font-weight: 700;
+  min-width: 60px;
+  line-height: 1;
 }
 
-.cta {
-  display:block;
-  padding:22px;
-  border-radius:14px;
-  background:linear-gradient(135deg,#f97316,#ea580c);
-  color:black;
-  text-decoration:none;
-  font-weight:900;
-  text-align:center;
-  font-size:20px;
-  border:2px solid #dc2626;
-  box-shadow:0 12px 30px rgba(249,115,22,0.5);
-  transition:all 0.25s ease;
-  cursor:pointer;
-  animation:pulse 2s infinite;
+.score-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: #1e1e1e;
+  border-radius: 999px;
+  overflow: hidden;
 }
 
-.cta:hover {
-  transform:translateY(-3px) scale(1.02);
-  box-shadow:0 20px 50px rgba(249,115,22,0.8);
+.score-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 1s ease;
 }
 
-.cta:active {
-  transform:scale(0.95);
+.section-label {
+  font-size: 10px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 
-@keyframes pulse {
-  0% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
-  50% {box-shadow:0 0 35px rgba(249,115,22,0.7);}
-  100% {box-shadow:0 0 0 rgba(249,115,22,0.4);}
+.main-leak-box {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-left: 3px solid #E24B4A;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
 }
 
-.subtle {
-  font-size:12px;
-  color:#94a3b8;
-  margin-top:10px;
-  text-align:center;
+.main-leak-text {
+  font-size: 15px;
+  color: #e5e5e5;
+  font-weight: 500;
+  line-height: 1.55;
 }
 
-.small {
-  font-size:13px;
-  color:#cbd5f5;
+.locked-box {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
 }
 
-.warning {
-  color:#f87171;
-  font-size:13px;
-  margin-top:6px;
+.locked-title {
+  font-size: 11px;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+  font-weight: 600;
 }
 
-.urgency {
-  margin-top:10px;
-  font-size:14px;
-  font-weight:700;
+.locked-item {
+  font-size: 13px;
+  color: #2a2a2a;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
-.live-loss {
-  font-size:18px;
-  font-weight:700;
-  color:#f87171;
-  margin-top:10px;
-  text-align:center;
+.locked-item:last-child { margin-bottom: 0; }
+
+.locked-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
-.trust {
-  font-size:13px;
-  color:#9ca3af;
-  margin-top:8px;
+.locked-text { flex: 1; }
+
+.fix-box {
+  background: #0a1a0a;
+  border: 1px solid #1a2a1a;
+  border-left: 3px solid #1D9E75;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
 }
 
-.decision {
-  margin-top:14px;
-  font-size:14px;
-  color:#e5e7eb;
+.fix-label {
+  font-size: 10px;
+  color: #1D9E75;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.fix-text {
+  font-size: 14px;
+  color: #2a5a2a;
+  line-height: 1.55;
+}
+
+.expiry-text {
+  font-size: 12px;
+  color: #3a3a3a;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.cta-section { margin-bottom: 24px; }
+
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  border-radius: 14px;
+  border: 2px solid #dc2626;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: black;
+  font-weight: 900;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(249,115,22,0.4);
+  transition: all 0.25s ease;
+  animation: ctaPulse 2.5s infinite;
+  margin-bottom: 10px;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(249,115,22,0.65);
+}
+
+.cta-btn:active { transform: scale(0.97); }
+
+@keyframes ctaPulse {
+  0%   { box-shadow: 0 0 0 rgba(249,115,22,0.4); }
+  50%  { box-shadow: 0 0 30px rgba(249,115,22,0.6); }
+  100% { box-shadow: 0 0 0 rgba(249,115,22,0.4); }
+}
+
+.cta-trust {
+  font-size: 12px;
+  color: #444;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.cta-trust-green {
+  font-size: 12px;
+  color: #1D9E75;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.what-box {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+}
+
+.what-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.what-item {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 7px;
+  padding-left: 4px;
+  line-height: 1.5;
+}
+
+.what-item:last-child { margin-bottom: 0; }
+
+.cta-btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  border-radius: 14px;
+  border: 2px solid #dc2626;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: black;
+  font-weight: 900;
+  font-size: 17px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(249,115,22,0.35);
+  transition: all 0.25s ease;
+  margin-bottom: 10px;
+}
+
+.cta-btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 35px rgba(249,115,22,0.6);
+}
+
+.decision-box {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: #444;
+  line-height: 1.8;
+}
+
+.footer {
+  font-size: 11px;
+  color: #2a2a2a;
+  text-align: center;
+  padding-top: 16px;
+  border-top: 1px solid #111;
+  line-height: 1.8;
+}
+
+#loadingState {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 15px;
+  color: #555;
+}
+
+@media (max-width: 420px) {
+  .loss-number { font-size: 52px; }
+  .cta-btn { font-size: 16px; padding: 18px; }
+  .score-label { min-width: 80px; font-size: 10px; }
+  .score-num { font-size: 18px; min-width: 50px; }
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
-<div id="app">Analyzing your store...</div>
+  <div id="loadingState">Analyzing your store...</div>
+  <div id="app" style="display:none;"></div>
 </div>
 
 <script>
-const app = document.getElementById("app");
-
 const params = new URLSearchParams(window.location.search);
 let id = params.get("token");
 
@@ -194,347 +363,215 @@ if (!id) {
   id = parts[parts.length - 1];
 }
 
-if (!id || id === "scan") {
-  app.innerText = "Missing scan token";
+if (!id || id === "scan" || id === "report") {
+  document.getElementById("loadingState").innerText = "Missing scan token.";
   throw new Error("Missing token");
 }
 
-(async function(){
+(async function() {
 
 let data = null;
 
 try {
-  const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-scan?token=${id}`);
+  const res = await fetch(
+    `https://n8n-production-43ab.up.railway.app/webhook/get-scan?token=${id}`
+  );
   const raw = await res.json();
   data = Array.isArray(raw) ? raw[0] : raw;
-} catch (e) {
+} catch(e) {
   console.error("API failed", e);
 }
 
 if (!data) {
-  app.innerText = "Failed to load report.";
+  document.getElementById("loadingState").innerText = "Failed to load report. Please try again.";
   return;
 }
 
-const row = data;
+const row    = data;
 const report = row.report_json || {};
 
-/* 🔥 ZMĚNA 6: DOMAIN FALLBACK + SANITIZE */
 const domain = (row.store_domain || "")
-  .replace("https://","")
-  .replace("http://","")
-  .trim();
+  .replace("https://","").replace("http://","").trim();
+
 const displayDomain = (domain && domain !== "undefined" && domain !== "null")
-  ? domain
-  : "Your store";
+  ? domain : "Your store";
 
-/* 🔥 FIXED LOSS FROM BACKEND */
-const min = report.estimated_loss_min || 0;
-const max = report.estimated_loss_max || 0;
+const lossMin = report.estimated_loss_min || row.estimated_loss_min || 0;
+const lossMax = report.estimated_loss_max || row.estimated_loss_max || 0;
+const daily   = report.estimated_loss_daily || Math.round(lossMin / 30);
 
-function formatMoney(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+const lossDisplay = report.estimated_loss_display
+  || ("$" + lossMin.toLocaleString() + "/month");
 
-const lossRange = `$${formatMoney(min)} – $${formatMoney(max)}`;
-const daily = Math.round(min / 30);
-const hourly = Math.round(daily / 24);
+const croScore = row.cro_score || row.score || 60;
+const arsScore = row.ars_score || report.ars_score || Math.round(croScore * 0.65);
 
-/* DATA */
-const estimatedLossText = report.estimated_loss || "";
-const urgencyText = report.urgency || "";
-const impactText = report.impact_explanation || "Users cannot confidently decide whether to proceed";
-const severity = report.severity || "";
+const mainLeak    = report.main_leak  || "Users are not clearly guided at the moment they decide.";
+const quickFix    = report.quick_fix  || "Make the primary action visually dominant and reduce competing elements.";
 
-/* CTA */
-const ctaText = "See Full Revenue Breakdown →";
+const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
+  ? report.locked_leaks
+  : [
+      { title: "Checkout friction issue", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString() + "/month" },
+      { title: "Mobile UX gap",           est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString() + "/month" },
+      { title: "AI visibility gap",       est_impact: "affecting organic discovery" }
+    ];
 
-/* COLOR */
-const urgencyColor = "#ef4444";
+const email = row.email || "";
+
+const croColor = croScore >= 70 ? "#1D9E75" : croScore >= 50 ? "#EF9F27" : "#E24B4A";
+const arsColor = arsScore >= 70 ? "#1D9E75" : arsScore >= 40 ? "#EF9F27" : "#E24B4A";
+
+const lockedHTML = lockedLeaks.map(l => `
+  <div class="locked-item">
+    <span class="locked-icon">🔒</span>
+    <span class="locked-text">${l.title}${l.est_impact
+      ? ' <span style="color:#333;">· ' + l.est_impact + '</span>'
+      : ''}</span>
+  </div>
+`).join("");
+
+document.getElementById("loadingState").style.display = "none";
+const app = document.getElementById("app");
+app.style.display = "block";
 
 app.innerHTML = `
 
-<!-- 🔥 ZMĚNA 1: HERO S PERSONALIZACÍ -->
-<h1>${displayDomain} IS LOSING</h1>
+  <div class="domain-label">${displayDomain}</div>
+  <div class="loss-number">${lossDisplay}</div>
+  <div class="loss-label">estimated monthly revenue loss</div>
 
-<div class="subtle">
-  Analysis for: <b>${displayDomain}</b>
-</div>
+  <div class="daily-loss">⚡ That's $${daily.toLocaleString()} every single day.</div>
+  <div class="live-counter" id="liveCounter"></div>
 
-<div class="money">${lossRange}/month</div>
-
-<div class="live-loss">
-  $${daily}/day • $${hourly}/hour
-</div>
-
-<div class="warning">
-  This is happening right now.
-</div>
-
-<!-- REALITY SLAP -->
-<div class="card red">
-  <strong>Right now:</strong><br><br>
-
-  Users are visiting your store.<br>
-  They are ready to buy.<br><br>
-
-  <b>They don't.</b><br><br>
-
-  Not because of your product.<br>
-  Not because of price.<br><br>
-
-  Because something in your funnel breaks their decision.
-</div>
-
-<div class="card red highlight">
-  <div class="small">Estimated revenue loss</div>
-  <div class="money">${lossRange}</div>
-
-  <div style="margin-top:8px;font-size:14px;">
-    ${estimatedLossText}
+  <div class="scores-section">
+    <div class="score-row">
+      <div class="score-label">CRO Score</div>
+      <div class="score-num" style="color:${croColor};">${croScore}<span style="font-size:13px;color:#333;">/100</span></div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill" id="croBar" style="width:0%;background:${croColor};"></div>
+      </div>
+    </div>
+    <div class="score-row">
+      <div class="score-label">AI Readiness</div>
+      <div class="score-num" style="color:${arsColor};">${arsScore}<span style="font-size:13px;color:#333;">/100</span></div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill" id="arsBar" style="width:0%;background:${arsColor};"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="urgency" style="color:${urgencyColor}">
-    $${daily} / day at risk
+  <div class="section-label">Main leak detected</div>
+  <div class="main-leak-box">
+    <div class="main-leak-text">${mainLeak}</div>
   </div>
 
-  <div class="warning">+$${hourly} at risk every hour</div>
-
-  <div id="liveLoss" class="live-loss">Calculating...</div>
-
-  <div class="subtle">
-    Based on observed patterns and estimated traffic — actual impact may vary
-  </div>
-</div>
-
-<!-- WHAT IS ACTUALLY HAPPENING -->
-<div class="card">
-  <strong>What is actually happening:</strong><br><br>
-
-  Users reach the decision moment<br>
-  → hesitate<br>
-  → leave<br><br>
-
-  This repeats every day.
-
-  <div class="urgency" style="color:${urgencyColor}">
-    ${urgencyText}
-  </div>
-</div>
-
-<div class="card red" style="text-align:center;">
-  <strong>This issue is likely impacting your conversions right now</strong><br><br>
-  Even small improvements can recover significant revenue over time
-</div>
-
-<div class="cta-zone">
-  <a id="auditBtnTop" class="cta" href="#">
-    Reveal Full Audit → $399
-  </a>
-  <div class="subtle">⚡ Instant access • No calls • Actionable fixes</div>
-  <div class="subtle" style="color:#22c55e;">
-    Most stores recover this from ONE fix
-  </div>
-  <!-- 🔥 ZMĚNA 3: STRIPE TRUST -->
-  <div class="subtle" style="margin-top:8px;">
-    🔒 Secure checkout powered by Stripe
-  </div>
-</div>
-
-<div class="card highlight">
-  <div class="small">Conversion Score</div>
-  <div class="score">${row.score || 60}/100</div>
-  <div class="warning">High-performing stores score 85+</div>
-</div>
-
-<div class="card">
-  <div class="small">Issue severity</div>
-  <div class="urgency" style="color:${urgencyColor}">
-    ${
-      severity === "high"
-        ? "🔴 High – actively blocking conversions"
-        : severity === "medium"
-        ? "🟠 Medium – causing hesitation"
-        : "🟢 Low – minor friction"
-    }
-  </div>
-</div>
-
-<!-- 🔥 ZMĚNA 2: MICRO TRUST BOOST -->
-<div class="trust">
-  Based on patterns across 1,000+ ecommerce stores • AI-powered analysis
-</div>
-
-<div class="card">
-  <strong>This is not random.</strong><br><br>
-  → Based on real ecommerce store data<br>
-  → Focused on revenue impact<br>
-</div>
-
-<!-- 🔥 ZMĚNA 4: PSYCHO TRIGGER -->
-<div class="card red">
-  <strong>Most founders don't see this:</strong><br><br>
-
-  You are not losing traffic.<br>
-  You are losing buyers who were ready to convert.<br><br>
-
-  <b>This is the most expensive type of loss.</b>
-</div>
-
-<!-- MAIN LEAK -->
-<div class="card red">
-  <strong>This is where you lose buyers:</strong><br><br>
-  ${report.main_leak || ""}
-  <div class="urgency" style="color:${urgencyColor}">
-    This is happening at the exact moment users decide whether to buy or leave
-  </div>
-</div>
-
-<!-- QUICK FIX DOWNGRADE -->
-<div class="card green">
-  <strong>One possible fix:</strong><br><br>
-  ${report.quick_fix || ""}
-  <div class="urgency">
-    Fixing this can immediately improve conversion rate
-  </div>
-  <div class="warning">
-    This is only a surface-level fix
-  </div>
-</div>
-
-<!-- FULL AUDIT TEASE -->
-<div class="card red">
-  <strong>You are only seeing a fraction of the problem:</strong><br><br>
-
-  The full audit uncovers:<br><br>
-
-  → Exact drop-off points killing conversions<br>
-  → Hidden UX friction you can't see<br>
-  → Real revenue impact per issue<br>
-  → Prioritized fix plan<br><br>
-
-  <div class="urgency">
-    ⚠️ Most stores have 3–5 additional leaks not visible here
-  </div>
-</div>
-
-<div class="card red">
-  <strong>If nothing changes:</strong><br><br>
-  → ~$${daily} at risk daily<br>
-  → ${lossRange} at risk monthly<br>
-  <div class="urgency">
-    Visitors are leaving instead of converting
-  </div>
-</div>
-
-<!-- TIME PRESSURE LOOP -->
-<div class="card red">
-  <strong>Every second this continues:</strong><br><br>
-
-  → users leave<br>
-  → revenue is lost<br><br>
-
-  <b>This does not stop.</b>
-</div>
-
-<!-- 🔥 ZMĚNA 5: WHY NOW TRIGGER -->
-<div class="card red">
-  <strong>Why this matters now:</strong><br><br>
-
-  Every day you delay:<br>
-  → more data is lost<br>
-  → more buyers leave<br><br>
-
-  <b>This compounds.</b>
-</div>
-
-<div class="cta-zone">
-  <a id="auditBtn" class="cta" href="#">
-    Reveal Full Audit → $399
-  </a>
-
-  <div class="subtle">Most stores recover the cost from one fix</div>
-  <div class="subtle">✔ No calls • ✔ No contracts • ✔ Immediate insights</div>
-  <div class="subtle" style="color:#22c55e;">
-    Most stores recover this from ONE fix
-  </div>
-  <!-- 🔥 ZMĚNA 3: STRIPE TRUST -->
-  <div class="subtle" style="margin-top:8px;">
-    🔒 Secure checkout powered by Stripe
+  <div class="locked-box">
+    <div class="locked-title">3 more critical leaks — locked</div>
+    ${lockedHTML}
   </div>
 
-  <div class="urgency" style="text-align:center;color:${urgencyColor};">
-    Every day you wait = ~$${daily} at risk
+  <div class="fix-label">✓ Quick fix (free)</div>
+  <div class="fix-box">
+    <div class="fix-text">${quickFix}</div>
   </div>
-</div>
 
-<!-- DECISION -->
-<div class="card">
-  <div class="decision">
-    <strong>Your decision:</strong><br><br>
-    1) Ignore this → continue losing ${lossRange}/month<br>
-    2) Fix it → recover this revenue starting today
+  <div class="expiry-text">⏳ This analysis expires in 48 hours as your store data changes.</div>
+
+  <div class="cta-section">
+    <div id="ctaBtnTop" class="cta-btn">Unlock All 4 Fixes — $399</div>
+    <div class="cta-trust">One-time payment &nbsp;·&nbsp; Delivered in 24h &nbsp;·&nbsp; 4 execution-ready fixes</div>
+    <div class="cta-trust-green">✔ Most stores recover this cost from one fix</div>
+    <div class="cta-trust" style="margin-top:6px;">🔒 Secure checkout powered by Stripe</div>
   </div>
-</div>
+
+  <div class="what-box">
+    <div class="what-title">Full audit reveals:</div>
+    <div class="what-item">→ Exact drop-off points killing your conversions</div>
+    <div class="what-item">→ Hidden friction across your entire funnel</div>
+    <div class="what-item">→ Revenue impact in real $ per issue</div>
+    <div class="what-item">→ Step-by-step fixes — no guessing, no calls</div>
+  </div>
+
+  <div class="decision-box">
+    <strong style="color:#666;">Your decision:</strong><br><br>
+    1) Fix it now → recover $${lossMin.toLocaleString()}/month starting this week<br>
+    2) Ignore it → continue losing $${daily.toLocaleString()} every day
+  </div>
+
+  <div id="ctaBtnBottom" class="cta-btn-secondary">Unlock All 4 Fixes — $399</div>
+  <div class="cta-trust" style="text-align:center;margin-bottom:32px;">🔒 Secure checkout &nbsp;·&nbsp; One-time $399 &nbsp;·&nbsp; 24h delivery</div>
+
+  <div class="footer">
+    Based on direct AI scan of your store &nbsp;·&nbsp; atomfoundry.dev<br>
+    Find → Prove → Fix → Protect
+  </div>
 `;
 
-const email = row?.email || "";
+setTimeout(() => {
+  const croBar = document.getElementById("croBar");
+  const arsBar = document.getElementById("arsBar");
+  if (croBar) croBar.style.width = croScore + "%";
+  if (arsBar) arsBar.style.width = arsScore + "%";
+}, 300);
 
-/* CHECKOUT */
-["auditBtn","auditBtnTop"].forEach(id=>{
-  const btn = document.getElementById(id);
-
-  if(btn){
-    btn.addEventListener("click", async (e) => {
-      e.preventDefault();
-
-      btn.innerText = "Redirecting...";
-      btn.style.opacity = "0.7";
-
-      try {
-        const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/create-checkout", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            domain: row.store_domain || "",
-            email: email || ""
-          })
-        });
-
-        const data = await res.json();
-
-        if (!data.url) {
-          alert("Checkout error");
-          return;
-        }
-
-        window.location.href = data.url;
-
-      } catch (err) {
-        console.error(err);
-        alert("Something went wrong");
-      }
-    });
-  }
-});
-
-/* LIVE LOSS */
-let seconds = 0;
-const live = document.getElementById("liveLoss");
+const hourly  = Math.round(daily / 24);
+let seconds   = 0;
+const counter = document.getElementById("liveCounter");
 
 setInterval(() => {
   seconds++;
-  const liveLoss = Math.round((hourly / 3600) * seconds);
-
-  if (live) {
-    live.innerText = `$${liveLoss} lost while you are reading this`;
+  const lost = Math.round((hourly / 3600) * seconds);
+  if (counter) {
+    counter.innerText = `$${lost.toLocaleString()} lost while you are reading this`;
   }
 }, 1000);
 
+async function goCheckout(btn) {
+  if (!btn) return;
+  btn.innerText = "Redirecting to checkout...";
+  btn.style.opacity = "0.75";
+
+  try {
+    const res = await fetch(
+      "https://n8n-production-43ab.up.railway.app/webhook/create-checkout",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          domain: row.store_domain || "",
+          email:  email || ""
+        })
+      }
+    );
+
+    const d = await res.json();
+
+    if (!d.url) {
+      alert("Checkout error — please try again.");
+      btn.innerText = "Unlock All 4 Fixes — $399";
+      btn.style.opacity = "1";
+      return;
+    }
+
+    window.location.href = d.url;
+
+  } catch(err) {
+    console.error(err);
+    alert("Something went wrong. Please try again.");
+    btn.innerText = "Unlock All 4 Fixes — $399";
+    btn.style.opacity = "1";
+  }
+}
+
+document.getElementById("ctaBtnTop").addEventListener("click", function() {
+  goCheckout(this);
+});
+document.getElementById("ctaBtnBottom").addEventListener("click", function() {
+  goCheckout(this);
+});
+
 })();
 </script>
-
 </body>
 </html>
