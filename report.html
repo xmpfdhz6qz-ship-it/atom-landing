@@ -38,7 +38,7 @@ body::before {
 
 .domain-label {
   font-size: 13px;
-  color: #555;
+  color: #666;
   margin-bottom: 8px;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -56,7 +56,7 @@ body::before {
 
 .loss-label {
   font-size: 13px;
-  color: #555;
+  color: #666;
   margin-bottom: 16px;
 }
 
@@ -69,7 +69,7 @@ body::before {
 
 .live-counter {
   font-size: 13px;
-  color: #444;
+  color: #555;
   margin-bottom: 24px;
   min-height: 20px;
 }
@@ -89,13 +89,11 @@ body::before {
   margin-bottom: 14px;
 }
 
-.score-row:last-child {
-  margin-bottom: 0;
-}
+.score-row:last-child { margin-bottom: 0; }
 
 .score-label {
   font-size: 11px;
-  color: #666;
+  color: #777;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
@@ -125,7 +123,7 @@ body::before {
 
 .section-label {
   font-size: 10px;
-  color: #555;
+  color: #666;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
@@ -158,7 +156,7 @@ body::before {
 
 .locked-title {
   font-size: 11px;
-  color: #444;
+  color: #555;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   margin-bottom: 12px;
@@ -167,7 +165,7 @@ body::before {
 
 .locked-item {
   font-size: 13px;
-  color: #2a2a2a;
+  color: #555;
   margin-bottom: 8px;
   line-height: 1.5;
   display: flex;
@@ -185,15 +183,6 @@ body::before {
 
 .locked-text { flex: 1; }
 
-.fix-box {
-  background: #0a1a0a;
-  border: 1px solid #1a2a1a;
-  border-left: 3px solid #1D9E75;
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 20px;
-}
-
 .fix-label {
   font-size: 10px;
   color: #1D9E75;
@@ -203,15 +192,24 @@ body::before {
   margin-bottom: 8px;
 }
 
+.fix-box {
+  background: #0a1a0a;
+  border: 1px solid #1a2a1a;
+  border-left: 3px solid #1D9E75;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+
 .fix-text {
   font-size: 14px;
-  color: #2a5a2a;
+  color: #4ade80;
   line-height: 1.55;
 }
 
 .expiry-text {
   font-size: 12px;
-  color: #3a3a3a;
+  color: #555;
   text-align: center;
   margin-bottom: 14px;
 }
@@ -252,7 +250,7 @@ body::before {
 
 .cta-trust {
   font-size: 12px;
-  color: #444;
+  color: #666;
   text-align: center;
   line-height: 1.6;
 }
@@ -275,13 +273,13 @@ body::before {
 .what-title {
   font-size: 13px;
   font-weight: 600;
-  color: #888;
+  color: #999;
   margin-bottom: 12px;
 }
 
 .what-item {
   font-size: 13px;
-  color: #555;
+  color: #888;
   margin-bottom: 7px;
   padding-left: 4px;
   line-height: 1.5;
@@ -319,13 +317,13 @@ body::before {
   padding: 16px 18px;
   margin-bottom: 24px;
   font-size: 13px;
-  color: #444;
+  color: #777;
   line-height: 1.8;
 }
 
 .footer {
   font-size: 11px;
-  color: #2a2a2a;
+  color: #444;
   text-align: center;
   padding-top: 16px;
   border-top: 1px solid #111;
@@ -406,8 +404,8 @@ const lossDisplay = report.estimated_loss_display
 const croScore = row.cro_score || row.score || 60;
 const arsScore = row.ars_score || report.ars_score || Math.round(croScore * 0.65);
 
-const mainLeak    = report.main_leak  || "Users are not clearly guided at the moment they decide.";
-const quickFix    = report.quick_fix  || "Make the primary action visually dominant and reduce competing elements.";
+const mainLeak  = report.main_leak || "Users are not clearly guided at the moment they decide.";
+const quickFix  = report.quick_fix || "Make the primary action visually dominant and reduce competing elements.";
 
 const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
   ? report.locked_leaks
@@ -426,7 +424,7 @@ const lockedHTML = lockedLeaks.map(l => `
   <div class="locked-item">
     <span class="locked-icon">🔒</span>
     <span class="locked-text">${l.title}${l.est_impact
-      ? ' <span style="color:#333;">· ' + l.est_impact + '</span>'
+      ? ' <span style="color:#444;">· ' + l.est_impact + '</span>'
       : ''}</span>
   </div>
 `).join("");
@@ -447,14 +445,14 @@ app.innerHTML = `
   <div class="scores-section">
     <div class="score-row">
       <div class="score-label">CRO Score</div>
-      <div class="score-num" style="color:${croColor};">${croScore}<span style="font-size:13px;color:#333;">/100</span></div>
+      <div class="score-num" style="color:${croColor};">${croScore}<span style="font-size:13px;color:#444;">/100</span></div>
       <div class="score-bar-wrap">
         <div class="score-bar-fill" id="croBar" style="width:0%;background:${croColor};"></div>
       </div>
     </div>
     <div class="score-row">
       <div class="score-label">AI Readiness</div>
-      <div class="score-num" style="color:${arsColor};">${arsScore}<span style="font-size:13px;color:#333;">/100</span></div>
+      <div class="score-num" style="color:${arsColor};">${arsScore}<span style="font-size:13px;color:#444;">/100</span></div>
       <div class="score-bar-wrap">
         <div class="score-bar-fill" id="arsBar" style="width:0%;background:${arsColor};"></div>
       </div>
@@ -494,13 +492,15 @@ app.innerHTML = `
   </div>
 
   <div class="decision-box">
-    <strong style="color:#666;">Your decision:</strong><br><br>
+    <strong style="color:#888;">Your decision:</strong><br><br>
     1) Fix it now → recover $${lossMin.toLocaleString()}/month starting this week<br>
     2) Ignore it → continue losing $${daily.toLocaleString()} every day
   </div>
 
   <div id="ctaBtnBottom" class="cta-btn-secondary">Unlock All 4 Fixes — $399</div>
-  <div class="cta-trust" style="text-align:center;margin-bottom:32px;">🔒 Secure checkout &nbsp;·&nbsp; One-time $399 &nbsp;·&nbsp; 24h delivery</div>
+  <div class="cta-trust" style="text-align:center;margin-bottom:32px;">
+    🔒 Secure checkout &nbsp;·&nbsp; One-time $399 &nbsp;·&nbsp; 24h delivery
+  </div>
 
   <div class="footer">
     Based on direct AI scan of your store &nbsp;·&nbsp; atomfoundry.dev<br>
