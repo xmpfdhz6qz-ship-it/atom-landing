@@ -47,8 +47,9 @@ body::before {
 
 .loss-label { font-size: 14px; color: #aaa; margin-bottom: 16px; }
 .daily-loss { font-size: 18px; color: #EF9F27; font-weight: 600; margin-bottom: 6px; }
-.live-counter { font-size: 14px; color: #777; margin-bottom: 24px; min-height: 22px; }
+.live-counter { font-size: 14px; color: #888; margin-bottom: 24px; min-height: 22px; }
 
+/* SCORE BARS */
 .scores-section {
   background: #111; border: 1px solid #1e1e1e;
   border-radius: 16px; padding: 18px 20px; margin-bottom: 8px;
@@ -65,61 +66,59 @@ body::before {
 .ars-verdict { font-size: 12px; font-weight: 600; margin-bottom: 6px; padding-left: 124px; line-height: 1.4; }
 .cro-verdict { font-size: 12px; font-weight: 600; margin-bottom: 10px; padding-left: 124px; line-height: 1.4; }
 
-/* ARS DETAIL LINK — opraveno */
 .ars-detail-link {
-  font-size: 13px;
-  color: #f97316;
-  cursor: pointer;
-  padding-left: 124px;
-  margin-bottom: 14px;
-  display: block;
-  text-decoration: none;
-  letter-spacing: 0.01em;
-  font-weight: 500;
+  font-size: 13px; color: #f97316; cursor: pointer;
+  padding-left: 124px; margin-bottom: 14px; display: block;
+  text-decoration: none; letter-spacing: 0.01em; font-weight: 500;
 }
 .ars-detail-link:hover { color: #fb923c; }
 
-/* ARS POPUP */
+/* ARS POPUP — zvětšeno */
 .ars-popup {
   display: none; background: #0d0d0d; border: 1px solid #1e1e1e;
-  border-radius: 12px; padding: 16px 18px; margin-bottom: 12px;
-  font-size: 13px; color: #aaa; line-height: 1.8;
+  border-radius: 12px; padding: 18px 20px; margin-bottom: 12px;
 }
 .ars-popup.open { display: block; }
-.ars-popup-title { font-size: 13px; font-weight: 700; color: #ccc; margin-bottom: 12px; }
-.ars-factor {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 6px 0; border-bottom: 1px solid #141414;
-}
-.ars-factor:last-of-type { border-bottom: none; }
-.ars-factor-name { font-size: 12px; color: #888; }
-.ars-factor-weight { font-size: 12px; font-weight: 700; color: #f97316; }
-.ars-factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; margin-top: 3px; }
-.ars-factor-fill { height: 100%; background: #f97316; border-radius: 999px; }
+.ars-popup-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 8px; }
+.ars-popup-desc { font-size: 13px; color: #999; line-height: 1.6; margin-bottom: 16px; }
 
+.ars-factor {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 0; border-bottom: 1px solid #141414;
+}
+.ars-factor:last-of-type { border-bottom: none; padding-bottom: 0; }
+.ars-factor-left { flex: 1; }
+.ars-factor-name { font-size: 13px; color: #aaa; margin-bottom: 4px; }
+.ars-factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
+.ars-factor-fill { height: 100%; background: #f97316; border-radius: 999px; }
+.ars-factor-weight { font-size: 13px; font-weight: 700; color: #f97316; min-width: 36px; text-align: right; }
+.ars-popup-footer { font-size: 12px; color: #666; margin-top: 12px; line-height: 1.6; }
+
+/* EXPLAIN */
 .explain-toggle {
-  font-size: 12px; color: #f97316; cursor: pointer;
+  font-size: 13px; color: #f97316; cursor: pointer;
   text-align: center; padding: 10px; margin-bottom: 16px;
   user-select: none; letter-spacing: 0.02em;
 }
 .explain-toggle:hover { color: #fb923c; }
-
 .explain-box {
   display: none; background: #0d0d0d; border: 1px solid #1e1e1e;
   border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
   font-size: 13px; color: #aaa; line-height: 1.8;
 }
 .explain-box.open { display: block; }
-.explain-title { font-size: 13px; font-weight: 700; color: #ccc; margin-bottom: 10px; }
-.explain-item { margin-bottom: 8px; padding-left: 4px; }
+.explain-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 12px; }
+.explain-item { margin-bottom: 10px; padding-left: 4px; }
 .explain-item:last-child { margin-bottom: 0; }
 .explain-highlight { color: #f97316; font-weight: 600; }
 
+/* SECTION LABEL */
 .section-label {
   font-size: 11px; color: #888; text-transform: uppercase;
   letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px;
 }
 
+/* MAIN LEAK */
 .main-leak-box {
   background: #111; border: 1px solid #1e1e1e;
   border-left: 3px solid #E24B4A; border-radius: 12px;
@@ -127,22 +126,24 @@ body::before {
 }
 .main-leak-text { font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.6; }
 
+/* LOCKED LEAKS — zesvětleno */
 .locked-box {
   background: #0d0d0d; border: 1px solid #1e1e1e;
   border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
 }
 .locked-title {
-  font-size: 11px; color: #666; text-transform: uppercase;
+  font-size: 11px; color: #888; text-transform: uppercase;
   letter-spacing: 0.07em; margin-bottom: 12px; font-weight: 600;
 }
 .locked-item {
-  font-size: 14px; color: #888; margin-bottom: 10px;
+  font-size: 14px; color: #aaa; margin-bottom: 10px;
   line-height: 1.5; display: flex; align-items: flex-start; gap: 8px;
 }
 .locked-item:last-child { margin-bottom: 0; }
 .locked-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
 .locked-text { flex: 1; }
 
+/* QUICK FIX */
 .fix-label {
   font-size: 11px; color: #1D9E75; text-transform: uppercase;
   letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px;
@@ -154,12 +155,17 @@ body::before {
 }
 .fix-text { font-size: 15px; color: #4ade80; line-height: 1.6; }
 .fix-impact {
-  font-size: 13px; color: #1D9E75; font-weight: 600;
-  margin-top: 8px; padding-top: 8px; border-top: 1px solid #1a2e1a;
+  font-size: 14px; color: #1D9E75; font-weight: 600;
+  margin-top: 10px; padding-top: 10px; border-top: 1px solid #1a2e1a;
 }
 
-.expiry-text { font-size: 13px; color: #777; text-align: center; margin-bottom: 14px; }
+/* EXPIRY — zvětšeno */
+.expiry-text {
+  font-size: 14px; color: #888;
+  text-align: center; margin-bottom: 16px; line-height: 1.5;
+}
 
+/* CTA */
 .cta-section { margin-bottom: 24px; }
 .cta-btn {
   display: block; width: 100%; padding: 20px; border-radius: 14px;
@@ -167,7 +173,7 @@ body::before {
   color: black; font-weight: 900; font-size: 18px; text-align: center;
   cursor: pointer; text-decoration: none;
   box-shadow: 0 12px 30px rgba(249,115,22,0.4);
-  transition: all 0.25s ease; animation: ctaPulse 2.5s infinite; margin-bottom: 12px;
+  transition: all 0.25s ease; animation: ctaPulse 2.5s infinite; margin-bottom: 14px;
 }
 .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(249,115,22,0.65); }
 .cta-btn:active { transform: scale(0.97); }
@@ -178,17 +184,23 @@ body::before {
   100% { box-shadow: 0 0 0 rgba(249,115,22,0.4); }
 }
 
-.cta-trust { font-size: 13px; color: #888; text-align: center; line-height: 1.7; }
-.cta-trust-green { font-size: 13px; color: #1D9E75; text-align: center; margin-top: 5px; }
+/* CTA TRUST — zvětšeno + na jednom řádku */
+.cta-trust {
+  font-size: 14px; color: #999;
+  text-align: center; line-height: 1.8; white-space: nowrap;
+}
+.cta-trust-green { font-size: 14px; color: #1D9E75; text-align: center; margin-top: 5px; }
 
+/* WHAT BOX */
 .what-box {
   background: #111; border: 1px solid #1e1e1e;
   border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;
 }
-.what-title { font-size: 14px; font-weight: 700; color: #ccc; margin-bottom: 14px; }
+.what-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 14px; }
 .what-item { font-size: 14px; color: #aaa; margin-bottom: 9px; padding-left: 4px; line-height: 1.5; }
 .what-item:last-child { margin-bottom: 0; }
 
+/* DECISION */
 .decision-box {
   background: #0d0d0d; border: 1px solid #1e1e1e;
   border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;
@@ -201,13 +213,24 @@ body::before {
   color: black; font-weight: 900; font-size: 17px; text-align: center;
   cursor: pointer; text-decoration: none;
   box-shadow: 0 10px 25px rgba(249,115,22,0.35);
-  transition: all 0.25s ease; margin-bottom: 12px;
+  transition: all 0.25s ease; margin-bottom: 14px;
 }
 .cta-btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 16px 35px rgba(249,115,22,0.6); }
 
-.footer { padding-top: 20px; border-top: 1px solid #1e1e1e; text-align: center; margin-top: 8px; }
-.footer-scan-line { font-size: 12px; color: #555; margin-bottom: 10px; line-height: 1.6; }
-.footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
+/* FOOTER — zvětšeno + sjednoceno */
+.footer {
+  padding-top: 20px; border-top: 1px solid #1e1e1e;
+  text-align: center; margin-top: 8px;
+}
+.footer-scan-line {
+  font-size: 13px; color: #777;
+  margin-bottom: 10px; line-height: 1.8;
+  white-space: nowrap;
+}
+.footer-tagline {
+  font-size: 16px; font-weight: 700;
+  color: #f97316; letter-spacing: 0.04em;
+}
 
 #loadingState { text-align: center; padding: 60px 20px; font-size: 15px; color: #666; }
 
@@ -225,6 +248,10 @@ body::before {
   .cro-verdict    { padding-left: 100px; }
   .ars-detail-link { padding-left: 100px; font-size: 13px; }
   .cta-btn        { font-size: 17px; padding: 18px; }
+  /* Na mobilu dovolíme wrap jen u cta-trust */
+  .cta-trust      { white-space: normal; font-size: 13px; }
+  .footer-scan-line { white-space: normal; font-size: 13px; }
+  .footer-tagline { font-size: 15px; }
 }
 </style>
 </head>
@@ -244,7 +271,6 @@ if (!id || id === "scan" || id === "report") {
   throw new Error("Missing token");
 }
 
-// 🔥 TRACKING
 function track(event) {
   fetch("https://n8n-production-43ab.up.railway.app/webhook/track", {
     method: "POST",
@@ -277,7 +303,7 @@ const displayDomain = (domain && domain !== "undefined" && domain !== "null") ? 
 
 const lossMin = report.estimated_loss_min || row.estimated_loss_min || 0;
 const daily   = report.estimated_loss_daily || Math.round(lossMin / 30);
-const lossDisplay = report.estimated_loss_display || ("$" + lossMin.toLocaleString() + "/month");
+const lossDisplay = report.estimated_loss_display || ("$" + lossMin.toLocaleString("en-US") + "/month");
 
 const croScore = row.cro_score || row.score || 60;
 const arsScore = row.ars_score || report.ars_score || Math.round(croScore * 0.65);
@@ -288,20 +314,18 @@ const quickFix = report.quick_fix || "Make the primary action visually dominant 
 const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
   ? report.locked_leaks
   : [
-      { title: "Visitors can't find products fast enough — drop-offs increase", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString() + "/month" },
-      { title: "No urgency triggers — users delay purchase and don't return",   est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString() + "/month" },
+      { title: "Visitors can't find products fast enough — drop-offs increase", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString("en-US") + "/month" },
+      { title: "No urgency triggers — users delay purchase and don't return",   est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString("en-US") + "/month" },
       { title: "Product info unclear — trust drops before checkout",            est_impact: "affecting checkout conversion" }
     ];
 
 const email = row.email || "";
 
-// 🔥 BARVY — zelená až nad 90
 const getCroColor = (s) => s >= 90 ? "#1D9E75" : s >= 60 ? "#EF9F27" : "#E24B4A";
 const getArsColor = (s) => s >= 90 ? "#1D9E75" : s >= 50 ? "#EF9F27" : "#E24B4A";
 const croColor = getCroColor(croScore);
 const arsColor = getArsColor(arsScore);
 
-// 🔥 VERDICT TEXTY — urgency
 const croVerdictText = croScore >= 90
   ? `<span style="color:#1D9E75;">✓ Strong conversion health — maintain and monitor</span>`
   : croScore >= 60
@@ -314,13 +338,13 @@ const arsVerdictText = arsScore >= 90
   ? `<span style="color:#EF9F27;">⚠ You're partially visible to AI — competitors may outrank you in AI search</span>`
   : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store</span>`;
 
-const quickFixImpact = Math.round(lossMin * 0.3);
+const quickFixImpact = Math.round(lossMin * 0.3).toLocaleString("en-US");
 
 const lockedHTML = lockedLeaks.map(l => `
   <div class="locked-item">
     <span class="locked-icon">🔒</span>
     <span class="locked-text">${l.title}${l.est_impact
-      ? ' <span style="color:#555;">· ' + l.est_impact + '</span>' : ''}</span>
+      ? ' <span style="color:#777;">· ' + l.est_impact + '</span>' : ''}</span>
   </div>`).join("");
 
 document.getElementById("loadingState").style.display = "none";
@@ -333,7 +357,7 @@ app.innerHTML = `
   <div class="loss-number">${lossDisplay}</div>
   <div class="loss-label">estimated monthly revenue loss</div>
 
-  <div class="daily-loss">⚡ That's $${daily.toLocaleString()} every single day.</div>
+  <div class="daily-loss">⚡ That's $${daily.toLocaleString("en-US")} every single day.</div>
   <div class="live-counter" id="liveCounter"></div>
 
   <div class="scores-section">
@@ -358,53 +382,53 @@ app.innerHTML = `
 
     <div class="ars-popup" id="arsPopup">
       <div class="ars-popup-title">How AI Readiness is calculated</div>
-      <div style="font-size:12px;color:#777;margin-bottom:12px;line-height:1.5;">
-        AI shopping agents (Google SGE, ChatGPT Shopping, Perplexity) score your store across 6 factors.
-        Low scores mean agents skip your store when recommending products to buyers.
+      <div class="ars-popup-desc">
+        AI shopping agents (Google SGE, ChatGPT Shopping, Perplexity) score your store
+        across 6 factors. Low scores mean agents skip your store when recommending products to buyers.
       </div>
       <div class="ars-factor">
-        <div style="flex:1;">
+        <div class="ars-factor-left">
           <div class="ars-factor-name">Structured Data (Schema)</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:25%;"></div></div>
         </div>
         <div class="ars-factor-weight">25%</div>
       </div>
       <div class="ars-factor">
-        <div style="flex:1;">
+        <div class="ars-factor-left">
           <div class="ars-factor-name">Content Quality & Specificity</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
         </div>
         <div class="ars-factor-weight">20%</div>
       </div>
       <div class="ars-factor">
-        <div style="flex:1;">
+        <div class="ars-factor-left">
           <div class="ars-factor-name">Trust Signals</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
         </div>
         <div class="ars-factor-weight">20%</div>
       </div>
       <div class="ars-factor">
-        <div style="flex:1;">
+        <div class="ars-factor-left">
           <div class="ars-factor-name">Technical Readability</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:15%;"></div></div>
         </div>
         <div class="ars-factor-weight">15%</div>
       </div>
       <div class="ars-factor">
-        <div style="flex:1;">
+        <div class="ars-factor-left">
           <div class="ars-factor-name">Price Visibility</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:12%;"></div></div>
         </div>
         <div class="ars-factor-weight">12%</div>
       </div>
       <div class="ars-factor">
-        <div style="flex:1;">
+        <div class="ars-factor-left">
           <div class="ars-factor-name">Brand Entity Clarity</div>
           <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:8%;"></div></div>
         </div>
         <div class="ars-factor-weight">8%</div>
       </div>
-      <div style="font-size:11px;color:#555;margin-top:10px;line-height:1.5;">
+      <div class="ars-popup-footer">
         The full audit includes specific fixes for each factor — structured data implementation,
         content improvements, and technical optimizations.
       </div>
@@ -447,7 +471,7 @@ app.innerHTML = `
   <div class="fix-label">✓ Quick fix (free)</div>
   <div class="fix-box">
     <div class="fix-text">${quickFix}</div>
-    <div class="fix-impact">→ Estimated impact: +$${quickFixImpact.toLocaleString()}/month</div>
+    <div class="fix-impact">→ Estimated impact: +$${quickFixImpact}/month</div>
   </div>
 
   <div class="expiry-text">⏳ This analysis expires in 48 hours as your store data changes.</div>
@@ -456,7 +480,7 @@ app.innerHTML = `
     <div id="ctaBtnTop" class="cta-btn">Unlock All 4 Fixes — $399</div>
     <div class="cta-trust">One-time payment &nbsp;·&nbsp; Delivered in 24h &nbsp;·&nbsp; 4 execution-ready fixes</div>
     <div class="cta-trust-green">✔ Most stores recover this cost from one fix</div>
-    <div class="cta-trust" style="margin-top:6px;">🔒 Secure checkout powered by Stripe</div>
+    <div class="cta-trust" style="margin-top:5px;">🔒 Secure checkout powered by Stripe</div>
   </div>
 
   <div class="what-box">
@@ -469,8 +493,8 @@ app.innerHTML = `
 
   <div class="decision-box">
     <strong style="color:#fff;">Your decision:</strong><br><br>
-    1) Fix it now → recover $${lossMin.toLocaleString()}/month starting this week<br>
-    2) Ignore it → continue losing $${daily.toLocaleString()} every day
+    1) Fix it now → recover $${lossMin.toLocaleString("en-US")}/month starting this week<br>
+    2) Ignore it → continue losing $${daily.toLocaleString("en-US")} every day
   </div>
 
   <div id="ctaBtnBottom" class="cta-btn-secondary">Unlock All 4 Fixes — $399</div>
@@ -479,7 +503,9 @@ app.innerHTML = `
   </div>
 
   <div class="footer">
-    <div class="footer-scan-line">Based on direct AI scan of your store &nbsp;·&nbsp; atomfoundry.dev</div>
+    <div class="footer-scan-line">
+      Based on direct AI scan of your store &nbsp;·&nbsp; atomfoundry.dev
+    </div>
     <div class="footer-tagline">Find → Prove → Fix → Protect</div>
   </div>
 `;
@@ -497,7 +523,7 @@ const counter = document.getElementById("liveCounter");
 setInterval(() => {
   seconds++;
   const lost = Math.round((hourly / 3600) * seconds);
-  if (counter) counter.innerText = `$${lost.toLocaleString()} lost while you are reading this`;
+  if (counter) counter.innerText = `$${lost.toLocaleString("en-US")} lost while you are reading this`;
 }, 1000);
 
 async function goCheckout(btn) {
