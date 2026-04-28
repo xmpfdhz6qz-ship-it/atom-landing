@@ -12,159 +12,234 @@
 <link rel="manifest" href="/site.webmanifest">
 
 <style>
-* { box-sizing:border-box; }
+* { box-sizing: border-box; }
 
 body {
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto;
-  background:#0A0A0A;
-  color:white;
-  line-height:1.7;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
+  background: #0A0A0A;
+  color: white;
+  line-height: 1.7;
 }
 
 body::before {
-  content:"";
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%);
-  pointer-events:none;
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%);
+  pointer-events: none;
 }
 
 .container {
-  max-width:560px;
-  margin:0 auto;
-  padding:40px 16px 30px;
-  text-align:center;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 32px 16px 40px;
+  text-align: center;
 }
 
-.live-strip {
-  display:inline-block;
-  background:#111;
-  border:1px solid #22c55e;
-  padding:8px 14px;
-  border-radius:999px;
-  font-size:12px;
-  margin-bottom:20px;
-  animation:liveGlow 2.2s ease-in-out infinite;
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding: 14px 20px;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
 }
 
-@keyframes liveGlow {
-  0% { box-shadow:0 0 0 rgba(34,197,94,0.0); opacity:0.7; }
-  50% { box-shadow:0 0 12px rgba(34,197,94,0.5); opacity:1; }
-  100% { box-shadow:0 0 0 rgba(34,197,94,0.0); opacity:0.7; }
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f97316;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-divider {
+  width: 1px;
+  background: #1e1e1e;
+  align-self: stretch;
 }
 
 h1 {
-  font-size:30px;
-  line-height:1.2;
-  margin-bottom:12px;
+  font-size: 30px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  font-weight: 700;
 }
 
 .sub {
-  font-size:15px;
-  color:#A1A1AA;
-  margin-bottom:8px;
-}
-
-.micro-proof {
-  font-size:12px;
-  color:#6b7280;
-  margin-bottom:24px;
+  font-size: 15px;
+  color: #A1A1AA;
+  margin-bottom: 28px;
+  line-height: 1.6;
 }
 
 .box {
-  background:#151515;
-  padding:20px;
-  border-radius:16px;
-  border:1px solid #2a2a2a;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  background: #151515;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  margin-bottom: 24px;
 }
 
-input[type="text"],
-input[type="email"] {
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border-radius:12px;
-  border:1px solid #2a2a2a;
-  background:#0A0A0A;
-  color:white;
-  font-size:15px;
-  outline:none;
-  transition:all 0.2s ease;
+input[type="text"] {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+  background: #0A0A0A;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input[type="text"]::placeholder {
+  color: #4b5563;
 }
 
 input:focus {
-  border-color:#f97316;
-  box-shadow:0 0 0 1px rgba(249,115,22,0.6),
-             0 0 12px rgba(249,115,22,0.3);
-}
-
-.checkbox {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  margin-top:16px;
-  font-size:12px;
-  color:#A1A1AA;
-}
-
-.no-friction {
-  margin-top:14px;
-  font-size:12px;
-  color:#6b7280;
+  border-color: #f97316;
+  box-shadow: 0 0 0 1px rgba(249,115,22,0.6),
+              0 0 12px rgba(249,115,22,0.3);
 }
 
 button {
-  margin-top:10px;
-  width:100%;
-  padding:18px;
-  border-radius:14px;
-  border:2px solid #dc2626;
-  background:linear-gradient(135deg,#f97316,#ea580c);
-  color:black;
-  font-weight:900;
-  font-size:16px;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(249,115,22,0.4);
-  transition:all 0.25s ease;
+  margin-top: 12px;
+  width: 100%;
+  padding: 18px;
+  border-radius: 14px;
+  border: 2px solid #dc2626;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: black;
+  font-weight: 900;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(249,115,22,0.4);
+  transition: all 0.25s ease;
 }
 
 button:hover {
-  transform:translateY(-2px);
-  box-shadow:0 15px 35px rgba(249,115,22,0.65);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(249,115,22,0.65);
 }
 
 button:active {
-  transform:scale(0.97);
+  transform: scale(0.97);
 }
 
 .micro {
-  margin-top:8px;
-  font-size:11px;
-  color:#6b7280;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6b7280;
 }
 
-.trust-line {
-  margin-top:10px;
-  font-size:11px;
-  color:#4b5563;
+.proof-line {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #f97316;
+  font-weight: 600;
 }
 
-.value-list {
-  margin-top:16px;
-  text-align:left;
-  font-size:13px;
-  color:#9ca3af;
-  line-height:2;
+.examples {
+  background: #0f0f0f;
+  border: 1px solid #1a1a1a;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: left;
 }
 
-.urgency {
-  margin-top:18px;
-  font-size:12px;
-  color:#ef4444;
+.examples-label {
+  font-size: 10px;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+}
+
+.example-item {
+  font-size: 12px;
+  color: #4b5563;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  padding-left: 4px;
+}
+
+.example-item:last-child {
+  margin-bottom: 0;
+}
+
+.example-leak {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.steps {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.step {
+  flex: 1;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.step-num {
+  font-size: 22px;
+  font-weight: 700;
+  color: #f97316;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.step-text {
+  font-size: 11px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.founder {
+  font-size: 11px;
+  color: #333;
+  padding-top: 16px;
+  border-top: 1px solid #1a1a1a;
+  line-height: 1.8;
+}
+
+.founder a {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+@media (max-width: 400px) {
+  h1 { font-size: 24px; }
+  .stats-bar { gap: 12px; padding: 12px 14px; }
+  .stat-num { font-size: 15px; }
+  .steps { flex-direction: column; gap: 8px; }
+  .step { padding: 12px; }
 }
 </style>
 </head>
@@ -173,66 +248,110 @@ button:active {
 
 <div class="container">
 
-  <div class="live-strip">
-    🟢 Live AI Scan Active • Detecting revenue leaks
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">$2,800</div>
+      <div class="stat-label">avg. leak found</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">40+</div>
+      <div class="stat-label">stores scanned</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">10s</div>
+      <div class="stat-label">to see results</div>
+    </div>
   </div>
 
   <h1>
-    Your store doesn't have a traffic problem.<br>
-    It has a decision problem.
+    Your store is leaking revenue right now.<br>
+    We show you exactly where.
   </h1>
 
   <p class="sub">
-    We show you the #1 place where visitors hesitate — before it shows up in your data.
-  </p>
-
-  <p class="micro-proof">
-    Based on patterns from 1,000+ e-commerce stores
+    Paste your Shopify store URL. Get your #1 revenue leak<br>
+    + estimated $ loss in 10 seconds. Free.
   </p>
 
   <div class="box">
-
     <form id="scanForm">
 
-      <input type="text" name="store" placeholder="Enter your store URL (e.g. gymshark.com)" required>
-      <input type="email" name="email" placeholder="your@email.com" required>
-
-      <div class="checkbox">
-        <input type="checkbox" checked>
-        <span>
-          I agree to <a href="/terms-of-service.html">Terms</a> & 
-          <a href="/privacy-policy.html">Privacy Policy</a>
-        </span>
-      </div>
-
-      <div class="no-friction">
-        No signup. No setup. Just paste your store.
-      </div>
+      <input
+        type="text"
+        name="store"
+        placeholder="yourstorename.com"
+        required
+        autocomplete="off"
+        autocapitalize="none"
+        spellcheck="false"
+      >
 
       <button type="submit">
-        Find My #1 Leak
+        Scan My Store →
       </button>
 
       <div class="micro">
-        Get your conversion insight in ~10 seconds
+        No signup &nbsp;·&nbsp; No setup &nbsp;·&nbsp; Free &nbsp;·&nbsp; Takes 10 seconds
       </div>
 
-      <div class="trust-line">
-        Recently analyzed: fashionnova.com • gymshark.com • allbirds.com
+      <div class="proof-line">
+        ⚡ Avg. revenue leak we find: $2,800/month
       </div>
 
     </form>
-
   </div>
 
-  <div class="value-list">
-    ✔ Identify the biggest conversion leak<br>
-    ✔ Understand why visitors don't convert<br>
-    ✔ Fix it with a clear next step
+  <div class="examples">
+    <div class="examples-label">Recent findings — anonymized</div>
+
+    <div class="example-item">
+      <span class="example-leak">🔴 $3,200/month</span>
+      <span> · Beauty store, US · rotating banner killed trust before Add to Cart</span>
+    </div>
+
+    <div class="example-item">
+      <span class="example-leak">🔴 $5,800/month</span>
+      <span> · Pet food brand, CA · 20+ promo codes visible to all visitors</span>
+    </div>
+
+    <div class="example-item">
+      <span class="example-leak">🔴 $2,890/month</span>
+      <span> · Skincare DTC, US · 5 competing offers shown simultaneously</span>
+    </div>
+
+    <div class="example-item">
+      <span class="example-leak">🔴 $3,480/month</span>
+      <span> · Jewelry store, US · fake countdown timer — visitors noticed the reset</span>
+    </div>
+
+    <div class="example-item">
+      <span class="example-leak">🔴 $3,640/month</span>
+      <span> · Wellness brand, US · promo code trains visitors not to pay full price</span>
+    </div>
   </div>
 
-  <div class="urgency">
-    ⚠️ Most stores lose 20–40% of revenue from hidden leaks
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Paste your store URL</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">We scan for revenue leaks</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">See your #1 leak + $ loss + exact fix</div>
+    </div>
+  </div>
+
+  <div class="founder">
+    Built by Daniel &nbsp;·&nbsp; Atom Foundry &nbsp;·&nbsp; scanning DTC stores daily<br>
+    Find → Prove → Fix → Protect &nbsp;·&nbsp;
+    <a href="/terms-of-service.html">Terms</a> &nbsp;&amp;&nbsp;
+    <a href="/privacy-policy.html">Privacy</a>
   </div>
 
 </div>
@@ -242,9 +361,7 @@ document.getElementById("scanForm").addEventListener("submit", (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
-
   let url = formData.get("store").trim();
-  const email = formData.get("email").trim();
 
   url = url
     .replace(/^https?:\/\//, "")
@@ -260,14 +377,10 @@ document.getElementById("scanForm").addEventListener("submit", (e) => {
   fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url, email })
+    body: JSON.stringify({ url })
   }).catch(() => {});
 
-  const params = new URLSearchParams({
-    domain: url,
-    email: email
-  });
-
+  const params = new URLSearchParams({ domain: url });
   window.location.href = "/audit-in-progress?" + params.toString();
 });
 </script>
