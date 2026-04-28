@@ -73,7 +73,6 @@ body::before {
   min-height: 22px;
 }
 
-/* SCORE BARS */
 .scores-section {
   background: #111;
   border: 1px solid #1e1e1e;
@@ -119,7 +118,6 @@ body::before {
   transition: width 1s ease;
 }
 
-/* ARS LABEL pod barem */
 .ars-verdict {
   font-size: 12px;
   font-weight: 600;
@@ -136,7 +134,6 @@ body::before {
   line-height: 1.4;
 }
 
-/* ROZBALITELNÁ SEKCE */
 .explain-toggle {
   font-size: 12px;
   color: #f97316;
@@ -183,7 +180,6 @@ body::before {
   font-weight: 600;
 }
 
-/* MAIN LEAK */
 .section-label {
   font-size: 11px;
   color: #888;
@@ -209,7 +205,6 @@ body::before {
   line-height: 1.6;
 }
 
-/* LOCKED LEAKS */
 .locked-box {
   background: #0d0d0d;
   border: 1px solid #1e1e1e;
@@ -241,7 +236,6 @@ body::before {
 .locked-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
 .locked-text { flex: 1; }
 
-/* QUICK FIX */
 .fix-label {
   font-size: 11px;
   color: #1D9E75;
@@ -266,7 +260,6 @@ body::before {
   line-height: 1.6;
 }
 
-/* EXPIRY + CTA */
 .expiry-text {
   font-size: 13px;
   color: #777;
@@ -307,7 +300,6 @@ body::before {
 .cta-trust { font-size: 13px; color: #888; text-align: center; line-height: 1.7; }
 .cta-trust-green { font-size: 13px; color: #1D9E75; text-align: center; margin-top: 5px; }
 
-/* WHAT YOU GET */
 .what-box {
   background: #111;
   border: 1px solid #1e1e1e;
@@ -320,7 +312,6 @@ body::before {
 .what-item { font-size: 14px; color: #aaa; margin-bottom: 9px; padding-left: 4px; line-height: 1.5; }
 .what-item:last-child { margin-bottom: 0; }
 
-/* DECISION */
 .decision-box {
   background: #0d0d0d;
   border: 1px solid #1e1e1e;
@@ -352,7 +343,6 @@ body::before {
 
 .cta-btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 16px 35px rgba(249,115,22,0.6); }
 
-/* FOOTER */
 .footer { padding-top: 20px; border-top: 1px solid #1e1e1e; text-align: center; margin-top: 8px; }
 .footer-scan-line { font-size: 12px; color: #555; margin-bottom: 10px; line-height: 1.6; }
 .footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
@@ -391,6 +381,15 @@ if (!id || id === "scan" || id === "report") {
   throw new Error("Missing token");
 }
 
+// ── 🔥 TRACKING ──────────────────────────────────────────────
+function track(event) {
+  fetch("https://n8n-production-43ab.up.railway.app/webhook/track", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token: id, event })
+  }).catch(() => {});
+}
+
 (async function() {
 
 let data = null;
@@ -404,6 +403,9 @@ if (!data) {
   document.getElementById("loadingState").innerText = "Failed to load report. Please try again.";
   return;
 }
+
+// ── 🔥 TRACK: otevřel report ──────────────────────────────────
+track("viewed_report");
 
 const row    = data;
 const report = row.report_json || {};
@@ -434,14 +436,12 @@ const email = row.email || "";
 const croColor = croScore >= 70 ? "#1D9E75" : croScore >= 50 ? "#EF9F27" : "#E24B4A";
 const arsColor = arsScore >= 70 ? "#1D9E75" : arsScore >= 40 ? "#EF9F27" : "#E24B4A";
 
-// CRO verdict text
 const croVerdictText = croScore >= 75
   ? `<span style="color:#1D9E75;">✓ Good conversion health — room to optimize</span>`
   : croScore >= 50
   ? `<span style="color:#EF9F27;">⚠ Conversion issues are costing you revenue</span>`
   : `<span style="color:#E24B4A;">✗ Critical conversion problems — buyers are leaving</span>`;
 
-// ARS verdict text
 const arsVerdictText = arsScore >= 70
   ? `<span style="color:#1D9E75;">✓ AI agents can find and recommend your store</span>`
   : arsScore >= 40
@@ -560,7 +560,6 @@ app.innerHTML = `
   </div>
 `;
 
-// Animate bars
 setTimeout(() => {
   const croBar = document.getElementById("croBar");
   const arsBar = document.getElementById("arsBar");
@@ -568,7 +567,6 @@ setTimeout(() => {
   if (arsBar) arsBar.style.width = arsScore + "%";
 }, 300);
 
-// Live counter
 const hourly  = Math.round(daily / 24);
 let seconds   = 0;
 const counter = document.getElementById("liveCounter");
@@ -578,9 +576,13 @@ setInterval(() => {
   if (counter) counter.innerText = `$${lost.toLocaleString()} lost while you are reading this`;
 }, 1000);
 
-// Checkout
+// ── CHECKOUT ──────────────────────────────────────────────────
 async function goCheckout(btn) {
   if (!btn) return;
+
+  // ── 🔥 TRACK: klikl na CTA ──────────────────────────────────
+  track("clicked_cta");
+
   btn.innerText = "Redirecting to checkout...";
   btn.style.opacity = "0.75";
   try {
@@ -613,7 +615,6 @@ document.getElementById("ctaBtnBottom").addEventListener("click", function() { g
 
 })();
 
-// Toggle explain
 function toggleExplain() {
   const box    = document.getElementById("explainBox");
   const toggle = document.querySelector(".explain-toggle");
