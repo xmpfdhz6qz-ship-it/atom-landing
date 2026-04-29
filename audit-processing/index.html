@@ -131,7 +131,7 @@ h1 {
   height: 100%; width: 0%;
   background: linear-gradient(90deg, #f97316, #ea580c);
   border-radius: 999px;
-  transition: width 0.5s ease;
+  transition: width 0.4s ease;
   box-shadow: 0 0 10px rgba(249,115,22,0.4);
 }
 
@@ -266,17 +266,18 @@ h1 {
 <script>
 document.getElementById("auditId").innerText = Date.now().toString().slice(-6);
 
-// ── COMET BORDER ─────────────────────────────────────────────────
+// ── SNAKE BORDER ──────────────────────────────────────────────────
 const canvas = document.getElementById("borderCanvas");
 const wrap   = document.getElementById("cardWrap");
 const ctx    = canvas.getContext("2d");
 
-const RADIUS = 20;
-const SPEED  = 0.0006;   // slow rotation
-const TAIL   = 0.30;     // tail = 30% of perimeter
+const RADIUS    = 20;
+const SPEED     = 0.004;   // rovnoměrná rychlost — jako had
+const TAIL_LEN  = 0.22;    // délka hada = 22% obvodu
+const THICKNESS = 2.5;     // tloušťka čáry
 
-let angle  = 0;
-let isDone = false;
+let headPos = 0;
+let isDone  = false;
 
 function resize() {
   const r = wrap.getBoundingClientRect();
@@ -286,85 +287,122 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
-function buildPath(w, h, r) {
+// Vybuduj body zaobleného obdélníku jako pole bodů
+function buildPerimeter(w, h, r) {
   const pts = [];
-  const N = 100;
+  const N = 80; // bodů na každý oblouk
+
+  // Levý horní oblouk
   for (let i = 0; i <= N; i++) {
     const a = Math.PI + (Math.PI / 2) * (i / N);
     pts.push([r + r * Math.cos(a), r + r * Math.sin(a)]);
   }
-  pts.push([w - r, 0]);
+  // Horní hrana
+  for (let i = 0; i <= N; i++) {
+    pts.push([r + (w - 2 * r) * (i / N), 0]);
+  }
+  // Pravý horní oblouk
   for (let i = 0; i <= N; i++) {
     const a = -Math.PI / 2 + (Math.PI / 2) * (i / N);
     pts.push([w - r + r * Math.cos(a), r + r * Math.sin(a)]);
   }
-  pts.push([w, h - r]);
+  // Pravá hrana
+  for (let i = 0; i <= N; i++) {
+    pts.push([w, r + (h - 2 * r) * (i / N)]);
+  }
+  // Pravý dolní oblouk
   for (let i = 0; i <= N; i++) {
     const a = (Math.PI / 2) * (i / N);
     pts.push([w - r + r * Math.cos(a), h - r + r * Math.sin(a)]);
   }
-  pts.push([r, h]);
+  // Dolní hrana
+  for (let i = 0; i <= N; i++) {
+    pts.push([w - r - (w - 2 * r) * (i / N), h]);
+  }
+  // Levý dolní oblouk
   for (let i = 0; i <= N; i++) {
     const a = Math.PI / 2 + (Math.PI / 2) * (i / N);
     pts.push([r + r * Math.cos(a), h - r + r * Math.sin(a)]);
   }
-  pts.push([0, r]);
+  // Levá hrana zpět nahoru
+  for (let i = 0; i <= N; i++) {
+    pts.push([0, h - r - (h - 2 * r) * (i / N)]);
+  }
+
   return pts;
 }
 
 function getPoint(pts, t) {
-  const idx = ((t % 1) + 1) % 1 * (pts.length - 1);
-  const i0  = Math.floor(idx) % pts.length;
-  const i1  = (i0 + 1) % pts.length;
-  const f   = idx - Math.floor(idx);
+  const total = pts.length;
+  const idx   = ((t % 1) + 1) % 1 * total;
+  const i0    = Math.floor(idx) % total;
+  const i1    = (i0 + 1) % total;
+  const f     = idx - Math.floor(idx);
   return [
     pts[i0][0] + (pts[i1][0] - pts[i0][0]) * f,
     pts[i0][1] + (pts[i1][1] - pts[i0][1]) * f,
   ];
 }
 
-function draw() {
+let lastTime = null;
+
+function draw(ts) {
+  if (!lastTime) lastTime = ts;
+  const dt = (ts - lastTime) / 1000;
+  lastTime = ts;
+
+  if (!isDone) {
+    headPos = (headPos + SPEED) % 1;
+  }
+
   const w = canvas.width;
   const h = canvas.height;
   ctx.clearRect(0, 0, w, h);
 
-  if (!isDone) angle = (angle + SPEED) % 1;
+  const pts   = buildPerimeter(w, h, RADIUS);
+  const STEPS = 120;
 
-  const pts  = buildPath(w, h, RADIUS);
-  const headT = angle;
-
-  const STEPS = 80;
   for (let i = 0; i < STEPS; i++) {
-    const t0 = ((headT - TAIL + (i / STEPS) * TAIL) + 2) % 1;
-    const t1 = ((headT - TAIL + ((i + 1) / STEPS) * TAIL) + 2) % 1;
-    const frac  = i / STEPS;
+    // frac 0 = ocas (průhledný), frac 1 = hlava (plný)
+    const frac = i / STEPS;
+
+    // pozice tohoto segmentu na perimetru
+    const t0 = ((headPos - TAIL_LEN + (frac * TAIL_LEN)) + 2) % 1;
+    const t1 = ((headPos - TAIL_LEN + ((frac + 1 / STEPS) * TAIL_LEN)) + 2) % 1;
+
+    // Alpha: ocas mizí plynule, hlava je plná
+    // Easing — kvadratická křivka pro přirozenější vymizení
     const alpha = isDone
-      ? frac * 0.25
-      : frac * 0.9 + 0.05;
-    const r_val = isDone ? 29  : 249;
-    const g_val = isDone ? 158 : 115;
-    const b_val = isDone ? 117 : 22;
+      ? frac * frac * 0.3
+      : frac * frac * 0.95 + 0.02;
+
+    const color = isDone
+      ? `rgba(29,158,117,${alpha})`
+      : `rgba(249,115,22,${alpha})`;
 
     const p0 = getPoint(pts, t0);
     const p1 = getPoint(pts, t1);
+
     ctx.beginPath();
     ctx.moveTo(p0[0], p0[1]);
     ctx.lineTo(p1[0], p1[1]);
-    ctx.strokeStyle = `rgba(${r_val},${g_val},${b_val},${alpha})`;
-    ctx.lineWidth   = 2;
+    ctx.strokeStyle = color;
+    ctx.lineWidth   = THICKNESS;
     ctx.lineCap     = "round";
+    ctx.lineJoin    = "round";
     ctx.stroke();
   }
 
+  // Glow na hlavě — jen při processing
   if (!isDone) {
-    const hp   = getPoint(pts, headT);
-    const grad = ctx.createRadialGradient(hp[0], hp[1], 0, hp[0], hp[1], 9);
-    grad.addColorStop(0,   "rgba(249,115,22,1)");
-    grad.addColorStop(0.4, "rgba(249,115,22,0.4)");
-    grad.addColorStop(1,   "rgba(249,115,22,0)");
+    const hp   = getPoint(pts, headPos);
+    const glow = ctx.createRadialGradient(hp[0], hp[1], 0, hp[0], hp[1], 10);
+    glow.addColorStop(0,   "rgba(249,115,22,0.9)");
+    glow.addColorStop(0.3, "rgba(249,115,22,0.5)");
+    glow.addColorStop(1,   "rgba(249,115,22,0)");
     ctx.beginPath();
-    ctx.arc(hp[0], hp[1], 9, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
+    ctx.arc(hp[0], hp[1], 10, 0, Math.PI * 2);
+    ctx.fillStyle = glow;
     ctx.fill();
   }
 
@@ -401,17 +439,19 @@ const pct    = document.getElementById("progressPct");
 const stepEl = document.getElementById("progressText");
 const msgEl  = document.getElementById("aiMessage");
 
+// AI messages s fade efektem
 const msgInterval = setInterval(() => {
   msgEl.style.opacity = "0";
   setTimeout(() => {
     msgEl.innerText = messages[msgIndex % messages.length];
     msgEl.style.opacity = "1";
     msgIndex++;
-  }, 300);
-}, 2400);
+  }, 250);
+}, 1200);
 
+// Progress bar — doběhne za ~5 sekund
 const progressInterval = setInterval(() => {
-  progress += Math.random() * 3.5 + 0.5;
+  progress += Math.random() * 12 + 3;
   if (progress >= 95) {
     progress = 95;
     clearInterval(progressInterval);
@@ -423,20 +463,26 @@ const progressInterval = setInterval(() => {
   bar.style.width = progress + "%";
   pct.innerText = Math.round(progress) + "%";
   stepEl.innerText = steps[Math.min(Math.floor(progress / 16), steps.length - 1)];
-}, 500);
+}, 300);
 
+// ── 5 SEKUND → DONE ──────────────────────────────────────────────
 setTimeout(() => {
   clearInterval(msgInterval);
   clearInterval(progressInterval);
+
   bar.style.width = "100%";
   pct.innerText = "100%";
   stepEl.innerText = "Complete.";
+
+  // Had přejde na zelenou
   isDone = true;
+
   setTimeout(() => {
     document.getElementById("processingState").style.display = "none";
     document.getElementById("doneState").style.display = "block";
-  }, 800);
-}, 25000);
+  }, 600);
+
+}, 5000); // ← 5 sekund
 </script>
 
 </body>
