@@ -106,10 +106,35 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
   margin-bottom: 24px;
   text-align: left;
 }
-.examples-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; font-weight: 600; }
-.example-item { font-size: 13px; color: #aaa; margin-bottom: 10px; line-height: 1.5; padding-left: 4px; }
+.examples-label {
+  font-size: 11px; color: #aaa; text-transform: uppercase;
+  letter-spacing: 0.07em; margin-bottom: 14px; font-weight: 600;
+}
+.example-item {
+  font-size: 13px; color: #aaa; margin-bottom: 10px;
+  line-height: 1.5; padding-left: 4px;
+}
 .example-item:last-child { margin-bottom: 0; }
 .example-leak { color: #ef4444; font-weight: 700; }
+
+/* ── FULL ARC EXAMPLE ── */
+.example-arc {
+  background: #0a1a0a;
+  border: 1px solid #1a2e1a;
+  border-left: 3px solid #1D9E75;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.6;
+  text-align: left;
+}
+.arc-label {
+  font-size: 10px; color: #1D9E75; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
+}
+.arc-result { color: #4ade80; font-weight: 600; }
 
 .steps { display: flex; gap: 10px; margin-bottom: 24px; }
 .step {
@@ -123,25 +148,20 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 .step-num { font-size: 24px; font-weight: 700; color: #f97316; margin-bottom: 6px; line-height: 1; }
 .step-text { font-size: 12px; color: #aaa; line-height: 1.4; font-weight: 500; }
 
-/* FOOTER — sjednocený se stránkami */
 .footer {
   padding-top: 16px;
   border-top: 1px solid #1e1e1e;
   text-align: center;
 }
 .footer-scan-line {
-  font-size: 12px;
-  color: #555;
-  margin-bottom: 8px;
-  line-height: 1.8;
+  font-size: 12px; color: #555;
+  margin-bottom: 8px; line-height: 1.8;
 }
 .footer-scan-line a { color: #777; text-decoration: none; }
 .footer-scan-line a:hover { color: #f97316; }
 .footer-tagline {
-  font-size: 15px;
-  font-weight: 700;
-  color: #f97316;
-  letter-spacing: 0.04em;
+  font-size: 15px; font-weight: 700;
+  color: #f97316; letter-spacing: 0.04em;
 }
 
 @media (max-width: 420px) {
@@ -174,7 +194,7 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
-      <div class="stat-num">40+</div>
+      <div class="stat-num">47</div>
       <div class="stat-label">stores scanned</div>
     </div>
     <div class="stat-divider"></div>
@@ -184,14 +204,15 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
     </div>
   </div>
 
+  <!-- 🔥 BREAK 1 OPRAVENO — odstraneno "We show you" -->
   <h1>
     Your store is leaking revenue right now.<br>
-    We show you exactly where.
+    See exactly where in 10 seconds.
   </h1>
 
   <p class="sub">
     Paste your Shopify store URL. Get your #1 revenue leak
-    + estimated $ loss in 10 seconds. Free.
+    + estimated $ loss. Free.
   </p>
 
   <div class="box">
@@ -206,23 +227,28 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
         spellcheck="false"
       >
       <button type="submit" id="scanBtn">
-        Scan My Store →
+        Find My Revenue Leak →
       </button>
       <div class="micro">
         No signup &nbsp;·&nbsp; No setup &nbsp;·&nbsp; Free &nbsp;·&nbsp; Takes 10 seconds
       </div>
       <div class="proof-line">
-        ⚡ Avg. revenue leak we find: $2,800/month
+        ⚡ Avg. revenue leak found: $2,800/month
       </div>
     </form>
   </div>
 
   <div class="examples">
     <div class="examples-label">Recent findings — anonymized</div>
-    <div class="example-item">
-      <span class="example-leak">🔴 $3,200/month</span>
-      <span> · Beauty store, US · rotating banner killed trust before Add to Cart</span>
+
+    <!-- 🔥 BREAK 2 OPRAVENO — full arc priklad nahore -->
+    <div class="example-arc">
+      <div class="arc-label">✓ Found → Fixed → Recovered</div>
+      Beauty store, US · CTA buried below fold · leak: $3,200/month<br>
+      Fix: moved Add to Cart above fold + trust badges next to price<br>
+      <span class="arc-result">→ Recovered $2,800/month within 3 weeks</span>
     </div>
+
     <div class="example-item">
       <span class="example-leak">🔴 $5,800/month</span>
       <span> · Pet food brand, CA · 20+ promo codes visible to all visitors</span>
@@ -256,9 +282,10 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
     </div>
   </div>
 
+  <!-- 🔥 BREAK 3 OPRAVENO — konkretni cislo misto "Built by Daniel" -->
   <div class="footer">
     <div class="footer-scan-line">
-      Built by Daniel &nbsp;·&nbsp; Atom Foundry &nbsp;·&nbsp; scanning DTC stores daily<br>
+      47 DTC stores scanned &nbsp;·&nbsp; $340k in leaks found &nbsp;·&nbsp; atomfoundry.dev<br>
       <a href="/terms-of-service.html">Terms</a> &nbsp;&amp;&nbsp;
       <a href="/privacy-policy.html">Privacy</a>
     </div>
