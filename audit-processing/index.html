@@ -1,348 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Processing | Atom Foundry</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Your Audit – Atom Foundry</title>
 
 <style>
-* { box-sizing:border-box; }
+* { box-sizing: border-box; }
 
 body {
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  background:#0A0A0A;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:16px;
-  min-height:100vh;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  background: #0A0A0A;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 body::before {
-  content:"";
-  position:fixed;
-  width:100%;height:100%;
-  background:radial-gradient(circle at 50% -20%, rgba(249,115,22,0.18), transparent 40%);
-  z-index:0;
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 body::after {
-  content:"";
-  position:fixed;
-  width:320px;
-  height:320px;
-  background:radial-gradient(circle, rgba(249,115,22,0.2), transparent 60%);
-  filter:blur(50px);
-  animation:floatGlow 6s ease-in-out infinite;
-  z-index:0;
+  content: "";
+  position: fixed;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(249,115,22,0.12), transparent 60%);
+  filter: blur(60px);
+  animation: floatGlow 7s ease-in-out infinite;
+  z-index: 0;
 }
 
 @keyframes floatGlow {
-  0% {transform:translate(-60px,-40px);}
-  50% {transform:translate(60px,40px);}
-  100% {transform:translate(-60px,-40px);}
+  0%   { transform: translate(-60px, -40px); }
+  50%  { transform: translate(60px, 40px); }
+  100% { transform: translate(-60px, -40px); }
 }
 
 .container {
-  max-width:520px;
-  width:100%;
-  z-index:1;
-  position:relative;
+  max-width: 520px;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+}
+
+.card-wrap {
+  position: relative;
+  border-radius: 20px;
+}
+
+.card-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 1px solid #1a1a1a;
+  pointer-events: none;
+}
+
+#borderCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .card {
-  background:#0e0e0e;
-  border-radius:20px;
-  padding:24px;
-  border:1px solid #1f1f1f;
-  box-shadow:0 20px 60px rgba(0,0,0,0.9);
-  position:relative;
+  background: #0e0e0e;
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+  position: relative;
+  z-index: 1;
 }
 
-/* SVG */
-.border-svg {
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-}
-
-.border-path {
-  fill:none;
-  stroke:rgba(255,255,255,0.05);
-  stroke-width:1;
-}
-
-.glow-dot {
-  fill:#f97316;
-  filter:drop-shadow(0 0 6px #f97316) drop-shadow(0 0 14px #ea580c);
-}
-
-.glow-trail {
-  fill:none;
-  stroke:url(#grad);
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-dasharray:80;
-}
-
-/* LIVE */
 .live {
-  font-size:12px;
-  color:#22c55e;
-  margin-bottom:10px;
-  animation:pulse 2s infinite;
+  font-size: 12px; color: #f97316; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 16px; animation: blink 2s infinite;
 }
-
-@keyframes pulse {
-  0% {opacity:0.6;}
-  50% {opacity:1;}
-  100% {opacity:0.6;}
-}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 
 h1 {
-  font-size:22px;
-  margin-bottom:10px;
-  color:#22c55e;
+  font-size: 22px; font-weight: 800;
+  color: #e8e8e8; margin-bottom: 8px; line-height: 1.3;
 }
 
-p {
-  color:#A1A1AA;
-  font-size:15px;
-  line-height:1.6;
+.sub {
+  color: #aaa; font-size: 14px;
+  line-height: 1.7; margin-bottom: 22px;
 }
 
-.highlight {
-  color:#fff;
-  font-weight:600;
+.ai-message-box {
+  background: #111; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.ai-message-label {
+  font-size: 10px; color: #f97316; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
+}
+.ai-message {
+  font-size: 13px; color: #888; line-height: 1.5;
+  min-height: 20px; transition: opacity 0.3s ease;
 }
 
-.email-box {
-  margin-top:18px;
-  padding:18px;
-  border-radius:16px;
-  background:linear-gradient(180deg,#052e16,#031a0f);
-  border:1px solid #14532d;
-  text-align:center;
-  box-shadow:0 0 30px rgba(34,197,94,0.15);
+.progress-wrap { margin-bottom: 20px; }
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: #666; margin-bottom: 8px;
 }
-
-.email-box h3 {
-  margin:0 0 10px;
-  color:#22c55e;
-  font-size:15px;
-}
-
 .progress-bar {
-  margin-top:20px;
-  height:10px;
-  background:#1f1f1f;
-  border-radius:999px;
-  overflow:hidden;
+  height: 6px; background: #1e1e1e;
+  border-radius: 999px; overflow: hidden;
 }
-
 .progress-fill {
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#f97316,#ea580c);
-  transition:width 0.4s ease;
-  box-shadow:0 0 20px rgba(249,115,22,0.6);
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #f97316, #ea580c);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(249,115,22,0.4);
 }
 
-.progress-text {
-  margin-top:14px;
-  font-size:13px;
-  color:#f97316;
-  font-weight:600;
-  text-align:center;
+.what-box {
+  background: #111; border: 1px solid #1e1e1e;
+  border-left: 3px solid #1D9E75;
+  border-radius: 12px; padding: 14px 16px;
+  margin-bottom: 20px;
 }
+.what-title {
+  font-size: 10px; color: #1D9E75; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;
+}
+.what-item {
+  font-size: 13px; color: #aaa;
+  padding: 5px 0; border-bottom: 1px solid #1a1a1a; line-height: 1.5;
+}
+.what-item:last-child { border-bottom: none; }
 
-.data-line {
-  margin-top:10px;
-  font-size:12px;
-  color:#6b7280;
-  text-align:center;
+.scan-id {
+  font-size: 11px; color: #333;
+  text-align: center; margin-bottom: 12px;
 }
 
 .footer {
-  margin-top:20px;
-  font-size:12px;
-  color:#6b7280;
-  text-align:center;
+  font-size: 12px; color: #444;
+  text-align: center; line-height: 1.8;
+}
+.tagline {
+  font-size: 13px; font-weight: 700;
+  color: #f97316; margin-top: 6px;
 }
 
-.id {
-  margin-top:12px;
-  font-size:11px;
-  color:#475569;
-  text-align:center;
+#doneState { display: none; }
+.done-check { font-size: 52px; text-align: center; margin-bottom: 14px; }
+.done-title {
+  font-size: 24px; font-weight: 800;
+  color: #1D9E75; text-align: center; margin-bottom: 8px;
 }
+.done-sub {
+  font-size: 14px; color: #aaa;
+  text-align: center; line-height: 1.7; margin-bottom: 22px;
+}
+.done-box {
+  background: #0a1a0a; border: 1px solid #1a2e1a;
+  border-left: 3px solid #1D9E75;
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
+}
+.done-box-title {
+  font-size: 10px; color: #1D9E75; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;
+}
+.done-item {
+  font-size: 13px; color: #aaa;
+  padding: 5px 0; border-bottom: 1px solid #1a2e1a; line-height: 1.5;
+}
+.done-item:last-child { border-bottom: none; }
 
+@media (max-width: 480px) {
+  h1 { font-size: 20px; }
+  .done-title { font-size: 21px; }
+  .card { padding: 22px 18px; }
+}
 </style>
 </head>
 
 <body>
-
 <div class="container">
-<div class="card">
+  <div class="card-wrap" id="cardWrap">
+    <canvas id="borderCanvas"></canvas>
+    <div class="card">
 
-<svg class="border-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <div id="processingState">
+        <div class="live">⚡ Building your audit now...</div>
+        <h1>We're analyzing your store.</h1>
+        <p class="sub">
+          Our AI engine is scanning your conversion flow,
+          calculating revenue impact, and building your 4 execution fixes.
+        </p>
+        <div class="ai-message-box">
+          <div class="ai-message-label">AI Engine</div>
+          <div class="ai-message" id="aiMessage">Connecting to store data...</div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span id="progressText">Initializing analysis...</span>
+            <span id="progressPct">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+        <div class="what-box">
+          <div class="what-title">Being prepared for you:</div>
+          <div class="what-item">→ 4 execution-ready fixes with exact $ impact</div>
+          <div class="what-item">→ CRO Score + AI Readiness breakdown</div>
+          <div class="what-item">→ Step-by-step implementation plan</div>
+          <div class="what-item">→ Done-For-You option if you want us to implement</div>
+        </div>
+        <div class="scan-id">Audit ID: AF-<span id="auditId"></span></div>
+        <div class="footer">
+          Your audit will be delivered to your email within a few minutes.<br>
+          <div class="tagline">Find → Prove → Fix → Protect</div>
+        </div>
+      </div>
 
-  <defs>
-    <linearGradient id="grad">
-      <stop offset="0%" stop-color="transparent"/>
-      <stop offset="50%" stop-color="#f97316"/>
-      <stop offset="100%" stop-color="transparent"/>
-    </linearGradient>
+      <div id="doneState">
+        <div class="done-check">✓</div>
+        <div class="done-title">Your audit is ready.</div>
+        <div class="done-sub">
+          Check your email — your full Revenue Audit<br>
+          with 4 execution-ready fixes is waiting for you.
+        </div>
+        <div class="done-box">
+          <div class="done-box-title">Your audit includes:</div>
+          <div class="done-item">→ 4 execution-ready fixes with exact $ impact</div>
+          <div class="done-item">→ CRO Score + AI Readiness Score breakdown</div>
+          <div class="done-item">→ Step-by-step implementation — no dev needed</div>
+          <div class="done-item">→ Revenue recovery timeline</div>
+          <div class="done-item">→ Done-For-You option if you want us to implement</div>
+        </div>
+        <div class="footer">
+          Questions? founder@atomfoundry.dev<br>
+          <div class="tagline">Find → Prove → Fix → Protect</div>
+        </div>
+      </div>
 
-    <path id="rectPath" d="M2,2 H98 V98 H2 Z" />
-  </defs>
-
-  <use href="#rectPath" class="border-path"/>
-
-  <path class="glow-trail">
-    <animateMotion id="trailMotion" dur="5s" repeatCount="indefinite">
-      <mpath href="#rectPath"/>
-    </animateMotion>
-  </path>
-
-  <circle r="1.4" class="glow-dot">
-    <animateMotion id="dotMotion" dur="5s" repeatCount="indefinite">
-      <mpath href="#rectPath"/>
-    </animateMotion>
-  </circle>
-
-</svg>
-
-<div class="live">🟢 Live AI Analysis Running</div>
-
-<h1>✅ Payment received — your audit is being prepared</h1>
-
-<p>
-We’re processing your store and generating your <span class="highlight">conversion audit</span>.
-</p>
-
-<p>
-This will take just a few seconds.
-</p>
-
-<div class="email-box">
-<h3>⚡ AI audit generation in progress</h3>
-
-<p id="aiMessage">
-Detecting revenue leaks...
-</p>
-
-<div class="data-line" id="storeCount">
-Comparing with 1,284 ecommerce stores
-</div>
-
-</div>
-
-<div class="progress-bar">
-<div class="progress-fill" id="progressFill"></div>
-</div>
-
-<div class="progress-text" id="progressText">
-Initializing analysis...
-</div>
-
-<p style="margin-top:14px;text-align:center;color:#9ca3af;font-size:13px;">
-Your audit will be delivered to your email within 60 seconds.
-</p>
-
-<div class="id">
-Scan ID: AF-<span id="auditId"></span>
-</div>
-
-<div class="footer">
-Atom Foundry · Conversion Intelligence Engine
-</div>
-
-</div>
+    </div>
+  </div>
 </div>
 
 <script>
+document.getElementById("auditId").innerText = Date.now().toString().slice(-6);
 
-document.getElementById("auditId").innerText =
-Date.now().toString().slice(-6);
+// ── COMET BORDER ─────────────────────────────────────────────────
+const canvas = document.getElementById("borderCanvas");
+const wrap   = document.getElementById("cardWrap");
+const ctx    = canvas.getContext("2d");
 
-const messages = [
-"Detecting revenue leaks...",
-"Analyzing store structure...",
-"Evaluating user behavior...",
-"Comparing with top stores...",
-"Calculating revenue impact...",
-"Finalizing audit..."
-];
+const RADIUS = 20;
+const SPEED  = 0.0006;   // slow rotation
+const TAIL   = 0.30;     // tail = 30% of perimeter
 
-const steps = [
-"Initializing analysis...",
-"Scanning structure...",
-"Analyzing conversion points...",
-"Detecting friction...",
-"Calculating losses...",
-"Finalizing audit..."
-];
+let angle  = 0;
+let isDone = false;
 
-let i = 0;
+function resize() {
+  const r = wrap.getBoundingClientRect();
+  canvas.width  = r.width;
+  canvas.height = r.height;
+}
+resize();
+window.addEventListener("resize", resize);
 
-const msgInterval = setInterval(() => {
-  document.getElementById("aiMessage").innerText = messages[i % messages.length];
-  document.getElementById("progressText").innerText = steps[i % steps.length];
-  i++;
-}, 2000);
+function buildPath(w, h, r) {
+  const pts = [];
+  const N = 100;
+  for (let i = 0; i <= N; i++) {
+    const a = Math.PI + (Math.PI / 2) * (i / N);
+    pts.push([r + r * Math.cos(a), r + r * Math.sin(a)]);
+  }
+  pts.push([w - r, 0]);
+  for (let i = 0; i <= N; i++) {
+    const a = -Math.PI / 2 + (Math.PI / 2) * (i / N);
+    pts.push([w - r + r * Math.cos(a), r + r * Math.sin(a)]);
+  }
+  pts.push([w, h - r]);
+  for (let i = 0; i <= N; i++) {
+    const a = (Math.PI / 2) * (i / N);
+    pts.push([w - r + r * Math.cos(a), h - r + r * Math.sin(a)]);
+  }
+  pts.push([r, h]);
+  for (let i = 0; i <= N; i++) {
+    const a = Math.PI / 2 + (Math.PI / 2) * (i / N);
+    pts.push([r + r * Math.cos(a), h - r + r * Math.sin(a)]);
+  }
+  pts.push([0, r]);
+  return pts;
+}
 
-let progress = 0;
-const bar = document.getElementById("progressFill");
+function getPoint(pts, t) {
+  const idx = ((t % 1) + 1) % 1 * (pts.length - 1);
+  const i0  = Math.floor(idx) % pts.length;
+  const i1  = (i0 + 1) % pts.length;
+  const f   = idx - Math.floor(idx);
+  return [
+    pts[i0][0] + (pts[i1][0] - pts[i0][0]) * f,
+    pts[i0][1] + (pts[i1][1] - pts[i0][1]) * f,
+  ];
+}
 
-const trailMotion = document.getElementById("trailMotion");
-const dotMotion = document.getElementById("dotMotion");
+function draw() {
+  const w = canvas.width;
+  const h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
 
-const progressInterval = setInterval(() => {
-  progress += Math.random() * 6;
+  if (!isDone) angle = (angle + SPEED) % 1;
 
-  if (progress >= 100) {
-    progress = 100;
-    bar.style.width = "100%";
+  const pts  = buildPath(w, h, RADIUS);
+  const headT = angle;
 
-    clearInterval(progressInterval);
-    clearInterval(msgInterval);
+  const STEPS = 80;
+  for (let i = 0; i < STEPS; i++) {
+    const t0 = ((headT - TAIL + (i / STEPS) * TAIL) + 2) % 1;
+    const t1 = ((headT - TAIL + ((i + 1) / STEPS) * TAIL) + 2) % 1;
+    const frac  = i / STEPS;
+    const alpha = isDone
+      ? frac * 0.25
+      : frac * 0.9 + 0.05;
+    const r_val = isDone ? 29  : 249;
+    const g_val = isDone ? 158 : 115;
+    const b_val = isDone ? 117 : 22;
 
-    document.getElementById("progressText").innerText =
-      "Finalizing your audit...";
-
-    setTimeout(() => {
-      const params = new URLSearchParams(window.location.search);
-      let domain = params.get("domain") || "";
-      domain = domain.replace(/^https?:\/\//, "");
-      window.location.href = "https://atomfoundry.dev/" + domain;
-    }, 1500);
+    const p0 = getPoint(pts, t0);
+    const p1 = getPoint(pts, t1);
+    ctx.beginPath();
+    ctx.moveTo(p0[0], p0[1]);
+    ctx.lineTo(p1[0], p1[1]);
+    ctx.strokeStyle = `rgba(${r_val},${g_val},${b_val},${alpha})`;
+    ctx.lineWidth   = 2;
+    ctx.lineCap     = "round";
+    ctx.stroke();
   }
 
+  if (!isDone) {
+    const hp   = getPoint(pts, headT);
+    const grad = ctx.createRadialGradient(hp[0], hp[1], 0, hp[0], hp[1], 9);
+    grad.addColorStop(0,   "rgba(249,115,22,1)");
+    grad.addColorStop(0.4, "rgba(249,115,22,0.4)");
+    grad.addColorStop(1,   "rgba(249,115,22,0)");
+    ctx.beginPath();
+    ctx.arc(hp[0], hp[1], 9, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+  }
+
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+// ── CONTENT ──────────────────────────────────────────────────────
+const messages = [
+  "Connecting to store data...",
+  "Analyzing homepage structure...",
+  "Detecting conversion friction...",
+  "Evaluating trust signals...",
+  "Calculating revenue impact...",
+  "Building execution cards...",
+  "Generating AI Readiness Score...",
+  "Finalizing your audit..."
+];
+const steps = [
+  "Initializing analysis...",
+  "Reading page structure...",
+  "Analyzing conversion flow...",
+  "Detecting revenue leaks...",
+  "Calculating $ impact...",
+  "Building your fixes...",
+  "Almost done..."
+];
+
+let msgIndex = 0;
+let progress = 0;
+
+const bar    = document.getElementById("progressFill");
+const pct    = document.getElementById("progressPct");
+const stepEl = document.getElementById("progressText");
+const msgEl  = document.getElementById("aiMessage");
+
+const msgInterval = setInterval(() => {
+  msgEl.style.opacity = "0";
+  setTimeout(() => {
+    msgEl.innerText = messages[msgIndex % messages.length];
+    msgEl.style.opacity = "1";
+    msgIndex++;
+  }, 300);
+}, 2400);
+
+const progressInterval = setInterval(() => {
+  progress += Math.random() * 3.5 + 0.5;
+  if (progress >= 95) {
+    progress = 95;
+    clearInterval(progressInterval);
+    stepEl.innerText = "Almost done...";
+    pct.innerText = "95%";
+    bar.style.width = "95%";
+    return;
+  }
   bar.style.width = progress + "%";
+  pct.innerText = Math.round(progress) + "%";
+  stepEl.innerText = steps[Math.min(Math.floor(progress / 16), steps.length - 1)];
+}, 500);
 
-  /* 🔥 SPEED CONTROL (WOW EFFECT) */
-  let speed = 6 - (progress / 20); // 6s → 1s
-  if (speed < 1) speed = 1;
-
-  trailMotion.setAttribute("dur", speed + "s");
-  dotMotion.setAttribute("dur", speed + "s");
-
-}, 800);
-
-/* slower believable counter */
-let count = 1284;
-setInterval(() => {
-  count += Math.floor(Math.random()*1);
-  document.getElementById("storeCount").innerText =
-  "Comparing with " + count.toLocaleString() + " ecommerce stores";
-}, 4000);
-
+setTimeout(() => {
+  clearInterval(msgInterval);
+  clearInterval(progressInterval);
+  bar.style.width = "100%";
+  pct.innerText = "100%";
+  stepEl.innerText = "Complete.";
+  isDone = true;
+  setTimeout(() => {
+    document.getElementById("processingState").style.display = "none";
+    document.getElementById("doneState").style.display = "block";
+  }, 800);
+}, 25000);
 </script>
 
 </body>
