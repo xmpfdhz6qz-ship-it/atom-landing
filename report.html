@@ -156,7 +156,6 @@ body::before {
   text-align: center; margin-bottom: 16px; line-height: 1.5;
 }
 
-/* ── CTA ── */
 .cta-section { margin-bottom: 24px; }
 .cta-btn {
   display: block; width: 100%; padding: 20px; border-radius: 14px;
@@ -181,7 +180,6 @@ body::before {
 }
 .cta-trust-green { font-size: 14px; color: #1D9E75; text-align: center; margin-top: 5px; }
 
-/* ── FOUNDER BOX ── */
 .founder-box {
   background: #0d0d0d;
   border: 1px solid #1e1e1e;
@@ -315,15 +313,15 @@ const lossDisplay = report.estimated_loss_display || ("$" + lossMin.toLocaleStri
 const croScore = row.cro_score || row.score || 60;
 const arsScore = row.ars_score || report.ars_score || Math.round(croScore * 0.65);
 
-const mainLeak = report.main_leak || "Users are not clearly guided at the moment they decide.";
+const mainLeak = report.main_leak || "Buyers are dropping off before taking action.";
 const quickFix = report.quick_fix || "Make the primary action visually dominant and reduce competing elements.";
 
 const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
   ? report.locked_leaks
   : [
-      { title: "Visitors can't find products fast enough — drop-offs increase", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString("en-US") + "/month" },
-      { title: "No urgency triggers — users delay purchase and don't return",   est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString("en-US") + "/month" },
-      { title: "Product info unclear — trust drops before checkout",            est_impact: "affecting checkout conversion" }
+      { title: "Buyers can't find products fast enough — revenue leaking at every scroll", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString("en-US") + "/month" },
+      { title: "No urgency — users hesitate, delay purchase and don't return",              est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString("en-US") + "/month" },
+      { title: "Trust drops before checkout — buyers abandon at the last step",             est_impact: "costing you sales every day" }
     ];
 
 const email = row.email || "";
@@ -337,13 +335,13 @@ const croVerdictText = croScore >= 90
   ? `<span style="color:#1D9E75;">✓ Strong conversion health — maintain and monitor</span>`
   : croScore >= 60
   ? `<span style="color:#EF9F27;">⚠ You're leaving money on the table — competitors scoring 90+ are winning your customers</span>`
-  : `<span style="color:#E24B4A;">✗ Critical conversion problems — buyers are leaving before purchasing</span>`;
+  : `<span style="color:#E24B4A;">✗ Buyers are leaving before purchasing — revenue leaking at every step</span>`;
 
 const arsVerdictText = arsScore >= 90
   ? `<span style="color:#1D9E75;">✓ Fully visible to AI agents — strong discovery position</span>`
   : arsScore >= 50
   ? `<span style="color:#EF9F27;">⚠ You're partially visible to AI — competitors may outrank you in AI search</span>`
-  : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store</span>`;
+  : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store — lost traffic every day</span>`;
 
 const quickFixImpact = Math.round(lossMin * 0.3).toLocaleString("en-US");
 
@@ -362,9 +360,11 @@ app.innerHTML = `
 
   <div class="domain-label">${displayDomain}</div>
   <div class="loss-number">${lossDisplay}</div>
-  <div class="loss-label">estimated monthly revenue loss</div>
 
-  <div class="daily-loss">⚡ That's $${daily.toLocaleString("en-US")} every single day.</div>
+  <!-- 🔥 consequence language -->
+  <div class="loss-label">revenue leaking from your store every month</div>
+
+  <div class="daily-loss">⚡ That's $${daily.toLocaleString("en-US")} in lost sales every single day.</div>
   <div class="live-counter" id="liveCounter"></div>
 
   <div class="scores-section">
@@ -448,62 +448,68 @@ app.innerHTML = `
     <div class="explain-title">Understanding your two scores</div>
     <div class="explain-item">
       <span class="explain-highlight">CRO Score (Conversion Rate Optimization)</span><br>
-      Measures how well your store converts visitors into buyers. Top-performing stores score 90+.
-      Even a 5% conversion improvement on $500k GMV = $25,000 extra revenue per year.
-      Every point below 90 is money left on the table.
+      Measures how many visitors are dropping off before buying. Top stores score 90+.
+      Every point below 90 is revenue leaking through gaps your traffic is already paying for.
     </div>
     <div class="explain-item">
       <span class="explain-highlight">AI Readiness Score</span><br>
-      Measures whether AI shopping agents — Google SGE, ChatGPT Shopping, Perplexity — can read,
-      understand and recommend your store. When a customer asks "what's the best pet food brand?",
-      AI agents recommend stores they can fully read. Partial visibility means competitors outrank you.
+      Measures whether AI shopping agents — Google SGE, ChatGPT Shopping, Perplexity — can find
+      and recommend your store. Low score means buyers who ask AI "what's the best X?" 
+      never see you. That's lost sales before they even land on your page.
     </div>
     <div class="explain-item">
       <span class="explain-highlight">Why both matter</span><br>
-      CRO fixes convert existing traffic. AI Readiness grows new traffic from AI-driven discovery.
-      The full audit addresses both — compounding revenue recovery.
+      CRO stops revenue leaking from existing traffic.
+      AI Readiness recovers sales from traffic you're not getting yet.
+      Both are costing you money right now.
     </div>
   </div>
 
-  <div class="section-label">Main leak detected</div>
+  <!-- 🔥 consequence language -->
+  <div class="section-label">Where buyers are dropping off</div>
   <div class="main-leak-box">
     <div class="main-leak-text">${mainLeak}</div>
   </div>
 
+  <!-- 🔥 consequence language -->
   <div class="locked-box">
-    <div class="locked-title">3 more critical leaks — locked</div>
+    <div class="locked-title">3 more revenue leaks costing you money — locked</div>
     ${lockedHTML}
   </div>
 
-  <div class="fix-label">✓ Quick fix (free)</div>
+  <!-- 🔥 consequence language -->
+  <div class="fix-label">✓ Stop this leak now — free</div>
   <div class="fix-box">
     <div class="fix-text">${quickFix}</div>
-    <div class="fix-impact">→ Estimated impact: +$${quickFixImpact}/month</div>
+    <div class="fix-impact">→ Stops $${quickFixImpact}/month in lost revenue</div>
   </div>
 
-  <div class="expiry-text">⏳ This analysis expires in 48 hours as your store data changes.</div>
+  <!-- 🔥 consequence language -->
+  <div class="expiry-text">⏳ This report expires in 48 hours — your revenue leak is active right now.</div>
 
   <div class="cta-section">
     <div id="ctaBtnTop" class="cta-btn">
       Recover $${lossMin.toLocaleString("en-US")}/mo — Unlock All 4 Fixes ($399)
     </div>
     <div class="cta-trust">One-time payment &nbsp;·&nbsp; Delivered in 24h &nbsp;·&nbsp; 4 execution-ready fixes</div>
-    <div class="cta-trust-green">✔ Most stores recover this cost from one fix</div>
+    <div class="cta-trust-green">✔ Most stores recover this cost in the first week</div>
     <div class="cta-trust" style="margin-top:5px;">🔒 Secure checkout powered by Stripe</div>
   </div>
 
+  <!-- 🔥 consequence language -->
   <div class="what-box">
-    <div class="what-title">Full audit reveals:</div>
-    <div class="what-item">→ Exact drop-off points killing your conversions</div>
-    <div class="what-item">→ Hidden friction across your entire funnel</div>
-    <div class="what-item">→ Revenue impact in real $ per issue</div>
-    <div class="what-item">→ Step-by-step fixes — no guessing, no calls</div>
+    <div class="what-title">Unlock all 4 revenue leaks — see exactly what's costing you:</div>
+    <div class="what-item">→ Exact drop-off points where buyers are leaving</div>
+    <div class="what-item">→ Hidden revenue leaks across your entire funnel</div>
+    <div class="what-item">→ Real $ cost per leak — evidence not estimates</div>
+    <div class="what-item">→ Step-by-step fix for each leak — no guessing, no calls</div>
   </div>
 
+  <!-- 🔥 consequence language -->
   <div class="decision-box">
-    <strong style="color:#fff;">Your decision:</strong><br><br>
-    1) Fix it now → recover $${lossMin.toLocaleString("en-US")}/month starting this week<br>
-    2) Ignore it → continue losing $${daily.toLocaleString("en-US")} every day
+    <strong style="color:#fff;">Your decision right now:</strong><br><br>
+    1) Stop the leak → recover $${lossMin.toLocaleString("en-US")}/month starting this week<br>
+    2) Do nothing → continue losing $${daily.toLocaleString("en-US")} in sales every single day
   </div>
 
   <div class="founder-box">
@@ -527,7 +533,7 @@ app.innerHTML = `
 
   <div class="footer">
     <div class="footer-scan-line">
-      Based on direct AI scan of your store &nbsp;·&nbsp; atomfoundry.dev
+      Based on direct revenue leak scan of your store &nbsp;·&nbsp; atomfoundry.dev
     </div>
     <div class="footer-tagline">Find → Prove → Fix → Protect</div>
   </div>
@@ -546,7 +552,7 @@ const counter = document.getElementById("liveCounter");
 setInterval(() => {
   seconds++;
   const lost = Math.round((hourly / 3600) * seconds);
-  if (counter) counter.innerText = `$${lost.toLocaleString("en-US")} lost while you are reading this`;
+  if (counter) counter.innerText = `$${lost.toLocaleString("en-US")} in lost sales while you are reading this`;
 }, 1000);
 
 async function goCheckout(btn) {
