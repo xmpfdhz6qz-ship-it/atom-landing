@@ -205,54 +205,70 @@ h1 {
     <div class="card">
 
       <div id="processingState">
-        <div class="live">⚡ Building your audit now...</div>
-        <h1>We're analyzing your store.</h1>
+
+        <!-- 🔥 consequence language -->
+        <div class="live">⚡ Building your revenue leak report now...</div>
+        <h1>Finding every revenue leak in your store.</h1>
         <p class="sub">
-          Our AI engine is scanning your conversion flow,
-          calculating revenue impact, and building your 4 execution fixes.
+          Our AI engine is detecting where buyers drop off,
+          calculating how much each leak costs you,
+          and building your exact fixes to stop them.
         </p>
+
         <div class="ai-message-box">
-          <div class="ai-message-label">AI Engine</div>
+          <div class="ai-message-label">Revenue Leak Engine</div>
           <div class="ai-message" id="aiMessage">Connecting to store data...</div>
         </div>
+
         <div class="progress-wrap">
           <div class="progress-label">
-            <span id="progressText">Initializing analysis...</span>
+            <span id="progressText">Initializing revenue leak scan...</span>
             <span id="progressPct">0%</span>
           </div>
           <div class="progress-bar">
             <div class="progress-fill" id="progressFill"></div>
           </div>
         </div>
+
+        <!-- 🔥 consequence language -->
         <div class="what-box">
-          <div class="what-title">Being prepared for you:</div>
-          <div class="what-item">→ 4 execution-ready fixes with exact $ impact</div>
-          <div class="what-item">→ CRO Score + AI Readiness breakdown</div>
-          <div class="what-item">→ Step-by-step implementation plan</div>
-          <div class="what-item">→ Done-For-You option if you want us to implement</div>
+          <div class="what-title">Being built for you right now:</div>
+          <div class="what-item">→ 4 exact fixes — each with $ revenue you stop losing</div>
+          <div class="what-item">→ CRO Score + AI Readiness — where you're losing traffic</div>
+          <div class="what-item">→ Step-by-step fix plan — stop each leak fast</div>
+          <div class="what-item">→ Done-For-You option — we fix all 4 leaks for you</div>
         </div>
+
         <div class="scan-id">Audit ID: AF-<span id="auditId"></span></div>
+
+        <!-- 🔥 consequence language -->
         <div class="footer">
-          Your audit will be delivered to your email within a few minutes.<br>
+          Your revenue leak report will be in your email within minutes.<br>
           <div class="tagline">Find → Prove → Fix → Protect</div>
         </div>
+
       </div>
 
       <div id="doneState">
         <div class="done-check">✓</div>
-        <div class="done-title">Your audit is ready.</div>
+
+        <!-- 🔥 consequence language -->
+        <div class="done-title">Your revenue leak report is ready.</div>
         <div class="done-sub">
-          Check your email — your full Revenue Audit<br>
-          with 4 execution-ready fixes is waiting for you.
+          Check your email — your full revenue leak report<br>
+          with 4 exact fixes to stop the leaks is waiting for you.
         </div>
+
         <div class="done-box">
-          <div class="done-box-title">Your audit includes:</div>
-          <div class="done-item">→ 4 execution-ready fixes with exact $ impact</div>
-          <div class="done-item">→ CRO Score + AI Readiness Score breakdown</div>
-          <div class="done-item">→ Step-by-step implementation — no dev needed</div>
-          <div class="done-item">→ Revenue recovery timeline</div>
-          <div class="done-item">→ Done-For-You option if you want us to implement</div>
+          <!-- 🔥 consequence language -->
+          <div class="done-box-title">Your report includes:</div>
+          <div class="done-item">→ 4 exact fixes — each showing $ revenue you recover</div>
+          <div class="done-item">→ CRO Score + AI Readiness — where sales are being lost</div>
+          <div class="done-item">→ Step-by-step fix plan — no dev knowledge needed</div>
+          <div class="done-item">→ Expected revenue recovery within 7 days per fix</div>
+          <div class="done-item">→ Done-For-You option — we fix all 4 leaks for you</div>
         </div>
+
         <div class="footer">
           Questions? founder@atomfoundry.dev<br>
           <div class="tagline">Find → Prove → Fix → Protect</div>
@@ -272,9 +288,9 @@ const wrap   = document.getElementById("cardWrap");
 const ctx    = canvas.getContext("2d");
 
 const RADIUS    = 20;
-const SPEED     = 0.004;   // rovnoměrná rychlost — jako had
-const TAIL_LEN  = 0.22;    // délka hada = 22% obvodu
-const THICKNESS = 2.5;     // tloušťka čáry
+const SPEED     = 0.004;
+const TAIL_LEN  = 0.22;
+const THICKNESS = 2.5;
 
 let headPos = 0;
 let isDone  = false;
@@ -287,44 +303,35 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
-// Vybuduj body zaobleného obdélníku jako pole bodů
 function buildPerimeter(w, h, r) {
   const pts = [];
-  const N = 80; // bodů na každý oblouk
+  const N = 80;
 
-  // Levý horní oblouk
   for (let i = 0; i <= N; i++) {
     const a = Math.PI + (Math.PI / 2) * (i / N);
     pts.push([r + r * Math.cos(a), r + r * Math.sin(a)]);
   }
-  // Horní hrana
   for (let i = 0; i <= N; i++) {
     pts.push([r + (w - 2 * r) * (i / N), 0]);
   }
-  // Pravý horní oblouk
   for (let i = 0; i <= N; i++) {
     const a = -Math.PI / 2 + (Math.PI / 2) * (i / N);
     pts.push([w - r + r * Math.cos(a), r + r * Math.sin(a)]);
   }
-  // Pravá hrana
   for (let i = 0; i <= N; i++) {
     pts.push([w, r + (h - 2 * r) * (i / N)]);
   }
-  // Pravý dolní oblouk
   for (let i = 0; i <= N; i++) {
     const a = (Math.PI / 2) * (i / N);
     pts.push([w - r + r * Math.cos(a), h - r + r * Math.sin(a)]);
   }
-  // Dolní hrana
   for (let i = 0; i <= N; i++) {
     pts.push([w - r - (w - 2 * r) * (i / N), h]);
   }
-  // Levý dolní oblouk
   for (let i = 0; i <= N; i++) {
     const a = Math.PI / 2 + (Math.PI / 2) * (i / N);
     pts.push([r + r * Math.cos(a), h - r + r * Math.sin(a)]);
   }
-  // Levá hrana zpět nahoru
   for (let i = 0; i <= N; i++) {
     pts.push([0, h - r - (h - 2 * r) * (i / N)]);
   }
@@ -363,26 +370,17 @@ function draw(ts) {
   const STEPS = 120;
 
   for (let i = 0; i < STEPS; i++) {
-    // frac 0 = ocas (průhledný), frac 1 = hlava (plný)
     const frac = i / STEPS;
-
-    // pozice tohoto segmentu na perimetru
     const t0 = ((headPos - TAIL_LEN + (frac * TAIL_LEN)) + 2) % 1;
     const t1 = ((headPos - TAIL_LEN + ((frac + 1 / STEPS) * TAIL_LEN)) + 2) % 1;
-
-    // Alpha: ocas mizí plynule, hlava je plná
-    // Easing — kvadratická křivka pro přirozenější vymizení
     const alpha = isDone
       ? frac * frac * 0.3
       : frac * frac * 0.95 + 0.02;
-
     const color = isDone
       ? `rgba(29,158,117,${alpha})`
       : `rgba(249,115,22,${alpha})`;
-
     const p0 = getPoint(pts, t0);
     const p1 = getPoint(pts, t1);
-
     ctx.beginPath();
     ctx.moveTo(p0[0], p0[1]);
     ctx.lineTo(p1[0], p1[1]);
@@ -393,7 +391,6 @@ function draw(ts) {
     ctx.stroke();
   }
 
-  // Glow na hlavě — jen při processing
   if (!isDone) {
     const hp   = getPoint(pts, headPos);
     const glow = ctx.createRadialGradient(hp[0], hp[1], 0, hp[0], hp[1], 10);
@@ -411,23 +408,27 @@ function draw(ts) {
 requestAnimationFrame(draw);
 
 // ── CONTENT ──────────────────────────────────────────────────────
+
+// 🔥 consequence-based AI messages
 const messages = [
   "Connecting to store data...",
-  "Analyzing homepage structure...",
-  "Detecting conversion friction...",
-  "Evaluating trust signals...",
-  "Calculating revenue impact...",
-  "Building execution cards...",
-  "Generating AI Readiness Score...",
-  "Finalizing your audit..."
+  "Finding where buyers are dropping off...",
+  "Detecting revenue leaks in your funnel...",
+  "Checking where buyers hesitate and abandon...",
+  "Calculating how much each leak costs you...",
+  "Building your exact fixes to stop the leaks...",
+  "Checking if AI agents are skipping your store...",
+  "Finalizing your revenue loss breakdown..."
 ];
+
+// 🔥 consequence-based progress steps
 const steps = [
-  "Initializing analysis...",
+  "Initializing revenue leak scan...",
   "Reading page structure...",
-  "Analyzing conversion flow...",
-  "Detecting revenue leaks...",
-  "Calculating $ impact...",
-  "Building your fixes...",
+  "Detecting where buyers drop off...",
+  "Exposing hidden revenue leaks...",
+  "Calculating $ loss per leak...",
+  "Building fixes to stop the leaks...",
   "Almost done..."
 ];
 
@@ -439,7 +440,6 @@ const pct    = document.getElementById("progressPct");
 const stepEl = document.getElementById("progressText");
 const msgEl  = document.getElementById("aiMessage");
 
-// AI messages s fade efektem
 const msgInterval = setInterval(() => {
   msgEl.style.opacity = "0";
   setTimeout(() => {
@@ -449,7 +449,6 @@ const msgInterval = setInterval(() => {
   }, 250);
 }, 1200);
 
-// Progress bar — doběhne za ~5 sekund
 const progressInterval = setInterval(() => {
   progress += Math.random() * 12 + 3;
   if (progress >= 95) {
@@ -472,9 +471,9 @@ setTimeout(() => {
 
   bar.style.width = "100%";
   pct.innerText = "100%";
-  stepEl.innerText = "Complete.";
+  // 🔥 consequence language
+  stepEl.innerText = "Revenue leaks found — report complete.";
 
-  // Had přejde na zelenou
   isDone = true;
 
   setTimeout(() => {
@@ -482,7 +481,7 @@ setTimeout(() => {
     document.getElementById("doneState").style.display = "block";
   }, 600);
 
-}, 5000); // ← 5 sekund
+}, 5000);
 </script>
 
 </body>
