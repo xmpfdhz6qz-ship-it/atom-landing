@@ -234,7 +234,6 @@ body::before {
 }
 .pdf-btn:hover { color: #ccc; border-color: #444; background: #161616; }
 
-/* ── FOUNDER BOX ── */
 .founder-box {
   background: #0d0d0d;
   border: 1px solid #1e1e1e;
@@ -259,7 +258,6 @@ body::before {
 .founder-sub { font-size: 11px; color: #666; margin-bottom: 8px; }
 .founder-quote { font-size: 13px; color: #aaa; line-height: 1.7; font-style: italic; }
 
-/* ── DFY ── */
 .dfy-box {
   background: #0f0f0f; border: 1px solid #f97316;
   border-radius: 16px; padding: 20px; margin-bottom: 24px;
@@ -293,7 +291,6 @@ body::before {
 }
 .dfy-cta:hover { transform: translateY(-2px); box-shadow: 0 16px 35px rgba(249,115,22,0.6); }
 
-/* ── MONITORING ── */
 .monitoring-box {
   background: #0d1a0d; border: 1px solid #1a2e1a;
   border-radius: 16px; padding: 20px; margin-bottom: 24px;
@@ -426,13 +423,13 @@ const croVerdictText = croScore >= 90
   ? `<span style="color:#1D9E75;">✓ Strong conversion health — maintain and monitor</span>`
   : croScore >= 60
   ? `<span style="color:#EF9F27;">⚠ You're leaving money on the table — competitors scoring 90+ are winning your customers</span>`
-  : `<span style="color:#E24B4A;">✗ Critical conversion problems — buyers are leaving before purchasing</span>`;
+  : `<span style="color:#E24B4A;">✗ Buyers are leaving before purchasing — revenue leaking at every step</span>`;
 
 const arsVerdictText = arsScore >= 90
   ? `<span style="color:#1D9E75;">✓ Fully visible to AI agents — strong discovery position</span>`
   : arsScore >= 50
   ? `<span style="color:#EF9F27;">⚠ You're partially visible to AI — competitors may outrank you in AI search</span>`
-  : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store</span>`;
+  : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store — lost traffic every day</span>`;
 
 const cardClasses     = ["exec-card-1","exec-card-2","exec-card-3","exec-card-4"];
 const priorityTexts   = ["Critical priority","High priority","Medium priority","Low priority"];
@@ -457,13 +454,13 @@ const execCardsHTML = issues.map((issue, i) => {
     <div class="exec-card-header">
       <div class="exec-num">${i+1}</div>
       <div style="flex:1;">
-        <div class="exec-card-title">${String(issue.title||"Conversion issue").replace(/</g,"&lt;")}</div>
-        <div class="exec-card-impact">${impact > 0 ? "~$"+fmt(impact)+"/month impact" : "Revenue impact detected"}</div>
+        <div class="exec-card-title">${String(issue.title||"Conversion leak").replace(/</g,"&lt;")}</div>
+        <div class="exec-card-impact">${impact > 0 ? "~$"+fmt(impact)+"/month revenue leaking here" : "Revenue leaking at this step"}</div>
       </div>
     </div>
     <div class="exec-card-body">
-      <div class="exec-reason">${String(issue.reason||issue.why_it_matters||"This issue slows user decision-making.").replace(/</g,"&lt;")}</div>
-      <div class="exec-fix-label">✓ Exact fix</div>
+      <div class="exec-reason">${String(issue.reason||issue.why_it_matters||"Buyers are dropping off at this step.").replace(/</g,"&lt;")}</div>
+      <div class="exec-fix-label">✓ Exact fix — stop this leak</div>
       <div class="exec-fix-text">${String(issue.fix||"").replace(/</g,"&lt;")}</div>
       <ul class="exec-steps">${stepsHTML}</ul>
     </div>
@@ -475,7 +472,7 @@ const execCardsHTML = issues.map((issue, i) => {
   </div>`;
 }).join("");
 
-const mainLeak = r.main_leak || r.primary_failure || "Decision path is not clearly guiding users to purchase.";
+const mainLeak = r.main_leak || r.primary_failure || "Buyers are dropping off before taking action.";
 
 document.getElementById("loadingState").style.display = "none";
 const app = document.getElementById("app");
@@ -485,13 +482,15 @@ app.innerHTML = `
 
   <div class="audit-badge">
     <span class="audit-badge-dot"></span>
-    Full Revenue Audit · atomfoundry.dev
+    Full Revenue Leak Audit · atomfoundry.dev
   </div>
 
   <div class="domain-label">${storeDomain}</div>
   <div class="loss-number">$${fmt(monthly)}/month</div>
-  <div class="loss-label">estimated revenue loss · full audit complete</div>
-  <div class="daily-loss">⚡ That's $${fmt(daily)} every single day.</div>
+
+  <!-- 🔥 consequence language -->
+  <div class="loss-label">revenue leaking from your store · full audit complete</div>
+  <div class="daily-loss">⚡ That's $${fmt(daily)} in lost sales every single day.</div>
   <div class="live-counter" id="liveCounter"></div>
 
   <div class="scores-section">
@@ -518,7 +517,7 @@ app.innerHTML = `
       <div class="ars-popup-title">How AI Readiness is calculated</div>
       <div class="ars-popup-desc">
         AI shopping agents (Google SGE, ChatGPT Shopping, Perplexity) score your store across 6 factors.
-        Low scores mean agents skip your store when recommending products to buyers.
+        Low scores mean agents skip your store when recommending products to buyers — lost sales before visitors even land.
       </div>
       <div class="ars-factor">
         <div class="ars-factor-left">
@@ -574,48 +573,51 @@ app.innerHTML = `
     <div class="explain-title">Understanding your two scores</div>
     <div class="explain-item">
       <span class="explain-highlight">CRO Score (Conversion Rate Optimization)</span><br>
-      Measures how well your store converts visitors into buyers. Top-performing stores score 90+.
-      Even a 5% conversion improvement on $500k GMV = $25,000 extra revenue per year.
-      Every point below 90 is money left on the table.
+      Measures how many visitors are dropping off before buying. Top stores score 90+.
+      Every point below 90 is revenue leaking through gaps your traffic is already paying for.
     </div>
     <div class="explain-item">
       <span class="explain-highlight">AI Readiness Score</span><br>
-      Measures whether AI shopping agents — Google SGE, ChatGPT Shopping, Perplexity — can read,
-      understand and recommend your store. Partial visibility means competitors outrank you.
+      Measures whether AI shopping agents — Google SGE, ChatGPT Shopping, Perplexity — can find
+      and recommend your store. Low score means buyers who ask AI never see you.
+      That's lost sales before they even land on your page.
     </div>
     <div class="explain-item">
       <span class="explain-highlight">Why both matter</span><br>
-      CRO fixes convert existing traffic. AI Readiness grows new traffic from AI-driven discovery.
-      This audit addresses both — compounding revenue recovery.
+      CRO stops revenue leaking from existing traffic.
+      AI Readiness recovers sales from traffic you're not getting yet.
+      Both are costing you money right now.
     </div>
   </div>
 
-  <div class="section-label">Primary leak identified</div>
+  <!-- 🔥 consequence language -->
+  <div class="section-label">Where buyers are dropping off</div>
   <div class="main-leak-box">
     <div class="main-leak-text">${String(mainLeak).replace(/</g,"&lt;")}</div>
   </div>
 
-  <div class="section-label">4 Execution fixes</div>
+  <div class="section-label">4 revenue leaks — exact fixes</div>
   <div class="execution-cards">${execCardsHTML}</div>
 
-  <div class="section-label">Revenue summary</div>
+  <!-- 🔥 consequence language -->
+  <div class="section-label">Revenue loss summary</div>
   <div class="revenue-box">
     <div class="revenue-row">
-      <span class="revenue-row-label">Monthly loss</span>
+      <span class="revenue-row-label">Monthly revenue leak</span>
       <span class="revenue-row-value" style="color:#E24B4A;">$${fmt(monthly)}</span>
     </div>
     <div class="revenue-row">
-      <span class="revenue-row-label">Daily loss</span>
+      <span class="revenue-row-label">Lost sales per day</span>
       <span class="revenue-row-value" style="color:#EF9F27;">$${fmt(daily)}</span>
     </div>
     <div class="revenue-row">
-      <span class="revenue-row-label">Yearly projection</span>
+      <span class="revenue-row-label">Yearly if not fixed</span>
       <span class="revenue-row-value" style="color:#E24B4A;">$${fmt(yearly)}</span>
     </div>
   </div>
 
   <a href="#" class="pdf-btn" onclick="window.print(); return false;">
-    ↓ Download Full Execution Plan (PDF)
+    ↓ Download Full Fix Plan (PDF)
   </a>
 
   <div class="founder-box">
@@ -630,49 +632,49 @@ app.innerHTML = `
     </div>
   </div>
 
-  <div class="section-label">Want us to implement these fixes for you?</div>
+  <div class="section-label">Want us to stop the leaks for you?</div>
   <div class="dfy-box">
     <div class="dfy-tag">Done-For-You</div>
-    <div class="dfy-title">We implement all 4 fixes. You just approve.</div>
+    <div class="dfy-title">We fix all 4 leaks. You just approve.</div>
     <div class="dfy-desc">
-      You now have the exact plan. But implementation takes time — and every day of delay costs you $${fmt(daily)}.
-      Our team implements all 4 fixes directly in your store within 5 business days.
+      You now have the exact plan. But every day of delay costs you $${fmt(daily)} in lost sales.
+      Our team fixes all 4 revenue leaks directly in your store within 5 business days.
     </div>
     <ul class="dfy-features">
-      <li class="dfy-feature">All 4 fixes implemented by our team</li>
+      <li class="dfy-feature">All 4 leaks fixed by our team</li>
       <li class="dfy-feature">No dev knowledge needed on your side</li>
       <li class="dfy-feature">Delivered in 5 business days</li>
       <li class="dfy-feature">Before/after conversion comparison</li>
     </ul>
     <div class="dfy-price">One-time · <strong>$899</strong> · No ongoing commitment</div>
-    <a href="mailto:audit@atomfoundry.dev?subject=Done-For-You%20Implementation%20-%20${encodeURIComponent(storeDomain)}&body=I%20would%20like%20to%20have%20my%204%20fixes%20implemented.%20My%20store%3A%20${encodeURIComponent(storeDomain)}" class="dfy-cta">
-      Implement All 4 Fixes For Me $899 →
+    <a href="mailto:audit@atomfoundry.dev?subject=Done-For-You%20Fix%20-%20${encodeURIComponent(storeDomain)}&body=I%20would%20like%20to%20have%20my%204%20revenue%20leaks%20fixed.%20My%20store%3A%20${encodeURIComponent(storeDomain)}" class="dfy-cta">
+      Fix All 4 Revenue Leaks For Me — $899 →
     </a>
     <div style="font-size:11px;color:#555;text-align:center;margin-top:8px;">
       We'll reply within 24 hours to confirm details
     </div>
   </div>
 
-  <div class="section-label">Keep your store optimized</div>
+  <div class="section-label">Stop future leaks before they cost you</div>
   <div class="monitoring-box">
-    <div class="monitoring-title">⚡ Add Revenue Monitoring — $89/month</div>
+    <div class="monitoring-title">⚡ Add Revenue Leak Monitoring — $89/month</div>
     <div class="monitoring-desc">
-      Conversion leaks evolve. New issues appear as your store grows and competitors improve.
+      Revenue leaks evolve — new drop-off points appear as your store grows and competitors improve.
       Monitoring catches them before they cost you money.
     </div>
     <ul class="monitoring-features">
       <li class="monitoring-feature">Weekly automated store scan</li>
-      <li class="monitoring-feature">Instant alert when new leak is detected</li>
-      <li class="monitoring-feature">Revenue impact tracked over time</li>
+      <li class="monitoring-feature">Instant alert when new revenue leak is detected</li>
+      <li class="monitoring-feature">$ loss tracked per leak over time</li>
       <li class="monitoring-feature">Monthly benchmark vs top DTC stores</li>
     </ul>
-    <div id="monitoring-btn" class="monitoring-cta">Add Monitoring $89/month →</div>
+    <div id="monitoring-btn" class="monitoring-cta">Stop Future Leaks — $89/month →</div>
     <div class="monitoring-micro">Cancel anytime &nbsp;·&nbsp; No contracts &nbsp;·&nbsp; Instant setup</div>
   </div>
 
   <div class="footer">
     <div class="footer-scan-line">
-      Full revenue audit · atomfoundry.dev &nbsp;·&nbsp;
+      Full revenue leak audit · atomfoundry.dev &nbsp;·&nbsp;
       <a href="#" onclick="openBillingPortal();return false;" style="color:#444;text-decoration:none;">Manage subscription</a>
     </div>
     <div class="footer-tagline">Find → Prove → Fix → Protect</div>
@@ -692,7 +694,7 @@ const counter = document.getElementById("liveCounter");
 setInterval(() => {
   seconds++;
   const lost = Math.round((hourly / 3600) * seconds);
-  if (counter) counter.innerText = `$${lost.toLocaleString("en-US")} lost while you are reading this`;
+  if (counter) counter.innerText = `$${lost.toLocaleString("en-US")} in lost sales while you are reading this`;
 }, 1000);
 
 bindCTA();
