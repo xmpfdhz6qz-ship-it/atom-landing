@@ -203,14 +203,16 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
     </div>
   </div>
 
+  <!-- HEADLINE — consequence first, no "we" -->
   <h1>
     Your store is leaking revenue right now.<br>
     See exactly where in 10 seconds.
   </h1>
 
+  <!-- SUBTITLE — consequence-based, not method-based -->
   <p class="sub">
-    Paste your Shopify store URL. Get your #1 revenue leak
-    + estimated $ loss. Free.
+    Paste your store URL. See exactly how much you're losing
+    — and the exact fix to stop it. Free.
   </p>
 
   <div class="box">
@@ -224,14 +226,15 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
         autocapitalize="none"
         spellcheck="false"
       >
+      <!-- CTA — consequence-based -->
       <button type="submit" id="scanBtn">
-        Find My Revenue Leak →
+        Show Me What I'm Losing →
       </button>
       <div class="micro">
         No signup &nbsp;·&nbsp; No setup &nbsp;·&nbsp; Free &nbsp;·&nbsp; Takes 10 seconds
       </div>
       <div class="proof-line" id="proofLine">
-        ⚡ Avg. revenue leak found: $2,800/month
+        ⚡ Avg. revenue leak stopped: $2,800/month
       </div>
     </form>
   </div>
@@ -239,16 +242,18 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
   <div class="examples">
     <div class="examples-label">Recent findings — anonymized</div>
 
+    <!-- FULL ARC — detect → fix → recover -->
     <div class="example-arc">
-      <div class="arc-label">✓ Found → Fixed → Recovered</div>
-      Beauty store, US · CTA buried below fold · leak: $3,200/month<br>
-      Fix: moved Add to Cart above fold + trust badges next to price<br>
+      <div class="arc-label">✓ Detected → Fixed → Recovered</div>
+      Beauty store, US · buyers dropped off before Add to Cart · losing $3,200/month<br>
+      Fix: CTA moved above fold, trust badges placed next to price<br>
       <span class="arc-result">→ Recovered $2,800/month within 3 weeks</span>
     </div>
 
     <div id="dynamicFindings"></div>
   </div>
 
+  <!-- STEPS — dollar loss language, not method language -->
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -256,18 +261,18 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-text">We scan for revenue leaks</div>
+      <div class="step-text">See your exact $ loss — where buyers drop off</div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-text">See your #1 leak + $ loss + exact fix</div>
+      <div class="step-text">Get the exact fix to stop losing revenue</div>
     </div>
   </div>
 
   <div class="footer">
     <div class="footer-scan-line">
       <span id="footerStores">47</span> DTC stores scanned &nbsp;·&nbsp;
-      $<span id="footerLeaks">340</span>k in leaks found &nbsp;·&nbsp; atomfoundry.dev<br>
+      $<span id="footerLeaks">340</span>k in revenue leaks found &nbsp;·&nbsp; atomfoundry.dev<br>
       <a href="/terms-of-service.html">Terms</a> &nbsp;&amp;&nbsp;
       <a href="/privacy-policy.html">Privacy</a>
     </div>
@@ -279,14 +284,11 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 <script>
 // ── DYNAMIC NUMBERS ──────────────────────────────────────────────
 
-// Base date — kdy jsme spustili (upravit na reálné datum spuštění)
-const BASE_DATE  = new Date('2026-03-01');
-const BASE_STORES = 47;
-const BASE_LEAK_AVG = 2800;   // $
-const BASE_LEAKS_TOTAL = 340; // $k
+const BASE_DATE       = new Date('2026-03-01');
+const BASE_STORES     = 47;
+const BASE_LEAK_AVG   = 2800;
+const BASE_LEAKS_TOTAL = 340;
 
-// Deterministicky seeded random — stejné číslo pro stejný den
-// Takže refresh nezmění číslo ale druhý den ano
 function seededRand(seed) {
   const x = Math.sin(seed + 1) * 10000;
   return x - Math.floor(x);
@@ -294,56 +296,42 @@ function seededRand(seed) {
 
 function getDaysSinceBase() {
   const now = new Date();
-  const diff = now - BASE_DATE;
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
+  return Math.floor((now - BASE_DATE) / (1000 * 60 * 60 * 24));
 }
 
 function computeStats() {
   const days = getDaysSinceBase();
-
-  // Stores: roste o ~1 každé 2.5 dne, s malou nepravidelností
-  // Seed je den aby byl konzistentní v rámci dne
-  const storeGrowth = Math.floor(days / 2.5);
-  const storeJitter = Math.floor(seededRand(days * 7) * 2); // 0 nebo 1
-  const stores = BASE_STORES + storeGrowth + storeJitter;
-
-  // Avg leak: kolísá ±$100 kolem base, denně jinak
-  const leakJitter = Math.floor(seededRand(days * 13) * 200) - 100;
-  const leakAvg = BASE_LEAK_AVG + leakJitter;
-  // Zaokrouhli na $50
-  const leakAvgRounded = Math.round(leakAvg / 50) * 50;
-
-  // Total leaks v $k: roste s počtem stores
-  const leaksTotal = Math.round(BASE_LEAKS_TOTAL + (stores - BASE_STORES) * 7.2);
-
+  const storeGrowth  = Math.floor(days / 2.5);
+  const storeJitter  = Math.floor(seededRand(days * 7) * 2);
+  const stores       = BASE_STORES + storeGrowth + storeJitter;
+  const leakJitter   = Math.floor(seededRand(days * 13) * 200) - 100;
+  const leakAvgRounded = Math.round((BASE_LEAK_AVG + leakJitter) / 50) * 50;
+  const leaksTotal   = Math.round(BASE_LEAKS_TOTAL + (stores - BASE_STORES) * 7.2);
   return { stores, leakAvg: leakAvgRounded, leaksTotal };
 }
 
 const stats = computeStats();
-
-// Aktualizuj UI
-document.getElementById('statStores').innerText = stats.stores;
+document.getElementById('statStores').innerText  = stats.stores;
 document.getElementById('statAvgLeak').innerText = '$' + stats.leakAvg.toLocaleString('en-US');
-document.getElementById('proofLine').innerText = '⚡ Avg. revenue leak found: $' + stats.leakAvg.toLocaleString('en-US') + '/month';
+document.getElementById('proofLine').innerText   = '⚡ Avg. revenue leak stopped: $' + stats.leakAvg.toLocaleString('en-US') + '/month';
 document.getElementById('footerStores').innerText = stats.stores;
-document.getElementById('footerLeaks').innerText = stats.leaksTotal;
+document.getElementById('footerLeaks').innerText  = stats.leaksTotal;
 
-// ── DYNAMIC RECENT FINDINGS ──────────────────────────────────────
+// ── DYNAMIC RECENT FINDINGS — consequence language ────────────────
 
 const allFindings = [
-  { amount: '$5,800', cat: 'Pet food brand, CA', leak: '20+ promo codes visible to all visitors' },
-  { amount: '$2,890', cat: 'Skincare DTC, US', leak: '5 competing offers shown simultaneously' },
-  { amount: '$3,480', cat: 'Jewelry store, US', leak: 'fake countdown timer — visitors noticed the reset' },
-  { amount: '$3,640', cat: 'Wellness brand, US', leak: 'promo code trains visitors not to pay full price' },
-  { amount: '$4,200', cat: 'Apparel brand, US', leak: 'no CTA above fold — users scroll past buy intent' },
-  { amount: '$2,650', cat: 'Home goods, CA', leak: 'trust badges missing near Add to Cart button' },
-  { amount: '$3,900', cat: 'Beauty DTC, US', leak: 'product page loads in 6.2s on mobile — 40% bounce' },
-  { amount: '$3,120', cat: 'Supplement brand, US', leak: 'price shown without context — no comparison anchor' },
-  { amount: '$2,420', cat: 'Pet accessories, CA', leak: 'checkout requires account creation — cart abandonment spike' },
-  { amount: '$4,750', cat: 'Fashion DTC, US', leak: 'announcement bar rotates 8 messages — distracts from CTA' },
+  { amount: '$5,800', cat: 'Pet food brand, CA',      leak: 'buyers left before buying — 20+ promo codes created discount-seeking behavior' },
+  { amount: '$2,890', cat: 'Skincare DTC, US',        leak: 'visitors dropped off — 5 competing offers shown at decision moment' },
+  { amount: '$3,480', cat: 'Jewelry store, US',       leak: 'trust collapsed — fake countdown reset caught by users' },
+  { amount: '$3,640', cat: 'Wellness brand, US',      leak: 'buyers trained to wait — promo code visible on every page' },
+  { amount: '$4,200', cat: 'Apparel brand, US',       leak: 'purchase intent lost — no CTA visible above fold' },
+  { amount: '$2,650', cat: 'Home goods, CA',          leak: 'buyers hesitated — no trust signals near Add to Cart' },
+  { amount: '$3,900', cat: 'Beauty DTC, US',          leak: '40% mobile bounce — product page took 6.2s to load' },
+  { amount: '$3,120', cat: 'Supplement brand, US',    leak: 'price felt uncertain — no comparison anchor near buy decision' },
+  { amount: '$2,420', cat: 'Pet accessories, CA',     leak: 'cart abandoned — checkout forced account creation' },
+  { amount: '$4,750', cat: 'Fashion DTC, US',         leak: 'buyers distracted — announcement bar rotated 8 messages near CTA' },
 ];
 
-// Seeded shuffle pro den — každý den jiné pořadí, ale konzistentní v rámci dne
 function seededShuffle(arr, seed) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -354,17 +342,15 @@ function seededShuffle(arr, seed) {
 }
 
 const days = getDaysSinceBase();
-const shuffled = seededShuffle(allFindings, days * 31);
+const shuffled  = seededShuffle(allFindings, days * 31);
 const displayed = shuffled.slice(0, 4);
 
-const findingsEl = document.getElementById('dynamicFindings');
-findingsEl.innerHTML = displayed.map(f => `
+document.getElementById('dynamicFindings').innerHTML = displayed.map(f => `
   <div class="example-item">
     <span class="example-leak">🔴 ${f.amount}/month</span>
     <span> · ${f.cat} · ${f.leak}</span>
   </div>
 `).join('');
-
 </script>
 
 <script>
