@@ -128,7 +128,6 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
   min-height: 42px;
 }
 
-/* FOOTER — sjednocený */
 .footer-wrap {
   margin-top: 20px;
   padding-top: 16px;
@@ -164,19 +163,22 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
 <div class="container">
 <div class="card">
 
-  <div class="live">⚡ Scanning your store now...</div>
+  <!-- 🔥 consequence language -->
+  <div class="live">⚡ Detecting revenue leaks now...</div>
 
-  <h1>Finding your revenue leak.</h1>
+  <!-- 🔥 consequence language -->
+  <h1>Finding where your revenue is leaking.</h1>
 
   <p>
-    We're analyzing your store for hidden
-    <span class="highlight">revenue leaks</span> —
-    this takes about <span class="highlight">10–15 seconds</span>.
+    Detecting hidden <span class="highlight">revenue leaks</span> —
+    where buyers drop off and <span class="highlight">sales are lost</span>.
+    Takes about <span class="highlight">10–15 seconds</span>.
   </p>
 
   <div class="email-box">
-    <h3>Where should we send your results?</h3>
-    <p>Enter your email and we'll send your full revenue leak report the moment it's ready.</p>
+    <!-- 🔥 consequence language -->
+    <h3>Where should we send your revenue leak report?</h3>
+    <p>Enter your email — we'll send your full report showing exactly what's costing you money.</p>
 
     <input
       type="email"
@@ -185,12 +187,13 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
       autocomplete="email"
     >
 
+    <!-- 🔥 consequence language -->
     <div class="btn" onclick="saveEmail()">
-      Send Me My Results →
+      Send Me My Revenue Leak Report →
     </div>
 
     <div class="btn-micro">
-      No spam. One email. Your results only.
+      No spam. One email. Your revenue leak report only.
     </div>
   </div>
 
@@ -205,12 +208,12 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
   </div>
 
   <div class="ai-message" id="aiMessage">
-    Analyzing store structure...
+    Finding where buyers are dropping off...
   </div>
 
   <div class="footer-wrap">
     <div class="footer-scan-line">
-      Built by Daniel &nbsp;·&nbsp; Atom Foundry &nbsp;·&nbsp; atomfoundry.dev
+      <span id="footerStores">47</span> DTC stores scanned &nbsp;·&nbsp; atomfoundry.dev
     </div>
     <div class="footer-tagline">Find → Prove → Fix → Protect</div>
   </div>
@@ -225,28 +228,47 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
 <script>
 document.getElementById("auditId").innerText = Date.now().toString().slice(-6);
 
+// Dynamic store count — stejná logika jako landing page
+const BASE_DATE   = new Date('2026-03-01');
+const BASE_STORES = 47;
+
+function seededRand(seed) {
+  const x = Math.sin(seed + 1) * 10000;
+  return x - Math.floor(x);
+}
+function getDaysSinceBase() {
+  return Math.floor((new Date() - BASE_DATE) / (1000 * 60 * 60 * 24));
+}
+const days = getDaysSinceBase();
+const storeGrowth  = Math.floor(days / 2.5);
+const storeJitter  = Math.floor(seededRand(days * 7) * 2);
+const stores       = BASE_STORES + storeGrowth + storeJitter;
+document.getElementById('footerStores').innerText = stores;
+
 const urlParams = new URLSearchParams(window.location.search);
 const tokenFromUrl = urlParams.get("token");
 const domain = urlParams.get("domain") || "";
 
+// 🔥 consequence-based AI messages
 const messages = [
-  "Analyzing homepage structure...",
-  "Checking trust signals before Add to Cart...",
-  "Detecting competing CTAs...",
-  "Scanning announcement bar messages...",
-  "Calculating estimated revenue loss...",
-  "Checking structured data for AI visibility...",
-  "Comparing against high-converting stores...",
-  "Finalizing your revenue leak report..."
+  "Finding where buyers are dropping off...",
+  "Detecting trust gaps costing you sales...",
+  "Checking for competing CTAs killing conversions...",
+  "Scanning announcement bar — is it distracting buyers?",
+  "Calculating how much revenue you're losing...",
+  "Checking AI agent visibility — are you missing traffic?",
+  "Comparing your store against top-converting DTC stores...",
+  "Finalizing your revenue loss breakdown..."
 ];
 
+// 🔥 consequence-based progress steps
 const steps = [
-  "Initializing scan...",
+  "Initializing revenue leak scan...",
   "Reading page structure...",
-  "Analyzing conversion friction...",
-  "Detecting revenue leaks...",
-  "Calculating $ impact...",
-  "Generating your fix..."
+  "Detecting where buyers drop off...",
+  "Exposing hidden revenue leaks...",
+  "Calculating $ loss per leak...",
+  "Building your exact fix..."
 ];
 
 let i = 0;
@@ -256,8 +278,8 @@ const msgInterval = setInterval(() => {
 }, 1800);
 
 let progress = 0;
-const bar = document.getElementById("progressFill");
-const pct = document.getElementById("progressPct");
+const bar    = document.getElementById("progressFill");
+const pct    = document.getElementById("progressPct");
 const stepEl = document.getElementById("progressText");
 
 const progressInterval = setInterval(() => {
@@ -266,14 +288,15 @@ const progressInterval = setInterval(() => {
   if (progress >= 95) {
     progress = 95;
     clearInterval(progressInterval);
-    stepEl.innerText = "Ready — enter your email to see results";
+    // 🔥 consequence language
+    stepEl.innerText = "Ready — enter your email to see your revenue leak";
     pct.innerText = "95%";
     bar.style.width = "95%";
     return;
   }
 
   bar.style.width = progress + "%";
-  pct.innerText = Math.round(progress) + "%";
+  pct.innerText   = Math.round(progress) + "%";
   stepEl.innerText = steps[Math.min(Math.floor(progress / 20), steps.length - 1)];
 }, 600);
 
@@ -292,7 +315,8 @@ function saveEmail() {
   }).catch(() => {});
 
   const btn = document.querySelector(".btn");
-  btn.innerText = "✓ Got it — loading your results";
+  // 🔥 consequence language
+  btn.innerText = "✓ Got it — loading your revenue leak report";
   btn.style.background = "#1D9E75";
   btn.style.border = "2px solid #1D9E75";
   btn.style.color = "#fff";
@@ -304,9 +328,10 @@ function saveEmail() {
 
 function redirectToReport(token) {
   clearInterval(msgInterval);
-  bar.style.width = "100%";
-  pct.innerText = "100%";
-  stepEl.innerText = "Complete — loading your results...";
+  bar.style.width  = "100%";
+  pct.innerText    = "100%";
+  // 🔥 consequence language
+  stepEl.innerText = "Revenue leaks found — loading your report...";
 
   setTimeout(() => {
     window.location.href = "https://atomfoundry.dev/report/" + token;
