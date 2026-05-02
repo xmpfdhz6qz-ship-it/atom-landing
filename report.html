@@ -288,7 +288,7 @@ function track(event) {
 
 let data = null;
 try {
-  const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-scan?token=${id}`);
+  const res = await fetch(`/api/get-scan?id=${id}`);
   const raw = await res.json();
   data = Array.isArray(raw) ? raw[0] : raw;
 } catch(e) { console.error("API failed", e); }
@@ -520,7 +520,7 @@ app.innerHTML = `
       <div class="founder-quote">
         "I've seen hundreds of stores fail because of these 4 leaks.<br>
         I won't let yours be one of them."
-      </div>
+      </div
     </div>
   </div>
 
