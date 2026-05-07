@@ -1,0 +1,91 @@
+scan.html<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store Scan — Atom Foundry</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .container { max-width: 600px; width: 100%; padding: 40px 24px; text-align: center; }
+  .logo { font-size: 14px; color: #666; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+  .domain { font-size: 20px; color: #ff6b35; font-weight: 600; margin: 16px 0; }
+  .status { font-size: 16px; color: #888; margin-bottom: 32px; }
+  .spinner { width: 40px; height: 40px; border: 3px solid #333; border-top-color: #ff6b35; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 24px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .score-box { background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; margin: 24px 0; display: none; }
+  .score-number { font-size: 64px; font-weight: 800; color: #ff6b35; }
+  .score-label { font-size: 14px; color: #666; margin-top: 4px; }
+  .leaks { text-align: left; margin-top: 16px; }
+  .leak { padding: 12px; border-bottom: 1px solid #1a1a1a; font-size: 14px; color: #aaa; }
+  .cta { margin-top: 32px; }
+  .btn { display: inline-block; background: #ff6b35; color: #fff; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600; text-decoration: none; }
+  .error { color: #ff4444; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">Atom Foundry</div>
+  <div id="loading">
+    <div class="spinner"></div>
+    <h1>Scanning your store...</h1>
+    <div class="domain" id="domain-display"></div>
+    <div class="status">Analyzing AI visibility, conversion leaks and revenue gaps</div>
+  </div>
+  <div id="result" style="display:none">
+    <h1>Scan Complete</h1>
+    <div class="domain" id="domain-result"></div>
+    <div class="score-box" id="score-box">
+      <div class="score-number" id="score-value">--</div>
+      <div class="score-label">AI Readiness Score</div>
+    </div>
+    <div class="cta">
+      <a href="/" class="btn">Get Full Report — Free</a>
+    </div>
+  </div>
+  <div id="error" style="display:none">
+    <h1>Something went wrong</h1>
+    <p class="error" id="error-msg"></p>
+    <div class="cta" style="margin-top:24px">
+      <a href="/" class="btn">Try Again</a>
+    </div>
+  </div>
+</div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const domain = params.get('domain') || params.get('url') || '';
+  const cleanDomain = domain.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  document.getElementById('domain-display').textContent = cleanDomain;
+  document.getElementById('domain-result').textContent = cleanDomain;
+  if (!cleanDomain) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error-msg').textContent = 'No domain provided.';
+  } else {
+    const webhookUrl = 'https://n8n-production-1d7c.up.railway.app/webhook/scan';
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ domain: cleanDomain, url: 'https://' + cleanDomain })
+    })
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      if (data.total_score !== undefined) {
+        document.getElementById('score-value').textContent = data.total_score;
+        document.getElementById('score-box').style.display = 'block';
+      }
+      if (data.token) {
+        document.querySelector('.btn').href = '/report/' + data.token;
+      }
+    })
+    .catch(err => {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+    });
+  }
+</script>
+</body>
+</html>
