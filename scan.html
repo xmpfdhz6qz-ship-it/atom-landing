@@ -9,69 +9,120 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
 
-/* HERO */
-.hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 60px 24px; background: radial-gradient(ellipse at 50% 0%, rgba(255,107,53,0.12) 0%, transparent 60%); }
-.hero-inner { max-width: 680px; width: 100%; text-align: center; }
-.badge { display: inline-block; background: rgba(255,107,53,0.15); border: 1px solid rgba(255,107,53,0.3); color: #ff6b35; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 32px; }
-.hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
-.hero h1 span { color: #ff6b35; }
-.hero p { font-size: 18px; color: #888; line-height: 1.6; margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-/* SCAN FORM */
-.scan-form { background: #111; border: 1px solid #222; border-radius: 16px; padding: 32px; margin-bottom: 16px; }
-.scan-form label { display: block; font-size: 13px; color: #666; margin-bottom: 10px; text-align: left; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
-.input-row { display: flex; gap: 12px; }
-.domain-input { flex: 1; background: #0a0a0a; border: 1px solid #333; border-radius: 10px; padding: 14px 18px; color: #fff; font-size: 16px; outline: none; transition: border-color 0.2s; }
-.domain-input::placeholder { color: #444; }
-.domain-input:focus { border-color: #ff6b35; }
-.scan-btn { background: #ff6b35; color: #fff; border: none; border-radius: 10px; padding: 14px 28px; font-size: 16px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.2s, transform 0.1s; }
-.scan-btn:hover { background: #e55a25; }
-.scan-btn:active { transform: scale(0.98); }
-.disclaimer { font-size: 12px; color: #444; margin-top: 12px; }
+/* REDIRECT ANIMATION SCREEN */
+#redirectScreen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0a0a0a;
+  z-index: 200;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+#redirectScreen.active { display: flex; }
 
-/* SOCIAL PROOF */
-.social-proof { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
-.proof-item { font-size: 13px; color: #555; display: flex; align-items: center; gap: 6px; }
-.proof-item::before { content: '✓'; color: #ff6b35; font-weight: 700; }
+.redirect-logo {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: white;
+  margin-bottom: 48px;
+}
+.redirect-logo span { color: #ff6b35; }
 
-/* WHAT YOU GET */
-.section { padding: 80px 24px; }
-.section-inner { max-width: 900px; margin: 0 auto; }
-.section-label { font-size: 12px; color: #ff6b35; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 16px; }
-.section h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
-.section .sub { font-size: 17px; color: #666; margin-bottom: 48px; line-height: 1.6; }
+.cards-wrap {
+  max-width: 520px;
+  width: 100%;
+  margin-bottom: 48px;
+}
 
-.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-.feature { background: #111; border: 1px solid #1a1a1a; border-radius: 14px; padding: 28px; transition: border-color 0.2s; }
-.feature:hover { border-color: #333; }
-.feature-icon { font-size: 28px; margin-bottom: 14px; }
-.feature h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-.feature p { font-size: 14px; color: #666; line-height: 1.6; }
+.info-card {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.info-card.visible { opacity: 1; transform: translateY(0); }
+.info-card.highlight { border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.05); }
 
-/* LEAKS */
-.leaks-section { background: #080808; border-top: 1px solid #111; border-bottom: 1px solid #111; }
-.leak-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 40px; }
-.leak-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 12px; padding: 20px; }
-.leak-amount { font-size: 24px; font-weight: 800; color: #ff6b35; margin-bottom: 4px; }
-.leak-name { font-size: 14px; color: #fff; font-weight: 600; margin-bottom: 6px; }
-.leak-desc { font-size: 13px; color: #555; line-height: 1.5; }
+.card-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.card-body {}
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.card-desc {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+}
+.card-stat {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ff6b35;
+  margin-bottom: 2px;
+}
 
-/* UPSELL */
-.upsell { background: linear-gradient(135deg, #111 0%, #0f0a08 100%); border: 1px solid #2a1a0a; border-radius: 20px; padding: 48px; text-align: center; margin: 0 24px 80px; max-width: 860px; margin-left: auto; margin-right: auto; }
-.upsell .price { font-size: 13px; color: #666; margin-bottom: 8px; }
-.upsell h2 { font-size: clamp(24px, 4vw, 38px); font-weight: 800; margin-bottom: 16px; }
-.upsell p { font-size: 16px; color: #777; margin-bottom: 32px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-.upsell-btn { display: inline-block; background: #ff6b35; color: #fff; padding: 16px 40px; border-radius: 10px; font-size: 17px; font-weight: 700; text-decoration: none; transition: background 0.2s; }
-.upsell-btn:hover { background: #e55a25; }
-.upsell-list { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 32px; }
-.upsell-item { background: rgba(255,107,53,0.1); border: 1px solid rgba(255,107,53,0.2); border-radius: 8px; padding: 8px 16px; font-size: 13px; color: #ff6b35; font-weight: 500; }
+.redirect-footer {
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.redirect-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #ff6b35;
+  animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
 
-/* SEO TEXT */
-.seo-section { padding: 80px 24px; border-top: 1px solid #111; }
-.seo-inner { max-width: 760px; margin: 0 auto; }
-.seo-inner h2 { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
-.seo-inner p { font-size: 15px; color: #555; line-height: 1.8; margin-bottom: 20px; }
-.seo-inner h3 { font-size: 18px; font-weight: 700; margin: 32px 0 12px; }
+.progress-bar-wrap {
+  width: 200px;
+  height: 2px;
+  background: #1e1e1e;
+  border-radius: 1px;
+  margin: 24px auto 0;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: #ff6b35;
+  border-radius: 1px;
+  width: 0%;
+  transition: width linear;
+}
 
 /* SCANNING STATE */
 .scanning-overlay { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; }
@@ -104,24 +155,75 @@ svg.ring { transform: rotate(-90deg); }
 .level-invisible { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
 .level-partial { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
 .level-ready { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
-.result-message { font-size: 16px; color: #666; line-height: 1.6; margin-bottom: 32px; }
+.result-message { font-size: 16px; color: #888; line-height: 1.6; margin-bottom: 24px; }
+
+.result-insights { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left; }
+.insight-card { background: #111; border: 1px solid #1a1a1a; border-radius: 10px; padding: 14px 18px; }
+.insight-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.insight-value { font-size: 14px; color: #ccc; line-height: 1.5; }
+.insight-value strong { color: #ff6b35; }
+
 .result-cta-primary { display: block; background: #ff6b35; color: #fff; padding: 16px 32px; border-radius: 10px; font-size: 17px; font-weight: 700; text-decoration: none; margin-bottom: 12px; transition: background 0.2s; }
 .result-cta-primary:hover { background: #e55a25; }
 .result-cta-secondary { font-size: 14px; color: #444; cursor: pointer; text-decoration: underline; }
 .result-cta-secondary:hover { color: #666; }
 
-/* FOOTER */
-footer { padding: 40px 24px; border-top: 1px solid #111; text-align: center; }
-footer p { font-size: 13px; color: #333; }
-
 @media (max-width: 600px) {
-  .input-row { flex-direction: column; }
-  .scan-btn { width: 100%; }
-  .upsell { padding: 32px 20px; margin: 0 16px 60px; }
+  .info-card { padding: 18px 20px; }
+  .card-stat { font-size: 18px; }
 }
 </style>
 </head>
 <body>
+
+<!-- REDIRECT ANIMATION SCREEN -->
+<div id="redirectScreen">
+  <div class="redirect-logo">Atom<span>Foundry</span></div>
+
+  <div class="cards-wrap">
+    <div class="info-card" id="card1">
+      <div class="card-icon">🤖</div>
+      <div class="card-body">
+        <div class="card-title">AI is now how people shop</div>
+        <div class="card-desc">ChatGPT, Perplexity, and Google AI Overviews are replacing traditional search for product discovery. If AI can't read your store — buyers never find you.</div>
+      </div>
+    </div>
+
+    <div class="info-card" id="card2">
+      <div class="card-icon">📉</div>
+      <div class="card-body">
+        <div class="card-stat">78%</div>
+        <div class="card-title">of Shopify stores are AI Invisible</div>
+        <div class="card-desc">Most stores lack schema markup, structured content, and trust signals — the exact things AI needs to recommend a store to shoppers.</div>
+      </div>
+    </div>
+
+    <div class="info-card highlight" id="card3">
+      <div class="card-icon">💸</div>
+      <div class="card-body">
+        <div class="card-stat">$330/day</div>
+        <div class="card-title">average revenue leak we find</div>
+        <div class="card-desc">Across 500+ scanned stores, the average daily revenue lost to AI invisibility and conversion gaps is $330. Most stores have 3–4 fixable leaks.</div>
+      </div>
+    </div>
+
+    <div class="info-card" id="card4">
+      <div class="card-icon">⚡</div>
+      <div class="card-body">
+        <div class="card-title">Free scan · 30 seconds · instant results</div>
+        <div class="card-desc">See your AI Readiness Score, your biggest revenue leaks, and exactly what to fix — all for free. No credit card, no commitment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="redirect-footer">
+    <div class="redirect-dot"></div>
+    <span id="redirectMsg">Taking you to the free scan...</span>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+</div>
 
 <!-- SCANNING OVERLAY -->
 <div class="scanning-overlay" id="scanningOverlay">
@@ -129,8 +231,8 @@ footer p { font-size: 13px; color: #333; }
   <div class="scanning-domain" id="scanningDomain"></div>
   <div class="scanning-status">Analyzing your store...</div>
   <div class="scanning-steps">
-    <div class="step done" id="step1">Fetching store data</div>
-    <div class="step active" id="step2">Running AI analysis</div>
+    <div class="step pending" id="step1">Fetching store data</div>
+    <div class="step pending" id="step2">Running AI analysis</div>
     <div class="step pending" id="step3">Calculating revenue leaks</div>
     <div class="step pending" id="step4">Generating score</div>
   </div>
@@ -155,170 +257,84 @@ footer p { font-size: 13px; color: #333; }
     </div>
     <div class="result-level" id="resultLevel"></div>
     <div class="result-message" id="resultMessage"></div>
-    <a href="/audit" class="result-cta-primary" id="resultCTA">Get Your Full Paid Audit — $399</a>
-    <div class="result-cta-secondary" onclick="document.getElementById('resultOverlay').classList.remove('active')">← Scan another store</div>
+    <div class="result-insights" id="resultInsights"></div>
+    <a href="/audit" class="result-cta-primary">Get Your Full Paid Audit — $399</a>
+    <div class="result-cta-secondary" onclick="resetScan()">← Scan another store</div>
   </div>
 </div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="badge">Free AI Readiness Scan</div>
-    <h1>Is Your Shopify Store <span>Invisible to AI?</span></h1>
-    <p>ChatGPT, Perplexity, and Google AI skip stores they can't understand. Find out your AI Readiness Score — and the exact revenue leaks — in 30 seconds. Free.</p>
-
-    <div class="scan-form" id="scanForm">
-      <label for="domainInput">Enter your Shopify store URL</label>
-      <div class="input-row">
-        <input type="text" class="domain-input" id="domainInput" placeholder="yourstore.com" autocomplete="off" autocapitalize="off">
-        <button class="scan-btn" onclick="startScan()">Scan My Store →</button>
-      </div>
-      <div class="disclaimer">Free. No credit card. Results in ~30 seconds.</div>
-    </div>
-
-    <div class="social-proof">
-      <div class="proof-item">500+ stores scanned</div>
-      <div class="proof-item">Average leak: $330/day</div>
-      <div class="proof-item">30-second analysis</div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT YOU GET -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-label">What's included</div>
-    <h2>Your Free Scan Reveals</h2>
-    <p class="sub">We analyze 40+ signals across AI visibility, conversion optimization, and technical SEO — and give you a single score with actionable insights.</p>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon">🤖</div>
-        <h3>AI Visibility Score</h3>
-        <p>See exactly why ChatGPT, Perplexity, and Google AI might not recommend your store — and what to fix.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">💸</div>
-        <h3>Revenue Leak Detection</h3>
-        <p>We identify the top 3–5 conversion gaps on your store and estimate the monthly revenue you're leaving behind.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📊</div>
-        <h3>Competitive Benchmark</h3>
-        <p>See how your store compares to 500+ scanned Shopify stores in your niche.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <h3>Quick Win List</h3>
-        <p>3 specific things you can fix this week to improve your AI readiness and conversion rate immediately.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LEAKS -->
-<section class="section leaks-section">
-  <div class="section-inner">
-    <div class="section-label">Most common leaks</div>
-    <h2>Where Shopify Stores Lose Money</h2>
-    <p class="sub">After scanning 500+ stores, these are the revenue leaks we find most often. Most stores have 3–4 of them.</p>
-    <div class="leak-list">
-      <div class="leak-card">
-        <div class="leak-amount">$180/mo</div>
-        <div class="leak-name">Missing Schema Markup</div>
-        <div class="leak-desc">AI can't read your product data. You're invisible to AI-powered search.</div>
-      </div>
-      <div class="leak-card">
-        <div class="leak-amount">$240/mo</div>
-        <div class="leak-name">No Pricing Above Fold</div>
-        <div class="leak-desc">Visitors leave before scrolling to price. Every second costs sales.</div>
-      </div>
-      <div class="leak-card">
-        <div class="leak-amount">$190/mo</div>
-        <div class="leak-name">Weak Mobile UX</div>
-        <div class="leak-desc">60%+ of your traffic is mobile. A bad mobile experience = lost revenue.</div>
-      </div>
-      <div class="leak-card">
-        <div class="leak-amount">$210/mo</div>
-        <div class="leak-name">No Social Proof</div>
-        <div class="leak-desc">No reviews, no trust badges. AI assistants skip stores with no credibility signals.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- UPSELL -->
-<section class="section">
-  <div class="section-inner">
-    <div class="upsell">
-      <div class="price">PAID AUDIT — ONE TIME</div>
-      <h2>Get the Full Fix: <span style="color:#ff6b35">$399 Deep Audit</span></h2>
-      <p>Your free scan shows the problem. The Paid Audit gives you the exact fix — complete with copy-paste prompts for Claude and Shopify AI so you don't have to figure it out yourself.</p>
-      <div class="upsell-list">
-        <span class="upsell-item">Full 40-signal analysis</span>
-        <span class="upsell-item">AI Action Plan</span>
-        <span class="upsell-item">Claude & Shopify prompts</span>
-        <span class="upsell-item">Revenue impact estimate</span>
-        <span class="upsell-item">Priority fix roadmap</span>
-        <span class="upsell-item">7-day implementation support</span>
-      </div>
-      <a href="/audit" class="upsell-btn">Get Your Paid Audit — $399 →</a>
-    </div>
-  </div>
-</section>
-
-<!-- SEO TEXT -->
-<section class="seo-section">
-  <div class="seo-inner">
-    <h2>What Is an AI Readiness Score for Shopify?</h2>
-    <p>An AI Readiness Score measures how well your Shopify store is understood and recommended by AI systems like ChatGPT, Perplexity, Google AI Overviews, and Shopify's own AI features. As more shoppers use AI to discover products, stores that aren't "AI-readable" are being skipped — even if they rank on Google.</p>
-    <p>Our free scan analyzes 40+ signals across four categories: AI visibility, conversion optimization, technical SEO, and content quality. You get a score from 0–100 and a clear breakdown of where you're losing revenue.</p>
-    <h3>Why AI Visibility Matters for Shopify Stores in 2025</h3>
-    <p>In 2024, AI-powered shopping queries grew by 400%. ChatGPT, Perplexity, and Google's AI Overviews are now primary discovery channels for many product categories. But most Shopify stores haven't adapted — they lack the schema markup, structured content, and trust signals that AI systems require to confidently recommend a store.</p>
-    <p>Stores with high AI Readiness Scores see 2–4x more organic traffic from AI-powered search, better conversion rates, and stronger performance with Shopify's native AI upsell features.</p>
-    <h3>How Does the Free Shopify AI Scan Work?</h3>
-    <p>Enter your store URL and our crawler fetches your homepage HTML, product structure, meta tags, schema markup, and 35+ other signals. Our AI model analyzes this data and generates your AI Readiness Score alongside a breakdown of your biggest revenue leaks. The entire scan takes 20–40 seconds.</p>
-  </div>
-</section>
-
-<footer>
-  <p>© 2025 Atom Foundry · <a href="/privacy-policy" style="color:#444;text-decoration:none">Privacy</a> · <a href="/terms-of-service" style="color:#444;text-decoration:none">Terms</a></p>
-</footer>
-
 <script>
-// Check if domain param in URL — auto-start scan
 const urlParams = new URLSearchParams(window.location.search);
 const prefilledDomain = urlParams.get('domain') || urlParams.get('url') || '';
 
-if (prefilledDomain) {
-  const clean = prefilledDomain.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-  document.getElementById('domainInput').value = clean;
-  // Auto-start if domain was passed
-  window.addEventListener('DOMContentLoaded', () => startScan());
-} else {
-  window.addEventListener('DOMContentLoaded', () => {});
+document.addEventListener('DOMContentLoaded', () => {
+  if (prefilledDomain) {
+    // Má doménu → rovnou scan
+    const clean = prefilledDomain.replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
+    setTimeout(() => startScan(clean), 300);
+  } else {
+    // Nemá doménu → animace + redirect na landing page
+    showRedirectAnimation();
+  }
+});
+
+function showRedirectAnimation() {
+  const screen = document.getElementById('redirectScreen');
+  screen.classList.add('active');
+
+  const cards = ['card1','card2','card3','card4'];
+  const delays = [300, 900, 1600, 2400];
+
+  cards.forEach((id, i) => {
+    setTimeout(() => {
+      document.getElementById(id).classList.add('visible');
+    }, delays[i]);
+  });
+
+  // Progress bar — 5 sekund
+  const bar = document.getElementById('progressBar');
+  const msg = document.getElementById('redirectMsg');
+  const duration = 5000;
+
+  setTimeout(() => {
+    bar.style.transitionDuration = duration + 'ms';
+    bar.style.width = '100%';
+  }, 50);
+
+  setTimeout(() => {
+    msg.textContent = 'Redirecting...';
+  }, 4000);
+
+  setTimeout(() => {
+    window.location.href = 'https://atomfoundry.dev';
+  }, duration + 200);
 }
 
 // Animate scanning steps
+let scanInProgress = false;
+
 function animateSteps() {
   const steps = ['step1','step2','step3','step4'];
-  steps.forEach((id, i) => {
-    const el = document.getElementById(id);
-    el.className = 'step pending';
-  });
+  steps.forEach(id => { document.getElementById(id).className = 'step pending'; });
   steps.forEach((id, i) => {
     setTimeout(() => {
-      const el = document.getElementById(id);
       if (i > 0) document.getElementById(steps[i-1]).className = 'step done';
-      el.className = 'step active';
+      document.getElementById(id).className = 'step active';
     }, i * 5000);
   });
 }
 
-function startScan() {
-  const input = document.getElementById('domainInput');
-  let domain = input.value.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
-  if (!domain) { input.focus(); input.style.borderColor = '#ef4444'; setTimeout(()=>input.style.borderColor='',2000); return; }
+function startScan(domainOverride) {
+  if (scanInProgress) return;
+  const domain = domainOverride || (() => {
+    const input = document.getElementById('domainInput');
+    if (!input) return '';
+    return input.value.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
+  })();
 
+  if (!domain) return;
+
+  scanInProgress = true;
   document.getElementById('scanningDomain').textContent = domain;
   document.getElementById('scanningOverlay').classList.add('active');
   animateSteps();
@@ -329,55 +345,72 @@ function startScan() {
     body: JSON.stringify({ domain: domain, url: 'https://www.' + domain })
   })
   .then(r => r.json())
-  .then(data => showResult(domain, data))
-  .catch(() => showResult(domain, {}));
+  .then(data => {
+    const result = Array.isArray(data) ? data[0] : data;
+    showResult(domain, result);
+  })
+  .catch(() => showResult(domain, {}))
+  .finally(() => { scanInProgress = false; });
 }
 
 function showResult(domain, data) {
   document.getElementById('scanningOverlay').classList.remove('active');
+
   const score = data.total_score ?? data.score ?? null;
   const level = data.readiness_level || '';
+  const mainLeak = data.main_leak || '';
+  const quickFix = data.quick_fix || '';
 
   document.getElementById('resultDomain').textContent = domain;
   document.getElementById('scoreVal').textContent = score !== null ? score : '--';
 
-  // Animate ring
   if (score !== null) {
-    const pct = score / 100;
     const circumference = 427;
-    document.getElementById('scoreCircle').style.strokeDashoffset = circumference - (circumference * pct);
+    setTimeout(() => {
+      document.getElementById('scoreCircle').style.strokeDashoffset =
+        circumference - (circumference * score / 100);
+    }, 100);
   }
 
-  // Level badge
   const levelEl = document.getElementById('resultLevel');
   if (level === 'ai_invisible') { levelEl.textContent = 'AI Invisible'; levelEl.className = 'result-level level-invisible'; }
   else if (level === 'ai_partial') { levelEl.textContent = 'Partially AI Ready'; levelEl.className = 'result-level level-partial'; }
-  else if (level === 'ai_ready') { levelEl.textContent = 'AI Ready'; levelEl.className = 'result-level level-ready'; }
+  else if (level === 'ai_ready') { levelEl.textContent = 'AI Ready ✓'; levelEl.className = 'result-level level-ready'; }
   else { levelEl.style.display = 'none'; }
 
-  // Message
   const msgEl = document.getElementById('resultMessage');
-  if (!score || score < 30) {
+  if (score === null) {
+    msgEl.textContent = 'We couldn\'t complete the scan. Please check your domain and try again.';
+  } else if (score < 30) {
     msgEl.textContent = 'Your store is likely invisible to AI assistants. ChatGPT and Perplexity probably won\'t recommend you — and you\'re missing significant revenue as a result.';
   } else if (score < 60) {
-    msgEl.textContent = 'Your store has partial AI visibility. You\'re missing key signals that could double your AI-driven traffic. The full audit shows you exactly what to fix.';
+    msgEl.textContent = 'Your store has partial AI visibility. You\'re missing key signals that could double your AI-driven traffic.';
   } else {
     msgEl.textContent = 'Good foundation — but there\'s still revenue on the table. The full audit identifies the exact gaps keeping you from 90+ AI Readiness.';
+  }
+
+  const insightsEl = document.getElementById('resultInsights');
+  insightsEl.innerHTML = '';
+  if (mainLeak) {
+    insightsEl.innerHTML += `<div class="insight-card"><div class="insight-label">Biggest leak found</div><div class="insight-value">${mainLeak}</div></div>`;
+  }
+  if (quickFix) {
+    insightsEl.innerHTML += `<div class="insight-card"><div class="insight-label">Quick win</div><div class="insight-value"><strong>#1 fix:</strong> ${quickFix}</div></div>`;
   }
 
   document.getElementById('resultOverlay').classList.add('active');
 }
 
-// Enter key on input
-document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('domainInput');
-  if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') startScan(); });
-  if (prefilledDomain) {
-    const clean = prefilledDomain.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-    document.getElementById('domainInput').value = clean;
-    setTimeout(startScan, 300);
-  }
-});
+function resetScan() {
+  document.getElementById('resultOverlay').classList.remove('active');
+  document.getElementById('scoreCircle').style.transition = 'none';
+  document.getElementById('scoreCircle').style.strokeDashoffset = '427';
+  setTimeout(() => {
+    document.getElementById('scoreCircle').style.transition = 'stroke-dashoffset 1.2s ease';
+  }, 50);
+  // Po resetu přesměruj na landing
+  window.location.href = 'https://atomfoundry.dev';
+}
 </script>
 </body>
 </html>
