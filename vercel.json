@@ -2,14 +2,13 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": ".",
-
   "routes": [
-    {
-      "handle": "filesystem"
-    },
     {
       "src": "/sitemap.xml",
       "dest": "https://n8n-production-1d7c.up.railway.app/webhook/sitemap"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/report/(.*)",
@@ -23,12 +22,10 @@
       "src": "/audit/(.*)",
       "dest": "/audit/index.html?token=$1"
     },
-
     {
       "src": "/insight(.*)",
       "dest": "/insight/index.html"
     },
-
     {
       "src": "/audit-processing",
       "dest": "/audit-processing/index.html"
@@ -61,9 +58,9 @@
       "src": "/monitoring-report/(.*)",
       "dest": "/monitoring-report.html?token=$1"
     },
-            {
-                        "src": "/scan(.*)",
-                        "dest": "/scan.html"
-            }
+    {
+      "src": "/scan(.*)",
+      "dest": "/scan.html"
+    }
   ]
 }
