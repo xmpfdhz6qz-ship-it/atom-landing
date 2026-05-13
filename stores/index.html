@@ -8,780 +8,623 @@
   <meta property="og:title" content="Shopify Store AI Readiness Database — Atom Foundry">
   <meta property="og:description" content="Browse analyzed stores and their AI visibility scores.">
   <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" href="/favicon.ico">
   <style>
-    :root {
-      --bg: #080808;
-      --bg2: #0f0f0f;
-      --bg3: #141414;
-      --border: #1e1e1e;
-      --border2: #2a2a2a;
-      --orange: #f97316;
-      --orange-dim: rgba(249,115,22,0.1);
-      --orange-glow: rgba(249,115,22,0.25);
-      --green: #1D9E75;
-      --green-dim: rgba(29,158,117,0.12);
-      --red: #E24B4A;
-      --red-dim: rgba(226,75,74,0.12);
-      --yellow: #EF9F27;
-      --yellow-dim: rgba(239,159,39,0.12);
-      --text: #e8e8e8;
-      --muted: #666;
-      --dim: #333;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.6;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
+      background: #0A0A0A;
+      color: white;
+      line-height: 1.7;
     }
     body::before {
-      content: '';
+      content: "";
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.08), transparent 50%);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%);
       pointer-events: none;
-      z-index: 0;
     }
     a { color: inherit; text-decoration: none; }
-
-    /* ─── NAVBAR ─────────────────────────────── */
-    .navbar {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(8,8,8,0.95);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 32px;
-      display: flex; align-items: stretch; justify-content: space-between;
-      height: 56px;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none;
-    }
-    .nav-logo-img { width: 28px; height: 28px; border-radius: 50%; }
-    .nav-brand {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px; font-weight: 800;
-      color: white; letter-spacing: 0.05em;
-    }
-    .nav-brand span { color: var(--orange); }
-    .nav-right { display: flex; align-items: center; gap: 20px; }
-    .nav-link {
-      font-size: 13px; color: var(--muted); font-weight: 600;
-      transition: color 0.15s; letter-spacing: 0.01em;
-    }
-    .nav-link:hover, .nav-link.active { color: var(--orange); }
-    .nav-social { display: flex; gap: 6px; }
-    .nav-social a {
-      width: 28px; height: 28px; border-radius: 6px;
-      background: var(--bg2); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted); font-size: 11px; font-weight: 700;
-      transition: all 0.15s;
-    }
-    .nav-social a:hover { border-color: var(--orange); color: var(--orange); background: var(--orange-dim); }
-    .nav-cta {
-      background: var(--orange); color: #000; font-weight: 800;
-      font-size: 12px; padding: 8px 16px; border-radius: 6px;
-      letter-spacing: 0.02em; transition: all 0.15s;
-    }
-    .nav-cta:hover { background: #ea580c; transform: translateY(-1px); }
-
-    /* ─── LAYOUT ─────────────────────────────── */
     .container {
-      width: min(100% - 48px, 860px);
+      max-width: 640px;
       margin: 0 auto;
-      padding: 40px 0 80px;
-      position: relative; z-index: 1;
+      padding: 32px 20px 40px;
+      position: relative;
+      z-index: 1;
     }
 
-    /* ─── HERO ───────────────────────────────── */
-    .breadcrumb {
-      font-size: 11px; color: var(--muted);
-      display: flex; align-items: center; gap: 6px;
-      margin-bottom: 24px; font-family: 'Space Mono', monospace;
-      letter-spacing: 0.04em;
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0 20px;
     }
-    .breadcrumb a { color: var(--muted); }
-    .breadcrumb a:hover { color: var(--text); }
-    .eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--orange);
-      margin-bottom: 14px;
-      display: flex; align-items: center; gap: 10px;
+    .nav-brand { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: -0.3px; }
+    .nav-brand span { color: #f97316; }
+    .header-tagline { font-size: 11px; color: #666; font-weight: 500; letter-spacing: 0.02em; margin-top: 3px; }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding: 16px 20px;
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px 16px 0 0;
     }
-    .eyebrow::before {
-      content: '';
-      width: 20px; height: 1px; background: var(--orange);
+    .stat-item { display: flex; flex-direction: column; align-items: center; }
+    .stat-num { font-size: 22px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 5px; }
+    .stat-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+    .stat-divider { width: 1px; background: #2a2a2a; align-self: stretch; }
+
+    /* NAV LINKS BAR */
+    .nav-links-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      margin-bottom: 28px;
     }
+    .nav-links-bar a {
+      font-size: 12px; color: #9ca3af;
+      border: 1px solid #2a2a2a;
+      padding: 5px 14px; border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links-bar a:hover { color: #f97316; border-color: #f97316; }
+    .nav-links-bar a.active { color: #f97316; border-color: rgba(249,115,22,0.4); background: rgba(249,115,22,0.06); }
+
+    /* HEADINGS */
     h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 800; line-height: 1.05;
-      letter-spacing: -0.03em; margin-bottom: 14px;
+      font-size: 32px; line-height: 1.2;
+      margin-bottom: 12px; font-weight: 700;
+      color: #fff; text-align: center;
     }
-    h1 span { color: var(--orange); }
-    .lead {
-      color: #888; font-size: 15px; line-height: 1.8;
-      max-width: 580px; margin-bottom: 20px;
-    }
-    .hero-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
-    .meta-tag {
-      font-size: 11px; color: #777;
-      background: var(--bg2); border: 1px solid var(--border);
-      padding: 3px 10px; border-radius: 100px;
-      font-family: 'Space Mono', monospace;
+    h1 span { color: #f97316; }
+    .sub {
+      font-size: 15px; color: #bbb; margin-bottom: 24px;
+      line-height: 1.6; font-weight: 400; text-align: center;
     }
 
-    /* ─── STAT BAR ───────────────────────────── */
-    .stat-bar {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 12px;
-      overflow: hidden; margin-bottom: 32px;
-    }
-    .stat-cell {
-      background: var(--bg2); padding: 16px 20px;
-    }
-    .stat-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 24px; font-weight: 700;
-      color: var(--orange); line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-label {
-      font-size: 11px; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.08em;
-      font-weight: 600;
-    }
-
-    /* ─── SEARCH BAR ─────────────────────────── */
-    .search-bar {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 14px;
+    /* CONTROLS BOX */
+    .controls-box {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 14px;
       margin-bottom: 10px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 150px 44px;
+      grid-template-columns: minmax(0,1fr) 148px 44px;
       gap: 8px;
     }
-    .search-input-wrap { position: relative; display: flex; align-items: center; }
+    .search-wrap { position: relative; display: flex; align-items: center; }
     .search-icon {
       position: absolute; left: 12px;
-      color: var(--muted); pointer-events: none;
-      width: 16px; height: 16px;
+      color: #555; pointer-events: none;
+      width: 14px; height: 14px;
     }
     .search {
       width: 100%; height: 44px;
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--text);
-      font-family: 'Syne', sans-serif; font-size: 13px;
-      padding: 0 12px 0 36px; outline: none;
-      transition: border-color 0.15s;
+      background: #0A0A0A; border: 1px solid #333;
+      border-radius: 12px; color: white;
+      font-family: inherit; font-size: 14px;
+      padding: 0 12px 0 34px; outline: none;
+      transition: all 0.2s;
     }
-    .search:focus { border-color: var(--orange); }
-    .search::placeholder { color: var(--muted); }
+    .search:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.5); }
+    .search::placeholder { color: #555; }
     .sort-select {
-      height: 44px; background: var(--bg3);
-      border: 1px solid var(--border); border-radius: 8px;
-      color: var(--text); font-family: 'Syne', sans-serif;
-      font-size: 13px; padding: 0 10px; outline: none;
-      transition: border-color 0.15s; cursor: pointer;
+      height: 44px; background: #0A0A0A;
+      border: 1px solid #333; border-radius: 12px;
+      color: white; font-family: inherit; font-size: 13px;
+      padding: 0 10px; outline: none; cursor: pointer;
+      transition: border-color 0.2s;
     }
-    .sort-select:focus { border-color: var(--orange); }
+    .sort-select:focus { border-color: #f97316; }
     .refresh-btn {
       height: 44px; width: 44px;
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--orange);
+      background: #0A0A0A; border: 1px solid #333;
+      border-radius: 12px; color: #f97316;
       cursor: pointer; display: flex;
       align-items: center; justify-content: center;
-      transition: all 0.15s; flex-shrink: 0;
+      transition: all 0.2s;
     }
-    .refresh-btn:hover { border-color: var(--orange); background: var(--orange-dim); }
-    .refresh-btn svg { width: 16px; height: 16px; }
+    .refresh-btn:hover { border-color: #f97316; background: rgba(249,115,22,0.08); }
+    .refresh-btn svg { width: 14px; height: 14px; }
 
-    /* ─── NICHE FILTER BAR ───────────────────── */
-    .niche-bar {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 12px 14px;
-      margin-bottom: 16px;
+    /* NICHE BAR */
+    .niche-box {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
     }
-    .niche-bar-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 10px; display: block;
+    .niche-label {
+      font-size: 10px; color: #666;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      font-weight: 600; margin-bottom: 10px; display: block;
     }
-    .niche-pills {
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
+    .niche-pills { display: flex; flex-wrap: wrap; gap: 6px; }
     .niche-pill {
-      display: inline-flex; align-items: center; gap: 5px;
+      display: inline-flex; align-items: center; gap: 4px;
       padding: 5px 12px; border-radius: 100px;
-      font-size: 12px; font-weight: 700;
-      border: 1px solid var(--border2);
-      background: var(--bg3); color: var(--muted);
-      cursor: pointer; transition: all 0.15s;
-      white-space: nowrap; user-select: none;
-      font-family: 'Syne', sans-serif;
+      font-size: 12px; font-weight: 600;
+      border: 1px solid #2a2a2a;
+      background: #0d0d0d; color: #888;
+      cursor: pointer; transition: all 0.2s;
+      white-space: nowrap; font-family: inherit;
+      user-select: none;
     }
-    .niche-pill:hover { border-color: var(--orange); color: var(--text); }
+    .niche-pill:hover { border-color: #f97316; color: #ddd; }
     .niche-pill.active {
-      background: var(--orange-dim);
-      border-color: var(--orange);
-      color: var(--orange);
+      background: rgba(249,115,22,0.1);
+      border-color: rgba(249,115,22,0.5);
+      color: #f97316;
     }
-    .niche-pill .pill-count {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px; opacity: 0.7;
-    }
+    .pill-count { font-size: 10px; opacity: 0.6; }
 
-    /* ─── STATUS ─────────────────────────────── */
+    /* STATUS */
     .status-row {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 12px; min-height: 24px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px; min-height: 22px;
     }
-    .status { color: var(--muted); font-size: 12px; font-family: 'Space Mono', monospace; }
+    .status { color: #666; font-size: 12px; }
     .clear-btn {
-      font-size: 11px; color: var(--orange); cursor: pointer;
-      background: none; border: none; font-family: 'Space Mono', monospace;
+      font-size: 11px; color: #f97316; cursor: pointer;
+      background: none; border: none; font-family: inherit;
       padding: 0; display: none;
     }
     .clear-btn.visible { display: block; }
 
-    /* ─── STORE GRID ─────────────────────────── */
+    /* STORE CARDS */
     .grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
 
     .store-card {
       display: block; overflow: hidden;
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px;
-      transition: transform 0.15s, border-color 0.15s, background 0.15s;
+      background: #161616; border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
     }
     .store-card:hover {
       transform: translateY(-2px);
-      border-color: rgba(249,115,22,0.3);
-      background: var(--bg3);
+      border-color: rgba(249,115,22,0.35);
+      background: #1a1a1a;
     }
     .card-inner {
       padding: 14px 16px;
-      display: grid; grid-template-columns: minmax(0,1fr) auto;
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
       gap: 14px; align-items: center;
     }
-    .card-left {}
     .domain {
-      font-size: 15px; font-weight: 800;
-      color: var(--text); letter-spacing: -0.02em;
+      font-size: 15px; font-weight: 700;
+      color: #e8e8e8; letter-spacing: -0.2px;
       overflow-wrap: anywhere;
     }
-    .readiness {
-      font-size: 12px; color: #666;
-      margin-top: 3px; text-transform: capitalize;
-    }
-    .card-tags {
-      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;
-    }
+    .readiness { font-size: 12px; color: #666; margin-top: 3px; text-transform: capitalize; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
     .card-tag {
       font-size: 10px; color: #666;
-      background: var(--bg); border: 1px solid var(--dim);
+      background: #111; border: 1px solid #222;
       border-radius: 100px; padding: 2px 8px;
-      font-family: 'Space Mono', monospace;
-      white-space: nowrap;
     }
-    .card-tag.niche {
-      color: var(--orange); border-color: rgba(249,115,22,0.2);
-      background: var(--orange-dim);
+    .card-tag.niche-tag {
+      color: #f97316; border-color: rgba(249,115,22,0.25);
+      background: rgba(249,115,22,0.07);
     }
     .score-wrap { text-align: right; flex-shrink: 0; }
     .score {
-      display: inline-flex; min-width: 64px; height: 38px;
+      display: inline-flex; min-width: 68px; height: 40px;
       align-items: center; justify-content: center;
-      border-radius: 8px; font-size: 16px; font-weight: 800;
-      font-family: 'Space Mono', monospace;
-      border: 1px solid currentColor;
-      background: var(--bg);
+      border-radius: 10px; font-size: 17px; font-weight: 700;
+      background: #0d0d0d; border: 1px solid currentColor;
     }
-    .score.green { color: var(--green); }
-    .score.orange { color: var(--yellow); }
-    .score.red { color: var(--red); }
+    .score.green { color: #1D9E75; }
+    .score.orange { color: #EF9F27; }
+    .score.red { color: #E24B4A; }
     .score-label {
-      display: block; margin-top: 5px;
-      color: var(--muted); font-size: 9px;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      font-family: 'Space Mono', monospace;
+      display: block; margin-top: 5px; color: #555;
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.08em; font-weight: 600;
     }
 
-    /* ─── EMPTY / LOADING ────────────────────── */
-    .empty {
-      text-align: center; padding: 48px 20px;
-      color: var(--muted); font-size: 14px;
-    }
-    .empty-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.4; }
-
-    /* ─── SKELETON ───────────────────────────── */
+    /* SKELETONS */
     .skeleton {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 14px 16px;
+      background: #161616; border: 1px solid #2a2a2a;
+      border-radius: 14px; padding: 14px 16px;
       display: grid; grid-template-columns: 1fr auto;
       gap: 14px; align-items: center;
     }
-    .skel { background: var(--bg3); border-radius: 4px; animation: pulse 1.4s ease infinite; }
-    .skel-domain { height: 16px; width: 60%; margin-bottom: 6px; }
-    .skel-sub { height: 12px; width: 40%; margin-bottom: 10px; }
+    .skel { background: #222; border-radius: 4px; animation: pulse 1.4s ease infinite; }
+    .skel-d { height: 15px; width: 55%; margin-bottom: 7px; }
+    .skel-s { height: 11px; width: 35%; margin-bottom: 10px; }
     .skel-tags { display: flex; gap: 6px; }
-    .skel-tag { height: 18px; width: 60px; border-radius: 100px; }
-    .skel-score { height: 38px; width: 64px; border-radius: 8px; }
-    @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.7; } }
+    .skel-tag { height: 18px; width: 55px; border-radius: 100px; }
+    .skel-score { height: 40px; width: 68px; border-radius: 10px; }
+    @keyframes pulse { 0%,100%{opacity:0.35} 50%{opacity:0.6} }
 
-    /* ─── CTA BLOCK ──────────────────────────── */
+    /* EMPTY */
+    .empty {
+      text-align: center; padding: 40px 20px;
+      color: #555; font-size: 14px;
+      background: #161616; border: 1px solid #2a2a2a;
+      border-radius: 14px;
+    }
+
+    /* CTA */
     .cta-block {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-left: 3px solid var(--orange);
-      border-radius: 0 10px 10px 0;
-      padding: 22px 24px; margin: 28px 0;
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 20px; align-items: center;
+      background: #0a1a0a;
+      border: 1px solid #1a2e1a;
+      border-left: 3px solid #1D9E75;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 24px 0 20px;
     }
-    .cta-block h2 {
-      font-size: 18px; font-weight: 800;
-      letter-spacing: -0.02em; margin-bottom: 6px;
-    }
-    .cta-block p { color: #888; font-size: 13px; line-height: 1.7; }
+    .cta-block h2 { font-size: 17px; font-weight: 700; margin-bottom: 6px; color: #e8e8e8; }
+    .cta-block p { margin: 0 0 14px; color: #888; font-size: 13px; line-height: 1.7; }
     .cta-btn {
-      display: inline-flex; align-items: center;
-      background: var(--orange); color: #000;
-      font-weight: 800; font-size: 13px;
-      padding: 12px 20px; border-radius: 8px;
-      white-space: nowrap; transition: all 0.15s;
+      display: inline-block;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: black; font-weight: 900; font-size: 14px;
+      padding: 12px 22px; border-radius: 10px;
+      border: 2px solid #dc2626;
+      box-shadow: 0 6px 20px rgba(249,115,22,0.35);
+      transition: all 0.25s;
     }
-    .cta-btn:hover { background: #ea580c; transform: translateY(-1px); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(249,115,22,0.55); }
 
-    /* ─── SEO BOX ────────────────────────────── */
+    /* SEO */
     .seo-box {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 20px 24px; margin-top: 12px;
+      background: #161616; border: 1px solid #2a2a2a;
+      border-radius: 14px; padding: 18px 20px; margin-top: 10px;
     }
-    .seo-box h2 { font-size: 15px; font-weight: 800; margin-bottom: 10px; }
-    .seo-box p { color: #777; font-size: 13px; line-height: 1.8; margin-bottom: 10px; }
+    .seo-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #ddd; }
+    .seo-box p { margin: 0 0 10px; color: #777; font-size: 13px; line-height: 1.8; }
     .seo-box p:last-child { margin-bottom: 0; }
 
-    /* ─── FOOTER ─────────────────────────────── */
-    .footer {
-      margin-top: 40px; padding-top: 24px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-    .footer-links {
-      display: flex; justify-content: center;
-      gap: 20px; flex-wrap: wrap; margin-bottom: 12px;
-    }
-    .footer-links a { font-size: 12px; color: var(--muted); }
-    .footer-links a:hover { color: var(--text); }
-    .footer-tagline {
-      color: var(--orange); font-size: 13px;
-      font-weight: 800; letter-spacing: 0.08em;
-      font-family: 'Space Mono', monospace;
-    }
-    .footer-copy { color: var(--dim); font-size: 11px; margin-top: 6px; font-family: 'Space Mono', monospace; }
+    /* FOOTER */
+    .footer { padding-top: 16px; border-top: 1px solid #1e1e1e; text-align: center; margin-top: 24px; }
+    .footer-scan-line { font-size: 12px; color: #555; margin-bottom: 8px; line-height: 1.8; }
+    .footer-scan-line a { color: #777; }
+    .footer-scan-line a:hover { color: #f97316; }
+    .footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
 
-    /* ─── RESPONSIVE ─────────────────────────── */
-    @media (max-width: 680px) {
-      .navbar { padding: 0 16px; }
-      .nav-link, .nav-social { display: none; }
-      .container { width: min(100% - 32px, 860px); padding-top: 28px; }
-      h1 { font-size: 28px; }
-      .stat-bar { grid-template-columns: 1fr 1fr; }
-      .search-bar { grid-template-columns: 1fr 44px; }
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      h1 { font-size: 26px; }
+      .controls-box { grid-template-columns: 1fr 44px; }
       .sort-select { display: none; }
-      .cta-block { grid-template-columns: 1fr; }
       .card-inner { grid-template-columns: 1fr; }
       .score-wrap { text-align: left; }
+      .stats-bar { gap: 14px; padding: 14px 12px; }
+      .stat-num { font-size: 19px; }
+      .header-tagline { display: none; }
     }
   </style>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="/" class="nav-logo">
-      <img src="/favicon-32x32.png" alt="Atom Foundry" class="nav-logo-img">
-      <span class="nav-brand">ATOM <span>FOUNDRY</span></span>
-    </a>
-    <div class="nav-right">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/stores" class="nav-link active">Stores</a>
-      <a href="/methodology" class="nav-link">Methodology</a>
-      <div class="nav-social">
-        <a href="https://x.com/atomfoundryai" target="_blank" title="X / Twitter">X</a>
-        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" title="LinkedIn">in</a>
-      </div>
-      <a href="/" class="nav-cta">See How Much You're Losing →</a>
+<div class="container">
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div>
+      <div class="nav-brand">ATOM <span>FOUNDRY</span></div>
+      <div class="header-tagline">AI Conversion Intelligence for E-commerce</div>
     </div>
-  </nav>
+  </div>
 
-  <main class="container">
-    <div class="breadcrumb">
-      <a href="/">Home</a> › <span>Stores</span>
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-total">—</div>
+      <div class="stat-label">Stores analyzed</div>
     </div>
-
-    <div class="eyebrow">AI Readiness Database</div>
-    <h1>Browse stores <span>AI can actually read.</span></h1>
-    <p class="lead">Explore public AI Readiness reports for ecommerce stores. Each result links to a full store page with schema, trust, content, and AI visibility signals.</p>
-    <div class="hero-meta">
-      <span class="meta-tag">Dynamic n8n data</span>
-      <span class="meta-tag">Postgres powered</span>
-      <span class="meta-tag">Updated automatically</span>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-avg">—</div>
+      <div class="stat-label">Avg AI score</div>
     </div>
-
-    <!-- STAT BAR -->
-    <div class="stat-bar">
-      <div class="stat-cell">
-        <div class="stat-num" id="store-count">—</div>
-        <div class="stat-label">Stores analyzed</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num" id="avg-score">—</div>
-        <div class="stat-label">Avg AI score</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num" id="high-count">—</div>
-        <div class="stat-label">Score ≥ 70</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num" id="low-count">—</div>
-        <div class="stat-label">Score &lt; 30</div>
-      </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-high">—</div>
+      <div class="stat-label">Score ≥ 70</div>
     </div>
-
-    <!-- SEARCH BAR -->
-    <div class="search-bar">
-      <div class="search-input-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input class="search" id="search" type="search"
-          placeholder="Search domain, platform or country…" aria-label="Search stores">
-      </div>
-      <select class="sort-select" id="sort" aria-label="Sort stores">
-        <option value="newest">Newest first</option>
-        <option value="best">Best score</option>
-        <option value="worst">Worst score</option>
-        <option value="az">A → Z</option>
-      </select>
-      <button class="refresh-btn" id="refresh" type="button" aria-label="Refresh stores">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-        </svg>
-      </button>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-low">—</div>
+      <div class="stat-label">Score &lt; 30</div>
     </div>
+  </div>
 
-    <!-- NICHE FILTER BAR -->
-    <div class="niche-bar">
-      <span class="niche-bar-label">Filter by niche</span>
-      <div class="niche-pills" id="niche-pills">
-        <button class="niche-pill active" data-niche="all">
-          All <span class="pill-count" id="count-all">0</span>
-        </button>
-        <button class="niche-pill" data-niche="fashion">
-          👗 Fashion <span class="pill-count" id="count-fashion">0</span>
-        </button>
-        <button class="niche-pill" data-niche="beauty">
-          💄 Beauty <span class="pill-count" id="count-beauty">0</span>
-        </button>
-        <button class="niche-pill" data-niche="health">
-          💊 Health &amp; Wellness <span class="pill-count" id="count-health">0</span>
-        </button>
-        <button class="niche-pill" data-niche="food">
-          🍎 Food &amp; Drink <span class="pill-count" id="count-food">0</span>
-        </button>
-        <button class="niche-pill" data-niche="home">
-          🏠 Home &amp; Living <span class="pill-count" id="count-home">0</span>
-        </button>
-        <button class="niche-pill" data-niche="sports">
-          🏃 Sports &amp; Outdoor <span class="pill-count" id="count-sports">0</span>
-        </button>
-        <button class="niche-pill" data-niche="pets">
-          🐾 Pets <span class="pill-count" id="count-pets">0</span>
-        </button>
-        <button class="niche-pill" data-niche="tech">
-          💻 Tech &amp; Gadgets <span class="pill-count" id="count-tech">0</span>
-        </button>
-        <button class="niche-pill" data-niche="kids">
-          🧸 Kids &amp; Baby <span class="pill-count" id="count-kids">0</span>
-        </button>
-        <button class="niche-pill" data-niche="jewelry">
-          💍 Jewelry <span class="pill-count" id="count-jewelry">0</span>
-        </button>
-        <button class="niche-pill" data-niche="other">
-          ✦ Other <span class="pill-count" id="count-other">0</span>
-        </button>
-      </div>
+  <!-- NAV LINKS BAR -->
+  <div class="nav-links-bar">
+    <a href="/">Home</a>
+    <a href="/stores" class="active">Stores →</a>
+    <a href="/methodology">How we score →</a>
+  </div>
+
+  <!-- HEADING -->
+  <h1>Browse stores <span>AI can actually read.</span></h1>
+  <p class="sub">Explore public AI Readiness reports for ecommerce stores. Each result links to a full store page with schema, trust, content, and visibility signals.</p>
+
+  <!-- SEARCH + SORT -->
+  <div class="controls-box">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input class="search" id="search" type="search"
+        placeholder="Search domain, platform or country…" aria-label="Search stores">
     </div>
+    <select class="sort-select" id="sort" aria-label="Sort stores">
+      <option value="newest">Newest first</option>
+      <option value="best">Best score</option>
+      <option value="worst">Worst score</option>
+      <option value="az">A → Z</option>
+    </select>
+    <button class="refresh-btn" id="refresh" type="button" aria-label="Refresh">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+    </button>
+  </div>
 
-    <!-- STATUS + CLEAR -->
-    <div class="status-row">
-      <div class="status" id="status">Loading stores…</div>
-      <button class="clear-btn" id="clear-btn" type="button">✕ Clear filters</button>
+  <!-- NICHE FILTER BAR -->
+  <div class="niche-box">
+    <span class="niche-label">Filter by niche</span>
+    <div class="niche-pills" id="niche-pills">
+      <button class="niche-pill active" data-niche="all">All <span class="pill-count" id="c-all">0</span></button>
+      <button class="niche-pill" data-niche="fashion">👗 Fashion <span class="pill-count" id="c-fashion">0</span></button>
+      <button class="niche-pill" data-niche="beauty">💄 Beauty <span class="pill-count" id="c-beauty">0</span></button>
+      <button class="niche-pill" data-niche="health">💊 Health &amp; Wellness <span class="pill-count" id="c-health">0</span></button>
+      <button class="niche-pill" data-niche="food">🍎 Food &amp; Drink <span class="pill-count" id="c-food">0</span></button>
+      <button class="niche-pill" data-niche="home">🏠 Home &amp; Living <span class="pill-count" id="c-home">0</span></button>
+      <button class="niche-pill" data-niche="sports">🏃 Sports &amp; Outdoor <span class="pill-count" id="c-sports">0</span></button>
+      <button class="niche-pill" data-niche="pets">🐾 Pets <span class="pill-count" id="c-pets">0</span></button>
+      <button class="niche-pill" data-niche="tech">💻 Tech &amp; Gadgets <span class="pill-count" id="c-tech">0</span></button>
+      <button class="niche-pill" data-niche="kids">🧸 Kids &amp; Baby <span class="pill-count" id="c-kids">0</span></button>
+      <button class="niche-pill" data-niche="jewelry">💍 Jewelry <span class="pill-count" id="c-jewelry">0</span></button>
+      <button class="niche-pill" data-niche="other">✦ Other <span class="pill-count" id="c-other">0</span></button>
     </div>
+  </div>
 
-    <!-- STORE LIST -->
-    <section class="grid" id="stores-list" aria-label="Analyzed stores"></section>
+  <!-- STATUS -->
+  <div class="status-row">
+    <div class="status" id="status">Loading stores…</div>
+    <button class="clear-btn" id="clear-btn" type="button">✕ Clear filters</button>
+  </div>
 
-    <!-- CTA -->
-    <section class="cta-block">
-      <div>
-        <h2>Is your store losing money to AI invisibility?</h2>
-        <p>See whether ChatGPT, Perplexity, and Google AI Overviews can understand and recommend your store — free, in 30 seconds.</p>
-      </div>
-      <a class="cta-btn" href="/">See how much you're losing →</a>
-    </section>
+  <!-- STORES LIST -->
+  <section class="grid" id="stores-list" aria-label="Analyzed stores"></section>
 
-    <!-- SEO BOX -->
-    <section class="seo-box">
-      <h2>Why this database exists</h2>
-      <p>AI assistants increasingly answer shopping questions before a buyer ever reaches Google results. Stores with clear schema, trust signals, pricing, and product content are easier for AI systems to understand and recommend.</p>
-      <p>This page acts as the public index for Atom Foundry's store reports. It helps shoppers, founders, and search engines discover individual AI Readiness reports at scale.</p>
-    </section>
+  <!-- CTA -->
+  <div class="cta-block">
+    <h2>Is your store losing money to AI invisibility?</h2>
+    <p>See whether ChatGPT, Perplexity, and Google AI Overviews can understand and recommend your store — free, in 30 seconds.</p>
+    <a class="cta-btn" href="/">Show Me What I'm Losing →</a>
+  </div>
 
-    <div class="footer">
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/scan">Free Scan</a>
-        <a href="/audit">Paid Audit</a>
-        <a href="/methodology">Methodology</a>
-        <a href="/privacy-policy">Privacy</a>
-        <a href="/terms-of-service">Terms</a>
-      </div>
-      <div class="footer-tagline">Find → Prove → Fix → Protect</div>
-      <div class="footer-copy">© 2025 Atom Foundry · atomfoundry.dev</div>
+  <!-- SEO -->
+  <section class="seo-box">
+    <h2>Why this database exists</h2>
+    <p>AI assistants increasingly answer shopping questions before a buyer ever reaches Google results. Stores with clear schema, trust signals, pricing, and product content are easier for AI systems to understand and recommend.</p>
+    <p>This page acts as the public index for Atom Foundry's store reports. It helps shoppers, founders, and search engines discover individual AI Readiness reports at scale.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-scan-line">
+      <a href="/">Home</a> &nbsp;·&nbsp;
+      <a href="/scan">Free Scan</a> &nbsp;·&nbsp;
+      <a href="/audit">Paid Audit</a> &nbsp;·&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;·&nbsp;
+      <a href="/privacy-policy">Privacy</a> &nbsp;·&nbsp;
+      <a href="/terms-of-service">Terms</a>
     </div>
-  </main>
+    <div class="footer-tagline">Find → Prove → Fix → Protect</div>
+  </div>
 
-  <script>
-    const STORES_API_URL = "https://n8n-production-1d7c.up.railway.app/webhook/stores";
+</div>
+<script>
+  const STORES_API_URL = "https://n8n-production-1d7c.up.railway.app/webhook/stores";
+  const state = { stores: [], query: "", sort: "newest", niche: "all" };
 
-    const state = {
-      stores: [],
-      query: "",
-      sort: "newest",
-      niche: "all"
+  const listEl   = document.getElementById("stores-list");
+  const statusEl = document.getElementById("status");
+  const searchEl = document.getElementById("search");
+  const sortEl   = document.getElementById("sort");
+  const clearBtn = document.getElementById("clear-btn");
+
+  const NICHES = {
+    fashion:  ["apparel","fashion","clothing","wear","shirt","dress","jeans","jacket","sneaker","shoe","boot","sock","hat","cap","hoodie","pant","skirt","coat","scarf","glove","bag","purse","handbag","wallet","luggage","sunglasses","denim","streetwear","swimwear","lingerie","activewear","boutique"],
+    beauty:   ["beauty","skincare","skin","serum","cream","makeup","cosmetic","lipstick","mascara","foundation","moisturizer","cleanser","toner","spf","sunscreen","retinol","glow","face","hair","shampoo","conditioner","perfume","fragrance","nail","brow","lash","grooming"],
+    health:   ["health","wellness","vitamin","supplement","protein","collagen","probiotic","cbd","fitness","nutrition","diet","sleep","immune","natural","organic","herbal","pharmacy","medicine","dental"],
+    food:     ["food","drink","coffee","tea","wine","beer","spirit","snack","chocolate","candy","sauce","oil","spice","meal","gourmet","grocery","bakery","bread","cheese","dairy","meat","seafood","vegan","juice","kombucha","smoothie"],
+    home:     ["home","house","furniture","decor","candle","plant","garden","cleaning","cookware","bed","bath","linen","sofa","chair","desk","lamp","rug","curtain","storage","tool","hardware"],
+    sports:   ["sport","outdoor","gym","yoga","run","bike","cycle","swim","surf","ski","hike","camp","climb","golf","tennis","basketball","football","soccer","training","workout","crossfit","boxing"],
+    pets:     ["pet","dog","cat","bird","fish","animal","paw","puppy","kitten","vet","treat","collar","leash","aquarium","reptile","hamster","rabbit"],
+    tech:     ["tech","gadget","electronic","phone","laptop","computer","camera","drone","robot","smart","speaker","headphone","earphone","cable","charger","battery","gaming"],
+    kids:     ["kid","baby","child","infant","toddler","toy","puzzle","school","nursery","stroller","diaper","maternity","pregnancy"],
+    jewelry:  ["jewelry","jewellery","ring","necklace","bracelet","earring","pendant","diamond","gold","silver","platinum","gem","crystal","watch","luxury"]
+  };
+
+  function detectNiche(store) {
+    const txt = [store.domain, store.readiness, store.platform].join(" ").toLowerCase();
+    for (const [niche, kws] of Object.entries(NICHES)) {
+      if (kws.some(k => txt.includes(k))) return niche;
+    }
+    return "other";
+  }
+
+  function normalizeStore(raw) {
+    const domain = String(raw.domain || raw.store_domain || "").replace(/^www\./, "").toLowerCase();
+    const store = {
+      domain,
+      score:     Number(raw.score ?? raw.total_score ?? 0),
+      date:      raw.date || raw.scanned_at || raw.created_at || "",
+      country:   raw.country || "",
+      platform:  raw.platform || "",
+      readiness: raw.readiness_level || ""
     };
+    store.niche = detectNiche(store);
+    return store;
+  }
 
-    const listEl    = document.getElementById("stores-list");
-    const statusEl  = document.getElementById("status");
-    const countEl   = document.getElementById("store-count");
-    const avgEl     = document.getElementById("avg-score");
-    const highEl    = document.getElementById("high-count");
-    const lowEl     = document.getElementById("low-count");
-    const searchEl  = document.getElementById("search");
-    const sortEl    = document.getElementById("sort");
-    const refreshEl = document.getElementById("refresh");
-    const clearBtn  = document.getElementById("clear-btn");
+  function scoreClass(s) {
+    if (s >= 70) return "green";
+    if (s >= 30) return "orange";
+    return "red";
+  }
 
-    /* ─── NICHE DETECTION ─────────────────────────────────────── */
-    const NICHE_KEYWORDS = {
-      fashion:  ["apparel","fashion","clothing","wear","shirt","dress","jeans","jacket","sneaker","shoe","boot","sock","hat","cap","outerwear","denim","streetwear","swimwear","lingerie","activewear","sportswear","garment","boutique","hoodie","tshirt","pant","skirt","coat","scarf","glove","bag","purse","handbag","wallet","luggage","accessory","jewel","sunglasses"],
-      beauty:   ["beauty","skincare","skin","serum","cream","makeup","cosmetic","lipstick","mascara","foundation","moisturizer","cleanser","toner","spf","sunscreen","retinol","glow","face","hair","shampoo","conditioner","perfume","fragrance","nail","salon","brow","lash","grooming"],
-      health:   ["health","wellness","vitamin","supplement","protein","collagen","probiotic","cbd","medical","fitness","nutrition","diet","sleep","immune","natural","organic","herbal","pharmacy","medicine","dental","eye","hearing"],
-      food:     ["food","drink","coffee","tea","wine","beer","spirit","snack","chocolate","candy","sauce","oil","spice","meal","chef","kitchen","gourmet","grocery","bakery","bread","cheese","dairy","meat","seafood","vegan","plant","juice","soda","kombucha","smoothie","protein","bar"],
-      home:     ["home","house","furniture","decor","candle","plant","garden","cleaning","kitchen","cookware","bed","bath","linen","sofa","chair","desk","lighting","lamp","rug","curtain","storage","organizer","tool","hardware"],
-      sports:   ["sport","outdoor","gym","yoga","run","bike","cycle","swim","surf","ski","hike","camp","climb","golf","tennis","basketball","football","soccer","training","workout","crossfit","pilates","martial","boxing"],
-      pets:     ["pet","dog","cat","bird","fish","animal","paw","puppy","kitten","vet","treat","collar","leash","cage","aquarium","reptile","hamster","rabbit"],
-      tech:     ["tech","gadget","electronic","phone","laptop","computer","camera","drone","robot","smart","speaker","headphone","earphone","cable","charger","battery","gaming","software","app","saas","ai","digital"],
-      kids:     ["kid","baby","child","infant","toddler","toy","game","puzzle","learn","school","nursery","stroller","diaper","maternity","pregnancy"],
-      jewelry:  ["jewelry","jewellery","ring","necklace","bracelet","earring","pendant","diamond","gold","silver","platinum","gem","crystal","watch","clock","luxury"]
-    };
+  function formatDate(v) {
+    if (!v) return "";
+    const d = new Date(v);
+    if (isNaN(d.getTime())) return String(v).slice(0,10);
+    return d.toISOString().slice(0,10);
+  }
 
-    function detectNiche(store) {
-      const text = [store.domain, store.readiness, store.platform].join(" ").toLowerCase();
-      for (const [niche, keywords] of Object.entries(NICHE_KEYWORDS)) {
-        if (keywords.some(k => text.includes(k))) return niche;
-      }
-      return "other";
+  function updateStats() {
+    const all = state.stores;
+    document.getElementById("stat-total").textContent = all.length || "—";
+    if (!all.length) {
+      ["stat-avg","stat-high","stat-low"].forEach(id => document.getElementById(id).textContent = "—");
+      return;
     }
+    document.getElementById("stat-avg").textContent  = Math.round(all.reduce((a,s) => a + s.score, 0) / all.length);
+    document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length;
+    document.getElementById("stat-low").textContent  = all.filter(s => s.score < 30).length;
+  }
 
-    /* ─── NORMALIZE ───────────────────────────────────────────── */
-    function normalizeStore(raw) {
-      const domain = String(raw.domain || raw.store_domain || "").replace(/^www\./, "").toLowerCase();
-      const store = {
-        domain,
-        score: Number(raw.score ?? raw.total_score ?? 0),
-        date: raw.date || raw.scanned_at || raw.created_at || "",
-        country: raw.country || "",
-        platform: raw.platform || "Shopify",
-        readiness: raw.readiness_level || ""
-      };
-      store.niche = detectNiche(store);
-      return store;
+  function updatePillCounts() {
+    document.getElementById("c-all").textContent = state.stores.length;
+    for (const niche of Object.keys(NICHES)) {
+      const el = document.getElementById("c-" + niche);
+      if (el) el.textContent = state.stores.filter(s => s.niche === niche).length;
     }
+    document.getElementById("c-other").textContent = state.stores.filter(s => s.niche === "other").length;
+  }
 
-    /* ─── SCORE CLASS ─────────────────────────────────────────── */
-    function scoreClass(s) {
-      if (s >= 70) return "green";
-      if (s >= 30) return "orange";
-      return "red";
+  function renderStores() {
+    const query = state.query.toLowerCase();
+    let stores = state.stores.filter(s => {
+      const txt = [s.domain, s.country, s.platform, s.readiness].join(" ").toLowerCase();
+      return (!query || txt.includes(query)) && (state.niche === "all" || s.niche === state.niche);
+    });
+    stores = stores.sort((a,b) => {
+      if (state.sort === "best")  return b.score - a.score;
+      if (state.sort === "worst") return a.score - b.score;
+      if (state.sort === "az")    return a.domain.localeCompare(b.domain);
+      return new Date(b.date||0) - new Date(a.date||0);
+    });
+
+    listEl.innerHTML = "";
+    const hasFilter = query || state.niche !== "all";
+    clearBtn.classList.toggle("visible", hasFilter);
+
+    if (!stores.length) {
+      listEl.innerHTML = `<div class="empty">${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>`;
+      statusEl.textContent = "0 stores";
+      return;
     }
+    statusEl.textContent = `${stores.length.toLocaleString()} store${stores.length !== 1 ? "s" : ""}${hasFilter ? " matched" : ""}`;
 
-    function formatDate(v) {
-      if (!v) return "";
-      const d = new Date(v);
-      if (isNaN(d.getTime())) return String(v).slice(0, 10);
-      return d.toISOString().slice(0, 10);
-    }
-
-    /* ─── UPDATE COUNTS ───────────────────────────────────────── */
-    function updateCounts(stores) {
-      const allStores = state.stores;
-      document.getElementById("count-all").textContent = allStores.length;
-      for (const niche of Object.keys(NICHE_KEYWORDS)) {
-        const el = document.getElementById("count-" + niche);
-        if (el) el.textContent = allStores.filter(s => s.niche === niche).length;
-      }
-      const otherEl = document.getElementById("count-other");
-      if (otherEl) otherEl.textContent = allStores.filter(s => s.niche === "other").length;
-    }
-
-    /* ─── UPDATE STATS ────────────────────────────────────────── */
-    function updateStats() {
-      const all = state.stores;
-      countEl.textContent = all.length;
-      if (!all.length) { avgEl.textContent = "—"; highEl.textContent = "—"; lowEl.textContent = "—"; return; }
-      const avg = Math.round(all.reduce((a, s) => a + s.score, 0) / all.length);
-      avgEl.textContent = avg;
-      highEl.textContent = all.filter(s => s.score >= 70).length;
-      lowEl.textContent = all.filter(s => s.score < 30).length;
-    }
-
-    /* ─── RENDER ──────────────────────────────────────────────── */
-    function renderStores() {
-      const query = state.query.toLowerCase();
-
-      let stores = state.stores.filter(store => {
-        const text = [store.domain, store.country, store.platform, store.readiness].join(" ").toLowerCase();
-        const matchQuery = !query || text.includes(query);
-        const matchNiche = state.niche === "all" || store.niche === state.niche;
-        return matchQuery && matchNiche;
-      });
-
-      stores = stores.sort((a, b) => {
-        if (state.sort === "best") return b.score - a.score;
-        if (state.sort === "worst") return a.score - b.score;
-        if (state.sort === "az") return a.domain.localeCompare(b.domain);
-        return new Date(b.date || 0) - new Date(a.date || 0);
-      });
-
-      listEl.innerHTML = "";
-
-      const hasFilters = query || state.niche !== "all";
-      clearBtn.classList.toggle("visible", hasFilters);
-
-      if (!stores.length) {
-        listEl.innerHTML = `<div class="empty">
-          <div class="empty-icon">◎</div>
-          <div>${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>
-        </div>`;
-        statusEl.textContent = "0 stores";
-        return;
-      }
-
-      statusEl.textContent = `${stores.length.toLocaleString()} store${stores.length !== 1 ? "s" : ""}${hasFilters ? " matched" : ""}`;
-
-      const fragment = document.createDocumentFragment();
-      for (const store of stores) {
-        const a = document.createElement("a");
-        a.href = `/store/${encodeURIComponent(store.domain)}`;
-        a.className = "store-card";
-        const date = formatDate(store.date);
-        const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase() + store.niche.slice(1) : null;
-        a.innerHTML = `
-          <div class="card-inner">
-            <div class="card-left">
-              <div class="domain">${store.domain}</div>
-              ${store.readiness ? `<div class="readiness">${store.readiness.replaceAll("_", " ")}</div>` : ""}
-              <div class="card-tags">
-                ${nicheLabel ? `<span class="card-tag niche">${nicheLabel}</span>` : ""}
-                ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
-                ${store.platform ? `<span class="card-tag">${store.platform}</span>` : ""}
-                ${date ? `<span class="card-tag">${date}</span>` : ""}
-              </div>
-            </div>
-            <div class="score-wrap">
-              <div class="score ${scoreClass(store.score)}">${store.score}</div>
-              <span class="score-label">/100 AI score</span>
-            </div>
-          </div>
-        `;
-        fragment.appendChild(a);
-      }
-      listEl.appendChild(fragment);
-    }
-
-    /* ─── SKELETON LOADING ────────────────────────────────────── */
-    function showSkeletons(n = 8) {
-      listEl.innerHTML = Array.from({length: n}).map(() => `
-        <div class="skeleton">
+    const frag = document.createDocumentFragment();
+    for (const store of stores) {
+      const a = document.createElement("a");
+      a.href = `/store/${encodeURIComponent(store.domain)}`;
+      a.className = "store-card";
+      const nicheLabel = store.niche !== "other"
+        ? store.niche.charAt(0).toUpperCase() + store.niche.slice(1)
+        : null;
+      const date = formatDate(store.date);
+      a.innerHTML = `
+        <div class="card-inner">
           <div>
-            <div class="skel skel-domain"></div>
-            <div class="skel skel-sub"></div>
-            <div class="skel-tags">
-              <div class="skel skel-tag"></div>
-              <div class="skel skel-tag"></div>
+            <div class="domain">${store.domain}</div>
+            ${store.readiness ? `<div class="readiness">${store.readiness.replaceAll("_"," ")}</div>` : ""}
+            <div class="card-tags">
+              ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
+              ${store.country  ? `<span class="card-tag">${store.country}</span>`  : ""}
+              ${store.platform ? `<span class="card-tag">${store.platform}</span>` : ""}
+              ${date           ? `<span class="card-tag">${date}</span>`           : ""}
             </div>
           </div>
-          <div class="skel skel-score"></div>
-        </div>
-      `).join("");
-    }
-
-    /* ─── LOAD ────────────────────────────────────────────────── */
-    async function loadStores() {
-      statusEl.textContent = "Loading…";
-      showSkeletons();
-      try {
-        const res = await fetch(STORES_API_URL, { headers: { "Accept": "application/json" } });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        const rows = Array.isArray(data) ? data : (data.stores || []);
-        state.stores = rows.map(normalizeStore).filter(s => s.domain);
-        updateStats();
-        updateCounts();
-        renderStores();
-      } catch (err) {
-        statusEl.textContent = "Could not load data.";
-        listEl.innerHTML = `<div class="empty">
-          <div class="empty-icon">⚠</div>
-          <div>Could not connect to the stores endpoint.</div>
+          <div class="score-wrap">
+            <div class="score ${scoreClass(store.score)}">${store.score}</div>
+            <span class="score-label">/100 AI score</span>
+          </div>
         </div>`;
-      }
+      frag.appendChild(a);
     }
+    listEl.appendChild(frag);
+  }
 
-    /* ─── NICHE PILLS ─────────────────────────────────────────── */
-    document.getElementById("niche-pills").addEventListener("click", e => {
-      const pill = e.target.closest(".niche-pill");
-      if (!pill) return;
-      document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
-      pill.classList.add("active");
-      state.niche = pill.dataset.niche;
+  function showSkeletons(n=8) {
+    listEl.innerHTML = Array.from({length:n}).map(() => `
+      <div class="skeleton">
+        <div>
+          <div class="skel skel-d"></div>
+          <div class="skel skel-s"></div>
+          <div class="skel-tags">
+            <div class="skel skel-tag"></div>
+            <div class="skel skel-tag"></div>
+          </div>
+        </div>
+        <div class="skel skel-score"></div>
+      </div>`).join("");
+  }
+
+  async function loadStores() {
+    statusEl.textContent = "Loading…";
+    showSkeletons();
+    try {
+      const res  = await fetch(STORES_API_URL, { headers: { "Accept": "application/json" } });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      const rows = Array.isArray(data) ? data : (data.stores || []);
+      state.stores = rows.map(normalizeStore).filter(s => s.domain);
+      updateStats();
+      updatePillCounts();
       renderStores();
-    });
+    } catch (err) {
+      statusEl.textContent = "Could not load data.";
+      listEl.innerHTML = `<div class="empty">Could not connect to the stores endpoint.</div>`;
+    }
+  }
 
-    /* ─── EVENTS ──────────────────────────────────────────────── */
-    searchEl.addEventListener("input", e => { state.query = e.target.value; renderStores(); });
-    sortEl.addEventListener("change", e => { state.sort = e.target.value; renderStores(); });
-    refreshEl.addEventListener("click", loadStores);
-    clearBtn.addEventListener("click", () => {
-      state.query = ""; state.niche = "all";
-      searchEl.value = "";
-      document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
-      document.querySelector('[data-niche="all"]').classList.add("active");
-      renderStores();
-    });
+  document.getElementById("niche-pills").addEventListener("click", e => {
+    const pill = e.target.closest(".niche-pill");
+    if (!pill) return;
+    document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    state.niche = pill.dataset.niche;
+    renderStores();
+  });
+  searchEl.addEventListener("input",  e => { state.query = e.target.value; renderStores(); });
+  sortEl.addEventListener("change",   e => { state.sort  = e.target.value; renderStores(); });
+  document.getElementById("refresh").addEventListener("click", loadStores);
+  clearBtn.addEventListener("click", () => {
+    state.query = ""; state.niche = "all"; searchEl.value = "";
+    document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
+    document.querySelector('[data-niche="all"]').classList.add("active");
+    renderStores();
+  });
 
-    loadStores();
-  </script>
+  loadStores();
+</script>
 </body>
 </html>
