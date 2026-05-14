@@ -3,12 +3,10 @@
 <head>
 <meta name="robots" content="noindex, nofollow">
 <meta charset="UTF-8">
-<title>Store Report – Atom Foundry</title>
+<title>AI Recommendation Report – Atom Foundry</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
@@ -17,146 +15,98 @@ body {
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
 }
-
 body::before {
   content: "";
-  position: fixed;
-  top: 0; left: 0;
+  position: fixed; top: 0; left: 0;
   width: 100%; height: 100%;
   background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%);
-  pointer-events: none;
-  z-index: 0;
+  pointer-events: none; z-index: 0;
 }
+.container { max-width: 600px; margin: 0 auto; padding: 28px 20px 48px; position: relative; z-index: 1; }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 28px 20px 48px;
-  position: relative;
-  z-index: 1;
+/* NAVBAR */
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1e1e1e; padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
 }
+.nav-brand { font-size: 15px; font-weight: 800; color: white; letter-spacing: -0.3px; text-decoration: none; }
+.nav-brand span { color: #f97316; }
+.nav-cta { background: #f97316; color: black; font-weight: 700; font-size: 13px; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
 
-.domain-label { font-size: 14px; color: #aaa; margin-bottom: 8px; font-weight: 500; }
-
-.loss-number {
-  font-size: 64px; font-weight: 800; color: #E24B4A;
-  line-height: 1; margin-bottom: 4px;
-  text-shadow: 0 0 40px rgba(226,75,74,0.3);
-  letter-spacing: -0.02em;
+/* HERO */
+.domain-label { font-size: 14px; color: #aaa; margin-bottom: 6px; font-weight: 500; }
+.score-hero { font-size: 72px; font-weight: 800; line-height: 1; margin-bottom: 4px; letter-spacing: -0.02em; }
+.score-hero-label { font-size: 14px; color: #aaa; margin-bottom: 10px; }
+.ai-status-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 700;
+  margin-bottom: 20px;
 }
+.badge-high { background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.3); color: #1D9E75; }
+.badge-medium { background: rgba(239,159,39,0.12); border: 1px solid rgba(239,159,39,0.3); color: #EF9F27; }
+.badge-low { background: rgba(226,75,74,0.12); border: 1px solid rgba(226,75,74,0.3); color: #E24B4A; }
+.badge-invisible { background: rgba(226,75,74,0.12); border: 1px solid rgba(226,75,74,0.3); color: #E24B4A; }
 
-.loss-label { font-size: 14px; color: #aaa; margin-bottom: 16px; }
-.daily-loss { font-size: 18px; color: #EF9F27; font-weight: 600; margin-bottom: 6px; }
-.live-counter { font-size: 14px; color: #888; margin-bottom: 24px; min-height: 22px; }
-
-.scores-section {
-  background: #111; border: 1px solid #1e1e1e;
-  border-radius: 16px; padding: 18px 20px; margin-bottom: 8px;
+.loss-strip {
+  background: #111; border: 1px solid #1e1e1e; border-radius: 14px;
+  padding: 16px 18px; margin-bottom: 20px; text-align: center;
 }
+.loss-strip-amount { font-size: 32px; font-weight: 800; color: #E24B4A; line-height: 1; margin-bottom: 4px; }
+.loss-strip-label { font-size: 13px; color: #888; }
+.live-counter { font-size: 13px; color: #666; margin-top: 6px; min-height: 20px; }
+
+/* SCORES SECTION */
+.scores-section { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; padding: 18px 20px; margin-bottom: 8px; }
 .score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
-.score-label {
-  font-size: 12px; color: #aaa; text-transform: uppercase;
-  letter-spacing: 0.06em; font-weight: 600; min-width: 110px;
-}
+.score-label { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; min-width: 110px; }
 .score-num { font-size: 22px; font-weight: 700; min-width: 65px; line-height: 1; }
 .score-bar-wrap { flex: 1; height: 7px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
 .score-bar-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
+.score-verdict { font-size: 12px; font-weight: 600; margin-bottom: 16px; padding-left: 124px; line-height: 1.4; }
 
-.ars-verdict { font-size: 12px; font-weight: 600; margin-bottom: 6px; padding-left: 124px; line-height: 1.4; }
-.cro-verdict { font-size: 12px; font-weight: 600; margin-bottom: 10px; padding-left: 124px; line-height: 1.4; }
+/* BREAKDOWN */
+.breakdown-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; }
+.breakdown-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 6px; }
+.breakdown-desc { font-size: 13px; color: #777; line-height: 1.6; margin-bottom: 16px; }
+.factor-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #141414; }
+.factor-row:last-child { border-bottom: none; padding-bottom: 0; }
+.factor-left { flex: 1; }
+.factor-name { font-size: 13px; color: #aaa; margin-bottom: 4px; }
+.factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
+.factor-fill { height: 100%; border-radius: 999px; }
+.factor-score { font-size: 13px; font-weight: 700; min-width: 50px; text-align: right; }
 
-.ars-detail-link {
-  font-size: 13px; color: #f97316; cursor: pointer;
-  padding-left: 124px; margin-bottom: 14px; display: block;
-  text-decoration: none; letter-spacing: 0.01em; font-weight: 500;
-}
-.ars-detail-link:hover { color: #fb923c; }
-
-.ars-popup {
-  display: none; background: #0d0d0d; border: 1px solid #1e1e1e;
-  border-radius: 12px; padding: 18px 20px; margin-bottom: 12px;
-}
-.ars-popup.open { display: block; }
-.ars-popup-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 8px; }
-.ars-popup-desc { font-size: 13px; color: #999; line-height: 1.6; margin-bottom: 16px; }
-.ars-factor {
-  display: flex; align-items: center; gap: 12px;
-  padding: 8px 0; border-bottom: 1px solid #141414;
-}
-.ars-factor:last-of-type { border-bottom: none; padding-bottom: 0; }
-.ars-factor-left { flex: 1; }
-.ars-factor-name { font-size: 13px; color: #aaa; margin-bottom: 4px; }
-.ars-factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
-.ars-factor-fill { height: 100%; background: #f97316; border-radius: 999px; }
-.ars-factor-weight { font-size: 13px; font-weight: 700; color: #f97316; min-width: 36px; text-align: right; }
-.ars-popup-footer { font-size: 12px; color: #666; margin-top: 12px; line-height: 1.6; }
-
-.explain-toggle {
-  font-size: 13px; color: #f97316; cursor: pointer;
-  text-align: center; padding: 10px; margin-bottom: 16px;
-  user-select: none; letter-spacing: 0.02em;
-}
+/* EXPLAIN */
+.explain-toggle { font-size: 13px; color: #f97316; cursor: pointer; text-align: center; padding: 10px; margin-bottom: 16px; user-select: none; }
 .explain-toggle:hover { color: #fb923c; }
-.explain-box {
-  display: none; background: #0d0d0d; border: 1px solid #1e1e1e;
-  border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
-  font-size: 13px; color: #aaa; line-height: 1.8;
-}
+.explain-box { display: none; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; font-size: 13px; color: #aaa; line-height: 1.8; }
 .explain-box.open { display: block; }
 .explain-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 12px; }
-.explain-item { margin-bottom: 10px; padding-left: 4px; }
-.explain-item:last-child { margin-bottom: 0; }
+.explain-item { margin-bottom: 10px; }
 .explain-highlight { color: #f97316; font-weight: 600; }
 
-.section-label {
-  font-size: 11px; color: #888; text-transform: uppercase;
-  letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px;
-}
+/* SECTION LABELS */
+.section-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px; }
 
-.main-leak-box {
-  background: #111; border: 1px solid #1e1e1e;
-  border-left: 3px solid #E24B4A; border-radius: 12px;
-  padding: 16px 18px; margin-bottom: 20px;
-}
+/* MAIN LEAK */
+.main-leak-box { background: #111; border: 1px solid #1e1e1e; border-left: 3px solid #E24B4A; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
 .main-leak-text { font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.6; }
 
-.locked-box {
-  background: #0d0d0d; border: 1px solid #1e1e1e;
-  border-radius: 12px; padding: 16px 18px; margin-bottom: 20px;
-}
-.locked-title {
-  font-size: 11px; color: #888; text-transform: uppercase;
-  letter-spacing: 0.07em; margin-bottom: 12px; font-weight: 600;
-}
-.locked-item {
-  font-size: 14px; color: #aaa; margin-bottom: 10px;
-  line-height: 1.5; display: flex; align-items: flex-start; gap: 8px;
-}
+/* LOCKED */
+.locked-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
+.locked-title { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; font-weight: 600; }
+.locked-item { font-size: 14px; color: #aaa; margin-bottom: 10px; line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
 .locked-item:last-child { margin-bottom: 0; }
 .locked-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-.locked-text { flex: 1; }
 
-.fix-label {
-  font-size: 11px; color: #1D9E75; text-transform: uppercase;
-  letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px;
-}
-.fix-box {
-  background: #0a1a0a; border: 1px solid #1a2e1a;
-  border-left: 3px solid #1D9E75; border-radius: 12px;
-  padding: 16px 18px; margin-bottom: 20px;
-}
+/* FIX */
+.fix-label { font-size: 11px; color: #1D9E75; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px; }
+.fix-box { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
 .fix-text { font-size: 15px; color: #4ade80; line-height: 1.6; }
-.fix-impact {
-  font-size: 14px; color: #1D9E75; font-weight: 600;
-  margin-top: 10px; padding-top: 10px; border-top: 1px solid #1a2e1a;
-}
 
-.expiry-text {
-  font-size: 14px; color: #888;
-  text-align: center; margin-bottom: 16px; line-height: 1.5;
-}
-
-.cta-section { margin-bottom: 24px; }
+/* CTA */
 .cta-btn {
   display: block; width: 100%; padding: 20px; border-radius: 14px;
   border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c);
@@ -166,102 +116,50 @@ body::before {
   transition: all 0.25s ease; animation: ctaPulse 2.5s infinite; margin-bottom: 14px;
 }
 .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(249,115,22,0.65); }
-.cta-btn:active { transform: scale(0.97); }
+@keyframes ctaPulse { 0%,100% { box-shadow: 0 0 0 rgba(249,115,22,0.4); } 50% { box-shadow: 0 0 30px rgba(249,115,22,0.6); } }
+.cta-trust { font-size: 13px; color: #999; text-align: center; line-height: 1.8; margin-bottom: 6px; }
+.cta-trust-green { font-size: 13px; color: #1D9E75; text-align: center; margin-bottom: 24px; }
 
-@keyframes ctaPulse {
-  0%   { box-shadow: 0 0 0 rgba(249,115,22,0.4); }
-  50%  { box-shadow: 0 0 30px rgba(249,115,22,0.6); }
-  100% { box-shadow: 0 0 0 rgba(249,115,22,0.4); }
-}
+/* WHAT BOX */
+.what-box { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; }
+.what-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 14px; }
+.what-item { font-size: 14px; color: #aaa; margin-bottom: 9px; line-height: 1.5; }
 
-.cta-trust {
-  font-size: 14px; color: #999;
-  text-align: center; line-height: 1.8; white-space: nowrap;
-}
-.cta-trust-green { font-size: 14px; color: #1D9E75; text-align: center; margin-top: 5px; }
+/* DECISION */
+.decision-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; font-size: 14px; color: #ccc; line-height: 1.9; }
 
-.founder-box {
-  background: #0d0d0d;
-  border: 1px solid #1e1e1e;
-  border-left: 3px solid #f97316;
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 24px;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-.founder-avatar {
-  width: 44px; height: 44px;
-  background: linear-gradient(135deg, #f97316, #ea580c);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 900; color: black;
-  flex-shrink: 0;
-}
+/* FOUNDER */
+.founder-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-left: 3px solid #f97316; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; display: flex; gap: 16px; align-items: flex-start; }
+.founder-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #f97316, #ea580c); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: black; flex-shrink: 0; }
 .founder-text { flex: 1; }
 .founder-name { font-size: 13px; font-weight: 700; color: #e8e8e8; margin-bottom: 4px; }
 .founder-sub { font-size: 11px; color: #666; margin-bottom: 8px; }
 .founder-quote { font-size: 13px; color: #aaa; line-height: 1.7; font-style: italic; }
 
-.what-box {
-  background: #111; border: 1px solid #1e1e1e;
-  border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;
-}
-.what-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 14px; }
-.what-item { font-size: 14px; color: #aaa; margin-bottom: 9px; padding-left: 4px; line-height: 1.5; }
-.what-item:last-child { margin-bottom: 0; }
-
-.decision-box {
-  background: #0d0d0d; border: 1px solid #1e1e1e;
-  border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;
-  font-size: 14px; color: #ccc; line-height: 1.9;
-}
-
-.cta-btn-secondary {
-  display: block; width: 100%; padding: 18px; border-radius: 14px;
-  border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c);
-  color: black; font-weight: 900; font-size: 17px; text-align: center;
-  cursor: pointer; text-decoration: none;
-  box-shadow: 0 10px 25px rgba(249,115,22,0.35);
-  transition: all 0.25s ease; margin-bottom: 14px;
-}
-.cta-btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 16px 35px rgba(249,115,22,0.6); }
-
-.footer {
-  padding-top: 20px; border-top: 1px solid #1e1e1e;
-  text-align: center; margin-top: 8px;
-}
-.footer-scan-line {
-  font-size: 13px; color: #777;
-  margin-bottom: 10px; line-height: 1.8; white-space: nowrap;
-}
-.footer-tagline { font-size: 16px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
+/* FOOTER */
+.footer { padding-top: 20px; border-top: 1px solid #1e1e1e; text-align: center; margin-top: 8px; }
+.footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
+.footer-platform { font-size: 11px; color: #444; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+.footer-copy { font-size: 12px; color: #444; margin-top: 6px; }
 
 #loadingState { text-align: center; padding: 60px 20px; font-size: 15px; color: #666; }
 
 @media (max-width: 480px) {
-  .loss-number    { font-size: 52px; }
-  .daily-loss     { font-size: 17px; }
-  .main-leak-text { font-size: 16px; }
-  .fix-text       { font-size: 15px; }
-  .locked-item    { font-size: 14px; }
-  .what-item      { font-size: 14px; }
-  .decision-box   { font-size: 14px; }
-  .score-label    { min-width: 90px; font-size: 11px; }
-  .score-num      { font-size: 20px; min-width: 55px; }
-  .ars-verdict    { padding-left: 100px; }
-  .cro-verdict    { padding-left: 100px; }
-  .ars-detail-link { padding-left: 100px; font-size: 13px; }
-  .cta-btn        { font-size: 15px; padding: 18px; }
-  .cta-trust      { white-space: normal; font-size: 13px; }
-  .footer-scan-line { white-space: normal; font-size: 13px; }
-  .footer-tagline { font-size: 15px; }
+  .score-label { min-width: 90px; font-size: 11px; }
+  .score-num { font-size: 20px; min-width: 55px; }
+  .score-verdict { padding-left: 100px; }
+  .score-hero { font-size: 56px; }
+  .cta-btn { font-size: 15px; padding: 18px; }
 }
 </style>
 </head>
-
 <body>
+
+<nav class="navbar">
+  <a href="/" class="nav-brand">ATOM <span>FOUNDRY</span></a>
+  <a href="/" class="nav-cta">Free Scan →</a>
+</nav>
+
 <div class="container">
   <div id="loadingState">Analyzing your store...</div>
   <div id="app" style="display:none;"></div>
@@ -278,10 +176,15 @@ if (!id || id === "scan" || id === "report") {
 
 function track(event) {
   fetch("https://n8n-production-43ab.up.railway.app/webhook/track", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ token: id, event })
   }).catch(() => {});
+}
+
+function getColor(score) {
+  if (score >= 70) return "#1D9E75";
+  if (score >= 40) return "#EF9F27";
+  return "#E24B4A";
 }
 
 (async function() {
@@ -303,54 +206,85 @@ track("viewed_report");
 const row    = data;
 const report = row.report_json || {};
 
-const domain = (row.store_domain || "").replace("https://","").replace("http://","").trim();
-const displayDomain = (domain && domain !== "undefined" && domain !== "null") ? domain : "Your store";
+const domain = (row.store_domain || "").replace(/^https?:\/\//, "").replace(/^www\./, "").trim();
+const displayDomain = (domain && domain !== "undefined") ? domain : "Your store";
 
-const lossMin = report.estimated_loss_min || row.estimated_loss_min || 0;
-const daily   = report.estimated_loss_daily || Math.round(lossMin / 30);
+// AI SCORE — hlavní metrika
+const aiScore = row.ars_score || report.total_score || row.score || 0;
+const aiColor = getColor(aiScore);
+
+// FACTOR SCORES
+const schema_score    = Math.min(report.schema_score    || 0, 20);
+const content_score   = Math.min(report.content_score   || 0, 18);
+const trust_score     = Math.min(report.trust_score     || 0, 18);
+const intent_score    = Math.min(report.intent_score    || 0, 14);
+const technical_score = Math.min(report.technical_score || 0, 12);
+const price_score     = Math.min(report.price_score     || 0, 10);
+const rec_score       = Math.min(report.rec_score       || 0,  5);
+const brand_score     = Math.min(report.brand_score     || 0,  3);
+
+// REVENUE
+const lossMin     = report.estimated_loss_min || row.estimated_loss_min || 0;
 const lossDisplay = report.estimated_loss_display || ("$" + lossMin.toLocaleString("en-US") + "/month");
+const daily       = report.estimated_loss_daily || Math.round(lossMin / 30);
 
-const croScore = row.cro_score || row.score || 60;
-const arsScore = row.ars_score || report.ars_score || Math.round(croScore * 0.65);
+// STATUS
+const readiness = report.readiness_level || row.readiness_level || "";
+const statusBadge = (() => {
+  if (aiScore >= 85) return { cls: "badge-high",      dot: "🟢", text: "Highly Recommendable" };
+  if (aiScore >= 70) return { cls: "badge-medium",    dot: "🟡", text: "Moderately Recommendable" };
+  if (aiScore >= 50) return { cls: "badge-low",       dot: "🟠", text: "Low Recommendation Confidence" };
+  return                    { cls: "badge-invisible",  dot: "🔴", text: "AI Invisible Risk" };
+})();
 
-const mainLeak = report.main_leak || "Buyers are dropping off before taking action.";
-const quickFix = report.quick_fix || "Make the primary action visually dominant and reduce competing elements.";
+const verdict = aiScore >= 70
+  ? `<span style="color:#1D9E75;">✓ AI agents can recommend your store</span>`
+  : aiScore >= 50
+  ? `<span style="color:#EF9F27;">⚠ AI may skip your store — competitors may outrank you</span>`
+  : `<span style="color:#E24B4A;">✗ AI Invisible — ChatGPT and Amazon Rufus may skip your store entirely</span>`;
+
+const mainLeak  = report.main_leak  || "AI agents may not confidently understand what your store sells.";
+const quickFix  = report.quick_fix  || "Add structured data and improve semantic clarity for AI systems.";
+const email     = row.email || "";
 
 const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
   ? report.locked_leaks
   : [
-      { title: "Buyers can't find products fast enough — revenue leaking at every scroll", est_impact: "$" + Math.round(lossMin * 0.25).toLocaleString("en-US") + "/month" },
-      { title: "No urgency — users hesitate, delay purchase and don't return",              est_impact: "$" + Math.round(lossMin * 0.20).toLocaleString("en-US") + "/month" },
-      { title: "Trust drops before checkout — buyers abandon at the last step",             est_impact: "costing you sales every day" }
+      { title: "AI structured data gaps limiting recommendation reach", est_impact: "$1,200/month" },
+      { title: "Semantic clarity issues reducing AI intent matching",   est_impact: "$900/month" },
+      { title: "Missing trust signals reducing AI confidence score",    est_impact: "$600/month" }
     ];
-
-const email = row.email || "";
-
-const getCroColor = (s) => s >= 90 ? "#1D9E75" : s >= 60 ? "#EF9F27" : "#E24B4A";
-const getArsColor = (s) => s >= 90 ? "#1D9E75" : s >= 50 ? "#EF9F27" : "#E24B4A";
-const croColor = getCroColor(croScore);
-const arsColor = getArsColor(arsScore);
-
-const croVerdictText = croScore >= 90
-  ? `<span style="color:#1D9E75;">✓ Strong conversion health — maintain and monitor</span>`
-  : croScore >= 60
-  ? `<span style="color:#EF9F27;">⚠ You're leaving money on the table — competitors scoring 90+ are winning your customers</span>`
-  : `<span style="color:#E24B4A;">✗ Buyers are leaving before purchasing — revenue leaking at every step</span>`;
-
-const arsVerdictText = arsScore >= 90
-  ? `<span style="color:#1D9E75;">✓ Fully visible to AI agents — strong discovery position</span>`
-  : arsScore >= 50
-  ? `<span style="color:#EF9F27;">⚠ You're partially visible to AI — competitors may outrank you in AI search</span>`
-  : `<span style="color:#E24B4A;">✗ AI agents cannot find or recommend your store — lost traffic every day</span>`;
-
-const quickFixImpact = Math.round(lossMin * 0.3).toLocaleString("en-US");
 
 const lockedHTML = lockedLeaks.map(l => `
   <div class="locked-item">
     <span class="locked-icon">🔒</span>
-    <span class="locked-text">${l.title}${l.est_impact
-      ? ' <span style="color:#777;">· ' + l.est_impact + '</span>' : ''}</span>
+    <span>${l.title}${l.est_impact ? ' <span style="color:#777;">· ' + l.est_impact + '</span>' : ''}</span>
   </div>`).join("");
+
+// FACTOR ROWS
+const factors = [
+  { name: "AI Structured Signals",    score: schema_score,    max: 20 },
+  { name: "Semantic Clarity",          score: content_score,   max: 18 },
+  { name: "AI Trust Confidence",       score: trust_score,     max: 18 },
+  { name: "User Intent Match",         score: intent_score,    max: 14 },
+  { name: "AI Interpretability",       score: technical_score, max: 12 },
+  { name: "Commerce Accuracy",         score: price_score,     max: 10 },
+  { name: "Recommendation Confidence", score: rec_score,       max:  5 },
+  { name: "External Authority Signals",score: brand_score,     max:  3 },
+];
+
+const factorRowsHTML = factors.map(f => {
+  const pct = f.max > 0 ? Math.round((f.score / f.max) * 100) : 0;
+  const col = getColor(pct);
+  return `
+    <div class="factor-row">
+      <div class="factor-left">
+        <div class="factor-name">${f.name}</div>
+        <div class="factor-bar"><div class="factor-fill" style="width:${pct}%;background:${col};"></div></div>
+      </div>
+      <div class="factor-score" style="color:${col};">${f.score}/${f.max}</div>
+    </div>`;
+}).join("");
 
 document.getElementById("loadingState").style.display = "none";
 const app = document.getElementById("app");
@@ -359,230 +293,158 @@ app.style.display = "block";
 app.innerHTML = `
 
   <div class="domain-label">${displayDomain}</div>
-  <div class="loss-number">${lossDisplay}</div>
 
-  <!-- 🔥 consequence language -->
-  <div class="loss-label">revenue leaking from your store every month</div>
+  <div class="score-hero" style="color:${aiColor};">${aiScore}<span style="font-size:24px;color:#888;">/100</span></div>
+  <div class="score-hero-label">AI Recommendation Score</div>
 
-  <div class="daily-loss">⚡ That's $${daily.toLocaleString("en-US")} in lost sales every single day.</div>
-  <div class="live-counter" id="liveCounter"></div>
+  <div class="ai-status-badge ${statusBadge.cls}">
+    ${statusBadge.dot} ${statusBadge.text}
+  </div>
 
+  <div class="loss-strip">
+    <div class="loss-strip-amount">${lossDisplay}</div>
+    <div class="loss-strip-label">estimated AI visibility gap per month</div>
+    <div class="live-counter" id="liveCounter"></div>
+  </div>
+
+  <!-- SCORE BAR -->
   <div class="scores-section">
     <div class="score-row">
-      <div class="score-label">CRO Score</div>
-      <div class="score-num" style="color:${croColor};">${croScore}<span style="font-size:13px;color:#888;">/100</span></div>
+      <div class="score-label">AI Score</div>
+      <div class="score-num" style="color:${aiColor};">${aiScore}<span style="font-size:13px;color:#888;">/100</span></div>
       <div class="score-bar-wrap">
-        <div class="score-bar-fill" id="croBar" style="width:0%;background:${croColor};"></div>
+        <div class="score-bar-fill" id="aiBar" style="width:0%;background:${aiColor};"></div>
       </div>
     </div>
-    <div class="cro-verdict">${croVerdictText}</div>
-
-    <div class="score-row">
-      <div class="score-label">AI Readiness</div>
-      <div class="score-num" style="color:${arsColor};">${arsScore}<span style="font-size:13px;color:#888;">/100</span></div>
-      <div class="score-bar-wrap">
-        <div class="score-bar-fill" id="arsBar" style="width:0%;background:${arsColor};"></div>
-      </div>
-    </div>
-    <div class="ars-verdict">${arsVerdictText}</div>
-    <span class="ars-detail-link" onclick="toggleArsPopup()">▸ Why AI agents might skip your store</span>
-
-    <div class="ars-popup" id="arsPopup">
-      <div class="ars-popup-title">How AI Readiness is calculated</div>
-      <div class="ars-popup-desc">
-        AI shopping agents (Google SGE, ChatGPT Shopping, Perplexity) score your store
-        across 6 factors. Low scores mean agents skip your store when recommending products to buyers.
-      </div>
-      <div class="ars-factor">
-        <div class="ars-factor-left">
-          <div class="ars-factor-name">Structured Data (Schema)</div>
-          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:25%;"></div></div>
-        </div>
-        <div class="ars-factor-weight">25%</div>
-      </div>
-      <div class="ars-factor">
-        <div class="ars-factor-left">
-          <div class="ars-factor-name">Content Quality & Specificity</div>
-          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
-        </div>
-        <div class="ars-factor-weight">20%</div>
-      </div>
-      <div class="ars-factor">
-        <div class="ars-factor-left">
-          <div class="ars-factor-name">Trust Signals</div>
-          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:20%;"></div></div>
-        </div>
-        <div class="ars-factor-weight">20%</div>
-      </div>
-      <div class="ars-factor">
-        <div class="ars-factor-left">
-          <div class="ars-factor-name">Technical Readability</div>
-          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:15%;"></div></div>
-        </div>
-        <div class="ars-factor-weight">15%</div>
-      </div>
-      <div class="ars-factor">
-        <div class="ars-factor-left">
-          <div class="ars-factor-name">Price Visibility</div>
-          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:12%;"></div></div>
-        </div>
-        <div class="ars-factor-weight">12%</div>
-      </div>
-      <div class="ars-factor">
-        <div class="ars-factor-left">
-          <div class="ars-factor-name">Brand Entity Clarity</div>
-          <div class="ars-factor-bar"><div class="ars-factor-fill" style="width:8%;"></div></div>
-        </div>
-        <div class="ars-factor-weight">8%</div>
-      </div>
-      <div class="ars-popup-footer">
-        The full audit includes specific fixes for each factor — structured data implementation,
-        content improvements, and technical optimizations.
-      </div>
-    </div>
+    <div class="score-verdict">${verdict}</div>
   </div>
 
-  <div class="explain-toggle" onclick="toggleExplain()">▸ What do these scores mean?</div>
-
+  <!-- EXPLAIN -->
+  <div class="explain-toggle" onclick="toggleExplain()">▸ What does this score mean?</div>
   <div class="explain-box" id="explainBox">
-    <div class="explain-title">Understanding your two scores</div>
+    <div class="explain-title">Understanding your AI Recommendation Score</div>
     <div class="explain-item">
-      <span class="explain-highlight">CRO Score (Conversion Rate Optimization)</span><br>
-      Measures how many visitors are dropping off before buying. Top stores score 90+.
-      Every point below 90 is revenue leaking through gaps your traffic is already paying for.
+      <span class="explain-highlight">AI Recommendation Score</span><br>
+      Measures how confidently AI shopping agents — ChatGPT, Amazon Rufus, Perplexity, Google AI Overviews — can understand, trust, and recommend your store. Low score means buyers who ask AI "what's the best X?" never see your store.
     </div>
     <div class="explain-item">
-      <span class="explain-highlight">AI Readiness Score</span><br>
-      Measures whether AI shopping agents — Google SGE, ChatGPT Shopping, Perplexity — can find
-      and recommend your store. Low score means buyers who ask AI "what's the best X?" 
-      never see you. That's lost sales before they even land on your page.
+      <span class="explain-highlight">Why it matters now</span><br>
+      AI is becoming the new shopping discovery layer. Stores that aren't readable by AI systems are being systematically skipped — even if they have great products.
     </div>
     <div class="explain-item">
-      <span class="explain-highlight">Why both matter</span><br>
-      CRO stops revenue leaking from existing traffic.
-      AI Readiness recovers sales from traffic you're not getting yet.
-      Both are costing you money right now.
+      <span class="explain-highlight">8 factors scored</span><br>
+      AI Structured Signals, Semantic Clarity, AI Trust Confidence, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals.
     </div>
   </div>
 
-  <!-- 🔥 consequence language -->
-  <div class="section-label">Where buyers are dropping off</div>
+  <!-- BREAKDOWN -->
+  <div class="breakdown-box">
+    <div class="breakdown-title">AI Recommendation Score — factor breakdown</div>
+    <div class="breakdown-desc">8 factors determine how confidently AI shopping agents can understand, trust, and recommend your store.</div>
+    ${factorRowsHTML}
+  </div>
+
+  <!-- MAIN LEAK -->
+  <div class="section-label">Biggest AI visibility gap detected</div>
   <div class="main-leak-box">
     <div class="main-leak-text">${mainLeak}</div>
   </div>
 
-  <!-- 🔥 consequence language -->
+  <!-- LOCKED -->
   <div class="locked-box">
-    <div class="locked-title">3 more revenue leaks costing you money — locked</div>
+    <div class="locked-title">🔒 More AI visibility gaps — unlocked in full audit</div>
     ${lockedHTML}
   </div>
 
-  <!-- 🔥 consequence language -->
-  <div class="fix-label">✓ Stop this leak now — free</div>
+  <!-- QUICK FIX -->
+  <div class="fix-label">✓ Quick win — fix this first</div>
   <div class="fix-box">
     <div class="fix-text">${quickFix}</div>
-    <div class="fix-impact">→ Stops $${quickFixImpact}/month in lost revenue</div>
   </div>
 
-  <!-- 🔥 consequence language -->
-  <div class="expiry-text">⏳ This report expires in 48 hours — your revenue leak is active right now.</div>
-
-  <div class="cta-section">
-    <div id="ctaBtnTop" class="cta-btn">
-      Recover $${lossMin.toLocaleString("en-US")}/mo — Unlock All 4 Fixes ($399)
-    </div>
-    <div class="cta-trust">One-time payment &nbsp;·&nbsp; Delivered in 24h &nbsp;·&nbsp; 4 execution-ready fixes</div>
-    <div class="cta-trust-green">✔ Most stores recover this cost in the first week</div>
-    <div class="cta-trust" style="margin-top:5px;">🔒 Secure checkout powered by Stripe</div>
+  <!-- CTA -->
+  <div id="ctaBtnTop" class="cta-btn">
+    Get Full AI Audit — See All Gaps ($399)
   </div>
+  <div class="cta-trust">One-time · Delivered in 48h · No calls needed</div>
+  <div class="cta-trust-green">✔ Includes custom prompts, llms.txt, schema markup ready to implement</div>
 
-  <!-- 🔥 consequence language -->
+  <!-- WHAT YOU GET -->
   <div class="what-box">
-    <div class="what-title">Unlock all 4 revenue leaks — see exactly what's costing you:</div>
-    <div class="what-item">→ Exact drop-off points where buyers are leaving</div>
-    <div class="what-item">→ Hidden revenue leaks across your entire funnel</div>
-    <div class="what-item">→ Real $ cost per leak — evidence not estimates</div>
-    <div class="what-item">→ Step-by-step fix for each leak — no guessing, no calls</div>
+    <div class="what-title">What's in the full audit:</div>
+    <div class="what-item">→ Complete AI Recommendation breakdown — all 8 factors with specific issues</div>
+    <div class="what-item">→ Exact AI interpretation problems for your store</div>
+    <div class="what-item">→ Execution checklist — what to fix this week vs. delegate</div>
+    <div class="what-item">→ Custom Claude prompts for your store — use immediately</div>
+    <div class="what-item">→ llms.txt + schema markup code ready to implement</div>
+    <div class="what-item">→ Written walkthrough — top 3 problems explained clearly</div>
   </div>
 
-  <!-- 🔥 consequence language -->
+  <!-- DECISION -->
   <div class="decision-box">
     <strong style="color:#fff;">Your decision right now:</strong><br><br>
-    1) Stop the leak → recover $${lossMin.toLocaleString("en-US")}/month starting this week<br>
-    2) Do nothing → continue losing $${daily.toLocaleString("en-US")} in sales every single day
+    1) Fix AI visibility → stop being skipped by ChatGPT and Amazon Rufus<br>
+    2) Do nothing → competitors with higher AI scores get recommended instead
   </div>
 
+  <!-- FOUNDER -->
   <div class="founder-box">
     <div class="founder-avatar">D</div>
     <div class="founder-text">
       <div class="founder-name">Daniel — Founder, Atom Foundry</div>
       <div class="founder-sub">Scanning DTC stores daily · atomfoundry.dev</div>
       <div class="founder-quote">
-        "I've seen hundreds of stores fail because of these 4 leaks.<br>
-        I won't let yours be one of them."
+        "I scan stores every day and the pattern is clear — stores that aren't readable by AI are being systematically skipped. Your competitors are already optimizing for this."
       </div>
     </div>
   </div>
 
-  <div id="ctaBtnBottom" class="cta-btn-secondary">
-    Recover $${lossMin.toLocaleString("en-US")}/mo — Unlock All 4 Fixes ($399)
+  <div id="ctaBtnBottom" class="cta-btn">
+    Get Full AI Audit — See All Gaps ($399)
   </div>
-  <div class="cta-trust" style="text-align:center;margin-bottom:32px;">
-    🔒 Secure checkout &nbsp;·&nbsp; One-time $399 &nbsp;·&nbsp; 24h delivery
-  </div>
+  <div class="cta-trust">🔒 Secure checkout · One-time $399 · 48h delivery</div>
 
-  <div class="footer">
-    <div class="footer-scan-line">
-      Based on direct revenue leak scan of your store &nbsp;·&nbsp; atomfoundry.dev
-    </div>
+  <div class="footer" style="margin-top:32px;">
     <div class="footer-tagline">Find → Prove → Fix → Protect</div>
+    <div class="footer-platform">AI Commerce Intelligence Platform</div>
+    <div class="footer-copy">© 2026 Atom Foundry · atomfoundry.dev</div>
   </div>
 `;
 
+// Animate bar
 setTimeout(() => {
-  const croBar = document.getElementById("croBar");
-  const arsBar = document.getElementById("arsBar");
-  if (croBar) croBar.style.width = croScore + "%";
-  if (arsBar) arsBar.style.width = arsScore + "%";
+  const bar = document.getElementById("aiBar");
+  if (bar) bar.style.width = aiScore + "%";
 }, 300);
 
-const hourly  = Math.round(daily / 24);
-let seconds   = 0;
+// Live counter
+const hourly = Math.round(daily / 24);
+let seconds = 0;
 const counter = document.getElementById("liveCounter");
 setInterval(() => {
   seconds++;
   const lost = Math.round((hourly / 3600) * seconds);
-  if (counter) counter.innerText = `$${lost.toLocaleString("en-US")} in lost sales while you are reading this`;
+  if (counter && lost > 0) counter.innerText = `$${lost.toLocaleString("en-US")} in estimated AI visibility loss while reading this`;
 }, 1000);
 
+// Checkout
 async function goCheckout(btn) {
   if (!btn) return;
   track("clicked_cta");
-  const originalText = btn.innerText;
+  const orig = btn.innerText;
   btn.innerText = "Redirecting to checkout...";
   btn.style.opacity = "0.75";
   try {
-    const res = await fetch(
-      "https://n8n-production-43ab.up.railway.app/webhook/create-checkout",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ domain: row.store_domain || "", email: email || "" })
-      }
-    );
+    const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/create-checkout", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ domain: row.store_domain || "", email: email || "" })
+    });
     const d = await res.json();
-    if (!d.url) {
-      alert("Checkout error — please try again.");
-      btn.innerText = originalText;
-      btn.style.opacity = "1";
-      return;
-    }
+    if (!d.url) { alert("Checkout error — please try again."); btn.innerText = orig; btn.style.opacity = "1"; return; }
     window.location.href = d.url;
   } catch(err) {
-    console.error(err);
     alert("Something went wrong. Please try again.");
-    btn.innerText = originalText;
-    btn.style.opacity = "1";
+    btn.innerText = orig; btn.style.opacity = "1";
   }
 }
 
@@ -592,21 +454,11 @@ document.getElementById("ctaBtnBottom").addEventListener("click", function() { g
 })();
 
 function toggleExplain() {
-  const box    = document.getElementById("explainBox");
+  const box = document.getElementById("explainBox");
   const toggle = document.querySelector(".explain-toggle");
   if (!box) return;
-  const isOpen = box.classList.contains("open");
   box.classList.toggle("open");
-  toggle.innerText = isOpen ? "▸ What do these scores mean?" : "▾ What do these scores mean?";
-}
-
-function toggleArsPopup() {
-  const popup = document.getElementById("arsPopup");
-  const link  = document.querySelector(".ars-detail-link");
-  if (!popup) return;
-  const isOpen = popup.classList.contains("open");
-  popup.classList.toggle("open");
-  link.innerText = isOpen ? "▸ Why AI agents might skip your store" : "▾ Why AI agents might skip your store";
+  toggle.innerText = box.classList.contains("open") ? "▾ What does this score mean?" : "▸ What does this score mean?";
 }
 </script>
 </body>
