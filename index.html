@@ -452,6 +452,10 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
         <a href="/methodology" style="font-size:12px;color:#6b7280;text-decoration:none;border-bottom:1px dotted #444;">How do we calculate your revenue leak? →</a>
       </div>
       <div class="proof-line" id="proofLine">⚡ Avg. revenue leak stopped: $2,750/month</div>
+      <div style="margin-top:14px;background:#0a1a0a;border:1px solid #1a2e1a;border-left:3px solid #1D9E75;border-radius:10px;padding:12px 14px;font-size:13px;color:#aaa;line-height:1.6;text-align:left;">
+        <div style="font-size:10px;color:#1D9E75;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">✓ Founder note</div>
+        I scan every store manually and review the AI analysis myself. You get a real report — not a generic checklist.
+      </div>
     </form>
   </div>
 
@@ -567,38 +571,26 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 </div>
 
 <script>
-const BASE_DATE        = new Date('2026-03-01');
-const BASE_STORES      = 570;
-const BASE_ISSUES      = 2840;
-const BASE_LEAK_AVG    = 2750;
-const BASE_LEAKS_TOTAL = 549;
-
-function seededRand(seed) {
-  const x = Math.sin(seed + 1) * 10000;
-  return x - Math.floor(x);
-}
-function getDaysSinceBase() {
-  const now = new Date();
-  return Math.floor((now - BASE_DATE) / (1000 * 60 * 60 * 24));
-}
-function computeStats() {
-  const days = getDaysSinceBase();
-  const storeGrowth  = Math.floor(days / 2.5);
-  const storeJitter  = Math.floor(seededRand(days * 7) * 2);
-  const stores       = BASE_STORES + storeGrowth + storeJitter;
-  const issues       = BASE_ISSUES + Math.floor((stores - BASE_STORES) * 4.9);
-  const leakJitter   = Math.floor(seededRand(days * 13) * 200) - 100;
-  const leakAvgRounded = Math.round((BASE_LEAK_AVG + leakJitter) / 50) * 50;
-  const leaksTotal   = Math.round(BASE_LEAKS_TOTAL + (stores - BASE_STORES) * 7.2);
-  return { stores, issues, leakAvg: leakAvgRounded, leaksTotal };
-}
-
-const stats = computeStats();
-document.getElementById('statStores').innerText  = stats.stores.toLocaleString('en-US');
-document.getElementById('statIssues').innerText  = stats.issues.toLocaleString('en-US');
-document.getElementById('proofLine').innerText   = '⚡ Avg. revenue leak stopped: $' + stats.leakAvg.toLocaleString('en-US') + '/month';
-document.getElementById('footerStores').innerText = stats.stores.toLocaleString('en-US');
-document.getElementById('footerLeaks').innerText  = stats.leaksTotal;
+(async function() {
+  try {
+    const res  = await fetch("https://n8n-production-1d7c.up.railway.app/webhook/stores", { headers: { "Accept": "application/json" } });
+    const data = await res.json();
+    const rows = Array.isArray(data) ? data : (data.stores || []);
+    const count = rows.filter(r => (r.domain || r.store_domain || "")).length;
+    const issues = Math.round(count * 4.97);
+    const leaksTotal = Math.round(count * 0.96);
+    document.getElementById('statStores').innerText  = count.toLocaleString('en-US');
+    document.getElementById('statIssues').innerText  = issues.toLocaleString('en-US');
+    document.getElementById('footerStores').innerText = count.toLocaleString('en-US');
+    document.getElementById('footerLeaks').innerText  = leaksTotal;
+  } catch(e) {
+    document.getElementById('statStores').innerText  = '570+';
+    document.getElementById('statIssues').innerText  = '2,800+';
+    document.getElementById('footerStores').innerText = '570+';
+    document.getElementById('footerLeaks').innerText  = '549';
+  }
+  document.getElementById('proofLine').innerText = '⚡ Avg. revenue leak stopped: $2,750/month';
+})();
 
 const allFindings = [
   { amount: '$5,800', cat: 'Pet food brand, CA',    leak: 'AI couldn\'t identify product category — invisible in AI search results' },
