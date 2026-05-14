@@ -14,240 +14,64 @@
   <link rel="icon" href="/favicon.ico">
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
-      background: #0A0A0A;
-      color: white;
-      line-height: 1.7;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%);
-      pointer-events: none;
-    }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: #0A0A0A; color: white; line-height: 1.7; }
+    body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%); pointer-events: none; }
     a { color: inherit; text-decoration: none; }
-    .container {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 32px 20px 40px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* NAVBAR */
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 0 20px;
-    }
+    .container { max-width: 640px; margin: 0 auto; padding: 32px 20px 40px; position: relative; z-index: 1; }
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 20px; }
     .nav-brand { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: -0.3px; }
     .nav-brand span { color: #f97316; }
     .header-tagline { font-size: 11px; color: #666; font-weight: 500; letter-spacing: 0.02em; margin-top: 3px; }
-
-    /* STATS BAR */
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      padding: 16px 20px;
-      background: #161616;
-      border: 1px solid #2a2a2a;
-      border-radius: 16px 16px 0 0;
-    }
+    .stats-bar { display: flex; justify-content: center; gap: 24px; padding: 16px 20px; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px 16px 0 0; }
     .stat-item { display: flex; flex-direction: column; align-items: center; }
     .stat-num { font-size: 22px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 5px; }
     .stat-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
     .stat-divider { width: 1px; background: #2a2a2a; align-self: stretch; }
-
-    /* NAV LINKS BAR */
-    .nav-links-bar {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 16px;
-      background: #111;
-      border: 1px solid #2a2a2a;
-      border-top: none;
-      border-radius: 0 0 16px 16px;
-      margin-bottom: 28px;
-    }
-    .nav-links-bar a {
-      font-size: 12px; color: #9ca3af;
-      border: 1px solid #2a2a2a;
-      padding: 5px 14px; border-radius: 8px;
-      transition: all 0.2s;
-    }
+    .nav-links-bar { display: flex; justify-content: center; gap: 8px; padding: 10px 16px; background: #111; border: 1px solid #2a2a2a; border-top: none; border-radius: 0 0 16px 16px; margin-bottom: 28px; }
+    .nav-links-bar a { font-size: 12px; color: #9ca3af; border: 1px solid #2a2a2a; padding: 5px 14px; border-radius: 8px; transition: all 0.2s; }
     .nav-links-bar a:hover { color: #f97316; border-color: #f97316; }
     .nav-links-bar a.active { color: #f97316; border-color: rgba(249,115,22,0.4); background: rgba(249,115,22,0.06); }
-
-    /* HEADINGS */
-    h1 {
-      font-size: 32px; line-height: 1.2;
-      margin-bottom: 12px; font-weight: 700;
-      color: #fff; text-align: center;
-    }
+    h1 { font-size: 32px; line-height: 1.2; margin-bottom: 12px; font-weight: 700; color: #fff; text-align: center; }
     h1 span { color: #f97316; }
-    .sub {
-      font-size: 15px; color: #bbb; margin-bottom: 24px;
-      line-height: 1.6; font-weight: 400; text-align: center;
-    }
-
-    /* CONTROLS BOX */
-    .controls-box {
-      background: #161616;
-      border: 1px solid #2a2a2a;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 10px;
-      display: grid;
-      grid-template-columns: minmax(0,1fr) 148px 44px;
-      gap: 8px;
-    }
+    .sub { font-size: 15px; color: #bbb; margin-bottom: 24px; line-height: 1.6; font-weight: 400; text-align: center; }
+    .controls-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 14px; margin-bottom: 10px; display: grid; grid-template-columns: minmax(0,1fr) 148px 44px; gap: 8px; }
     .search-wrap { position: relative; display: flex; align-items: center; }
-    .search-icon {
-      position: absolute; left: 12px;
-      color: #555; pointer-events: none;
-      width: 14px; height: 14px;
-    }
-    .search {
-      width: 100%; height: 44px;
-      background: #0A0A0A; border: 1px solid #333;
-      border-radius: 12px; color: white;
-      font-family: inherit; font-size: 14px;
-      padding: 0 12px 0 34px; outline: none;
-      transition: all 0.2s;
-    }
+    .search-icon { position: absolute; left: 12px; color: #555; pointer-events: none; width: 14px; height: 14px; }
+    .search { width: 100%; height: 44px; background: #0A0A0A; border: 1px solid #333; border-radius: 12px; color: white; font-family: inherit; font-size: 14px; padding: 0 12px 0 34px; outline: none; transition: all 0.2s; }
     .search:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.5); }
     .search::placeholder { color: #555; }
-    .sort-select {
-      height: 44px; background: #0A0A0A;
-      border: 1px solid #333; border-radius: 12px;
-      color: white; font-family: inherit; font-size: 13px;
-      padding: 0 10px; outline: none; cursor: pointer;
-      transition: border-color 0.2s;
-    }
+    .sort-select { height: 44px; background: #0A0A0A; border: 1px solid #333; border-radius: 12px; color: white; font-family: inherit; font-size: 13px; padding: 0 10px; outline: none; cursor: pointer; transition: border-color 0.2s; }
     .sort-select:focus { border-color: #f97316; }
-    .refresh-btn {
-      height: 44px; width: 44px;
-      background: #0A0A0A; border: 1px solid #333;
-      border-radius: 12px; color: #f97316;
-      cursor: pointer; display: flex;
-      align-items: center; justify-content: center;
-      transition: all 0.2s;
-    }
+    .refresh-btn { height: 44px; width: 44px; background: #0A0A0A; border: 1px solid #333; border-radius: 12px; color: #f97316; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
     .refresh-btn:hover { border-color: #f97316; background: rgba(249,115,22,0.08); }
     .refresh-btn svg { width: 14px; height: 14px; }
-
-    /* NICHE BAR */
-    .niche-box {
-      background: #161616;
-      border: 1px solid #2a2a2a;
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-    }
-    .niche-label {
-      font-size: 10px; color: #666;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      font-weight: 600; margin-bottom: 10px; display: block;
-    }
+    .niche-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
+    .niche-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 10px; display: block; }
     .niche-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-    .niche-pill {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 5px 12px; border-radius: 100px;
-      font-size: 12px; font-weight: 600;
-      border: 1px solid #2a2a2a;
-      background: #0d0d0d; color: #888;
-      cursor: pointer; transition: all 0.2s;
-      white-space: nowrap; font-family: inherit;
-      user-select: none;
-    }
+    .niche-pill { display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; border-radius: 100px; font-size: 12px; font-weight: 600; border: 1px solid #2a2a2a; background: #0d0d0d; color: #888; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-family: inherit; user-select: none; }
     .niche-pill:hover { border-color: #f97316; color: #ddd; }
-    .niche-pill.active {
-      background: rgba(249,115,22,0.1);
-      border-color: rgba(249,115,22,0.5);
-      color: #f97316;
-    }
+    .niche-pill.active { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.5); color: #f97316; }
     .pill-count { font-size: 10px; opacity: 0.6; }
-
-    /* STATUS */
-    .status-row {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px; min-height: 22px;
-    }
+    .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; min-height: 22px; }
     .status { color: #666; font-size: 12px; }
-    .clear-btn {
-      font-size: 11px; color: #f97316; cursor: pointer;
-      background: none; border: none; font-family: inherit;
-      padding: 0; display: none;
-    }
+    .clear-btn { font-size: 11px; color: #f97316; cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; display: none; }
     .clear-btn.visible { display: block; }
-
-    /* STORE CARDS */
     .grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-
-    .store-card {
-      display: block; overflow: hidden;
-      background: #161616; border: 1px solid #2a2a2a;
-      border-radius: 14px;
-      transition: transform 0.2s, border-color 0.2s, background 0.2s;
-    }
-    .store-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(249,115,22,0.35);
-      background: #1a1a1a;
-    }
-    .card-inner {
-      padding: 14px 16px;
-      display: grid;
-      grid-template-columns: minmax(0,1fr) auto;
-      gap: 14px; align-items: center;
-    }
-    .domain {
-      font-size: 15px; font-weight: 700;
-      color: #e8e8e8; letter-spacing: -0.2px;
-      overflow-wrap: anywhere;
-    }
+    .store-card { display: block; overflow: hidden; background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; transition: transform 0.2s, border-color 0.2s, background 0.2s; }
+    .store-card:hover { transform: translateY(-2px); border-color: rgba(249,115,22,0.35); background: #1a1a1a; }
+    .card-inner { padding: 14px 16px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; align-items: center; }
+    .domain { font-size: 15px; font-weight: 700; color: #e8e8e8; letter-spacing: -0.2px; overflow-wrap: anywhere; }
     .readiness { font-size: 12px; color: #666; margin-top: 3px; text-transform: capitalize; }
     .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    .card-tag {
-      font-size: 10px; color: #666;
-      background: #111; border: 1px solid #222;
-      border-radius: 100px; padding: 2px 8px;
-    }
-    .card-tag.niche-tag {
-      color: #f97316; border-color: rgba(249,115,22,0.25);
-      background: rgba(249,115,22,0.07);
-    }
+    .card-tag { font-size: 10px; color: #666; background: #111; border: 1px solid #222; border-radius: 100px; padding: 2px 8px; }
+    .card-tag.niche-tag { color: #f97316; border-color: rgba(249,115,22,0.25); background: rgba(249,115,22,0.07); }
     .score-wrap { text-align: right; flex-shrink: 0; }
-    .score {
-      display: inline-flex; min-width: 68px; height: 40px;
-      align-items: center; justify-content: center;
-      border-radius: 10px; font-size: 17px; font-weight: 700;
-      background: #0d0d0d; border: 1px solid currentColor;
-    }
+    .score { display: inline-flex; min-width: 68px; height: 40px; align-items: center; justify-content: center; border-radius: 10px; font-size: 17px; font-weight: 700; background: #0d0d0d; border: 1px solid currentColor; }
     .score.green { color: #1D9E75; }
     .score.orange { color: #EF9F27; }
     .score.red { color: #E24B4A; }
-    .score-label {
-      display: block; margin-top: 5px; color: #555;
-      font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.08em; font-weight: 600;
-    }
-
-    /* SKELETONS */
-    .skeleton {
-      background: #161616; border: 1px solid #2a2a2a;
-      border-radius: 14px; padding: 14px 16px;
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 14px; align-items: center;
-    }
+    .score-label { display: block; margin-top: 5px; color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+    .skeleton { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
     .skel { background: #222; border-radius: 4px; animation: pulse 1.4s ease infinite; }
     .skel-d { height: 15px; width: 55%; margin-bottom: 7px; }
     .skel-s { height: 11px; width: 35%; margin-bottom: 10px; }
@@ -255,54 +79,22 @@
     .skel-tag { height: 18px; width: 55px; border-radius: 100px; }
     .skel-score { height: 40px; width: 68px; border-radius: 10px; }
     @keyframes pulse { 0%,100%{opacity:0.35} 50%{opacity:0.6} }
-
-    /* EMPTY */
-    .empty {
-      text-align: center; padding: 40px 20px;
-      color: #555; font-size: 14px;
-      background: #161616; border: 1px solid #2a2a2a;
-      border-radius: 14px;
-    }
-
-    /* CTA */
-    .cta-block {
-      background: #0a1a0a;
-      border: 1px solid #1a2e1a;
-      border-left: 3px solid #1D9E75;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 24px 0 20px;
-    }
+    .empty { text-align: center; padding: 40px 20px; color: #555; font-size: 14px; background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; }
+    .cta-block { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 20px; margin: 24px 0 20px; }
     .cta-block h2 { font-size: 17px; font-weight: 700; margin-bottom: 6px; color: #e8e8e8; }
     .cta-block p { margin: 0 0 14px; color: #888; font-size: 13px; line-height: 1.7; }
-    .cta-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: black; font-weight: 900; font-size: 14px;
-      padding: 12px 22px; border-radius: 10px;
-      border: 2px solid #dc2626;
-      box-shadow: 0 6px 20px rgba(249,115,22,0.35);
-      transition: all 0.25s;
-    }
+    .cta-btn { display: inline-block; background: linear-gradient(135deg, #f97316, #ea580c); color: black; font-weight: 900; font-size: 14px; padding: 12px 22px; border-radius: 10px; border: 2px solid #dc2626; box-shadow: 0 6px 20px rgba(249,115,22,0.35); transition: all 0.25s; }
     .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(249,115,22,0.55); }
-
-    /* SEO */
-    .seo-box {
-      background: #161616; border: 1px solid #2a2a2a;
-      border-radius: 14px; padding: 18px 20px; margin-top: 10px;
-    }
+    .seo-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 18px 20px; margin-top: 10px; }
     .seo-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #ddd; }
     .seo-box p { margin: 0 0 10px; color: #777; font-size: 13px; line-height: 1.8; }
     .seo-box p:last-child { margin-bottom: 0; }
-
-    /* FOOTER */
     .footer { padding-top: 16px; border-top: 1px solid #1e1e1e; text-align: center; margin-top: 24px; }
     .footer-scan-line { font-size: 12px; color: #555; margin-bottom: 8px; line-height: 1.8; }
     .footer-scan-line a { color: #777; }
     .footer-scan-line a:hover { color: #f97316; }
     .footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
-
-    /* RESPONSIVE */
+    .footer-platform { font-size: 11px; color: #444; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
     @media (max-width: 480px) {
       h1 { font-size: 26px; }
       .controls-box { grid-template-columns: 1fr 44px; }
@@ -318,56 +110,36 @@
 <body>
 <div class="container">
 
-  <!-- NAVBAR -->
   <div class="navbar">
     <div>
       <div class="nav-brand">ATOM <span>FOUNDRY</span></div>
-      <div class="header-tagline">AI Conversion Intelligence for E-commerce</div>
+      <div class="header-tagline">AI Commerce Intelligence Platform</div>
     </div>
   </div>
 
-  <!-- STATS BAR -->
   <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-num" id="stat-total">—</div>
-      <div class="stat-label">Stores analyzed</div>
-    </div>
+    <div class="stat-item"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Stores analyzed</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item">
-      <div class="stat-num" id="stat-avg">—</div>
-      <div class="stat-label">Avg AI score</div>
-    </div>
+    <div class="stat-item"><div class="stat-num" id="stat-avg">—</div><div class="stat-label">Avg AI score</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item">
-      <div class="stat-num" id="stat-high">—</div>
-      <div class="stat-label">Score ≥ 70</div>
-    </div>
+    <div class="stat-item"><div class="stat-num" id="stat-high">—</div><div class="stat-label">Score ≥ 70</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item">
-      <div class="stat-num" id="stat-low">—</div>
-      <div class="stat-label">Score &lt; 30</div>
-    </div>
+    <div class="stat-item"><div class="stat-num" id="stat-low">—</div><div class="stat-label">Score &lt; 30</div></div>
   </div>
 
-  <!-- NAV LINKS BAR -->
   <div class="nav-links-bar">
     <a href="/">Home</a>
     <a href="/stores" class="active">Stores →</a>
     <a href="/methodology">How we score →</a>
   </div>
 
-  <!-- HEADING -->
   <h1>Browse stores <span>AI can actually read.</span></h1>
   <p class="sub">Explore public AI Readiness reports for ecommerce stores. Each result links to a full store page with schema, trust, content, and visibility signals.</p>
 
-  <!-- SEARCH + SORT -->
   <div class="controls-box">
     <div class="search-wrap">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input class="search" id="search" type="search"
-        placeholder="Search domain, platform or country…" aria-label="Search stores">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search" id="search" type="search" placeholder="Search domain, platform or country…" aria-label="Search stores">
     </div>
     <select class="sort-select" id="sort" aria-label="Sort stores">
       <option value="newest">Newest first</option>
@@ -376,14 +148,10 @@
       <option value="az">A → Z</option>
     </select>
     <button class="refresh-btn" id="refresh" type="button" aria-label="Refresh">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-        <path d="M3 3v5h5"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
     </button>
   </div>
 
-  <!-- NICHE FILTER BAR -->
   <div class="niche-box">
     <span class="niche-label">Filter by niche</span>
     <div class="niche-pills" id="niche-pills">
@@ -402,30 +170,25 @@
     </div>
   </div>
 
-  <!-- STATUS -->
   <div class="status-row">
     <div class="status" id="status">Loading stores…</div>
     <button class="clear-btn" id="clear-btn" type="button">✕ Clear filters</button>
   </div>
 
-  <!-- STORES LIST -->
   <section class="grid" id="stores-list" aria-label="Analyzed stores"></section>
 
-  <!-- CTA -->
   <div class="cta-block">
-    <h2>Is your store losing money to AI invisibility?</h2>
-    <p>See whether ChatGPT, Perplexity, and Google AI Overviews can understand and recommend your store — free, in 30 seconds.</p>
+    <h2>Is your store invisible to AI shopping assistants?</h2>
+    <p>See whether ChatGPT, Perplexity, and Google AI Overviews can understand and recommend your store — free, in 10 seconds.</p>
     <a class="cta-btn" href="/">Show Me What I'm Losing →</a>
   </div>
 
-  <!-- SEO -->
   <section class="seo-box">
     <h2>Why this database exists</h2>
     <p>AI assistants increasingly answer shopping questions before a buyer ever reaches Google results. Stores with clear schema, trust signals, pricing, and product content are easier for AI systems to understand and recommend.</p>
     <p>This page acts as the public index for Atom Foundry's store reports. It helps shoppers, founders, and search engines discover individual AI Readiness reports at scale.</p>
   </section>
 
-  <!-- FOOTER -->
   <div class="footer">
     <div class="footer-scan-line">
       <a href="/">Home</a> &nbsp;·&nbsp;
@@ -436,19 +199,18 @@
       <a href="/terms-of-service">Terms</a>
     </div>
     <div class="footer-tagline">Find → Prove → Fix → Protect</div>
+    <div class="footer-platform">AI Commerce Intelligence Platform</div>
   </div>
 
 </div>
 <script>
   const STORES_API_URL = "https://n8n-production-1d7c.up.railway.app/webhook/stores";
   const state = { stores: [], query: "", sort: "newest", niche: "all" };
-
   const listEl   = document.getElementById("stores-list");
   const statusEl = document.getElementById("status");
   const searchEl = document.getElementById("search");
   const sortEl   = document.getElementById("sort");
   const clearBtn = document.getElementById("clear-btn");
-
   const NICHES = {
     fashion:  ["apparel","fashion","clothing","wear","shirt","dress","jeans","jacket","sneaker","shoe","boot","sock","hat","cap","hoodie","pant","skirt","coat","scarf","glove","bag","purse","handbag","wallet","luggage","sunglasses","denim","streetwear","swimwear","lingerie","activewear","boutique"],
     beauty:   ["beauty","skincare","skin","serum","cream","makeup","cosmetic","lipstick","mascara","foundation","moisturizer","cleanser","toner","spf","sunscreen","retinol","glow","face","hair","shampoo","conditioner","perfume","fragrance","nail","brow","lash","grooming"],
@@ -461,7 +223,6 @@
     kids:     ["kid","baby","child","infant","toddler","toy","puzzle","school","nursery","stroller","diaper","maternity","pregnancy"],
     jewelry:  ["jewelry","jewellery","ring","necklace","bracelet","earring","pendant","diamond","gold","silver","platinum","gem","crystal","watch","luxury"]
   };
-
   function detectNiche(store) {
     const txt = [store.domain, store.readiness, store.platform].join(" ").toLowerCase();
     for (const [niche, kws] of Object.entries(NICHES)) {
@@ -469,125 +230,49 @@
     }
     return "other";
   }
-
   function normalizeStore(raw) {
     const domain = String(raw.domain || raw.store_domain || "").replace(/^www\./, "").toLowerCase();
-    const store = {
-      domain,
-      score:     Number(raw.score ?? raw.total_score ?? 0),
-      date:      raw.date || raw.scanned_at || raw.created_at || "",
-      country:   raw.country || "",
-      platform:  raw.platform || "",
-      readiness: raw.readiness_level || ""
-    };
+    const store = { domain, score: Number(raw.score ?? raw.total_score ?? 0), date: raw.date || raw.scanned_at || raw.created_at || "", country: raw.country || "", platform: raw.platform || "", readiness: raw.readiness_level || "" };
     store.niche = detectNiche(store);
     return store;
   }
-
-  function scoreClass(s) {
-    if (s >= 70) return "green";
-    if (s >= 30) return "orange";
-    return "red";
-  }
-
-  function formatDate(v) {
-    if (!v) return "";
-    const d = new Date(v);
-    if (isNaN(d.getTime())) return String(v).slice(0,10);
-    return d.toISOString().slice(0,10);
-  }
-
+  function scoreClass(s) { if (s >= 70) return "green"; if (s >= 30) return "orange"; return "red"; }
+  function formatDate(v) { if (!v) return ""; const d = new Date(v); if (isNaN(d.getTime())) return String(v).slice(0,10); return d.toISOString().slice(0,10); }
   function updateStats() {
     const all = state.stores;
     document.getElementById("stat-total").textContent = all.length || "—";
-    if (!all.length) {
-      ["stat-avg","stat-high","stat-low"].forEach(id => document.getElementById(id).textContent = "—");
-      return;
-    }
+    if (!all.length) { ["stat-avg","stat-high","stat-low"].forEach(id => document.getElementById(id).textContent = "—"); return; }
     document.getElementById("stat-avg").textContent  = Math.round(all.reduce((a,s) => a + s.score, 0) / all.length);
     document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length;
     document.getElementById("stat-low").textContent  = all.filter(s => s.score < 30).length;
   }
-
   function updatePillCounts() {
     document.getElementById("c-all").textContent = state.stores.length;
-    for (const niche of Object.keys(NICHES)) {
-      const el = document.getElementById("c-" + niche);
-      if (el) el.textContent = state.stores.filter(s => s.niche === niche).length;
-    }
+    for (const niche of Object.keys(NICHES)) { const el = document.getElementById("c-" + niche); if (el) el.textContent = state.stores.filter(s => s.niche === niche).length; }
     document.getElementById("c-other").textContent = state.stores.filter(s => s.niche === "other").length;
   }
-
   function renderStores() {
     const query = state.query.toLowerCase();
-    let stores = state.stores.filter(s => {
-      const txt = [s.domain, s.country, s.platform, s.readiness].join(" ").toLowerCase();
-      return (!query || txt.includes(query)) && (state.niche === "all" || s.niche === state.niche);
-    });
-    stores = stores.sort((a,b) => {
-      if (state.sort === "best")  return b.score - a.score;
-      if (state.sort === "worst") return a.score - b.score;
-      if (state.sort === "az")    return a.domain.localeCompare(b.domain);
-      return new Date(b.date||0) - new Date(a.date||0);
-    });
-
+    let stores = state.stores.filter(s => { const txt = [s.domain, s.country, s.platform, s.readiness].join(" ").toLowerCase(); return (!query || txt.includes(query)) && (state.niche === "all" || s.niche === state.niche); });
+    stores = stores.sort((a,b) => { if (state.sort === "best") return b.score - a.score; if (state.sort === "worst") return a.score - b.score; if (state.sort === "az") return a.domain.localeCompare(b.domain); return new Date(b.date||0) - new Date(a.date||0); });
     listEl.innerHTML = "";
     const hasFilter = query || state.niche !== "all";
     clearBtn.classList.toggle("visible", hasFilter);
-
-    if (!stores.length) {
-      listEl.innerHTML = `<div class="empty">${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>`;
-      statusEl.textContent = "0 stores";
-      return;
-    }
+    if (!stores.length) { listEl.innerHTML = `<div class="empty">${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>`; statusEl.textContent = "0 stores"; return; }
     statusEl.textContent = `${stores.length.toLocaleString()} store${stores.length !== 1 ? "s" : ""}${hasFilter ? " matched" : ""}`;
-
     const frag = document.createDocumentFragment();
     for (const store of stores) {
       const a = document.createElement("a");
       a.href = `/store/${encodeURIComponent(store.domain)}`;
       a.className = "store-card";
-      const nicheLabel = store.niche !== "other"
-        ? store.niche.charAt(0).toUpperCase() + store.niche.slice(1)
-        : null;
+      const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase() + store.niche.slice(1) : null;
       const date = formatDate(store.date);
-      a.innerHTML = `
-        <div class="card-inner">
-          <div>
-            <div class="domain">${store.domain}</div>
-            ${store.readiness ? `<div class="readiness">${store.readiness.replaceAll("_"," ")}</div>` : ""}
-            <div class="card-tags">
-              ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
-              ${store.country  ? `<span class="card-tag">${store.country}</span>`  : ""}
-              ${store.platform ? `<span class="card-tag">${store.platform}</span>` : ""}
-              ${date           ? `<span class="card-tag">${date}</span>`           : ""}
-            </div>
-          </div>
-          <div class="score-wrap">
-            <div class="score ${scoreClass(store.score)}">${store.score}</div>
-            <span class="score-label">/100 AI score</span>
-          </div>
-        </div>`;
+      a.innerHTML = `<div class="card-inner"><div><div class="domain">${store.domain}</div>${store.readiness ? `<div class="readiness">${store.readiness.replaceAll("_"," ")}</div>` : ""}<div class="card-tags">${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}${store.country ? `<span class="card-tag">${store.country}</span>` : ""}${store.platform ? `<span class="card-tag">${store.platform}</span>` : ""}${date ? `<span class="card-tag">${date}</span>` : ""}</div></div><div class="score-wrap"><div class="score ${scoreClass(store.score)}">${store.score}</div><span class="score-label">/100 AI score</span></div></div>`;
       frag.appendChild(a);
     }
     listEl.appendChild(frag);
   }
-
-  function showSkeletons(n=8) {
-    listEl.innerHTML = Array.from({length:n}).map(() => `
-      <div class="skeleton">
-        <div>
-          <div class="skel skel-d"></div>
-          <div class="skel skel-s"></div>
-          <div class="skel-tags">
-            <div class="skel skel-tag"></div>
-            <div class="skel skel-tag"></div>
-          </div>
-        </div>
-        <div class="skel skel-score"></div>
-      </div>`).join("");
-  }
-
+  function showSkeletons(n=8) { listEl.innerHTML = Array.from({length:n}).map(() => `<div class="skeleton"><div><div class="skel skel-d"></div><div class="skel skel-s"></div><div class="skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div><div class="skel skel-score"></div></div>`).join(""); }
   async function loadStores() {
     statusEl.textContent = "Loading…";
     showSkeletons();
@@ -605,25 +290,11 @@
       listEl.innerHTML = `<div class="empty">Could not connect to the stores endpoint.</div>`;
     }
   }
-
-  document.getElementById("niche-pills").addEventListener("click", e => {
-    const pill = e.target.closest(".niche-pill");
-    if (!pill) return;
-    document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
-    pill.classList.add("active");
-    state.niche = pill.dataset.niche;
-    renderStores();
-  });
+  document.getElementById("niche-pills").addEventListener("click", e => { const pill = e.target.closest(".niche-pill"); if (!pill) return; document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active")); pill.classList.add("active"); state.niche = pill.dataset.niche; renderStores(); });
   searchEl.addEventListener("input",  e => { state.query = e.target.value; renderStores(); });
   sortEl.addEventListener("change",   e => { state.sort  = e.target.value; renderStores(); });
   document.getElementById("refresh").addEventListener("click", loadStores);
-  clearBtn.addEventListener("click", () => {
-    state.query = ""; state.niche = "all"; searchEl.value = "";
-    document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
-    document.querySelector('[data-niche="all"]').classList.add("active");
-    renderStores();
-  });
-
+  clearBtn.addEventListener("click", () => { state.query = ""; state.niche = "all"; searchEl.value = ""; document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active")); document.querySelector('[data-niche="all"]').classList.add("active"); renderStores(); });
   loadStores();
 </script>
 </body>
