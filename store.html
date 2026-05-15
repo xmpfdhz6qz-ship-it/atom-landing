@@ -280,7 +280,7 @@ body::before {
     <div class="explain-title">Understanding the AI Recommendation Score</div>
     <div class="explain-item">
       <span class="explain-highlight">AI Recommendation Score</span><br>
-      Measures how confidently AI shopping agents — ChatGPT, Amazon Rufus, Perplexity, Google AI Overviews — can understand, trust, and recommend this store. Low score means buyers who ask AI "what's the best X?" never see this store.
+      Measures how confidently AI shopping agents — ChatGPT, Alexa for Shopping, Perplexity, Google AI Mode — can understand, trust, and recommend this store. Low score means buyers who ask AI "what's the best X?" never see this store.
     </div>
     <div class="explain-item">
       <span class="explain-highlight">Why it matters</span><br>
@@ -295,7 +295,7 @@ body::before {
   <!-- BREAKDOWN — always visible -->
   <div class="breakdown-box">
     <div class="breakdown-title">AI Recommendation Score — factor breakdown</div>
-    <div class="breakdown-desc">8 factors determine how confidently AI shopping agents — Amazon Rufus, ChatGPT, Google SGE — can understand, trust, and recommend this store.</div>
+    <div class="breakdown-desc">8 factors determine how confidently AI shopping agents — Alexa for Shopping, ChatGPT, Google AI Mode — can understand, trust, and recommend this store.</div>
     <div id="factorRows"></div>
   </div>
 
@@ -337,7 +337,7 @@ body::before {
   <div style="background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:24px 20px;margin-bottom:20px;text-align:center;">
     <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:10px;">Is your store losing money too?</div>
     <div style="font-size:18px;font-weight:800;color:white;margin-bottom:8px;letter-spacing:-0.3px;">Find your AI visibility gaps — free</div>
-    <div style="font-size:14px;color:#888;margin-bottom:20px;line-height:1.6;">AI agents are the new storefront. See exactly where your store is invisible to ChatGPT, Amazon Rufus, and Google AI — in 30 seconds.</div>
+    <div style="font-size:14px;color:#888;margin-bottom:20px;line-height:1.6;">AI agents are the new storefront. See exactly where your store is invisible to ChatGPT, Alexa for Shopping, and Google AI Mode — in 30 seconds.</div>
     <a href="/" class="cta-btn" style="margin-bottom:10px;">Scan my store free → find my AI gaps</a>
     <div style="font-size:12px;color:#666;">Free · No credit card · Results in 30 seconds</div>
   </div>
@@ -346,7 +346,7 @@ body::before {
   <div class="section-label">What is AI Recommendation Readiness?</div>
   <div class="edu-box">
     <div class="edu-title">Why AI assistants skip most Shopify stores</div>
-    <div class="edu-text">When a shopper asks ChatGPT "what's the best minimalist skincare brand for sensitive skin?" or Amazon Rufus "find me eco-friendly coffee under $30" — AI agents scan thousands of stores and recommend only the ones they can fully understand, trust, and match to the buyer's intent.</div>
+    <div class="edu-text">When a shopper asks ChatGPT "what's the best minimalist skincare brand for sensitive skin?" or Alexa for Shopping "find me eco-friendly coffee under $30" — AI agents scan thousands of stores and recommend only the ones they can fully understand, trust, and match to the buyer's intent.</div>
     <div class="edu-text">To recommend a store, AI needs: structured data (schema markup), clear semantic positioning, explicit pricing, trust signals like reviews and return policies, fast crawlable structure, and content that matches specific buyer intents. Shopify confirmed it in May 2026: your store is becoming a product database for AI agents.</div>
     <div class="edu-text">Most Shopify stores were built for human visitors and Google — not for AI recommendation engines. As AI-powered shopping grows, stores that haven't adapted are being systematically skipped. <strong style="color:#ddd;">If AI can't confidently understand and trust your store, it won't recommend it.</strong></div>
   </div>
@@ -362,7 +362,7 @@ body::before {
   <!-- AI CHANNELS -->
   <div class="section-label">Where AI recommendation readiness matters</div>
   <div class="channels-box">
-    <div class="channel-item"><div class="channel-name">Amazon Rufus</div><div class="channel-desc">300M+ users. Structured product data, variants, pricing, and trust signals are critical for recommendations.</div></div>
+    <div class="channel-item"><div class="channel-name">Alexa for Shopping</div><div class="channel-desc">300M+ users (formerly Rufus, launched May 2026). Embedded directly into Amazon search. Structured product data, variants, pricing, and trust signals are critical.</div></div>
     <div class="channel-item"><div class="channel-name">ChatGPT Shopping</div><div class="channel-desc">Uses schema markup, semantic clarity, and brand entity signals. Intent match is the key ranking factor.</div></div>
     <div class="channel-item"><div class="channel-name">Perplexity</div><div class="channel-desc">Crawls and evaluates stores in real time. Clear content, trust signals, and reviews are key.</div></div>
     <div class="channel-item"><div class="channel-name">Google AI Overviews</div><div class="channel-desc">Stores without rich snippets and commerce accuracy get excluded from AI-generated product summaries.</div></div>
@@ -421,7 +421,7 @@ function getAiStatusBlock(score) {
 function getAiVerdict(score) {
   if (score >= 70) return `<span style="color:#1D9E75;">✓ Visible to AI — this store appears in AI-powered recommendations</span>`;
   if (score >= 40) return `<span style="color:#EF9F27;">⚠ Partially visible to AI — missing key signals, competitors may outrank</span>`;
-  return `<span style="color:#E24B4A;">✗ AI Invisible — ChatGPT and Amazon Rufus may skip this store entirely</span>`;
+  return `<span style="color:#E24B4A;">✗ AI Invisible — ChatGPT and Alexa for Shopping may skip this store entirely</span>`;
 }
 
 // leakCopy now covers all 8 factors including intent and rec
@@ -461,7 +461,7 @@ function leakCopy(gap) {
     }
   };
   return map[gap] || {
-    leak: 'AI visibility gaps were detected across multiple factors that reduce this store\'s recommendation probability in ChatGPT, Amazon Rufus, and Google AI.',
+    leak: 'AI visibility gaps were detected across multiple factors that reduce this store\'s recommendation probability in ChatGPT, Alexa for Shopping, and Google AI Mode.',
     fix:  'Review the full audit for specific, prioritized recommendations across all 8 scoring factors.'
   };
 }
@@ -536,7 +536,7 @@ function renderPage(data) {
 
   // Meta
   document.title = `${storeNameCap} AI Recommendation Score: ${score}/100 — Atom Foundry`;
-  document.getElementById('pageDesc').content = `${storeNameCap} (${domain}) scored ${score}/100 on AI Recommendation Readiness. Find out if ChatGPT, Amazon Rufus, and Google AI recommend this store.`;
+  document.getElementById('pageDesc').content = `${storeNameCap} (${domain}) scored ${score}/100 on AI Recommendation Readiness. Find out if ChatGPT, Alexa for Shopping, and Google AI Mode recommend this store.`;
   document.getElementById('ogTitle').content = `${storeNameCap} AI Recommendation Score: ${score}/100`;
   document.getElementById('ogDesc').content = `${storeNameCap} scored ${score}/100. See the full AI Recommendation breakdown.`;
 
@@ -645,7 +645,7 @@ function renderPage(data) {
     <h2>${storeNameCap} AI Recommendation Score: ${score}/100</h2>
     <p>${levelDesc} This page is part of Atom Foundry's public AI Recommendation database — an ongoing scan of Shopify stores for AI recommendation readiness.</p>
     <h3>What does the ${storeNameCap} score mean?</h3>
-    <p>A score of ${score}/100 means AI assistants like ChatGPT, Amazon Rufus, Perplexity, and Google AI Overviews ${score >= 70 ? 'can largely understand, trust, and recommend this store' : score >= 40 ? 'can partially understand this store but miss key signals' : 'struggle to read, trust, and recommend this store'}. The score covers 8 factors: AI Structured Signals, Semantic Clarity, AI Trust Confidence, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals.</p>
+    <p>A score of ${score}/100 means AI assistants like ChatGPT, Alexa for Shopping, Perplexity, and Google AI Mode ${score >= 70 ? 'can largely understand, trust, and recommend this store' : score >= 40 ? 'can partially understand this store but miss key signals' : 'struggle to read, trust, and recommend this store'}. The score covers 8 factors: AI Structured Signals, Semantic Clarity, AI Trust Confidence, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals.</p>
     <h3>How was ${storeNameCap} scanned?</h3>
     <p>Our crawler fetched the ${domain} homepage and analyzed its HTML for 40+ AI recommendation signals across 8 scoring factors. The data was processed by a GPT-4o model trained to evaluate ecommerce stores from the perspective of AI shopping agents. Scans refresh automatically.</p>
     <h3>How can ${storeNameCap} improve its AI Recommendation Score?</h3>
