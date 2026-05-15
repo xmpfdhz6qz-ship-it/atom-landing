@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Scan in Progress | Atom Foundry</title>
-
+<title>AI Scan in Progress | Atom Foundry</title>
 <style>
 body {
   margin: 0;
@@ -39,11 +38,7 @@ body::before {
   animation: pulse 2s infinite;
   font-weight: 600;
 }
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
+@keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 h1 { font-size: 22px; margin-bottom: 10px; color: #fff; font-weight: 700; line-height: 1.3; }
 p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
 .highlight { color: #f97316; font-weight: 600; }
@@ -76,6 +71,7 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
   outline: none;
   margin-bottom: 10px;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 .email-box input[type="email"]::placeholder { color: #555; }
 .email-box input[type="email"]:focus {
@@ -128,57 +124,67 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
   min-height: 42px;
 }
 
+.agents-strip {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.agents-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.06em; width: 100%; text-align: center; margin-bottom: 6px; }
+.agent-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.04); border: 1px solid #1e1e1e;
+  border-radius: 999px; padding: 4px 10px;
+  font-size: 11px; font-weight: 600; color: #777;
+}
+.agent-pill .dot { width: 5px; height: 5px; border-radius: 50%; }
+.agent-pill.amazon .dot { background: #FF9900; }
+.agent-pill.google .dot { background: #4285F4; }
+.agent-pill.chatgpt .dot { background: #10a37f; }
+.agent-pill.perplexity .dot { background: #20B2AA; }
+
 .footer-wrap {
   margin-top: 20px;
   padding-top: 16px;
   border-top: 1px solid #1a1a1a;
   text-align: center;
 }
-.footer-scan-line {
-  font-size: 11px;
-  color: #444;
-  margin-bottom: 8px;
-  line-height: 1.8;
-}
-.footer-tagline {
-  font-size: 14px;
-  font-weight: 700;
-  color: #f97316;
-  letter-spacing: 0.04em;
-}
-
+.footer-scan-line { font-size: 11px; color: #444; margin-bottom: 8px; line-height: 1.8; }
+.footer-tagline { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
 .scan-id { margin-top: 8px; font-size: 10px; color: #2a2a2a; text-align: center; }
 
 @media (max-width: 420px) {
   h1 { font-size: 20px; }
   p { font-size: 14px; }
   .email-box h3 { font-size: 13px; }
-  .email-box p { font-size: 13px; }
   .footer-tagline { font-size: 14px; }
 }
 </style>
 </head>
-
 <body>
 <div class="container">
 <div class="card">
 
-  <!-- 🔥 consequence language -->
-  <div class="live">⚡ Detecting revenue leaks now...</div>
+  <div class="live">⚡ Scanning AI visibility signals now...</div>
 
-  <!-- 🔥 consequence language -->
-  <h1>Finding where your revenue is leaking.</h1>
+  <h1>Checking if AI agents can recommend your store.</h1>
 
   <p>
-    Detecting hidden <span class="highlight">revenue leaks</span> —
-    where buyers drop off and <span class="highlight">sales are lost</span>.
+    We're scanning your store against <span class="highlight">8 AI recommendation factors</span> —
+    the same signals that <span class="highlight">Alexa for Shopping, ChatGPT, and Google AI Mode</span>
+    use to decide what to recommend to buyers.
     Takes about <span class="highlight">10–15 seconds</span>.
   </p>
 
   <div class="email-box">
-    <!-- 🔥 consequence language -->
-    <h3>Where should we send your revenue leak report?</h3>
-    <p>Enter your email — we'll send your full report showing exactly what's costing you money.</p>
+    <h3>Where should we send your AI Recommendation Report?</h3>
+    <p>Enter your email — we'll send your full AI score showing exactly where your store is invisible to AI agents.</p>
 
     <input
       type="email"
@@ -187,19 +193,18 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
       autocomplete="email"
     >
 
-    <!-- 🔥 consequence language -->
     <div class="btn" onclick="saveEmail()">
-      Send Me My Revenue Leak Report →
+      Send Me My AI Recommendation Report →
     </div>
 
     <div class="btn-micro">
-      No spam. One email. Your revenue leak report only.
+      No spam. One email. Your AI visibility score only.
     </div>
   </div>
 
   <div class="progress-wrap">
     <div class="progress-label">
-      <span id="progressText">Initializing scan...</span>
+      <span id="progressText">Initializing AI scan...</span>
       <span id="progressPct">0%</span>
     </div>
     <div class="progress-bar">
@@ -208,7 +213,15 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
   </div>
 
   <div class="ai-message" id="aiMessage">
-    Finding where buyers are dropping off...
+    Checking AI structured signals...
+  </div>
+
+  <div class="agents-strip">
+    <div class="agents-label">Evaluating against</div>
+    <span class="agent-pill amazon"><span class="dot"></span>Alexa for Shopping</span>
+    <span class="agent-pill chatgpt"><span class="dot"></span>ChatGPT</span>
+    <span class="agent-pill google"><span class="dot"></span>Google AI Mode</span>
+    <span class="agent-pill perplexity"><span class="dot"></span>Perplexity</span>
   </div>
 
   <div class="footer-wrap">
@@ -228,7 +241,6 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
 <script>
 document.getElementById("auditId").innerText = Date.now().toString().slice(-6);
 
-// Dynamic store count — stejná logika jako landing page
 const BASE_DATE   = new Date('2026-03-01');
 const BASE_STORES = 47;
 
@@ -240,35 +252,33 @@ function getDaysSinceBase() {
   return Math.floor((new Date() - BASE_DATE) / (1000 * 60 * 60 * 24));
 }
 const days = getDaysSinceBase();
-const storeGrowth  = Math.floor(days / 2.5);
-const storeJitter  = Math.floor(seededRand(days * 7) * 2);
-const stores       = BASE_STORES + storeGrowth + storeJitter;
+const storeGrowth = Math.floor(days / 2.5);
+const storeJitter = Math.floor(seededRand(days * 7) * 2);
+const stores = BASE_STORES + storeGrowth + storeJitter;
 document.getElementById('footerStores').innerText = stores;
 
 const urlParams = new URLSearchParams(window.location.search);
 const tokenFromUrl = urlParams.get("token");
 const domain = urlParams.get("domain") || "";
 
-// 🔥 consequence-based AI messages
 const messages = [
-  "Finding where buyers are dropping off...",
-  "Detecting trust gaps costing you sales...",
-  "Checking for competing CTAs killing conversions...",
-  "Scanning announcement bar — is it distracting buyers?",
-  "Calculating how much revenue you're losing...",
-  "Checking AI agent visibility — are you missing traffic?",
-  "Comparing your store against top-converting DTC stores...",
-  "Finalizing your revenue loss breakdown..."
+  "Checking AI structured signals...",
+  "Evaluating schema markup and JSON-LD...",
+  "Scanning semantic clarity for AI agents...",
+  "Checking trust signals — reviews, SSL, return policy...",
+  "Evaluating user intent match against buyer queries...",
+  "Checking AI interpretability — meta tags, H1, Open Graph...",
+  "Analyzing commerce accuracy — pricing, availability...",
+  "Calculating AI Recommendation Score..."
 ];
 
-// 🔥 consequence-based progress steps
 const steps = [
-  "Initializing revenue leak scan...",
+  "Initializing AI scan...",
   "Reading page structure...",
-  "Detecting where buyers drop off...",
-  "Exposing hidden revenue leaks...",
-  "Calculating $ loss per leak...",
-  "Building your exact fix..."
+  "Detecting AI signal gaps...",
+  "Scoring 8 recommendation factors...",
+  "Calculating AI visibility gap...",
+  "Building your AI Recommendation Report..."
 ];
 
 let i = 0;
@@ -288,8 +298,7 @@ const progressInterval = setInterval(() => {
   if (progress >= 95) {
     progress = 95;
     clearInterval(progressInterval);
-    // 🔥 consequence language
-    stepEl.innerText = "Ready — enter your email to see your revenue leak";
+    stepEl.innerText = "Ready — enter your email to see your AI score";
     pct.innerText = "95%";
     bar.style.width = "95%";
     return;
@@ -315,8 +324,7 @@ function saveEmail() {
   }).catch(() => {});
 
   const btn = document.querySelector(".btn");
-  // 🔥 consequence language
-  btn.innerText = "✓ Got it — loading your revenue leak report";
+  btn.innerText = "✓ Got it — loading your AI Recommendation Report";
   btn.style.background = "#1D9E75";
   btn.style.border = "2px solid #1D9E75";
   btn.style.color = "#fff";
@@ -330,14 +338,12 @@ function redirectToReport(token) {
   clearInterval(msgInterval);
   bar.style.width  = "100%";
   pct.innerText    = "100%";
-  // 🔥 consequence language
-  stepEl.innerText = "Revenue leaks found — loading your report...";
+  stepEl.innerText = "AI scan complete — loading your report...";
 
   setTimeout(() => {
     window.location.href = "https://atomfoundry.dev/report/" + token;
   }, 600);
 }
 </script>
-
 </body>
 </html>
