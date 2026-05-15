@@ -10,38 +10,51 @@
 <link rel="icon" href="/favicon.ico">
 <link rel="manifest" href="/site.webmanifest">
 <style>
-* { box-sizing: border-box; }
-body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: #0A0A0A; color: white; line-height: 1.7; overflow-x: hidden; }
-body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%); pointer-events: none; }
-.container { max-width: 560px; margin: 0 auto; padding: 32px 20px 40px; text-align: center; position: relative; z-index: 1; overflow: hidden; }
-.navbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 20px 0; position: relative; z-index: 1; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: #0A0A0A; color: white; line-height: 1.7; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%); pointer-events: none; z-index: 0; }
+.container { max-width: 560px; width: 100%; margin: 0 auto; padding: 32px 20px 40px; text-align: center; position: relative; z-index: 1; }
+
+/* NAVBAR */
+.navbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 20px 0; }
 .logo-name { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: -0.3px; }
 .logo-name span { color: #f97316; }
-.header-tagline { font-size: 11px; color: #666; font-weight: 500; letter-spacing: 0.02em; }
-.stats-bar { display: flex; justify-content: center; gap: 24px; margin-bottom: 0; padding: 16px 20px; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px 16px 0 0; }
+.header-tagline { font-size: 11px; color: #666; font-weight: 500; }
+
+/* STATS + NAV */
+.stats-bar { display: flex; justify-content: center; gap: 24px; padding: 16px 20px; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px 16px 0 0; width: 100%; }
 .stat-item { display: flex; flex-direction: column; align-items: center; }
 .stat-num { font-size: 22px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 5px; }
 .stat-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
 .stat-divider { width: 1px; background: #2a2a2a; align-self: stretch; }
-.nav-links-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; padding: 10px 16px; background: #111; border: 1px solid #2a2a2a; border-top: none; border-radius: 0 0 16px 16px; }
+.nav-links-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; padding: 10px 16px; background: #111; border: 1px solid #2a2a2a; border-top: none; border-radius: 0 0 16px 16px; width: 100%; flex-wrap: wrap; }
 .nav-links-bar a { font-size: 12px; color: #9ca3af; text-decoration: none; border: 1px solid #2a2a2a; padding: 5px 14px; border-radius: 8px; transition: all 0.2s; }
 .nav-links-bar a:hover { color: #f97316; border-color: #f97316; }
-h1 { font-size: 28px; line-height: 1.25; margin-bottom: 14px; font-weight: 700; color: #ffffff; }
+
+/* HERO */
+h1 { font-size: 28px; line-height: 1.25; margin-bottom: 14px; font-weight: 700; color: #fff; }
 h1 em { font-style: normal; color: #f97316; }
-.sub { font-size: 16px; color: #bbb; margin-bottom: 28px; line-height: 1.6; font-weight: 400; }
-.box { background: #161616; padding: 20px; border-radius: 16px; border: 1px solid #2a2a2a; box-shadow: 0 10px 30px rgba(0,0,0,0.6); margin-bottom: 24px; }
-input[type="text"] { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #333; background: #0A0A0A; color: white; font-size: 16px; outline: none; transition: all 0.2s ease; }
+.sub { font-size: 16px; color: #bbb; margin-bottom: 20px; line-height: 1.6; }
+
+/* POSITIONING STATEMENT */
+.positioning { width: 100%; background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 14px 18px; margin-bottom: 24px; font-size: 14px; color: #aaa; line-height: 1.6; text-align: center; }
+
+/* SCAN BOX */
+.box { width: 100%; background: #161616; padding: 20px; border-radius: 16px; border: 1px solid #2a2a2a; box-shadow: 0 10px 30px rgba(0,0,0,0.6); margin-bottom: 24px; }
+input[type="text"] { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #333; background: #0A0A0A; color: white; font-size: 16px; outline: none; transition: all 0.2s; }
 input[type="text"]::placeholder { color: #666; }
-input:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.6), 0 0 12px rgba(249,115,22,0.3); }
-button { margin-top: 12px; width: 100%; padding: 18px; border-radius: 14px; border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c); color: black; font-weight: 900; font-size: 17px; cursor: pointer; box-shadow: 0 10px 25px rgba(249,115,22,0.4); transition: all 0.25s ease; }
+input:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.6); }
+button { margin-top: 12px; width: 100%; padding: 18px; border-radius: 14px; border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c); color: black; font-weight: 900; font-size: 17px; cursor: pointer; box-shadow: 0 10px 25px rgba(249,115,22,0.4); transition: all 0.25s; }
 button:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(249,115,22,0.65); }
 button:active { transform: scale(0.97); }
 button:disabled { opacity: 0.7; cursor: default; transform: none; }
-.micro { margin-top: 12px; font-size: 13px; color: #888; }
 .btn-sub { margin-top: 6px; font-size: 12px; color: #666; }
+.micro { margin-top: 10px; font-size: 13px; color: #888; }
 .proof-line { margin-top: 14px; font-size: 14px; color: #f97316; font-weight: 600; }
+
 /* SHOPIFY CONTRAST */
-.shopify-contrast { background: #0d0d0d; border: 1px solid #1e1e1e; border-left: 3px solid #f97316; border-radius: 14px; padding: 20px; margin-bottom: 24px; text-align: left; width: 100%; }
+.shopify-contrast { width: 100%; background: #0d0d0d; border: 1px solid #1e1e1e; border-left: 3px solid #f97316; border-radius: 14px; padding: 20px; margin-bottom: 24px; text-align: left; }
 .shopify-contrast-label { font-size: 10px; color: #f97316; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
 .shopify-contrast-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .shopify-col { background: #111; border-radius: 10px; padding: 14px; border: 1px solid #222; min-width: 0; }
@@ -52,109 +65,121 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 .shopify-col-item:last-child { border-bottom: none; }
 .shopify-contrast-line { font-size: 14px; font-weight: 700; color: #e8e8e8; text-align: center; line-height: 1.6; padding: 12px 0 0 0; border-top: 1px solid #1e1e1e; }
 .shopify-contrast-line span { color: #f97316; }
+
 /* MONSTER LINES */
-.monster-lines { margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; width: 100%; }
-.monster-line { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; font-size: 15px; font-weight: 600; color: #e8e8e8; text-align: left; line-height: 1.5; box-sizing: border-box; }
+.monster-lines { width: 100%; margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
+.monster-line { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; font-size: 15px; font-weight: 600; color: #e8e8e8; text-align: left; line-height: 1.5; }
 .monster-line span { color: #f97316; }
+
 /* AGENTIC */
-.agentic-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px; margin-bottom: 24px; text-align: left; width: 100%; box-sizing: border-box; }
+.agentic-box { width: 100%; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px; margin-bottom: 24px; text-align: left; }
 .agentic-label { font-size: 10px; color: #EF9F27; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
 .agentic-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.4; }
 .agentic-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; font-size: 12px; }
-.flow-step { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 5px 10px; color: #aaa; font-weight: 500; white-space: nowrap; }
+.flow-step { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 5px 10px; color: #aaa; font-weight: 500; }
 .flow-step.highlight { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.3); color: #f97316; font-weight: 700; }
-.flow-arrow { color: #444; font-size: 12px; flex-shrink: 0; }
+.flow-arrow { color: #444; font-size: 12px; }
 .agentic-note { font-size: 13px; color: #888; line-height: 1.7; padding-top: 12px; border-top: 1px solid #1e1e1e; }
 .agentic-note strong { color: #f97316; }
+
 /* OLD vs NEW */
-.old-new { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; width: 100%; box-sizing: border-box; }
+.old-new { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
 .old-new-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px; font-weight: 600; text-align: center; }
 .old-new-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .old-col { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 14px; min-width: 0; }
 .new-col { background: #0a1a0a; border: 1px solid #1a2e1a; border-radius: 10px; padding: 14px; min-width: 0; }
 .old-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; color: #666; }
 .new-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; color: #1D9E75; }
-.old-item { font-size: 12px; color: #888; padding: 4px 0; border-bottom: 1px solid #1a1a1a; line-height: 1.4; text-decoration: line-through; text-decoration-color: #444; }
+.old-item { font-size: 12px; color: #888; padding: 4px 0; border-bottom: 1px solid #1a1a1a; line-height: 1.4; text-decoration: line-through; text-decoration-color: #555; }
 .old-item:last-child { border-bottom: none; }
 .new-item { font-size: 12px; color: #4ade80; padding: 4px 0; border-bottom: 1px solid #1a2e1a; line-height: 1.4; }
 .new-item:last-child { border-bottom: none; }
+
 /* WHAT AI SEES */
-.what-ai-sees { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
-.was-grid { display: flex; flex-direction: column; gap: 10px; }
-.was-row { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid #1e1e1e; }
-.was-row:last-child { border-bottom: none; padding-bottom: 0; }
-.was-label { font-size: 13px; color: #aaa; font-weight: 500; min-width: 180px; }
-.was-bar-wrap { flex: 1; height: 6px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
+.what-ai-sees { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
+.was-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1e1e1e; }
+.was-row:last-child { border-bottom: none; }
+.was-label { font-size: 12px; color: #aaa; font-weight: 500; width: 160px; flex-shrink: 0; }
+.was-bar-wrap { flex: 1; height: 5px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
 .was-bar-fill { height: 100%; border-radius: 999px; }
-.was-score { font-size: 12px; font-weight: 700; min-width: 60px; text-align: right; }
+.was-score { font-size: 11px; font-weight: 700; width: 48px; text-align: right; flex-shrink: 0; }
+
 /* AI CONTRAST */
-.ai-contrast { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
+.ai-contrast { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
 .section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px; font-weight: 600; text-align: center; }
 .contrast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.contrast-col { background: #0d0d0d; border-radius: 10px; padding: 14px; border: 1px solid #222; }
+.contrast-col { background: #0d0d0d; border-radius: 10px; padding: 14px; border: 1px solid #222; min-width: 0; }
 .contrast-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
 .contrast-col-label.human { color: #1D9E75; }
 .contrast-col-label.ai { color: #ef4444; }
 .contrast-item { font-size: 12px; color: #bbb; padding: 5px 0; border-bottom: 1px solid #1a1a1a; line-height: 1.4; }
-.contrast-item:last-child { border-bottom: none; padding-bottom: 0; }
+.contrast-item:last-child { border-bottom: none; }
 .contrast-item.green { color: #4ade80; }
 .contrast-item.red { color: #f87171; }
 .contrast-caption { text-align: center; font-size: 12px; color: #555; margin-top: 14px; font-style: italic; }
+
 /* AI RISK */
-.ai-risk { background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
+.ai-risk { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
 .risk-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #1e1e1e; font-size: 13px; color: #bbb; line-height: 1.5; }
 .risk-item:last-child { border-bottom: none; }
 .risk-icon { color: #ef4444; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+
 /* EXAMPLES */
-.examples { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 18px; margin-bottom: 24px; text-align: left; }
+.examples { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 18px; margin-bottom: 24px; text-align: left; }
 .examples-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; font-weight: 600; }
-.example-item { font-size: 13px; color: #aaa; margin-bottom: 10px; line-height: 1.5; padding-left: 4px; }
+.example-item { font-size: 13px; color: #aaa; margin-bottom: 10px; line-height: 1.5; }
 .example-item:last-child { margin-bottom: 0; }
 .example-leak { color: #ef4444; font-weight: 700; }
-.example-arc { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: #aaa; line-height: 1.6; text-align: left; }
+.example-arc { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: #aaa; line-height: 1.6; }
 .arc-label { font-size: 10px; color: #1D9E75; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
 .arc-result { color: #4ade80; font-weight: 600; }
+
 /* FUTURE */
-.future-section { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center; }
+.future-section { width: 100%; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center; }
 .future-section h3 { font-size: 16px; font-weight: 700; color: #f97316; margin: 0 0 10px 0; }
 .future-section p { font-size: 13px; color: #888; line-height: 1.7; margin: 0 0 14px 0; }
 .future-items { display: flex; flex-direction: column; gap: 6px; text-align: left; }
 .future-item { font-size: 12px; color: #777; padding: 5px 0; border-bottom: 1px solid #1a1a1a; }
 .future-item:last-child { border-bottom: none; }
 .future-item span { color: #f97316; margin-right: 6px; }
+
 /* FPFP */
-.fpfp { margin: 0 0 24px 0; padding: 20px; border-radius: 16px; border: 1px solid #1e1e1e; background: #0d0d0d; }
+.fpfp { width: 100%; margin: 0 0 24px 0; padding: 20px; border-radius: 16px; border: 1px solid #1e1e1e; background: #0d0d0d; }
 .fpfp-row { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: nowrap; }
-.fpfp-step { position: relative; text-align: center; padding: 10px 10px; cursor: default; }
+.fpfp-step { position: relative; text-align: center; padding: 10px; cursor: default; }
 .fpfp-step span { font-weight: 800; font-size: 13px; color: #f97316; }
-.fpfp-tip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(6px); background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 10px 14px; width: 180px; font-size: 12px; color: #cbd5e1; line-height: 1.5; opacity: 0; transition: all 0.2s ease; pointer-events: none; z-index: 99; white-space: normal; }
+.fpfp-tip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(6px); background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 10px 14px; width: 180px; font-size: 12px; color: #cbd5e1; line-height: 1.5; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 99; }
 .fpfp-arrow { color: #444; font-size: 14px; padding: 0 1px; }
+
 /* STEPS */
-.steps { display: flex; gap: 10px; margin-bottom: 24px; }
-.step { flex: 1; background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 16px 10px; text-align: center; }
+.steps { display: flex; gap: 10px; margin-bottom: 24px; width: 100%; }
+.step { flex: 1; background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 16px 10px; text-align: center; min-width: 0; }
 .step-num { font-size: 24px; font-weight: 700; color: #f97316; margin-bottom: 6px; line-height: 1; }
 .step-text { font-size: 12px; color: #aaa; line-height: 1.4; font-weight: 500; }
+
 /* FOOTER */
-.footer { padding-top: 16px; border-top: 1px solid #1e1e1e; text-align: center; }
+.footer { padding-top: 16px; border-top: 1px solid #1e1e1e; text-align: center; width: 100%; }
 .footer-scan-line { font-size: 12px; color: #555; margin-bottom: 8px; line-height: 1.8; }
 .footer-scan-line a { color: #777; text-decoration: none; }
 .footer-scan-line a:hover { color: #f97316; }
 .footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
 .footer-platform { font-size: 11px; color: #444; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
-@media (max-width: 420px) {
-  h1 { font-size: 26px; }
+
+@media (max-width: 480px) {
+  h1 { font-size: 24px; }
   .sub { font-size: 15px; }
-  .stats-bar { gap: 14px; padding: 14px 12px; }
+  .stats-bar { gap: 12px; padding: 14px 10px; }
   .stat-num { font-size: 19px; }
-  .steps { flex-direction: column; gap: 8px; }
-  .micro { font-size: 14px; }
-  input[type="text"] { font-size: 16px; padding: 16px; }
-  button { font-size: 17px; padding: 20px; }
-  .nav-links-bar a { font-size: 11px; padding: 5px 10px; }
+  .stat-label { font-size: 10px; }
   .header-tagline { display: none; }
-  .contrast-grid { grid-template-columns: 1fr; }
   .shopify-contrast-row { grid-template-columns: 1fr; }
   .old-new-grid { grid-template-columns: 1fr; }
+  .contrast-grid { grid-template-columns: 1fr; }
+  .steps { flex-direction: column; }
+  .was-label { width: 120px; font-size: 11px; }
+  .was-score { width: 40px; font-size: 10px; }
+  button { font-size: 15px; padding: 16px; }
+  .nav-links-bar a { font-size: 11px; padding: 5px 10px; }
 }
 </style>
 </head>
@@ -184,9 +209,11 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
   <h1>Shopify made your store<br><em>AI-readable.</em> That doesn't mean AI will recommend it.</h1>
   <p class="sub">Being visible to AI is not the same as being recommended by AI. See exactly where your store falls short and what it's costing you.</p>
 
-  <div style="background:#111;border:1px solid #1e1e1e;border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:14px;color:#aaa;line-height:1.6;text-align:center;">
+  <div class="positioning">
     We analyze how AI shopping systems <strong style="color:#e8e8e8;">interpret and recommend</strong> your store — across 8 factors that determine whether AI chooses you or your competitor.
   </div>
+
+  <div class="box">
     <form id="scanForm">
       <input type="text" name="store" placeholder="yourstorename.com" required autocomplete="off" autocapitalize="none" spellcheck="false">
       <button type="submit" id="scanBtn">Can AI Recommend Your Store? →</button>
@@ -281,38 +308,36 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 
   <div class="what-ai-sees">
     <div class="section-label">What AI sees when it reads your store</div>
-    <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.6;">This is what AI shopping agents evaluate when deciding whether to recommend your store. Most stores score poorly on 4+ of these factors.</div>
-    <div class="was-grid">
-      <div class="was-row">
-        <div class="was-label">AI Interpretation</div>
-        <div class="was-bar-wrap"><div class="was-bar-fill" style="width:28%;background:#E24B4A;"></div></div>
-        <div class="was-score" style="color:#E24B4A;">Low</div>
-      </div>
-      <div class="was-row">
-        <div class="was-label">Recommendation Confidence</div>
-        <div class="was-bar-wrap"><div class="was-bar-fill" style="width:22%;background:#E24B4A;"></div></div>
-        <div class="was-score" style="color:#E24B4A;">Critical</div>
-      </div>
-      <div class="was-row">
-        <div class="was-label">Semantic Clarity</div>
-        <div class="was-bar-wrap"><div class="was-bar-fill" style="width:41%;background:#EF9F27;"></div></div>
-        <div class="was-score" style="color:#EF9F27;">Partial</div>
-      </div>
-      <div class="was-row">
-        <div class="was-label">Trust Signals</div>
-        <div class="was-bar-wrap"><div class="was-bar-fill" style="width:35%;background:#EF9F27;"></div></div>
-        <div class="was-score" style="color:#EF9F27;">Weak</div>
-      </div>
-      <div class="was-row">
-        <div class="was-label">Comparison Strength</div>
-        <div class="was-bar-wrap"><div class="was-bar-fill" style="width:18%;background:#E24B4A;"></div></div>
-        <div class="was-score" style="color:#E24B4A;">Critical</div>
-      </div>
-      <div class="was-row">
-        <div class="was-label">Product Understanding</div>
-        <div class="was-bar-wrap"><div class="was-bar-fill" style="width:45%;background:#EF9F27;"></div></div>
-        <div class="was-score" style="color:#EF9F27;">Partial</div>
-      </div>
+    <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.6;">What AI shopping agents evaluate when deciding whether to recommend your store. Most stores score poorly on 4+ of these factors.</div>
+    <div class="was-row">
+      <div class="was-label">AI Interpretation</div>
+      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:28%;background:#E24B4A;"></div></div>
+      <div class="was-score" style="color:#E24B4A;">Low</div>
+    </div>
+    <div class="was-row">
+      <div class="was-label">Rec. Confidence</div>
+      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:22%;background:#E24B4A;"></div></div>
+      <div class="was-score" style="color:#E24B4A;">Critical</div>
+    </div>
+    <div class="was-row">
+      <div class="was-label">Semantic Clarity</div>
+      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:41%;background:#EF9F27;"></div></div>
+      <div class="was-score" style="color:#EF9F27;">Partial</div>
+    </div>
+    <div class="was-row">
+      <div class="was-label">Trust Signals</div>
+      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:35%;background:#EF9F27;"></div></div>
+      <div class="was-score" style="color:#EF9F27;">Weak</div>
+    </div>
+    <div class="was-row">
+      <div class="was-label">Comparison Strength</div>
+      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:18%;background:#E24B4A;"></div></div>
+      <div class="was-score" style="color:#E24B4A;">Critical</div>
+    </div>
+    <div class="was-row">
+      <div class="was-label">Product Understanding</div>
+      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:45%;background:#EF9F27;"></div></div>
+      <div class="was-score" style="color:#EF9F27;">Partial</div>
     </div>
     <div style="margin-top:14px;font-size:12px;color:#555;text-align:center;font-style:italic;">Average scores across 700+ scanned DTC stores · May 2026</div>
   </div>
@@ -411,21 +436,21 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 <script>
 (async function() {
   try {
-    const res  = await fetch("https://n8n-production-1d7c.up.railway.app/webhook/stores", { headers: { "Accept": "application/json" } });
+    const res = await fetch("https://n8n-production-1d7c.up.railway.app/webhook/stores", { headers: { "Accept": "application/json" } });
     const data = await res.json();
     const rows = Array.isArray(data) ? data : (data.stores || []);
     const count = rows.filter(r => (r.domain || r.store_domain || "")).length;
     const issues = Math.round(count * 4.97);
     const leaksTotal = Math.round(count * 0.96);
-    document.getElementById('statStores').innerText  = count.toLocaleString('en-US');
-    document.getElementById('statIssues').innerText  = issues.toLocaleString('en-US');
+    document.getElementById('statStores').innerText = count.toLocaleString('en-US');
+    document.getElementById('statIssues').innerText = issues.toLocaleString('en-US');
     document.getElementById('footerStores').innerText = count.toLocaleString('en-US');
-    document.getElementById('footerLeaks').innerText  = leaksTotal;
+    document.getElementById('footerLeaks').innerText = leaksTotal;
   } catch(e) {
-    document.getElementById('statStores').innerText  = '570+';
-    document.getElementById('statIssues').innerText  = '2,800+';
+    document.getElementById('statStores').innerText = '570+';
+    document.getElementById('statIssues').innerText = '2,800+';
     document.getElementById('footerStores').innerText = '570+';
-    document.getElementById('footerLeaks').innerText  = '549';
+    document.getElementById('footerLeaks').innerText = '549';
   }
 })();
 
@@ -434,16 +459,16 @@ function seededRand(seed) { const x = Math.sin(seed + 1) * 10000; return x - Mat
 function getDaysSinceBase() { return Math.floor((new Date() - BASE_DATE) / (1000 * 60 * 60 * 24)); }
 
 const allFindings = [
-  { amount: '$5,800', cat: 'Pet food brand, CA',    leak: "AI couldn't identify product category — invisible in AI search results" },
-  { amount: '$2,890', cat: 'Skincare DTC, US',      leak: 'AI readability leak — conflicting signals reduced recommendation confidence' },
-  { amount: '$3,480', cat: 'Jewelry store, US',     leak: 'Trust clarity problem — AI detected inconsistent credibility signals' },
-  { amount: '$3,640', cat: 'Wellness brand, US',    leak: "AI couldn't map product to clear use case — semantic confusion" },
-  { amount: '$4,200', cat: 'Apparel brand, US',     leak: 'Recommendation blocker — AI interpretation score critically low' },
-  { amount: '$2,650', cat: 'Home goods, CA',        leak: 'AI trust signal gap — missing structured data for recommendation engines' },
-  { amount: '$3,900', cat: 'Beauty DTC, US',        leak: 'Product structure unreadable to AI agents — AI navigation failure' },
-  { amount: '$3,120', cat: 'Supplement brand, US',  leak: 'Messaging too generic for confident recommendation — AI intent mismatch' },
-  { amount: '$2,420', cat: 'Pet accessories, CA',   leak: 'Category signals ambiguous to AI systems — AI readability issue' },
-  { amount: '$4,750', cat: 'Fashion DTC, US',       leak: 'Unclear positioning reduced AI discoverability — interpretation leak' },
+  { amount: '$5,800', cat: 'Pet food brand, CA', leak: "AI couldn't identify product category — invisible in AI search results" },
+  { amount: '$2,890', cat: 'Skincare DTC, US', leak: 'AI readability leak — conflicting signals reduced recommendation confidence' },
+  { amount: '$3,480', cat: 'Jewelry store, US', leak: 'Trust clarity problem — AI detected inconsistent credibility signals' },
+  { amount: '$3,640', cat: 'Wellness brand, US', leak: "AI couldn't map product to clear use case — semantic confusion" },
+  { amount: '$4,200', cat: 'Apparel brand, US', leak: 'Recommendation blocker — AI interpretation score critically low' },
+  { amount: '$2,650', cat: 'Home goods, CA', leak: 'AI trust signal gap — missing structured data for recommendation engines' },
+  { amount: '$3,900', cat: 'Beauty DTC, US', leak: 'Product structure unreadable to AI agents — AI navigation failure' },
+  { amount: '$3,120', cat: 'Supplement brand, US', leak: 'Messaging too generic for confident recommendation — AI intent mismatch' },
+  { amount: '$2,420', cat: 'Pet accessories, CA', leak: 'Category signals ambiguous to AI systems — AI readability issue' },
+  { amount: '$4,750', cat: 'Fashion DTC, US', leak: 'Unclear positioning reduced AI discoverability — interpretation leak' },
 ];
 
 function seededShuffle(arr, seed) {
