@@ -81,6 +81,16 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .footer-platform { font-size:11px; color:#444; margin-top:6px; text-transform:uppercase; letter-spacing:0.06em; }
 .footer-copy { font-size:12px; color:#444; margin-top:6px; }
 #loadingState { text-align:center; padding:60px 20px; font-size:15px; color:#666; }
+/* AGENTIC BOX */
+.agentic-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
+.agentic-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
+.agentic-desc { font-size:12px; color:#666; margin-bottom:12px; line-height:1.5; }
+.agentic-row { display:flex; align-items:center; justify-content:space-between; padding:7px 0; border-bottom:1px solid #141414; }
+.agentic-row:last-of-type { border-bottom:none; }
+.agentic-file { font-size:13px; color:#aaa; font-family:monospace; }
+.agentic-status-ok  { font-size:12px; font-weight:700; color:#1D9E75; }
+.agentic-status-bad { font-size:12px; font-weight:700; color:#E24B4A; }
+.agentic-note { font-size:12px; color:#555; margin-top:10px; padding-top:10px; border-top:1px solid #1a1a1a; line-height:1.6; font-style:italic; }
 @media (max-width:480px) {
   .score-label { min-width:90px; font-size:11px; }
   .score-num { font-size:20px; min-width:55px; }
@@ -115,14 +125,11 @@ function track(event) {
   }).catch(()=>{});
 }
 
-// Barvy podle methodology: 85+ zelená, 50-84 oranžová, 0-49 červená
 function getColor(pct) {
   if (pct >= 85) return "#1D9E75";
   if (pct >= 50) return "#EF9F27";
   return "#E24B4A";
 }
-
-// Pro faktory (0-100% z maxima)
 function getFactorColor(pct) {
   if (pct >= 70) return "#1D9E75";
   if (pct >= 40) return "#EF9F27";
@@ -165,14 +172,12 @@ const lossMin     = report.estimated_loss_min || row.estimated_loss_min || 0;
 const lossDisplay = report.estimated_loss_display || ("$" + lossMin.toLocaleString("en-US") + "/month");
 const daily       = report.estimated_loss_daily || Math.round(lossMin / 30);
 
-// Badge podle methodology thresholds
 const statusBadge = (() => {
-  if (aiScore >= 85) return { cls:"badge-high",      dot:"🟢", text:"Highly Recommendable" };
-  if (aiScore >= 50) return { cls:"badge-medium",    dot:"🟡", text:"Partially Visible" };
-  return                    { cls:"badge-invisible",  dot:"🔴", text:"AI Invisible Risk" };
+  if (aiScore >= 85) return { cls:"badge-high",     dot:"🟢", text:"Highly Recommendable" };
+  if (aiScore >= 50) return { cls:"badge-medium",   dot:"🟡", text:"Partially Visible" };
+  return                    { cls:"badge-invisible", dot:"🔴", text:"AI Invisible Risk" };
 })();
 
-// Verdict podle methodology thresholds
 const verdict = aiScore >= 85
   ? `<span style="color:#1D9E75;">✓ AI agents can clearly understand, trust, and recommend your store</span>`
   : aiScore >= 50
@@ -222,6 +227,32 @@ const factorRowsHTML = factors.map(f => {
     </div>`;
 }).join("");
 
+// SHOPIFY AGENTIC FILES
+const has_llms_txt  = report.has_llms_txt  || row.has_llms_txt  || false;
+const has_llms_full = report.has_llms_full || row.has_llms_full || false;
+const has_agents_md = report.has_agents_md || row.has_agents_md || false;
+const llms_txt_quality = report.llms_txt_quality || row.llms_txt_quality || 0;
+
+const agStatus = (ok) => ok
+  ? `<span class="agentic-status-ok">✅ detected</span>`
+  : `<span class="agentic-status-bad">❌ missing</span>`;
+
+const agNote = has_llms_txt
+  ? (llms_txt_quality >= 2
+    ? "Shopify generated your llms.txt — content looks good for AI agents."
+    : "Shopify generated your llms.txt — but AI agents need more than just the file to recommend you.")
+  : "Shopify's Agentic Dashboard is live. Your store doesn't have llms.txt yet — AI agents can't read your catalog.";
+
+const agenticHTML = `
+  <div class="agentic-box">
+    <div class="agentic-title">Shopify Agentic Readiness</div>
+    <div class="agentic-desc">Shopify now generates these files for every store. Missing or weak files mean AI agents can't understand or purchase from your store.</div>
+    <div class="agentic-row"><span class="agentic-file">llms.txt</span>${agStatus(has_llms_txt)}</div>
+    <div class="agentic-row"><span class="agentic-file">llms-full.txt</span>${agStatus(has_llms_full)}</div>
+    <div class="agentic-row"><span class="agentic-file">agents.md</span>${agStatus(has_agents_md)}</div>
+    <div class="agentic-note">${agNote}</div>
+  </div>`;
+
 document.getElementById("loadingState").style.display = "none";
 const app = document.getElementById("app");
 app.style.display = "block";
@@ -260,6 +291,8 @@ app.innerHTML = `
     <div class="breakdown-desc">8 factors determine how confidently AI shopping agents — Alexa for Shopping, ChatGPT, Google AI Mode — can understand, trust, and recommend your store.</div>
     ${factorRowsHTML}
   </div>
+
+  ${agenticHTML}
 
   <div class="section-label">Biggest AI visibility gap detected</div>
   <div class="main-leak-box"><div class="main-leak-text">${mainLeak}</div></div>
