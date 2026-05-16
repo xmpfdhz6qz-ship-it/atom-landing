@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Building Your Audit – Atom Foundry</title>
+<title>Building Your AI Audit – Atom Foundry</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -206,23 +206,22 @@ h1 {
 
       <div id="processingState">
 
-        <!-- 🔥 consequence language -->
-        <div class="live">⚡ Building your revenue leak report now...</div>
-        <h1>Finding every revenue leak in your store.</h1>
+        <div class="live">⚡ Building your AI Recommendation Audit now...</div>
+        <h1>Analyzing how AI agents see your store.</h1>
         <p class="sub">
-          Our AI engine is detecting where buyers drop off,
-          calculating how much each leak costs you,
-          and building your exact fixes to stop them.
+          Our AI engine is checking all 8 recommendation factors,
+          identifying exactly why AI agents may skip your store,
+          and building your personalized fix plan.
         </p>
 
         <div class="ai-message-box">
-          <div class="ai-message-label">Revenue Leak Engine</div>
+          <div class="ai-message-label">AI Commerce Intelligence Engine</div>
           <div class="ai-message" id="aiMessage">Connecting to store data...</div>
         </div>
 
         <div class="progress-wrap">
           <div class="progress-label">
-            <span id="progressText">Initializing revenue leak scan...</span>
+            <span id="progressText">Initializing AI readiness scan...</span>
             <span id="progressPct">0%</span>
           </div>
           <div class="progress-bar">
@@ -230,20 +229,19 @@ h1 {
           </div>
         </div>
 
-        <!-- 🔥 consequence language -->
         <div class="what-box">
           <div class="what-title">Being built for you right now:</div>
-          <div class="what-item">→ 4 exact fixes — each with $ revenue you stop losing</div>
-          <div class="what-item">→ CRO Score + AI Readiness — where you're losing traffic</div>
-          <div class="what-item">→ Step-by-step fix plan — stop each leak fast</div>
-          <div class="what-item">→ Done-For-You option — we fix all 4 leaks for you</div>
+          <div class="what-item">→ AI Recommendation Score — all 8 factors with specific issues</div>
+          <div class="what-item">→ Execution checklist — what to fix this week vs. delegate</div>
+          <div class="what-item">→ Custom Claude prompts for your store — use immediately</div>
+          <div class="what-item">→ llms.txt + schema markup ready to implement</div>
+          <div class="what-item">→ Written walkthrough — top 3 problems explained clearly</div>
         </div>
 
         <div class="scan-id">Audit ID: AF-<span id="auditId"></span></div>
 
-        <!-- 🔥 consequence language -->
         <div class="footer">
-          Your revenue leak report will be in your email within minutes.<br>
+          Your AI Recommendation Audit will be in your email within minutes.<br>
           <div class="tagline">Find → Prove → Fix → Protect</div>
         </div>
 
@@ -251,26 +249,24 @@ h1 {
 
       <div id="doneState">
         <div class="done-check">✓</div>
-
-        <!-- 🔥 consequence language -->
-        <div class="done-title">Your revenue leak report is ready.</div>
+        <div class="done-title">Your AI Audit is ready.</div>
         <div class="done-sub">
-          Check your email — your full revenue leak report<br>
-          with 4 exact fixes to stop the leaks is waiting for you.
+          Check your email — your full AI Recommendation Audit<br>
+          with exact fixes is waiting for you.
         </div>
 
         <div class="done-box">
-          <!-- 🔥 consequence language -->
-          <div class="done-box-title">Your report includes:</div>
-          <div class="done-item">→ 4 exact fixes — each showing $ revenue you recover</div>
-          <div class="done-item">→ CRO Score + AI Readiness — where sales are being lost</div>
-          <div class="done-item">→ Step-by-step fix plan — no dev knowledge needed</div>
-          <div class="done-item">→ Expected revenue recovery within 7 days per fix</div>
-          <div class="done-item">→ Done-For-You option — we fix all 4 leaks for you</div>
+          <div class="done-box-title">Your audit includes:</div>
+          <div class="done-item">→ Complete AI Recommendation breakdown — all 8 factors</div>
+          <div class="done-item">→ Exact AI interpretation issues for your store</div>
+          <div class="done-item">→ Execution checklist — what to fix this week</div>
+          <div class="done-item">→ Custom Claude prompts for your store</div>
+          <div class="done-item">→ llms.txt + schema markup ready to implement</div>
+          <div class="done-item">→ Written walkthrough — top 3 problems explained</div>
         </div>
 
         <div class="footer">
-          Questions? founder@atomfoundry.dev<br>
+          Questions? audit@atomfoundry.dev<br>
           <div class="tagline">Find → Prove → Fix → Protect</div>
         </div>
       </div>
@@ -282,7 +278,6 @@ h1 {
 <script>
 document.getElementById("auditId").innerText = Date.now().toString().slice(-6);
 
-// ── SNAKE BORDER ──────────────────────────────────────────────────
 const canvas = document.getElementById("borderCanvas");
 const wrap   = document.getElementById("cardWrap");
 const ctx    = canvas.getContext("2d");
@@ -306,129 +301,77 @@ window.addEventListener("resize", resize);
 function buildPerimeter(w, h, r) {
   const pts = [];
   const N = 80;
-
-  for (let i = 0; i <= N; i++) {
-    const a = Math.PI + (Math.PI / 2) * (i / N);
-    pts.push([r + r * Math.cos(a), r + r * Math.sin(a)]);
-  }
-  for (let i = 0; i <= N; i++) {
-    pts.push([r + (w - 2 * r) * (i / N), 0]);
-  }
-  for (let i = 0; i <= N; i++) {
-    const a = -Math.PI / 2 + (Math.PI / 2) * (i / N);
-    pts.push([w - r + r * Math.cos(a), r + r * Math.sin(a)]);
-  }
-  for (let i = 0; i <= N; i++) {
-    pts.push([w, r + (h - 2 * r) * (i / N)]);
-  }
-  for (let i = 0; i <= N; i++) {
-    const a = (Math.PI / 2) * (i / N);
-    pts.push([w - r + r * Math.cos(a), h - r + r * Math.sin(a)]);
-  }
-  for (let i = 0; i <= N; i++) {
-    pts.push([w - r - (w - 2 * r) * (i / N), h]);
-  }
-  for (let i = 0; i <= N; i++) {
-    const a = Math.PI / 2 + (Math.PI / 2) * (i / N);
-    pts.push([r + r * Math.cos(a), h - r + r * Math.sin(a)]);
-  }
-  for (let i = 0; i <= N; i++) {
-    pts.push([0, h - r - (h - 2 * r) * (i / N)]);
-  }
-
+  for (let i = 0; i <= N; i++) { const a = Math.PI + (Math.PI/2)*(i/N); pts.push([r+r*Math.cos(a), r+r*Math.sin(a)]); }
+  for (let i = 0; i <= N; i++) { pts.push([r+(w-2*r)*(i/N), 0]); }
+  for (let i = 0; i <= N; i++) { const a = -Math.PI/2+(Math.PI/2)*(i/N); pts.push([w-r+r*Math.cos(a), r+r*Math.sin(a)]); }
+  for (let i = 0; i <= N; i++) { pts.push([w, r+(h-2*r)*(i/N)]); }
+  for (let i = 0; i <= N; i++) { const a = (Math.PI/2)*(i/N); pts.push([w-r+r*Math.cos(a), h-r+r*Math.sin(a)]); }
+  for (let i = 0; i <= N; i++) { pts.push([w-r-(w-2*r)*(i/N), h]); }
+  for (let i = 0; i <= N; i++) { const a = Math.PI/2+(Math.PI/2)*(i/N); pts.push([r+r*Math.cos(a), h-r+r*Math.sin(a)]); }
+  for (let i = 0; i <= N; i++) { pts.push([0, h-r-(h-2*r)*(i/N)]); }
   return pts;
 }
 
 function getPoint(pts, t) {
   const total = pts.length;
-  const idx   = ((t % 1) + 1) % 1 * total;
-  const i0    = Math.floor(idx) % total;
-  const i1    = (i0 + 1) % total;
-  const f     = idx - Math.floor(idx);
-  return [
-    pts[i0][0] + (pts[i1][0] - pts[i0][0]) * f,
-    pts[i0][1] + (pts[i1][1] - pts[i0][1]) * f,
-  ];
+  const idx = ((t%1)+1)%1*total;
+  const i0 = Math.floor(idx)%total;
+  const i1 = (i0+1)%total;
+  const f = idx-Math.floor(idx);
+  return [pts[i0][0]+(pts[i1][0]-pts[i0][0])*f, pts[i0][1]+(pts[i1][1]-pts[i0][1])*f];
 }
 
 let lastTime = null;
-
 function draw(ts) {
   if (!lastTime) lastTime = ts;
-  const dt = (ts - lastTime) / 1000;
   lastTime = ts;
-
-  if (!isDone) {
-    headPos = (headPos + SPEED) % 1;
-  }
-
-  const w = canvas.width;
-  const h = canvas.height;
-  ctx.clearRect(0, 0, w, h);
-
-  const pts   = buildPerimeter(w, h, RADIUS);
+  if (!isDone) headPos = (headPos + SPEED) % 1;
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  const pts = buildPerimeter(w,h,RADIUS);
   const STEPS = 120;
-
   for (let i = 0; i < STEPS; i++) {
-    const frac = i / STEPS;
-    const t0 = ((headPos - TAIL_LEN + (frac * TAIL_LEN)) + 2) % 1;
-    const t1 = ((headPos - TAIL_LEN + ((frac + 1 / STEPS) * TAIL_LEN)) + 2) % 1;
-    const alpha = isDone
-      ? frac * frac * 0.3
-      : frac * frac * 0.95 + 0.02;
-    const color = isDone
-      ? `rgba(29,158,117,${alpha})`
-      : `rgba(249,115,22,${alpha})`;
-    const p0 = getPoint(pts, t0);
-    const p1 = getPoint(pts, t1);
-    ctx.beginPath();
-    ctx.moveTo(p0[0], p0[1]);
-    ctx.lineTo(p1[0], p1[1]);
-    ctx.strokeStyle = color;
-    ctx.lineWidth   = THICKNESS;
-    ctx.lineCap     = "round";
-    ctx.lineJoin    = "round";
-    ctx.stroke();
+    const frac = i/STEPS;
+    const t0 = ((headPos-TAIL_LEN+(frac*TAIL_LEN))+2)%1;
+    const t1 = ((headPos-TAIL_LEN+((frac+1/STEPS)*TAIL_LEN))+2)%1;
+    const alpha = isDone ? frac*frac*0.3 : frac*frac*0.95+0.02;
+    const color = isDone ? `rgba(29,158,117,${alpha})` : `rgba(249,115,22,${alpha})`;
+    const p0 = getPoint(pts,t0), p1 = getPoint(pts,t1);
+    ctx.beginPath(); ctx.moveTo(p0[0],p0[1]); ctx.lineTo(p1[0],p1[1]);
+    ctx.strokeStyle = color; ctx.lineWidth = THICKNESS;
+    ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.stroke();
   }
-
   if (!isDone) {
-    const hp   = getPoint(pts, headPos);
-    const glow = ctx.createRadialGradient(hp[0], hp[1], 0, hp[0], hp[1], 10);
-    glow.addColorStop(0,   "rgba(249,115,22,0.9)");
-    glow.addColorStop(0.3, "rgba(249,115,22,0.5)");
-    glow.addColorStop(1,   "rgba(249,115,22,0)");
-    ctx.beginPath();
-    ctx.arc(hp[0], hp[1], 10, 0, Math.PI * 2);
-    ctx.fillStyle = glow;
-    ctx.fill();
+    const hp = getPoint(pts, headPos);
+    const glow = ctx.createRadialGradient(hp[0],hp[1],0,hp[0],hp[1],10);
+    glow.addColorStop(0,"rgba(249,115,22,0.9)");
+    glow.addColorStop(0.3,"rgba(249,115,22,0.5)");
+    glow.addColorStop(1,"rgba(249,115,22,0)");
+    ctx.beginPath(); ctx.arc(hp[0],hp[1],10,0,Math.PI*2);
+    ctx.fillStyle = glow; ctx.fill();
   }
-
   requestAnimationFrame(draw);
 }
 requestAnimationFrame(draw);
 
-// ── CONTENT ──────────────────────────────────────────────────────
-
-// 🔥 consequence-based AI messages
 const messages = [
   "Connecting to store data...",
-  "Finding where buyers are dropping off...",
-  "Detecting revenue leaks in your funnel...",
-  "Checking where buyers hesitate and abandon...",
-  "Calculating how much each leak costs you...",
-  "Building your exact fixes to stop the leaks...",
-  "Checking if AI agents are skipping your store...",
-  "Finalizing your revenue loss breakdown..."
+  "Checking AI structured signals — schema, JSON-LD...",
+  "Evaluating semantic clarity for AI agents...",
+  "Analyzing AI trust confidence signals...",
+  "Checking user intent match and AI interpretability...",
+  "Evaluating recommendation confidence vs competitors...",
+  "Checking brand authority signals in AI memory...",
+  "Building your personalized AI fix plan..."
 ];
 
-// 🔥 consequence-based progress steps
 const steps = [
-  "Initializing revenue leak scan...",
-  "Reading page structure...",
-  "Detecting where buyers drop off...",
-  "Exposing hidden revenue leaks...",
-  "Calculating $ loss per leak...",
-  "Building fixes to stop the leaks...",
+  "Initializing AI readiness scan...",
+  "Reading store structure and signals...",
+  "Scoring 8 AI recommendation factors...",
+  "Identifying biggest AI visibility gaps...",
+  "Generating custom Claude prompts...",
+  "Building llms.txt and schema markup...",
   "Almost done..."
 ];
 
@@ -461,26 +404,20 @@ const progressInterval = setInterval(() => {
   }
   bar.style.width = progress + "%";
   pct.innerText = Math.round(progress) + "%";
-  stepEl.innerText = steps[Math.min(Math.floor(progress / 16), steps.length - 1)];
+  stepEl.innerText = steps[Math.min(Math.floor(progress/16), steps.length-1)];
 }, 300);
 
-// ── 5 SEKUND → DONE ──────────────────────────────────────────────
 setTimeout(() => {
   clearInterval(msgInterval);
   clearInterval(progressInterval);
-
   bar.style.width = "100%";
   pct.innerText = "100%";
-  // 🔥 consequence language
-  stepEl.innerText = "Revenue leaks found — report complete.";
-
+  stepEl.innerText = "AI audit complete — check your email.";
   isDone = true;
-
   setTimeout(() => {
     document.getElementById("processingState").style.display = "none";
     document.getElementById("doneState").style.display = "block";
   }, 600);
-
 }, 5000);
 </script>
 
