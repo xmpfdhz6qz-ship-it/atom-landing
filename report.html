@@ -7,100 +7,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto;
-  background: #0A0A0A;
-  color: white;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
-}
-body::before {
-  content: "";
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%);
-  pointer-events: none; z-index: 0;
-}
-.container { max-width: 600px; margin: 0 auto; padding: 28px 20px 48px; position: relative; z-index: 1; }
-.navbar { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid #1e1e1e; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
-.nav-brand { font-size: 15px; font-weight: 800; color: white; letter-spacing: -0.3px; text-decoration: none; }
-.nav-brand span { color: #f97316; }
-.nav-cta { background: #f97316; color: black; font-weight: 700; font-size: 13px; padding: 8px 16px; border-radius: 8px; text-decoration: none; }
-.domain-label { font-size: 14px; color: #aaa; margin-bottom: 6px; font-weight: 500; }
-.score-hero { font-size: 72px; font-weight: 800; line-height: 1; margin-bottom: 4px; letter-spacing: -0.02em; }
-.score-hero-label { font-size: 14px; color: #aaa; margin-bottom: 10px; }
-.ai-status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 700; margin-bottom: 20px; }
-.badge-high      { background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.3);  color: #1D9E75; }
-.badge-medium    { background: rgba(239,159,39,0.12);  border: 1px solid rgba(239,159,39,0.3);  color: #EF9F27; }
-.badge-low       { background: rgba(226,75,74,0.12);   border: 1px solid rgba(226,75,74,0.3);   color: #E24B4A; }
-.badge-invisible { background: rgba(226,75,74,0.12);   border: 1px solid rgba(226,75,74,0.3);   color: #E24B4A; }
-.loss-strip { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 16px 18px; margin-bottom: 20px; text-align: center; }
-.loss-strip-amount { font-size: 32px; font-weight: 800; color: #E24B4A; line-height: 1; margin-bottom: 4px; }
-.loss-strip-label { font-size: 13px; color: #888; }
-.live-counter { font-size: 13px; color: #666; margin-top: 6px; min-height: 20px; }
-.scores-section { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; padding: 18px 20px; margin-bottom: 8px; }
-.score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
-.score-label { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; min-width: 110px; }
-.score-num { font-size: 22px; font-weight: 700; min-width: 65px; line-height: 1; }
-.score-bar-wrap { flex: 1; height: 7px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
-.score-bar-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
-.score-verdict { font-size: 12px; font-weight: 600; margin-bottom: 16px; padding-left: 124px; line-height: 1.4; }
-.breakdown-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; }
-.breakdown-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 6px; }
-.breakdown-desc { font-size: 13px; color: #777; line-height: 1.6; margin-bottom: 16px; }
-.factor-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #141414; }
-.factor-row:last-child { border-bottom: none; padding-bottom: 0; }
-.factor-left { flex: 1; }
-.factor-name { font-size: 13px; color: #aaa; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-.new-tag { font-size: 9px; font-weight: 700; color: #1D9E75; background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.25); border-radius: 3px; padding: 1px 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-.factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
-.factor-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
-.factor-score { font-size: 13px; font-weight: 700; min-width: 50px; text-align: right; }
-.explain-toggle { font-size: 13px; color: #f97316; cursor: pointer; text-align: center; padding: 10px; margin-bottom: 16px; user-select: none; }
-.explain-toggle:hover { color: #fb923c; }
-.explain-box { display: none; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; font-size: 13px; color: #aaa; line-height: 1.8; }
-.explain-box.open { display: block; }
-.explain-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 12px; }
-.explain-item { margin-bottom: 10px; }
-.explain-highlight { color: #f97316; font-weight: 600; }
-.section-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px; }
-.main-leak-box { background: #111; border: 1px solid #1e1e1e; border-left: 3px solid #E24B4A; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.main-leak-text { font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.6; }
-.locked-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.locked-title { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; font-weight: 600; }
-.locked-item { font-size: 14px; color: #aaa; margin-bottom: 10px; line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
-.locked-item:last-child { margin-bottom: 0; }
-.locked-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-.fix-label { font-size: 11px; color: #1D9E75; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px; }
-.fix-box { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.fix-text { font-size: 15px; color: #4ade80; line-height: 1.6; }
-.cta-btn { display: block; width: 100%; padding: 20px; border-radius: 14px; border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c); color: black; font-weight: 900; font-size: 17px; text-align: center; cursor: pointer; text-decoration: none; box-shadow: 0 12px 30px rgba(249,115,22,0.4); transition: all 0.25s ease; animation: ctaPulse 2.5s infinite; margin-bottom: 14px; }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(249,115,22,0.65); }
-@keyframes ctaPulse { 0%,100% { box-shadow: 0 0 0 rgba(249,115,22,0.4); } 50% { box-shadow: 0 0 30px rgba(249,115,22,0.6); } }
-.cta-trust { font-size: 13px; color: #999; text-align: center; line-height: 1.8; margin-bottom: 6px; }
-.cta-trust-green { font-size: 13px; color: #1D9E75; text-align: center; margin-bottom: 24px; }
-.what-box { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; }
-.what-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 14px; }
-.what-item { font-size: 14px; color: #aaa; margin-bottom: 9px; line-height: 1.5; }
-.decision-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; font-size: 14px; color: #ccc; line-height: 1.9; }
-.founder-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-left: 3px solid #f97316; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; display: flex; gap: 16px; align-items: flex-start; }
-.founder-avatar { width: 44px; height: 44px; background: linear-gradient(135deg, #f97316, #ea580c); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: black; flex-shrink: 0; }
-.founder-text { flex: 1; }
-.founder-name { font-size: 13px; font-weight: 700; color: #e8e8e8; margin-bottom: 4px; }
-.founder-sub { font-size: 11px; color: #666; margin-bottom: 8px; }
-.founder-quote { font-size: 13px; color: #aaa; line-height: 1.7; font-style: italic; }
-.footer { padding-top: 20px; border-top: 1px solid #1e1e1e; text-align: center; margin-top: 8px; }
-.footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
-.footer-platform { font-size: 11px; color: #444; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
-.footer-copy { font-size: 12px; color: #444; margin-top: 6px; }
-#loadingState { text-align: center; padding: 60px 20px; font-size: 15px; color: #666; }
-@media (max-width: 480px) {
-  .score-label { min-width: 90px; font-size: 11px; }
-  .score-num { font-size: 20px; min-width: 55px; }
-  .score-verdict { padding-left: 100px; }
-  .score-hero { font-size: 56px; }
-  .cta-btn { font-size: 15px; padding: 18px; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto; background:#0A0A0A; color:white; -webkit-font-smoothing:antialiased; line-height:1.6; }
+body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%; background:radial-gradient(circle at 50% -10%,rgba(249,115,22,0.12),transparent 45%); pointer-events:none; z-index:0; }
+.container { max-width:600px; margin:0 auto; padding:28px 20px 48px; position:relative; z-index:1; }
+.navbar { position:sticky; top:0; z-index:100; background:rgba(10,10,10,0.92); backdrop-filter:blur(12px); border-bottom:1px solid #1e1e1e; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; }
+.nav-brand { font-size:15px; font-weight:800; color:white; letter-spacing:-0.3px; text-decoration:none; }
+.nav-brand span { color:#f97316; }
+.nav-cta { background:#f97316; color:black; font-weight:700; font-size:13px; padding:8px 16px; border-radius:8px; text-decoration:none; }
+.domain-label { font-size:14px; color:#aaa; margin-bottom:6px; font-weight:500; }
+.score-hero { font-size:72px; font-weight:800; line-height:1; margin-bottom:4px; letter-spacing:-0.02em; }
+.score-hero-label { font-size:14px; color:#aaa; margin-bottom:10px; }
+.ai-status-badge { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:100px; font-size:13px; font-weight:700; margin-bottom:20px; }
+.badge-high      { background:rgba(29,158,117,0.12);  border:1px solid rgba(29,158,117,0.3);  color:#1D9E75; }
+.badge-medium    { background:rgba(239,159,39,0.12);  border:1px solid rgba(239,159,39,0.3);  color:#EF9F27; }
+.badge-invisible { background:rgba(226,75,74,0.12);   border:1px solid rgba(226,75,74,0.3);   color:#E24B4A; }
+.loss-strip { background:#111; border:1px solid #1e1e1e; border-radius:14px; padding:16px 18px; margin-bottom:20px; text-align:center; }
+.loss-strip-amount { font-size:32px; font-weight:800; color:#E24B4A; line-height:1; margin-bottom:4px; }
+.loss-strip-label { font-size:13px; color:#888; }
+.live-counter { font-size:13px; color:#666; margin-top:6px; min-height:20px; }
+.scores-section { background:#111; border:1px solid #1e1e1e; border-radius:16px; padding:18px 20px; margin-bottom:8px; }
+.score-row { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+.score-label { font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.06em; font-weight:600; min-width:110px; }
+.score-num { font-size:22px; font-weight:700; min-width:65px; line-height:1; }
+.score-bar-wrap { flex:1; height:7px; background:#1e1e1e; border-radius:999px; overflow:hidden; }
+.score-bar-fill { height:100%; border-radius:999px; transition:width 1s ease; }
+.score-verdict { font-size:12px; font-weight:600; margin-bottom:16px; padding-left:124px; line-height:1.4; }
+.breakdown-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:18px 20px; margin-bottom:20px; }
+.breakdown-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:6px; }
+.breakdown-desc { font-size:13px; color:#777; line-height:1.6; margin-bottom:16px; }
+.factor-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #141414; }
+.factor-row:last-child { border-bottom:none; padding-bottom:0; }
+.factor-left { flex:1; }
+.factor-name { font-size:13px; color:#aaa; margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+.new-tag { font-size:9px; font-weight:700; color:#1D9E75; background:rgba(29,158,117,0.12); border:1px solid rgba(29,158,117,0.25); border-radius:3px; padding:1px 4px; text-transform:uppercase; letter-spacing:0.05em; }
+.factor-bar { height:4px; background:#1a1a1a; border-radius:999px; overflow:hidden; }
+.factor-fill { height:100%; border-radius:999px; transition:width 1s ease; }
+.factor-score { font-size:13px; font-weight:700; min-width:50px; text-align:right; }
+.explain-toggle { font-size:13px; color:#f97316; cursor:pointer; text-align:center; padding:10px; margin-bottom:16px; user-select:none; }
+.explain-toggle:hover { color:#fb923c; }
+.explain-box { display:none; background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; font-size:13px; color:#aaa; line-height:1.8; }
+.explain-box.open { display:block; }
+.explain-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:12px; }
+.explain-item { margin-bottom:10px; }
+.explain-highlight { color:#f97316; font-weight:600; }
+.section-label { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:8px; }
+.main-leak-box { background:#111; border:1px solid #1e1e1e; border-left:3px solid #E24B4A; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
+.main-leak-text { font-size:16px; color:#e8e8e8; font-weight:500; line-height:1.6; }
+.locked-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
+.locked-title { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:12px; font-weight:600; }
+.locked-item { font-size:14px; color:#aaa; margin-bottom:10px; line-height:1.5; display:flex; align-items:flex-start; gap:8px; }
+.locked-item:last-child { margin-bottom:0; }
+.locked-icon { font-size:14px; flex-shrink:0; margin-top:1px; }
+.fix-label { font-size:11px; color:#1D9E75; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:8px; }
+.fix-box { background:#0a1a0a; border:1px solid #1a2e1a; border-left:3px solid #1D9E75; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
+.fix-text { font-size:15px; color:#4ade80; line-height:1.6; }
+.cta-btn { display:block; width:100%; padding:20px; border-radius:14px; border:2px solid #dc2626; background:linear-gradient(135deg,#f97316,#ea580c); color:black; font-weight:900; font-size:17px; text-align:center; cursor:pointer; text-decoration:none; box-shadow:0 12px 30px rgba(249,115,22,0.4); transition:all 0.25s ease; animation:ctaPulse 2.5s infinite; margin-bottom:14px; }
+.cta-btn:hover { transform:translateY(-2px); box-shadow:0 18px 40px rgba(249,115,22,0.65); }
+@keyframes ctaPulse { 0%,100%{box-shadow:0 0 0 rgba(249,115,22,0.4);}50%{box-shadow:0 0 30px rgba(249,115,22,0.6);} }
+.cta-trust { font-size:13px; color:#999; text-align:center; line-height:1.8; margin-bottom:6px; }
+.cta-trust-green { font-size:13px; color:#1D9E75; text-align:center; margin-bottom:24px; }
+.what-box { background:#111; border:1px solid #1e1e1e; border-radius:12px; padding:18px 20px; margin-bottom:24px; }
+.what-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:14px; }
+.what-item { font-size:14px; color:#aaa; margin-bottom:9px; line-height:1.5; }
+.decision-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:18px 20px; margin-bottom:24px; font-size:14px; color:#ccc; line-height:1.9; }
+.founder-box { background:#0d0d0d; border:1px solid #1e1e1e; border-left:3px solid #f97316; border-radius:12px; padding:18px 20px; margin-bottom:24px; display:flex; gap:16px; align-items:flex-start; }
+.founder-avatar { width:44px;height:44px; background:linear-gradient(135deg,#f97316,#ea580c); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; color:black; flex-shrink:0; }
+.founder-text { flex:1; }
+.founder-name { font-size:13px; font-weight:700; color:#e8e8e8; margin-bottom:4px; }
+.founder-sub { font-size:11px; color:#666; margin-bottom:8px; }
+.founder-quote { font-size:13px; color:#aaa; line-height:1.7; font-style:italic; }
+.footer { padding-top:20px; border-top:1px solid #1e1e1e; text-align:center; margin-top:8px; }
+.footer-tagline { font-size:15px; font-weight:700; color:#f97316; letter-spacing:0.04em; }
+.footer-platform { font-size:11px; color:#444; margin-top:6px; text-transform:uppercase; letter-spacing:0.06em; }
+.footer-copy { font-size:12px; color:#444; margin-top:6px; }
+#loadingState { text-align:center; padding:60px 20px; font-size:15px; color:#666; }
+@media (max-width:480px) {
+  .score-label { min-width:90px; font-size:11px; }
+  .score-num { font-size:20px; min-width:55px; }
+  .score-verdict { padding-left:100px; }
+  .score-hero { font-size:56px; }
+  .cta-btn { font-size:15px; padding:18px; }
 }
 </style>
 </head>
@@ -124,12 +110,20 @@ if (!id || id === "scan" || id === "report") {
 
 function track(event) {
   fetch("https://n8n-production-43ab.up.railway.app/webhook/track", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ token: id, event })
-  }).catch(() => {});
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ token:id, event })
+  }).catch(()=>{});
 }
 
+// Barvy podle methodology: 85+ zelená, 50-84 oranžová, 0-49 červená
 function getColor(pct) {
+  if (pct >= 85) return "#1D9E75";
+  if (pct >= 50) return "#EF9F27";
+  return "#E24B4A";
+}
+
+// Pro faktory (0-100% z maxima)
+function getFactorColor(pct) {
   if (pct >= 70) return "#1D9E75";
   if (pct >= 40) return "#EF9F27";
   return "#E24B4A";
@@ -152,7 +146,7 @@ track("viewed_report");
 
 const row    = data;
 const report = row.report_json || {};
-const domain = (row.store_domain || "").replace(/^https?:\/\//, "").replace(/^www\./, "").trim();
+const domain = (row.store_domain || "").replace(/^https?:\/\//,"").replace(/^www\./,"").trim();
 const displayDomain = (domain && domain !== "undefined") ? domain : "Your store";
 
 const aiScore = row.ars_score || report.total_score || row.score || 0;
@@ -171,18 +165,19 @@ const lossMin     = report.estimated_loss_min || row.estimated_loss_min || 0;
 const lossDisplay = report.estimated_loss_display || ("$" + lossMin.toLocaleString("en-US") + "/month");
 const daily       = report.estimated_loss_daily || Math.round(lossMin / 30);
 
+// Badge podle methodology thresholds
 const statusBadge = (() => {
-  if (aiScore >= 85) return { cls: "badge-high",      dot: "🟢", text: "Highly Recommendable" };
-  if (aiScore >= 70) return { cls: "badge-medium",    dot: "🟡", text: "Moderately Recommendable" };
-  if (aiScore >= 50) return { cls: "badge-low",       dot: "🟠", text: "Low Recommendation Confidence" };
-  return                    { cls: "badge-invisible",  dot: "🔴", text: "AI Invisible Risk" };
+  if (aiScore >= 85) return { cls:"badge-high",      dot:"🟢", text:"Highly Recommendable" };
+  if (aiScore >= 50) return { cls:"badge-medium",    dot:"🟡", text:"Partially Visible" };
+  return                    { cls:"badge-invisible",  dot:"🔴", text:"AI Invisible Risk" };
 })();
 
-const verdict = aiScore >= 70
-  ? `<span style="color:#1D9E75;">✓ AI agents can recommend your store</span>`
+// Verdict podle methodology thresholds
+const verdict = aiScore >= 85
+  ? `<span style="color:#1D9E75;">✓ AI agents can clearly understand, trust, and recommend your store</span>`
   : aiScore >= 50
-  ? `<span style="color:#EF9F27;">⚠ AI may skip your store — competitors may outrank you</span>`
-  : `<span style="color:#E24B4A;">✗ AI Invisible — ChatGPT and Alexa for Shopping may skip your store entirely</span>`;
+  ? `<span style="color:#EF9F27;">⚠ AI can see your store but misses key signals — competitors with higher scores are winning your customers</span>`
+  : `<span style="color:#E24B4A;">✗ AI Invisible Risk — critical gaps prevent AI agents from recommending this store</span>`;
 
 const mainLeak = report.main_leak || "AI agents may not confidently understand what your store sells.";
 const quickFix = report.quick_fix || "Add structured data and improve semantic clarity for AI systems.";
@@ -191,31 +186,31 @@ const email    = row.email || "";
 const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
   ? report.locked_leaks
   : [
-      { title: "AI structured data gaps limiting recommendation reach", est_impact: "$1,200/month" },
-      { title: "Semantic clarity issues reducing AI intent matching",   est_impact: "$900/month"   },
-      { title: "Missing trust signals reducing AI confidence score",    est_impact: "$600/month"   }
+      { title:"AI structured data gaps limiting recommendation reach", est_impact:"$1,200/month" },
+      { title:"Semantic clarity issues reducing AI intent matching",   est_impact:"$900/month"   },
+      { title:"Missing trust signals reducing AI confidence score",    est_impact:"$600/month"   }
     ];
 
 const lockedHTML = lockedLeaks.map(l => `
   <div class="locked-item">
     <span class="locked-icon">🔒</span>
-    <span>${l.title}${l.est_impact ? ' <span style="color:#777;">· ' + l.est_impact + '</span>' : ''}</span>
+    <span>${l.title}${l.est_impact ? ' <span style="color:#777;">· '+l.est_impact+'</span>' : ''}</span>
   </div>`).join("");
 
 const factors = [
-  { name: "AI Structured Signals",     score: schema_score,    max: 20, isNew: false },
-  { name: "Semantic Clarity",           score: content_score,   max: 18, isNew: false },
-  { name: "AI Trust Confidence",        score: trust_score,     max: 18, isNew: false },
-  { name: "User Intent Match",          score: intent_score,    max: 14, isNew: true  },
-  { name: "AI Interpretability",        score: technical_score, max: 12, isNew: false },
-  { name: "Commerce Accuracy",          score: price_score,     max: 10, isNew: false },
-  { name: "Recommendation Confidence",  score: rec_score,       max:  5, isNew: true  },
-  { name: "External Authority Signals", score: brand_score,     max:  3, isNew: true  },
+  { name:"AI Structured Signals",     score:schema_score,    max:20, isNew:false },
+  { name:"Semantic Clarity",           score:content_score,   max:18, isNew:false },
+  { name:"AI Trust Confidence",        score:trust_score,     max:18, isNew:false },
+  { name:"User Intent Match",          score:intent_score,    max:14, isNew:true  },
+  { name:"AI Interpretability",        score:technical_score, max:12, isNew:false },
+  { name:"Commerce Accuracy",          score:price_score,     max:10, isNew:false },
+  { name:"Recommendation Confidence",  score:rec_score,       max:5,  isNew:true  },
+  { name:"External Authority Signals", score:brand_score,     max:3,  isNew:true  },
 ];
 
 const factorRowsHTML = factors.map(f => {
   const pct = f.max > 0 ? Math.round((f.score / f.max) * 100) : 0;
-  const col = getColor(pct);
+  const col = getFactorColor(pct);
   const newTag = f.isNew ? `<span class="new-tag">New</span>` : "";
   return `
     <div class="factor-row">
@@ -255,9 +250,9 @@ app.innerHTML = `
   <div class="explain-toggle" onclick="toggleExplain()">▸ What does this score mean?</div>
   <div class="explain-box" id="explainBox">
     <div class="explain-title">Understanding your AI Recommendation Score</div>
-    <div class="explain-item"><span class="explain-highlight">AI Recommendation Score</span><br>Measures how confidently AI shopping agents — ChatGPT, Alexa for Shopping, Perplexity, Google AI Mode — can understand, trust, and recommend your store. Low score means buyers who ask AI "what's the best X?" never see your store.</div>
-    <div class="explain-item"><span class="explain-highlight">Why it matters now</span><br>AI is becoming the new shopping discovery layer. Stores that aren't readable by AI systems are being systematically skipped — even if they have great products.</div>
-    <div class="explain-item"><span class="explain-highlight">8 factors scored</span><br>AI Structured Signals, Semantic Clarity, AI Trust Confidence, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals.</div>
+    <div class="explain-item"><span class="explain-highlight">85–100: Highly Recommendable</span><br>AI agents can clearly understand, trust, and recommend your store to shoppers.</div>
+    <div class="explain-item"><span class="explain-highlight">50–84: Partially Visible</span><br>AI can see your store but misses key signals. Competitors with higher scores are winning your customers.</div>
+    <div class="explain-item"><span class="explain-highlight">0–49: AI Invisible Risk</span><br>Critical gaps prevent AI agents from recommending this store. Urgent action needed.</div>
   </div>
 
   <div class="breakdown-box">
@@ -335,8 +330,8 @@ async function goCheckout(btn) {
   btn.style.opacity = "0.75";
   try {
     const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/create-checkout", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ domain: row.store_domain || "", email: email || "" })
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ domain:row.store_domain || "", email:email || "" })
     });
     const d = await res.json();
     if (!d.url) { alert("Checkout error — please try again."); btn.innerText = orig; btn.style.opacity = "1"; return; }
