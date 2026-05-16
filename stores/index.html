@@ -61,6 +61,7 @@
     .store-card:hover { transform: translateY(-2px); border-color: rgba(249,115,22,0.35); background: #1a1a1a; }
     .card-inner { padding: 14px 16px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; align-items: center; }
     .domain { font-size: 15px; font-weight: 700; color: #e8e8e8; letter-spacing: -0.2px; overflow-wrap: anywhere; }
+    .store-name-label { font-size: 12px; color: #777; margin-top: 2px; }
     .readiness { font-size: 12px; color: #666; margin-top: 3px; text-transform: capitalize; }
     .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
     .card-tag { font-size: 10px; color: #666; background: #111; border: 1px solid #222; border-radius: 100px; padding: 2px 8px; }
@@ -139,7 +140,7 @@
   <div class="controls-box">
     <div class="search-wrap">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input class="search" id="search" type="search" placeholder="Search domain, platform or country…" aria-label="Search stores">
+      <input class="search" id="search" type="search" placeholder="Search domain, store name, platform or country…" aria-label="Search stores">
     </div>
     <select class="sort-select" id="sort" aria-label="Sort stores">
       <option value="newest">Newest first</option>
@@ -211,33 +212,64 @@
   const searchEl = document.getElementById("search");
   const sortEl   = document.getElementById("sort");
   const clearBtn = document.getElementById("clear-btn");
+
   const NICHES = {
-    fashion:  ["apparel","fashion","clothing","wear","shirt","dress","jeans","jacket","sneaker","shoe","boot","sock","hat","cap","hoodie","pant","skirt","coat","scarf","glove","bag","purse","handbag","wallet","luggage","sunglasses","denim","streetwear","swimwear","lingerie","activewear","boutique"],
-    beauty:   ["beauty","skincare","skin","serum","cream","makeup","cosmetic","lipstick","mascara","foundation","moisturizer","cleanser","toner","spf","sunscreen","retinol","glow","face","hair","shampoo","conditioner","perfume","fragrance","nail","brow","lash","grooming"],
-    health:   ["health","wellness","vitamin","supplement","protein","collagen","probiotic","cbd","fitness","nutrition","diet","sleep","immune","natural","organic","herbal","pharmacy","medicine","dental"],
-    food:     ["food","drink","coffee","tea","wine","beer","spirit","snack","chocolate","candy","sauce","oil","spice","meal","gourmet","grocery","bakery","bread","cheese","dairy","meat","seafood","vegan","juice","kombucha","smoothie"],
-    home:     ["home","house","furniture","decor","candle","plant","garden","cleaning","cookware","bed","bath","linen","sofa","chair","desk","lamp","rug","curtain","storage","tool","hardware"],
-    sports:   ["sport","outdoor","gym","yoga","run","bike","cycle","swim","surf","ski","hike","camp","climb","golf","tennis","basketball","football","soccer","training","workout","crossfit","boxing"],
-    pets:     ["pet","dog","cat","bird","fish","animal","paw","puppy","kitten","vet","treat","collar","leash","aquarium","reptile","hamster","rabbit"],
-    tech:     ["tech","gadget","electronic","phone","laptop","computer","camera","drone","robot","smart","speaker","headphone","earphone","cable","charger","battery","gaming"],
-    kids:     ["kid","baby","child","infant","toddler","toy","puzzle","school","nursery","stroller","diaper","maternity","pregnancy"],
-    jewelry:  ["jewelry","jewellery","ring","necklace","bracelet","earring","pendant","diamond","gold","silver","platinum","gem","crystal","watch","luxury"]
+    fashion:  ["apparel","fashion","clothing","wear","shirt","dress","jeans","jacket","sneaker","shoe","boot","sock","hat","cap","hoodie","pant","skirt","coat","scarf","glove","bag","purse","handbag","wallet","luggage","sunglasses","denim","streetwear","swimwear","lingerie","activewear","boutique","garment","tailor","wardrobe","outfit","style","couture"],
+    beauty:   ["beauty","skincare","skin","serum","cream","makeup","cosmetic","lipstick","mascara","foundation","moisturizer","cleanser","toner","spf","sunscreen","retinol","glow","face","hair","shampoo","conditioner","perfume","fragrance","nail","brow","lash","grooming","salon","spa","esthetic","derma"],
+    health:   ["health","wellness","vitamin","supplement","protein","collagen","probiotic","cbd","fitness","nutrition","diet","sleep","immune","natural","organic","herbal","pharmacy","medicine","dental","medic","rehab","therapy","mental","mindful","detox","cleanse"],
+    food:     ["food","drink","coffee","tea","wine","beer","spirit","snack","chocolate","candy","sauce","oil","spice","meal","gourmet","grocery","bakery","bread","cheese","dairy","meat","seafood","vegan","juice","kombucha","smoothie","gastro","kitchen","cook","recipe","cafe","restaurant","deli","farm","harvest","brew","roast"],
+    home:     ["home","house","furniture","decor","candle","plant","garden","cleaning","cookware","bed","bath","linen","sofa","chair","desk","lamp","rug","curtain","storage","tool","hardware","interior","living","room","floor","wall","ceiling","tile","shelf","cabinet","drawer"],
+    sports:   ["sport","outdoor","gym","yoga","run","bike","cycle","swim","surf","ski","hike","camp","climb","golf","tennis","basketball","football","soccer","training","workout","crossfit","boxing","athlet","trail","trek","paddle","kayak","hunt","fish","archery"],
+    pets:     ["pet","dog","cat","bird","fish","animal","paw","puppy","kitten","vet","treat","collar","leash","aquarium","reptile","hamster","rabbit","feline","canine","equine","horse","ferret","guinea"],
+    tech:     ["tech","gadget","electronic","phone","laptop","computer","camera","drone","robot","smart","speaker","headphone","earphone","cable","charger","battery","gaming","software","hardware","digital","cyber","data","cloud","app","device","monitor","keyboard","mouse","tablet","wearable"],
+    kids:     ["kid","baby","child","infant","toddler","toy","puzzle","school","nursery","stroller","diaper","maternity","pregnancy","junior","youth","teen","educational","learning","playroom","lego","doll","game"],
+    jewelry:  ["jewelry","jewellery","ring","necklace","bracelet","earring","pendant","diamond","gold","silver","platinum","gem","crystal","watch","luxury","bead","charm","locket","brooch","tiara","cufflink","signet"]
   };
+
+  // Detekce niche podle domény A store_name
   function detectNiche(store) {
-    const txt = [store.domain, store.readiness, store.platform].join(" ").toLowerCase();
+    const txt = [
+      store.domain,
+      store.store_name || "",
+      store.readiness || "",
+      store.platform || ""
+    ].join(" ").toLowerCase();
+
     for (const [niche, kws] of Object.entries(NICHES)) {
       if (kws.some(k => txt.includes(k))) return niche;
     }
     return "other";
   }
+
   function normalizeStore(raw) {
     const domain = String(raw.domain || raw.store_domain || "").replace(/^www\./, "").toLowerCase();
-    const store = { domain, score: Number(raw.score ?? raw.total_score ?? 0), date: raw.date || raw.scanned_at || raw.created_at || "", country: raw.country || "", platform: raw.platform || "", readiness: raw.readiness_level || "" };
+    const store = {
+      domain,
+      store_name: raw.store_name || "",
+      score: Number(raw.score ?? raw.total_score ?? 0),
+      date: raw.date || raw.scanned_at || raw.created_at || "",
+      country: raw.country || "",
+      platform: raw.platform || "",
+      readiness: raw.readiness_level || ""
+    };
     store.niche = detectNiche(store);
     return store;
   }
-  function scoreClass(s) { if (s >= 70) return "green"; if (s >= 30) return "orange"; return "red"; }
-  function formatDate(v) { if (!v) return ""; const d = new Date(v); if (isNaN(d.getTime())) return String(v).slice(0,10); return d.toISOString().slice(0,10); }
+
+  // Barvy podle methodology: 85+ zelená, 50-84 oranžová, 0-49 červená
+  function scoreClass(s) {
+    if (s >= 85) return "green";
+    if (s >= 50) return "orange";
+    return "red";
+  }
+
+  function formatDate(v) {
+    if (!v) return "";
+    const d = new Date(v);
+    if (isNaN(d.getTime())) return String(v).slice(0,10);
+    return d.toISOString().slice(0,10);
+  }
+
   function updateStats() {
     const all = state.stores;
     document.getElementById("stat-total").textContent = all.length || "—";
@@ -246,20 +278,41 @@
     document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length;
     document.getElementById("stat-low").textContent  = all.filter(s => s.score < 30).length;
   }
+
   function updatePillCounts() {
     document.getElementById("c-all").textContent = state.stores.length;
-    for (const niche of Object.keys(NICHES)) { const el = document.getElementById("c-" + niche); if (el) el.textContent = state.stores.filter(s => s.niche === niche).length; }
+    for (const niche of Object.keys(NICHES)) {
+      const el = document.getElementById("c-" + niche);
+      if (el) el.textContent = state.stores.filter(s => s.niche === niche).length;
+    }
     document.getElementById("c-other").textContent = state.stores.filter(s => s.niche === "other").length;
   }
+
   function renderStores() {
     const query = state.query.toLowerCase();
-    let stores = state.stores.filter(s => { const txt = [s.domain, s.country, s.platform, s.readiness].join(" ").toLowerCase(); return (!query || txt.includes(query)) && (state.niche === "all" || s.niche === state.niche); });
-    stores = stores.sort((a,b) => { if (state.sort === "best") return b.score - a.score; if (state.sort === "worst") return a.score - b.score; if (state.sort === "az") return a.domain.localeCompare(b.domain); return new Date(b.date||0) - new Date(a.date||0); });
+    let stores = state.stores.filter(s => {
+      const txt = [s.domain, s.store_name, s.country, s.platform, s.readiness].join(" ").toLowerCase();
+      return (!query || txt.includes(query)) && (state.niche === "all" || s.niche === state.niche);
+    });
+    stores = stores.sort((a,b) => {
+      if (state.sort === "best")  return b.score - a.score;
+      if (state.sort === "worst") return a.score - b.score;
+      if (state.sort === "az")    return a.domain.localeCompare(b.domain);
+      return new Date(b.date||0) - new Date(a.date||0);
+    });
+
     listEl.innerHTML = "";
     const hasFilter = query || state.niche !== "all";
     clearBtn.classList.toggle("visible", hasFilter);
-    if (!stores.length) { listEl.innerHTML = `<div class="empty">${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>`; statusEl.textContent = "0 stores"; return; }
+
+    if (!stores.length) {
+      listEl.innerHTML = `<div class="empty">${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>`;
+      statusEl.textContent = "0 stores";
+      return;
+    }
+
     statusEl.textContent = `${stores.length.toLocaleString()} store${stores.length !== 1 ? "s" : ""}${hasFilter ? " matched" : ""}`;
+
     const frag = document.createDocumentFragment();
     for (const store of stores) {
       const a = document.createElement("a");
@@ -267,12 +320,32 @@
       a.className = "store-card";
       const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase() + store.niche.slice(1) : null;
       const date = formatDate(store.date);
-      a.innerHTML = `<div class="card-inner"><div><div class="domain">${store.domain}</div>${store.readiness ? `<div class="readiness">${store.readiness.replaceAll("_"," ")}</div>` : ""}<div class="card-tags">${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}${store.country ? `<span class="card-tag">${store.country}</span>` : ""}${store.platform ? `<span class="card-tag">${store.platform}</span>` : ""}${date ? `<span class="card-tag">${date}</span>` : ""}</div></div><div class="score-wrap"><div class="score ${scoreClass(store.score)}">${store.score}</div><span class="score-label">/100 AI score</span></div></div>`;
+      const storeNameHtml = store.store_name && store.store_name !== store.domain
+        ? `<div class="store-name-label">${store.store_name}</div>`
+        : "";
+      a.innerHTML = `<div class="card-inner"><div>
+        <div class="domain">${store.domain}</div>
+        ${storeNameHtml}
+        ${store.readiness ? `<div class="readiness">${store.readiness.replaceAll("_"," ")}</div>` : ""}
+        <div class="card-tags">
+          ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
+          ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
+          ${store.platform ? `<span class="card-tag">${store.platform}</span>` : ""}
+          ${date ? `<span class="card-tag">${date}</span>` : ""}
+        </div>
+      </div><div class="score-wrap">
+        <div class="score ${scoreClass(store.score)}">${store.score}</div>
+        <span class="score-label">/100 AI score</span>
+      </div></div>`;
       frag.appendChild(a);
     }
     listEl.appendChild(frag);
   }
-  function showSkeletons(n=8) { listEl.innerHTML = Array.from({length:n}).map(() => `<div class="skeleton"><div><div class="skel skel-d"></div><div class="skel skel-s"></div><div class="skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div><div class="skel skel-score"></div></div>`).join(""); }
+
+  function showSkeletons(n=8) {
+    listEl.innerHTML = Array.from({length:n}).map(() => `<div class="skeleton"><div><div class="skel skel-d"></div><div class="skel skel-s"></div><div class="skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div><div class="skel skel-score"></div></div>`).join("");
+  }
+
   async function loadStores() {
     statusEl.textContent = "Loading…";
     showSkeletons();
@@ -290,11 +363,25 @@
       listEl.innerHTML = `<div class="empty">Could not connect to the stores endpoint.</div>`;
     }
   }
-  document.getElementById("niche-pills").addEventListener("click", e => { const pill = e.target.closest(".niche-pill"); if (!pill) return; document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active")); pill.classList.add("active"); state.niche = pill.dataset.niche; renderStores(); });
+
+  document.getElementById("niche-pills").addEventListener("click", e => {
+    const pill = e.target.closest(".niche-pill");
+    if (!pill) return;
+    document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    state.niche = pill.dataset.niche;
+    renderStores();
+  });
   searchEl.addEventListener("input",  e => { state.query = e.target.value; renderStores(); });
   sortEl.addEventListener("change",   e => { state.sort  = e.target.value; renderStores(); });
   document.getElementById("refresh").addEventListener("click", loadStores);
-  clearBtn.addEventListener("click", () => { state.query = ""; state.niche = "all"; searchEl.value = ""; document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active")); document.querySelector('[data-niche="all"]').classList.add("active"); renderStores(); });
+  clearBtn.addEventListener("click", () => {
+    state.query = ""; state.niche = "all";
+    searchEl.value = "";
+    document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
+    document.querySelector('[data-niche="all"]').classList.add("active");
+    renderStores();
+  });
   loadStores();
 </script>
 </body>
