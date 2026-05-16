@@ -10,33 +10,24 @@
 body { margin:0; font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto; background:#0A0A0A; color:white; -webkit-font-smoothing:antialiased; line-height:1.6; }
 body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%; background:radial-gradient(circle at 50% -10%,rgba(249,115,22,0.12),transparent 45%); pointer-events:none; z-index:0; }
 .container { max-width:620px; margin:0 auto; padding:28px 20px 56px; position:relative; z-index:1; }
-
 .audit-badge { display:inline-flex; align-items:center; gap:8px; background:#111; border:1px solid #1e1e1e; border-radius:999px; padding:6px 14px; font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:20px; }
 .audit-badge-dot { width:6px;height:6px; background:#1D9E75; border-radius:50%; animation:blink 2s infinite; }
 @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
-
 .domain-label { font-size:14px; color:#aaa; margin-bottom:8px; font-weight:500; }
 .loss-number { font-size:64px; font-weight:800; color:#E24B4A; line-height:1; margin-bottom:4px; text-shadow:0 0 40px rgba(226,75,74,0.3); letter-spacing:-0.02em; }
 .loss-label { font-size:14px; color:#aaa; margin-bottom:16px; }
 .daily-loss { font-size:18px; color:#EF9F27; font-weight:600; margin-bottom:6px; }
 .live-counter { font-size:14px; color:#888; margin-bottom:24px; min-height:22px; }
-
-/* SCORE SECTION */
 .scores-section { background:#111; border:1px solid #1e1e1e; border-radius:16px; padding:18px 20px; margin-bottom:8px; }
 .score-row { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
 .score-label { font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.06em; font-weight:600; min-width:130px; }
 .score-num { font-size:22px; font-weight:700; min-width:65px; line-height:1; }
 .score-bar-wrap { flex:1; height:7px; background:#1e1e1e; border-radius:999px; overflow:hidden; }
 .score-bar-fill { height:100%; border-radius:999px; transition:width 1.2s ease; }
-.score-verdict { font-size:12px; font-weight:600; padding-left:144px; margin-bottom:12px; line-height:1.4; }
-
-/* 8 FACTORS */
-.factors-toggle { font-size:13px; color:#f97316; cursor:pointer; padding-left:144px; margin-bottom:14px; display:block; letter-spacing:0.01em; font-weight:500; }
-.factors-toggle:hover { color:#fb923c; }
-.factors-popup { display:none; background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:18px 20px; margin-bottom:12px; }
-.factors-popup.open { display:block; }
-.factors-popup-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:4px; }
-.factors-popup-desc { font-size:13px; color:#999; line-height:1.6; margin-bottom:16px; }
+.score-verdict { font-size:12px; font-weight:600; padding-left:144px; margin-bottom:16px; line-height:1.4; }
+.factors-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:18px 20px; margin-top:4px; }
+.factors-box-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
+.factors-box-desc { font-size:12px; color:#666; line-height:1.5; margin-bottom:14px; }
 .factor-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #141414; }
 .factor-row:last-of-type { border-bottom:none; }
 .factor-left { flex:1; }
@@ -44,7 +35,6 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .factor-bar { height:4px; background:#1a1a1a; border-radius:999px; overflow:hidden; }
 .factor-fill { height:100%; border-radius:999px; }
 .factor-score { font-size:13px; font-weight:700; min-width:50px; text-align:right; }
-
 .explain-toggle { font-size:13px; color:#f97316; cursor:pointer; text-align:center; padding:10px; margin-bottom:16px; user-select:none; }
 .explain-toggle:hover { color:#fb923c; }
 .explain-box { display:none; background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; font-size:13px; color:#aaa; line-height:1.8; }
@@ -52,13 +42,20 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .explain-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:12px; }
 .explain-item { margin-bottom:10px; padding-left:4px; }
 .explain-highlight { color:#f97316; font-weight:600; }
-
 .section-label { font-size:10px; color:#777; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
 .section-label::after { content:""; flex:1; height:1px; background:#1a1a1a; }
-
 .main-leak-box { background:#111; border:1px solid #1e1e1e; border-left:3px solid #E24B4A; border-radius:12px; padding:16px 18px; margin-bottom:24px; }
 .main-leak-text { font-size:16px; color:#e8e8e8; font-weight:500; line-height:1.6; }
-
+/* AGENTIC BOX */
+.agentic-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:14px; padding:18px 20px; margin-bottom:20px; }
+.agentic-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
+.agentic-desc { font-size:12px; color:#666; margin-bottom:14px; }
+.agentic-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #141414; }
+.agentic-row:last-of-type { border-bottom:none; }
+.agentic-file { font-size:13px; color:#aaa; font-family:monospace; }
+.agentic-status-ok  { font-size:12px; font-weight:700; color:#1D9E75; }
+.agentic-status-bad { font-size:12px; font-weight:700; color:#E24B4A; }
+.agentic-quality { font-size:11px; color:#555; margin-top:10px; padding-top:10px; border-top:1px solid #1a1a1a; line-height:1.6; }
 /* ISSUE CARDS */
 .execution-cards { display:flex; flex-direction:column; gap:16px; margin-bottom:28px; }
 .exec-card { border-radius:16px; overflow:hidden; transition:all 0.25s ease; border:1px solid; }
@@ -93,13 +90,9 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .priority-high { font-size:11px; font-weight:700; color:#EF9F27; }
 .priority-medium { font-size:11px; font-weight:700; color:#f97316; }
 .priority-low { font-size:11px; font-weight:700; color:#1D9E75; }
-
-/* DELIVERABLES */
 .deliverable-box { background:#111; border:1px solid #1e1e1e; border-radius:16px; padding:20px; margin-bottom:20px; }
 .deliverable-title { font-size:15px; font-weight:700; color:#e8e8e8; margin-bottom:4px; }
 .deliverable-desc { font-size:13px; color:#666; margin-bottom:14px; }
-
-/* CHECKLIST */
 .checklist-item { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid #1a1a1a; }
 .checklist-item:last-child { border-bottom:none; }
 .checklist-week { font-size:10px; color:#555; text-transform:uppercase; letter-spacing:0.06em; font-weight:700; min-width:44px; margin-top:2px; }
@@ -112,42 +105,31 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .checklist-meta { font-size:11px; color:#555; }
 .checklist-yourself { font-size:10px; font-weight:700; color:#1D9E75; }
 .checklist-delegate { font-size:10px; font-weight:700; color:#EF9F27; }
-
-/* WALKTHROUGH */
 .walkthrough-section { margin-bottom:14px; padding-bottom:14px; border-bottom:1px solid #1a1a1a; }
 .walkthrough-section:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
 .walkthrough-heading { font-size:14px; font-weight:700; color:#f97316; margin-bottom:6px; }
 .walkthrough-text { font-size:13px; color:#aaa; line-height:1.7; }
-
-/* PROMPTS */
 .prompt-item { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:10px; padding:14px; margin-bottom:10px; }
 .prompt-item:last-child { margin-bottom:0; }
 .prompt-title { font-size:12px; font-weight:700; color:#f97316; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
 .prompt-text { font-size:12px; color:#888; line-height:1.6; font-family:monospace; background:#0a0a0a; border:1px solid #1a1a1a; border-radius:8px; padding:10px 12px; white-space:pre-wrap; word-break:break-word; }
 .copy-btn { margin-top:8px; font-size:11px; color:#555; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; padding:4px 10px; cursor:pointer; transition:all 0.2s; }
 .copy-btn:hover { color:#f97316; border-color:#f97316; }
-
-/* LLMS + SCHEMA */
 .code-box { font-size:12px; color:#4ade80; line-height:1.6; font-family:monospace; background:#0a0a0a; border:1px solid #1a2e1a; border-radius:10px; padding:14px; white-space:pre-wrap; word-break:break-word; max-height:240px; overflow-y:auto; }
 .schema-code-box { font-size:12px; color:#60a5fa; line-height:1.6; font-family:monospace; background:#0a0a0a; border:1px solid #1a2e60; border-radius:10px; padding:14px; white-space:pre-wrap; word-break:break-word; max-height:240px; overflow-y:auto; }
-
-/* REVENUE BOX */
 .revenue-box { background:#111; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:24px; }
 .revenue-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #1a1a1a; }
 .revenue-row:last-child { border-bottom:none; padding-bottom:0; }
 .revenue-row-label { font-size:13px; color:#888; }
 .revenue-row-value { font-size:16px; font-weight:700; }
-
 .pdf-btn { display:block; width:100%; padding:16px; border-radius:12px; background:#111; border:1px solid #2a2a2a; color:#aaa; font-size:14px; font-weight:600; text-align:center; cursor:pointer; transition:all 0.2s ease; margin-bottom:24px; text-decoration:none; }
 .pdf-btn:hover { color:#ccc; border-color:#444; background:#161616; }
-
 .founder-box { background:#0d0d0d; border:1px solid #1e1e1e; border-left:3px solid #f97316; border-radius:12px; padding:18px 20px; margin-bottom:24px; display:flex; gap:16px; align-items:flex-start; }
 .founder-avatar { width:44px;height:44px; background:linear-gradient(135deg,#f97316,#ea580c); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; color:black; flex-shrink:0; }
 .founder-text { flex:1; }
 .founder-name { font-size:13px; font-weight:700; color:#e8e8e8; margin-bottom:4px; }
 .founder-sub { font-size:11px; color:#666; margin-bottom:8px; }
 .founder-quote { font-size:13px; color:#aaa; line-height:1.7; font-style:italic; }
-
 .dfy-box { background:#0f0f0f; border:1px solid #f97316; border-radius:16px; padding:20px; margin-bottom:24px; position:relative; overflow:hidden; }
 .dfy-box::before { content:""; position:absolute; inset:0; background:linear-gradient(135deg,rgba(249,115,22,0.06),transparent 60%); pointer-events:none; }
 .dfy-tag { display:inline-block; background:rgba(249,115,22,0.15); color:#f97316; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; padding:3px 10px; border-radius:999px; margin-bottom:10px; }
@@ -160,49 +142,27 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .dfy-price strong { color:#f97316; font-size:15px; }
 .dfy-cta { display:block; width:100%; padding:18px; border-radius:14px; border:2px solid #dc2626; background:linear-gradient(135deg,#f97316,#ea580c); color:black; font-weight:900; font-size:17px; text-align:center; cursor:pointer; text-decoration:none; transition:all 0.25s ease; box-shadow:0 10px 25px rgba(249,115,22,0.35); }
 .dfy-cta:hover { transform:translateY(-2px); box-shadow:0 16px 35px rgba(249,115,22,0.6); }
-
 .footer { padding-top:20px; border-top:1px solid #1e1e1e; text-align:center; }
 .footer-scan-line { font-size:13px; color:#777; margin-bottom:10px; line-height:1.8; }
 .footer-tagline { font-size:16px; font-weight:700; color:#f97316; letter-spacing:0.04em; }
-
 #loadingState { text-align:center; padding:80px 20px; font-size:15px; color:#555; }
-
-@media print {
-  body { background:white; color:black; }
-  body::before { display:none; }
-  .dfy-box, .pdf-btn, .live-counter, .founder-box { display:none; }
-  .exec-card { page-break-inside:avoid; }
-}
-
-@media (max-width:480px) {
-  .loss-number { font-size:52px; }
-  .score-label { min-width:100px; font-size:11px; }
-  .score-num { font-size:20px; min-width:55px; }
-  .score-verdict { padding-left:115px; }
-  .factors-toggle { padding-left:115px; }
-  .footer-scan-line { white-space:normal; font-size:12px; }
-}
+@media print { body{background:white;color:black;} body::before{display:none;} .dfy-box,.pdf-btn,.live-counter,.founder-box{display:none;} .exec-card{page-break-inside:avoid;} }
+@media (max-width:480px) { .loss-number{font-size:52px;} .score-label{min-width:100px;font-size:11px;} .score-num{font-size:20px;min-width:55px;} .score-verdict{padding-left:115px;} }
 </style>
 </head>
-
 <body>
 <div class="container">
   <div id="loadingState">Loading your AI audit...</div>
   <div id="app" style="display:none;"></div>
 </div>
-
 <script>
 let email = "";
 let storeDomain = "";
 
 (async function(){
 try {
-
 const token = window.location.pathname.split("/").pop();
-if (!token || token.length < 6) {
-  document.getElementById("loadingState").innerText = "Invalid audit token.";
-  return;
-}
+if (!token || token.length < 6) { document.getElementById("loadingState").innerText = "Invalid audit token."; return; }
 
 const res = await fetch(`https://n8n-production-43ab.up.railway.app/webhook/get-audit?token=${token}`);
 if (!res.ok) { document.getElementById("loadingState").innerText = "Failed to load audit."; return; }
@@ -223,20 +183,27 @@ storeDomain = data.store_domain || data.domain || "";
 const params = new URLSearchParams(window.location.search);
 email = data.email || params.get("email") || "";
 
-// SCORES
+// SCORES — barvy podle methodology: 85+ zelená, 50-84 oranžová, 0-49 červená
 const aiScore = data.score || r.score || r.total_score || 0;
-const readiness = r.readiness_level || (aiScore >= 85 ? "Highly Recommendable" : aiScore >= 70 ? "Moderately Recommendable" : aiScore >= 50 ? "Low Recommendation Confidence" : "AI Invisible Risk");
 
-const getColor = (s) => s >= 70 ? "#1D9E75" : s >= 50 ? "#EF9F27" : "#E24B4A";
+function getColor(s) {
+  if (s >= 85) return "#1D9E75";
+  if (s >= 50) return "#EF9F27";
+  return "#E24B4A";
+}
+function getFactorColor(pct) {
+  if (pct >= 70) return "#1D9E75";
+  if (pct >= 40) return "#EF9F27";
+  return "#E24B4A";
+}
+
 const aiColor = getColor(aiScore);
 
 const aiVerdictText = aiScore >= 85
   ? `<span style="color:#1D9E75;">✓ Highly Recommendable — AI agents can confidently recommend this store</span>`
-  : aiScore >= 70
-  ? `<span style="color:#EF9F27;">⚠ Moderately Recommendable — some gaps reducing AI recommendation confidence</span>`
   : aiScore >= 50
-  ? `<span style="color:#EF9F27;">⚠ Low Recommendation Confidence — AI agents may skip this store</span>`
-  : `<span style="color:#E24B4A;">✗ AI Invisible Risk — ChatGPT and Alexa for Shopping may be skipping this store entirely</span>`;
+  ? `<span style="color:#EF9F27;">⚠ Partially Visible — AI sees this store but competitors with higher scores win more recommendations</span>`
+  : `<span style="color:#E24B4A;">✗ AI Invisible Risk — critical gaps prevent AI agents from recommending this store</span>`;
 
 // 8 FACTORS
 const schema_score    = Number(r.schema_score    || data.schema_score    || 0);
@@ -248,36 +215,66 @@ const price_score     = Number(r.price_score     || data.price_score     || 0);
 const rec_score       = Number(r.rec_score       || data.rec_score       || 0);
 const brand_score     = Number(r.brand_score     || data.brand_score     || 0);
 
-const factorHTML = (name, score, max, color) => `
-  <div class="factor-row">
+const factorHTML = (name, score, max) => {
+  const pct = max > 0 ? Math.round(score/max*100) : 0;
+  const col = getFactorColor(pct);
+  return `<div class="factor-row">
     <div class="factor-left">
       <div class="factor-name">${name}</div>
-      <div class="factor-bar"><div class="factor-fill" style="width:${Math.round(score/max*100)}%;background:${color};"></div></div>
+      <div class="factor-bar"><div class="factor-fill" style="width:${pct}%;background:${col};"></div></div>
     </div>
-    <div class="factor-score" style="color:${color};">${score}/${max}</div>
+    <div class="factor-score" style="color:${col};">${score}/${max}</div>
   </div>`;
+};
 
 const factorsHTML = [
-  factorHTML("AI Structured Signals", schema_score, 20, getColor(schema_score/20*100)),
-  factorHTML("Semantic Clarity", content_score, 18, getColor(content_score/18*100)),
-  factorHTML("AI Trust Confidence", trust_score, 18, getColor(trust_score/18*100)),
-  factorHTML("User Intent Match", intent_score, 14, getColor(intent_score/14*100)),
-  factorHTML("AI Interpretability", technical_score, 12, getColor(technical_score/12*100)),
-  factorHTML("Commerce Accuracy", price_score, 10, getColor(price_score/10*100)),
-  factorHTML("Recommendation Confidence", rec_score, 5, getColor(rec_score/5*100)),
-  factorHTML("External Authority Signals", brand_score, 3, getColor(brand_score/3*100)),
+  factorHTML("AI Structured Signals", schema_score, 20),
+  factorHTML("Semantic Clarity", content_score, 18),
+  factorHTML("AI Trust Confidence", trust_score, 18),
+  factorHTML("User Intent Match", intent_score, 14),
+  factorHTML("AI Interpretability", technical_score, 12),
+  factorHTML("Commerce Accuracy", price_score, 10),
+  factorHTML("Recommendation Confidence", rec_score, 5),
+  factorHTML("External Authority Signals", brand_score, 3),
 ].join("");
 
+// AGENTIC FILES
+const has_llms_txt    = r.has_llms_txt    || data.has_llms_txt    || false;
+const has_llms_full   = r.has_llms_full   || data.has_llms_full   || false;
+const has_agents_md   = r.has_agents_md   || data.has_agents_md   || false;
+const llms_txt_quality = r.llms_txt_quality || data.llms_txt_quality || 0;
+
+const agenticStatus = (ok) => ok
+  ? `<span class="agentic-status-ok">✅ detected</span>`
+  : `<span class="agentic-status-bad">❌ missing</span>`;
+
+const qualityText = has_llms_txt
+  ? (llms_txt_quality >= 2
+    ? "llms.txt quality: Good — content is sufficient for AI agents."
+    : llms_txt_quality === 1
+    ? "llms.txt quality: Weak — file exists but content is too thin for AI agents to use effectively."
+    : "llms.txt quality: Empty — file exists but has no usable content.")
+  : "llms.txt is missing — Shopify Agentic Dashboard is live and this store is not configured for AI agents.";
+
+const agenticHTML = `
+  <div class="agentic-box">
+    <div class="agentic-title">Shopify Agentic Files</div>
+    <div class="agentic-desc">Shopify now generates these files automatically. Missing or weak files mean AI agents can't understand, browse, or purchase from this store.</div>
+    <div class="agentic-row"><span class="agentic-file">llms.txt</span>${agenticStatus(has_llms_txt)}</div>
+    <div class="agentic-row"><span class="agentic-file">llms-full.txt</span>${agenticStatus(has_llms_full)}</div>
+    <div class="agentic-row"><span class="agentic-file">agents.md</span>${agenticStatus(has_agents_md)}</div>
+    <div class="agentic-quality">${qualityText}</div>
+  </div>`;
+
 // ISSUE CARDS
-const cardClasses     = ["exec-card-1","exec-card-2","exec-card-3","exec-card-4"];
-const priorityTexts   = ["Critical priority","High priority","Medium priority","Low priority"];
-const priorityClasses = ["priority-critical","priority-high","priority-medium","priority-low"];
+const cardClasses   = ["exec-card-1","exec-card-2","exec-card-3","exec-card-4"];
+const priorityTexts = ["Critical priority","High priority","Medium priority","Low priority"];
+const priorityCls   = ["priority-critical","priority-high","priority-medium","priority-low"];
 
 const execCardsHTML = issues.map((issue, i) => {
   const impact = Number(issue.impact_value || 0);
   const steps  = Array.isArray(issue.fix_steps) && issue.fix_steps.length > 0 ? issue.fix_steps : ["Identify the exact gap on your store","Implement the fix following the steps above","Validate the change with AI testing tools","Monitor AI recommendation signals over 7 days"];
   const stepsHTML = steps.slice(0,4).map(s => `<li class="exec-step">${String(s).replace(/</g,"&lt;")}</li>`).join("");
-  const timeline = issue.recovery_time || "1–3 days";
   return `
   <div class="exec-card ${cardClasses[i]||'exec-card-4'}">
     <div class="exec-card-header">
@@ -294,14 +291,14 @@ const execCardsHTML = issues.map((issue, i) => {
       <ul class="exec-steps">${stepsHTML}</ul>
     </div>
     <div class="exec-footer">
-      <div class="exec-timeline">⏱ ${timeline} to implement</div>
+      <div class="exec-timeline">⏱ ${issue.recovery_time||"1–3 days"} to implement</div>
       <div class="exec-impact-time">📈 AI visibility improves within 7 days</div>
-      <div class="${priorityClasses[i]||'priority-low'}">${priorityTexts[i]||"Low priority"}</div>
+      <div class="${priorityCls[i]||'priority-low'}">${priorityTexts[i]||"Low priority"}</div>
     </div>
   </div>`;
 }).join("");
 
-// EXECUTION CHECKLIST
+// CHECKLIST
 const checklist = Array.isArray(r.execution_checklist) ? r.execution_checklist : [];
 const checklistHTML = checklist.length > 0 ? checklist.map(item => `
   <div class="checklist-item">
@@ -309,25 +306,18 @@ const checklistHTML = checklist.length > 0 ? checklist.map(item => `
     <div class="checklist-priority ${item.priority||'medium'}">${(item.priority||'medium').toUpperCase()}</div>
     <div class="checklist-content">
       <div class="checklist-action">${String(item.action||"").replace(/</g,"&lt;")}</div>
-      <div class="checklist-meta">
-        ${item.estimated_time ? `⏱ ${item.estimated_time}` : ""}
-        ${item.impact ? ` · 📈 ${item.impact}` : ""}
-        &nbsp;&nbsp;
-        <span class="${item.do_yourself ? 'checklist-yourself' : 'checklist-delegate'}">${item.do_yourself ? "✓ Do yourself" : "→ Delegate"}</span>
-      </div>
+      <div class="checklist-meta">${item.estimated_time?`⏱ ${item.estimated_time}`:""}${item.impact?` · 📈 ${item.impact}`:""}&nbsp;&nbsp;<span class="${item.do_yourself?'checklist-yourself':'checklist-delegate'}">${item.do_yourself?"✓ Do yourself":"→ Delegate"}</span></div>
     </div>
   </div>`).join("") : `<div style="font-size:13px;color:#555;padding:10px 0;">Execution checklist will appear after audit generation.</div>`;
 
-// WRITTEN WALKTHROUGH
+// WALKTHROUGH
 const walkthrough = r.written_walkthrough || "";
 const walkthroughHTML = walkthrough ? walkthrough.split("## ").filter(Boolean).map(section => {
   const lines = section.split("\n");
-  const heading = lines[0] || "";
-  const body = lines.slice(1).join("\n").trim();
-  return `<div class="walkthrough-section"><div class="walkthrough-heading">${heading.replace(/</g,"&lt;")}</div><div class="walkthrough-text">${body.replace(/</g,"&lt;")}</div></div>`;
+  return `<div class="walkthrough-section"><div class="walkthrough-heading">${lines[0].replace(/</g,"&lt;")}</div><div class="walkthrough-text">${lines.slice(1).join("\n").trim().replace(/</g,"&lt;")}</div></div>`;
 }).join("") : `<div style="font-size:13px;color:#555;padding:10px 0;">Written walkthrough will appear after audit generation.</div>`;
 
-// CLAUDE PROMPTS
+// PROMPTS
 const claudePrompts = Array.isArray(r.claude_prompts) ? r.claude_prompts : [];
 const promptsHTML = claudePrompts.length > 0 ? claudePrompts.map((p, i) => `
   <div class="prompt-item">
@@ -336,11 +326,9 @@ const promptsHTML = claudePrompts.length > 0 ? claudePrompts.map((p, i) => `
     <button class="copy-btn" onclick="copyText('prompt-${i}', this)">Copy prompt</button>
   </div>`).join("") : `<div style="font-size:13px;color:#555;padding:10px 0;">Custom Claude prompts will appear after audit generation.</div>`;
 
-// LLMS.TXT
+// LLMS + SCHEMA
 const llmsTxt = r.llms_txt || "";
 const llmsTxtHTML = llmsTxt ? `<div class="code-box" id="llms-txt-box">${llmsTxt.replace(/</g,"&lt;")}</div><button class="copy-btn" style="margin-top:8px;" onclick="copyText('llms-txt-box', this)">Copy llms.txt</button>` : `<div style="font-size:13px;color:#555;padding:10px 0;">llms.txt will appear after audit generation.</div>`;
-
-// SCHEMA MARKUP
 const schemaMk = r.schema_markup || "";
 const schemaHTML = schemaMk ? `<div class="schema-code-box" id="schema-box">${schemaMk.replace(/</g,"&lt;")}</div><button class="copy-btn" style="margin-top:8px;" onclick="copyText('schema-box', this)">Copy schema markup</button>` : `<div style="font-size:13px;color:#555;padding:10px 0;">Schema markup will appear after audit generation.</div>`;
 
@@ -351,11 +339,7 @@ const app = document.getElementById("app");
 app.style.display = "block";
 
 app.innerHTML = `
-
-  <div class="audit-badge">
-    <span class="audit-badge-dot"></span>
-    AI Recommendation Audit · atomfoundry.dev
-  </div>
+  <div class="audit-badge"><span class="audit-badge-dot"></span>AI Recommendation Audit · atomfoundry.dev</div>
 
   <div class="domain-label">${storeDomain}</div>
   <div class="loss-number">$${fmt(monthly)}/month</div>
@@ -370,10 +354,9 @@ app.innerHTML = `
       <div class="score-bar-wrap"><div class="score-bar-fill" id="aiBar" style="width:0%;background:${aiColor};"></div></div>
     </div>
     <div class="score-verdict">${aiVerdictText}</div>
-    <span class="factors-toggle" onclick="toggleFactors()">▸ See all 8 AI recommendation factors</span>
-    <div class="factors-popup" id="factorsPopup">
-      <div class="factors-popup-title">8-Factor AI Recommendation Score Breakdown</div>
-      <div class="factors-popup-desc">These 8 factors determine how confidently AI shopping agents — Alexa for Shopping, ChatGPT, Google AI Mode — can understand, trust, and recommend your store.</div>
+    <div class="factors-box">
+      <div class="factors-box-title">8-Factor AI Recommendation Score Breakdown</div>
+      <div class="factors-box-desc">These 8 factors determine how confidently AI shopping agents — Alexa for Shopping, ChatGPT, Google AI Mode — can understand, trust, and recommend your store.</div>
       ${factorsHTML}
     </div>
   </div>
@@ -382,15 +365,15 @@ app.innerHTML = `
   <div class="explain-box" id="explainBox">
     <div class="explain-title">Understanding your AI Recommendation Score</div>
     <div class="explain-item"><span class="explain-highlight">85–100: Highly Recommendable</span><br>AI agents can confidently understand, trust, and recommend this store to shoppers.</div>
-    <div class="explain-item"><span class="explain-highlight">70–84: Moderately Recommendable</span><br>AI may recommend this store but with reduced confidence — competitors may score higher.</div>
-    <div class="explain-item"><span class="explain-highlight">50–69: Low Recommendation Confidence</span><br>AI agents struggle to confidently recommend this store. Significant gaps detected.</div>
-    <div class="explain-item"><span class="explain-highlight">0–49: AI Invisible Risk</span><br>AI agents may be skipping this store entirely. Urgent action needed.</div>
+    <div class="explain-item"><span class="explain-highlight">50–84: Partially Visible</span><br>AI can see this store but misses key signals. Competitors with higher scores win more recommendations.</div>
+    <div class="explain-item"><span class="explain-highlight">0–49: AI Invisible Risk</span><br>Critical gaps prevent AI agents from recommending this store. Urgent action needed.</div>
   </div>
 
+  <div class="section-label">Shopify agentic readiness</div>
+  ${agenticHTML}
+
   <div class="section-label">Biggest AI interpretation gap</div>
-  <div class="main-leak-box">
-    <div class="main-leak-text">${String(mainLeak).replace(/</g,"&lt;")}</div>
-  </div>
+  <div class="main-leak-box"><div class="main-leak-text">${String(mainLeak).replace(/</g,"&lt;")}</div></div>
 
   <div class="section-label">4 AI visibility issues — exact fixes</div>
   <div class="execution-cards">${execCardsHTML}</div>
@@ -432,18 +415,9 @@ app.innerHTML = `
 
   <div class="section-label">AI visibility gap summary</div>
   <div class="revenue-box">
-    <div class="revenue-row">
-      <span class="revenue-row-label">Monthly AI visibility gap</span>
-      <span class="revenue-row-value" style="color:#E24B4A;">$${fmt(monthly)}</span>
-    </div>
-    <div class="revenue-row">
-      <span class="revenue-row-label">Missed AI-driven revenue per day</span>
-      <span class="revenue-row-value" style="color:#EF9F27;">$${fmt(daily)}</span>
-    </div>
-    <div class="revenue-row">
-      <span class="revenue-row-label">Yearly if not fixed</span>
-      <span class="revenue-row-value" style="color:#E24B4A;">$${fmt(yearly)}</span>
-    </div>
+    <div class="revenue-row"><span class="revenue-row-label">Monthly AI visibility gap</span><span class="revenue-row-value" style="color:#E24B4A;">$${fmt(monthly)}</span></div>
+    <div class="revenue-row"><span class="revenue-row-label">Missed AI-driven revenue per day</span><span class="revenue-row-value" style="color:#EF9F27;">$${fmt(daily)}</span></div>
+    <div class="revenue-row"><span class="revenue-row-label">Yearly if not fixed</span><span class="revenue-row-value" style="color:#E24B4A;">$${fmt(yearly)}</span></div>
   </div>
 
   <a href="#" class="pdf-btn" onclick="window.print(); return false;">↓ Save Full AI Audit (PDF)</a>
@@ -470,9 +444,7 @@ app.innerHTML = `
       <li class="dfy-feature">30-day support included</li>
     </ul>
     <div class="dfy-price">One-time · <strong>$899</strong> · No ongoing commitment</div>
-    <a href="mailto:audit@atomfoundry.dev?subject=Done-For-You%20AI%20Fix%20-%20${encodeURIComponent(storeDomain)}&body=I%20would%20like%20to%20have%20my%20AI%20visibility%20gaps%20fixed.%20My%20store%3A%20${encodeURIComponent(storeDomain)}" class="dfy-cta">
-      Fix All AI Gaps For Me $899 →
-    </a>
+    <a href="mailto:audit@atomfoundry.dev?subject=Done-For-You%20AI%20Fix%20-%20${encodeURIComponent(storeDomain)}&body=I%20would%20like%20to%20have%20my%20AI%20visibility%20gaps%20fixed.%20My%20store%3A%20${encodeURIComponent(storeDomain)}" class="dfy-cta">Fix All AI Gaps For Me $899 →</a>
     <div style="font-size:11px;color:#555;text-align:center;margin-top:8px;">We'll reply within 24 hours to confirm details</div>
   </div>
 
@@ -482,10 +454,7 @@ app.innerHTML = `
   </div>
 `;
 
-setTimeout(() => {
-  const aiBar = document.getElementById("aiBar");
-  if (aiBar) aiBar.style.width = aiScore + "%";
-}, 300);
+setTimeout(() => { const b = document.getElementById("aiBar"); if (b) b.style.width = aiScore + "%"; }, 300);
 
 const hourly = Math.round(daily / 24);
 let seconds = 0;
@@ -511,20 +480,10 @@ function toggleExplain() {
   toggle.innerText = isOpen ? "▸ What does this score mean?" : "▾ What does this score mean?";
 }
 
-function toggleFactors() {
-  const popup = document.getElementById("factorsPopup");
-  const link = document.querySelector(".factors-toggle");
-  if (!popup) return;
-  const isOpen = popup.classList.contains("open");
-  popup.classList.toggle("open");
-  link.innerText = isOpen ? "▸ See all 8 AI recommendation factors" : "▾ See all 8 AI recommendation factors";
-}
-
 function copyText(id, btn) {
   const el = document.getElementById(id);
   if (!el) return;
-  const text = el.innerText || el.textContent;
-  navigator.clipboard.writeText(text).then(() => {
+  navigator.clipboard.writeText(el.innerText || el.textContent).then(() => {
     const orig = btn.innerText;
     btn.innerText = "✓ Copied!";
     btn.style.color = "#4ade80";
