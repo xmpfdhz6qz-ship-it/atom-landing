@@ -71,19 +71,20 @@ body::before {
   pointer-events: none; z-index: 0;
 }
 
-/* NAV */
-.navbar {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(8,8,8,0.92); backdrop-filter: blur(16px);
-  border-bottom: 1px solid #1e1e1e;
-  padding: 14px 32px;
-  display: flex; align-items: center; justify-content: space-between;
+/* NAV — landing page style */
+.nav {
+  padding: 20px 28px;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-logo img { width: 28px; height: 28px; border-radius: 50%; }
-.nav-brand { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
-.nav-brand span { color: #f97316; }
-.nav-links { display: flex; align-items: center; gap: 6px; }
+.nav-brand { display: flex; flex-direction: column; gap: 2px; }
+.nav-logo { font-weight: 800; font-size: 18px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: #f97316; }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .nav-links a {
   font-size: 13px; color: #999; text-decoration: none;
   border: 1px solid #1e1e1e; padding: 6px 14px;
@@ -91,13 +92,8 @@ body::before {
 }
 .nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
 .nav-links a.active { color: #f97316; border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.05); }
-.nav-cta {
-  background: #f97316; color: #000; font-weight: 700;
-  font-size: 13px; padding: 8px 18px; border-radius: 8px;
-  text-decoration: none; transition: all 0.2s;
-}
-.nav-cta:hover { background: #ea580c; }
-@media (max-width: 640px) { .nav-links { display: none; } .navbar { padding: 12px 20px; } }
+.nav-links a.research-link { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+@media (max-width: 640px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { justify-content: flex-start; } }
 
 /* LAYOUT */
 .page { position: relative; z-index: 1; }
@@ -110,11 +106,8 @@ body::before {
   letter-spacing: 0.12em; font-weight: 700; margin-bottom: 16px;
   display: flex; align-items: center; gap: 8px;
 }
-.hero-kicker-dot {
-  width: 5px; height: 5px; background: #f97316;
-  border-radius: 50%; animation: blink 2s infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+
 .hero h1 {
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 800; line-height: 1.1;
@@ -356,19 +349,18 @@ body::before {
 <body>
 <div class="page">
 
-<nav class="navbar">
-  <a href="/" class="nav-logo">
-    <img src="/favicon-32x32.png" alt="Atom Foundry">
-    <span class="nav-brand">ATOM <span>FOUNDRY</span></span>
-  </a>
-  <div class="nav-links">
-    <a href="/" class="nav-link">Home</a>
-    <a href="/stores" class="nav-link">Stores</a>
-    <a href="/geo" class="nav-link">GEO</a>
-    <a href="/methodology" class="nav-link">Methodology</a>
-    <a href="/research" class="nav-link active">Research</a>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
   </div>
-  <a href="/" class="nav-cta">Free Scan</a>
+  <div class="nav-links">
+    <a href="/" class="nav-links">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/methodology">How we score</a>
+    <a href="/geo">GEO</a>
+    <a href="/research" class="active research-link">Research</a>
+  </div>
 </nav>
 
 <div class="page">
@@ -376,7 +368,7 @@ body::before {
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-kicker"><span class="hero-kicker-dot"></span>Atom Foundry Research</div>
+    <div class="hero-kicker">Research</div>
     <h1>What we found after scanning<br><em>thousands of real stores</em></h1>
     <p class="hero-sub">We run automated scans on Shopify and DTC stores to understand how AI shopping agents actually read, evaluate, and recommend them. The data is live, continuously updated, and ours alone.</p>
   </div>
