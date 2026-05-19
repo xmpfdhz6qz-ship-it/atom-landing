@@ -29,7 +29,7 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .factors-box-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
 .factors-box-desc { font-size:12px; color:#666; line-height:1.5; margin-bottom:14px; }
 .factor-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #141414; }
-.factor-row:last-of-type { border-bottom:none; }
+.factor-row:last-child { border-bottom:none; }
 .factor-left { flex:1; }
 .factor-name { font-size:13px; color:#aaa; margin-bottom:4px; }
 .factor-bar { height:4px; background:#1a1a1a; border-radius:999px; overflow:hidden; }
@@ -40,14 +40,14 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .explain-box { display:none; background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; font-size:13px; color:#aaa; line-height:1.8; }
 .explain-box.open { display:block; }
 .explain-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:12px; }
-.explain-item { margin-bottom:10px; padding-left:4px; }
+.explain-item { margin-bottom:10px; }
 .explain-highlight { color:#f97316; font-weight:600; }
 .section-label { font-size:10px; color:#777; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
 .section-label::after { content:""; flex:1; height:1px; background:#1a1a1a; }
 .main-leak-box { background:#111; border:1px solid #1e1e1e; border-left:3px solid #E24B4A; border-radius:12px; padding:16px 18px; margin-bottom:24px; }
 .main-leak-text { font-size:16px; color:#e8e8e8; font-weight:500; line-height:1.6; }
 /* AGENTIC BOX */
-.agentic-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:14px; padding:18px 20px; margin-bottom:20px; }
+.agentic-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
 .agentic-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
 .agentic-desc { font-size:12px; color:#666; margin-bottom:14px; }
 .agentic-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #141414; }
@@ -183,7 +183,6 @@ storeDomain = data.store_domain || data.domain || "";
 const params = new URLSearchParams(window.location.search);
 email = data.email || params.get("email") || "";
 
-// SCORES — barvy podle methodology: 85+ zelená, 50-84 oranžová, 0-49 červená
 const aiScore = data.score || r.score || r.total_score || 0;
 
 function getColor(s) {
@@ -199,13 +198,36 @@ function getFactorColor(pct) {
 
 const aiColor = getColor(aiScore);
 
+// v2.0 — 4 tiers + fallback for old DB values
+function getStatusBadge(score, level) {
+  const map = {
+    'highly_recommendable':          { cls:"badge-high",     dot:"🟢", text:"Highly Recommendable" },
+    'moderately_recommendable':      { cls:"badge-medium",   dot:"🟡", text:"Moderately Recommendable" },
+    'low_recommendation_confidence': { cls:"badge-medium",   dot:"🟡", text:"Low Recommendation Confidence" },
+    'ai_invisible_risk':             { cls:"badge-invisible", dot:"🔴", text:"AI Invisible Risk" },
+    'ai_ready':    { cls:"badge-high",     dot:"🟢", text:"Highly Recommendable" },
+    'ai_partial':  { cls:"badge-medium",   dot:"🟡", text:"Partially Visible" },
+    'ai_invisible':{ cls:"badge-invisible",dot:"🔴", text:"AI Invisible Risk" },
+  };
+  if (level && map[level]) return map[level];
+  if (score >= 85) return { cls:"badge-high",     dot:"🟢", text:"Highly Recommendable" };
+  if (score >= 70) return { cls:"badge-medium",   dot:"🟡", text:"Moderately Recommendable" };
+  if (score >= 50) return { cls:"badge-medium",   dot:"🟡", text:"Low Recommendation Confidence" };
+  return                  { cls:"badge-invisible", dot:"🔴", text:"AI Invisible Risk" };
+}
+
+const statusBadge = getStatusBadge(aiScore, data.readiness_level || r.readiness_level || '');
+
+// v2.0 verdict
 const aiVerdictText = aiScore >= 85
   ? `<span style="color:#1D9E75;">✓ Highly Recommendable — AI agents can confidently recommend this store</span>`
+  : aiScore >= 70
+  ? `<span style="color:#EF9F27;">◑ Moderately Recommendable — AI recommends this store but stronger signals win more traffic</span>`
   : aiScore >= 50
-  ? `<span style="color:#EF9F27;">⚠ Partially Visible — AI sees this store but competitors with higher scores win more recommendations</span>`
+  ? `<span style="color:#EF9F27;">⚠ Low Recommendation Confidence — AI sees this store but competitors with higher scores win</span>`
   : `<span style="color:#E24B4A;">✗ AI Invisible Risk — critical gaps prevent AI agents from recommending this store</span>`;
 
-// 8 FACTORS
+// 8 FACTORS v2.0
 const schema_score    = Number(r.schema_score    || data.schema_score    || 0);
 const content_score   = Number(r.content_score   || data.content_score   || 0);
 const trust_score     = Number(r.trust_score     || data.trust_score     || 0);
@@ -228,20 +250,20 @@ const factorHTML = (name, score, max) => {
 };
 
 const factorsHTML = [
-  factorHTML("AI Structured Signals", schema_score, 20),
-  factorHTML("Semantic Clarity", content_score, 18),
-  factorHTML("AI Trust Confidence", trust_score, 18),
-  factorHTML("User Intent Match", intent_score, 14),
-  factorHTML("AI Interpretability", technical_score, 12),
-  factorHTML("Commerce Accuracy", price_score, 10),
-  factorHTML("Recommendation Confidence", rec_score, 5),
-  factorHTML("External Authority Signals", brand_score, 3),
+  factorHTML("AI Structured Signals",    schema_score,    20),
+  factorHTML("Semantic Clarity",          content_score,   18),
+  factorHTML("AI Trust Confidence",       trust_score,     18),
+  factorHTML("User Intent Match",         intent_score,    14),
+  factorHTML("AI Interpretability",       technical_score, 12),
+  factorHTML("Commerce Accuracy",         price_score,     10),
+  factorHTML("Recommendation Confidence", rec_score,        5),
+  factorHTML("External Authority Signals",brand_score,      3),
 ].join("");
 
 // AGENTIC FILES
-const has_llms_txt    = r.has_llms_txt    || data.has_llms_txt    || false;
-const has_llms_full   = r.has_llms_full   || data.has_llms_full   || false;
-const has_agents_md   = r.has_agents_md   || data.has_agents_md   || false;
+const has_llms_txt     = r.has_llms_txt     || data.has_llms_txt     || false;
+const has_llms_full    = r.has_llms_full    || data.has_llms_full    || false;
+const has_agents_md    = r.has_agents_md    || data.has_agents_md    || false;
 const llms_txt_quality = r.llms_txt_quality || data.llms_txt_quality || 0;
 
 const agenticStatus = (ok) => ok
@@ -365,7 +387,8 @@ app.innerHTML = `
   <div class="explain-box" id="explainBox">
     <div class="explain-title">Understanding your AI Recommendation Score</div>
     <div class="explain-item"><span class="explain-highlight">85–100: Highly Recommendable</span><br>AI agents can confidently understand, trust, and recommend this store to shoppers.</div>
-    <div class="explain-item"><span class="explain-highlight">50–84: Partially Visible</span><br>AI can see this store but misses key signals. Competitors with higher scores win more recommendations.</div>
+    <div class="explain-item"><span class="explain-highlight">70–84: Moderately Recommendable</span><br>AI recommends this store but stronger signals would win more traffic and recommendations.</div>
+    <div class="explain-item"><span class="explain-highlight">50–69: Low Recommendation Confidence</span><br>AI can see this store but misses key signals. Competitors with higher scores win more recommendations.</div>
     <div class="explain-item"><span class="explain-highlight">0–49: AI Invisible Risk</span><br>Critical gaps prevent AI agents from recommending this store. Urgent action needed.</div>
   </div>
 
@@ -464,6 +487,25 @@ setInterval(() => {
   const lost = Math.round((hourly / 3600) * seconds);
   if (counter) counter.innerText = `$${lost.toLocaleString("en-US")} in missed AI-driven revenue while you are reading this`;
 }, 1000);
+
+async function goCheckout(btn) {
+  if (!btn) return;
+  const orig = btn.innerText;
+  btn.innerText = "Redirecting to checkout...";
+  btn.style.opacity = "0.75";
+  try {
+    const res = await fetch("https://n8n-production-43ab.up.railway.app/webhook/create-checkout", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ domain:storeDomain || "", email:email || "" })
+    });
+    const d = await res.json();
+    if (!d.url) { alert("Checkout error — please try again."); btn.innerText = orig; btn.style.opacity = "1"; return; }
+    window.location.href = d.url;
+  } catch(err) {
+    alert("Something went wrong. Please try again.");
+    btn.innerText = orig; btn.style.opacity = "1";
+  }
+}
 
 } catch (err) {
   console.error("FATAL:", err);
