@@ -196,7 +196,7 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
   align-items: center;
   gap: 0;
 }
-.data-strip-num { font-size: 28px; font-weight: 800; color: #f97316; line-height: 1; }
+.data-strip-num { font-size: 26px; font-weight: 800; color: #f97316; line-height: 1; }
 .data-strip-label { font-size: 12px; color: #888; margin-top: 3px; }
 .data-strip-divider { width: 1px; height: 40px; background: #1e1e1e; flex-shrink: 0; }
 
@@ -223,13 +223,27 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
 .shift-flow:last-child { margin-bottom: 0; }
 .flow-node {
   background: #1a1a1a; border: 1px solid #222;
-  border-radius: 8px; padding: 7px 14px;
+  border-radius: 8px; padding: 8px 16px;
   font-size: 13px; color: #777; font-weight: 500;
+  min-width: 110px; text-align: center;
 }
-.flow-node.active {
-  background: rgba(249,115,22,0.1);
-  border-color: rgba(249,115,22,0.3);
-  color: #f97316; font-weight: 700;
+.flow-old-prefix {
+  background: rgba(255,255,255,0.04); border: 1px solid #2a2a2a;
+  color: #888; font-weight: 700;
+  min-width: 70px;
+}
+.flow-old {
+  background: rgba(255,255,255,0.03); border: 1px solid #222;
+  color: #888;
+}
+.flow-new-prefix {
+  background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.25);
+  color: #1D9E75; font-weight: 700;
+  min-width: 70px;
+}
+.flow-new {
+  background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2);
+  color: #fb923c; font-weight: 600;
 }
 .flow-arrow { color: #333; font-size: 14px; }
 .shift-note { font-size: 13px; color: #999; line-height: 1.7; padding-top: 16px; border-top: 1px solid #161616; margin-top: 16px; }
@@ -291,7 +305,7 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
 .fpfp-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 32px; margin-top: 24px; }
 .fpfp-row { display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; }
 .fpfp-step { position: relative; padding: 10px 14px; cursor: default; text-align: center; }
-.fpfp-step-label { font-size: 14px; font-weight: 800; color: #f97316; }
+.fpfp-step-label { font-size: 18px; font-weight: 800; color: #f97316; }
 .fpfp-tip {
   position: absolute; bottom: calc(100% + 10px); left: 50%;
   transform: translateX(-50%) translateY(6px);
@@ -301,14 +315,14 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
   opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 99;
   white-space: normal;
 }
-.fpfp-step-desc { font-size: 11px; color: #888; margin-top: 3px; }
+.fpfp-step-desc { font-size: 13px; color: #999; margin-top: 5px; }
 .fpfp-arrow { color: #333; font-size: 16px; padding: 0 2px; }
 
 /* STEPS */
 .steps-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 32px; }
 .step-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 18px; text-align: center; }
-.step-num { font-size: 28px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 8px; }
-.step-text { font-size: 13px; color: #999; line-height: 1.5; }
+.step-num { font-size: 40px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 10px; }
+.step-text { font-size: 15px; color: #999; line-height: 1.5; }
 
 /* CTA SECTION */
 .cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin-top: 32px; }
@@ -461,17 +475,17 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
       <div class="data-strip-divider"></div>
       <div>
         <div class="data-strip-num">52%</div>
-        <div class="data-strip-label">Score below 50, AI Invisible Risk</div>
+        <div class="data-strip-label">AI Invisible Risk</div>
       </div>
       <div class="data-strip-divider"></div>
       <div>
         <div class="data-strip-num">45/100</div>
-        <div class="data-strip-label">Average AI Readiness Score</div>
+        <div class="data-strip-label">Avg. AI Readiness Score</div>
       </div>
       <div class="data-strip-divider"></div>
       <div>
         <div class="data-strip-num">0%</div>
-        <div class="data-strip-label">Highly Recommendable stores</div>
+        <div class="data-strip-label">Highly Recommendable</div>
       </div>
     </div>
 
@@ -486,22 +500,26 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
       <p class="section-body">The old customer journey ran through Google. The new one runs through AI. Shopify confirmed it in May 2026: your store is becoming a product database for AI agents. The question is whether that database is readable.</p>
       <div class="shift-box">
         <div class="shift-flow">
-          <div class="flow-node">Today: Human</div>
+          <div class="flow-node flow-old-prefix">Today</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node">Google</div>
+          <div class="flow-node flow-old">Human</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node">Store</div>
+          <div class="flow-node flow-old">Google</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node">Checkout</div>
+          <div class="flow-node flow-old">Store</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node flow-old">Checkout</div>
         </div>
         <div class="shift-flow">
-          <div class="flow-node active">New: Human</div>
+          <div class="flow-node flow-new-prefix">New</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node active">ChatGPT or Alexa</div>
+          <div class="flow-node flow-new">Human</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node active">AI picks store</div>
+          <div class="flow-node flow-new">ChatGPT or Alexa</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node active">AI buys</div>
+          <div class="flow-node flow-new">AI picks store</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node flow-new">AI buys</div>
         </div>
         <div class="shift-note">Shopify is building <strong>Agentic Storefronts</strong> designed for AI agents. Stores that AI cannot read will be bypassed entirely as this model scales.</div>
       </div>
