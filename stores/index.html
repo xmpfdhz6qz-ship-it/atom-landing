@@ -45,6 +45,18 @@
     .refresh-btn { height: 44px; width: 44px; background: #0A0A0A; border: 1px solid #333; border-radius: 12px; color: #f97316; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
     .refresh-btn:hover { border-color: #f97316; background: rgba(249,115,22,0.08); }
     .refresh-btn svg { width: 14px; height: 14px; }
+
+    /* REGION FILTER */
+    .region-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
+    .region-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 10px; display: block; }
+    .region-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .region-pill { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 700; border: 1px solid #2a2a2a; background: #0d0d0d; color: #888; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-family: inherit; user-select: none; }
+    .region-pill:hover { border-color: #f97316; color: #ddd; }
+    .region-pill.active { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.5); color: #f97316; }
+    .region-pill .flag { font-size: 16px; }
+    .region-pill .rpcount { font-size: 10px; opacity: 0.6; font-weight: 500; }
+
+    /* NICHE FILTER */
     .niche-box { background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
     .niche-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 10px; display: block; }
     .niche-pills { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -52,6 +64,7 @@
     .niche-pill:hover { border-color: #f97316; color: #ddd; }
     .niche-pill.active { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.5); color: #f97316; }
     .pill-count { font-size: 10px; opacity: 0.6; }
+
     .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; min-height: 22px; }
     .status { color: #666; font-size: 12px; }
     .clear-btn { font-size: 11px; color: #f97316; cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; display: none; }
@@ -105,6 +118,8 @@
       .stats-bar { gap: 14px; padding: 14px 12px; }
       .stat-num { font-size: 19px; }
       .header-tagline { display: none; }
+      .region-pills { gap: 6px; }
+      .region-pill { padding: 7px 14px; font-size: 12px; }
     }
   </style>
 </head>
@@ -153,6 +168,18 @@
     </button>
   </div>
 
+  <!-- REGION FILTER -->
+  <div class="region-box">
+    <span class="region-label">Filter by region</span>
+    <div class="region-pills" id="region-pills">
+      <button class="region-pill active" data-region="all"><span class="flag">🌍</span> All <span class="rpcount" id="rc-all">0</span></button>
+      <button class="region-pill" data-region="usa"><span class="flag">🇺🇸</span> USA <span class="rpcount" id="rc-usa">0</span></button>
+      <button class="region-pill" data-region="canada"><span class="flag">🇨🇦</span> Canada <span class="rpcount" id="rc-canada">0</span></button>
+      <button class="region-pill" data-region="europe"><span class="flag">🇪🇺</span> Europe <span class="rpcount" id="rc-europe">0</span></button>
+    </div>
+  </div>
+
+  <!-- NICHE FILTER -->
   <div class="niche-box">
     <span class="niche-label">Filter by niche</span>
     <div class="niche-pills" id="niche-pills">
@@ -206,7 +233,10 @@
 </div>
 <script>
   const STORES_API_URL = "https://n8n-production-1d7c.up.railway.app/webhook/stores";
-  const state = { stores: [], query: "", sort: "newest", niche: "all" };
+
+  const EU_COUNTRIES = new Set(['CZ','SK','DE','AT','CH','PL','HU','RO','FR','IT','ES','NL','BE','SE','DK','FI','NO','PT','GB']);
+
+  const state = { stores: [], query: "", sort: "newest", niche: "all", region: "all" };
   const listEl   = document.getElementById("stores-list");
   const statusEl = document.getElementById("status");
   const searchEl = document.getElementById("search");
@@ -226,19 +256,21 @@
     jewelry:  ["jewelry","jewellery","ring","necklace","bracelet","earring","pendant","diamond","gold","silver","platinum","gem","crystal","watch","luxury","bead","charm","locket","brooch","tiara","cufflink","signet"]
   };
 
-  // Detekce niche podle domény A store_name
   function detectNiche(store) {
-    const txt = [
-      store.domain,
-      store.store_name || "",
-      store.readiness || "",
-      store.platform || ""
-    ].join(" ").toLowerCase();
-
+    const txt = [store.domain, store.store_name || "", store.readiness || "", store.platform || ""].join(" ").toLowerCase();
     for (const [niche, kws] of Object.entries(NICHES)) {
       if (kws.some(k => txt.includes(k))) return niche;
     }
     return "other";
+  }
+
+  function getRegion(country) {
+    if (!country) return 'other';
+    const c = country.toUpperCase();
+    if (c === 'US') return 'usa';
+    if (c === 'CA') return 'canada';
+    if (EU_COUNTRIES.has(c)) return 'europe';
+    return 'other';
   }
 
   function normalizeStore(raw) {
@@ -253,14 +285,29 @@
       readiness: raw.readiness_level || ""
     };
     store.niche = detectNiche(store);
+    store.region = getRegion(store.country);
     return store;
   }
 
-  // Barvy podle methodology: 85+ zelená, 50-84 oranžová, 0-49 červená
+  // v2.0 thresholds: 85+ green, 50-84 orange, 0-49 red
   function scoreClass(s) {
     if (s >= 85) return "green";
     if (s >= 50) return "orange";
     return "red";
+  }
+
+  // v2.0 readiness label mapping
+  function getLevelLabel(level) {
+    const map = {
+      'highly_recommendable':          'Highly Recommendable',
+      'moderately_recommendable':      'Moderately Recommendable',
+      'low_recommendation_confidence': 'Low Rec. Confidence',
+      'ai_invisible_risk':             'AI Invisible Risk',
+      'ai_ready':                      'Highly Recommendable',
+      'ai_partial':                    'Partially Visible',
+      'ai_invisible':                  'AI Invisible Risk'
+    };
+    return map[level] || level.replace(/_/g, ' ');
   }
 
   function formatDate(v) {
@@ -268,6 +315,14 @@
     const d = new Date(v);
     if (isNaN(d.getTime())) return String(v).slice(0,10);
     return d.toISOString().slice(0,10);
+  }
+
+  // Filtered stores based on region + niche
+  function getRegionFiltered() {
+    return state.stores.filter(s => {
+      if (state.region === 'all') return true;
+      return s.region === state.region;
+    });
   }
 
   function updateStats() {
@@ -279,21 +334,34 @@
     document.getElementById("stat-low").textContent  = all.filter(s => s.score < 30).length;
   }
 
-  function updatePillCounts() {
-    document.getElementById("c-all").textContent = state.stores.length;
+  function updateRegionCounts() {
+    document.getElementById("rc-all").textContent    = state.stores.length;
+    document.getElementById("rc-usa").textContent    = state.stores.filter(s => s.region === 'usa').length;
+    document.getElementById("rc-canada").textContent = state.stores.filter(s => s.region === 'canada').length;
+    document.getElementById("rc-europe").textContent = state.stores.filter(s => s.region === 'europe').length;
+  }
+
+  function updateNicheCounts() {
+    // Counts based on currently selected region
+    const regionStores = getRegionFiltered();
+    document.getElementById("c-all").textContent = regionStores.length;
     for (const niche of Object.keys(NICHES)) {
       const el = document.getElementById("c-" + niche);
-      if (el) el.textContent = state.stores.filter(s => s.niche === niche).length;
+      if (el) el.textContent = regionStores.filter(s => s.niche === niche).length;
     }
-    document.getElementById("c-other").textContent = state.stores.filter(s => s.niche === "other").length;
+    document.getElementById("c-other").textContent = regionStores.filter(s => s.niche === "other").length;
   }
 
   function renderStores() {
     const query = state.query.toLowerCase();
     let stores = state.stores.filter(s => {
       const txt = [s.domain, s.store_name, s.country, s.platform, s.readiness].join(" ").toLowerCase();
-      return (!query || txt.includes(query)) && (state.niche === "all" || s.niche === state.niche);
+      const matchQuery  = !query || txt.includes(query);
+      const matchRegion = state.region === 'all' || s.region === state.region;
+      const matchNiche  = state.niche === 'all' || s.niche === state.niche;
+      return matchQuery && matchRegion && matchNiche;
     });
+
     stores = stores.sort((a,b) => {
       if (state.sort === "best")  return b.score - a.score;
       if (state.sort === "worst") return a.score - b.score;
@@ -302,7 +370,7 @@
     });
 
     listEl.innerHTML = "";
-    const hasFilter = query || state.niche !== "all";
+    const hasFilter = query || state.region !== "all" || state.niche !== "all";
     clearBtn.classList.toggle("visible", hasFilter);
 
     if (!stores.length) {
@@ -323,10 +391,11 @@
       const storeNameHtml = store.store_name && store.store_name !== store.domain
         ? `<div class="store-name-label">${store.store_name}</div>`
         : "";
+      const readinessLabel = store.readiness ? getLevelLabel(store.readiness) : '';
       a.innerHTML = `<div class="card-inner"><div>
         <div class="domain">${store.domain}</div>
         ${storeNameHtml}
-        ${store.readiness ? `<div class="readiness">${store.readiness.replaceAll("_"," ")}</div>` : ""}
+        ${readinessLabel ? `<div class="readiness">${readinessLabel}</div>` : ""}
         <div class="card-tags">
           ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
           ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
@@ -356,7 +425,8 @@
       const rows = Array.isArray(data) ? data : (data.stores || []);
       state.stores = rows.map(normalizeStore).filter(s => s.domain);
       updateStats();
-      updatePillCounts();
+      updateRegionCounts();
+      updateNicheCounts();
       renderStores();
     } catch (err) {
       statusEl.textContent = "Could not load data.";
@@ -364,6 +434,22 @@
     }
   }
 
+  // Region filter
+  document.getElementById("region-pills").addEventListener("click", e => {
+    const pill = e.target.closest(".region-pill");
+    if (!pill) return;
+    document.querySelectorAll(".region-pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    state.region = pill.dataset.region;
+    // Reset niche when region changes
+    state.niche = "all";
+    document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
+    document.querySelector('[data-niche="all"]').classList.add("active");
+    updateNicheCounts();
+    renderStores();
+  });
+
+  // Niche filter
   document.getElementById("niche-pills").addEventListener("click", e => {
     const pill = e.target.closest(".niche-pill");
     if (!pill) return;
@@ -372,16 +458,22 @@
     state.niche = pill.dataset.niche;
     renderStores();
   });
+
   searchEl.addEventListener("input",  e => { state.query = e.target.value; renderStores(); });
   sortEl.addEventListener("change",   e => { state.sort  = e.target.value; renderStores(); });
   document.getElementById("refresh").addEventListener("click", loadStores);
+
   clearBtn.addEventListener("click", () => {
-    state.query = ""; state.niche = "all";
+    state.query = ""; state.niche = "all"; state.region = "all";
     searchEl.value = "";
     document.querySelectorAll(".niche-pill").forEach(p => p.classList.remove("active"));
     document.querySelector('[data-niche="all"]').classList.add("active");
+    document.querySelectorAll(".region-pill").forEach(p => p.classList.remove("active"));
+    document.querySelector('[data-region="all"]').classList.add("active");
+    updateNicheCounts();
     renderStores();
   });
+
   loadStores();
 </script>
 </body>
