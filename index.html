@@ -196,9 +196,9 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
   </div>
 
   <div class="stats-bar">
-    <div class="stat-item"><div class="stat-num" id="statStores">1,085</div><div class="stat-label">stores analyzed</div></div>
+    <div class="stat-item"><div class="stat-num" id="statStores">—</div><div class="stat-label">stores analyzed</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num" id="statIssues">5,392</div><div class="stat-label">AI issues found</div></div>
+    <div class="stat-item"><div class="stat-num" id="statIssues">—</div><div class="stat-label">AI issues found</div></div>
     <div class="stat-divider"></div>
     <div class="stat-item"><div class="stat-num">10s</div><div class="stat-label">to see results</div></div>
   </div>
@@ -213,7 +213,7 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
   <p class="sub">Being visible to AI is not the same as being recommended by AI. See exactly where your store falls short and what it's costing you.</p>
 
   <div class="positioning">
-    We analyze how AI shopping systems <strong style="color:#e8e8e8;">interpret and recommend</strong> your store — across 8 factors that determine whether AI chooses you or your competitor.
+    We analyze how AI shopping systems <strong style="color:#e8e8e8;">interpret and recommend</strong> your store across 8 factors that determine whether AI chooses you or your competitor.
   </div>
 
   <div class="box">
@@ -231,7 +231,7 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
       <div class="proof-line" id="proofLine">⚡ Avg. AI visibility gap found: $2,750/month</div>
       <div style="margin-top:14px;background:#0a1a0a;border:1px solid #1a2e1a;border-left:3px solid #1D9E75;border-radius:10px;padding:12px 14px;font-size:13px;color:#aaa;line-height:1.6;text-align:left;">
         <div style="font-size:10px;color:#1D9E75;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">✓ Founder note</div>
-        I scan every store manually and review the AI analysis myself. You get a real report — not a generic checklist.
+        I scan every store manually and review the AI analysis myself. You get a real report, not a generic checklist.
       </div>
     </form>
   </div>
@@ -342,7 +342,7 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
       <div class="was-bar-wrap"><div class="was-bar-fill" style="width:45%;background:#EF9F27;"></div></div>
       <div class="was-score" style="color:#EF9F27;">Partial</div>
     </div>
-    <div style="margin-top:14px;font-size:12px;color:#555;text-align:center;font-style:italic;">Average scores across 1,085 scanned DTC stores · May 2026</div>
+    <div style="margin-top:14px;font-size:12px;color:#555;text-align:center;font-style:italic;" id="wasDate">Average scores across scanned DTC stores · May 2026</div>
   </div>
 
   <div class="ai-contrast">
@@ -425,8 +425,8 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 
   <div class="footer">
     <div class="footer-scan-line">
-      <span id="footerStores">1,085</span> DTC stores analyzed &nbsp;·&nbsp;
-      $<span id="footerLeaks">1,041</span>k in AI gaps found &nbsp;·&nbsp; atomfoundry.dev<br>
+      <span id="footerStores">—</span> DTC stores analyzed &nbsp;·&nbsp;
+      $<span id="footerLeaks">—</span>k in AI gaps found &nbsp;·&nbsp; atomfoundry.dev<br>
       <a href="/terms-of-service.html">Terms</a> &nbsp;&amp;&nbsp;
       <a href="/privacy-policy.html">Privacy</a>
     </div>
@@ -445,10 +445,13 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
     const count = rows.filter(r => (r.domain || r.store_domain || "")).length;
     const issues = Math.round(count * 4.97);
     const leaksTotal = Math.round(count * 0.96);
-    document.getElementById('statStores').innerText = count.toLocaleString('en-US');
-    document.getElementById('statIssues').innerText = issues.toLocaleString('en-US');
-    document.getElementById('footerStores').innerText = count.toLocaleString('en-US');
-    document.getElementById('footerLeaks').innerText = leaksTotal.toLocaleString('en-US');
+    if (count > 0) {
+      document.getElementById('statStores').innerText = count.toLocaleString('en-US');
+      document.getElementById('statIssues').innerText = issues.toLocaleString('en-US');
+      document.getElementById('footerStores').innerText = count.toLocaleString('en-US');
+      document.getElementById('footerLeaks').innerText = leaksTotal.toLocaleString('en-US');
+      document.getElementById('wasDate').innerText = `Average scores across ${count.toLocaleString('en-US')} scanned DTC stores · May 2026`;
+    }
   } catch(e) {}
 })();
 
