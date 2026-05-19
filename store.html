@@ -57,6 +57,11 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 .score-bar-wrap { flex:1; height:7px; background:#1e1e1e; border-radius:999px; overflow:hidden; }
 .score-bar-fill { height:100%; border-radius:999px; transition:width 1s ease; }
 .score-verdict { font-size:12px; font-weight:600; margin-bottom:16px; padding-left:124px; line-height:1.4; }
+.loss-block { background:#0d0d0d; border:1px solid #1e1e1e; border-left:3px solid #E24B4A; border-radius:12px; padding:14px 18px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.loss-block-label { font-size:11px; color:#888; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:4px; }
+.loss-block-amount { font-size:28px; font-weight:800; color:#E24B4A; line-height:1; }
+.loss-block-amount span { font-size:14px; color:#888; font-weight:400; }
+.loss-block-icon { font-size:32px; flex-shrink:0; }
 .breakdown-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:18px 20px; margin-bottom:20px; }
 .breakdown-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:6px; }
 .breakdown-desc { font-size:13px; color:#777; line-height:1.6; margin-bottom:16px; }
@@ -132,6 +137,7 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
 @media (max-width:480px) {
   .score-label{min-width:90px;font-size:11px;} .score-num{font-size:20px;min-width:55px;} .score-verdict{padding-left:100px;}
   .signals-grid{grid-template-columns:1fr;} .stats-grid{grid-template-columns:1fr;} .cta-btn{font-size:15px;padding:18px;} .store-title{font-size:22px;}
+  .loss-block{flex-direction:column;align-items:flex-start;gap:8px;} .loss-block-icon{display:none;}
 }
 </style>
 </head>
@@ -187,11 +193,20 @@ body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%;
     <div class="score-verdict" id="aiVerdict"></div>
   </div>
 
+  <div id="lossBlock" style="display:none;" class="loss-block">
+    <div>
+      <div class="loss-block-label">Estimated monthly revenue at risk</div>
+      <div class="loss-block-amount" id="lossAmount">--<span>/month</span></div>
+    </div>
+    <div class="loss-block-icon">💸</div>
+  </div>
+
   <div class="explain-toggle" onclick="toggleExplain()">▸ What does this score mean?</div>
   <div class="explain-box" id="explainBox">
     <div class="explain-title">Understanding the AI Recommendation Score</div>
     <div class="explain-item"><span class="explain-highlight">85–100: Highly Recommendable</span><br>AI agents can clearly understand, trust, and recommend this store to shoppers.</div>
-    <div class="explain-item"><span class="explain-highlight">50–84: Partially Visible</span><br>AI can see the store but misses key signals. Competitors with higher scores are winning more customers.</div>
+    <div class="explain-item"><span class="explain-highlight">70–84: Moderately Recommendable</span><br>AI recommends this store but stronger signals would win more traffic and recommendations.</div>
+    <div class="explain-item"><span class="explain-highlight">50–69: Low Recommendation Confidence</span><br>AI can see the store but misses key signals. Competitors with higher scores win more customers.</div>
     <div class="explain-item"><span class="explain-highlight">0–49: AI Invisible Risk</span><br>Critical gaps prevent AI agents from recommending this store. Urgent action needed.</div>
   </div>
 
@@ -293,31 +308,42 @@ function getDomain() {
   return idx >= 0 && parts[idx + 1] ? decodeURIComponent(parts[idx + 1]).toLowerCase().replace(/^www\./, '') : '';
 }
 
-// Barvy podle methodology: 85+ zelená, 50-84 oranžová, 0-49 červená
 function getColor(score) {
   if (score >= 85) return '#1D9E75';
   if (score >= 50) return '#EF9F27';
   return '#E24B4A';
 }
 
-// Pro faktory — granularnější
 function getFactorColor(pct) {
   if (pct >= 70) return '#1D9E75';
   if (pct >= 40) return '#EF9F27';
   return '#E24B4A';
 }
 
-// Badge podle methodology thresholds
-function getAiStatusBlock(score) {
-  if (score >= 85) return { cls:'high',   dot:'🟢', label:'HIGHLY RECOMMENDABLE',  text:'AI agents can clearly understand, trust, and recommend this store to shoppers.' };
-  if (score >= 50) return { cls:'medium', dot:'🟡', label:'PARTIALLY VISIBLE',      text:'AI can see this store but misses key signals. Competitors with higher scores win more recommendations.' };
-  return                  { cls:'low',    dot:'🔴', label:'AI INVISIBLE RISK',      text:'Critical gaps prevent AI agents from recommending this store. Urgent action needed.' };
+function getLevelLabel(level) {
+  const map = {
+    'highly_recommendable':          'Highly Recommendable',
+    'moderately_recommendable':      'Moderately Recommendable',
+    'low_recommendation_confidence': 'Low Recommendation Confidence',
+    'ai_invisible_risk':             'AI Invisible Risk',
+    'ai_ready':                      'Highly Recommendable',
+    'ai_partial':                    'Partially Visible',
+    'ai_invisible':                  'AI Invisible Risk'
+  };
+  return map[level] || level.replace(/_/g, ' ');
 }
 
-// Verdict podle methodology thresholds
+function getAiStatusBlock(score) {
+  if (score >= 85) return { cls:'high',   dot:'🟢', label:'HIGHLY RECOMMENDABLE',          text:'AI agents can clearly understand, trust, and recommend this store to shoppers.' };
+  if (score >= 70) return { cls:'medium', dot:'🟡', label:'MODERATELY RECOMMENDABLE',      text:'AI recommends this store but stronger signals would win more traffic and recommendations.' };
+  if (score >= 50) return { cls:'medium', dot:'🟡', label:'LOW RECOMMENDATION CONFIDENCE', text:'AI can see this store but misses key signals. Competitors with higher scores win more recommendations.' };
+  return                  { cls:'low',    dot:'🔴', label:'AI INVISIBLE RISK',              text:'Critical gaps prevent AI agents from recommending this store. Urgent action needed.' };
+}
+
 function getAiVerdict(score) {
   if (score >= 85) return `<span style="color:#1D9E75;">✓ Highly Recommendable — AI agents can confidently recommend this store</span>`;
-  if (score >= 50) return `<span style="color:#EF9F27;">⚠ Partially Visible — AI sees this store but competitors with higher scores win more recommendations</span>`;
+  if (score >= 70) return `<span style="color:#EF9F27;">◑ Moderately Recommendable — AI recommends this store but stronger signals win more traffic</span>`;
+  if (score >= 50) return `<span style="color:#EF9F27;">⚠ Low Recommendation Confidence — AI sees this store but competitors with higher scores win</span>`;
   return `<span style="color:#E24B4A;">✗ AI Invisible Risk — critical gaps prevent AI agents from recommending this store</span>`;
 }
 
@@ -337,10 +363,10 @@ function leakCopy(gap) {
 
 function buildLockedLeaks(data) {
   const candidates = [
-    { key:'intent', score:data.intent_score??0,    max:14, threshold:10, text:'User Intent Match analysis — does your positioning match how buyers search AI?',              impact:'' },
-    { key:'price',  score:data.price_score??0,     max:10, threshold:7,  text:'Commerce Accuracy gaps — pricing, stock, variant structure',                               impact:' · estimated impact $180–$320/month' },
-    { key:'brand',  score:data.brand_score??0,     max:3,  threshold:2,  text:'External Authority Signals vs. top competitors in the same niche',                        impact:'' },
-    { key:'rec',    score:data.rec_score??0,       max:5,  threshold:3,  text:'Recommendation Confidence deep-dive — compound signal analysis',                          impact:'' }
+    { key:'intent', score:data.intent_score??0,  max:14, threshold:10, text:'User Intent Match analysis — does your positioning match how buyers search AI?',     impact:'' },
+    { key:'price',  score:data.price_score??0,   max:10, threshold:7,  text:'Commerce Accuracy gaps — pricing, stock, variant structure',                        impact:' · estimated impact $180–$320/month' },
+    { key:'brand',  score:data.brand_score??0,   max:3,  threshold:2,  text:'External Authority Signals vs. top competitors in the same niche',                 impact:'' },
+    { key:'rec',    score:data.rec_score??0,     max:5,  threshold:3,  text:'Recommendation Confidence deep-dive — compound signal analysis',                   impact:'' }
   ];
   const weak = candidates.filter(c => c.score < c.threshold);
   if (!weak.length) { document.getElementById('lockedBox').style.display='none'; return; }
@@ -366,11 +392,8 @@ function renderPage(data) {
   const biggestGap = rawGap.includes('|') ? 'schema' : rawGap;
   const mainLeak = data.main_leak || leakCopy(biggestGap).leak;
   const quickFix = data.quick_fix || leakCopy(biggestGap).fix;
-
-  // Agentic badge
   const agenticReady = data.has_llms_txt && data.has_llms_full && data.has_agents_md;
 
-  // Meta
   document.title = `${storeNameCap} AI Recommendation Score: ${score}/100 — Atom Foundry`;
   document.getElementById('pageDesc').content = `${storeNameCap} (${domain}) scored ${score}/100 on AI Recommendation Readiness. Find out if ChatGPT, Alexa for Shopping, and Google AI Mode recommend this store.`;
   document.getElementById('ogTitle').content = `${storeNameCap} AI Recommendation Score: ${score}/100`;
@@ -383,7 +406,7 @@ function renderPage(data) {
     ${platform ? `<span class="meta-tag">${platform.charAt(0).toUpperCase()+platform.slice(1)}</span>` : ''}
     ${country ? `<span class="meta-tag">${country}</span>` : ''}
     <span class="meta-tag">Score: ${score}/100</span>
-    ${level ? `<span class="meta-tag" style="color:${getColor(score)};border-color:${getColor(score)}33">${level.replace('_',' ')}</span>` : ''}
+    ${level ? `<span class="meta-tag" style="color:${getColor(score)};border-color:${getColor(score)}33">${getLevelLabel(level)}</span>` : ''}
     ${agenticReady ? `<span class="meta-tag" style="color:#1D9E75;border-color:rgba(29,158,117,0.3);background:rgba(29,158,117,0.06);">🤖 Agentic ready</span>` : ''}
   `;
 
@@ -399,6 +422,12 @@ function renderPage(data) {
   document.getElementById('aiBar').style.background = aiColor;
   document.getElementById('aiVerdict').innerHTML = getAiVerdict(score);
   setTimeout(() => { document.getElementById('aiBar').style.width = score + '%'; }, 300);
+
+  // Estimated loss
+  if (data.estimated_loss && data.estimated_loss > 0) {
+    document.getElementById('lossBlock').style.display = 'flex';
+    document.getElementById('lossAmount').innerHTML = `$${Number(data.estimated_loss).toLocaleString('en-US')}<span>/month</span>`;
+  }
 
   const factors = [
     { name:'AI Structured Signals',     score:Math.min(data.schema_score    ??0,20), max:20, isNew:false },
@@ -459,15 +488,17 @@ function renderPage(data) {
 
   const levelDesc = score >= 85
     ? `With a score of ${score}/100, ${storeNameCap} is highly recommendable — AI agents can confidently understand and recommend this store.`
+    : score >= 70
+    ? `With a score of ${score}/100, ${storeNameCap} is moderately recommendable — AI recommends this store but there are opportunities to improve.`
     : score >= 50
-    ? `With a score of ${score}/100, ${storeNameCap} is partially visible to AI — it's missing key signals that limit its recommendation probability.`
+    ? `With a score of ${score}/100, ${storeNameCap} has low recommendation confidence — it's missing key signals that limit its recommendation probability.`
     : `With a score of ${score}/100, ${storeNameCap} is currently invisible to most AI shopping agents.`;
 
   document.getElementById('seoBox').innerHTML = `
     <h2>${storeNameCap} AI Recommendation Score: ${score}/100</h2>
     <p>${levelDesc} This page is part of Atom Foundry's public AI Recommendation database — an ongoing scan of Shopify stores for AI recommendation readiness.</p>
     <h3>What does the ${storeNameCap} score mean?</h3>
-    <p>A score of ${score}/100 means AI assistants like ChatGPT, Alexa for Shopping, Perplexity, and Google AI Mode ${score>=85?'can clearly understand, trust, and recommend this store':score>=50?'can partially understand this store but miss key signals':'struggle to read, trust, and recommend this store'}. The score covers 8 factors: AI Structured Signals, Semantic Clarity, AI Trust Confidence, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals.</p>
+    <p>A score of ${score}/100 means AI assistants like ChatGPT, Alexa for Shopping, Perplexity, and Google AI Mode ${score>=85?'can clearly understand, trust, and recommend this store':score>=70?'can moderately recommend this store but miss some signals':score>=50?'can partially understand this store but miss key signals':'struggle to read, trust, and recommend this store'}. The score covers 8 factors: AI Structured Signals, Semantic Clarity, AI Trust Confidence, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals.</p>
     <h3>How was ${storeNameCap} scanned?</h3>
     <p>Our crawler fetched the ${domain} homepage and analyzed its HTML for 40+ AI recommendation signals across 8 scoring factors. The data was processed by a GPT-4o model trained to evaluate ecommerce stores from the perspective of AI shopping agents. Scans refresh automatically.</p>
     <h3>How can ${storeNameCap} improve its AI Recommendation Score?</h3>
