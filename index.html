@@ -31,6 +31,8 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
 .nav-links-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; padding: 10px 16px; background: #111; border: 1px solid #2a2a2a; border-top: none; border-radius: 0 0 16px 16px; width: 100%; flex-wrap: wrap; }
 .nav-links-bar a { font-size: 12px; color: #9ca3af; text-decoration: none; border: 1px solid #2a2a2a; padding: 5px 14px; border-radius: 8px; transition: all 0.2s; }
 .nav-links-bar a:hover { color: #f97316; border-color: #f97316; }
+.nav-links-bar a.research { color: #EF9F27; border-color: rgba(239,159,39,0.35); background: rgba(239,159,39,0.06); }
+.nav-links-bar a.research:hover { color: #f97316; border-color: #f97316; background: rgba(249,115,22,0.08); }
 
 /* HERO */
 h1 { font-size: 28px; line-height: 1.25; margin-bottom: 14px; font-weight: 700; color: #fff; }
@@ -194,9 +196,9 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
   </div>
 
   <div class="stats-bar">
-    <div class="stat-item"><div class="stat-num" id="statStores">570</div><div class="stat-label">stores analyzed</div></div>
+    <div class="stat-item"><div class="stat-num" id="statStores">1,085</div><div class="stat-label">stores analyzed</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num" id="statIssues">2,840</div><div class="stat-label">AI issues found</div></div>
+    <div class="stat-item"><div class="stat-num" id="statIssues">5,392</div><div class="stat-label">AI issues found</div></div>
     <div class="stat-divider"></div>
     <div class="stat-item"><div class="stat-num">10s</div><div class="stat-label">to see results</div></div>
   </div>
@@ -204,6 +206,7 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
   <div class="nav-links-bar">
     <a href="/stores">Stores →</a>
     <a href="/methodology">How we score →</a>
+    <a href="/research" class="research">Research →</a>
   </div>
 
   <h1>Shopify made your store<br><em>AI-readable.</em> That doesn't mean AI will recommend it.</h1>
@@ -339,7 +342,7 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
       <div class="was-bar-wrap"><div class="was-bar-fill" style="width:45%;background:#EF9F27;"></div></div>
       <div class="was-score" style="color:#EF9F27;">Partial</div>
     </div>
-    <div style="margin-top:14px;font-size:12px;color:#555;text-align:center;font-style:italic;">Average scores across 700+ scanned DTC stores · May 2026</div>
+    <div style="margin-top:14px;font-size:12px;color:#555;text-align:center;font-style:italic;">Average scores across 1,085 scanned DTC stores · May 2026</div>
   </div>
 
   <div class="ai-contrast">
@@ -422,8 +425,8 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
 
   <div class="footer">
     <div class="footer-scan-line">
-      <span id="footerStores">570</span> DTC stores analyzed &nbsp;·&nbsp;
-      $<span id="footerLeaks">549</span>k in AI gaps found &nbsp;·&nbsp; atomfoundry.dev<br>
+      <span id="footerStores">1,085</span> DTC stores analyzed &nbsp;·&nbsp;
+      $<span id="footerLeaks">1,041</span>k in AI gaps found &nbsp;·&nbsp; atomfoundry.dev<br>
       <a href="/terms-of-service.html">Terms</a> &nbsp;&amp;&nbsp;
       <a href="/privacy-policy.html">Privacy</a>
     </div>
@@ -445,13 +448,8 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
     document.getElementById('statStores').innerText = count.toLocaleString('en-US');
     document.getElementById('statIssues').innerText = issues.toLocaleString('en-US');
     document.getElementById('footerStores').innerText = count.toLocaleString('en-US');
-    document.getElementById('footerLeaks').innerText = leaksTotal;
-  } catch(e) {
-    document.getElementById('statStores').innerText = '570+';
-    document.getElementById('statIssues').innerText = '2,800+';
-    document.getElementById('footerStores').innerText = '570+';
-    document.getElementById('footerLeaks').innerText = '549';
-  }
+    document.getElementById('footerLeaks').innerText = leaksTotal.toLocaleString('en-US');
+  } catch(e) {}
 })();
 
 const BASE_DATE = new Date('2026-03-01');
