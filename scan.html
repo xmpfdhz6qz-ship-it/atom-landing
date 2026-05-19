@@ -19,7 +19,6 @@ body::before {
   z-index: 0;
 }
 
-/* REDIRECT ANIMATION SCREEN */
 #redirectScreen {
   display: none;
   position: fixed;
@@ -66,29 +65,11 @@ body::before {
 .info-card.visible { opacity: 1; transform: translateY(0); }
 .info-card.highlight { border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.05); }
 
-.card-icon {
-  font-size: 24px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
+.card-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
 .card-body {}
-.card-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 4px;
-}
-.card-desc {
-  font-size: 13px;
-  color: #888;
-  line-height: 1.6;
-}
-.card-stat {
-  font-size: 22px;
-  font-weight: 800;
-  color: #ff6b35;
-  margin-bottom: 2px;
-}
+.card-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.card-desc { font-size: 13px; color: #888; line-height: 1.6; }
+.card-stat { font-size: 22px; font-weight: 800; color: #ff6b35; margin-bottom: 2px; }
 
 .redirect-footer {
   font-size: 13px;
@@ -152,9 +133,11 @@ body::before {
 .score-label { font-size: 13px; color: #666; margin-top: 4px; }
 svg.ring { transform: rotate(-90deg); }
 .result-level { display: inline-block; padding: 6px 18px; border-radius: 100px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }
-.level-invisible { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-.level-partial { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
-.level-ready { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+.level-invisible   { background: rgba(239,68,68,0.15);   color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.level-low         { background: rgba(239,68,68,0.12);   color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+.level-partial     { background: rgba(245,158,11,0.15);  color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+.level-moderate    { background: rgba(249,115,22,0.12);  color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
+.level-ready       { background: rgba(34,197,94,0.15);   color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
 .result-message { font-size: 16px; color: #888; line-height: 1.6; margin-bottom: 24px; }
 
 .result-insights { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left; }
@@ -269,11 +252,9 @@ const prefilledDomain = urlParams.get('domain') || urlParams.get('url') || '';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (prefilledDomain) {
-    // Má doménu → rovnou scan
     const clean = prefilledDomain.replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
     setTimeout(() => startScan(clean), 300);
   } else {
-    // Nemá doménu → animace + redirect na landing page
     showRedirectAnimation();
   }
 });
@@ -284,33 +265,19 @@ function showRedirectAnimation() {
 
   const cards = ['card1','card2','card3','card4'];
   const delays = [300, 900, 1600, 2400];
-
   cards.forEach((id, i) => {
-    setTimeout(() => {
-      document.getElementById(id).classList.add('visible');
-    }, delays[i]);
+    setTimeout(() => { document.getElementById(id).classList.add('visible'); }, delays[i]);
   });
 
-  // Progress bar — 5 sekund
   const bar = document.getElementById('progressBar');
   const msg = document.getElementById('redirectMsg');
   const duration = 5000;
 
-  setTimeout(() => {
-    bar.style.transitionDuration = duration + 'ms';
-    bar.style.width = '100%';
-  }, 50);
-
-  setTimeout(() => {
-    msg.textContent = 'Redirecting...';
-  }, 4000);
-
-  setTimeout(() => {
-    window.location.href = 'https://atomfoundry.dev';
-  }, duration + 200);
+  setTimeout(() => { bar.style.transitionDuration = duration + 'ms'; bar.style.width = '100%'; }, 50);
+  setTimeout(() => { msg.textContent = 'Redirecting...'; }, 4000);
+  setTimeout(() => { window.location.href = 'https://atomfoundry.dev'; }, duration + 200);
 }
 
-// Animate scanning steps
 let scanInProgress = false;
 
 function animateSteps() {
@@ -353,6 +320,27 @@ function startScan(domainOverride) {
   .finally(() => { scanInProgress = false; });
 }
 
+// v2.0 level label + class
+function getLevelInfo(level, score) {
+  // Handle both old and new readiness_level values
+  const map = {
+    'highly_recommendable':          { label: 'Highly Recommendable',          cls: 'level-ready'    },
+    'moderately_recommendable':      { label: 'Moderately Recommendable',      cls: 'level-moderate' },
+    'low_recommendation_confidence': { label: 'Low Recommendation Confidence', cls: 'level-low'      },
+    'ai_invisible_risk':             { label: 'AI Invisible Risk',             cls: 'level-invisible' },
+    // fallback for old DB values
+    'ai_ready':    { label: 'Highly Recommendable', cls: 'level-ready'    },
+    'ai_partial':  { label: 'Partially Visible',    cls: 'level-partial'  },
+    'ai_invisible':{ label: 'AI Invisible Risk',    cls: 'level-invisible' },
+  };
+  if (level && map[level]) return map[level];
+  // Fallback by score if no level
+  if (score >= 85) return { label: 'Highly Recommendable',          cls: 'level-ready'    };
+  if (score >= 70) return { label: 'Moderately Recommendable',      cls: 'level-moderate' };
+  if (score >= 50) return { label: 'Low Recommendation Confidence', cls: 'level-low'      };
+  return                  { label: 'AI Invisible Risk',             cls: 'level-invisible' };
+}
+
 function showResult(domain, data) {
   document.getElementById('scanningOverlay').classList.remove('active');
 
@@ -372,21 +360,28 @@ function showResult(domain, data) {
     }, 100);
   }
 
+  // v2.0 level badge
   const levelEl = document.getElementById('resultLevel');
-  if (level === 'ai_invisible') { levelEl.textContent = 'AI Invisible'; levelEl.className = 'result-level level-invisible'; }
-  else if (level === 'ai_partial') { levelEl.textContent = 'Partially AI Ready'; levelEl.className = 'result-level level-partial'; }
-  else if (level === 'ai_ready') { levelEl.textContent = 'AI Ready ✓'; levelEl.className = 'result-level level-ready'; }
-  else { levelEl.style.display = 'none'; }
+  if (score !== null) {
+    const info = getLevelInfo(level, score);
+    levelEl.textContent = info.label;
+    levelEl.className = `result-level ${info.cls}`;
+  } else {
+    levelEl.style.display = 'none';
+  }
 
+  // Message by score
   const msgEl = document.getElementById('resultMessage');
   if (score === null) {
     msgEl.textContent = 'We couldn\'t complete the scan. Please check your domain and try again.';
-  } else if (score < 30) {
+  } else if (score < 50) {
     msgEl.textContent = 'Your store is likely invisible to AI assistants. ChatGPT and Perplexity probably won\'t recommend you — and you\'re missing significant revenue as a result.';
-  } else if (score < 60) {
-    msgEl.textContent = 'Your store has partial AI visibility. You\'re missing key signals that could double your AI-driven traffic.';
+  } else if (score < 70) {
+    msgEl.textContent = 'Your store has partial AI visibility. You\'re missing key signals that could significantly increase your AI-driven traffic.';
+  } else if (score < 85) {
+    msgEl.textContent = 'Your store is moderately visible to AI. There\'s still meaningful revenue on the table — the full audit shows exactly what to fix.';
   } else {
-    msgEl.textContent = 'Good foundation — but there\'s still revenue on the table. The full audit identifies the exact gaps keeping you from 90+ AI Readiness.';
+    msgEl.textContent = 'Strong foundation — your store is highly recommendable to AI agents. The full audit identifies remaining opportunities for maximum AI visibility.';
   }
 
   const insightsEl = document.getElementById('resultInsights');
@@ -408,7 +403,6 @@ function resetScan() {
   setTimeout(() => {
     document.getElementById('scoreCircle').style.transition = 'stroke-dashoffset 1.2s ease';
   }, 50);
-  // Po resetu přesměruj na landing
   window.location.href = 'https://atomfoundry.dev';
 }
 </script>
