@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Atom Foundry – AI Commerce Intelligence</title>
+<title>Atom Foundry — AI Commerce Intelligence</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI shopping agents now recommend products to hundreds of millions of buyers. See if your Shopify store gets recommended or skipped. Free AI Readiness Score in 10 seconds.">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -12,428 +13,697 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 100%; overflow-x: hidden; }
-body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: #0A0A0A; color: white; line-height: 1.7; }
-body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.18), transparent 45%); pointer-events: none; z-index: 0; }
-.container { max-width: 560px; width: 100%; margin: 0 auto; padding: 32px 20px 40px; text-align: center; position: relative; z-index: 1; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #080808;
+  color: #e8e8e8;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent),
+    radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
 
-/* NAVBAR */
-.navbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 20px 0; }
-.logo-name { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: -0.3px; }
-.logo-name span { color: #f97316; }
-.header-tagline { font-size: 11px; color: #666; font-weight: 500; }
+/* LAYOUT */
+.page { position: relative; z-index: 1; }
+.container { max-width: 760px; width: 100%; margin: 0 auto; padding: 0 28px; }
+.container-wide { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
 
-/* STATS + NAV */
-.stats-bar { display: flex; justify-content: center; gap: 24px; padding: 16px 20px; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px 16px 0 0; width: 100%; }
-.stat-item { display: flex; flex-direction: column; align-items: center; }
-.stat-num { font-size: 22px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 5px; }
-.stat-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
-.stat-divider { width: 1px; background: #2a2a2a; align-self: stretch; }
-.nav-links-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; padding: 10px 16px; background: #111; border: 1px solid #2a2a2a; border-top: none; border-radius: 0 0 16px 16px; width: 100%; flex-wrap: wrap; }
-.nav-links-bar a { font-size: 12px; color: #9ca3af; text-decoration: none; border: 1px solid #2a2a2a; padding: 5px 14px; border-radius: 8px; transition: all 0.2s; }
-.nav-links-bar a:hover { color: #f97316; border-color: #f97316; }
-.nav-links-bar a.research { color: #EF9F27; border-color: rgba(239,159,39,0.35); background: rgba(239,159,39,0.06); }
-.nav-links-bar a.research:hover { color: #f97316; border-color: #f97316; background: rgba(249,115,22,0.08); }
+/* NAV */
+.nav {
+  padding: 20px 28px;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand { display: flex; flex-direction: column; gap: 2px; }
+.nav-logo { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: -0.3px; }
+.nav-logo span { color: #f97316; }
+.nav-tagline { font-size: 10px; color: #555; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.nav-links a {
+  font-size: 12px; color: #777; text-decoration: none;
+  border: 1px solid #1e1e1e; padding: 5px 14px;
+  border-radius: 8px; transition: all 0.2s;
+}
+.nav-links a:hover { color: #f97316; border-color: #f97316; }
+.nav-links a.research {
+  color: #EF9F27;
+  border-color: rgba(239,159,39,0.3);
+  background: rgba(239,159,39,0.06);
+}
+.nav-links a.research:hover { color: #f97316; border-color: #f97316; }
+
+/* STATS BAR */
+.stats-wrap {
+  max-width: 860px;
+  margin: 0 auto 0;
+  padding: 0 28px;
+}
+.stats-bar {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.stat-cell {
+  flex: 1;
+  padding: 16px 20px;
+  text-align: center;
+  border-right: 1px solid #1e1e1e;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-num { font-size: 24px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
 
 /* HERO */
-h1 { font-size: 28px; line-height: 1.25; margin-bottom: 14px; font-weight: 700; color: #fff; }
-h1 em { font-style: normal; color: #f97316; }
-.sub { font-size: 16px; color: #bbb; margin-bottom: 20px; line-height: 1.6; }
+.hero { padding: 56px 0 48px; text-align: center; }
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(249,115,22,0.08);
+  border: 1px solid rgba(249,115,22,0.2);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 11px; color: #f97316;
+  text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+  margin-bottom: 24px;
+}
+.hero-kicker-dot {
+  width: 5px; height: 5px;
+  background: #f97316; border-radius: 50%;
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h1 {
+  font-size: clamp(30px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.hero h1 em { font-style: normal; color: #f97316; }
+.hero-sub {
+  font-size: 18px;
+  color: #888;
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 0 auto 36px;
+}
 
-/* POSITIONING STATEMENT */
-.positioning { width: 100%; background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 14px 18px; margin-bottom: 24px; font-size: 14px; color: #aaa; line-height: 1.6; text-align: center; }
+/* FEAR HOOK */
+.fear-hook {
+  background: #0f0f0f;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 36px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: left;
+}
+.fear-col { padding: 20px; border-radius: 12px; }
+.fear-col.human { background: rgba(29,158,117,0.06); border: 1px solid rgba(29,158,117,0.15); }
+.fear-col.ai { background: rgba(226,75,74,0.06); border: 1px solid rgba(226,75,74,0.15); }
+.fear-col-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+.fear-col.human .fear-col-label { color: #1D9E75; }
+.fear-col.ai .fear-col-label { color: #E24B4A; }
+.fear-item { font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: #bbb; display: flex; align-items: center; gap: 8px; }
+.fear-item:last-child { border-bottom: none; }
+.fear-item.pos { color: #4ade80; }
+.fear-item.neg { color: #f87171; }
+.fear-hook-caption { grid-column: 1 / -1; text-align: center; font-size: 14px; font-weight: 700; color: #e8e8e8; padding-top: 16px; border-top: 1px solid #1e1e1e; line-height: 1.6; }
+.fear-hook-caption span { color: #f97316; }
 
 /* SCAN BOX */
-.box { width: 100%; background: #161616; padding: 20px; border-radius: 16px; border: 1px solid #2a2a2a; box-shadow: 0 10px 30px rgba(0,0,0,0.6); margin-bottom: 24px; }
-input[type="text"] { width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #333; background: #0A0A0A; color: white; font-size: 16px; outline: none; transition: all 0.2s; }
-input[type="text"]::placeholder { color: #666; }
-input:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.6); }
-button { margin-top: 12px; width: 100%; padding: 18px; border-radius: 14px; border: 2px solid #dc2626; background: linear-gradient(135deg, #f97316, #ea580c); color: black; font-weight: 900; font-size: 17px; cursor: pointer; box-shadow: 0 10px 25px rgba(249,115,22,0.4); transition: all 0.25s; }
-button:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(249,115,22,0.65); }
-button:active { transform: scale(0.97); }
-button:disabled { opacity: 0.7; cursor: default; transform: none; }
-.btn-sub { margin-top: 6px; font-size: 12px; color: #666; }
-.micro { margin-top: 10px; font-size: 13px; color: #888; }
-.proof-line { margin-top: 14px; font-size: 14px; color: #f97316; font-weight: 600; }
+.scan-section { margin-bottom: 48px; }
+.scan-box {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.scan-box-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 16px; text-align: center; }
+input[type="text"] {
+  width: 100%; padding: 16px 20px;
+  border-radius: 12px; border: 1px solid #222;
+  background: #080808; color: #fff;
+  font-size: 16px; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+input[type="text"]::placeholder { color: #444; }
+input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.4); }
+.scan-btn {
+  margin-top: 12px; width: 100%; padding: 18px;
+  border-radius: 14px; border: none;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #000; font-weight: 900; font-size: 17px;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 8px 24px rgba(249,115,22,0.4);
+  transition: all 0.25s;
+}
+.scan-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+.scan-btn:active { transform: scale(0.98); }
+.scan-btn:disabled { opacity: 0.7; cursor: default; transform: none; }
+.scan-meta { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 14px; flex-wrap: wrap; }
+.scan-meta-item { font-size: 12px; color: #555; }
+.scan-proof { margin-top: 14px; text-align: center; font-size: 14px; color: #f97316; font-weight: 600; }
+.scan-example { margin-top: 10px; text-align: center; }
+.scan-example a { font-size: 13px; color: #666; text-decoration: none; border-bottom: 1px dotted #333; padding-bottom: 1px; transition: color 0.2s; }
+.scan-example a:hover { color: #999; }
+.scan-founder {
+  margin-top: 16px;
+  background: #0a1a0a;
+  border: 1px solid #1a2e1a;
+  border-left: 3px solid #1D9E75;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px; color: #888; line-height: 1.6;
+  text-align: left;
+}
+.scan-founder-label { font-size: 10px; color: #1D9E75; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
 
-/* SHOPIFY CONTRAST */
-.shopify-contrast { width: 100%; background: #0d0d0d; border: 1px solid #1e1e1e; border-left: 3px solid #f97316; border-radius: 14px; padding: 20px; margin-bottom: 24px; text-align: left; }
-.shopify-contrast-label { font-size: 10px; color: #f97316; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
-.shopify-contrast-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
-.shopify-col { background: #111; border-radius: 10px; padding: 14px; border: 1px solid #222; min-width: 0; }
-.shopify-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-.shopify-col-label.shopify { color: #96BF48; }
-.shopify-col-label.atom { color: #f97316; }
-.shopify-col-item { font-size: 12px; color: #aaa; padding: 4px 0; border-bottom: 1px solid #1a1a1a; line-height: 1.4; }
-.shopify-col-item:last-child { border-bottom: none; }
-.shopify-contrast-line { font-size: 14px; font-weight: 700; color: #e8e8e8; text-align: center; line-height: 1.6; padding: 12px 0 0 0; border-top: 1px solid #1e1e1e; }
-.shopify-contrast-line span { color: #f97316; }
+/* DATA STRIP */
+.data-strip {
+  background: #0f0f0f;
+  border: 1px solid #1e1e1e;
+  border-radius: 14px;
+  padding: 20px 28px;
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.data-strip-num { font-size: 28px; font-weight: 800; color: #f97316; line-height: 1; }
+.data-strip-label { font-size: 12px; color: #555; margin-top: 3px; }
+.data-strip-divider { width: 1px; height: 40px; background: #1e1e1e; flex-shrink: 0; }
 
-/* MONSTER LINES */
-.monster-lines { width: 100%; margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; }
-.monster-line { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; font-size: 15px; font-weight: 600; color: #e8e8e8; text-align: left; line-height: 1.5; }
-.monster-line span { color: #f97316; }
+/* SECTION */
+.section { margin-bottom: 56px; }
+.section-kicker {
+  font-size: 10px; color: #f97316;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  font-weight: 700; margin-bottom: 12px;
+}
+.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+.section-title em { font-style: normal; color: #f97316; }
+.section-body { font-size: 15px; color: #777; line-height: 1.8; max-width: 620px; }
 
-/* AGENTIC */
-.agentic-box { width: 100%; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px; margin-bottom: 24px; text-align: left; }
-.agentic-label { font-size: 10px; color: #EF9F27; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
-.agentic-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.4; }
-.agentic-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; font-size: 12px; }
-.flow-step { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 5px 10px; color: #aaa; font-weight: 500; }
-.flow-step.highlight { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.3); color: #f97316; font-weight: 700; }
-.flow-arrow { color: #444; font-size: 12px; }
-.agentic-note { font-size: 13px; color: #888; line-height: 1.7; padding-top: 12px; border-top: 1px solid #1e1e1e; }
-.agentic-note strong { color: #f97316; }
+/* SHIFT BOX */
+.shift-box {
+  background: #0f0f0f;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-top: 24px;
+}
+.shift-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.shift-flow:last-child { margin-bottom: 0; }
+.flow-node {
+  background: #1a1a1a; border: 1px solid #222;
+  border-radius: 8px; padding: 7px 14px;
+  font-size: 13px; color: #777; font-weight: 500;
+}
+.flow-node.active {
+  background: rgba(249,115,22,0.1);
+  border-color: rgba(249,115,22,0.3);
+  color: #f97316; font-weight: 700;
+}
+.flow-arrow { color: #333; font-size: 14px; }
+.shift-note { font-size: 13px; color: #666; line-height: 1.7; padding-top: 16px; border-top: 1px solid #161616; margin-top: 16px; }
+.shift-note strong { color: #f97316; }
 
-/* OLD vs NEW */
-.old-new { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
-.old-new-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px; font-weight: 600; text-align: center; }
-.old-new-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.old-col { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 14px; min-width: 0; }
-.new-col { background: #0a1a0a; border: 1px solid #1a2e1a; border-radius: 10px; padding: 14px; min-width: 0; }
-.old-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; color: #666; }
-.new-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; color: #1D9E75; }
-.old-item { font-size: 12px; color: #888; padding: 4px 0; border-bottom: 1px solid #1a1a1a; line-height: 1.4; text-decoration: line-through; text-decoration-color: #555; }
-.old-item:last-child { border-bottom: none; }
-.new-item { font-size: 12px; color: #4ade80; padding: 4px 0; border-bottom: 1px solid #1a2e1a; line-height: 1.4; }
-.new-item:last-child { border-bottom: none; }
+/* TWO COL COMPARE */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
+.compare-col { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px; }
+.compare-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+.compare-col-label.old { color: #444; }
+.compare-col-label.new { color: #1D9E75; }
+.compare-item { font-size: 13px; padding: 6px 0; border-bottom: 1px solid #161616; color: #888; line-height: 1.4; }
+.compare-item:last-child { border-bottom: none; }
+.compare-item.struck { text-decoration: line-through; text-decoration-color: #333; color: #444; }
+.compare-item.bright { color: #4ade80; }
 
-/* WHAT AI SEES */
-.what-ai-sees { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
-.was-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #1e1e1e; }
-.was-row:last-child { border-bottom: none; }
-.was-label { font-size: 12px; color: #aaa; font-weight: 500; width: 160px; flex-shrink: 0; }
-.was-bar-wrap { flex: 1; height: 5px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
-.was-bar-fill { height: 100%; border-radius: 999px; }
-.was-score { font-size: 11px; font-weight: 700; width: 48px; text-align: right; flex-shrink: 0; }
+/* SIGNALS BARS */
+.signals-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 28px 32px; margin-top: 24px; }
+.signals-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 6px; text-align: center; }
+.signals-sub { font-size: 13px; color: #555; text-align: center; margin-bottom: 20px; line-height: 1.6; }
+.sig-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #161616; }
+.sig-row:last-child { border-bottom: none; }
+.sig-name { font-size: 12px; color: #888; font-weight: 500; width: 175px; flex-shrink: 0; }
+.sig-bar-wrap { flex: 1; height: 5px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
+.sig-bar-fill { height: 100%; border-radius: 999px; }
+.sig-score { font-size: 11px; font-weight: 700; width: 52px; text-align: right; flex-shrink: 0; }
+.signals-note { font-size: 12px; color: #444; text-align: center; margin-top: 16px; font-style: italic; }
 
-/* AI CONTRAST */
-.ai-contrast { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
-.section-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px; font-weight: 600; text-align: center; }
-.contrast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.contrast-col { background: #0d0d0d; border-radius: 10px; padding: 14px; border: 1px solid #222; min-width: 0; }
-.contrast-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-.contrast-col-label.human { color: #1D9E75; }
-.contrast-col-label.ai { color: #ef4444; }
-.contrast-item { font-size: 12px; color: #bbb; padding: 5px 0; border-bottom: 1px solid #1a1a1a; line-height: 1.4; }
-.contrast-item:last-child { border-bottom: none; }
-.contrast-item.green { color: #4ade80; }
-.contrast-item.red { color: #f87171; }
-.contrast-caption { text-align: center; font-size: 12px; color: #555; margin-top: 14px; font-style: italic; }
+/* RISK LIST */
+.risk-list { margin-top: 20px; display: flex; flex-direction: column; gap: 0; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; overflow: hidden; }
+.risk-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 22px; border-bottom: 1px solid #161616; font-size: 14px; color: #888; line-height: 1.5; }
+.risk-row:last-child { border-bottom: none; }
+.risk-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; color: #E24B4A; }
 
-/* AI RISK */
-.ai-risk { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: left; }
-.risk-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #1e1e1e; font-size: 13px; color: #bbb; line-height: 1.5; }
-.risk-item:last-child { border-bottom: none; }
-.risk-icon { color: #ef4444; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
-
-/* EXAMPLES */
-.examples { width: 100%; background: #161616; border: 1px solid #2a2a2a; border-radius: 14px; padding: 18px; margin-bottom: 24px; text-align: left; }
-.examples-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 14px; font-weight: 600; }
-.example-item { font-size: 13px; color: #aaa; margin-bottom: 10px; line-height: 1.5; }
-.example-item:last-child { margin-bottom: 0; }
-.example-leak { color: #ef4444; font-weight: 700; }
-.example-arc { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; font-size: 13px; color: #aaa; line-height: 1.6; }
-.arc-label { font-size: 10px; color: #1D9E75; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-.arc-result { color: #4ade80; font-weight: 600; }
+/* FINDINGS */
+.findings-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 28px 32px; margin-top: 24px; }
+.finding-arc {
+  background: #0a1a0a; border: 1px solid #1a2e1a;
+  border-left: 3px solid #1D9E75;
+  border-radius: 10px; padding: 14px 18px;
+  margin-bottom: 14px; font-size: 13px; color: #888; line-height: 1.6;
+}
+.finding-arc-label { font-size: 10px; color: #1D9E75; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.finding-arc-result { color: #4ade80; font-weight: 600; }
+.finding-item { font-size: 13px; color: #777; padding: 8px 0; border-bottom: 1px solid #161616; line-height: 1.5; }
+.finding-item:last-child { border-bottom: none; }
+.finding-amount { color: #E24B4A; font-weight: 700; }
 
 /* FUTURE */
-.future-section { width: 100%; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center; }
-.future-section h3 { font-size: 16px; font-weight: 700; color: #f97316; margin: 0 0 10px 0; }
-.future-section p { font-size: 13px; color: #888; line-height: 1.7; margin: 0 0 14px 0; }
-.future-items { display: flex; flex-direction: column; gap: 6px; text-align: left; }
-.future-item { font-size: 12px; color: #777; padding: 5px 0; border-bottom: 1px solid #1a1a1a; }
+.future-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 28px 32px; margin-top: 24px; }
+.future-title { font-size: 18px; font-weight: 700; color: #f97316; margin-bottom: 10px; }
+.future-body { font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 20px; }
+.future-items { display: flex; flex-direction: column; gap: 0; }
+.future-item { font-size: 13px; color: #666; padding: 8px 0; border-bottom: 1px solid #161616; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
 .future-item:last-child { border-bottom: none; }
-.future-item span { color: #f97316; margin-right: 6px; }
+.future-item-arrow { color: #f97316; flex-shrink: 0; margin-top: 2px; }
 
 /* FPFP */
-.fpfp { width: 100%; margin: 0 0 24px 0; padding: 20px; border-radius: 16px; border: 1px solid #1e1e1e; background: #0d0d0d; }
-.fpfp-row { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: nowrap; }
-.fpfp-step { position: relative; text-align: center; padding: 10px; cursor: default; }
-.fpfp-step span { font-weight: 800; font-size: 13px; color: #f97316; }
-.fpfp-tip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(6px); background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 10px 14px; width: 180px; font-size: 12px; color: #cbd5e1; line-height: 1.5; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 99; }
-.fpfp-arrow { color: #444; font-size: 14px; padding: 0 1px; }
+.fpfp-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 32px; margin-top: 24px; }
+.fpfp-row { display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; }
+.fpfp-step { position: relative; padding: 10px 14px; cursor: default; text-align: center; }
+.fpfp-step-label { font-size: 14px; font-weight: 800; color: #f97316; }
+.fpfp-tip {
+  position: absolute; bottom: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: #1a1a1a; border: 1px solid #2a2a2a;
+  border-radius: 10px; padding: 10px 14px;
+  width: 190px; font-size: 12px; color: #aaa; line-height: 1.5;
+  opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 99;
+  white-space: normal;
+}
+.fpfp-arrow { color: #333; font-size: 16px; padding: 0 2px; }
 
 /* STEPS */
-.steps { display: flex; gap: 10px; margin-bottom: 24px; width: 100%; }
-.step { flex: 1; background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 16px 10px; text-align: center; min-width: 0; }
-.step-num { font-size: 24px; font-weight: 700; color: #f97316; margin-bottom: 6px; line-height: 1; }
-.step-text { font-size: 12px; color: #aaa; line-height: 1.4; font-weight: 500; }
+.steps-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 32px; }
+.step-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 18px; text-align: center; }
+.step-num { font-size: 28px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 8px; }
+.step-text { font-size: 13px; color: #666; line-height: 1.5; }
+
+/* CTA SECTION */
+.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin-top: 32px; }
+.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+.cta-sub { font-size: 15px; color: #666; margin-bottom: 24px; line-height: 1.6; }
+.cta-btn {
+  display: inline-block; padding: 18px 40px;
+  border-radius: 14px; border: none;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #000; font-weight: 900; font-size: 16px;
+  cursor: pointer; font-family: inherit;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(249,115,22,0.4);
+  transition: all 0.25s;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+.cta-note { font-size: 12px; color: #444; margin-top: 12px; }
 
 /* FOOTER */
-.footer { padding-top: 16px; border-top: 1px solid #1e1e1e; text-align: center; width: 100%; }
-.footer-scan-line { font-size: 12px; color: #555; margin-bottom: 8px; line-height: 1.8; }
-.footer-scan-line a { color: #777; text-decoration: none; }
-.footer-scan-line a:hover { color: #f97316; }
-.footer-tagline { font-size: 15px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
-.footer-platform { font-size: 11px; color: #444; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; text-decoration: none; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
 
-@media (max-width: 480px) {
-  h1 { font-size: 24px; }
-  .sub { font-size: 15px; }
-  .stats-bar { gap: 12px; padding: 14px 10px; }
-  .stat-num { font-size: 19px; }
-  .stat-label { font-size: 10px; }
-  .header-tagline { display: none; }
-  .shopify-contrast-row { grid-template-columns: 1fr; }
-  .old-new-grid { grid-template-columns: 1fr; }
-  .contrast-grid { grid-template-columns: 1fr; }
-  .steps { flex-direction: column; }
-  .was-label { width: 120px; font-size: 11px; }
-  .was-score { width: 40px; font-size: 10px; }
-  button { font-size: 15px; padding: 16px; }
-  .nav-links-bar a { font-size: 11px; padding: 5px 10px; }
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .nav-links { justify-content: flex-start; }
+  .stats-wrap { padding: 0 20px; }
+  .stats-bar { flex-direction: column; }
+  .stat-cell { border-right: none; border-bottom: 1px solid #1e1e1e; }
+  .stat-cell:last-child { border-bottom: none; }
+  .container, .container-wide { padding: 0 20px; }
+  .hero h1 { font-size: 30px; }
+  .hero-sub { font-size: 16px; }
+  .fear-hook { grid-template-columns: 1fr; }
+  .scan-box { padding: 22px 20px; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .steps-row { grid-template-columns: 1fr; }
+  .data-strip { justify-content: center; text-align: center; }
+  .data-strip-divider { width: 40px; height: 1px; }
+  .cta-section { padding: 28px 20px; }
+  .sig-name { width: 130px; font-size: 11px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-platform { text-align: left; }
+  .shift-box { padding: 20px; }
+  .findings-section { padding: 22px 20px; }
+  .signals-section { padding: 22px 20px; }
 }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="page">
 
-  <div class="navbar">
-    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:3px;">
-      <span class="logo-name">ATOM <span>FOUNDRY</span></span>
-      <span class="header-tagline">AI Commerce Intelligence Platform</span>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-logo">ATOM <span>FOUNDRY</span></div>
+      <div class="nav-tagline">AI Commerce Intelligence Platform</div>
     </div>
-  </div>
-
-  <div class="stats-bar">
-    <div class="stat-item"><div class="stat-num" id="statStores">—</div><div class="stat-label">stores analyzed</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num" id="statIssues">—</div><div class="stat-label">AI issues found</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-item"><div class="stat-num">10s</div><div class="stat-label">to see results</div></div>
-  </div>
-
- <div class="nav-links-bar">
-  <a href="/stores">Stores →</a>
-  <a href="/methodology">How we score →</a>
-  <a href="/geo">GEO →</a>
-  <a href="/research" class="research">Research →</a>
-</div>
-
-  <h1>Shopify made your store<br><em>AI-readable.</em> That doesn't mean AI will recommend it.</h1>
-  <p class="sub">Being visible to AI is not the same as being recommended by AI. See exactly where your store falls short and what it's costing you.</p>
-
-  <div class="positioning">
-    We analyze how AI shopping systems <strong style="color:#e8e8e8;">interpret and recommend</strong> your store across 8 factors that determine whether AI chooses you or your competitor.
-  </div>
-
-  <div class="box">
-    <form id="scanForm">
-      <input type="text" name="store" placeholder="yourstorename.com" required autocomplete="off" autocapitalize="none" spellcheck="false">
-      <button type="submit" id="scanBtn">Can AI Recommend Your Store? →</button>
-      <div class="btn-sub">Free AI Recommendation Score · Takes 10 seconds</div>
-      <div style="text-align:center;margin-top:10px;">
-        <a href="/store/naadam.co" style="font-size:13px;color:#9ca3af;text-decoration:none;border-bottom:1px dotted #444;padding-bottom:1px;">See example report →</a>
-      </div>
-      <div class="micro">No signup &nbsp;·&nbsp; No setup &nbsp;·&nbsp; Free &nbsp;·&nbsp; Instant results</div>
-      <div style="text-align:center;margin-top:8px;">
-        <a href="/methodology" style="font-size:12px;color:#6b7280;text-decoration:none;border-bottom:1px dotted #444;">How do we calculate your AI score? →</a>
-      </div>
-      <div class="proof-line" id="proofLine">⚡ Avg. AI visibility gap found: $2,750/month</div>
-      <div style="margin-top:14px;background:#0a1a0a;border:1px solid #1a2e1a;border-left:3px solid #1D9E75;border-radius:10px;padding:12px 14px;font-size:13px;color:#aaa;line-height:1.6;text-align:left;">
-        <div style="font-size:10px;color:#1D9E75;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">✓ Founder note</div>
-        I scan every store manually and review the AI analysis myself. You get a real report, not a generic checklist.
-      </div>
-    </form>
-  </div>
-
-  <div class="shopify-contrast">
-    <div class="shopify-contrast-label">⚡ The gap Shopify doesn't solve</div>
-    <div class="shopify-contrast-row">
-      <div class="shopify-col">
-        <div class="shopify-col-label shopify">Shopify checks</div>
-        <div class="shopify-col-item">Product schema present</div>
-        <div class="shopify-col-item">Description exists</div>
-        <div class="shopify-col-item">Pricing visible</div>
-        <div class="shopify-col-item">Structured data</div>
-        <div class="shopify-col-item">robots.txt</div>
-      </div>
-      <div class="shopify-col">
-        <div class="shopify-col-label atom">Atom Foundry checks</div>
-        <div class="shopify-col-item">Will AI recommend this store</div>
-        <div class="shopify-col-item">Does AI understand what & for whom</div>
-        <div class="shopify-col-item">Does AI trust this store</div>
-        <div class="shopify-col-item">Will AI choose this over competitors</div>
-        <div class="shopify-col-item">Does this brand exist in AI memory</div>
-      </div>
+    <div class="nav-links">
+      <a href="/stores">Stores</a>
+      <a href="/methodology">How we score</a>
+      <a href="/geo">GEO</a>
+      <a href="/research" class="research">Research</a>
     </div>
-    <div class="shopify-contrast-line">
-      Shopify prepares your store for AI agents.<br>
-      <span>Atom Foundry tells you if AI agents will actually choose you.</span>
-    </div>
-  </div>
+  </nav>
 
-  <div class="monster-lines">
-    <div class="monster-line">Most stores are preparing to be <span>crawled</span>.<br>Very few are preparing to be <span>chosen</span>.</div>
-    <div class="monster-line">Being <span>visible</span> to AI is not the same as being <span>recommended</span> by AI.</div>
-  </div>
-
-  <div class="agentic-box">
-    <div class="agentic-label">🔴 The shift happening right now</div>
-    <div class="agentic-title">AI agents are starting to buy — not just recommend.</div>
-    <div class="agentic-flow">
-      <div class="flow-step">Today: Human</div><div class="flow-arrow">→</div>
-      <div class="flow-step">Google</div><div class="flow-arrow">→</div>
-      <div class="flow-step">Store</div><div class="flow-arrow">→</div>
-      <div class="flow-step">Checkout</div>
-    </div>
-    <div class="agentic-flow">
-      <div class="flow-step highlight">New: Human</div><div class="flow-arrow">→</div>
-      <div class="flow-step highlight">ChatGPT / Alexa</div><div class="flow-arrow">→</div>
-      <div class="flow-step highlight">AI picks store</div><div class="flow-arrow">→</div>
-      <div class="flow-step highlight">AI buys</div>
-    </div>
-    <div class="agentic-note">Shopify is building <strong>Agentic Storefronts</strong> — storefronts designed for AI agents, not humans. Your store might be bypassed entirely if AI can't confidently understand and trust it.</div>
-  </div>
-
-  <div class="old-new">
-    <div class="old-new-label">The shift in ecommerce optimization</div>
-    <div class="old-new-grid">
-      <div class="old-col">
-        <div class="old-col-label">Old world</div>
-        <div class="old-item">SEO</div>
-        <div class="old-item">Ads</div>
-        <div class="old-item">Landing pages</div>
-        <div class="old-item">CRO</div>
-        <div class="old-item">Visual design</div>
-        <div class="old-item">Retargeting</div>
+  <!-- STATS BAR -->
+  <div class="stats-wrap">
+    <div class="stats-bar">
+      <div class="stat-cell">
+        <div class="stat-num" id="statStores">—</div>
+        <div class="stat-label">Stores analyzed</div>
       </div>
-      <div class="new-col">
-        <div class="new-col-label">New world</div>
-        <div class="new-item">AI discoverability</div>
-        <div class="new-item">AI recommendation confidence</div>
-        <div class="new-item">Structured product intelligence</div>
-        <div class="new-item">Machine-readable trust</div>
-        <div class="new-item">Semantic clarity</div>
-        <div class="new-item">AI comparison positioning</div>
+      <div class="stat-cell">
+        <div class="stat-num" id="statIssues">—</div>
+        <div class="stat-label">AI issues found</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">10s</div>
+        <div class="stat-label">To see results</div>
       </div>
     </div>
   </div>
 
-  <div class="what-ai-sees">
-    <div class="section-label">What AI sees when it reads your store</div>
-    <div style="font-size:13px;color:#666;margin-bottom:16px;line-height:1.6;">What AI shopping agents evaluate when deciding whether to recommend your store. Most stores score poorly on 4+ of these factors.</div>
-    <div class="was-row">
-      <div class="was-label">AI Interpretation</div>
-      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:28%;background:#E24B4A;"></div></div>
-      <div class="was-score" style="color:#E24B4A;">Low</div>
+  <!-- HERO -->
+  <div class="container">
+    <div class="hero">
+      <div class="hero-kicker"><span class="hero-kicker-dot"></span>AI Commerce Intelligence</div>
+      <h1>Your store looks fine to humans.<br><em>AI agents see something different.</em></h1>
+      <p class="hero-sub">Two stores can be identical to the human eye. One gets recommended by ChatGPT and Alexa for Shopping. The other gets skipped entirely. The difference is not design. It is structure, trust, and machine-readable signals.</p>
     </div>
-    <div class="was-row">
-      <div class="was-label">Rec. Confidence</div>
-      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:22%;background:#E24B4A;"></div></div>
-      <div class="was-score" style="color:#E24B4A;">Critical</div>
-    </div>
-    <div class="was-row">
-      <div class="was-label">Semantic Clarity</div>
-      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:41%;background:#EF9F27;"></div></div>
-      <div class="was-score" style="color:#EF9F27;">Partial</div>
-    </div>
-    <div class="was-row">
-      <div class="was-label">Trust Signals</div>
-      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:35%;background:#EF9F27;"></div></div>
-      <div class="was-score" style="color:#EF9F27;">Weak</div>
-    </div>
-    <div class="was-row">
-      <div class="was-label">Comparison Strength</div>
-      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:18%;background:#E24B4A;"></div></div>
-      <div class="was-score" style="color:#E24B4A;">Critical</div>
-    </div>
-    <div class="was-row">
-      <div class="was-label">Product Understanding</div>
-      <div class="was-bar-wrap"><div class="was-bar-fill" style="width:45%;background:#EF9F27;"></div></div>
-      <div class="was-score" style="color:#EF9F27;">Partial</div>
-    </div>
-    <div style="margin-top:14px;font-size:12px;color:#555;text-align:center;font-style:italic;" id="wasDate">Average scores across scanned DTC stores · May 2026</div>
-  </div>
 
-  <div class="ai-contrast">
-    <div class="section-label">How AI sees your store</div>
-    <div class="contrast-grid">
-      <div class="contrast-col">
-        <div class="contrast-col-label human">✓ Humans see</div>
-        <div class="contrast-item green">Premium skincare brand</div>
-        <div class="contrast-item green">Beautiful lifestyle visuals</div>
-        <div class="contrast-item green">Clear brand identity</div>
-        <div class="contrast-item green">Trust-building design</div>
+    <!-- FEAR HOOK -->
+    <div class="fear-hook">
+      <div class="fear-col human">
+        <div class="fear-col-label">What humans see</div>
+        <div class="fear-item pos">✓ Premium skincare brand</div>
+        <div class="fear-item pos">✓ Beautiful lifestyle visuals</div>
+        <div class="fear-item pos">✓ Clear brand identity</div>
+        <div class="fear-item pos">✓ Trust-building design</div>
       </div>
-      <div class="contrast-col">
-        <div class="contrast-col-label ai">✗ AI sees</div>
-        <div class="contrast-item red">❌ Unclear product category</div>
-        <div class="contrast-item red">❌ Weak trust signals</div>
-        <div class="contrast-item red">❌ Missing semantic structure</div>
-        <div class="contrast-item red">❌ Low recommendation confidence</div>
+      <div class="fear-col ai">
+        <div class="fear-col-label">What AI agents see</div>
+        <div class="fear-item neg">✗ Unclear product category</div>
+        <div class="fear-item neg">✗ No machine-readable trust</div>
+        <div class="fear-item neg">✗ Missing semantic structure</div>
+        <div class="fear-item neg">✗ Low recommendation confidence</div>
+      </div>
+      <div class="fear-hook-caption">
+        Shopify makes your store readable to AI.<br>
+        <span>Atom Foundry tells you if AI will actually choose you.</span>
       </div>
     </div>
-    <div class="contrast-caption">AI shopping systems don't browse like humans. They interpret structure, trust, and machine-readable signals.</div>
-  </div>
 
-  <div class="ai-risk">
-    <div class="section-label">What happens when AI can't recommend your store</div>
-    <div class="risk-item"><span class="risk-icon">❌</span> Skipped by Alexa for Shopping, ChatGPT, and Google AI Mode when buyers ask for recommendations</div>
-    <div class="risk-item"><span class="risk-icon">❌</span> Invisible in AI-powered discovery — competitors with higher AI scores win instead</div>
-    <div class="risk-item"><span class="risk-icon">❌</span> AI can't confidently explain what you sell or to whom — no recommendation confidence</div>
-    <div class="risk-item"><span class="risk-icon">❌</span> Bypassed in Agentic Storefronts — AI agents complete purchases at stores they understand</div>
-    <div class="risk-item"><span class="risk-icon">❌</span> Losing a growing share of AI-driven traffic every day while competitors optimize</div>
-  </div>
-
-  <div class="examples">
-    <div class="examples-label">Recent findings — anonymized</div>
-    <div class="example-arc">
-      <div class="arc-label">✓ Detected → Fixed → Recovered</div>
-      Beauty store, US · AI couldn't identify core product positioning · losing $3,200/month<br>
-      Fix: Semantic structure improved, trust signals added above fold<br>
-      <span class="arc-result">→ Recovered $2,800/month within 3 weeks</span>
-    </div>
-    <div id="dynamicFindings"></div>
-  </div>
-
-  <div class="future-section">
-    <h3>AI is the new shopping layer.</h3>
-    <p>Alexa for Shopping, ChatGPT, Google AI Mode, and Perplexity are now recommending products to hundreds of millions of buyers. Shopify confirmed it: your store is becoming a product database for AI agents.</p>
-    <div class="future-items">
-      <div class="future-item"><span>→</span> AI recommends products and drives purchase decisions in conversation</div>
-      <div class="future-item"><span>→</span> AI agents browse, compare, and buy autonomously via Agentic Storefronts</div>
-      <div class="future-item"><span>→</span> Stores invisible to AI lose a growing share of discovery every day</div>
-      <div class="future-item"><span>→</span> Stores that fix AI gaps in 2026 will dominate AI discovery in 2027</div>
-    </div>
-  </div>
-
-  <div class="fpfp">
-    <div class="fpfp-row">
-      <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-        <span>Find</span><div class="fpfp-tip">We scan your store and detect what AI systems can't understand or recommend.</div>
-      </div>
-      <span class="fpfp-arrow">→</span>
-      <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-        <span>Prove</span><div class="fpfp-tip">We calculate the exact revenue impact of every AI interpretation issue.</div>
-      </div>
-      <span class="fpfp-arrow">→</span>
-      <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-        <span>Fix</span><div class="fpfp-tip">You get exact fixes — clear actions to improve AI readability and recommendation confidence.</div>
-      </div>
-      <span class="fpfp-arrow">→</span>
-      <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-        <span>Protect</span><div class="fpfp-tip">Ongoing monitoring catches new AI readability issues before they cost you.</div>
+    <!-- SCAN BOX -->
+    <div class="scan-section">
+      <div class="scan-box">
+        <div class="scan-box-label">Free AI Recommendation Score</div>
+        <form id="scanForm">
+          <input type="text" name="store" id="storeInput" placeholder="yourstorename.com" required autocomplete="off" autocapitalize="none" spellcheck="false">
+          <button type="submit" class="scan-btn" id="scanBtn">Can AI Recommend Your Store?</button>
+          <div class="scan-meta">
+            <span class="scan-meta-item">No signup</span>
+            <span class="scan-meta-item">No setup</span>
+            <span class="scan-meta-item">Free</span>
+            <span class="scan-meta-item">Results in 10 seconds</span>
+          </div>
+          <div class="scan-proof" id="proofLine">Average AI visibility gap found: $2,750 per month</div>
+          <div class="scan-example">
+            <a href="/store/naadam.co">See an example report</a>
+          </div>
+          <div class="scan-founder">
+            <div class="scan-founder-label">Founder note</div>
+            I review every AI analysis personally. You get a real report, not a generic checklist.
+          </div>
+        </form>
       </div>
     </div>
-  </div>
 
-  <div class="steps">
-    <div class="step"><div class="step-num">1</div><div class="step-text">Paste your store URL</div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-text">See your AI Recommendation Score across 8 factors</div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-text">Get the exact fix to become AI-recommendable</div></div>
-  </div>
-
-  <div class="footer">
-    <div class="footer-scan-line">
-      <span id="footerStores">—</span> DTC stores analyzed &nbsp;·&nbsp;
-      $<span id="footerLeaks">—</span>k in AI gaps found &nbsp;·&nbsp; atomfoundry.dev<br>
-      <a href="/terms-of-service.html">Terms</a> &nbsp;&amp;&nbsp;
-      <a href="/privacy-policy.html">Privacy</a>
+    <!-- DATA STRIP -->
+    <div class="data-strip">
+      <div>
+        <div class="data-strip-num" id="stripStores">—</div>
+        <div class="data-strip-label">DTC stores analyzed</div>
+      </div>
+      <div class="data-strip-divider"></div>
+      <div>
+        <div class="data-strip-num">52%</div>
+        <div class="data-strip-label">Score below 50, AI Invisible Risk</div>
+      </div>
+      <div class="data-strip-divider"></div>
+      <div>
+        <div class="data-strip-num">45/100</div>
+        <div class="data-strip-label">Average AI Readiness Score</div>
+      </div>
+      <div class="data-strip-divider"></div>
+      <div>
+        <div class="data-strip-num">0%</div>
+        <div class="data-strip-label">Highly Recommendable stores</div>
+      </div>
     </div>
-    <div class="footer-tagline">Find → Prove → Fix → Protect</div>
-    <div class="footer-platform">AI Commerce Intelligence Platform</div>
+
   </div>
+
+  <!-- SHIFT SECTION -->
+  <div class="container-wide">
+
+    <div class="section">
+      <div class="section-kicker">The shift happening now</div>
+      <h2 class="section-title">AI agents are starting to <em>buy,</em> not just recommend.</h2>
+      <p class="section-body">The old customer journey ran through Google. The new one runs through AI. Shopify confirmed it in May 2026: your store is becoming a product database for AI agents. The question is whether that database is readable.</p>
+      <div class="shift-box">
+        <div class="shift-flow">
+          <div class="flow-node">Today: Human</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Google</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Store</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Checkout</div>
+        </div>
+        <div class="shift-flow">
+          <div class="flow-node active">New: Human</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node active">ChatGPT or Alexa</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node active">AI picks store</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node active">AI buys</div>
+        </div>
+        <div class="shift-note">Shopify is building <strong>Agentic Storefronts</strong> designed for AI agents. Stores that AI cannot read will be bypassed entirely as this model scales.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Old world vs. new world</div>
+      <h2 class="section-title">What actually matters now in <em>ecommerce optimization</em></h2>
+      <p class="section-body">The tools that drove growth for the last decade still work. But they optimize for humans and Google. AI agents evaluate your store on entirely different criteria.</p>
+      <div class="compare-grid">
+        <div class="compare-col">
+          <div class="compare-col-label old">What used to matter</div>
+          <div class="compare-item struck">SEO keyword ranking</div>
+          <div class="compare-item struck">Paid ads and retargeting</div>
+          <div class="compare-item struck">Landing page conversion</div>
+          <div class="compare-item struck">CRO and A/B testing</div>
+          <div class="compare-item struck">Visual design quality</div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-col-label new">What AI agents evaluate</div>
+          <div class="compare-item bright">AI discoverability signals</div>
+          <div class="compare-item bright">Recommendation confidence</div>
+          <div class="compare-item bright">Structured product intelligence</div>
+          <div class="compare-item bright">Machine-readable trust</div>
+          <div class="compare-item bright">Semantic positioning clarity</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">What AI actually sees</div>
+      <h2 class="section-title">Most stores score poorly on four or more of these <em>signals</em></h2>
+      <p class="section-body">When an AI shopping agent evaluates your store, it reads structure and machine-readable signals. Not design. Not branding. These are the factors it weighs.</p>
+      <div class="signals-section">
+        <div class="signals-label">Average across <span id="signalsCount">1,700+</span> scanned DTC stores</div>
+        <div class="sig-row">
+          <div class="sig-name">AI Interpretation</div>
+          <div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:28%;background:#E24B4A;"></div></div>
+          <div class="sig-score" style="color:#E24B4A;">Low</div>
+        </div>
+        <div class="sig-row">
+          <div class="sig-name">Recommendation Confidence</div>
+          <div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:22%;background:#E24B4A;"></div></div>
+          <div class="sig-score" style="color:#E24B4A;">Critical</div>
+        </div>
+        <div class="sig-row">
+          <div class="sig-name">Semantic Clarity</div>
+          <div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:41%;background:#EF9F27;"></div></div>
+          <div class="sig-score" style="color:#EF9F27;">Partial</div>
+        </div>
+        <div class="sig-row">
+          <div class="sig-name">Trust Signals</div>
+          <div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:35%;background:#EF9F27;"></div></div>
+          <div class="sig-score" style="color:#EF9F27;">Weak</div>
+        </div>
+        <div class="sig-row">
+          <div class="sig-name">Comparison Strength</div>
+          <div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:18%;background:#E24B4A;"></div></div>
+          <div class="sig-score" style="color:#E24B4A;">Critical</div>
+        </div>
+        <div class="sig-row">
+          <div class="sig-name">Product Understanding</div>
+          <div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:45%;background:#EF9F27;"></div></div>
+          <div class="sig-score" style="color:#EF9F27;">Partial</div>
+        </div>
+        <div class="signals-note" id="signalsDate">May 2026 benchmark</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">What happens when AI skips your store</div>
+      <h2 class="section-title">Being invisible to AI costs more <em>every day</em></h2>
+      <div class="risk-list">
+        <div class="risk-row"><span class="risk-icon">✗</span>Skipped by Alexa for Shopping, ChatGPT, and Google AI Mode when buyers ask for product recommendations</div>
+        <div class="risk-row"><span class="risk-icon">✗</span>Invisible in AI-powered discovery while competitors with higher scores capture that traffic</div>
+        <div class="risk-row"><span class="risk-icon">✗</span>AI cannot explain what you sell or to whom, so it defaults to a competitor it understands better</div>
+        <div class="risk-row"><span class="risk-icon">✗</span>Bypassed in Agentic Storefronts as AI agents complete purchases at stores they can confidently read</div>
+        <div class="risk-row"><span class="risk-icon">✗</span>Losing a growing share of AI-driven revenue every day while the gap widens</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Recent findings</div>
+      <h2 class="section-title">What we found when we actually <em>looked</em></h2>
+      <div class="findings-section">
+        <div class="finding-arc">
+          <div class="finding-arc-label">Detected, fixed, recovered</div>
+          Beauty store, US. AI could not identify core product positioning. Losing $3,200 per month.<br>
+          Fix: Semantic structure improved, trust signals added above the fold.<br>
+          <span class="finding-arc-result">Recovered $2,800 per month within three weeks.</span>
+        </div>
+        <div id="dynamicFindings"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Where this is going</div>
+      <h2 class="section-title">AI is becoming the new <em>shopping layer</em></h2>
+      <div class="future-box">
+        <div class="future-title">AI is the new shopping layer.</div>
+        <div class="future-body">Alexa for Shopping, ChatGPT, Google AI Mode, and Perplexity now recommend products to hundreds of millions of buyers. Shopify confirmed it: your store is becoming a product database for AI agents.</div>
+        <div class="future-items">
+          <div class="future-item"><span class="future-item-arrow">→</span>AI recommends products and drives purchase decisions in conversation</div>
+          <div class="future-item"><span class="future-item-arrow">→</span>AI agents browse, compare, and buy autonomously via Agentic Storefronts</div>
+          <div class="future-item"><span class="future-item-arrow">→</span>Stores invisible to AI lose a growing share of discovery every single day</div>
+          <div class="future-item"><span class="future-item-arrow">→</span>Stores that close AI gaps in 2026 will dominate AI discovery in 2027</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">How it works</div>
+      <h2 class="section-title">Find the gap. Prove the cost. <em>Fix it.</em></h2>
+      <div class="fpfp-box">
+        <div class="fpfp-row">
+          <div class="fpfp-step"
+            onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'"
+            onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
+            <div class="fpfp-step-label">Find</div>
+            <div class="fpfp-tip">We scan your store and identify exactly what AI systems cannot understand or recommend.</div>
+          </div>
+          <span class="fpfp-arrow">→</span>
+          <div class="fpfp-step"
+            onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'"
+            onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
+            <div class="fpfp-step-label">Prove</div>
+            <div class="fpfp-tip">We calculate the exact revenue impact of each AI interpretation gap.</div>
+          </div>
+          <span class="fpfp-arrow">→</span>
+          <div class="fpfp-step"
+            onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'"
+            onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
+            <div class="fpfp-step-label">Fix</div>
+            <div class="fpfp-tip">You get specific, actionable fixes to improve AI readability and recommendation confidence.</div>
+          </div>
+          <span class="fpfp-arrow">→</span>
+          <div class="fpfp-step"
+            onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'"
+            onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
+            <div class="fpfp-step-label">Protect</div>
+            <div class="fpfp-tip">Ongoing monitoring catches new AI readability issues before they cost you revenue.</div>
+          </div>
+        </div>
+      </div>
+      <div class="steps-row">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-text">Paste your store URL</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-text">See your AI Recommendation Score across 8 factors</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-text">Get the exact fix to become AI recommendable</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <div class="cta-title">Is your store losing revenue to AI invisibility?</div>
+      <div class="cta-sub">Find out in 10 seconds. Free AI Recommendation Score with exact dollar impact per gap.</div>
+      <a href="#" class="cta-btn" onclick="document.getElementById('storeInput').focus();window.scrollTo({top:0,behavior:'smooth'});return false;">Get My Free AI Score</a>
+      <div class="cta-note">Free · No signup · No credit card · Results in 10 seconds</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span id="footerStores">—</span> DTC stores analyzed &nbsp;·&nbsp;
+        $<span id="footerLeaks">—</span>k in AI gaps found &nbsp;·&nbsp; atomfoundry.dev<br>
+        <a href="/terms-of-service.html">Terms</a> &nbsp;·&nbsp;
+        <a href="/privacy-policy.html">Privacy</a> &nbsp;·&nbsp;
+        <a href="/methodology">Methodology</a> &nbsp;·&nbsp;
+        <a href="/geo">GEO</a>
+      </div>
+      <div>
+        <div class="footer-right">Find → Prove → Fix → Protect</div>
+        <div class="footer-platform">AI Commerce Intelligence Platform</div>
+      </div>
+    </div>
+  </footer>
 
 </div>
 
@@ -451,7 +721,9 @@ button:disabled { opacity: 0.7; cursor: default; transform: none; }
       document.getElementById('statIssues').innerText = issues.toLocaleString('en-US');
       document.getElementById('footerStores').innerText = count.toLocaleString('en-US');
       document.getElementById('footerLeaks').innerText = leaksTotal.toLocaleString('en-US');
-      document.getElementById('wasDate').innerText = `Average scores across ${count.toLocaleString('en-US')} scanned DTC stores · May 2026`;
+      document.getElementById('stripStores').innerText = count.toLocaleString('en-US');
+      document.getElementById('signalsCount').innerText = count.toLocaleString('en-US');
+      document.getElementById('signalsDate').innerText = 'May 2026 benchmark across ' + count.toLocaleString('en-US') + ' stores';
     }
   } catch(e) {}
 })();
@@ -461,16 +733,16 @@ function seededRand(seed) { const x = Math.sin(seed + 1) * 10000; return x - Mat
 function getDaysSinceBase() { return Math.floor((new Date() - BASE_DATE) / (1000 * 60 * 60 * 24)); }
 
 const allFindings = [
-  { amount: '$5,800', cat: 'Pet food brand, CA', leak: "AI couldn't identify product category — invisible in AI search results" },
-  { amount: '$2,890', cat: 'Skincare DTC, US', leak: 'AI readability leak — conflicting signals reduced recommendation confidence' },
-  { amount: '$3,480', cat: 'Jewelry store, US', leak: 'Trust clarity problem — AI detected inconsistent credibility signals' },
-  { amount: '$3,640', cat: 'Wellness brand, US', leak: "AI couldn't map product to clear use case — semantic confusion" },
-  { amount: '$4,200', cat: 'Apparel brand, US', leak: 'Recommendation blocker — AI interpretation score critically low' },
-  { amount: '$2,650', cat: 'Home goods, CA', leak: 'AI trust signal gap — missing structured data for recommendation engines' },
-  { amount: '$3,900', cat: 'Beauty DTC, US', leak: 'Product structure unreadable to AI agents — AI navigation failure' },
-  { amount: '$3,120', cat: 'Supplement brand, US', leak: 'Messaging too generic for confident recommendation — AI intent mismatch' },
-  { amount: '$2,420', cat: 'Pet accessories, CA', leak: 'Category signals ambiguous to AI systems — AI readability issue' },
-  { amount: '$4,750', cat: 'Fashion DTC, US', leak: 'Unclear positioning reduced AI discoverability — interpretation leak' },
+  { amount: '$5,800', cat: 'Pet food brand, CA', leak: "AI could not identify product category and the store was invisible in AI search results" },
+  { amount: '$2,890', cat: 'Skincare DTC, US', leak: 'Conflicting signals reduced recommendation confidence across all major AI platforms' },
+  { amount: '$3,480', cat: 'Jewelry store, US', leak: 'Inconsistent credibility signals caused AI to deprioritize the store in trust evaluation' },
+  { amount: '$3,640', cat: 'Wellness brand, US', leak: "AI could not map products to a clear use case and marked the store as semantically ambiguous" },
+  { amount: '$4,200', cat: 'Apparel brand, US', leak: 'AI interpretation score was critically low, blocking the store from recommendation queues' },
+  { amount: '$2,650', cat: 'Home goods, CA', leak: 'Structured data gaps prevented recommendation engines from reading trust signals' },
+  { amount: '$3,900', cat: 'Beauty DTC, US', leak: 'Product structure was unreadable to AI agents, causing navigation failure in agentic flows' },
+  { amount: '$3,120', cat: 'Supplement brand, US', leak: 'Generic messaging prevented confident AI recommendation due to intent mismatch' },
+  { amount: '$2,420', cat: 'Pet accessories, CA', leak: 'Ambiguous category signals confused AI classification systems' },
+  { amount: '$4,750', cat: 'Fashion DTC, US', leak: 'Unclear positioning reduced AI discoverability across all conversational platforms' },
 ];
 
 function seededShuffle(arr, seed) {
@@ -485,9 +757,8 @@ function seededShuffle(arr, seed) {
 const days = getDaysSinceBase();
 const shuffled = seededShuffle(allFindings, days * 31);
 document.getElementById('dynamicFindings').innerHTML = shuffled.slice(0, 4).map(f => `
-  <div class="example-item">
-    <span class="example-leak">🔴 ${f.amount}/month</span>
-    <span> · ${f.cat} · ${f.leak}</span>
+  <div class="finding-item">
+    <span class="finding-amount">${f.amount}/month</span> &nbsp;·&nbsp; ${f.cat} &nbsp;·&nbsp; ${f.leak}
   </div>
 `).join('');
 </script>
@@ -523,5 +794,6 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
   }
 });
 </script>
+
 </body>
 </html>
