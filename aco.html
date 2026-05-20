@@ -358,7 +358,7 @@ h2 em { font-style: normal; color: #f97316; }
 /* INTERNAL LINKS */
 .internal-links { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
 .internal-links-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
-.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 .internal-link-item {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 14px; background: #111; border: 1px solid #1e1e1e;
@@ -402,6 +402,23 @@ h2 em { font-style: normal; color: #f97316; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
   .footer-platform { text-align: left; }
 }
+
+/* DEEP DIVE CARDS */
+.deepdive-link { text-decoration: none; display: block; }
+.deepdive-arrow { font-size: 12px; margin-top: 12px; font-weight: 600; transition: transform 0.2s; display: inline-block; }
+.deepdive-link:hover .deepdive-arrow { transform: translateX(4px); }
+
+.deepdive-red { border-color: rgba(226,75,74,0.2); background: rgba(226,75,74,0.04); transition: background 0.25s, border-color 0.25s; }
+.deepdive-red:hover { background: rgba(226,75,74,0.10); border-color: rgba(226,75,74,0.45); }
+
+.deepdive-green { border-color: rgba(29,158,117,0.2); background: rgba(29,158,117,0.04); transition: background 0.25s, border-color 0.25s; }
+.deepdive-green:hover { background: rgba(29,158,117,0.10); border-color: rgba(29,158,117,0.45); }
+
+.deepdive-blue { border-color: rgba(96,165,250,0.2); background: rgba(96,165,250,0.04); transition: background 0.25s, border-color 0.25s; }
+.deepdive-blue:hover { background: rgba(96,165,250,0.10); border-color: rgba(96,165,250,0.45); }
+
+.deepdive-orange { border-color: rgba(249,115,22,0.2); background: rgba(249,115,22,0.04); transition: background 0.25s, border-color 0.25s; }
+.deepdive-orange:hover { background: rgba(249,115,22,0.10); border-color: rgba(249,115,22,0.45); }
 </style>
 </head>
 <body>
@@ -710,6 +727,47 @@ h2 em { font-style: normal; color: #f97316; }
     <a href="/methodology" style="font-size:14px;color:#f97316;text-decoration:underline;display:inline-block;margin-top:4px;">Read the full scoring methodology</a>
   </div>
 
+  <!-- DEEP DIVES -->
+  <div class="section">
+    <div class="section-kicker">Go deeper</div>
+    <h2>Three topics every ACO-focused<br>founder should understand</h2>
+    <p class="body-text">Each of these is a core layer of Agentic Commerce Optimization. If you are serious about getting recommended by AI shopping agents, these are the pages to read next.</p>
+    <div class="pillars-grid">
+      <a href="/ai-visibility" class="deepdive-link">
+        <div class="pillar deepdive-red">
+          <div class="pillar-icon">👁️</div>
+          <div class="pillar-name" style="color:#f87171;">AI Visibility</div>
+          <div class="pillar-desc">AI may not be able to read your store at all. Learn the difference between AI Visibility and AI Recommendability, what breaks visibility, and the five fastest fixes for stores in the AI Invisible Risk zone.</div>
+          <div class="deepdive-arrow" style="color:#E24B4A;">Read the guide →</div>
+        </div>
+      </a>
+      <a href="/what-is-agentic-commerce" class="deepdive-link">
+        <div class="pillar deepdive-green">
+          <div class="pillar-icon">🤖</div>
+          <div class="pillar-name" style="color:#34d399;">What is Agentic Commerce?</div>
+          <div class="pillar-desc">The complete explainer for Shopify founders. What Agentic Commerce actually means, how Shopify's Agentic Dashboard works, what llms.txt and agents.md do, and why the agentic model changes everything.</div>
+          <div class="deepdive-arrow" style="color:#1D9E75;">Read the guide →</div>
+        </div>
+      </a>
+      <a href="/benchmarks" class="deepdive-link">
+        <div class="pillar deepdive-blue">
+          <div class="pillar-icon">📊</div>
+          <div class="pillar-name" style="color:#60a5fa;">AI Readiness Benchmarks</div>
+          <div class="pillar-desc">Real AI Readiness scores from 1,700+ scanned Shopify stores broken down by category. See exactly where fashion, beauty, health, home, and other niches stand and how your store compares to your industry.</div>
+          <div class="deepdive-arrow" style="color:#60a5fa;">See the data →</div>
+        </div>
+      </a>
+      <a href="/methodology" class="deepdive-link">
+        <div class="pillar deepdive-orange">
+          <div class="pillar-icon">📐</div>
+          <div class="pillar-name">Scoring Methodology</div>
+          <div class="pillar-desc">The complete 8-factor AI Readiness scoring model. What each factor measures, how it is weighted, why it predicts AI recommendation probability, and what average scores look like across 500+ scanned stores.</div>
+          <div class="deepdive-arrow" style="color:#f97316;">Read the methodology →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
   <!-- FAQ -->
   <div class="section">
     <div class="section-kicker">FAQ</div>
@@ -778,21 +836,29 @@ h2 em { font-style: normal; color: #f97316; }
   <div class="internal-links">
     <div class="internal-links-label">Explore more</div>
     <div class="internal-links-grid">
+      <a href="/ai-visibility" class="internal-link-item">
+        <span class="internal-link-icon">👁️</span>
+        <div class="internal-link-text"><strong>AI Visibility</strong><span>Can AI even read your store?</span></div>
+      </a>
+      <a href="/what-is-agentic-commerce" class="internal-link-item">
+        <span class="internal-link-icon">🤖</span>
+        <div class="internal-link-text"><strong>Agentic Commerce</strong><span>What it is and how it works</span></div>
+      </a>
+      <a href="/benchmarks" class="internal-link-item">
+        <span class="internal-link-icon">📊</span>
+        <div class="internal-link-text"><strong>Benchmarks</strong><span>AI scores by niche and category</span></div>
+      </a>
       <a href="/geo" class="internal-link-item">
         <span class="internal-link-icon">🔍</span>
         <div class="internal-link-text"><strong>GEO for Shopify</strong><span>Generative Engine Optimization guide</span></div>
       </a>
       <a href="/methodology" class="internal-link-item">
-        <span class="internal-link-icon">📊</span>
+        <span class="internal-link-icon">📐</span>
         <div class="internal-link-text"><strong>Scoring Methodology</strong><span>8-factor AI Readiness Score explained</span></div>
       </a>
       <a href="/research" class="internal-link-item">
         <span class="internal-link-icon">🔬</span>
         <div class="internal-link-text"><strong>Research</strong><span>2026 AI Readiness Report and findings</span></div>
-      </a>
-      <a href="/stores" class="internal-link-item">
-        <span class="internal-link-icon">🏪</span>
-        <div class="internal-link-text"><strong>Store Database</strong><span>Browse 1,700+ AI Readiness scores</span></div>
       </a>
     </div>
   </div>
