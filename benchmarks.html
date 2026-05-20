@@ -205,7 +205,6 @@ h2 em { font-style: normal; color: #f97316; }
 
 <div class="wrap">
 
-  <!-- HERO -->
   <div class="hero">
     <div class="breadcrumb">
       <a href="/">Home</a> ›
@@ -236,7 +235,6 @@ h2 em { font-style: normal; color: #f97316; }
     </div>
   </div>
 
-  <!-- BENCHMARK BY NICHE -->
   <div class="section">
     <div class="section-kicker">Benchmarks by niche</div>
     <h2>AI Readiness scores <em>by category</em></h2>
@@ -250,7 +248,6 @@ h2 em { font-style: normal; color: #f97316; }
     <div class="data-note" id="dataNoteNiche"></div>
   </div>
 
-  <!-- FACTOR BENCHMARKS -->
   <div class="section">
     <div class="section-kicker">Factor breakdown</div>
     <h2>Where every category <em>actually fails</em></h2>
@@ -315,7 +312,6 @@ h2 em { font-style: normal; color: #f97316; }
     <p class="data-note">Based on 500+ store scan. Source: Atom Foundry AI Readiness Report, May 2026. Factor data updated continuously.</p>
   </div>
 
-  <!-- CTA -->
   <div class="cta-block">
     <h2>How does <em>your store</em> compare?</h2>
     <p>See your exact AI Readiness Score versus your category average. Find out which gaps are costing you the most AI-driven revenue.</p>
@@ -396,11 +392,9 @@ async function loadBenchmarks() {
     const data = await res.json();
     const rows = Array.isArray(data) ? data : (data.stores || []);
 
-    // Update total stores count
     const totalEl = document.getElementById('totalStores');
     if (totalEl && rows.length > 0) totalEl.textContent = rows.length.toLocaleString('en-US');
 
-    // Bucket stores by niche
     const buckets = {};
     for (const r of rows) {
       const domain = String(r.domain || r.store_domain || '').replace(/^www\./, '').toLowerCase();
@@ -413,7 +407,6 @@ async function loadBenchmarks() {
       buckets[niche].push(score);
     }
 
-    // Build benchmark cards
     const grid = document.getElementById('benchmarkGrid');
     if (!grid) return;
     grid.innerHTML = '';
@@ -432,8 +425,10 @@ async function loadBenchmarks() {
       const barColor = col === 'green' ? '#1D9E75' : col === 'orange' ? '#f97316' : '#E24B4A';
       const barW = Math.round((avg / 100) * 100);
 
-      const card = document.createElement('div');
+      // ONLY CHANGE: div -> a with href
+      const card = document.createElement('a');
       card.className = 'bench-card';
+      card.href = `/benchmarks/${key}`;
       card.innerHTML = `
         <div class="bench-header">
           <div class="bench-niche">
