@@ -53,7 +53,7 @@
       "name": "What is the difference between AI Visibility and AI Recommendability?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "AI Visibility means an AI agent can read your store at all — your content is crawlable and parseable. AI Recommendability means an AI agent will confidently recommend your store to a buyer. A store can be fully visible to AI and still not get recommended, because AI agents only recommend stores they can match to a buyer's intent, trust as reliable, and verify as commerce-accurate. Recommendability is what drives revenue."
+        "text": "AI Visibility means an AI agent can read your store at all. Your content is crawlable and parseable. AI Recommendability means an AI agent will confidently recommend your store to a buyer. A store can be fully visible to AI and still not get recommended, because AI agents only recommend stores they can match to a buyer's intent, trust as reliable, and verify as commerce-accurate. Recommendability is what drives revenue."
       }
     },
     {
@@ -85,7 +85,7 @@
       "name": "What is Agentic Commerce?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Agentic Commerce is the emerging model where AI agents autonomously browse, compare, and complete purchases on behalf of buyers. Shopify's Agentic Dashboard (launched May 2026) generates llms.txt, llms-full.txt, and agents.md for every store — enabling AI agents to read product catalogs and complete checkouts. Stores not configured for agentic commerce will be bypassed as this model scales through 2026-2027."
+        "text": "Agentic Commerce is the emerging model where AI agents autonomously browse, compare, and complete purchases on behalf of buyers. Shopify's Agentic Dashboard (launched May 2026) generates llms.txt, llms-full.txt, and agents.md for every store, enabling AI agents to read product catalogs and complete checkouts. Stores not configured for agentic commerce will be bypassed as this model scales through 2026-2027."
       }
     },
     {
@@ -101,7 +101,7 @@
       "name": "What is Machine-Readable Commerce?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Machine-Readable Commerce is product and commerce data formatted for AI consumption, not just humans. This means prices in schema markup (not just rendered on page), stock availability in structured data, variant information in parseable format, and product specifications in crawlable text. If your commerce data requires JavaScript to render, AI agents often can't read it — and can't recommend what they can't read."
+        "text": "Machine-Readable Commerce is product and commerce data formatted for AI consumption, not just humans. This means prices in schema markup (not just rendered on page), stock availability in structured data, variant information in parseable format, and product specifications in crawlable text. If your commerce data requires JavaScript to render, AI agents often cannot read it and cannot recommend what they cannot read."
       }
     }
   ]
@@ -127,13 +127,13 @@
     {
       "@type": "DefinedTerm",
       "name": "AI Visibility",
-      "description": "Whether an AI agent can read your store at all — content is crawlable, structured, and parseable by AI systems.",
+      "description": "Whether an AI agent can read your store at all. Content is crawlable, structured, and parseable by AI systems.",
       "inDefinedTermSet": "https://atomfoundry.dev/methodology#geo-glossary"
     },
     {
       "@type": "DefinedTerm",
       "name": "AI Recommendability",
-      "description": "Whether an AI agent will confidently recommend your store to a buyer. Goes beyond visibility — requires intent matching, trust verification, and commerce accuracy.",
+      "description": "Whether an AI agent will confidently recommend your store to a buyer. Goes beyond visibility. It requires intent matching, trust verification, and commerce accuracy.",
       "inDefinedTermSet": "https://atomfoundry.dev/methodology#geo-glossary"
     },
     {
@@ -163,7 +163,7 @@
     {
       "@type": "DefinedTerm",
       "name": "Recommendation Readiness",
-      "description": "A store's overall preparedness to be recommended by AI shopping agents — the composite of structured data, semantic clarity, trust signals, commerce accuracy, and intent matching.",
+      "description": "A store's overall preparedness to be recommended by AI shopping agents. It is the composite of structured data, semantic clarity, trust signals, commerce accuracy, and intent matching.",
       "inDefinedTermSet": "https://atomfoundry.dev/methodology#geo-glossary"
     }
   ]
@@ -193,24 +193,31 @@
 body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
 body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.10), transparent 45%); pointer-events: none; z-index: 0; }
 a { color: inherit; text-decoration: none; }
-.navbar { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-logo-img { width: 36px; height: 36px; border-radius: 50%; }
-.nav-brand { font-size: 16px; font-weight: 800; color: var(--white); letter-spacing: -0.3px; }
-.nav-brand span { color: var(--orange); }
-.nav-links { display: flex; align-items: center; gap: 20px; }
-.nav-link { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
-.nav-link:hover, .nav-link.active { color: var(--orange); }
-.nav-social { display: flex; gap: 10px; }
-.nav-social a { width: 30px; height: 30px; border-radius: 6px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; font-size: 13px; transition: all 0.2s; }
-.nav-social a:hover { background: rgba(249,115,22,0.1); border-color: var(--orange); color: var(--orange); }
-.nav-cta { background: var(--orange); color: black; font-weight: 700; font-size: 13px; padding: 8px 18px; border-radius: 8px; text-decoration: none; transition: all 0.2s; }
-.nav-cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
+/* NAV — landing page style */
+.nav {
+  padding: 20px 32px; max-width: 860px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.nav-brand { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: var(--orange); }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; justify-content: flex-end; }
+.nav-links a {
+  font-size: 12px; color: #999; text-decoration: none;
+  border: 1px solid var(--border); padding: 5px 12px;
+  border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap;
+}
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.active { color: var(--orange); border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.05); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+.nav-links a.cta-nav:hover { background: var(--orange-dark); }
+@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; justify-content: flex-start; } }
 .hero { max-width: 860px; margin: 0 auto; padding: 72px 32px 48px; position: relative; z-index: 1; }
 .hero-pain { background: rgba(226,75,74,0.08); border: 1px solid rgba(226,75,74,0.25); border-radius: 10px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: #f87171; line-height: 1.6; }
 .hero-pain strong { color: #fca5a5; }
 .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 24px; }
-.hero-badge-dot { width: 5px; height: 5px; background: var(--orange); border-radius: 50%; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 .hero-title { font-size: 52px; font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 20px; letter-spacing: -0.02em; }
 .hero-title span { color: var(--orange); }
@@ -388,21 +395,19 @@ a { color: inherit; text-decoration: none; }
 </head>
 <body>
 
-<nav class="navbar">
-  <a href="https://atomfoundry.dev" class="nav-logo">
-    <img src="/favicon-32x32.png" alt="Atom Foundry" class="nav-logo-img">
-    <span class="nav-brand">ATOM <span>FOUNDRY</span></span>
-  </a>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+  </div>
   <div class="nav-links">
-    <a href="https://atomfoundry.dev" class="nav-link">Home</a>
-    <a href="/stores" class="nav-link">Stores</a>
-    <a href="/geo" class="nav-link">GEO</a>
-    <a href="https://atomfoundry.dev/methodology" class="nav-link active">Methodology</a>
-    <div class="nav-social">
-      <a href="https://x.com/atomfoundryai" target="_blank">𝕏</a>
-      <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank">in</a>
-    </div>
-    <a href="https://atomfoundry.dev" class="nav-cta">See If AI Understands Your Store →</a>
+    <a href="/">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/geo">GEO</a>
+    <a href="/aco">ACO</a>
+    <a href="/methodology" class="active">Methodology</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/" class="cta-nav">Free Score</a>
   </div>
 </nav>
 
@@ -411,7 +416,7 @@ a { color: inherit; text-decoration: none; }
     <strong>Most Shopify stores are already invisible to AI shopping agents.</strong>
     They just don't see it yet. Alexa for Shopping, ChatGPT, Google AI Mode, and Perplexity are now recommending products to hundreds of millions of buyers. Shopify confirmed it: your store is becoming a product database for AI agents.
   </div>
-  <div class="hero-badge"><span class="hero-badge-dot"></span>Updated May 2026 · Version 2.0</div>
+  <div class="hero-badge">Updated May 2026 · Version 2.0</div>
   <h1 class="hero-title">AI Recommendation Score<br><span>Methodology & GEO Glossary</span></h1>
   <p class="hero-subtitle">The first published scoring standard for how AI shopping agents evaluate, trust, and recommend DTC Shopify stores. Includes complete <a href="#geo-glossary" style="color:var(--orange);text-decoration:underline;">GEO glossary</a> and AI commerce signal definitions.</p>
   <div class="trust-bar">
@@ -428,7 +433,7 @@ a { color: inherit; text-decoration: none; }
   <div class="hero-meta">
     <span class="hero-meta-item">📅 <strong>Updated:</strong> May 2026</span>
     <span class="hero-meta-item">✍️ <strong>Author:</strong> Daniel, Atom Foundry</span>
-    <span class="hero-meta-item">📊 <strong>Version:</strong> 2.0 — 8 factors</span>
+    <span class="hero-meta-item">📊 <strong>Version:</strong> 2.0, 8 factors</span>
   </div>
   <div class="hero-actions">
     <button class="btn-primary" onclick="downloadPDF()">↓ Download PDF</button>
@@ -443,13 +448,13 @@ a { color: inherit; text-decoration: none; }
   <div class="section-label">GEO Glossary · AI Commerce Vocabulary</div>
 
   <div class="geo-header">
-    <div class="geo-header-label"><span class="geo-header-dot"></span>Essential terms for AI-era ecommerce</div>
-    <div class="geo-header-title">GEO, AI Visibility &amp; <span>AI Recommendability</span> — defined</div>
-    <div class="geo-header-sub">The language of AI commerce is still forming. These are the terms that matter for DTC Shopify stores in 2026 — and what each one actually means for your revenue. Also see: <a href="/geo" style="color:var(--orange);text-decoration:underline;">full GEO guide for ecommerce →</a></div>
+    <div class="geo-header-label">Essential terms for AI-era ecommerce</div>
+    <div class="geo-header-title">GEO, AI Visibility &amp; <span>AI Recommendability</span></div>
+    <div class="geo-header-sub">The language of AI commerce is still forming. These are the terms that matter for DTC Shopify stores in 2026 and what each one actually means for your revenue. Also see: <a href="/geo" style="color:var(--orange);text-decoration:underline;">full GEO guide for ecommerce →</a></div>
   </div>
 
   <div class="geo-seo-callout">
-    <div class="geo-seo-callout-label">⚠️ Why SEO ≠ AI Recommendation — the critical difference</div>
+    <div class="geo-seo-callout-label">⚠️ Why SEO ≠ AI Recommendation: the critical difference</div>
     <div class="geo-seo-grid">
       <div class="geo-seo-col">
         <div class="geo-seo-col-label seo">SEO optimizes for</div>
@@ -479,15 +484,15 @@ a { color: inherit; text-decoration: none; }
   <div class="geo-terms-grid">
     <div class="geo-term highlight">
       <div class="geo-term-name">GEO <span class="geo-term-badge">Core term</span></div>
-      <div class="geo-term-def"><strong>Generative Engine Optimization</strong> — the practice of optimizing content so it gets cited, referenced, or recommended by AI systems like ChatGPT, Perplexity, and Google AI Mode. GEO is the AI-era equivalent of SEO. For ecommerce, GEO means structuring your store so AI agents can understand, trust, and recommend your products in response to buyer queries.</div>
+      <div class="geo-term-def"><strong>Generative Engine Optimization</strong> is the practice of optimizing content so it gets cited, referenced, or recommended by AI systems like ChatGPT, Perplexity, and Google AI Mode. GEO is the AI-era equivalent of SEO. For ecommerce, GEO means structuring your store so AI agents can understand, trust, and recommend your products in response to buyer queries.</div>
     </div>
     <div class="geo-term">
       <div class="geo-term-name">AI Visibility</div>
-      <div class="geo-term-def"><strong>Whether an AI agent can read your store at all.</strong> A store has AI visibility when its content is crawlable, structured, and parseable by AI systems. AI visibility is necessary but not sufficient — a store can be fully visible to AI and still not get recommended. <strong>AI visibility is not the same as AI recommendability.</strong></div>
+      <div class="geo-term-def"><strong>Whether an AI agent can read your store at all.</strong> A store has AI visibility when its content is crawlable, structured, and parseable by AI systems. AI visibility is necessary but not sufficient. A store can be fully visible to AI and still not get recommended. <strong>AI visibility is not the same as AI recommendability.</strong></div>
     </div>
     <div class="geo-term highlight">
       <div class="geo-term-name">AI Recommendability <span class="geo-term-badge">Key distinction</span></div>
-      <div class="geo-term-def"><strong>Whether an AI agent will confidently recommend your store to a buyer.</strong> Goes beyond visibility. AI agents only recommend stores they can match to a buyer's intent, trust as reliable, and verify as commerce-accurate. Recommendability is what drives revenue — and what Atom Foundry measures.</div>
+      <div class="geo-term-def"><strong>Whether an AI agent will confidently recommend your store to a buyer.</strong> Goes beyond visibility. AI agents only recommend stores they can match to a buyer's intent, trust as reliable, and verify as commerce-accurate. Recommendability is what drives revenue. That is what Atom Foundry measures.</div>
     </div>
     <div class="geo-term">
       <div class="geo-term-name">AI Trust Signals</div>
@@ -495,11 +500,11 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="geo-term">
       <div class="geo-term-name">Machine-Readable Commerce</div>
-      <div class="geo-term-def"><strong>Product and commerce data formatted for AI consumption, not just humans.</strong> Prices in schema markup, stock availability in structured data, variant information in parseable format. If your commerce data requires JavaScript to render, AI agents often can't read it — and can't recommend what they can't read.</div>
+      <div class="geo-term-def"><strong>Product and commerce data formatted for AI consumption, not just humans.</strong> Prices in schema markup, stock availability in structured data, variant information in parseable format. If your commerce data requires JavaScript to render, AI agents often cannot read it, and cannot recommend what they cannot read.</div>
     </div>
     <div class="geo-term">
       <div class="geo-term-name">Recommendation Readiness</div>
-      <div class="geo-term-def"><strong>A store's overall preparedness to be recommended by AI shopping agents.</strong> Composite of structured data, semantic clarity, trust signals, commerce accuracy, intent matching, and external authority. High Recommendation Readiness = AI recommends you. Low = AI skips you — regardless of product quality or brand recognition.</div>
+      <div class="geo-term-def"><strong>A store's overall preparedness to be recommended by AI shopping agents.</strong> Composite of structured data, semantic clarity, trust signals, commerce accuracy, intent matching, and external authority. High Recommendation Readiness = AI recommends you. Low = AI skips you, regardless of product quality or brand recognition.</div>
     </div>
     <div class="geo-term">
       <div class="geo-term-name">Conversational Commerce Readiness</div>
@@ -519,11 +524,11 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="geo-term">
       <div class="geo-term-name">Agentic Commerce</div>
-      <div class="geo-term-def"><strong>The emerging model where AI agents autonomously browse, compare, and complete purchases.</strong> Shopify's Agentic Dashboard (May 2026) generates llms.txt, llms-full.txt, and agents.md for every store — enabling AI agents to read product catalogs and complete checkouts. Stores not configured for agentic commerce will be bypassed as this scales.</div>
+      <div class="geo-term-def"><strong>The emerging model where AI agents autonomously browse, compare, and complete purchases.</strong> Shopify's Agentic Dashboard (May 2026) generates llms.txt, llms-full.txt, and agents.md for every store, enabling AI agents to read product catalogs and complete checkouts. Stores not configured for agentic commerce will be bypassed as this scales.</div>
     </div>
     <div class="geo-term">
       <div class="geo-term-name">AI Citation Readiness <span class="geo-term-badge green">GEO bridge</span></div>
-      <div class="geo-term-def"><strong>How well a store is positioned to be cited by AI in response to buyer queries.</strong> GEO focuses on getting cited in AI-generated content. AI Citation Readiness for ecommerce goes further — it measures whether AI will cite your store specifically when recommending products, not just mention your brand generically. This is where GEO meets commerce.</div>
+      <div class="geo-term-def"><strong>How well a store is positioned to be cited by AI in response to buyer queries.</strong> GEO focuses on getting cited in AI-generated content. AI Citation Readiness for ecommerce goes further. It measures whether AI will cite your store specifically when recommending products, not just mention your brand generically. This is where GEO meets commerce.</div>
     </div>
   </div>
 </div>
@@ -534,7 +539,7 @@ a { color: inherit; text-decoration: none; }
 <!-- FAQ SECTION -->
 <div class="faq-section" id="faq">
   <div class="section-label">Frequently Asked Questions</div>
-  <h2 style="font-size:28px;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2;">GEO & AI Recommendation — FAQ</h2>
+  <h2 style="font-size:28px;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2;">GEO & AI Recommendation: FAQ</h2>
   <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:680px;margin-bottom:0;">Common questions about GEO, AI visibility, and what it means for your Shopify store.</p>
 
   <div class="faq-list">
@@ -543,7 +548,7 @@ a { color: inherit; text-decoration: none; }
         <span class="faq-question-text">What is GEO (Generative Engine Optimization)?</span>
         <span class="faq-chevron">▾</span>
       </div>
-      <div class="faq-answer">GEO — Generative Engine Optimization — is the practice of optimizing your content and store so AI systems like ChatGPT, Perplexity, Google AI Mode, and Alexa for Shopping can understand, cite, and recommend you. It's the AI-era equivalent of SEO. For Shopify stores, GEO specifically means structuring product data, trust signals, and content so AI shopping agents confidently recommend your store when buyers ask for product recommendations.</div>
+      <div class="faq-answer">GEO stands for Generative Engine Optimization. It is the practice of optimizing your content and store so AI systems like ChatGPT, Perplexity, Google AI Mode, and Alexa for Shopping can understand, cite, and recommend you. It's the AI-era equivalent of SEO. For Shopify stores, GEO specifically means structuring product data, trust signals, and content so AI shopping agents confidently recommend your store when buyers ask for product recommendations.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
@@ -557,7 +562,7 @@ a { color: inherit; text-decoration: none; }
         <span class="faq-question-text">What is the difference between AI Visibility and AI Recommendability?</span>
         <span class="faq-chevron">▾</span>
       </div>
-      <div class="faq-answer">AI Visibility means an AI agent can read your store — your content is crawlable and parseable. AI Recommendability means an AI agent will confidently recommend your store to a buyer. These are very different. A store can be fully visible to AI and still not get recommended, because AI agents only recommend stores they can match to a specific buyer's intent, verify as trustworthy, and confirm as commerce-accurate. Recommendability is what drives revenue — visibility alone doesn't.</div>
+      <div class="faq-answer">AI Visibility means an AI agent can read your store. Your content is crawlable and parseable. AI Recommendability means an AI agent will confidently recommend your store to a buyer. These are very different. A store can be fully visible to AI and still not get recommended, because AI agents only recommend stores they can match to a specific buyer's intent, verify as trustworthy, and confirm as commerce-accurate. Recommendability is what drives revenue. Visibility alone doesn't.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
@@ -578,21 +583,21 @@ a { color: inherit; text-decoration: none; }
         <span class="faq-question-text">What is Agentic Commerce and why does it matter?</span>
         <span class="faq-chevron">▾</span>
       </div>
-      <div class="faq-answer">Agentic Commerce is the model where AI agents autonomously browse, compare, and complete purchases on behalf of buyers — without human input at each step. Shopify launched its Agentic Dashboard in May 2026, generating llms.txt, llms-full.txt, and agents.md for every store. These files let AI agents read your product catalog and complete checkouts. Stores not configured for agentic commerce will be bypassed as this model scales through 2026–2027.</div>
+      <div class="faq-answer">Agentic Commerce is the model where AI agents autonomously browse, compare, and complete purchases on behalf of buyers, without human input at each step. Shopify launched its Agentic Dashboard in May 2026, generating llms.txt, llms-full.txt, and agents.md for every store. These files let AI agents read your product catalog and complete checkouts. Stores not configured for agentic commerce will be bypassed as this model scales through 2026–2027.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
         <span class="faq-question-text">What are AI Trust Signals for ecommerce stores?</span>
         <span class="faq-chevron">▾</span>
       </div>
-      <div class="faq-answer">AI Trust Signals are machine-readable signals that tell AI shopping agents a store is safe to recommend. Unlike visual trust (design, badges), AI trust signals must be in crawlable HTML or structured data: star ratings in JSON-LD AggregateRating, return policy text visible without JavaScript, SSL certificate, shipping information in plain text, and contact details. AI agents will not recommend a store they can't verify as trustworthy — regardless of how good the product actually is.</div>
+      <div class="faq-answer">AI Trust Signals are machine-readable signals that tell AI shopping agents a store is safe to recommend. Unlike visual trust (design, badges), AI trust signals must be in crawlable HTML or structured data: star ratings in JSON-LD AggregateRating, return policy text visible without JavaScript, SSL certificate, shipping information in plain text, and contact details. AI agents will not recommend a store they cannot verify as trustworthy, regardless of how good the product actually is.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
         <span class="faq-question-text">How is GEO for ecommerce different from GEO for content sites?</span>
         <span class="faq-chevron">▾</span>
       </div>
-      <div class="faq-answer">GEO for content sites focuses on getting cited in AI-generated answers — AI mentions your article, brand, or opinion. GEO for ecommerce goes further: it's about getting recommended in AI shopping flows where buyers are ready to purchase. Ecommerce GEO requires commerce-specific signals that content GEO doesn't: product schema, pricing accuracy, stock availability, variant structure, checkout trust signals, and niche intent matching. This is why a generic GEO strategy won't work for Shopify stores.</div>
+      <div class="faq-answer">GEO for content sites focuses on getting cited in AI-generated answers. AI mentions your article, brand, or opinion. GEO for ecommerce goes further: it's about getting recommended in AI shopping flows where buyers are ready to purchase. Ecommerce GEO requires commerce-specific signals that content GEO doesn't: product schema, pricing accuracy, stock availability, variant structure, checkout trust signals, and niche intent matching. This is why a generic GEO strategy won't work for Shopify stores.</div>
     </div>
   </div>
 </div>
@@ -602,7 +607,7 @@ a { color: inherit; text-decoration: none; }
 <div class="section">
   <div class="section-label">Why Version 2.0</div>
   <h2 class="section-title">Shopify just confirmed what we've been building</h2>
-  <p class="section-body">In May 2026, Shopify made it official: the future of e-commerce is AI-distributed. At the same time, Amazon retired Rufus and launched Alexa for Shopping — embedding AI directly into Amazon search results. This is the most important change in e-commerce in 15 years.</p>
+  <p class="section-body">In May 2026, Shopify made it official: the future of e-commerce is AI-distributed. At the same time, Amazon retired Rufus and launched Alexa for Shopping, now embedding AI directly into Amazon search results. This is the most important change in e-commerce in 15 years.</p>
   <div class="shopify-insight">
     <div class="shopify-insight-label">Shopify · May 2026</div>
     <div class="shopify-quote">"Your store is becoming a product database for AI agents."</div>
@@ -610,8 +615,8 @@ a { color: inherit; text-decoration: none; }
     <p>AI won't just be a search engine. AI will be a <strong>recommendation engine.</strong> And Atom Foundry is the infrastructure for the recommendation economy.</p>
   </div>
   <div class="why-now-box">
-    <p><strong>What this means for your store:</strong> AI agents are starting to recommend products, compare stores, navigate websites, and assist purchases — right now. Most Shopify stores are invisible to this layer.</p>
-    <p>Alexa for Shopping already serves 300M+ users. ChatGPT Shopping, Google AI Mode, Perplexity and Microsoft Copilot all have live checkout integrations. <strong>This is not a future trend. It is already here.</strong></p>
+    <p><strong>What this means for your store:</strong> AI agents are starting to recommend products, compare stores, navigate websites, and assist purchases. Right now. Most Shopify stores are invisible to this layer.</p>
+    <p>Alexa for Shopping already serves 300M+ users. ChatGPT Shopping, Google AI Mode, Perplexity and Microsoft Copilot all have live checkout integrations. <strong>This is not a future trend. It is already happening.</strong></p>
   </div>
 </div>
 
@@ -624,7 +629,7 @@ a { color: inherit; text-decoration: none; }
     <div class="benchmark-grid">
       <div><div class="benchmark-num">51/100</div><div class="benchmark-label"><strong>Average AI Recommendation Score</strong><br>Most stores are partially visible but losing significant AI-driven traffic</div></div>
       <div><div class="benchmark-num">72%</div><div class="benchmark-label"><strong>Missing AI Structured Signals</strong><br>AI agents cannot confidently identify what the store sells or to whom</div></div>
-      <div><div class="benchmark-num">64%</div><div class="benchmark-label"><strong>Missing AI Trust Confidence</strong><br>No machine-readable reviews or return policy — agents skip these stores</div></div>
+      <div><div class="benchmark-num">64%</div><div class="benchmark-label"><strong>Missing AI Trust Confidence</strong><br>No machine-readable reviews or return policy. Agents skip these stores</div></div>
       <div><div class="benchmark-num">58%</div><div class="benchmark-label"><strong>Failed Commerce Accuracy</strong><br>Price hidden behind JavaScript, out-of-stock shown as available, missing variants</div></div>
     </div>
   </div>
@@ -640,10 +645,10 @@ a { color: inherit; text-decoration: none; }
     <p><strong>The gap:</strong> Most DTC stores were built for human visitors. AI agents need structured signals to evaluate and recommend a store. <span class="highlight">These are not technical issues. They are revenue leaks.</span></p>
   </div>
   <div class="why-grid">
-    <div class="why-card"><div class="why-card-icon">🔍</div><div class="why-card-title">AI agents skip unstructured stores</div><div class="why-card-desc">Without structured signals, semantic clarity, and trust confidence, AI agents cannot recommend your store — so they don't. This is a revenue leak before a single visitor lands.</div></div>
+    <div class="why-card"><div class="why-card-icon">🔍</div><div class="why-card-title">AI agents skip unstructured stores</div><div class="why-card-desc">Without structured signals, semantic clarity, and trust confidence, AI agents cannot recommend your store, so they don't. This is a revenue leak before a single visitor lands.</div></div>
     <div class="why-card"><div class="why-card-icon">🎯</div><div class="why-card-title">AI ranks by intent, not traffic</div><div class="why-card-desc">AI doesn't rank stores generally. It ranks them per specific buyer intent: luxury, eco, minimalist, fast shipping. Generic stores without clear positioning are invisible.</div></div>
-    <div class="why-card"><div class="why-card-icon">📈</div><div class="why-card-title">Early movers win compounding</div><div class="why-card-desc">Stores with high AI Recommendation Readiness accumulate compounding visibility advantages. AI learns which stores to trust. Get in early — before competitors do.</div></div>
-    <div class="why-card"><div class="why-card-icon">⚡</div><div class="why-card-title">Fixable in days, not months</div><div class="why-card-desc">Unlike SEO, AI Readiness gaps — schema, trust signals, intent clarity — can be fixed in 24–48 hours. AI visibility is a binary switch. You're either readable or you're not.</div></div>
+    <div class="why-card"><div class="why-card-icon">📈</div><div class="why-card-title">Early movers win compounding</div><div class="why-card-desc">Stores with high AI Recommendation Readiness accumulate compounding visibility advantages. AI learns which stores to trust. Getting in early means getting ahead of competitors.</div></div>
+    <div class="why-card"><div class="why-card-icon">⚡</div><div class="why-card-title">Fixable in days, not months</div><div class="why-card-desc">Unlike SEO, AI Readiness gaps like schema, trust signals, and intent clarity can be fixed in 24–48 hours. AI visibility is effectively a binary switch. You are either readable or you are not.</div></div>
   </div>
 </div>
 
@@ -653,7 +658,7 @@ a { color: inherit; text-decoration: none; }
   <p class="section-body">The AI Recommendation Score is a 0–100 composite score across 8 factors. Each factor is weighted by its proven impact on AI agent recommendation behavior.</p>
   <div class="binary-callout">A score below 50 means your store is effectively invisible in AI-driven discovery. A score above 85 means AI agents can confidently understand, trust, and recommend you. <strong>There is no middle ground.</strong></div>
   <div class="score-overview">
-    <div class="score-overview-title">Score composition across 8 factors — v2.0</div>
+    <div class="score-overview-title">Score composition across 8 factors, v2.0</div>
     <div class="score-bar-row"><div class="score-bar-label">AI Structured Signals</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:20%"></div></div><div class="score-bar-pct">20%</div></div>
     <div class="score-bar-row"><div class="score-bar-label">Semantic Clarity</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:18%"></div></div><div class="score-bar-pct">18%</div></div>
     <div class="score-bar-row"><div class="score-bar-label">AI Trust Confidence</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:18%"></div></div><div class="score-bar-pct">18%</div></div>
@@ -673,7 +678,7 @@ a { color: inherit; text-decoration: none; }
       <div class="factor-header"><div class="factor-num">01</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">AI Structured Signals</div></div><div class="factor-weight-row"><span class="factor-weight">20% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:100%"></div></div></div></div></div>
       <div class="factor-body">
         <div class="factor-leak-note">Missing structured signals is the single biggest revenue leak in AI discovery. 72% of stores we scanned have this gap.</div>
-        <p class="factor-desc">JSON-LD structured data is the primary language AI agents use to understand what a store sells, at what price, and how trustworthy it is. If that database isn't structured, Alexa for Shopping, ChatGPT, Google AI Mode and Perplexity can't read it — and they skip the store.</p>
+        <p class="factor-desc">JSON-LD structured data is the primary language AI agents use to understand what a store sells, at what price, and how trustworthy it is. If that database isn't structured, Alexa for Shopping, ChatGPT, Google AI Mode and Perplexity cannot read it and they skip the store entirely.</p>
         <div class="factor-signals"><span class="signal-tag orange">Product schema</span><span class="signal-tag orange">Organization schema</span><span class="signal-tag orange">AggregateRating</span><span class="signal-tag orange">llms.txt</span><span class="signal-tag">BreadcrumbList</span><span class="signal-tag">JSON-LD format</span><span class="signal-tag">Inventory signals</span><span class="signal-tag">Variant structure</span></div>
       </div>
     </div>
@@ -695,14 +700,14 @@ a { color: inherit; text-decoration: none; }
     <div class="factor-card is-new">
       <div class="factor-header"><div class="factor-num">04</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">User Intent Match</div><span class="factor-new-badge">New in v2.0</span></div><div class="factor-weight-row"><span class="factor-weight">14% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:70%"></div></div></div></div></div>
       <div class="factor-body">
-        <p class="factor-desc">AI ranks stores per specific buyer intent. Generic stores without clear niche positioning fail completely. Stores with explicit signals — luxury, eco, minimalist, premium — are significantly more likely to be recommended.</p>
+        <p class="factor-desc">AI ranks stores per specific buyer intent. Generic stores without clear niche positioning fail completely. Stores with explicit signals like luxury, eco, minimalist, and premium positioning are significantly more likely to be recommended.</p>
         <div class="factor-signals"><span class="signal-tag green">Niche positioning clarity</span><span class="signal-tag green">Price tier signaling</span><span class="signal-tag green">Use-case specificity</span><span class="signal-tag green">Target audience explicit</span></div>
       </div>
     </div>
     <div class="factor-card">
       <div class="factor-header"><div class="factor-num">05</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">AI Interpretability</div></div><div class="factor-weight-row"><span class="factor-weight">12% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:60%"></div></div></div></div></div>
       <div class="factor-body">
-        <p class="factor-desc">A technically inaccessible store — slow load times, JS-rendered content, popup overload — cannot be fully indexed by AI agents, regardless of content quality.</p>
+        <p class="factor-desc">A technically inaccessible store with slow load times, JavaScript-rendered content, or popup overload cannot be fully indexed by AI agents, regardless of content quality.</p>
         <div class="factor-signals"><span class="signal-tag orange">robots.txt present</span><span class="signal-tag orange">sitemap.xml present</span><span class="signal-tag orange">PageSpeed 70+</span><span class="signal-tag">Mobile viewport</span><span class="signal-tag">No JS-hidden content</span></div>
       </div>
     </div>
@@ -717,14 +722,14 @@ a { color: inherit; text-decoration: none; }
     <div class="factor-card is-new">
       <div class="factor-header"><div class="factor-num">07</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">Recommendation Confidence</div><span class="factor-new-badge">New in v2.0</span></div><div class="factor-weight-row"><span class="factor-weight">5% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:25%"></div></div></div></div></div>
       <div class="factor-body">
-        <p class="factor-desc">How safely AI can predict that a customer will be satisfied after buying. AI agents are trained to optimize for user satisfaction — stores that generate disappointment get deprioritized.</p>
+        <p class="factor-desc">How safely AI can predict that a customer will be satisfied after buying. AI agents are trained to optimize for user satisfaction. Stores that generate disappointment get deprioritized.</p>
         <div class="factor-signals"><span class="signal-tag green">Delivery confidence signals</span><span class="signal-tag green">Purchase friction low</span><span class="signal-tag green">Return process clear</span><span class="signal-tag">Payment options visible</span></div>
       </div>
     </div>
     <div class="factor-card is-new">
       <div class="factor-header"><div class="factor-num">08</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">External Authority Signals</div><span class="factor-new-badge">New in v2.0</span></div><div class="factor-weight-row"><span class="factor-weight">3% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:15%"></div></div></div></div></div>
       <div class="factor-body">
-        <p class="factor-desc">AI cross-references the wider internet: Reddit, YouTube, TikTok, blog mentions, creator endorsements. Currently 3% weight — predicted to become one of the most important factors by 2027.</p>
+        <p class="factor-desc">AI cross-references the wider internet: Reddit, YouTube, TikTok, blog mentions, creator endorsements. Currently 3% weight, predicted to become one of the most important factors by 2027.</p>
         <div class="factor-signals"><span class="signal-tag green">Reddit mentions</span><span class="signal-tag green">YouTube reviews</span><span class="signal-tag green">TikTok brand presence</span><span class="signal-tag green">Creator endorsements</span><span class="signal-tag">Blog &amp; press coverage</span></div>
       </div>
     </div>
@@ -755,19 +760,16 @@ a { color: inherit; text-decoration: none; }
     <div class="about-content">
       <div class="about-name">Daniel, Founder of Atom Foundry</div>
       <div class="about-sub">Scanning DTC stores daily · atomfoundry.dev</div>
-      <div class="about-desc">I built Atom Foundry after seeing too many DTC founders spend money on traffic that never converts — not because their product is bad, but because their store is invisible to AI systems.<br><br>Check your store: <a href="https://atomfoundry.dev">atomfoundry.dev</a> · <a href="/geo">GEO guide →</a> · Contact: <a href="mailto:founder@atomfoundry.dev">founder@atomfoundry.dev</a></div>
-      <div class="about-social">
-        <a href="https://x.com/atomfoundryai" target="_blank">𝕏 @atomfoundryai</a>
-        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank">in LinkedIn</a>
-      </div>
+      <div class="about-desc">I built Atom Foundry after seeing too many DTC founders spend money on traffic that never converts. Not because their product is bad, but because their store is invisible to AI systems.<br><br>Check your store: <a href="https://atomfoundry.dev">atomfoundry.dev</a> · <a href="/geo">GEO guide →</a> · Contact: <a href="mailto:founder@atomfoundry.dev">founder@atomfoundry.dev</a></div>
+
     </div>
   </div>
 </div>
 
 <div class="section" style="padding-top:0;">
   <div class="cta-section">
-    <div class="cta-title">See your AI Recommendation Score — free</div>
-    <div class="cta-desc">Free scan · 10 seconds · No signup · Exact dollar amount per gap</div>
+    <div class="cta-title">See your AI Recommendation Score for free</div>
+    <div class="cta-desc">Free scan · 10 seconds · No signup required · Exact dollar amount per gap</div>
     <div class="cta-buttons">
       <a href="https://atomfoundry.dev" class="btn-primary">Check My AI Recommendation Score →</a>
       <button class="btn-secondary" onclick="downloadPDF()">↓ Download Methodology PDF</button>
@@ -776,13 +778,18 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <div class="footer">
-  <div class="footer-social">
-    <a href="https://x.com/atomfoundryai" target="_blank">𝕏 Follow on X</a>
-    <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank">in Follow on LinkedIn</a>
-  </div>
+
   <div class="footer-tagline">Find → Prove → Fix → Protect</div>
   <div class="footer-platform">AI Commerce Intelligence Platform</div>
-  <div class="footer-line">AI Recommendation Score Methodology v2.0 · GEO Glossary · Updated May 2026 · <a href="https://atomfoundry.dev" style="color:#666;">atomfoundry.dev</a> · <a href="/geo" style="color:#666;">GEO Guide →</a></div>
+  <div class="footer-line">
+    <a href="/" style="color:#666;">Home</a> &nbsp;·&nbsp;
+    <a href="/stores" style="color:#666;">Stores</a> &nbsp;·&nbsp;
+    <a href="/geo" style="color:#666;">GEO</a> &nbsp;·&nbsp;
+    <a href="/aco" style="color:#666;">ACO</a> &nbsp;·&nbsp;
+    <a href="/research" style="color:#666;">Research</a> &nbsp;·&nbsp;
+    <a href="/privacy-policy" style="color:#666;">Privacy</a><br>
+    AI Recommendation Score Methodology v2.0 · GEO Glossary · Updated May 2026 · atomfoundry.dev
+  </div>
 </div>
 
 <script>
