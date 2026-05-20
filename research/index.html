@@ -344,6 +344,24 @@ body::before {
 .footer-right { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
 .footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; text-align: right; }
 @media (max-width: 640px) { .footer-inner { flex-direction: column; align-items: flex-start; } .footer-platform { text-align: left; } }
+
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  body::before { display: none; }
+  .nav, footer { display: none; }
+  .hero-kicker, .section-kicker { color: #f97316 !important; }
+  .featured-card, .finding-card, .observation-card, .data-grid {
+    border: 1px solid #ddd !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  .featured-actions { display: none; }
+  a { color: #000 !important; text-decoration: none !important; }
+  h1, h2, h3 { color: #000 !important; }
+  .hero-sub, .body-text, p { color: #333 !important; }
+  .stat-num, .data-big { color: #f97316 !important; }
+  @page { margin: 20mm; }
+}
 </style>
 </head>
 <body>
@@ -442,7 +460,7 @@ body::before {
           </div>
         </div>
         <div class="featured-actions">
-          <a href="/research/2026-ai-readiness-report.pdf" class="btn-primary" download>Download PDF</a>
+          <a href="#" class="btn-primary" onclick="window.print();return false;">Download PDF</a>
           <a href="/stores" class="btn-secondary">Browse store data</a>
         </div>
       </div>
