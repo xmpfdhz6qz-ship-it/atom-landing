@@ -117,6 +117,7 @@ h2 em { font-style: normal; color: #f97316; }
 .bench-card {
   background: #0f0f0f; border: 1px solid #1e1e1e;
   border-radius: 16px; padding: 22px 24px; transition: border-color 0.2s;
+  display: block;
 }
 .bench-card:hover { border-color: rgba(249,115,22,0.25); }
 .bench-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
@@ -207,8 +208,8 @@ h2 em { font-style: normal; color: #f97316; }
 
   <div class="hero">
     <div class="breadcrumb">
-      <a href="/">Home</a> ›
-      <a href="/research">Research</a> ›
+      <a href="/">Home</a> &rsaquo;
+      <a href="/research">Research</a> &rsaquo;
       <span>Benchmarks</span>
     </div>
     <div class="hero-kicker">AI Readiness Benchmarks · Live Data · 2026</div>
@@ -221,15 +222,15 @@ h2 em { font-style: normal; color: #f97316; }
         <div class="top-stat-label">Total stores analyzed</div>
       </div>
       <div class="top-stat">
-        <div class="top-stat-num red" id="avgScore">45</div>
+        <div class="top-stat-num red" id="avgScore">...</div>
         <div class="top-stat-label">Average AI score across all stores</div>
       </div>
       <div class="top-stat">
-        <div class="top-stat-num red">52%</div>
+        <div class="top-stat-num red" id="invisiblePct">...</div>
         <div class="top-stat-label">Stores classified as AI Invisible Risk</div>
       </div>
       <div class="top-stat">
-        <div class="top-stat-num green">0%</div>
+        <div class="top-stat-num green" id="highPct">...</div>
         <div class="top-stat-label">Stores reaching Highly Recommendable</div>
       </div>
     </div>
@@ -349,26 +350,40 @@ h2 em { font-style: normal; color: #f97316; }
 </div>
 
 <script>
+const STORES_API = 'https://n8n-production-1d7c.up.railway.app/webhook/stores';
+
 const NICHES = {
-  fashion:  { label: 'Fashion', icon: '👗', keywords: ['apparel','fashion','clothing','wear','shirt','dress','jeans','jacket','sneaker','shoe','boot','sock','hat','cap','hoodie','pant','skirt','coat','bag','purse','handbag','wallet','denim','streetwear','swimwear','lingerie','activewear','boutique'] },
-  beauty:   { label: 'Beauty', icon: '💄', keywords: ['beauty','skincare','skin','serum','cream','makeup','cosmetic','lipstick','mascara','foundation','moisturizer','cleanser','toner','sunscreen','retinol','glow','face','hair','shampoo','conditioner','perfume','fragrance','nail','brow','lash','grooming'] },
-  health:   { label: 'Health and Wellness', icon: '💊', keywords: ['health','wellness','vitamin','supplement','protein','collagen','probiotic','cbd','fitness','nutrition','diet','sleep','immune','natural','organic','herbal','pharmacy','dental','rehab','therapy','mental','mindful','detox','cleanse'] },
-  food:     { label: 'Food and Drink', icon: '🍎', keywords: ['food','drink','coffee','tea','wine','beer','spirit','snack','chocolate','candy','sauce','oil','spice','meal','gourmet','grocery','bakery','bread','cheese','dairy','meat','seafood','vegan','juice','kombucha','smoothie','brew','roast'] },
-  home:     { label: 'Home and Living', icon: '🏠', keywords: ['home','house','furniture','decor','candle','plant','garden','cleaning','cookware','bed','bath','linen','sofa','chair','desk','lamp','rug','curtain','storage','tool','hardware','interior','living','floor','wall','shelf','cabinet'] },
-  sports:   { label: 'Sports and Outdoor', icon: '🏃', keywords: ['sport','outdoor','gym','yoga','run','bike','cycle','swim','surf','ski','hike','camp','climb','golf','tennis','basketball','football','soccer','training','workout','crossfit','boxing','trail','trek','paddle'] },
-  pets:     { label: 'Pets', icon: '🐾', keywords: ['pet','dog','cat','bird','fish','animal','paw','puppy','kitten','vet','treat','collar','leash','aquarium','reptile','hamster','rabbit','feline','canine','equine','horse'] },
-  tech:     { label: 'Tech and Gadgets', icon: '💻', keywords: ['tech','gadget','electronic','phone','laptop','computer','camera','drone','robot','smart','speaker','headphone','earphone','cable','charger','battery','gaming','software','hardware','digital','device','monitor','keyboard','mouse','tablet'] },
-  kids:     { label: 'Kids and Baby', icon: '🧸', keywords: ['kid','baby','child','infant','toddler','toy','puzzle','school','nursery','stroller','diaper','maternity','pregnancy','junior','youth','teen','educational','learning','playroom','doll','game'] },
-  jewelry:  { label: 'Jewelry', icon: '💍', keywords: ['jewelry','jewellery','ring','necklace','bracelet','earring','pendant','diamond','gold','silver','platinum','gem','crystal','watch','luxury','bead','charm','locket','brooch'] },
+  fashion:  { label: 'Fashion',           icon: '👗' },
+  beauty:   { label: 'Beauty',            icon: '💄' },
+  health:   { label: 'Health and Wellness', icon: '💊' },
+  food:     { label: 'Food and Drink',    icon: '🍎' },
+  home:     { label: 'Home and Living',   icon: '🏠' },
+  sports:   { label: 'Sports and Outdoor', icon: '🏃' },
+  pets:     { label: 'Pets',              icon: '🐾' },
+  tech:     { label: 'Tech and Gadgets',  icon: '💻' },
+  kids:     { label: 'Kids and Baby',     icon: '🧸' },
+  jewelry:  { label: 'Jewelry',           icon: '💍' },
 };
 
-function detectNiche(domain, storeName) {
-  const txt = (domain + ' ' + (storeName || '')).toLowerCase();
-  for (const [key, val] of Object.entries(NICHES)) {
-    if (val.keywords.some(k => txt.includes(k))) return key;
-  }
-  return null;
-}
+// Same mapping as stores page — DB niche only, no keyword fallback
+const NICHE_DB_MAP = {
+  'fashion':             'fashion',
+  'beauty':              'beauty',
+  'health & wellness':   'health',
+  'health and wellness': 'health',
+  'food & drink':        'food',
+  'food and drink':      'food',
+  'home & living':       'home',
+  'home and living':     'home',
+  'sports & outdoor':    'sports',
+  'sports and outdoor':  'sports',
+  'pets':                'pets',
+  'tech & gadgets':      'tech',
+  'tech and gadgets':    'tech',
+  'kids & baby':         'kids',
+  'kids and baby':       'kids',
+  'jewelry':             'jewelry',
+};
 
 function scoreColor(score) {
   if (score >= 70) return 'green';
@@ -390,45 +405,34 @@ function tagLabel(score) {
 
 async function loadBenchmarks() {
   try {
-    const res = await fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 'Accept': 'application/json' } });
+    const res = await fetch(STORES_API, { headers: { 'Accept': 'application/json' } });
     if (!res.ok) throw new Error('fetch failed');
     const data = await res.json();
     const rows = Array.isArray(data) ? data : (data.stores || []);
 
-    const totalEl = document.getElementById('totalStores');
-    if (totalEl && rows.length > 0) totalEl.textContent = rows.length.toLocaleString('en-US');
+    // Update top stats
+    const total = rows.length;
+    document.getElementById('totalStores').textContent = total.toLocaleString('en-US');
 
-    // Niche mapping z DB hodnot na NICHES klíče
-    const NICHE_MAP = {
-      'fashion':             'fashion',
-      'beauty':              'beauty',
-      'health & wellness':   'health',
-      'health and wellness': 'health',
-      'food & drink':        'food',
-      'food and drink':      'food',
-      'home & living':       'home',
-      'home and living':     'home',
-      'sports & outdoor':    'sports',
-      'sports and outdoor':  'sports',
-      'pets':                'pets',
-      'tech & gadgets':      'tech',
-      'tech and gadgets':    'tech',
-      'kids & baby':         'kids',
-      'kids and baby':       'kids',
-      'jewelry':             'jewelry',
-    };
+    if (total > 0) {
+      const scores = rows.map(r => Number(r.score ?? r.total_score ?? 0)).filter(s => s > 0);
+      const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+      const invisiblePct = Math.round((scores.filter(s => s < 50).length / scores.length) * 100);
+      const highPct = Math.round((scores.filter(s => s >= 85).length / scores.length) * 100);
+      document.getElementById('avgScore').textContent = avg;
+      document.getElementById('invisiblePct').textContent = invisiblePct + '%';
+      document.getElementById('highPct').textContent = highPct + '%';
+    }
 
+    // Bucket by DB niche only — same logic as stores page
     const buckets = {};
     for (const r of rows) {
-      const domain = String(r.domain || r.store_domain || '').replace(/^www\./, '').toLowerCase();
-      const storeName = r.store_name || '';
       const score = Number(r.score ?? r.total_score ?? 0);
-      if (!domain || score === 0) continue;
+      if (!score) continue;
 
-      // Použij DB niche místo keyword detekce
       const rawNiche = (r.niche || '').toLowerCase().trim();
-      const niche = NICHE_MAP[rawNiche] || detectNiche(domain, storeName);
-      if (!niche) continue;
+      const niche = NICHE_DB_MAP[rawNiche] || null;
+      if (!niche) continue; // no fallback — stores with no DB niche are excluded (same as stores page)
 
       if (!buckets[niche]) buckets[niche] = [];
       buckets[niche].push(score);
@@ -452,7 +456,6 @@ async function loadBenchmarks() {
       const barColor = col === 'green' ? '#1D9E75' : col === 'orange' ? '#f97316' : '#E24B4A';
       const barW = Math.round((avg / 100) * 100);
 
-      // ONLY CHANGE: div -> a with href
       const card = document.createElement('a');
       card.className = 'bench-card';
       card.href = `/benchmarks/${key}`;
@@ -462,7 +465,7 @@ async function loadBenchmarks() {
             <div class="bench-icon">${NICHES[key].icon}</div>
             <div>
               <div class="bench-name">${NICHES[key].label}</div>
-              <div class="bench-count">${scores.length} stores analyzed</div>
+              <div class="bench-count">${scores.length.toLocaleString('en-US')} stores analyzed</div>
             </div>
           </div>
           <span class="bench-tag ${tagClass(avg)}">${tagLabel(avg)}</span>
@@ -485,33 +488,16 @@ async function loadBenchmarks() {
     }
 
     if (rendered === 0) {
-      grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Not enough category data yet. Check back soon as more stores are scanned.</div>';
+      grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Not enough category data yet. Check back soon.</div>';
     }
 
+    const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     document.getElementById('dataNoteNiche').textContent =
-      `Data from ${rows.length.toLocaleString('en-US')} scanned US, CA and Europe DTC Shopify stores. Updated continuously. Last refresh: ${new Date().toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'})}.`;
+      `Data from ${total.toLocaleString('en-US')} scanned US, CA and Europe DTC Shopify stores. Updated continuously. Last refresh: ${today}.`;
 
   } catch(e) {
     const grid = document.getElementById('benchmarkGrid');
-    if (grid) grid.innerHTML = `
-      <div style="grid-column:1/-1;background:#0f0f0f;border:1px solid #1e1e1e;border-radius:14px;padding:28px 24px;">
-        <div style="font-size:10px;color:#f97316;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:12px;">Industry averages · May 2026 · 500 stores</div>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-          ${[
-            ['👗','Fashion','47',56],['💄','Beauty','44',59],['💊','Health','48',51],
-            ['🍎','Food','46',54],['🏠','Home','43',57],['🏃','Sports','49',49]
-          ].map(([icon,label,avg,inv]) => `
-            <div style="background:#111;border:1px solid #1e1e1e;border-radius:10px;padding:14px 16px;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-                <span style="font-size:16px;">${icon}</span>
-                <span style="font-size:14px;font-weight:700;color:#fff;">${label}</span>
-              </div>
-              <div style="font-size:22px;font-weight:800;color:#E24B4A;">${avg}<span style="font-size:12px;color:#555;font-weight:400;">/100</span></div>
-              <div style="font-size:12px;color:#777;margin-top:4px;">AI Invisible Risk: <strong style="color:#E24B4A;">${inv}%</strong></div>
-            </div>`).join('')}
-        </div>
-        <div style="font-size:11px;color:#444;margin-top:14px;font-style:italic;">Static data shown. Live data unavailable. Source: Atom Foundry AI Readiness Report, May 2026.</div>
-      </div>`;
+    if (grid) grid.innerHTML = `<div class="loading-state" style="grid-column:1/-1;color:#555;">Could not load benchmark data. Please try again later.</div>`;
   }
 }
 
