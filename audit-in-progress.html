@@ -1,239 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Scan in Progress | Atom Foundry</title>
+<meta name="robots" content="noindex, nofollow">
 <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-  background: #0A0A0A;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #080808; color: #e8e8e8;
+  line-height: 1.7; -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  padding: 20px;
 }
 body::before {
-  content: "";
-  position: fixed;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% -20%, rgba(249,115,22,0.15), transparent 40%);
-  pointer-events: none;
+  content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.12), transparent);
+  pointer-events: none; z-index: 0;
 }
-.container { max-width: 520px; width: 100%; z-index: 1; }
-.card {
-  background: #111;
-  border-radius: 18px;
-  padding: 24px;
-  border: 1px solid #222;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav {
+  padding: 20px 28px; max-width: 860px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  position: relative; z-index: 10;
 }
-.live {
-  font-size: 12px;
-  color: #f97316;
-  margin-bottom: 12px;
+.nav-brand { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 18px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: #f97316; }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; justify-content: flex-end; }
+.nav-links a {
+  font-size: 12px; color: #999; text-decoration: none;
+  border: 1px solid #1e1e1e; padding: 5px 12px;
+  border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap;
+}
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; } }
+
+/* PAGE */
+.page { position: relative; z-index: 1; }
+.wrap { max-width: 520px; margin: 0 auto; padding: 24px 24px 48px; }
+
+/* SCORE PREVIEW */
+.score-preview {
+  background: #111; border: 1px solid #1e1e1e; border-radius: 20px;
+  padding: 28px 24px; margin-bottom: 16px; text-align: center;
+}
+.score-preview-kicker {
+  font-size: 10px; color: #f97316; text-transform: uppercase;
+  letter-spacing: 0.12em; font-weight: 700; margin-bottom: 16px;
   animation: pulse 2s infinite;
-  font-weight: 600;
 }
-@keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
-h1 { font-size: 22px; margin-bottom: 10px; color: #fff; font-weight: 700; line-height: 1.3; }
-p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
-.highlight { color: #f97316; font-weight: 600; }
+@keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+.score-circle-wrap { display: flex; justify-content: center; margin-bottom: 16px; }
+.score-circle {
+  width: 120px; height: 120px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 3px solid currentColor; background: rgba(0,0,0,0.3);
+  position: relative;
+}
+.score-circle-num { font-size: 44px; font-weight: 800; line-height: 1; }
+.score-circle-denom { font-size: 13px; color: #666; margin-top: 2px; }
+.score-circle.red { color: #E24B4A; }
+.score-circle.orange { color: #EF9F27; }
+.score-circle.green { color: #1D9E75; }
+.score-preview-label { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.score-preview-sub { font-size: 13px; color: #888; line-height: 1.6; }
+.score-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
+  margin-top: 12px;
+}
+.score-badge.red { background: rgba(226,75,74,0.1); border: 1px solid rgba(226,75,74,0.3); color: #E24B4A; }
+.score-badge.orange { background: rgba(239,159,39,0.1); border: 1px solid rgba(239,159,39,0.3); color: #EF9F27; }
+.score-badge.green { background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.3); color: #1D9E75; }
 
-.email-box {
-  margin-top: 20px;
-  padding: 18px;
-  border-radius: 14px;
-  background: #0f0f0f;
-  border: 1px solid #1e1e1e;
-  text-align: center;
+/* EMAIL GATE */
+.email-gate {
+  background: #111; border: 1px solid #1e1e1e; border-radius: 20px;
+  padding: 28px 24px; margin-bottom: 16px;
 }
-.email-box h3 {
-  margin: 0 0 6px;
-  color: #f97316;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.email-gate-title {
+  font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.3;
 }
-.email-box p { font-size: 13px; color: #888; margin-bottom: 12px; }
-.email-box input[type="email"] {
-  width: 100%;
-  padding: 13px 14px;
-  border-radius: 10px;
-  border: 1px solid #2a2a2a;
-  background: #0A0A0A;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
-  margin-bottom: 10px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
+.email-gate-sub { font-size: 14px; color: #888; margin-bottom: 20px; line-height: 1.6; }
+.email-gate-free {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(29,158,117,0.08); border: 1px solid rgba(29,158,117,0.2);
+  border-radius: 8px; padding: 6px 12px;
+  font-size: 12px; font-weight: 700; color: #1D9E75;
+  margin-bottom: 16px; display: block; text-align: center;
 }
-.email-box input[type="email"]::placeholder { color: #555; }
-.email-box input[type="email"]:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 1px rgba(249,115,22,0.5);
+input[type="email"] {
+  width: 100%; padding: 14px 16px;
+  border-radius: 12px; border: 1px solid #2a2a2a;
+  background: #080808; color: #fff;
+  font-size: 15px; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit; margin-bottom: 10px;
 }
-.btn {
-  display: block;
-  width: 100%;
-  padding: 14px;
+input[type="email"]::placeholder { color: #555; }
+input[type="email"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.4); }
+.email-btn {
+  display: block; width: 100%; padding: 15px;
+  border-radius: 12px; border: 2px solid #dc2626;
   background: linear-gradient(135deg, #f97316, #ea580c);
-  color: #000;
-  border-radius: 12px;
-  font-weight: 900;
-  font-size: 14px;
-  border: 2px solid #dc2626;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.2s ease;
+  color: #000; font-weight: 900; font-size: 15px;
+  cursor: pointer; font-family: inherit; text-align: center;
+  box-shadow: 0 8px 24px rgba(249,115,22,0.35);
+  transition: all 0.25s;
 }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(249,115,22,0.5); }
-.btn-micro { margin-top: 8px; font-size: 12px; color: #666; }
+.email-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 32px rgba(249,115,22,0.55); }
+.email-privacy { font-size: 12px; color: #555; text-align: center; margin-top: 8px; }
 
-.progress-wrap { margin-top: 20px; }
-.progress-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 6px;
+/* PROGRESS */
+.progress-card {
+  background: #111; border: 1px solid #1e1e1e; border-radius: 20px;
+  padding: 22px 24px; margin-bottom: 16px;
 }
-.progress-bar { height: 6px; background: #1f1f1f; border-radius: 999px; overflow: hidden; }
+.progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.progress-text { font-size: 13px; color: #888; }
+.progress-pct { font-size: 13px; color: #f97316; font-weight: 700; }
+.progress-bar { height: 6px; background: #1e1e1e; border-radius: 999px; overflow: hidden; margin-bottom: 12px; }
 .progress-fill {
-  height: 100%;
-  width: 0%;
+  height: 100%; width: 0%;
   background: linear-gradient(90deg, #f97316, #ea580c);
-  transition: width 0.4s ease;
-  border-radius: 999px;
+  border-radius: 999px; transition: width 0.4s ease;
 }
-
 .ai-message {
-  margin-top: 16px;
-  padding: 12px 14px;
-  background: #0f0f0f;
-  border: 1px solid #1a1a1a;
-  border-radius: 10px;
-  font-size: 13px;
-  color: #888;
-  text-align: center;
-  min-height: 42px;
+  background: #0f0f0f; border: 1px solid #1a1a1a;
+  border-radius: 10px; padding: 12px 14px;
+  font-size: 13px; color: #777; text-align: center; min-height: 40px;
 }
 
-.agents-strip {
-  margin-top: 16px;
-  padding: 12px 14px;
-  background: #0d0d0d;
-  border: 1px solid #1a1a1a;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex-wrap: wrap;
+/* AGENTS */
+.agents-card {
+  background: #111; border: 1px solid #1e1e1e; border-radius: 20px;
+  padding: 18px 24px; margin-bottom: 16px;
 }
-.agents-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.06em; width: 100%; text-align: center; margin-bottom: 6px; }
+.agents-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 10px; text-align: center; }
+.agents-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 .agent-pill {
   display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(255,255,255,0.04); border: 1px solid #1e1e1e;
-  border-radius: 999px; padding: 4px 10px;
+  background: rgba(255,255,255,0.03); border: 1px solid #1e1e1e;
+  border-radius: 999px; padding: 5px 12px;
   font-size: 11px; font-weight: 600; color: #777;
 }
-.agent-pill .dot { width: 5px; height: 5px; border-radius: 50%; }
-.agent-pill.amazon .dot { background: #FF9900; }
-.agent-pill.google .dot { background: #4285F4; }
-.agent-pill.chatgpt .dot { background: #10a37f; }
-.agent-pill.perplexity .dot { background: #20B2AA; }
+.agent-pill .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.dot-amazon { background: #FF9900; }
+.dot-chatgpt { background: #10a37f; }
+.dot-google { background: #4285F4; }
+.dot-perplexity { background: #20B2AA; }
 
-.footer-wrap {
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid #1a1a1a;
-  text-align: center;
-}
-.footer-scan-line { font-size: 11px; color: #444; margin-bottom: 8px; line-height: 1.8; }
-.footer-tagline { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
-.scan-id { margin-top: 8px; font-size: 10px; color: #2a2a2a; text-align: center; }
-
-@media (max-width: 420px) {
-  h1 { font-size: 20px; }
-  p { font-size: 14px; }
-  .email-box h3 { font-size: 13px; }
-  .footer-tagline { font-size: 14px; }
-}
+/* FOOTER */
+.scan-footer { text-align: center; padding-top: 16px; border-top: 1px solid #1a1a1a; margin-top: 8px; }
+.scan-footer-line { font-size: 12px; color: #444; margin-bottom: 8px; }
+.scan-footer-tagline { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
+.scan-id { font-size: 10px; color: #2a2a2a; text-align: center; margin-top: 12px; }
 </style>
 </head>
 <body>
-<div class="container">
-<div class="card">
+<div class="page">
 
-  <div class="live">⚡ Scanning AI visibility signals now...</div>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+  </div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/aco">ACO</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/" class="cta-nav">Free Score</a>
+  </div>
+</nav>
 
-  <h1>Checking if AI agents can recommend your store.</h1>
+<div class="wrap">
 
-  <p>
-    We're scanning your store against <span class="highlight">8 AI recommendation factors</span> —
-    the same signals that <span class="highlight">Alexa for Shopping, ChatGPT, and Google AI Mode</span>
-    use to decide what to recommend to buyers.
-    Takes about <span class="highlight">10–15 seconds</span>.
-  </p>
-
-  <div class="email-box">
-    <h3>Where should we send your AI Recommendation Report?</h3>
-    <p>Enter your email — we'll send your full AI score showing exactly where your store is invisible to AI agents.</p>
-
-    <input
-      type="email"
-      id="emailInput"
-      placeholder="your@email.com"
-      autocomplete="email"
-    >
-
-    <div class="btn" onclick="saveEmail()">
-      Send Me My AI Recommendation Report →
+  <!-- SCORE PREVIEW -->
+  <div class="score-preview" id="scorePreview" style="display:none;">
+    <div class="score-preview-kicker">Your AI Readiness Score is ready</div>
+    <div class="score-circle-wrap">
+      <div class="score-circle" id="scoreCircle">
+        <div class="score-circle-num" id="scoreNum">--</div>
+        <div class="score-circle-denom">/100</div>
+      </div>
     </div>
+    <div class="score-preview-label" id="scoreDomain">Your store</div>
+    <div id="scoreBadge"></div>
+    <div class="score-preview-sub" style="margin-top:12px;">Enter your email below to get your full free AI score report with every gap and how to fix it.</div>
+  </div>
 
-    <div class="btn-micro">
-      No spam. One email. Your AI visibility score only.
+  <!-- SCANNING STATE (shown while score not ready) -->
+  <div id="scanningState">
+    <div class="progress-card">
+      <div style="font-size:10px;color:#f97316;text-transform:uppercase;letter-spacing:0.12em;font-weight:700;margin-bottom:12px;animation:pulse 2s infinite;">Scanning AI visibility signals now...</div>
+      <h2 style="font-size:20px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3;">Checking if AI agents can recommend your store.</h2>
+      <p style="font-size:14px;color:#aaa;margin-bottom:16px;">We are scanning your store against 8 AI recommendation factors. Takes about 10 to 15 seconds.</p>
+      <div class="progress-header">
+        <span class="progress-text" id="progressText">Initializing scan...</span>
+        <span class="progress-pct" id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="ai-message" id="aiMessage">Checking AI structured signals...</div>
     </div>
   </div>
 
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span id="progressText">Initializing AI scan...</span>
-      <span id="progressPct">0%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
+  <!-- EMAIL GATE -->
+  <div class="email-gate">
+    <div class="email-gate-title" id="emailTitle">Almost done. Where should we send your results?</div>
+    <div class="email-gate-sub" id="emailSub">Your free AI score report shows every gap and the fastest way to fix each one. No spam, ever.</div>
+    <div class="email-gate-free">100% free. No credit card. No signup required.</div>
+    <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
+    <button class="email-btn" id="emailBtn" onclick="saveEmail()">Get My Free AI Score Report</button>
+    <div class="email-privacy">One email. Your AI score only. No spam.</div>
   </div>
 
-  <div class="ai-message" id="aiMessage">
-    Checking AI structured signals...
-  </div>
-
-  <div class="agents-strip">
+  <!-- AGENTS -->
+  <div class="agents-card">
     <div class="agents-label">Evaluating against</div>
-    <span class="agent-pill amazon"><span class="dot"></span>Alexa for Shopping</span>
-    <span class="agent-pill chatgpt"><span class="dot"></span>ChatGPT</span>
-    <span class="agent-pill google"><span class="dot"></span>Google AI Mode</span>
-    <span class="agent-pill perplexity"><span class="dot"></span>Perplexity</span>
-  </div>
-
-  <div class="footer-wrap">
-    <div class="footer-scan-line">
-      <span id="footerStores">47</span> DTC stores scanned &nbsp;·&nbsp; atomfoundry.dev
+    <div class="agents-row">
+      <span class="agent-pill"><span class="dot dot-amazon"></span>Alexa for Shopping</span>
+      <span class="agent-pill"><span class="dot dot-chatgpt"></span>ChatGPT</span>
+      <span class="agent-pill"><span class="dot dot-google"></span>Google AI Mode</span>
+      <span class="agent-pill"><span class="dot dot-perplexity"></span>Perplexity</span>
     </div>
-    <div class="footer-tagline">Find → Prove → Fix → Protect</div>
   </div>
 
-  <div class="scan-id">
-    Scan ID: AF-<span id="auditId"></span>
+  <div class="scan-footer">
+    <div class="scan-footer-line"><span id="footerStores">4,300</span> DTC stores analyzed &nbsp;·&nbsp; atomfoundry.dev</div>
+    <div class="scan-footer-tagline">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
   </div>
+
+  <div class="scan-id">Scan ID: AF-<span id="auditId"></span></div>
 
 </div>
 </div>
@@ -241,44 +248,33 @@ p { color: #bbb; font-size: 15px; margin: 0 0 10px; }
 <script>
 document.getElementById("auditId").innerText = Date.now().toString().slice(-6);
 
-const BASE_DATE   = new Date('2026-03-01');
-const BASE_STORES = 47;
-
-function seededRand(seed) {
-  const x = Math.sin(seed + 1) * 10000;
-  return x - Math.floor(x);
-}
-function getDaysSinceBase() {
-  return Math.floor((new Date() - BASE_DATE) / (1000 * 60 * 60 * 24));
-}
-const days = getDaysSinceBase();
-const storeGrowth = Math.floor(days / 2.5);
-const storeJitter = Math.floor(seededRand(days * 7) * 2);
-const stores = BASE_STORES + storeGrowth + storeJitter;
-document.getElementById('footerStores').innerText = stores;
-
 const urlParams = new URLSearchParams(window.location.search);
 const tokenFromUrl = urlParams.get("token");
 const domain = urlParams.get("domain") || "";
 
+// Update domain display
+if (domain) {
+  document.getElementById("scoreDomain").innerText = domain;
+}
+
+// Progress animation
 const messages = [
   "Checking AI structured signals...",
   "Evaluating schema markup and JSON-LD...",
   "Scanning semantic clarity for AI agents...",
-  "Checking trust signals — reviews, SSL, return policy...",
-  "Evaluating user intent match against buyer queries...",
-  "Checking AI interpretability — meta tags, H1, Open Graph...",
-  "Analyzing commerce accuracy — pricing, availability...",
-  "Calculating AI Recommendation Score..."
+  "Checking trust signals and return policy...",
+  "Evaluating user intent match...",
+  "Checking AI interpretability and meta tags...",
+  "Analyzing commerce accuracy and pricing...",
+  "Calculating AI Readiness Score..."
 ];
-
 const steps = [
-  "Initializing AI scan...",
+  "Initializing scan...",
   "Reading page structure...",
   "Detecting AI signal gaps...",
   "Scoring 8 recommendation factors...",
   "Calculating AI visibility gap...",
-  "Building your AI Recommendation Report..."
+  "Building your AI score report..."
 ];
 
 let i = 0;
@@ -288,26 +284,76 @@ const msgInterval = setInterval(() => {
 }, 1800);
 
 let progress = 0;
-const bar    = document.getElementById("progressFill");
-const pct    = document.getElementById("progressPct");
+const bar = document.getElementById("progressFill");
+const pct = document.getElementById("progressPct");
 const stepEl = document.getElementById("progressText");
 
 const progressInterval = setInterval(() => {
   progress += Math.random() * 8;
-
   if (progress >= 95) {
     progress = 95;
     clearInterval(progressInterval);
-    stepEl.innerText = "Ready — enter your email to see your AI score";
+    stepEl.innerText = "Ready. Enter your email to see your score.";
     pct.innerText = "95%";
     bar.style.width = "95%";
     return;
   }
-
   bar.style.width = progress + "%";
-  pct.innerText   = Math.round(progress) + "%";
+  pct.innerText = Math.round(progress) + "%";
   stepEl.innerText = steps[Math.min(Math.floor(progress / 20), steps.length - 1)];
 }, 600);
+
+// Try to load score from DB if token exists
+async function tryLoadScore() {
+  if (!tokenFromUrl) return;
+  try {
+    const res = await fetch("/api/get-scan?id=" + tokenFromUrl);
+    const raw = await res.json();
+    const data = Array.isArray(raw) ? raw[0] : raw;
+    if (!data) return;
+    const score = data.ars_score || data.score || data.total_score || 0;
+    if (score > 0) showScore(score, data.store_domain || domain);
+  } catch(e) {}
+}
+
+// Poll for score every 3 seconds
+let pollCount = 0;
+const pollInterval = setInterval(async () => {
+  pollCount++;
+  if (pollCount > 20) { clearInterval(pollInterval); return; }
+  await tryLoadScore();
+}, 3000);
+
+function showScore(score, storeDomain) {
+  clearInterval(pollInterval);
+  clearInterval(progressInterval);
+  clearInterval(msgInterval);
+
+  // Show score circle
+  const circle = document.getElementById("scoreCircle");
+  const numEl = document.getElementById("scoreNum");
+  numEl.innerText = score;
+
+  let colorClass, badgeClass, badgeText;
+  if (score >= 85) { colorClass = "green"; badgeClass = "green"; badgeText = "Highly Recommendable"; }
+  else if (score >= 50) { colorClass = "orange"; badgeClass = "orange"; badgeText = "Partially Visible"; }
+  else { colorClass = "red"; badgeClass = "red"; badgeText = "AI Invisible Risk"; }
+
+  circle.classList.add(colorClass);
+
+  document.getElementById("scoreBadge").innerHTML =
+    '<span class="score-badge ' + badgeClass + '">' + badgeText + '</span>';
+
+  // Update email gate text
+  document.getElementById("emailTitle").innerText = "Your free score is ready. Where should we send it?";
+  document.getElementById("emailSub").innerText = "Enter your email to get your full free AI score report with every gap and the fastest way to fix each one.";
+
+  // Hide scanning, show score
+  document.getElementById("scanningState").style.display = "none";
+  document.getElementById("scorePreview").style.display = "block";
+
+  if (storeDomain) document.getElementById("scoreDomain").innerText = storeDomain.replace(/^www\./, "");
+}
 
 function saveEmail() {
   const email = document.getElementById("emailInput").value.trim();
@@ -323,26 +369,22 @@ function saveEmail() {
     body: JSON.stringify({ email, token: tokenFromUrl })
   }).catch(() => {});
 
-  const btn = document.querySelector(".btn");
-  btn.innerText = "✓ Got it — loading your AI Recommendation Report";
+  const btn = document.getElementById("emailBtn");
+  btn.innerText = "Got it. Loading your free report...";
   btn.style.background = "#1D9E75";
-  btn.style.border = "2px solid #1D9E75";
+  btn.style.borderColor = "#1D9E75";
   btn.style.color = "#fff";
 
   if (tokenFromUrl) {
-    setTimeout(() => redirectToReport(tokenFromUrl), 1500);
+    setTimeout(() => {
+      bar.style.width = "100%";
+      pct.innerText = "100%";
+      stepEl.innerText = "Scan complete. Loading your report...";
+      setTimeout(() => {
+        window.location.href = "https://atomfoundry.dev/report/" + tokenFromUrl;
+      }, 800);
+    }, 1200);
   }
-}
-
-function redirectToReport(token) {
-  clearInterval(msgInterval);
-  bar.style.width  = "100%";
-  pct.innerText    = "100%";
-  stepEl.innerText = "AI scan complete — loading your report...";
-
-  setTimeout(() => {
-    window.location.href = "https://atomfoundry.dev/report/" + token;
-  }, 600);
 }
 </script>
 </body>
