@@ -327,9 +327,9 @@
       platform: raw.platform || "",
       readiness: raw.readiness_level || ""
     };
-    // Use niche from DB if available, otherwise detect from domain
+    // Use niche from DB only — no keyword guessing
     const dbNiche = raw.niche ? NICHE_DB_MAP[raw.niche.toLowerCase()] : null;
-    store.niche = dbNiche || detectNiche(store);
+    store.niche = dbNiche || "other";
     store.region = getRegion(store.country);
     return store;
   }
