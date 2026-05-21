@@ -782,8 +782,15 @@ document.getElementById('dynamicFindings').innerHTML = shuffled.slice(0, 4).map(
 document.getElementById("scanForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const btn = document.getElementById("scanBtn");
-  btn.innerText = "Scanning...";
   btn.disabled = true;
+
+  // Animated dots while scanning
+  let dotCount = 0;
+  const dotInterval = setInterval(() => {
+    dotCount = (dotCount % 3) + 1;
+    btn.innerText = "Scanning" + ".".repeat(dotCount);
+  }, 400);
+  btn.innerText = "Scanning.";
   let url = document.querySelector("input[name='store']").value.trim();
   url = url.replace(/^https?:\/\//, "").replace(/\/$/, "").trim();
   const domain = url;
@@ -796,6 +803,7 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
     });
     const data = await response.json();
     const token = data.token;
+    clearInterval(dotInterval);
     if (token) {
       const params = new URLSearchParams({ token, domain });
       window.location.href = "/audit-in-progress?" + params.toString();
@@ -804,6 +812,7 @@ document.getElementById("scanForm").addEventListener("submit", async (e) => {
       window.location.href = "/audit-in-progress?" + params.toString();
     }
   } catch (err) {
+    clearInterval(dotInterval);
     const params = new URLSearchParams({ domain });
     window.location.href = "/audit-in-progress?" + params.toString();
   }
