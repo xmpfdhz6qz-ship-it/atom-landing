@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Readiness Benchmarks for Shopify Stores — 2026 Industry Data</title>
+<title>AI Readiness Benchmarks for Shopify Stores. 2026 Industry Data</title>
 <meta name="description" content="Industry AI Readiness benchmarks for Shopify and DTC stores. Real data from 1,700+ scanned stores across fashion, beauty, health, home, and more. See how your category compares.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://atomfoundry.dev/benchmarks">
-<meta property="og:title" content="AI Readiness Benchmarks for Shopify Stores — 2026 Industry Data">
+<meta property="og:title" content="AI Readiness Benchmarks for Shopify Stores. 2026 Industry Data">
 <meta property="og:description" content="Industry AI Readiness benchmarks for Shopify stores. Real data from 1,700+ scanned stores. See average scores by niche and how your store compares.">
 <meta property="og:url" content="https://atomfoundry.dev/benchmarks">
 <meta property="og:type" content="article">
@@ -398,14 +398,38 @@ async function loadBenchmarks() {
     const totalEl = document.getElementById('totalStores');
     if (totalEl && rows.length > 0) totalEl.textContent = rows.length.toLocaleString('en-US');
 
+    // Niche mapping z DB hodnot na NICHES klíče
+    const NICHE_MAP = {
+      'fashion':             'fashion',
+      'beauty':              'beauty',
+      'health & wellness':   'health',
+      'health and wellness': 'health',
+      'food & drink':        'food',
+      'food and drink':      'food',
+      'home & living':       'home',
+      'home and living':     'home',
+      'sports & outdoor':    'sports',
+      'sports and outdoor':  'sports',
+      'pets':                'pets',
+      'tech & gadgets':      'tech',
+      'tech and gadgets':    'tech',
+      'kids & baby':         'kids',
+      'kids and baby':       'kids',
+      'jewelry':             'jewelry',
+    };
+
     const buckets = {};
     for (const r of rows) {
       const domain = String(r.domain || r.store_domain || '').replace(/^www\./, '').toLowerCase();
       const storeName = r.store_name || '';
       const score = Number(r.score ?? r.total_score ?? 0);
       if (!domain || score === 0) continue;
-      const niche = detectNiche(domain, storeName);
+
+      // Použij DB niche místo keyword detekce
+      const rawNiche = (r.niche || '').toLowerCase().trim();
+      const niche = NICHE_MAP[rawNiche] || detectNiche(domain, storeName);
       if (!niche) continue;
+
       if (!buckets[niche]) buckets[niche] = [];
       buckets[niche].push(score);
     }
