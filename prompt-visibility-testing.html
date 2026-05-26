@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Visibility Testing: How to Measure Whether AI Recommends Your Store</title>
+<meta name="description" content="Prompt Visibility Testing is the most direct way to measure AI Commerce visibility. Send real buyer prompts to ChatGPT, Perplexity, and Google AI Mode. Track whether your brand appears, at what position, and who shows up instead.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/prompt-visibility-testing">
+<meta property="og:title" content="Prompt Visibility Testing: Measure Your AI Commerce Visibility Directly">
+<meta property="og:description" content="The most direct measurement of AI visibility. Send real buyer prompts to AI systems and track whether your brand appears.">
+<meta property="og:url" content="https://atomfoundry.dev/prompt-visibility-testing">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Prompt Visibility Testing: How to Measure Whether AI Recommends Your Store","description":"Prompt Visibility Testing is the most direct way to measure AI Commerce visibility. Send real buyer prompts to AI systems and track whether your brand appears.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/prompt-visibility-testing"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Prompt Visibility Testing?","acceptedAnswer":{"@type":"Answer","text":"Prompt Visibility Testing is the process of submitting real buyer prompts to AI shopping systems and measuring whether a brand appears in the responses, at what position, and with what recommendation confidence. It is the most direct measurement of AI Commerce visibility."}},{"@type":"Question","name":"How many prompts do I need to test?","acceptedAnswer":{"@type":"Answer","text":"A minimum viable test is 50 prompts covering buyer prompts, comparison prompts, problem prompts, discovery prompts, and AI shopping prompts. A comprehensive test uses 100 or more prompts across all five types."}},{"@type":"Question","name":"Which AI systems should I test with?","acceptedAnswer":{"@type":"Answer","text":"Test with at least ChatGPT, Perplexity, and Google AI Mode. These three operate differently. ChatGPT relies on training data. Perplexity crawls in real time. Google AI Mode blends organic search with AI evaluation. Testing all three gives a complete picture."}}]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.nav { padding: 20px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 2px; }
+.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: var(--orange); }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+.nav-links a { font-size: 12px; color: #999; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; } }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.hero { padding: 72px 0 48px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 32px; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.section { padding: 56px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 22px; }
+.body-text strong { color: var(--text); }
+.callout { background: var(--bg2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+
+/* TEST RESULTS VISUAL */
+.test-results { background: var(--bg2); border: 1px solid var(--border2); border-radius: 16px; overflow: hidden; margin: 28px 0; }
+.tr-header { background: #0d0d0d; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.tr-header-title { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+.tr-header-score { font-size: 12px; font-weight: 700; color: var(--orange); }
+.tr-prompt-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; align-items: center; padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
+.tr-prompt-row:last-child { border-bottom: none; }
+.tr-prompt-row:hover { background: rgba(255,255,255,0.01); }
+.tr-prompt { font-size: 12px; color: var(--muted); font-style: italic; }
+.tr-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+.tr-badge.appeared { color: #1D9E75; background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.2); }
+.tr-badge.missed { color: #E24B4A; background: rgba(226,75,74,0.1); border: 1px solid rgba(226,75,74,0.2); }
+.tr-badge.second { color: #EF9F27; background: rgba(239,159,39,0.08); border: 1px solid rgba(239,159,39,0.2); }
+.tr-badge.first { color: #1D9E75; background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.25); }
+.tr-platform { font-size: 10px; color: #333; width: 60px; text-align: right; }
+
+/* PROMPT TYPE GRID */
+.prompt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0; }
+.prompt-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px; transition: border-color 0.2s; }
+.prompt-card:hover { border-color: rgba(249,115,22,0.25); }
+.prompt-type-num { font-size: 11px; color: var(--orange); font-weight: 700; font-family: monospace; margin-bottom: 6px; }
+.prompt-type-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.prompt-example { font-size: 12px; color: var(--dim); font-style: italic; background: #0d0d0d; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; }
+.prompt-why { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* PLATFORM COMPARISON */
+.platform-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 24px 0; }
+.platform-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; text-align: center; }
+.platform-icon { font-size: 22px; margin-bottom: 8px; }
+.platform-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.platform-note { font-size: 11px; color: var(--muted); line-height: 1.5; }
+.platform-key { font-size: 11px; color: var(--orange); margin-top: 8px; font-weight: 600; }
+
+/* OUTCOME CARDS */
+.outcome-list { display: flex; flex-direction: column; gap: 10px; margin: 24px 0; }
+.outcome-card { display: flex; gap: 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.outcome-letter { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--orange); background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2); flex-shrink: 0; }
+.outcome-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.outcome-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(249,115,22,0.04); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.faq-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.faq-item.open .faq-answer { display: block; }
+
+/* CTA + FOOTER */
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 56px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+@media (max-width: 600px) {
+  .prompt-grid { grid-template-columns: 1fr; }
+  .platform-grid { grid-template-columns: 1fr; }
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+  .tr-prompt-row { grid-template-columns: 1fr auto; }
+  .tr-platform { display: none; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+  </div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/geo">GEO</a>
+    <a href="/aco">ACO</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/vocabulary">Vocabulary</a> &rsaquo; <span>Prompt Visibility Testing</span></div>
+    <div class="hero-kicker">Advanced Metric &middot; AI Commerce Intelligence</div>
+    <h1>Prompt Visibility<br><em>Testing</em></h1>
+    <p class="hero-sub">The most direct measurement of AI Commerce visibility. You send real buyer prompts to AI systems. You track whether your brand appears, at what position, and who shows up instead of you.</p>
+    <div class="hero-cta-row">
+      <a href="/" class="btn-primary">Get My Free AI Commerce Score</a>
+      <a href="/recommendation-share" class="btn-secondary">Learn About Recommendation Share</a>
+    </div>
+  </div>
+
+  <!-- TEST RESULTS VISUAL -->
+  <div class="section" style="border-top:none;padding-top:0;">
+    <div class="section-kicker">What a test looks like</div>
+    <h2>Real buyer prompts. <em>Real results.</em></h2>
+    <p class="body-text">This is what a Prompt Visibility Test output looks like. Each row is a buyer prompt submitted to ChatGPT, Perplexity, and Google AI Mode. Your brand either appeared or it did not.</p>
+
+    <div class="test-results">
+      <div class="tr-header">
+        <div class="tr-header-title">Prompt Visibility Test results &middot; Skincare niche &middot; 20 of 50 prompts shown</div>
+        <div class="tr-header-score">Recommendation Share: 18%</div>
+      </div>
+      <div class="tr-prompt-row">
+        <div class="tr-prompt">"best organic skincare for sensitive skin under $60"</div>
+        <div class="tr-badge first">1st pick</div>
+        <div class="tr-badge appeared">appeared</div>
+        <div class="tr-platform">ChatGPT</div>
+      </div>
+      <div class="tr-prompt-row">
+        <div class="tr-prompt">"fragrance-free moisturizer for rosacea"</div>
+        <div class="tr-badge missed">not found</div>
+        <div class="tr-badge missed">missed</div>
+        <div class="tr-platform">ChatGPT</div>
+      </div>
+      <div class="tr-prompt-row">
+        <div class="tr-prompt">"best clean beauty brands dermatologist approved"</div>
+        <div class="tr-badge second">2nd mention</div>
+        <div class="tr-badge appeared">appeared</div>
+        <div class="tr-platform">Perplexity</div>
+      </div>
+      <div class="tr-prompt-row">
+        <div class="tr-prompt">"sustainable skincare brands similar to Aesop"</div>
+        <div class="tr-badge missed">not found</div>
+        <div class="tr-badge missed">missed</div>
+        <div class="tr-platform">Perplexity</div>
+      </div>
+      <div class="tr-prompt-row">
+        <div class="tr-prompt">"vitamin C serum for hyperpigmentation under $50"</div>
+        <div class="tr-badge first">1st pick</div>
+        <div class="tr-badge appeared">appeared</div>
+        <div class="tr-platform">Google AI</div>
+      </div>
+      <div class="tr-prompt-row">
+        <div class="tr-prompt">"recommend a complete skincare routine for beginners"</div>
+        <div class="tr-badge missed">not found</div>
+        <div class="tr-badge missed">missed</div>
+        <div class="tr-platform">Google AI</div>
+      </div>
+      <div class="tr-prompt-row">
+        <div class="tr-prompt">"what skincare brand is good for oily acne-prone skin"</div>
+        <div class="tr-badge missed">not found</div>
+        <div class="tr-badge missed">missed</div>
+        <div class="tr-platform">ChatGPT</div>
+      </div>
+    </div>
+
+    <p class="body-text">A Recommendation Share of 18% means the brand appeared in 9 out of 50 prompts. The test also shows which prompt types it is missing from, which competitors appear in the gaps, and what the Recommendation Position was for each appearance.</p>
+  </div>
+
+  <!-- FIVE PROMPT TYPES -->
+  <div class="section">
+    <div class="section-kicker">Building your prompt set</div>
+    <h2>The five prompt types that <em>matter most</em></h2>
+
+    <div class="prompt-grid">
+      <div class="prompt-card">
+        <div class="prompt-type-num">TYPE 01</div>
+        <div class="prompt-type-title">Buyer Prompts</div>
+        <div class="prompt-example">"Best protein powder for women runners"</div>
+        <div class="prompt-why">Direct purchase intent. The highest-value prompt type. Appearing here drives real purchase decisions. Cover price ranges, use cases, and certifications.</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-type-num">TYPE 02</div>
+        <div class="prompt-type-title">Comparison Prompts</div>
+        <div class="prompt-example">"Best alternatives to Gymshark for women"</div>
+        <div class="prompt-why">Category-level comparisons. Being included when buyers compare options builds Recommendation Density across the niche.</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-type-num">TYPE 03</div>
+        <div class="prompt-type-title">Problem Prompts</div>
+        <div class="prompt-example">"Skincare for acne-prone sensitive skin"</div>
+        <div class="prompt-why">Tests intent matching. If you sell for this use case but do not appear here, you have an Intent Misalignment problem. The fix is specific content, not more content.</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-type-num">TYPE 04</div>
+        <div class="prompt-type-title">Discovery Prompts</div>
+        <div class="prompt-example">"Eco-friendly activewear brands like Patagonia"</div>
+        <div class="prompt-why">Tests your position in the AI Recommendation Graph. Appearing in discovery means AI understands your brand characteristics and relationships.</div>
+      </div>
+    </div>
+    <div class="callout"><strong>The fifth type:</strong> AI Shopping Prompts. "Recommend me a complete skincare routine under $100." These simulate the exact moment a buyer hands buying decisions to AI. Appearing here is the most commercially direct form of Prompt Visibility.</div>
+  </div>
+
+  <!-- THREE PLATFORMS -->
+  <div class="section">
+    <div class="section-kicker">Where to run tests</div>
+    <h2>Three platforms, <em>three different results</em></h2>
+    <p class="body-text">Your Recommendation Share will be different on each platform because they work completely differently. Running tests on only one platform gives you a partial picture.</p>
+
+    <div class="platform-grid">
+      <div class="platform-card">
+        <div class="platform-icon">&#129302;</div>
+        <div class="platform-name">ChatGPT</div>
+        <div class="platform-note">Uses training data. Results reflect what ChatGPT learned about your brand months ago. Slower to update but highest buyer intent.</div>
+        <div class="platform-key">Key driver: brand entity</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-icon">&#128269;</div>
+        <div class="platform-name">Perplexity</div>
+        <div class="platform-note">Crawls in real time. Reflects your current page content and external citations. Fastest to respond to improvements.</div>
+        <div class="platform-key">Key driver: page content</div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-icon">&#127758;</div>
+        <div class="platform-name">Google AI Mode</div>
+        <div class="platform-note">Blends organic search signals with AI evaluation. Schema markup and structured data matter most here alongside traditional SEO.</div>
+        <div class="platform-key">Key driver: schema + SEO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT TO DO WITH RESULTS -->
+  <div class="section">
+    <div class="section-kicker">Reading your results</div>
+    <h2>What your test results <em>tell you to fix</em></h2>
+
+    <div class="outcome-list">
+      <div class="outcome-card">
+        <div class="outcome-letter">A</div>
+        <div>
+          <div class="outcome-title">Low appearance rate across all prompt types</div>
+          <div class="outcome-desc">Your brand has low entity presence in AI training data. Priority: build external mentions through Reddit in your niche, get press coverage, add to Trustpilot. These changes take 4 to 12 weeks to filter into training data but are the foundation of everything else.</div>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-letter">B</div>
+        <div>
+          <div class="outcome-title">Appears on branded queries but not buyer prompts</div>
+          <div class="outcome-desc">You have brand entity but poor intent matching. This is Intent Misalignment. Rewrite content around actual buyer query language. Create FAQ sections that answer the prompts you are failing. Update llms.txt with buyer-intent-specific language.</div>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-letter">C</div>
+        <div>
+          <div class="outcome-title">Appears but always as a supporting mention, never first</div>
+          <div class="outcome-desc">You are in the Recommendation Graph but your Recommendation Position is weak. Fix Commerce Accuracy (prices in HTML, return policy visible) and strengthen trust signals. Getting from second mention to first pick can double AI-referred revenue.</div>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-letter">D</div>
+        <div>
+          <div class="outcome-title">Strong on ChatGPT, weak on Perplexity</div>
+          <div class="outcome-desc">Your brand entity is good but your current page content is weak. Perplexity crawls in real time. Create more specific, query-answering content and build external citations that Perplexity can find and cite in real time.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>Prompt Visibility Testing: <em>common questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is Prompt Visibility Testing?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Prompt Visibility Testing is the process of submitting real buyer prompts to AI shopping systems and measuring whether a brand appears in the responses, at what position, and with what recommendation confidence. It is the most direct measurement of AI Commerce visibility because it tests actual recommendation behavior rather than inferring it from structural signals.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How many prompts do I need to test?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">A minimum viable test is 50 prompts covering all five prompt types: buyer prompts, comparison prompts, problem prompts, discovery prompts, and AI shopping prompts. A comprehensive test uses 100 or more prompts. The more prompts you test, the more reliable your Recommendation Share calculation.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Which AI systems should I test with?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Test with at least ChatGPT, Perplexity, and Google AI Mode. These three operate differently. ChatGPT relies on training data. Perplexity crawls in real time. Google AI Mode blends organic search signals with AI evaluation. Testing all three gives a complete picture of your AI Commerce visibility.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How often should I run Prompt Visibility Tests?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Monthly is the right cadence for most stores. Running the same prompt set every month gives you Recommendation Velocity, the rate of change in your Recommendation Share over time. Positive velocity confirms your AI Commerce improvements are working. Negative velocity means a competitor is gaining ground.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>Start with a <em>free AI Commerce Score</em></h2>
+    <p>The score predicts your Prompt Visibility results. The Paid Audit includes full Prompt Visibility Testing with 50 buyer prompts across ChatGPT, Perplexity, and Google AI Mode.</p>
+    <div class="cta-row">
+      <a href="/" class="btn-primary">Get My Free AI Commerce Score</a>
+      <a href="/recommendation-share" class="btn-secondary">Learn About Recommendation Share</a>
+    </div>
+    <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related</div>
+    <div class="internal-links-grid">
+      <a href="/recommendation-share" class="internal-link-item"><span class="internal-link-icon">&#128202;</span><div class="internal-link-text"><strong>Recommendation Share</strong><span>The metric this test measures</span></div></a>
+      <a href="/learn/prompt-visibility-testing" class="internal-link-item"><span class="internal-link-icon">&#127891;</span><div class="internal-link-text"><strong>Learn guide</strong><span>Full Prompt Visibility Testing guide</span></div></a>
+      <a href="/chatgpt-visibility" class="internal-link-item"><span class="internal-link-icon">&#129302;</span><div class="internal-link-text"><strong>ChatGPT Visibility</strong><span>How ChatGPT evaluates stores</span></div></a>
+      <a href="/human-view-vs-ai-view" class="internal-link-item"><span class="internal-link-icon">&#128065;&#65039;</span><div class="internal-link-text"><strong>Human View vs AI View</strong><span>What AI sees on your store</span></div></a>
+      <a href="/vocabulary" class="internal-link-item"><span class="internal-link-icon">&#128218;</span><div class="internal-link-text"><strong>Vocabulary</strong><span>Every AI Commerce term defined</span></div></a>
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#128208;</span><div class="internal-link-text"><strong>Methodology</strong><span>The full 8-factor scoring model</span></div></a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/">Home</a> &nbsp;&middot;&nbsp; <a href="/prompt-visibility-testing">Prompt Visibility Testing</a> &nbsp;&middot;&nbsp; <a href="/recommendation-share">Recommendation Share</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; AI Commerce Intelligence Platform &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">AI Commerce Intelligence Platform</div>
+    </div>
+  </div>
+</div>
+<script>
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+</script>
+</body>
+</html>
