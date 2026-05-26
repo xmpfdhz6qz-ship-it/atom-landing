@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Human View vs AI View: How AI Shopping Agents See Your Store</title>
+<meta name="description" content="Your beautiful ecommerce store is not what AI shopping agents see. Side by side: what humans see vs what AI actually reads. The most important visual in AI Commerce Intelligence.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/human-view-vs-ai-view">
+<meta property="og:title" content="Human View vs AI View: How AI Sees Your Store">
+<meta property="og:description" content="Your beautiful store is not what AI shopping agents see. Side by side comparison that changes how you think about ecommerce.">
+<meta property="og:url" content="https://atomfoundry.dev/human-view-vs-ai-view">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Human View vs AI View: How AI Shopping Agents See Your Store","description":"Your beautiful ecommerce store is not what AI shopping agents see. This visual comparison shows what humans see versus what AI actually reads when evaluating your store for recommendations.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/human-view-vs-ai-view"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What do AI shopping agents actually see on my store?","acceptedAnswer":{"@type":"Answer","text":"AI shopping agents read structured signals, not design. They see JSON-LD schema markup, server-rendered HTML text including prices and policies, heading hierarchy, and image alt text. They cannot see visual design, photography, brand aesthetics, or any content rendered via JavaScript."}},{"@type":"Question","name":"Why does AI see my store differently from humans?","acceptedAnswer":{"@type":"Answer","text":"AI shopping agents crawl your store the same way search engine bots do. They fetch HTML source and extract structured signals. They do not render JavaScript, cannot see images, and do not experience design or brand storytelling. The gap between human experience and AI experience is where most stores lose AI visibility."}},{"@type":"Question","name":"How do I improve what AI sees on my store?","acceptedAnswer":{"@type":"Answer","text":"The highest-impact changes are: add JSON-LD Product and Organization schema markup, ensure prices are in server-rendered HTML not JavaScript, add return policy text in crawlable HTML, write specific niche positioning in your H1 and meta, and add descriptive alt text to all product images."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Human View vs AI View","item":"https://atomfoundry.dev/human-view-vs-ai-view"}]}</script>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c;
+  --red: #E24B4A; --green: #1D9E75; --yellow: #EF9F27;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.nav { padding: 20px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: var(--orange); }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; justify-content: flex-end; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+.nav-links a.cta-nav:hover { background: var(--orange-dark); }
+@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; justify-content: flex-start; } }
+
+/* HERO */
+.hero { padding: 72px 0 56px; max-width: 780px; margin: 0 auto; padding-left: 24px; padding-right: 24px; position: relative; z-index: 1; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,54px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 580px; margin-bottom: 36px; }
+
+/* THE MAIN SPLIT VISUAL */
+.split-container { width: 100%; max-width: 1100px; margin: 0 auto 80px; padding: 0 24px; position: relative; z-index: 1; }
+.split-label-row { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; margin-bottom: 16px; }
+.split-label { text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; padding: 8px 16px; border-radius: 8px; }
+.split-label.human { color: #1D9E75; background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.2); }
+.split-label.ai { color: #E24B4A; background: rgba(226,75,74,0.1); border: 1px solid rgba(226,75,74,0.2); }
+.split-divider-label { display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--dim); }
+.split-panels { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: stretch; }
+.split-divider { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 0 8px; }
+.split-vs { width: 36px; height: 36px; border-radius: 50%; background: #1a1a1a; border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--dim); flex-shrink: 0; }
+.split-divider-line { flex: 1; width: 1px; background: var(--border); }
+
+/* HUMAN PANEL - STORE MOCKUP */
+.human-panel { background: var(--bg2); border: 1px solid rgba(29,158,117,0.25); border-radius: 16px; overflow: hidden; }
+.store-browser-bar { background: #1a1a1a; padding: 10px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+.browser-dots { display: flex; gap: 5px; }
+.browser-dot { width: 8px; height: 8px; border-radius: 50%; }
+.browser-url { flex: 1; background: #222; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: var(--dim); font-family: monospace; }
+.store-nav-bar { background: #fff; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; }
+.store-logo { font-size: 13px; font-weight: 800; color: #1a1a1a; letter-spacing: -0.3px; }
+.store-nav-links { display: flex; gap: 14px; }
+.store-nav-link { font-size: 10px; color: #666; font-weight: 500; }
+.store-hero-img { width: 100%; height: 140px; background: linear-gradient(135deg, #f0f0ee 0%, #e8e4df 50%, #d8d2cb 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.store-hero-img::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(180,160,140,0.3) 0%, transparent 60%); }
+.store-product-img { width: 80px; height: 80px; background: linear-gradient(135deg, #c8beb4, #a89880); border-radius: 8px; position: relative; z-index: 1; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+.store-product-img::after { content: ""; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; }
+.store-badge { position: absolute; top: 10px; right: 10px; background: #1a1a1a; color: #fff; font-size: 8px; font-weight: 700; padding: 3px 7px; border-radius: 4px; z-index: 2; letter-spacing: 0.05em; }
+.store-content { background: #fff; padding: 16px 20px; }
+.store-brand-name { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; }
+.store-product-name { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; line-height: 1.3; }
+.store-tagline { font-size: 11px; color: #666; margin-bottom: 12px; line-height: 1.5; }
+.store-price-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.store-price { font-size: 16px; font-weight: 800; color: #1a1a1a; }
+.store-price-old { font-size: 12px; color: #aaa; text-decoration: line-through; }
+.store-price-badge { font-size: 9px; background: #fef2f2; color: #dc2626; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+.store-stars { display: flex; align-items: center; gap: 3px; margin-bottom: 12px; }
+.store-star { color: #f59e0b; font-size: 10px; }
+.store-star-count { font-size: 10px; color: #666; }
+.store-trust-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.store-trust-badge { font-size: 9px; color: #555; background: #f5f5f5; border-radius: 4px; padding: 3px 8px; display: flex; align-items: center; gap: 3px; }
+.store-cta { width: 100%; padding: 10px; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: 0.02em; }
+.store-returns { font-size: 9px; color: #999; text-align: center; margin-top: 8px; }
+.human-caption { background: rgba(29,158,117,0.06); border-top: 1px solid rgba(29,158,117,0.15); padding: 12px 16px; }
+.human-caption-title { font-size: 11px; font-weight: 700; color: #1D9E75; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.human-item { font-size: 12px; color: #4ade80; display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+
+/* AI PANEL - RAW DATA VIEW */
+.ai-panel { background: #070d07; border: 1px solid rgba(226,75,74,0.25); border-radius: 16px; overflow: hidden; font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace; }
+.ai-terminal-bar { background: #0d1a0d; padding: 10px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.ai-terminal-title { font-size: 10px; color: #4a7a4a; font-family: monospace; letter-spacing: 0.05em; flex: 1; text-align: center; }
+.ai-content { padding: 16px; font-size: 11px; line-height: 1.6; color: #4a7a4a; overflow: hidden; }
+.ai-line { margin-bottom: 2px; display: flex; gap: 6px; }
+.ai-line-num { color: #1a3a1a; width: 20px; flex-shrink: 0; text-align: right; user-select: none; }
+.ai-tag { color: #5a9a5a; }
+.ai-attr { color: #7aba7a; }
+.ai-val { color: #a8d8a8; }
+.ai-str { color: #c8eac8; }
+.ai-missing { color: #E24B4A; background: rgba(226,75,74,0.08); border-radius: 3px; padding: 0 3px; }
+.ai-warning { color: #EF9F27; }
+.ai-ok { color: #1D9E75; }
+.ai-comment { color: #2a4a2a; }
+.ai-section { color: #3d6b3d; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 0 4px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: 6px; }
+.ai-section:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+.ai-score-row { display: flex; align-items: center; gap: 6px; padding: 3px 0; }
+.ai-score-bar { flex: 1; height: 3px; background: #1a3a1a; border-radius: 999px; }
+.ai-score-fill { height: 100%; border-radius: 999px; }
+.ai-score-val { font-size: 10px; width: 28px; text-align: right; }
+.ai-caption { background: rgba(226,75,74,0.06); border-top: 1px solid rgba(226,75,74,0.15); padding: 12px 16px; }
+.ai-caption-title { font-size: 11px; font-weight: 700; color: #E24B4A; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; }
+.ai-caption-item { font-size: 12px; color: #f87171; display: flex; align-items: center; gap: 6px; padding: 2px 0; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; }
+
+/* BELOW THE FOLD */
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.section { padding: 56px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 22px; }
+.body-text strong { color: var(--text); }
+.body-text a { color: var(--orange); text-decoration: underline; }
+.callout { background: var(--bg2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+
+/* GAP ITEMS */
+.gap-list { display: flex; flex-direction: column; gap: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin: 28px 0; }
+.gap-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.gap-row:last-child { border-bottom: none; }
+.gap-cell { padding: 14px 18px; font-size: 13px; line-height: 1.5; }
+.gap-cell:first-child { border-right: 1px solid rgba(255,255,255,0.04); color: #4ade80; display: flex; align-items: center; gap: 8px; }
+.gap-cell:last-child { color: #f87171; display: flex; align-items: center; gap: 8px; font-family: 'SF Mono', monospace; font-size: 11px; }
+.gap-header { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #0d0d0d; border-bottom: 1px solid var(--border); }
+.gap-header-cell { padding: 10px 18px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
+.gap-header-cell:first-child { color: #1D9E75; border-right: 1px solid rgba(255,255,255,0.04); }
+.gap-header-cell:last-child { color: #E24B4A; }
+
+/* IMPACT BARS */
+.impact-list { display: flex; flex-direction: column; gap: 10px; margin: 28px 0; }
+.impact-row { display: flex; align-items: center; gap: 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+.impact-icon { font-size: 18px; flex-shrink: 0; }
+.impact-label { font-size: 13px; color: var(--muted); flex: 1; }
+.impact-bar-wrap { width: 120px; height: 6px; background: #1a1a1a; border-radius: 999px; overflow: hidden; flex-shrink: 0; }
+.impact-bar { height: 100%; border-radius: 999px; transition: width 1.2s ease; }
+.impact-points { font-size: 12px; font-weight: 700; width: 56px; text-align: right; flex-shrink: 0; }
+
+/* SCORE ZONES */
+.score-zones { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border2); border-radius: 14px; overflow: hidden; border: 1px solid var(--border2); margin: 28px 0; }
+.sz-card { background: var(--bg2); padding: 18px 14px; text-align: center; }
+.sz-range { font-size: 22px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+.sz-name { font-size: 11px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+.sz-desc { font-size: 11px; color: var(--dim); line-height: 1.4; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(249,115,22,0.04); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.faq-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.faq-item.open .faq-answer { display: block; }
+.faq-answer a { color: var(--orange); text-decoration: underline; }
+
+/* BUTTONS */
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 48px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+
+/* INTERNAL LINKS */
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; flex-shrink: 0; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 0.04em; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+
+@media (max-width: 700px) {
+  .split-panels { grid-template-columns: 1fr; }
+  .split-label-row { grid-template-columns: 1fr 1fr; }
+  .split-divider-label { display: none; }
+  .split-divider { flex-direction: row; padding: 12px 0; }
+  .split-divider-line { width: 100%; height: 1px; }
+  .gap-row { grid-template-columns: 1fr; }
+  .gap-cell:first-child { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .score-zones { grid-template-columns: 1fr 1fr; }
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+  .impact-bar-wrap { width: 70px; }
+  .impact-points { width: 44px; }
+}
+
+/* CURSOR BLINK */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cursor { display: inline-block; width: 6px; height: 12px; background: #4a7a4a; border-radius: 1px; animation: blink 1.2s steps(1) infinite; vertical-align: middle; }
+
+/* SCAN ANIMATION */
+@keyframes scanLine { 0%{top:0;opacity:0.7} 100%{top:100%;opacity:0} }
+.scan-effect { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(226,75,74,0.6), transparent); animation: scanLine 3s linear infinite; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+  </div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/geo">GEO</a>
+    <a href="/aco">ACO</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="breadcrumb">
+    <a href="/">Home</a> &rsaquo;
+    <span>Human View vs AI View</span>
+  </div>
+  <div class="hero-kicker">AI Commerce Intelligence · Viral Feature</div>
+  <h1>Human View<br>vs <em>AI View</em></h1>
+  <p class="hero-sub">Your store looks beautiful to humans. To AI shopping agents it looks completely different. Here is what ChatGPT, Alexa for Shopping, and Perplexity actually see when they evaluate whether to recommend you.</p>
+</div>
+
+<!-- THE BIG SPLIT -->
+<div class="split-container">
+
+  <div class="split-label-row">
+    <div class="split-label human">&#10003; What humans see</div>
+    <div class="split-divider-label"></div>
+    <div class="split-label ai">&#10007; What AI agents see</div>
+  </div>
+
+  <div class="split-panels">
+
+    <!-- HUMAN PANEL -->
+    <div class="human-panel">
+      <div class="store-browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot" style="background:#ff5f56;"></div>
+          <div class="browser-dot" style="background:#ffbd2e;"></div>
+          <div class="browser-dot" style="background:#27c93f;"></div>
+        </div>
+        <div class="browser-url">luminestore.com/products/clarity-serum</div>
+      </div>
+
+      <div class="store-nav-bar">
+        <div class="store-logo">LUMINE</div>
+        <div class="store-nav-links">
+          <span class="store-nav-link">Shop</span>
+          <span class="store-nav-link">Ingredients</span>
+          <span class="store-nav-link">About</span>
+        </div>
+      </div>
+
+      <div class="store-hero-img">
+        <div class="store-product-img"></div>
+        <div class="store-badge">BESTSELLER</div>
+      </div>
+
+      <div class="store-content">
+        <div class="store-brand-name">Lumine Skincare</div>
+        <div class="store-product-name">Clarity Vitamin C Serum</div>
+        <div class="store-tagline">Brightening formula for sensitive skin. 15% L-Ascorbic Acid with Hyaluronic Acid.</div>
+        <div class="store-price-row">
+          <span class="store-price">$48.00</span>
+          <span class="store-price-old">$62.00</span>
+          <span class="store-price-badge">SAVE 23%</span>
+        </div>
+        <div class="store-stars">
+          <span class="store-star">&#9733;</span>
+          <span class="store-star">&#9733;</span>
+          <span class="store-star">&#9733;</span>
+          <span class="store-star">&#9733;</span>
+          <span class="store-star">&#9733;</span>
+          <span class="store-star-count">&nbsp;4.9 (2,847 reviews)</span>
+        </div>
+        <div class="store-trust-row">
+          <span class="store-trust-badge">&#128200; Dermatologist tested</span>
+          <span class="store-trust-badge">&#127807; Fragrance free</span>
+          <span class="store-trust-badge">&#9989; Cruelty free</span>
+        </div>
+        <button class="store-cta">Add to Cart</button>
+        <div class="store-returns">Free 30-day returns &nbsp;&middot;&nbsp; Ships in 24h</div>
+      </div>
+
+      <div class="human-caption">
+        <div class="human-caption-title">Humans see</div>
+        <div class="human-item">&#10003; Premium visual design</div>
+        <div class="human-item">&#10003; Trust-building photography</div>
+        <div class="human-item">&#10003; Clear pricing and badges</div>
+        <div class="human-item">&#10003; Social proof (2,847 reviews)</div>
+        <div class="human-item">&#10003; Strong brand identity</div>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="split-divider">
+      <div class="split-divider-line"></div>
+      <div class="split-vs">VS</div>
+      <div class="split-divider-line"></div>
+    </div>
+
+    <!-- AI PANEL -->
+    <div class="ai-panel">
+      <div class="ai-terminal-bar">
+        <div class="browser-dots">
+          <div class="browser-dot" style="background:#1a3a1a;"></div>
+          <div class="browser-dot" style="background:#1a3a1a;"></div>
+          <div class="browser-dot" style="background:#1a3a1a;"></div>
+        </div>
+        <div class="ai-terminal-title">GPTBot / ClaudeBot / PerplexityBot: HTML extraction</div>
+      </div>
+
+      <div class="ai-content">
+        <div style="position:relative;overflow:hidden;">
+          <div class="scan-effect"></div>
+
+          <div class="ai-section">schema detection</div>
+          <div class="ai-line"><span class="ai-line-num">1</span><span class="ai-tag">&lt;schema&gt;</span> <span class="ai-missing">NOT FOUND</span> <span class="ai-comment">// Product schema missing</span></div>
+          <div class="ai-line"><span class="ai-line-num">2</span><span class="ai-tag">&lt;Organization&gt;</span> <span class="ai-missing">NOT FOUND</span></div>
+          <div class="ai-line"><span class="ai-line-num">3</span><span class="ai-tag">&lt;AggregateRating&gt;</span> <span class="ai-missing">NOT FOUND</span></div>
+          <div class="ai-line"><span class="ai-line-num">4</span><span class="ai-tag">&lt;BreadcrumbList&gt;</span> <span class="ai-ok">detected</span></div>
+
+          <div class="ai-section">price extraction</div>
+          <div class="ai-line"><span class="ai-line-num">5</span><span class="ai-attr">price:</span> <span class="ai-warning">JS_RENDERED</span> <span class="ai-comment">// Cannot read</span></div>
+          <div class="ai-line"><span class="ai-line-num">6</span><span class="ai-attr">currency:</span> <span class="ai-missing">UNKNOWN</span></div>
+          <div class="ai-line"><span class="ai-line-num">7</span><span class="ai-attr">availability:</span> <span class="ai-missing">NOT_FOUND</span></div>
+
+          <div class="ai-section">content signals</div>
+          <div class="ai-line"><span class="ai-line-num">8</span><span class="ai-attr">h1:</span> <span class="ai-str">"Clarity Vitamin C Serum"</span></div>
+          <div class="ai-line"><span class="ai-line-num">9</span><span class="ai-attr">category:</span> <span class="ai-warning">AMBIGUOUS</span> <span class="ai-comment">// "skincare"?</span></div>
+          <div class="ai-line"><span class="ai-line-num">10</span><span class="ai-attr">niche_intent:</span> <span class="ai-warning">LOW_CONFIDENCE</span></div>
+          <div class="ai-line"><span class="ai-line-num">11</span><span class="ai-attr">faq_schema:</span> <span class="ai-missing">NOT FOUND</span></div>
+
+          <div class="ai-section">trust signals</div>
+          <div class="ai-line"><span class="ai-line-num">12</span><span class="ai-attr">reviews:</span> <span class="ai-warning">IFRAME_ONLY</span> <span class="ai-comment">// Cannot extract</span></div>
+          <div class="ai-line"><span class="ai-line-num">13</span><span class="ai-attr">return_policy:</span> <span class="ai-missing">JS_MODAL</span></div>
+          <div class="ai-line"><span class="ai-line-num">14</span><span class="ai-attr">shipping_info:</span> <span class="ai-missing">NOT_IN_HTML</span></div>
+          <div class="ai-line"><span class="ai-line-num">15</span><span class="ai-attr">contact:</span> <span class="ai-ok">found</span></div>
+
+          <div class="ai-section">images</div>
+          <div class="ai-line"><span class="ai-line-num">16</span><span class="ai-attr">hero_img:</span> <span class="ai-str">"product-hero-v2.jpg"</span></div>
+          <div class="ai-line"><span class="ai-line-num">17</span><span class="ai-attr">alt_text:</span> <span class="ai-missing">MISSING</span></div>
+
+          <div class="ai-section">recommendation score</div>
+          <div class="ai-score-row">
+            <span style="font-size:10px;color:#3d6b3d;width:110px;">Semantic Clarity</span>
+            <div class="ai-score-bar"><div class="ai-score-fill" style="width:38%;background:#E24B4A;"></div></div>
+            <span class="ai-score-val" style="color:#E24B4A;">7/18</span>
+          </div>
+          <div class="ai-score-row">
+            <span style="font-size:10px;color:#3d6b3d;width:110px;">Commerce Accuracy</span>
+            <div class="ai-score-bar"><div class="ai-score-fill" style="width:20%;background:#E24B4A;"></div></div>
+            <span class="ai-score-val" style="color:#E24B4A;">2/10</span>
+          </div>
+          <div class="ai-score-row">
+            <span style="font-size:10px;color:#3d6b3d;width:110px;">AI Trust Score</span>
+            <div class="ai-score-bar"><div class="ai-score-fill" style="width:33%;background:#E24B4A;"></div></div>
+            <span class="ai-score-val" style="color:#E24B4A;">6/18</span>
+          </div>
+          <div class="ai-score-row">
+            <span style="font-size:10px;color:#3d6b3d;width:110px;">Rec. Confidence</span>
+            <div class="ai-score-bar"><div class="ai-score-fill" style="width:25%;background:#E24B4A;"></div></div>
+            <span class="ai-score-val" style="color:#E24B4A;">3/14</span>
+          </div>
+
+          <div style="margin-top:10px;padding:8px;background:rgba(226,75,74,0.08);border-radius:6px;border:1px solid rgba(226,75,74,0.2);">
+            <div style="font-size:10px;color:#E24B4A;font-weight:700;margin-bottom:4px;">AI COMMERCE SCORE: 31/100</div>
+            <div style="font-size:10px;color:#f87171;">STATUS: AI_INVISIBLE_RISK &mdash; excluded from recommendations</div>
+          </div>
+
+          <div style="margin-top:6px;font-size:10px;color:#2a4a2a;">recommendation_output: null <span class="cursor"></span></div>
+        </div>
+      </div>
+
+      <div class="ai-caption">
+        <div class="ai-caption-title">AI agents see</div>
+        <div class="ai-caption-item">&#10007; Price: JS_RENDERED (unreadable)</div>
+        <div class="ai-caption-item">&#10007; Reviews: IFRAME_ONLY (can't extract)</div>
+        <div class="ai-caption-item">&#10007; Schema: Product schema missing</div>
+        <div class="ai-caption-item">&#10007; Return policy: JS modal (invisible)</div>
+        <div class="ai-caption-item">&#10007; AI Commerce Score: 31/100</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPTION -->
+  <div style="text-align:center;margin-top:24px;padding:20px 24px;background:rgba(249,115,22,0.04);border:1px solid rgba(249,115,22,0.15);border-radius:14px;">
+    <div style="font-size:17px;font-weight:700;color:var(--white);line-height:1.6;">Same store. Same products. Completely different reality.</div>
+    <div style="font-size:14px;color:var(--muted);margin-top:6px;">Humans see a premium brand. AI sees a 31 out of 100 with recommendation output: null.</div>
+  </div>
+</div>
+
+<!-- CONTENT BELOW -->
+<div class="wrap">
+
+  <div class="section" style="padding-top:0;border-top:none;">
+    <div class="section-kicker">Why this gap exists</div>
+    <h2>Your store was built for <em>humans and Google,</em> not for AI</h2>
+    <p class="body-text">For twenty years, ecommerce optimization meant making stores look beautiful to humans and readable to Google. Those two goals were compatible. Beautiful design helped conversion. Clean HTML helped rankings. Both pointed in the same direction.</p>
+    <p class="body-text">AI shopping agents changed the equation. They cannot see design. They cannot execute JavaScript. They do not experience brand storytelling. They extract structured signals from HTML, evaluate trust based on machine-readable data, and score recommendation confidence based on what they can actually parse. The gap between human experience and AI experience is where most AI visibility problems live.</p>
+    <div class="callout"><strong>The most common gap across 6,789 scanned stores:</strong> Prices rendered via JavaScript. More than 60% of stores have prices that AI agents cannot reliably read. Without price data, AI cannot confidently recommend a store for any price-sensitive query, which covers most buyer prompts.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">Signal by signal</div>
+    <h2>What humans see versus <em>what AI reads</em></h2>
+
+    <div class="gap-list">
+      <div class="gap-header">
+        <div class="gap-header-cell">&#10003; Human experience</div>
+        <div class="gap-header-cell">&#10007; AI agent extraction</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-cell">Beautiful product photography with lifestyle context</div>
+        <div class="gap-cell"><span class="ai-missing" style="font-family:monospace;">alt="product-hero-v2.jpg"</span>&nbsp; No semantic signal</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-cell">Clear price displayed prominently: $48.00</div>
+        <div class="gap-cell"><span class="ai-warning" style="font-family:monospace;">price: JS_RENDERED</span>&nbsp; Cannot read</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-cell">4.9 stars from 2,847 reviews (highly visible)</div>
+        <div class="gap-cell"><span class="ai-missing" style="font-family:monospace;">reviews: IFRAME_ONLY</span>&nbsp; Not extractable</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-cell">Return policy shown in a slide-out panel</div>
+        <div class="gap-cell"><span class="ai-missing" style="font-family:monospace;">return_policy: JS_MODAL</span>&nbsp; Invisible to AI</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-cell">Strong brand identity and visual trust signals</div>
+        <div class="gap-cell"><span class="ai-missing" style="font-family:monospace;">Organization: NOT FOUND</span>&nbsp; No schema</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-cell">Dermatologist tested badge with visual icon</div>
+        <div class="gap-cell"><span class="ai-warning" style="font-family:monospace;">trust_badge: IMAGE_ONLY</span>&nbsp; No text anchor</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-cell">Ships in 24 hours noted below Add to Cart</div>
+        <div class="gap-cell"><span class="ai-missing" style="font-family:monospace;">shipping_info: NOT_IN_HTML</span>&nbsp; Rendered via JS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">The fix</div>
+    <h2>Closing the gap: <em>five highest-impact fixes</em></h2>
+    <p class="body-text">The same store from the example above can move from AI Commerce Score 31 to above 65 with five structural fixes. None of them require changing how the store looks to humans.</p>
+
+    <div class="impact-list" id="impactList">
+      <div class="impact-row">
+        <div class="impact-icon">&#128200;</div>
+        <div class="impact-label">Add Product + Organization JSON-LD schema markup</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:0%;background:#1D9E75;" data-target="90"></div></div>
+        <div class="impact-points" style="color:#1D9E75;">+18 pts</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-icon">&#128178;</div>
+        <div class="impact-label">Move price to server-rendered HTML with schema:price</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:0%;background:#EF9F27;" data-target="72"></div></div>
+        <div class="impact-points" style="color:#EF9F27;">+8 pts</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-icon">&#128204;</div>
+        <div class="impact-label">Add return policy text in crawlable HTML on product page</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:0%;background:#EF9F27;" data-target="65"></div></div>
+        <div class="impact-points" style="color:#EF9F27;">+7 pts</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-icon">&#11088;</div>
+        <div class="impact-label">Enable AggregateRating schema from review app (Yotpo, Judge.me)</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:0%;background:#EF9F27;" data-target="58"></div></div>
+        <div class="impact-points" style="color:#EF9F27;">+6 pts</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-icon">&#128247;</div>
+        <div class="impact-label">Add descriptive alt text to all product images</div>
+        <div class="impact-bar-wrap"><div class="impact-bar" style="width:0%;background:#EF9F27;" data-target="45"></div></div>
+        <div class="impact-points" style="color:#EF9F27;">+5 pts</div>
+      </div>
+    </div>
+
+    <p class="body-text">These five changes do not touch the visual design of the store. The human experience stays identical. But the AI view transforms from a wall of red warnings into a store AI can confidently read, trust, and recommend.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">Score zones</div>
+    <h2>Where does your store sit on the <em>AI Commerce Scale?</em></h2>
+
+    <div class="score-zones">
+      <div class="sz-card">
+        <div class="sz-range" style="color:#1D9E75;">85 to 100</div>
+        <div class="sz-name" style="color:#1D9E75;">Highly Recommendable™</div>
+        <div class="sz-desc">AI agents can clearly understand, trust, and recommend this store.</div>
+      </div>
+      <div class="sz-card">
+        <div class="sz-range" style="color:#EF9F27;">70 to 84</div>
+        <div class="sz-name" style="color:#EF9F27;">Moderately Recommendable™</div>
+        <div class="sz-desc">AI recommends this store but stronger signals would win more traffic.</div>
+      </div>
+      <div class="sz-card">
+        <div class="sz-range" style="color:#E8A030;">50 to 69</div>
+        <div class="sz-name" style="color:#E8A030;">Low Rec. Confidence™</div>
+        <div class="sz-desc">AI can see the store but misses key signals to recommend confidently.</div>
+      </div>
+      <div class="sz-card">
+        <div class="sz-range" style="color:#E24B4A;">0 to 49</div>
+        <div class="sz-name" style="color:#E24B4A;">AI Visibility Risk™</div>
+        <div class="sz-desc">Critical gaps prevent AI agents from recommending this store at all.</div>
+      </div>
+    </div>
+
+    <p class="body-text">Across 6,789 scanned stores, <strong>52% score below 50</strong> and are in AI Visibility Risk. Zero stores score above 85. The average is 45 out of 100. The store in the example above scored 31. Most stores look like this to AI.</p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>Common questions about <em>AI view vs human view</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What do AI shopping agents actually see on my store?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">AI shopping agents read structured signals, not design. They see JSON-LD schema markup, server-rendered HTML text including prices and policies, heading hierarchy, and image alt text. They cannot see visual design, photography, brand aesthetics, or any content rendered via JavaScript.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Why does AI see my store differently from humans?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">AI shopping agents crawl your store the same way search engine bots do. They fetch HTML source and extract structured signals. They do not render JavaScript, cannot see images, and do not experience design or brand storytelling. The gap between human experience and AI experience is where most stores lose AI visibility.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How do I improve what AI sees on my store?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">The highest-impact changes are: add JSON-LD Product and Organization schema markup, ensure prices are in server-rendered HTML not JavaScript, add return policy text in crawlable HTML, write specific niche positioning in your H1 and meta, and add descriptive alt text to all product images. None of these changes affect what humans see.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Can AI see my product reviews?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Only if they are rendered in server-side HTML with AggregateRating schema markup. Most review apps render reviews via JavaScript or iframes, which AI agents cannot read. To make reviews visible to AI, enable AggregateRating schema output in your review app settings. Yotpo, Judge.me, and Loox all support this but it is not always enabled by default.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Does improving AI view hurt human experience?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">No. Improving what AI sees is purely additive. Adding schema markup, moving prices to HTML, adding return policy text in crawlable form, and writing descriptive alt text do not change the visual design, user interface, or customer experience of your store in any way. You improve AI visibility without changing anything humans see or experience.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>See your store through <em>AI eyes</em> right now</h2>
+    <p>Get your free AI Commerce Score in 30 seconds. See exactly what AI shopping agents can and cannot read on your store, with the specific fixes that will close the gap.</p>
+    <div class="cta-row">
+      <a href="/" class="btn-primary">Get My Free AI Commerce Score</a>
+      <a href="/learn/what-ai-agents-read" class="btn-secondary">Read the full guide</a>
+    </div>
+    <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Keep exploring</div>
+    <div class="internal-links-grid">
+      <a href="/learn/what-ai-agents-read" class="internal-link-item"><span class="internal-link-icon">&#128214;</span><div class="internal-link-text"><strong>What AI Agents Actually Read</strong><span>The complete guide to AI signal extraction</span></div></a>
+      <a href="/machine-readable-commerce" class="internal-link-item"><span class="internal-link-icon">&#9881;&#65039;</span><div class="internal-link-text"><strong>Machine-Readable Commerce</strong><span>How to build a store AI can recommend</span></div></a>
+      <a href="/learn/ai-retrieval-signals" class="internal-link-item"><span class="internal-link-icon">&#128202;</span><div class="internal-link-text"><strong>AI Retrieval Signals</strong><span>All 8 scoring factors explained</span></div></a>
+      <a href="/ai-commerce-intelligence" class="internal-link-item"><span class="internal-link-icon">&#129504;</span><div class="internal-link-text"><strong>AI Commerce Intelligence</strong><span>The full category definition</span></div></a>
+      <a href="/vocabulary" class="internal-link-item"><span class="internal-link-icon">&#128218;</span><div class="internal-link-text"><strong>Vocabulary</strong><span>Every AI Commerce term defined</span></div></a>
+      <a href="/stores" class="internal-link-item"><span class="internal-link-icon">&#127978;</span><div class="internal-link-text"><strong>Store Database</strong><span>Browse 6,789 real AI Commerce Scores</span></div></a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/">Home</a> &nbsp;&middot;&nbsp;
+      <a href="/human-view-vs-ai-view">Human View vs AI View</a> &nbsp;&middot;&nbsp;
+      <a href="/learn">Learn</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; AI Commerce Intelligence Platform &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">AI Commerce Intelligence Platform</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.querySelectorAll('[data-target]').forEach(bar => {
+      setTimeout(() => { bar.style.width = bar.dataset.target + '%'; }, 100);
+    });
+    obs.unobserve(e.target);
+  });
+}, { threshold: 0.2 });
+
+const il = document.getElementById('impactList');
+if (il) obs.observe(il);
+</script>
+</body>
+</html>
