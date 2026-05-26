@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Readability: How Well AI Can Extract Content From Your Store</title>
+<meta name="description" content="AI Readability measures how well AI shopping agents can extract and parse content from your ecommerce store. The second-highest weighted factor in the AI Commerce Score. Here is what it tests and how to improve it.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/ai-readability">
+<meta property="og:title" content="AI Readability: Can AI Actually Extract Your Store Content?">
+<meta property="og:description" content="AI Readability is the 0 to 20 point factor measuring how cleanly AI agents can extract and parse your store content.">
+<meta property="og:url" content="https://atomfoundry.dev/ai-readability">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AI Readability: How Well AI Can Extract Content From Your Store","description":"AI Readability measures how well AI shopping agents can extract and parse content from your ecommerce store. It is the second-highest weighted factor in the AI Commerce Score.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/ai-readability"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is AI Readability?","acceptedAnswer":{"@type":"Answer","text":"AI Readability is the factor measuring how well AI shopping agents can extract and parse content from an ecommerce store. It is scored from 0 to 20 points in the AI Commerce Score and covers heading hierarchy, FAQ structure, server-side rendering, semantic formatting, and paragraph clarity."}},{"@type":"Question","name":"How do I improve my AI Readability score?","acceptedAnswer":{"@type":"Answer","text":"The highest-impact improvements are: ensure all critical content is in server-rendered HTML not JavaScript, use clear H1/H2/H3 heading hierarchy, add FAQ sections with direct answers in HTML, write concise paragraphs with one idea each, and avoid hiding content in tabs, accordions, or modals that only open via JavaScript."}},{"@type":"Question","name":"Why does JavaScript hurt AI Readability?","acceptedAnswer":{"@type":"Answer","text":"Most AI crawlers fetch the initial HTML of a page without executing JavaScript. Content that only appears after JavaScript runs is not visible to AI agents. This affects prices, reviews, policies, product descriptions loaded dynamically, and any content inside JavaScript-rendered components."}}]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.nav { padding: 20px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 2px; }
+.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: var(--orange); }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+.nav-links a { font-size: 12px; color: #999; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; } }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.hero { padding: 72px 0 48px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 32px; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.section { padding: 56px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 22px; }
+.body-text strong { color: var(--text); }
+.callout { background: var(--bg2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+
+/* SCORE BADGE */
+.score-badge { display: inline-flex; align-items: center; gap: 14px; background: var(--bg2); border: 1px solid rgba(249,115,22,0.3); border-radius: 14px; padding: 16px 22px; margin: 20px 0 28px; }
+.score-badge-num { font-size: 32px; font-weight: 800; color: var(--orange); line-height: 1; }
+.score-badge-label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.score-badge-label strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+/* HTML SOURCE VISUAL */
+.source-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0; }
+.source-panel { border-radius: 14px; overflow: hidden; }
+.source-panel.bad { border: 1px solid rgba(226,75,74,0.25); }
+.source-panel.good { border: 1px solid rgba(29,158,117,0.25); }
+.source-header { padding: 10px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.source-panel.bad .source-header { background: rgba(226,75,74,0.08); color: #E24B4A; }
+.source-panel.good .source-header { background: rgba(29,158,117,0.06); color: #1D9E75; }
+.source-code { background: #070a07; padding: 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; line-height: 1.7; overflow-x: auto; }
+.sc-tag { color: #5a9a5a; }
+.sc-dim { color: #2a4a2a; }
+.sc-val { color: #c8eac8; }
+.sc-bad { color: #f87171; }
+.sc-good { color: #4ade80; }
+.sc-comment { color: #1a3a1a; }
+.source-verdict { padding: 10px 14px; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
+.source-panel.bad .source-verdict { background: rgba(226,75,74,0.04); color: #f87171; }
+.source-panel.good .source-verdict { background: rgba(29,158,117,0.04); color: #4ade80; }
+
+/* READABILITY FACTORS */
+.factor-cards { display: flex; flex-direction: column; gap: 10px; margin: 24px 0; }
+.fc { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; transition: border-color 0.2s; }
+.fc:hover { border-color: rgba(249,115,22,0.2); }
+.fc-icon { font-size: 20px; }
+.fc-body {}
+.fc-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.fc-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.fc-pts { font-size: 12px; font-weight: 700; color: var(--orange); white-space: nowrap; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(249,115,22,0.04); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.faq-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.faq-item.open .faq-answer { display: block; }
+
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 56px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+@media (max-width: 600px) {
+  .source-compare { grid-template-columns: 1fr; }
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+  </div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/geo">GEO</a>
+    <a href="/aco">ACO</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/vocabulary">Vocabulary</a> &rsaquo; <span>AI Readability</span></div>
+    <div class="hero-kicker">Score Factor &middot; 0 to 20 Points</div>
+    <h1>AI Readability<span style="color:var(--orange);">&trade;</span></h1>
+    <p class="hero-sub">AI Readability measures how cleanly AI shopping agents can extract and parse content from your store. It is the highest-weighted factor in the AI Commerce Score. Most stores fail it silently.</p>
+    <div class="hero-cta-row">
+      <a href="/" class="btn-primary">Check My AI Readability Score</a>
+      <a href="/ai-commerce-score" class="btn-secondary">Full AI Commerce Score</a>
+    </div>
+  </div>
+
+  <div class="section" style="border-top:none;padding-top:0;">
+    <div class="section-kicker">What it measures</div>
+    <h2>The <em>highest-weighted</em> factor in the score</h2>
+
+    <div class="score-badge">
+      <div class="score-badge-num">0 to 20</div>
+      <div class="score-badge-label">
+        <strong>AI Readability&trade;</strong>
+        Highest point value of all 8 factors. Average across 6,789 scanned stores: 9 out of 20. 44% of stores score below 8.
+      </div>
+    </div>
+
+    <p class="body-text">AI Readability is the starting point for everything else. If AI cannot extract your content cleanly, your schema markup, pricing, and trust signals cannot do their job. A store with perfect schema markup but JavaScript-rendered content scores low on AI Readability because the extraction layer fails before the signal evaluation begins.</p>
+
+    <!-- HTML SOURCE VISUAL -->
+    <div class="source-compare">
+      <div class="source-panel bad">
+        <div class="source-header">&#10007; Low AI Readability</div>
+        <div class="source-code">
+<span class="sc-dim">&lt;!-- Price loaded via React --&gt;</span><br>
+<span class="sc-tag">&lt;div</span> <span class="sc-dim">id="price-root"</span><span class="sc-tag">&gt;&lt;/div&gt;</span><br>
+<span class="sc-dim">&lt;!-- FAQ in accordion --&gt;</span><br>
+<span class="sc-tag">&lt;div</span> <span class="sc-dim">class="faq-accordion"</span><span class="sc-tag">&gt;</span><br>
+&nbsp;&nbsp;<span class="sc-bad">[JS rendered content]</span><br>
+<span class="sc-tag">&lt;/div&gt;</span><br>
+<span class="sc-dim">&lt;!-- H1 is missing --&gt;</span><br>
+<span class="sc-tag">&lt;div</span> <span class="sc-dim">class="hero-title"</span><span class="sc-tag">&gt;</span><br>
+&nbsp;&nbsp;<span class="sc-bad">Premium Skincare</span><br>
+<span class="sc-tag">&lt;/div&gt;</span>
+        </div>
+        <div class="source-verdict">AI sees: empty price, hidden FAQ, no H1. Readability: 3/20</div>
+      </div>
+      <div class="source-panel good">
+        <div class="source-header">&#10003; High AI Readability</div>
+        <div class="source-code">
+<span class="sc-dim">&lt;!-- Price in HTML --&gt;</span><br>
+<span class="sc-tag">&lt;span</span> <span class="sc-dim">itemprop="price"</span><span class="sc-tag">&gt;</span><span class="sc-good">48.00</span><span class="sc-tag">&lt;/span&gt;</span><br>
+<span class="sc-dim">&lt;!-- FAQ in HTML --&gt;</span><br>
+<span class="sc-tag">&lt;details&gt;&lt;summary&gt;</span><span class="sc-good">Is this fragrance-free?</span><span class="sc-tag">&lt;/summary&gt;</span><br>
+<span class="sc-tag">&lt;p&gt;</span><span class="sc-good">Yes, 100% fragrance-free.</span><span class="sc-tag">&lt;/p&gt;&lt;/details&gt;</span><br>
+<span class="sc-dim">&lt;!-- H1 semantic --&gt;</span><br>
+<span class="sc-tag">&lt;h1&gt;</span><span class="sc-good">Organic Skincare for Sensitive Skin</span><span class="sc-tag">&lt;/h1&gt;</span>
+        </div>
+        <div class="source-verdict">AI reads: price $48, FAQ answers, semantic H1. Readability: 17/20</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT IT COVERS -->
+  <div class="section">
+    <div class="section-kicker">What AI Readability covers</div>
+    <h2>The five components <em>AI Readability measures</em></h2>
+
+    <div class="factor-cards">
+      <div class="fc">
+        <div class="fc-icon">&#128203;</div>
+        <div class="fc-body">
+          <div class="fc-title">Heading hierarchy</div>
+          <div class="fc-desc">Clear H1 for the page topic, H2 for major sections, H3 for supporting detail. AI uses heading structure to build a map of page content. Missing or broken hierarchy makes extraction unreliable.</div>
+        </div>
+        <div class="fc-pts">Up to 4 pts</div>
+      </div>
+      <div class="fc">
+        <div class="fc-icon">&#10067;</div>
+        <div class="fc-body">
+          <div class="fc-title">FAQ structure in HTML</div>
+          <div class="fc-desc">FAQ sections with questions and answers in server-rendered HTML. AI extracts FAQ content to answer buyer queries directly. JavaScript-rendered accordions are invisible. Native HTML details/summary or static divs work best.</div>
+        </div>
+        <div class="fc-pts">Up to 4 pts</div>
+      </div>
+      <div class="fc">
+        <div class="fc-icon">&#128187;</div>
+        <div class="fc-body">
+          <div class="fc-title">Server-side rendering quality</div>
+          <div class="fc-desc">How much critical content is in the initial HTML response versus loaded via JavaScript. Prices, policies, product descriptions, and trust signals all need to be in the HTML source. The more that is JavaScript-dependent, the lower this component scores.</div>
+        </div>
+        <div class="fc-pts">Up to 6 pts</div>
+      </div>
+      <div class="fc">
+        <div class="fc-icon">&#128214;</div>
+        <div class="fc-body">
+          <div class="fc-title">Paragraph clarity and density</div>
+          <div class="fc-desc">Short, focused paragraphs that contain one clear idea each are easier for AI to extract and attribute to a semantic concept. Wall-of-text descriptions and long paragraphs reduce extraction reliability.</div>
+        </div>
+        <div class="fc-pts">Up to 3 pts</div>
+      </div>
+      <div class="fc">
+        <div class="fc-icon">&#127968;</div>
+        <div class="fc-body">
+          <div class="fc-title">Semantic HTML element usage</div>
+          <div class="fc-desc">Using the right HTML elements for the right content. Article, section, main, nav, aside all give AI structural context. Divs used for everything provide no semantic signal. Proper HTML5 semantics improve extraction accuracy.</div>
+        </div>
+        <div class="fc-pts">Up to 3 pts</div>
+      </div>
+    </div>
+
+    <div class="callout"><strong>The fastest win:</strong> Server-side rendering quality is worth up to 6 points and fails in more stores than any other AI Readability component. Check your page source with Cmd+U. If your price, main product description, or return policy is not in the raw HTML, that is your first fix.</div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>AI Readability: <em>common questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is AI Readability?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">AI Readability is the factor in the AI Commerce Score measuring how well AI shopping agents can extract and parse content from an ecommerce store. It is scored from 0 to 20 points and covers heading hierarchy, FAQ structure in HTML, server-side rendering quality, paragraph clarity, and semantic HTML element usage.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Why does JavaScript hurt AI Readability?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Most AI crawlers fetch the initial HTML of a page without executing JavaScript. Content that only appears after JavaScript runs is not visible to AI agents. This affects prices, reviews, policies, product descriptions loaded dynamically, and any content inside JavaScript-rendered components like React or Vue.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How do I check my store's AI Readability?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Open your store in Chrome and press Cmd+U (or Ctrl+U on Windows) to view page source. Search for your product price, your return policy text, and your main product description. If they are not in the raw HTML source, they are likely JavaScript-rendered and invisible to AI. Run a free scan at atomfoundry.dev to get a precise AI Readability score from 0 to 20.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Does AI Readability affect SEO?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Some AI Readability factors overlap with SEO. Server-side rendering and heading hierarchy both help Google as well as AI agents. FAQ schema markup benefits both. But the AI Readability scoring is specifically calibrated for AI shopping agent extraction, not Google crawling, so improvements are primarily GEO-focused.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>Get your <em>AI Readability score</em> free</h2>
+    <p>See your exact AI Readability score from 0 to 20 and find out which components you are failing. Free scan in 30 seconds.</p>
+    <div class="cta-row">
+      <a href="/" class="btn-primary">Check My AI Readability Score</a>
+      <a href="/human-view-vs-ai-view" class="btn-secondary">Human View vs AI View</a>
+    </div>
+    <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related factors</div>
+    <div class="internal-links-grid">
+      <a href="/ai-interpretability" class="internal-link-item"><span class="internal-link-icon">&#129504;</span><div class="internal-link-text"><strong>AI Interpretability</strong><span>Can AI understand what you sell?</span></div></a>
+      <a href="/recommendation-confidence" class="internal-link-item"><span class="internal-link-icon">&#11088;</span><div class="internal-link-text"><strong>Recommendation Confidence</strong><span>How strongly AI endorses you</span></div></a>
+      <a href="/ai-commerce-score" class="internal-link-item"><span class="internal-link-icon">&#128200;</span><div class="internal-link-text"><strong>AI Commerce Score</strong><span>All 8 factors explained</span></div></a>
+      <a href="/machine-readable-commerce" class="internal-link-item"><span class="internal-link-icon">&#9881;&#65039;</span><div class="internal-link-text"><strong>Machine-Readable Commerce</strong><span>Full architectural approach</span></div></a>
+      <a href="/human-view-vs-ai-view" class="internal-link-item"><span class="internal-link-icon">&#128065;&#65039;</span><div class="internal-link-text"><strong>Human View vs AI View</strong><span>See readability gaps visually</span></div></a>
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#128208;</span><div class="internal-link-text"><strong>Methodology</strong><span>Full scoring documentation</span></div></a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/">Home</a> &nbsp;&middot;&nbsp; <a href="/ai-readability">AI Readability</a> &nbsp;&middot;&nbsp; <a href="/ai-commerce-score">AI Commerce Score</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; AI Commerce Intelligence Platform &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">AI Commerce Intelligence Platform</div>
+    </div>
+  </div>
+</div>
+<script>function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }</script>
+</body>
+</html>
