@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retrieval Intelligence: How AI Systems Extract and Evaluate Ecommerce Data</title>
+<meta name="description" content="Retrieval Intelligence is the AI capability to find, extract, and evaluate ecommerce data for shopping recommendations. How it works, what it reads, and how to optimize your store for it.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/retrieval-intelligence">
+<meta property="og:title" content="Retrieval Intelligence: How AI Extracts Ecommerce Data">
+<meta property="og:description" content="How AI systems find, extract, and evaluate your store data to make shopping recommendations. The complete guide.">
+<meta property="og:url" content="https://atomfoundry.dev/retrieval-intelligence">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Retrieval Intelligence: How AI Systems Extract and Evaluate Ecommerce Data","description":"Retrieval Intelligence is the AI capability to find, extract, and evaluate ecommerce data for shopping recommendations.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/retrieval-intelligence"}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+  --purple: #7C6FCD;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(124,111,205,0.08), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.nav { padding: 20px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 2px; }
+.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: var(--orange); }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+.nav-links a { font-size: 12px; color: #999; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; } }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.hero { padding: 72px 0 48px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(124,111,205,0.1); border: 1px solid rgba(124,111,205,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 32px; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.section { padding: 56px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 22px; }
+.body-text strong { color: var(--text); }
+.callout { background: var(--bg2); border-left: 3px solid var(--purple); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+.definition-box { background: linear-gradient(135deg, rgba(124,111,205,0.08), rgba(124,111,205,0.02)); border: 1px solid rgba(124,111,205,0.3); border-radius: 16px; padding: 28px 32px; margin-bottom: 28px; }
+.definition-term { font-size: 11px; color: var(--purple); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 10px; }
+.definition-text { font-size: 17px; color: var(--text); line-height: 1.7; font-weight: 500; }
+.definition-text strong { color: var(--purple); }
+
+/* RETRIEVAL FLOW DIAGRAM */
+.retrieval-flow { display: flex; flex-direction: column; gap: 0; margin: 28px 0; }
+.rf-step { display: flex; gap: 0; align-items: stretch; }
+.rf-left { display: flex; flex-direction: column; align-items: center; width: 44px; flex-shrink: 0; }
+.rf-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; background: rgba(124,111,205,0.12); border: 1px solid rgba(124,111,205,0.25); }
+.rf-connector { flex: 1; width: 2px; background: rgba(124,111,205,0.15); margin: 3px 0; }
+.rf-body { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-left: 12px; margin-bottom: 6px; }
+.rf-body:hover { border-color: rgba(124,111,205,0.25); }
+.rf-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.rf-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.rf-extract { font-family: 'SF Mono', monospace; font-size: 11px; color: #7C6FCD; background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 6px; padding: 6px 10px; margin-top: 8px; }
+
+/* THREE RETRIEVAL TYPES */
+.retrieval-types { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 24px 0; }
+.rt-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.rt-icon { font-size: 22px; margin-bottom: 8px; }
+.rt-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.rt-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.rt-tag { font-size: 10px; font-weight: 700; margin-top: 8px; padding: 2px 8px; border-radius: 4px; display: inline-block; color: var(--purple); background: rgba(124,111,205,0.1); border: 1px solid rgba(124,111,205,0.2); }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(124,111,205,0.04); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.faq-chevron { color: var(--purple); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.faq-item.open .faq-answer { display: block; }
+
+/* CTA + INTERNAL + FOOTER */
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 56px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+@media (max-width: 600px) {
+  .retrieval-types { grid-template-columns: 1fr; }
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+  </div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/geo">GEO</a>
+    <a href="/aco">ACO</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <span>Retrieval Intelligence</span></div>
+    <div class="hero-kicker">Core Concept &middot; AI Commerce Intelligence</div>
+    <h1>Retrieval<br><em>Intelligence</em></h1>
+    <p class="hero-sub">How AI shopping agents find, extract, and evaluate ecommerce data when building recommendations. Understanding this process is the foundation of optimizing for AI visibility.</p>
+    <div class="hero-cta-row">
+      <a href="/" class="btn-primary">Check My Store Free</a>
+      <a href="/learn/what-ai-agents-read" class="btn-secondary">What AI Agents Read</a>
+    </div>
+  </div>
+
+  <!-- DEFINITION -->
+  <div class="section" style="border-top:none;padding-top:0;">
+    <div class="section-kicker">Definition</div>
+    <h2>What is <em>Retrieval Intelligence?</em></h2>
+    <div class="definition-box">
+      <div class="definition-term">Retrieval Intelligence</div>
+      <div class="definition-text"><strong>Retrieval Intelligence</strong> is the AI system capability to find, extract, evaluate, and synthesize ecommerce data from store pages, structured data files, and external sources to build accurate and confident product recommendations.</div>
+    </div>
+    <p class="body-text">Retrieval Intelligence is what happens between a buyer asking a question and an AI giving a recommendation. The AI does not randomly pick stores. It runs a structured extraction and evaluation process, reading every available signal to determine which store best answers the buyer query with the highest confidence.</p>
+    <p class="body-text">Stores with high AI Commerce Scores have structured their data so Retrieval Intelligence can extract it cleanly. Stores with low scores have data that Retrieval Intelligence either cannot find, cannot parse, or cannot verify.</p>
+  </div>
+
+  <!-- RETRIEVAL FLOW VISUAL -->
+  <div class="section">
+    <div class="section-kicker">How it works</div>
+    <h2>The Retrieval Intelligence <em>pipeline</em></h2>
+
+    <div class="retrieval-flow">
+      <div class="rf-step">
+        <div class="rf-left">
+          <div class="rf-icon">&#128269;</div>
+          <div class="rf-connector"></div>
+        </div>
+        <div class="rf-body">
+          <div class="rf-title">Step 1: Discovery</div>
+          <div class="rf-desc">AI agent identifies candidate stores for the buyer query. Sources include training data (ChatGPT), real-time web crawl (Perplexity), product feeds, llms.txt files, and indexed store pages. Stores not in any of these sources cannot be retrieved at all.</div>
+          <div class="rf-extract">discovery_sources: training_data | web_crawl | product_feeds | llms_txt</div>
+        </div>
+      </div>
+      <div class="rf-step">
+        <div class="rf-left">
+          <div class="rf-icon">&#128202;</div>
+          <div class="rf-connector"></div>
+        </div>
+        <div class="rf-body">
+          <div class="rf-title">Step 2: Extraction</div>
+          <div class="rf-desc">AI agent extracts structured signals from each candidate store. JSON-LD schema, server-rendered prices, heading content, alt text, and policy text. Data locked behind JavaScript or in iframes cannot be extracted and registers as missing.</div>
+          <div class="rf-extract">extracted: schema=MISSING | price=JS_RENDERED | reviews=IFRAME</div>
+        </div>
+      </div>
+      <div class="rf-step">
+        <div class="rf-left">
+          <div class="rf-icon">&#9989;</div>
+          <div class="rf-connector"></div>
+        </div>
+        <div class="rf-body">
+          <div class="rf-title">Step 3: Verification</div>
+          <div class="rf-desc">AI cross-references extracted data against external sources. Reddit mentions, press coverage, review platforms. A store that says it has great products but has zero external mentions gets low verification confidence. External validation is not optional for AI trust.</div>
+          <div class="rf-extract">verification: reddit=low | press=none | review_platforms=not_found</div>
+        </div>
+      </div>
+      <div class="rf-step">
+        <div class="rf-left">
+          <div class="rf-icon">&#127919;</div>
+          <div class="rf-connector"></div>
+        </div>
+        <div class="rf-body">
+          <div class="rf-title">Step 4: Intent Matching</div>
+          <div class="rf-desc">AI scores how well each candidate store matches the specific buyer query intent. Stores with specific, buyer-intent-aligned positioning score high. Stores with generic copy score low regardless of product quality.</div>
+          <div class="rf-extract">intent_match: query="eco skincare sensitive" | store_positioning="ambiguous"</div>
+        </div>
+      </div>
+      <div class="rf-step">
+        <div class="rf-left">
+          <div class="rf-icon">&#11088;</div>
+        </div>
+        <div class="rf-body">
+          <div class="rf-title">Step 5: Recommendation Scoring</div>
+          <div class="rf-desc">Final composite score determines recommendation inclusion, position, and confidence language. Stores that score above the confidence threshold get recommended. Stores below it get excluded or mentioned weakly. Most stores fall below the threshold.</div>
+          <div class="rf-extract">recommendation_score: 31/100 | threshold: 50 | output: EXCLUDED</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THREE MODES -->
+  <div class="section">
+    <div class="section-kicker">How different AI systems retrieve</div>
+    <h2>Three different <em>retrieval modes</em></h2>
+
+    <div class="retrieval-types">
+      <div class="rt-card">
+        <div class="rt-icon">&#129504;</div>
+        <div class="rt-name">Training-Based Retrieval</div>
+        <div class="rt-desc">ChatGPT retrieves from training data built months in advance. Brand entity, press mentions, Reddit discussion, and schema markup from past crawls all feed this. Changes are slow to reflect.</div>
+        <div class="rt-tag">ChatGPT, Claude</div>
+      </div>
+      <div class="rt-card">
+        <div class="rt-icon">&#128246;</div>
+        <div class="rt-name">Real-Time Retrieval</div>
+        <div class="rt-desc">Perplexity crawls the web in real time at query submission. Current page content, live external citations, and fresh schema data all matter. Changes reflect within days.</div>
+        <div class="rt-tag">Perplexity, Bing AI</div>
+      </div>
+      <div class="rt-card">
+        <div class="rt-icon">&#127381;</div>
+        <div class="rt-name">Hybrid Retrieval</div>
+        <div class="rt-desc">Google AI Mode blends training data with live search index signals. Schema markup, organic authority, and structured commerce data all contribute. Both SEO and GEO signals matter.</div>
+        <div class="rt-tag">Google AI Mode</div>
+      </div>
+    </div>
+    <div class="callout"><strong>Why this matters for your strategy:</strong> Improving Perplexity visibility is faster because it reads real-time data. Improving ChatGPT visibility takes longer because it requires building brand entity in training data. Knowing which system your buyers use most tells you where to focus first.</div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>Retrieval Intelligence: <em>common questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is Retrieval Intelligence in AI commerce?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Retrieval Intelligence is the AI system capability to find, extract, evaluate, and synthesize ecommerce data from store pages, structured data files, and external sources to build shopping recommendations. It is the underlying process that determines whether your store gets discovered, read, verified, and recommended when buyers ask AI shopping agents for product recommendations.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How do I optimize my store for AI Retrieval Intelligence?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Optimizing for Retrieval Intelligence means making each step of the pipeline easier. For Discovery: ensure your store is indexed and has an llms.txt file. For Extraction: add JSON-LD schema and ensure prices and policies are in server-rendered HTML. For Verification: build Reddit presence and press coverage. For Intent Matching: write specific buyer-intent-aligned positioning. For Recommendation Scoring: fix the factors with the highest failure rates first.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What data can AI retrieval systems actually read?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">AI retrieval systems read JSON-LD schema markup, server-rendered HTML text including prices and policies, heading hierarchy, image alt text, and files like llms.txt. They cannot reliably read JavaScript-rendered content, content in iframes, PDFs, or content behind login walls. Anything AI cannot read registers as missing data, which lowers recommendation confidence.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>See how your store <em>scores on Retrieval Intelligence</em></h2>
+    <p>The free AI Commerce Score scan evaluates all 8 extraction and retrieval factors for your specific store.</p>
+    <div class="cta-row">
+      <a href="/" class="btn-primary">Check My Store Free</a>
+      <a href="/learn/what-ai-agents-read" class="btn-secondary">What AI Agents Read</a>
+    </div>
+    <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related</div>
+    <div class="internal-links-grid">
+      <a href="/learn/what-ai-agents-read" class="internal-link-item"><span class="internal-link-icon">&#127891;</span><div class="internal-link-text"><strong>What AI Agents Actually Read</strong><span>The complete extraction guide</span></div></a>
+      <a href="/human-view-vs-ai-view" class="internal-link-item"><span class="internal-link-icon">&#128065;&#65039;</span><div class="internal-link-text"><strong>Human View vs AI View</strong><span>See the retrieval gap visually</span></div></a>
+      <a href="/machine-readable-commerce" class="internal-link-item"><span class="internal-link-icon">&#9881;&#65039;</span><div class="internal-link-text"><strong>Machine-Readable Commerce</strong><span>How to build for AI retrieval</span></div></a>
+      <a href="/ai-commerce-score" class="internal-link-item"><span class="internal-link-icon">&#128200;</span><div class="internal-link-text"><strong>AI Commerce Score</strong><span>How retrieval quality is measured</span></div></a>
+      <a href="/vocabulary" class="internal-link-item"><span class="internal-link-icon">&#128218;</span><div class="internal-link-text"><strong>Vocabulary</strong><span>Every AI Commerce term defined</span></div></a>
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#128208;</span><div class="internal-link-text"><strong>Methodology</strong><span>The full 8-factor scoring model</span></div></a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/">Home</a> &nbsp;&middot;&nbsp; <a href="/retrieval-intelligence">Retrieval Intelligence</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/stores">Stores</a> &nbsp;&middot;&nbsp; <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; AI Commerce Intelligence Platform &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">AI Commerce Intelligence Platform</div>
+    </div>
+  </div>
+</div>
+<script>
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+</script>
+</body>
+</html>
