@@ -168,9 +168,9 @@ body::before {
   </div>
 
   <div class="stats-grid">
-    <div class="stat-cell"><div class="stat-num" id="statStores">1,783</div><div class="stat-label">Stores analyzed</div></div>
-    <div class="stat-cell"><div class="stat-num">45/100</div><div class="stat-label">Avg AI score</div></div>
-    <div class="stat-cell"><div class="stat-num">52%</div><div class="stat-label">AI Invisible Risk</div></div>
+    <div class="stat-cell"><div class="stat-num" id="statStores">&mdash;</div><div class="stat-label">Stores analyzed</div></div>
+    <div class="stat-cell"><div class="stat-num" id="statAvg">&mdash;</div><div class="stat-label">Avg AI score</div></div>
+    <div class="stat-cell"><div class="stat-num" id="statRisk">52%</div><div class="stat-label">AI Invisible Risk</div></div>
     <div class="stat-cell"><div class="stat-num">0%</div><div class="stat-label">Highly Recommendable</div></div>
   </div>
 
@@ -241,8 +241,8 @@ body::before {
       </div>
       <div class="featured-body">
         <div class="featured-numbers">
-          <div class="fn-cell"><div class="fn-num orange">500</div><div class="fn-label">Stores analyzed</div></div>
-          <div class="fn-cell"><div class="fn-num red">45/100</div><div class="fn-label">Avg AI score</div></div>
+          <div class="fn-cell"><div class="fn-num orange" id="fnStores">&mdash;</div><div class="fn-label">Stores analyzed</div></div>
+          <div class="fn-cell"><div class="fn-num red" id="fnAvg">&mdash;</div><div class="fn-label">Avg AI score</div></div>
           <div class="fn-cell"><div class="fn-num red">52%</div><div class="fn-label">AI Invisible Risk</div></div>
           <div class="fn-cell"><div class="fn-num gray">0%</div><div class="fn-label">Highly Recommendable</div></div>
         </div>
@@ -387,7 +387,25 @@ fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 
   .then(d => {
     const rows = Array.isArray(d) ? d : (d.stores || []);
     const count = rows.filter(r => (r.domain || r.store_domain || '')).length;
-    if (count > 0) document.getElementById('statStores').textContent = count.toLocaleString('en-US');
+    if (!count) return;
+    const scores = rows.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0);
+    const avg = scores.length ? Math.round(scores.reduce((a,b) => a+b,0) / scores.length) : 45;
+    const invisible = scores.length ? Math.round(scores.filter(s => s < 50).length / scores.length * 100) : 52;
+
+    document.getElementById('statStores').textContent = count.toLocaleString('en-US');
+    document.getElementById('statAvg').textContent = avg + '/100';
+    document.getElementById('statRisk').textContent = invisible + '%';
+
+    const fnStores = document.getElementById('fnStores');
+    if (fnStores) fnStores.textContent = count.toLocaleString('en-US');
+    const fnAvg = document.getElementById('fnAvg');
+    if (fnAvg) fnAvg.textContent = avg + '/100';
+
+    // Update chart subtitle
+    const chartTitle = document.querySelector('.chart-title');
+    if (chartTitle && chartTitle.textContent.includes('500')) {
+      chartTitle.textContent = 'Score distribution across ' + count.toLocaleString('en-US') + ' scanned stores — May 2026';
+    }
   }).catch(() => {});
 
 // Donut chart
