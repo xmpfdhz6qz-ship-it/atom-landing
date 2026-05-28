@@ -171,7 +171,7 @@ body::before {
     <div class="stat-cell"><div class="stat-num" id="statStores">&mdash;</div><div class="stat-label">Stores analyzed</div></div>
     <div class="stat-cell"><div class="stat-num" id="statAvg">&mdash;</div><div class="stat-label">Avg AI score</div></div>
     <div class="stat-cell"><div class="stat-num" id="statRisk">52%</div><div class="stat-label">AI Invisible Risk</div></div>
-    <div class="stat-cell"><div class="stat-num">0%</div><div class="stat-label">Highly Recommendable</div></div>
+    <div class="stat-cell"><div class="stat-num" id="statHighPct">0%</div><div class="stat-label">Highly Recommendable</div></div>
   </div>
 
   <!-- CHART 1: Score distribution -->
@@ -191,8 +191,8 @@ body::before {
           <div style="font-size:12px;color:#888;">Low or moderate confidence — score 50 to 84</div>
         </div>
         <div style="background:#111;border:1px solid #1e1e1e;border-radius:10px;padding:14px 18px;">
-          <div style="font-size:26px;font-weight:800;color:#1D9E75;line-height:1;margin-bottom:4px;">0 stores</div>
-          <div style="font-size:12px;color:#888;">Reached Highly Recommendable — no store cleared 85</div>
+          <div style="font-size:26px;font-weight:800;color:#1D9E75;line-height:1;margin-bottom:4px;" id="statHighly">0 stores</div>
+          <div style="font-size:12px;color:#888;" id="statHighlyLabel">Reached Highly Recommendable — no store cleared 85</div>
         </div>
       </div>
     </div>
@@ -244,7 +244,7 @@ body::before {
           <div class="fn-cell"><div class="fn-num orange" id="fnStores">&mdash;</div><div class="fn-label">Stores analyzed</div></div>
           <div class="fn-cell"><div class="fn-num red" id="fnAvg">&mdash;</div><div class="fn-label">Avg AI score</div></div>
           <div class="fn-cell"><div class="fn-num red">52%</div><div class="fn-label">AI Invisible Risk</div></div>
-          <div class="fn-cell"><div class="fn-num gray">0%</div><div class="fn-label">Highly Recommendable</div></div>
+          <div class="fn-cell"><div class="fn-num gray" id="fnHighly">0%</div><div class="fn-label">Highly Recommendable</div></div>
         </div>
         <div class="featured-insights">
           <div class="insight"><div class="insight-icon">🏗️</div><div class="insight-body"><strong>Schema markup is the biggest gap.</strong> Average score 9.0 out of 20. Most stores have no structured data that AI can reliably parse.</div></div>
@@ -392,14 +392,27 @@ fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 
     const avg = scores.length ? Math.round(scores.reduce((a,b) => a+b,0) / scores.length) : 45;
     const invisible = scores.length ? Math.round(scores.filter(s => s < 50).length / scores.length * 100) : 52;
 
+    const highCount = scores.filter(s => s >= 85).length;
+    const highPct = scores.length ? Math.round(highCount / scores.length * 100) : 0;
+
     document.getElementById('statStores').textContent = count.toLocaleString('en-US');
     document.getElementById('statAvg').textContent = avg + '/100';
     document.getElementById('statRisk').textContent = invisible + '%';
+    document.getElementById('statHighPct').textContent = highPct + '%';
 
     const fnStores = document.getElementById('fnStores');
     if (fnStores) fnStores.textContent = count.toLocaleString('en-US');
     const fnAvg = document.getElementById('fnAvg');
     if (fnAvg) fnAvg.textContent = avg + '/100';
+    const fnHighly = document.getElementById('fnHighly');
+    if (fnHighly) fnHighly.textContent = highPct + '%';
+
+    const statHighly = document.getElementById('statHighly');
+    if (statHighly) statHighly.textContent = highCount + (highCount === 1 ? ' store' : ' stores');
+    const statHighlyLabel = document.getElementById('statHighlyLabel');
+    if (statHighlyLabel) statHighlyLabel.textContent = highCount > 0
+      ? highCount + ' store' + (highCount !== 1 ? 's' : '') + ' reached Highly Recommendable (85+)'
+      : 'Reached Highly Recommendable — no store cleared 85';
 
     // Update chart subtitle
     const chartTitle = document.querySelector('.chart-title');
