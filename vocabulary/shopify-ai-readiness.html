@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopify AI Readiness: Is Your Store Ready for AI Shopping Agents in 2026?</title>
+<meta name="description" content="Check if your Shopify store is ready for AI shopping agents. The complete 2026 guide to Shopify AI readiness including llms.txt, schema markup, price visibility, and the AI Commerce Score.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/shopify-ai-readiness">
+<meta property="og:title" content="Shopify AI Readiness: Is Your Store Ready for AI Shopping Agents?">
+<meta property="og:description" content="Most Shopify stores are not ready for AI shopping agents. Here is the complete checklist and how to fix it.">
+<meta property="og:url" content="https://atomfoundry.dev/shopify-ai-readiness">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Shopify AI Readiness: Is Your Store Ready for AI Shopping Agents in 2026?","description":"Check if your Shopify store is ready for AI shopping agents. The complete 2026 guide to Shopify AI readiness.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/shopify-ai-readiness"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is my Shopify store AI ready?","acceptedAnswer":{"@type":"Answer","text":"Most Shopify stores are not AI ready. Across 6,789 stores scanned by Atom Foundry, 52% score below 50 on the AI Commerce Score and are in AI Visibility Risk. The average score is 45 out of 100. To check your store, run a free scan at atomfoundry.dev."}},{"@type":"Question","name":"What does Shopify AI readiness mean?","acceptedAnswer":{"@type":"Answer","text":"Shopify AI readiness means your store has the structured signals AI shopping agents need to discover, evaluate, trust, and recommend it. This includes Product JSON-LD schema, prices in server-rendered HTML, AggregateRating schema from reviews, return policy in crawlable text, llms.txt via Shopify Agentic Dashboard, and specific niche positioning language."}},{"@type":"Question","name":"What is Shopify Agentic Dashboard?","acceptedAnswer":{"@type":"Answer","text":"Shopify Agentic Dashboard is a feature launched in May 2026 that enables llms.txt and agents.md files for every Shopify store. These files give AI shopping agents explicit structured information about your store. Enable it in Shopify Admin, then Settings, then Agentic."}},{"@type":"Question","name":"Does Shopify automatically make my store AI ready?","acceptedAnswer":{"@type":"Answer","text":"No. Shopify added llms.txt via the Agentic Dashboard in May 2026, which is a step in the right direction. But file existence is not enough. The auto-generated llms.txt is generic. And the other critical AI readiness factors like Product schema, price visibility, and AggregateRating schema require active configuration."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Shopify AI Readiness","item":"https://atomfoundry.dev/shopify-ai-readiness"}]}</script>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.nav { padding: 20px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: var(--orange); }
+.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; justify-content: flex-end; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+.nav-links a.cta-nav:hover { background: var(--orange-dark); }
+@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; justify-content: flex-start; } }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.hero { padding: 72px 0 56px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 32px; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.section { padding: 56px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 22px; }
+.body-text strong { color: var(--text); }
+.body-text a { color: var(--orange); text-decoration: underline; }
+.callout { background: var(--bg2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+
+/* STAT STRIP */
+.stat-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border2); border-radius: 14px; overflow: hidden; border: 1px solid var(--border2); margin-bottom: 48px; }
+.strip-cell { background: var(--bg2); padding: 18px 16px; text-align: center; }
+.strip-num { font-size: 26px; font-weight: 800; color: var(--orange); line-height: 1; margin-bottom: 4px; }
+.strip-label { font-size: 11px; color: var(--dim); line-height: 1.4; }
+
+/* READINESS CHECKLIST */
+.checklist { display: flex; flex-direction: column; gap: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin: 28px 0; }
+.check-row { display: grid; grid-template-columns: 32px 1fr auto; gap: 14px; align-items: flex-start; padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
+.check-row:last-child { border-bottom: none; }
+.check-row:hover { background: rgba(249,115,22,0.02); }
+.check-icon { width: 26px; height: 26px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+.check-icon.fail { background: rgba(226,75,74,0.15); color: #E24B4A; border: 1px solid rgba(226,75,74,0.2); }
+.check-icon.warn { background: rgba(239,159,39,0.15); color: #EF9F27; border: 1px solid rgba(239,159,39,0.2); }
+.check-icon.pass { background: rgba(29,158,117,0.15); color: #1D9E75; border: 1px solid rgba(29,158,117,0.2); }
+.check-body {}
+.check-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.check-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.check-how { font-size: 11px; color: #555; margin-top: 5px; font-style: italic; }
+.check-fail-rate { font-size: 12px; font-weight: 700; flex-shrink: 0; }
+
+/* SHOPIFY VERSION CARDS */
+.version-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0; }
+.version-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
+.version-card.new { border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.02); }
+.version-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.version-card:not(.new) .version-label { color: #444; }
+.version-card.new .version-label { color: var(--orange); }
+.version-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.version-item { font-size: 13px; color: var(--muted); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 8px; }
+.version-item:last-child { border-bottom: none; }
+.version-item.added { color: #4ade80; }
+.version-item.missing { color: #f87171; }
+
+/* STEPS */
+.steps-list { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+.step-item { display: flex; gap: 16px; align-items: flex-start; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; transition: border-color 0.2s; }
+.step-item:hover { border-color: rgba(249,115,22,0.2); }
+.step-num { width: 32px; height: 32px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--orange); flex-shrink: 0; }
+.step-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.step-tag { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 700; color: var(--green); background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.2); border-radius: 6px; padding: 3px 8px; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(249,115,22,0.04); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.faq-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.faq-item.open .faq-answer { display: block; }
+.faq-answer a { color: var(--orange); text-decoration: underline; }
+
+/* SCORE ZONES */
+.score-zones { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border2); border-radius: 14px; overflow: hidden; border: 1px solid var(--border2); margin: 28px 0; }
+.sz-card { background: var(--bg2); padding: 16px 12px; text-align: center; }
+.sz-range { font-size: 18px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+.sz-name { font-size: 11px; font-weight: 700; margin-bottom: 5px; line-height: 1.3; }
+.sz-desc { font-size: 11px; color: var(--dim); line-height: 1.4; }
+
+/* CTA */
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 56px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+
+/* INTERNAL LINKS */
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; flex-shrink: 0; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 0.04em; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+
+@media (max-width: 600px) {
+  .stat-strip { grid-template-columns: 1fr 1fr; }
+  .version-grid { grid-template-columns: 1fr; }
+  .score-zones { grid-template-columns: 1fr 1fr; }
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+  .check-row { grid-template-columns: 28px 1fr; }
+  .check-fail-rate { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+  </div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/stores">Stores</a>
+    <a href="/geo">GEO</a>
+    <a href="/aco">ACO</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="breadcrumb">
+      <a href="/">Home</a> &rsaquo;
+      <span>Shopify AI Readiness</span>
+    </div>
+    <div class="hero-kicker">Shopify 2026 &middot; AI Commerce Intelligence</div>
+    <h1>Is your Shopify store<br><em>AI ready?</em></h1>
+    <p class="hero-sub">AI shopping agents now recommend products to hundreds of millions of buyers. Most Shopify stores are not structured for AI. 52% score below 50 on the AI Commerce Score and are excluded from AI recommendations entirely.</p>
+    <div class="hero-cta-row">
+      <a href="/" class="btn-primary">Check My Shopify Store Free</a>
+      <a href="/geo" class="btn-secondary">Full GEO Guide</a>
+    </div>
+
+    <div class="stat-strip">
+      <div class="strip-cell"><div class="strip-num">52%</div><div class="strip-label">Of Shopify stores in AI Visibility Risk zone</div></div>
+      <div class="strip-cell"><div class="strip-num">13x</div><div class="strip-label">Growth in AI-referred Shopify orders YoY (Q1 2026)</div></div>
+      <div class="strip-cell"><div class="strip-num">45/100</div><div class="strip-label">Average AI Commerce Score across 6,789 stores</div></div>
+    </div>
+  </div>
+
+  <!-- WHAT IS AI READINESS -->
+  <div class="section" style="padding-top:0;border-top:none;">
+    <div class="section-kicker">Definition</div>
+    <h2>What does <em>Shopify AI readiness</em> mean?</h2>
+    <p class="body-text">Shopify AI readiness means your store has the structured signals that AI shopping agents need to discover, evaluate, trust, and recommend it when buyers ask for product recommendations. It is not about design, speed, or SEO. It is about whether AI can read your store.</p>
+    <p class="body-text">When a buyer asks ChatGPT or Alexa for Shopping to recommend a product, the AI evaluates thousands of stores in milliseconds. It checks for schema markup, readable prices, trust signals, and semantic clarity. Stores that pass those checks get recommended. Stores that fail get skipped.</p>
+    <div class="callout"><strong>The 2026 context:</strong> Shopify reported 13x year-over-year growth in AI-referred orders in Q1 2026. AI-referred orders convert at 50% higher rates with 14% higher average order value. AI readiness is now a direct revenue variable for every Shopify store.</div>
+  </div>
+
+  <!-- SHOPIFY AGENTIC DASHBOARD -->
+  <div class="section">
+    <div class="section-kicker">Shopify May 2026 update</div>
+    <h2>What Shopify added and <em>what it does not do</em></h2>
+    <p class="body-text">Shopify launched the Agentic Dashboard in May 2026, adding llms.txt and agents.md to every store. This was a significant step. But file existence is not AI readiness. The auto-generated files are generic, and they cover only one of the five critical AI readiness layers.</p>
+
+    <div class="version-grid">
+      <div class="version-card">
+        <div class="version-label">Before Agentic Dashboard</div>
+        <div class="version-title">Default Shopify store</div>
+        <div class="version-item missing">&#10007; No llms.txt file</div>
+        <div class="version-item missing">&#10007; No agents.md file</div>
+        <div class="version-item missing">&#10007; No AI navigation layer</div>
+        <div class="version-item missing">&#10007; AI agents working blind</div>
+      </div>
+      <div class="version-card new">
+        <div class="version-label">After Agentic Dashboard (May 2026)</div>
+        <div class="version-title">Shopify store with Agentic enabled</div>
+        <div class="version-item added">&#10003; llms.txt file exists</div>
+        <div class="version-item added">&#10003; agents.md file exists</div>
+        <div class="version-item missing">&#10007; Schema markup still missing</div>
+        <div class="version-item missing">&#10007; Price still JS-rendered</div>
+        <div class="version-item missing">&#10007; Reviews still in iframes</div>
+        <div class="version-item missing">&#10007; Generic llms.txt content</div>
+      </div>
+    </div>
+
+    <p class="body-text">Shopify gave every store the foundation. But foundation is not readiness. A store with llms.txt but no Product schema, JavaScript-rendered prices, and generic positioning is still not AI ready. The Agentic Dashboard is step one of five.</p>
+  </div>
+
+  <!-- THE CHECKLIST -->
+  <div class="section">
+    <div class="section-kicker">AI Readiness Checklist</div>
+    <h2>The complete <em>Shopify AI readiness</em> checklist</h2>
+    <p class="body-text">Run through each item for your store. View page source in Chrome with Cmd+U to check most of these in 5 minutes.</p>
+
+    <div class="checklist">
+      <div class="check-row">
+        <div class="check-icon fail">&#10007;</div>
+        <div class="check-body">
+          <div class="check-title">Product JSON-LD schema on product pages</div>
+          <div class="check-desc">The single highest-impact item. Tells AI exactly what you sell, what it costs, who your brand is. Check: Cmd+U, search for "application/ld+json" and "@type":"Product".</div>
+          <div class="check-how">Fix: Add via theme.liquid or a schema app. Shopify Dawn and some apps include it by default.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#E24B4A;">78% fail</div>
+      </div>
+      <div class="check-row">
+        <div class="check-icon fail">&#10007;</div>
+        <div class="check-body">
+          <div class="check-title">Prices in server-rendered HTML</div>
+          <div class="check-desc">If your price only appears after JavaScript runs, AI cannot read it. Check: Cmd+U, search for your exact price (e.g. "48.00"). If it is not there, you fail this check.</div>
+          <div class="check-how">Fix: Ensure price renders in the initial HTML response. Add schema:price to your Product JSON-LD.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#E24B4A;">62% fail</div>
+      </div>
+      <div class="check-row">
+        <div class="check-icon fail">&#10007;</div>
+        <div class="check-body">
+          <div class="check-title">AggregateRating schema from reviews</div>
+          <div class="check-desc">AI agents heavily weight reviews. Most review apps render via JavaScript or iframes. Check: Cmd+U, search for "aggregateRating" or "ratingValue".</div>
+          <div class="check-how">Fix: Enable schema output in Yotpo, Judge.me, or Loox settings. Not enabled by default in most apps.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#E24B4A;">71% fail</div>
+      </div>
+      <div class="check-row">
+        <div class="check-icon warn">!</div>
+        <div class="check-body">
+          <div class="check-title">Return policy in crawlable HTML text</div>
+          <div class="check-desc">If your return policy opens in a JavaScript modal or links to a PDF, AI cannot read it. AI needs this to build trust confidence for recommendations.</div>
+          <div class="check-how">Fix: Add a brief return policy text block directly in your product page template HTML.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#EF9F27;">54% fail</div>
+      </div>
+      <div class="check-row">
+        <div class="check-icon warn">!</div>
+        <div class="check-body">
+          <div class="check-title">Organization schema on homepage</div>
+          <div class="check-desc">Tells AI who your brand is. Brand name, logo URL, social links. Builds brand entity in AI training data over time.</div>
+          <div class="check-how">Fix: Add @type: "Organization" JSON-LD to your theme.liquid head section.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#EF9F27;">83% fail</div>
+      </div>
+      <div class="check-row">
+        <div class="check-icon warn">!</div>
+        <div class="check-body">
+          <div class="check-title">Specific niche positioning in H1 and hero copy</div>
+          <div class="check-desc">AI matches stores to buyer intent semantically. Generic copy like "premium quality products" matches nothing. Specific copy like "organic skincare for sensitive skin" matches buyers asking exactly that.</div>
+          <div class="check-how">Fix: Rewrite homepage H1 and hero copy to include: what you sell, who it is for, what makes you different.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#EF9F27;">48% fail</div>
+      </div>
+      <div class="check-row">
+        <div class="check-icon warn">!</div>
+        <div class="check-body">
+          <div class="check-title">llms.txt enabled and customized</div>
+          <div class="check-desc">Auto-generated llms.txt exists but is generic. Customizing it with specific brand positioning, product attributes, buyer intent language, and trust signals significantly improves AI recommendation probability.</div>
+          <div class="check-how">Fix: Shopify Admin, Settings, Agentic. Edit the llms.txt content with the 5-element framework from the llms.txt guide.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#EF9F27;">Most stores</div>
+      </div>
+      <div class="check-row">
+        <div class="check-icon pass">&#10003;</div>
+        <div class="check-body">
+          <div class="check-title">Descriptive alt text on product images</div>
+          <div class="check-desc">AI reads alt text, not images. "image_2847.jpg" is noise. "Organic cotton crew-neck sweatshirt in navy, GOTS-certified" is a rich semantic signal.</div>
+          <div class="check-how">Fix: Edit product images in Shopify Admin and add descriptive alt text to all product photos.</div>
+        </div>
+        <div class="check-fail-rate" style="color:#EF9F27;">67% fail</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO FIX -->
+  <div class="section">
+    <div class="section-kicker">Fix priority order</div>
+    <h2>How to improve your Shopify <em>AI readiness score</em></h2>
+    <p class="body-text">These are the five highest-impact fixes in order. A store that completes all five typically moves from AI Visibility Risk (below 50) to Low Recommendation Confidence zone (50 to 69) within a week. Most changes take under an hour each.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Add Product JSON-LD schema to product pages</div>
+          <div class="step-desc">Go to your Shopify theme editor, open product.liquid or the product template, and add a JSON-LD script tag with @type: "Product", including name, description, price, priceCurrency, availability, brand, and image. Or use a schema app like Schema Plus or SEO Manager.</div>
+          <div class="step-tag">Typical score impact: +15 to 20 points</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Enable AggregateRating schema in your review app</div>
+          <div class="step-desc">In Yotpo: Settings, Integrations, Schema Markup, enable. In Judge.me: Settings, SEO, enable Schema Markup. In Loox: Settings, Advanced, enable Rich Snippets. Each app calls it something slightly different but it is in settings.</div>
+          <div class="step-tag">Typical score impact: +8 to 12 points</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Add return policy text directly in product page HTML</div>
+          <div class="step-desc">In your product template, add a small text block: "Free 30-day returns. No questions asked." This does not need to be prominent for humans but it needs to be in the HTML source for AI to read it. One line of text, massive AI trust signal.</div>
+          <div class="step-tag">Typical score impact: +5 to 8 points</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Rewrite homepage hero with specific niche positioning</div>
+          <div class="step-desc">Replace generic brand language with specific buyer-intent language. Include your product category, your target customer, your key differentiator, and your main use case. Write it the way buyers phrase queries to AI, not the way brand copywriters write taglines.</div>
+          <div class="step-tag">Typical score impact: +6 to 10 points</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">Customize llms.txt via Shopify Agentic Dashboard</div>
+          <div class="step-desc">Shopify Admin, Settings, Agentic. Enable if not already on. Edit llms.txt to include: specific brand positioning, top product categories with attributes, trust signals like return policy and shipping, buyer intent questions with answers, and how you differ from competitors.</div>
+          <div class="step-tag">Typical score impact: +4 to 8 points</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORE ZONES -->
+  <div class="section">
+    <div class="section-kicker">Where you stand</div>
+    <h2>The four <em>AI readiness zones</em></h2>
+    <p class="body-text">Every Shopify store Atom Foundry scans falls into one of four zones based on its AI Commerce Score. Knowing your zone tells you how urgent the fixes are.</p>
+
+    <div class="score-zones">
+      <div class="sz-card">
+        <div class="sz-range" style="color:#1D9E75;">85 to 100</div>
+        <div class="sz-name" style="color:#1D9E75;">Highly Recommendable</div>
+        <div class="sz-desc">AI agents confidently recommend. Currently zero stores reach this zone.</div>
+      </div>
+      <div class="sz-card">
+        <div class="sz-range" style="color:#EF9F27;">70 to 84</div>
+        <div class="sz-name" style="color:#EF9F27;">Moderately Recommendable</div>
+        <div class="sz-desc">AI recommends but stronger signals would capture more.</div>
+      </div>
+      <div class="sz-card">
+        <div class="sz-range" style="color:#E8A030;">50 to 69</div>
+        <div class="sz-name" style="color:#E8A030;">Low Rec. Confidence</div>
+        <div class="sz-desc">AI sees the store but recommendation confidence is weak.</div>
+      </div>
+      <div class="sz-card">
+        <div class="sz-range" style="color:#E24B4A;">0 to 49</div>
+        <div class="sz-name" style="color:#E24B4A;">AI Visibility Risk</div>
+        <div class="sz-desc">52% of stores. Excluded from AI recommendations entirely.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>Shopify AI readiness: <em>common questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Is my Shopify store AI ready?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Most Shopify stores are not AI ready. Across 6,789 stores scanned by Atom Foundry, 52% score below 50 and are in AI Visibility Risk. The average score is 45 out of 100. To check your specific store, run a free scan at atomfoundry.dev. Results in 30 seconds.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What does Shopify AI readiness mean?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Shopify AI readiness means your store has the structured signals AI shopping agents need to discover, evaluate, trust, and recommend it. This includes Product JSON-LD schema, prices in server-rendered HTML, AggregateRating schema from reviews, return policy in crawlable text, llms.txt via Shopify Agentic Dashboard, and specific niche positioning language.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is Shopify Agentic Dashboard?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Shopify Agentic Dashboard is a feature launched in May 2026 that enables llms.txt and agents.md files for every Shopify store. These files give AI shopping agents explicit structured information about your store. Enable it in Shopify Admin, then Settings, then Agentic. Once enabled, customize the llms.txt content for maximum AI readiness impact.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Does Shopify automatically make my store AI ready?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">No. Shopify added llms.txt via the Agentic Dashboard in May 2026, which is a step in the right direction. But file existence is not enough. The auto-generated llms.txt is generic. And the other critical AI readiness factors like Product schema, price visibility in HTML, and AggregateRating schema require active configuration by the store owner.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How long does it take to make a Shopify store AI ready?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">The five highest-impact fixes can be completed in a day. Adding schema markup takes one to two hours. Enabling AggregateRating schema in a review app takes five minutes. Adding return policy text to product pages takes ten minutes. Rewriting hero copy takes one to two hours. Customizing llms.txt takes thirty minutes. Unlike SEO, AI readiness improvements reflect quickly because AI agents re-crawl frequently.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Does AI readiness affect my Google SEO rankings?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Some AI readiness improvements overlap with SEO. Adding schema markup can improve rich snippets in Google results. Specific niche positioning language helps both AI intent matching and SEO keyword relevance. But most AI readiness changes like llms.txt, price visibility in HTML, and return policy text have no significant SEO impact. They are purely for AI shopping agent optimization.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>Check your Shopify store&#39;s <em>AI readiness score</em> free</h2>
+    <p>See your AI Commerce Score across all 8 readiness factors. Find out exactly which signals are missing and what to fix first. Results in 30 seconds.</p>
+    <div class="cta-row">
+      <a href="/" class="btn-primary">Check My Shopify Store Free</a>
+      <a href="/methodology" class="btn-secondary">Full Methodology</a>
+    </div>
+    <div class="cta-note">Free. No credit card. 30 seconds. No signup required.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related guides</div>
+    <div class="internal-links-grid">
+      <a href="/geo" class="internal-link-item"><span class="internal-link-icon">&#128269;</span><div class="internal-link-text"><strong>GEO Guide</strong><span>Complete Generative Engine Optimization guide</span></div></a>
+      <a href="/learn/llms-txt-explained" class="internal-link-item"><span class="internal-link-icon">&#128196;</span><div class="internal-link-text"><strong>llms.txt Explained</strong><span>How to customize your Shopify llms.txt</span></div></a>
+      <a href="/machine-readable-commerce" class="internal-link-item"><span class="internal-link-icon">&#9881;&#65039;</span><div class="internal-link-text"><strong>Machine-Readable Commerce</strong><span>The full architectural approach</span></div></a>
+      <a href="/human-view-vs-ai-view" class="internal-link-item"><span class="internal-link-icon">&#128065;&#65039;</span><div class="internal-link-text"><strong>Human View vs AI View</strong><span>See exactly what AI sees on your store</span></div></a>
+      <a href="/geo-vs-seo" class="internal-link-item"><span class="internal-link-icon">&#128200;</span><div class="internal-link-text"><strong>GEO vs SEO</strong><span>What is different and why it matters</span></div></a>
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#128208;</span><div class="internal-link-text"><strong>Methodology</strong><span>The full 8-factor AI Commerce Score</span></div></a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/">Home</a> &nbsp;&middot;&nbsp;
+      <a href="/shopify-ai-readiness">Shopify AI Readiness</a> &nbsp;&middot;&nbsp;
+      <a href="/geo">GEO</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; AI Commerce Intelligence Platform &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">AI Commerce Intelligence Platform</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+</script>
+</body>
+</html>
