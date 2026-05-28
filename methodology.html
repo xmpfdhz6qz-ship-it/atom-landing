@@ -3,210 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Recommendation Score Methodology & GEO Glossary — Atom Foundry</title>
-<meta name="description" content="Complete methodology for AI Recommendation Readiness scoring. GEO glossary, AI visibility definitions, and why SEO is not AI recommendation for Shopify DTC stores. 8-factor scoring model v2.0.">
+<title>AI Commerce Score Methodology v3.0: Atom Foundry</title>
+<meta name="description" content="How Atom Foundry scores ecommerce stores for AI recommendation readiness. 8 factors, 100 points, built for the era of AI shopping agents. The first published scoring standard for the AI Commerce Graph.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://atomfoundry.dev/methodology">
-<meta property="og:title" content="AI Recommendation Score Methodology & GEO Glossary — Atom Foundry">
-<meta property="og:description" content="The first published AI Recommendation scoring standard for DTC Shopify stores. GEO glossary, 8 factors, AI commerce signal definitions.">
+<meta property="og:title" content="AI Commerce Score Methodology v3.0: Atom Foundry">
+<meta property="og:description" content="The scoring model behind the AI Commerce Graph. 8 factors measuring how AI shopping agents see, evaluate, and recommend ecommerce stores.">
 <meta property="og:url" content="https://atomfoundry.dev/methodology">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" href="/favicon.ico">
-
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"AI Recommendation Score Methodology & GEO Glossary for Shopify DTC Stores","description":"The first published AI Recommendation scoring standard for DTC Shopify stores. 8 factors weighted by how Alexa for Shopping, Google AI Mode, ChatGPT Shopping and Shopify AI agents evaluate and recommend stores.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-13","dateModified":"2026-05-19","url":"https://atomfoundry.dev/methodology"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Methodology & GEO Glossary","item":"https://atomfoundry.dev/methodology"}]}</script>
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"AI Commerce Score Methodology v3.0","description":"The scoring model behind the AI Commerce Graph. 8 factors measuring how AI shopping agents see, evaluate, and recommend ecommerce stores.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-28","dateModified":"2026-05-28","url":"https://atomfoundry.dev/methodology"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Methodology","item":"https://atomfoundry.dev/methodology"}]}</script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
-  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --orange: #f97316; --orange-dark: #ea580c;
+  --red: #E24B4A; --green: #1D9E75; --amber: #EF9F27;
+  --bg: #080808; --bg2: #111; --bg3: #0d0d0d;
   --border: #1e1e1e; --border2: #2a2a2a;
-  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #fff;
 }
 body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.10), transparent 45%); pointer-events: none; z-index: 0; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.12), transparent); pointer-events: none; z-index: 0; }
 a { color: inherit; text-decoration: none; }
-.nav { padding: 20px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.nav-brand { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
-.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+
+/* NAV */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; line-height: 1.2; display: block; }
 .nav-logo span { color: var(--orange); }
-.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
-.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; justify-content: flex-end; }
-.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-subline { font-size: 13px; color: var(--orange); font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
 .nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
 .nav-links a.active { color: var(--orange); border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.05); }
-.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.research { color: var(--amber); border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
 .nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
-.nav-links a.cta-nav:hover { background: var(--orange-dark); }
-@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; justify-content: flex-start; } }
-.hero { max-width: 860px; margin: 0 auto; padding: 72px 32px 48px; position: relative; z-index: 1; }
-.hero-pain { background: rgba(226,75,74,0.08); border: 1px solid rgba(226,75,74,0.25); border-radius: 10px; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: #f87171; line-height: 1.6; }
-.hero-pain strong { color: #fca5a5; }
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 24px; }
-.hero-title { font-size: 52px; font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 20px; letter-spacing: -0.02em; }
-.hero-title span { color: var(--orange); }
-.hero-subtitle { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 640px; margin-bottom: 28px; }
-.trust-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
-.trust-bar-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
-.trust-bar-brands { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.brand-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; font-size: 12px; font-weight: 600; color: var(--muted); }
-.brand-pill .dot { width: 6px; height: 6px; border-radius: 50%; }
-.brand-pill.amazon .dot { background: #FF9900; }
-.brand-pill.google .dot { background: #4285F4; }
-.brand-pill.chatgpt .dot { background: #10a37f; }
-.brand-pill.shopify .dot { background: #96BF48; }
-.brand-pill.perplexity .dot { background: #20B2AA; }
-.brand-pill.copilot .dot { background: #0078D4; }
-.hero-meta { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
-.hero-meta-item { font-size: 13px; color: var(--dim); display: flex; align-items: center; gap: 6px; }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
+
+/* LAYOUT */
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+/* HERO */
+.hero { padding: 56px 0 40px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+.hero h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 16px; letter-spacing: -0.02em; }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 17px; color: var(--muted); line-height: 1.75; max-width: 640px; margin-bottom: 28px; }
+.hero-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.hero-meta-item { font-size: 13px; color: var(--dim); }
 .hero-meta-item strong { color: var(--muted); }
-.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 14px; padding: 14px 24px; border-radius: 10px; text-decoration: none; border: 2px solid #dc2626; cursor: pointer; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.3); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(249,115,22,0.5); }
-.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 10px; text-decoration: none; border: 1px solid var(--border2); cursor: pointer; transition: all 0.2s; }
-.btn-secondary:hover { color: var(--white); border-color: #444; background: var(--bg2); }
-.divider { max-width: 860px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
-.divider hr { border: none; border-top: 1px solid var(--border); margin-bottom: 48px; }
-.section { max-width: 860px; margin: 0 auto; padding: 0 32px 64px; position: relative; z-index: 1; }
-.section-label { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-.section-title { font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 12px; line-height: 1.2; }
-.section-body { font-size: 15px; color: var(--muted); line-height: 1.8; max-width: 680px; }
-.geo-section { max-width: 860px; margin: 0 auto; padding: 0 32px 64px; position: relative; z-index: 1; }
-.geo-header { background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(249,115,22,0.03)); border: 1px solid rgba(249,115,22,0.3); border-radius: 20px; padding: 32px 36px 28px; margin-bottom: 24px; }
-.geo-header-label { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 14px; }
-.geo-header-title { font-size: 26px; font-weight: 800; color: var(--white); margin-bottom: 10px; letter-spacing: -0.02em; line-height: 1.2; }
-.geo-header-title span { color: var(--orange); }
-.geo-header-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 640px; }
-.geo-seo-callout { background: rgba(226,75,74,0.07); border: 1px solid rgba(226,75,74,0.2); border-left: 3px solid var(--red); border-radius: 12px; padding: 18px 22px; margin-bottom: 24px; }
-.geo-seo-callout-label { font-size: 10px; color: var(--red); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
-.geo-seo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.geo-seo-col { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 16px; }
-.geo-seo-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-.geo-seo-col-label.seo { color: var(--dim); }
-.geo-seo-col-label.ai { color: var(--orange); }
-.geo-seo-item { font-size: 13px; color: var(--muted); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); line-height: 1.4; }
-.geo-seo-item:last-child { border-bottom: none; }
-.geo-seo-item.strike { color: var(--dim); text-decoration: line-through; text-decoration-color: #444; }
-.geo-seo-item.win { color: #4ade80; }
-.geo-terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.geo-term { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; transition: border-color 0.2s, transform 0.2s; }
-.geo-term:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-2px); }
-.geo-term.highlight { border-color: rgba(249,115,22,0.25); background: rgba(249,115,22,0.04); }
-.geo-term-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.geo-term-badge { font-size: 9px; font-weight: 700; color: var(--orange); background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.25); border-radius: 4px; padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.06em; }
-.geo-term-badge.green { color: var(--green); background: rgba(29,158,117,0.12); border-color: rgba(29,158,117,0.25); }
-.geo-term-def { font-size: 13px; color: var(--muted); line-height: 1.65; }
-.geo-term-def strong { color: var(--text); }
-.faq-section { max-width: 860px; margin: 0 auto; padding: 0 32px 64px; position: relative; z-index: 1; }
-.faq-list { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
-.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
-.faq-question:hover { background: rgba(249,115,22,0.04); }
-.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
-.faq-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
-.faq-item.open .faq-chevron { transform: rotate(180deg); }
-.faq-answer { display: none; padding: 0 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); padding-top: 16px; }
-.faq-item.open .faq-answer { display: block; }
-.shopify-insight { background: rgba(150,191,72,0.06); border: 1px solid rgba(150,191,72,0.2); border-left: 3px solid #96BF48; border-radius: 12px; padding: 20px 24px; margin: 28px 0; }
-.shopify-insight-label { font-size: 10px; color: #96BF48; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
-.shopify-insight p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 8px; }
-.shopify-insight p:last-child { margin-bottom: 0; }
-.shopify-insight strong { color: #96BF48; }
-.shopify-quote { font-size: 16px; font-weight: 700; color: var(--text); font-style: italic; margin-bottom: 8px; padding-left: 16px; border-left: 2px solid #96BF48; }
-.benchmark-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 28px 0; position: relative; overflow: hidden; }
-.benchmark-block::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--orange), var(--orange-dark), transparent); }
-.benchmark-title { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 20px; }
-.benchmark-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.benchmark-num { font-size: 32px; font-weight: 700; color: var(--orange); line-height: 1; margin-bottom: 6px; }
-.benchmark-label { font-size: 13px; color: var(--muted); line-height: 1.4; }
-.benchmark-label strong { color: var(--text); }
-.context-box { background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--orange); border-radius: 12px; padding: 20px 24px; margin: 28px 0; }
-.context-box p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 10px; }
-.context-box p:last-child { margin-bottom: 0; }
-.context-box strong { color: var(--orange); }
-.why-now-box { background: rgba(249,115,22,0.06); border: 1px solid rgba(249,115,22,0.2); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
-.why-now-box p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 8px; }
-.why-now-box p:last-child { margin-bottom: 0; }
-.why-now-box strong { color: var(--orange); }
-.score-overview { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin: 28px 0; }
-.score-overview-title { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 20px; }
+.trust-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+.trust-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+.brand-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.brand-pill .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* SECTION */
+.section { padding: 48px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,30px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.8; max-width: 680px; margin-bottom: 20px; }
+.body-text strong { color: var(--text); }
+
+/* SCORE OVERVIEW BAR */
+.score-overview { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; margin: 24px 0; }
+.score-overview-title { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 20px; }
 .score-bar-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
 .score-bar-row:last-child { margin-bottom: 0; }
-.score-bar-label { font-size: 13px; color: var(--muted); min-width: 220px; font-weight: 500; }
-.score-bar-label .new-tag { display: inline-block; font-size: 9px; font-weight: 700; background: rgba(29,158,117,0.15); border: 1px solid rgba(29,158,117,0.3); color: var(--green); border-radius: 4px; padding: 1px 5px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.06em; vertical-align: middle; }
+.score-bar-label { font-size: 13px; color: var(--muted); min-width: 240px; font-weight: 500; }
 .score-bar-wrap { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; }
 .score-bar-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--orange-dark)); border-radius: 999px; }
 .score-bar-pct { font-size: 13px; font-weight: 700; color: var(--orange); min-width: 36px; text-align: right; }
-.binary-callout { background: rgba(255,255,255,0.03); border: 1px solid var(--border2); border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 13px; color: var(--muted); line-height: 1.6; }
-.binary-callout strong { color: var(--orange); }
-.factors-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
-.factor-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-.factor-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-.factor-card.is-new { border-color: rgba(29,158,117,0.25); }
-.factor-card.is-new .factor-header { background: rgba(29,158,117,0.04); }
+
+/* FACTOR CARDS */
+.factors-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+.factor-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+.factor-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.5); }
 .factor-header { display: flex; align-items: flex-start; gap: 16px; padding: 20px 22px 18px; border-bottom: 1px solid var(--border); }
-.factor-num { width: 36px; height: 36px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--orange); flex-shrink: 0; }
-.factor-card.is-new .factor-num { background: rgba(29,158,117,0.12); border-color: rgba(29,158,117,0.25); color: var(--green); }
-.factor-header-content { flex: 1; }
-.factor-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-.factor-name { font-size: 16px; font-weight: 600; color: var(--white); }
-.factor-new-badge { font-size: 10px; font-weight: 700; color: var(--green); background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.25); border-radius: 4px; padding: 2px 7px; text-transform: uppercase; letter-spacing: 0.06em; }
+.factor-num { width: 38px; height: 38px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--orange); flex-shrink: 0; }
+.factor-header-right { flex: 1; }
+.factor-name { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
 .factor-weight-row { display: flex; align-items: center; gap: 10px; }
 .factor-weight { font-size: 13px; font-weight: 700; color: var(--orange); }
-.factor-weight-bar { flex: 1; max-width: 120px; height: 4px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; }
+.factor-weight-bar { flex: 1; max-width: 140px; height: 4px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; }
 .factor-weight-fill { height: 100%; background: var(--orange); border-radius: 999px; }
-.factor-card.is-new .factor-weight { color: var(--green); }
-.factor-card.is-new .factor-weight-fill { background: var(--green); }
 .factor-body { padding: 18px 22px; }
-.factor-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
-.factor-leak-note { font-size: 12px; color: #f87171; background: rgba(226,75,74,0.06); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 8px 12px; margin-bottom: 14px; }
-.factor-signals { display: flex; flex-wrap: wrap; gap: 8px; }
-.signal-tag { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: var(--muted); }
-.signal-tag.orange { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.2); color: #fb923c; }
-.signal-tag.green { background: rgba(29,158,117,0.08); border-color: rgba(29,158,117,0.2); color: #34d399; }
-.ranges-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-top: 24px; }
-.range-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; text-align: center; }
-.range-score { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-.range-card.green .range-score { color: var(--green); }
-.range-card.orange .range-score { color: #EF9F27; }
-.range-card.red .range-score { color: var(--red); }
-.range-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
-.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.why-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
-.why-card-icon { font-size: 20px; margin-bottom: 10px; }
-.why-card-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
-.why-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-.about-box { background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--orange); border-radius: 12px; padding: 24px; display: flex; gap: 20px; align-items: flex-start; margin-top: 28px; }
-.about-avatar { width: 52px; height: 52px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: black; flex-shrink: 0; }
-.about-content { flex: 1; }
+.factor-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
+.factor-sub-label { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 10px; }
+.sub-metrics { display: flex; flex-direction: column; gap: 8px; }
+.sub-metric { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.sub-metric-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sub-metric-weight { font-size: 11px; color: var(--orange); font-weight: 700; white-space: nowrap; }
+.sub-metric-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.sub-metric-tech { font-size: 11px; color: var(--dim); margin-top: 5px; font-family: 'SF Mono', monospace; }
+
+/* SCORE ZONES */
+.zones-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 24px; }
+.zone-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; text-align: center; }
+.zone-score { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.zone-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.zone-card.green .zone-score { color: var(--green); }
+.zone-card.amber .zone-score { color: var(--amber); }
+.zone-card.orange .zone-score { color: var(--orange); }
+.zone-card.red .zone-score { color: var(--red); }
+
+/* CALLOUT */
+.callout { background: rgba(249,115,22,0.06); border: 1px solid rgba(249,115,22,0.2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+
+/* SHOPIFY INSIGHT */
+.shopify-insight { background: rgba(150,191,72,0.06); border: 1px solid rgba(150,191,72,0.2); border-left: 3px solid #96BF48; border-radius: 0 10px 10px 0; padding: 18px 22px; margin: 24px 0; }
+.shopify-insight-label { font-size: 10px; color: #96BF48; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.shopify-insight p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 6px; }
+.shopify-insight p:last-child { margin-bottom: 0; }
+.shopify-insight strong { color: #96BF48; }
+
+/* ABOUT */
+.about-box { background: var(--bg3); border: 1px solid var(--border); border-left: 3px solid var(--orange); border-radius: 0 12px 12px 0; padding: 24px; display: flex; gap: 20px; align-items: flex-start; margin-top: 28px; }
+.about-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #000; flex-shrink: 0; }
 .about-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
 .about-sub { font-size: 12px; color: var(--dim); margin-bottom: 10px; }
 .about-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
 .about-desc a { color: var(--orange); }
-.cta-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 36px; text-align: center; margin-top: 28px; position: relative; overflow: hidden; }
-.cta-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(249,115,22,0.08), transparent 60%); pointer-events: none; }
-.cta-title { font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 10px; position: relative; }
-.cta-desc { font-size: 14px; color: var(--muted); margin-bottom: 24px; position: relative; }
-.cta-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
-.footer { border-top: 1px solid var(--border); padding: 32px; text-align: center; position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
-.footer-line { font-size: 13px; color: var(--dim); margin-bottom: 8px; line-height: 1.8; }
-.footer-tagline { font-size: 15px; font-weight: 700; color: var(--orange); letter-spacing: 0.04em; }
-.footer-platform { font-size: 11px; color: #444; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
-.chart-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; margin: 28px 0; }
-.chart-card-title { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 20px; }
+
+/* CTA */
+.cta-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 40px 36px; text-align: center; margin-top: 48px; position: relative; overflow: hidden; }
+.cta-block::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(249,115,22,0.08), transparent 60%); pointer-events: none; }
+.cta-block h2 { font-size: 24px; margin-bottom: 10px; position: relative; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 24px; position: relative; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: #000; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; cursor: pointer; font-family: inherit; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 860px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: var(--dim); line-height: 1.9; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+
 @media (max-width: 640px) {
-  .hero-title { font-size: 36px; }
-  .hero, .section, .geo-section, .faq-section { padding-left: 20px; padding-right: 20px; }
-  .divider { padding: 0 20px; }
-  .ranges-grid { grid-template-columns: 1fr 1fr; }
-  .why-grid { grid-template-columns: 1fr; }
-  .benchmark-grid { grid-template-columns: 1fr 1fr; }
+  .wrap { padding: 0 20px; }
+  .zones-grid { grid-template-columns: 1fr 1fr; }
   .score-bar-label { min-width: 160px; font-size: 12px; }
-  .geo-terms-grid { grid-template-columns: 1fr; }
-  .geo-seo-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -215,344 +165,439 @@ a { color: inherit; text-decoration: none; }
 <nav class="nav">
   <div class="nav-brand">
     <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
-    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
   </div>
   <div class="nav-links">
-    <a href="/">Home</a>
     <a href="/stores">Stores</a>
-    <a href="/geo">GEO</a>
-    <a href="/aco">ACO</a>
     <a href="/methodology" class="active">Methodology</a>
+    <a href="/vocabulary">Vocabulary</a>
     <a href="/research" class="research">Research</a>
-    <a href="/" class="cta-nav">Free Score</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
   </div>
 </nav>
 
-<div class="hero">
-  <div class="hero-pain"><strong>Most Shopify stores are already invisible to AI shopping agents.</strong> They just don't see it yet. Alexa for Shopping, ChatGPT, Google AI Mode, and Perplexity are now recommending products to hundreds of millions of buyers. Shopify confirmed it: your store is becoming a product database for AI agents.</div>
-  <div class="hero-badge">Updated May 2026 · Version 2.0</div>
-  <h1 class="hero-title">AI Recommendation Score<br><span>Methodology & GEO Glossary</span></h1>
-  <p class="hero-subtitle">The first published scoring standard for how AI shopping agents evaluate, trust, and recommend DTC Shopify stores. Includes complete <a href="#geo-glossary" style="color:var(--orange);text-decoration:underline;">GEO glossary</a> and AI commerce signal definitions.</p>
-  <div class="trust-bar">
-    <span class="trust-bar-label">Evaluated by</span>
-    <div class="trust-bar-brands">
-      <span class="brand-pill amazon"><span class="dot"></span>Alexa for Shopping</span>
-      <span class="brand-pill google"><span class="dot"></span>Google AI Mode</span>
-      <span class="brand-pill chatgpt"><span class="dot"></span>ChatGPT Shopping</span>
-      <span class="brand-pill shopify"><span class="dot"></span>Shopify AI</span>
-      <span class="brand-pill perplexity"><span class="dot"></span>Perplexity</span>
-      <span class="brand-pill copilot"><span class="dot"></span>MS Copilot</span>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-badge">Updated May 2026 &middot; Version 3.0</div>
+    <h1>AI Commerce Score<br><em>Methodology v3.0</em></h1>
+    <p class="hero-sub">The scoring model behind the AI Commerce Graph. Eight factors measuring how AI shopping agents see, interpret, trust, and recommend ecommerce stores. Built for the era where AI decides who gets the sale.</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item"><strong>Updated:</strong> May 2026</span>
+      <span class="hero-meta-item"><strong>Author:</strong> Daniel, Atom Foundry</span>
+      <span class="hero-meta-item"><strong>Version:</strong> 3.0 &middot; 8 factors &middot; 100 points</span>
+    </div>
+    <div class="trust-bar">
+      <span class="trust-label">Evaluated by</span>
+      <span class="brand-pill"><span class="dot" style="background:#FF9900;"></span>Alexa for Shopping</span>
+      <span class="brand-pill"><span class="dot" style="background:#4285F4;"></span>Google AI Mode</span>
+      <span class="brand-pill"><span class="dot" style="background:#10a37f;"></span>ChatGPT Shopping</span>
+      <span class="brand-pill"><span class="dot" style="background:#96BF48;"></span>Shopify AI</span>
+      <span class="brand-pill"><span class="dot" style="background:#20B2AA;"></span>Perplexity</span>
+      <span class="brand-pill"><span class="dot" style="background:#000;"></span>Apple Intelligence</span>
     </div>
   </div>
-  <div class="hero-meta">
-    <span class="hero-meta-item">📅 <strong>Updated:</strong> May 2026</span>
-    <span class="hero-meta-item">✍️ <strong>Author:</strong> Daniel, Atom Foundry</span>
-    <span class="hero-meta-item">📊 <strong>Version:</strong> 2.0, 8 factors</span>
-  </div>
-  <div class="hero-actions">
-    <button class="btn-primary" onclick="downloadPDF()">Download PDF</button>
-    <a href="https://atomfoundry.dev" class="btn-secondary">See If AI Understands Your Store</a>
-  </div>
-</div>
 
-<div class="divider"><hr></div>
-
-<!-- GEO GLOSSARY -->
-<div class="geo-section" id="geo-glossary">
-  <div class="section-label">GEO Glossary · AI Commerce Vocabulary</div>
-  <div class="geo-header">
-    <div class="geo-header-label">Essential terms for AI-era ecommerce</div>
-    <div class="geo-header-title">GEO, AI Visibility &amp; <span>AI Recommendability</span></div>
-    <div class="geo-header-sub">The language of AI commerce is still forming. These are the terms that matter for DTC Shopify stores in 2026 and what each one actually means for your revenue. Also see: <a href="/geo" style="color:var(--orange);text-decoration:underline;">full GEO guide for ecommerce</a></div>
+  <!-- WHY THIS EXISTS -->
+  <div class="section">
+    <div class="section-kicker">Why this scoring model exists</div>
+    <h2>AI shopping agents are <em>already routing commerce</em></h2>
+    <p class="body-text">Shopify confirmed it in May 2026. AI-referred orders grew 13x year over year in Q1 2026. AI-referred orders convert at 50 percent higher rates and carry 14 percent higher average order value than organic traffic. The shift from search-first to recommendation-first commerce is happening right now, not in the future.</p>
+    <p class="body-text">The problem is that AI agents evaluate stores on completely different signals than Google does. Schema markup, machine-readable trust, semantic clarity, visual consistency, feed accuracy. Most stores have never optimized for any of these. They rank well on Google and are invisible to AI.</p>
+    <div class="shopify-insight">
+      <div class="shopify-insight-label">Shopify &middot; May 2026</div>
+      <p>Your store is becoming a product database for AI agents. The question is whether that database is readable.</p>
+      <p>The old funnel: Google, then website, then checkout. The new funnel: <strong>AI conversation, then AI recommendation, then instant purchase.</strong></p>
+    </div>
+    <p class="body-text">The AI Commerce Score is Atom Foundry's answer to the question every DTC founder should be asking right now: when a buyer asks an AI agent to recommend a product in my category, does my store show up? And if it does, does AI recommend me confidently or weakly?</p>
   </div>
-  <div class="geo-seo-callout">
-    <div class="geo-seo-callout-label">Why SEO is not AI Recommendation: the critical difference</div>
-    <div class="geo-seo-grid">
-      <div class="geo-seo-col">
-        <div class="geo-seo-col-label seo">SEO optimizes for</div>
-        <div class="geo-seo-item">Keyword ranking in Google</div>
-        <div class="geo-seo-item">Backlinks and domain authority</div>
-        <div class="geo-seo-item">Click-through from search results</div>
-        <div class="geo-seo-item">Human-readable page content</div>
-        <div class="geo-seo-item">Meta titles and descriptions</div>
-        <div class="geo-seo-item strike">Machine-readable trust signals</div>
-        <div class="geo-seo-item strike">AI intent matching</div>
-        <div class="geo-seo-item strike">Recommendation confidence</div>
+
+  <!-- SCORE OVERVIEW -->
+  <div class="section">
+    <div class="section-kicker">Score composition</div>
+    <h2>Eight factors, <em>100 points total</em></h2>
+    <p class="body-text">Each factor is weighted by its real impact on AI recommendation behavior, measured across thousands of stores. The weights reflect what actually moves the needle on whether AI includes or excludes a store from its recommendations.</p>
+
+    <div class="score-overview">
+      <div class="score-overview-title">AI Commerce Score v3.0 &middot; Factor weights</div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">01 &nbsp; Semantic Visuals &amp; Image Clarity</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:100%"></div></div>
+        <div class="score-bar-pct">15%</div>
       </div>
-      <div class="geo-seo-col">
-        <div class="geo-seo-col-label ai">AI Recommendation requires</div>
-        <div class="geo-seo-item win">Structured data AI can parse</div>
-        <div class="geo-seo-item win">Machine-readable trust signals</div>
-        <div class="geo-seo-item win">Semantic clarity for intent matching</div>
-        <div class="geo-seo-item win">Commerce accuracy — price and stock</div>
-        <div class="geo-seo-item win">AI agent files — llms.txt, agents.md</div>
-        <div class="geo-seo-item win">Recommendation confidence signals</div>
-        <div class="geo-seo-item win">Niche positioning for AI queries</div>
-        <div class="geo-seo-item win">External authority signals</div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">02 &nbsp; AI Structured Signals</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:100%"></div></div>
+        <div class="score-bar-pct">15%</div>
+      </div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">03 &nbsp; Core Technical &amp; Interpretability</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:100%"></div></div>
+        <div class="score-bar-pct">15%</div>
+      </div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">04 &nbsp; AI Trust &amp; Transaction Confidence</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:100%"></div></div>
+        <div class="score-bar-pct">15%</div>
+      </div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">05 &nbsp; Commerce &amp; Feed Accuracy</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:100%"></div></div>
+        <div class="score-bar-pct">15%</div>
+      </div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">06 &nbsp; User Intent Match</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:67%"></div></div>
+        <div class="score-bar-pct">10%</div>
+      </div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">07 &nbsp; Recommendation Confidence</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:67%"></div></div>
+        <div class="score-bar-pct">10%</div>
+      </div>
+      <div class="score-bar-row">
+        <div class="score-bar-label">08 &nbsp; External Authority Signals</div>
+        <div class="score-bar-wrap"><div class="score-bar-fill" style="width:33%"></div></div>
+        <div class="score-bar-pct">5%</div>
+      </div>
+    </div>
+
+    <div class="callout"><strong>The threshold that matters:</strong> A score below 50 means AI shopping agents are actively excluding your store from recommendation flows. A score above 85 means AI can confidently understand, trust, and recommend you. Right now, zero stores in our database of 6,789 scanned stores have cleared 85.</div>
+  </div>
+
+  <!-- THE 8 FACTORS -->
+  <div class="section">
+    <div class="section-kicker">Factor definitions</div>
+    <h2>The eight factors: <em>what we measure and why</em></h2>
+
+    <div class="factors-grid">
+
+      <!-- FACTOR 1 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">01</div>
+          <div class="factor-header-right">
+            <div class="factor-name">Semantic Visuals &amp; Image Clarity</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">15% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">AI vision systems now read product images, not just text. GPT-4o Vision and Apple Intelligence can see what is in a photo and compare it against the surrounding text. A store that tells AI its product is a black leather boot but has a generic alt tag reading image_322.jpg is failing this factor silently. The AI eye sees the product. The AI brain cannot match it to anything.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Alt Text Matching <span class="sub-metric-weight">8%</span></div>
+              <div class="sub-metric-desc">We send your product images to GPT-4o Vision and compare its semantic description against your actual alt text. If the image shows a black leather Chelsea boot and your alt attribute says product-image-4, that gap costs you points. AI cannot confidently recommend a product it cannot semantically verify.</div>
+              <div class="sub-metric-tech">Tool: GPT-4o Vision API + HTML parser</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">Image Context &amp; Overlays <span class="sub-metric-weight">4%</span></div>
+              <div class="sub-metric-desc">We check whether critical information is baked into images as graphics rather than HTML text. If your 20 percent sale badge is a PNG overlay, AI crawlers without Vision API cannot read it. That information is invisible to most AI systems.</div>
+              <div class="sub-metric-tech">Tool: Vision API overlay detection</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">Product Visual Consistency <span class="sub-metric-weight">3%</span></div>
+              <div class="sub-metric-desc">We verify that what appears in the product photo matches what the HTML description says. Color mismatches, size discrepancies, or model photos that do not reflect the actual product all reduce AI confidence in the accuracy of your data.</div>
+              <div class="sub-metric-tech">Tool: Vision API + structured data comparison</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTOR 2 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">02</div>
+          <div class="factor-header-right">
+            <div class="factor-name">AI Structured Signals</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">15% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">Structured data is the primary language AI agents use to understand what a store sells, at what price, and how trustworthy it is. JSON-LD schema is not optional in 2026. It is the difference between being in the AI Commerce Graph and being outside it. 72 percent of stores we have scanned are missing critical schema markup.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Schema.org Validation</div>
+              <div class="sub-metric-desc">We validate the presence and correctness of Product, Offer, and AggregateRating JSON-LD markup. Missing or invalid schema means AI agents cannot reliably extract product details, pricing, or social proof data.</div>
+              <div class="sub-metric-tech">Tool: Schema.org validator + JSON-LD parser</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">Merchant Identity</div>
+              <div class="sub-metric-desc">We check for Organization or Store schema that connects your website to your Persistent Merchant Identity. This is how AI systems build a consistent understanding of your brand across platforms and over time.</div>
+              <div class="sub-metric-tech">Tool: JSON-LD parser + Knowledge Graph check</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">AI Root Indexing</div>
+              <div class="sub-metric-desc">We check for a valid llms.txt file in your domain root. This is the file that tells AI agents what your store does, what it sells, and how to navigate your product catalog. Every Shopify store now has this file via Agentic Dashboard, but quality varies enormously.</div>
+              <div class="sub-metric-tech">Tool: llms.txt fetcher + content quality scorer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTOR 3 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">03</div>
+          <div class="factor-header-right">
+            <div class="factor-name">Core Technical &amp; Interpretability</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">15% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">A technically broken store is an invisible store. AI crawlers face the same blockers as Googlebot, plus a few new ones specific to LLM agents. Cloudflare WAF blocking GPTBot, LCP over four seconds, a DOM with 400 nested divs and no semantic hierarchy. All of these are scoring against you right now.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Crawler Accessibility</div>
+              <div class="sub-metric-desc">We check whether your robots.txt and any WAF configuration block or restrict known AI crawlers including GPTBot (ChatGPT), ClaudeBot (Claude), and AppleBot (Apple Intelligence). A blocked bot is a lost recommendation.</div>
+              <div class="sub-metric-tech">Tool: robots.txt parser + user-agent tests</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">Core Web Vitals</div>
+              <div class="sub-metric-desc">We pull LCP (Largest Contentful Paint) and CLS (Cumulative Layout Shift) via the Google PageSpeed API. Target is LCP under 2.5 seconds and CLS under 0.1. Slow or unstable pages break AI agent navigation flows and reduce crawl depth.</div>
+              <div class="sub-metric-tech">Tool: Google PageSpeed Insights API</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">DOM Structure Quality</div>
+              <div class="sub-metric-desc">We analyze the heading hierarchy (H1 through H3), the ratio of semantic HTML to div soup, and the overall cleanliness of the rendered DOM. AI agents use heading structure to build a map of page content. A missing H1 or a broken hierarchy means the map is wrong.</div>
+              <div class="sub-metric-tech">Tool: HTML parser + heading tree analysis</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTOR 4 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">04</div>
+          <div class="factor-header-right">
+            <div class="factor-name">AI Trust &amp; Transaction Confidence</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">15% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">When an AI agent is about to route a buyer to your store or complete a purchase autonomously, it runs a trust check. Not on design, not on visual badges. On machine-readable evidence that the transaction will go smoothly and the buyer will not be left with a problem. 64 percent of stores fail this check.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Machine-Readable Policies</div>
+              <div class="sub-metric-desc">We check whether your return policy and terms of service are in crawlable HTML text, not locked inside a JavaScript modal or a PDF. AI agents need to read these directly. If they cannot, they treat the transaction as higher risk and reduce recommendation confidence.</div>
+              <div class="sub-metric-tech">Tool: Policy page crawler + text extraction</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">Checkout Gateway Accessibility</div>
+              <div class="sub-metric-desc">We test whether the cart and checkout flow is accessible to autonomous agents. Agentic Storefronts require a clean, machine-navigable checkout path. Popup interruptions, mandatory account creation, and broken cart APIs all reduce this score.</div>
+              <div class="sub-metric-tech">Tool: Agentic checkout flow tester</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">Legal Identity Transparency</div>
+              <div class="sub-metric-desc">We check whether the company behind the store is clearly identified in the footer or contact pages, with a readable business name, address, and contact method. AI systems cross-reference this against external databases to verify the merchant is legitimate.</div>
+              <div class="sub-metric-tech">Tool: Footer parser + identity verification</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTOR 5 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">05</div>
+          <div class="factor-header-right">
+            <div class="factor-name">Commerce &amp; Feed Accuracy</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">15% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">AI agents are starting to complete purchases. When an agent tells a buyer it found the perfect product at 89 dollars with free shipping and the checkout shows 109 dollars with a delivery fee, that agent has failed the buyer. AI systems are learning to avoid stores that create this kind of gap. 58 percent of stores fail commerce accuracy checks.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Real-Time Price Sync</div>
+              <div class="sub-metric-desc">We compare the price visible in your HTML against the price in your Google Shopping XML feed or Shopify API. Discrepancies of any size are flagged. AI agents that surface a wrong price to a buyer lose trust immediately and that trust loss is remembered.</div>
+              <div class="sub-metric-tech">Tool: Live scraper + feed XML comparison</div>
+            </div>
+            <div class="sub-metric">
+              <div class="sub-metric-name">Inventory Integrity</div>
+              <div class="sub-metric-desc">We check whether your availability signals are accurate across your feed, your schema markup, and your live page. If your feed says in stock and your page says available in 14 days, AI gets contradictory data and reduces its confidence score for your store.</div>
+              <div class="sub-metric-tech">Tool: Feed vs. live page availability checker</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTOR 6 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">06</div>
+          <div class="factor-header-right">
+            <div class="factor-name">User Intent Match</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">10% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:67%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">AI agents do not match stores to keywords. They match stores to buyer intent. When someone tells Apple Intelligence to find a gift for their dad who loves hiking under 60 dollars, the AI is looking for a store whose content maps semantically to that specific, contextual request. Generic copy cannot match specific intent. This is where most stores bleed recommendation share.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Long-Tail Semantic Coverage</div>
+              <div class="sub-metric-desc">We use semantic embedding comparison to measure how well your product descriptions and category copy cover the actual language buyers use in LLM search prompts. Use-case descriptions, context phrases (good for cold weather, perfect for marathon training), and gift context signals all matter here.</div>
+              <div class="sub-metric-tech">Tool: LLM semantic embedding comparison</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTOR 7 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">07</div>
+          <div class="factor-header-right">
+            <div class="factor-name">Recommendation Confidence</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">10% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:67%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">There is a difference between appearing in an AI response and being confidently recommended. A store that AI hedges on gets a mention. A store that AI trusts gets the first pick. Recommendation Confidence measures the social proof signals that AI systems can actually parse and analyze, not just see.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Reviews Schema &amp; Sentiment</div>
+              <div class="sub-metric-desc">We check for AggregateRating schema with a real ratingValue and reviewCount from a verified review platform. We also run sentiment analysis on accessible review content. AI systems analyze sentiment to predict post-purchase satisfaction, which feeds directly into how confidently they recommend a store.</div>
+              <div class="sub-metric-tech">Tool: Schema validator + sentiment analysis API</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTOR 8 -->
+      <div class="factor-card">
+        <div class="factor-header">
+          <div class="factor-num">08</div>
+          <div class="factor-header-right">
+            <div class="factor-name">External Authority Signals</div>
+            <div class="factor-weight-row">
+              <span class="factor-weight">5% weight</span>
+              <div class="factor-weight-bar"><div class="factor-weight-fill" style="width:33%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="factor-body">
+          <p class="factor-desc">AI systems are trained on the entire internet. They know what people say about brands outside of brand-owned channels. A store that has no Reddit mentions, no press coverage, and no citations in AI indexes is treated as unverified. Currently this factor carries 5 percent weight. Based on how quickly LLM training data is expanding, we expect this to be among the most important factors by 2027.</p>
+          <div class="factor-sub-label">Sub-metrics</div>
+          <div class="sub-metrics">
+            <div class="sub-metric">
+              <div class="sub-metric-name">Knowledge Graph Footprint</div>
+              <div class="sub-metric-desc">We check for brand mentions and citations in external LLM indexes, Reddit discussions, Perplexity citations, and AI-readable databases. A brand that appears consistently across external sources has a stronger Persistent Merchant Identity in the AI Commerce Graph.</div>
+              <div class="sub-metric-tech">Tool: LLM citation indexing + Reddit API + Perplexity check</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCORE ZONES -->
+  <div class="section">
+    <div class="section-kicker">Score interpretation</div>
+    <h2>What your <em>AI Commerce Score means</em></h2>
+    <p class="body-text">The score is a direct predictor of AI recommendation probability. Below 50 and AI systems are systematically excluding your store. Above 85 and AI agents can recommend you with high confidence. The average across 6,789 scanned stores is 45.</p>
+    <div class="zones-grid">
+      <div class="zone-card green">
+        <div class="zone-score">85 to 100</div>
+        <div class="zone-label"><strong style="color:var(--green);">Highly Recommendable</strong><br>AI agents understand, trust, and confidently recommend your store.</div>
+      </div>
+      <div class="zone-card amber">
+        <div class="zone-score">70 to 84</div>
+        <div class="zone-label"><strong style="color:var(--amber);">Moderately Recommendable</strong><br>AI recommends you but stronger signals would increase frequency and position.</div>
+      </div>
+      <div class="zone-card orange">
+        <div class="zone-score">50 to 69</div>
+        <div class="zone-label"><strong style="color:var(--orange);">Low Confidence</strong><br>AI can see your store but misses critical signals. Recommendations are weak or inconsistent.</div>
+      </div>
+      <div class="zone-card red">
+        <div class="zone-score">0 to 49</div>
+        <div class="zone-label"><strong style="color:var(--red);">AI Invisible Risk</strong><br>Critical gaps prevent AI from recommending your store. You are being skipped today.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:20px;"><strong>Current benchmark:</strong> Average AI Commerce Score across 6,789 scanned DTC stores is 45 out of 100. 52 percent of stores score below 50. Zero stores have reached the Highly Recommendable threshold of 85 or above. The opportunity is wide open.</div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section">
+    <div class="section-kicker">About</div>
+    <h2>About <em>Atom Foundry</em></h2>
+    <p class="body-text">Atom Foundry is the AI Commerce Graph. We map how AI systems understand, trust, and route commerce decisions to merchants. We scan stores, score them across these 8 factors, and show exactly what to fix and what it costs to leave it broken.</p>
+    <div class="about-box">
+      <div class="about-avatar">D</div>
+      <div>
+        <div class="about-name">Daniel, Founder of Atom Foundry</div>
+        <div class="about-sub">Scanning DTC stores daily &middot; atomfoundry.dev</div>
+        <div class="about-desc">I built Atom Foundry because the shift from search to recommendation is real and most founders have no way to measure it. The AI Commerce Score is the first tool that actually tells you where you stand in the new layer that decides who gets discovered.<br><br>Contact: <a href="mailto:founder@atomfoundry.dev">founder@atomfoundry.dev</a></div>
       </div>
     </div>
   </div>
-  <div class="geo-terms-grid">
-    <div class="geo-term highlight"><div class="geo-term-name">GEO <span class="geo-term-badge">Core term</span></div><div class="geo-term-def"><strong>Generative Engine Optimization</strong> is the practice of optimizing content so it gets cited, referenced, or recommended by AI systems like ChatGPT, Perplexity, and Google AI Mode. GEO is the AI-era equivalent of SEO. For ecommerce, GEO means structuring your store so AI agents can understand, trust, and recommend your products in response to buyer queries.</div></div>
-    <div class="geo-term"><div class="geo-term-name">AI Visibility</div><div class="geo-term-def"><strong>Whether an AI agent can read your store at all.</strong> A store has AI visibility when its content is crawlable, structured, and parseable by AI systems. AI visibility is necessary but not sufficient. A store can be fully visible to AI and still not get recommended. AI visibility is not the same as AI recommendability.</div></div>
-    <div class="geo-term highlight"><div class="geo-term-name">AI Recommendability <span class="geo-term-badge">Key distinction</span></div><div class="geo-term-def"><strong>Whether an AI agent will confidently recommend your store to a buyer.</strong> Goes beyond visibility. AI agents only recommend stores they can match to a buyer's intent, trust as reliable, and verify as commerce-accurate. Recommendability is what drives revenue. That is what Atom Foundry measures.</div></div>
-    <div class="geo-term"><div class="geo-term-name">AI Trust Signals</div><div class="geo-term-def"><strong>Machine-readable signals that tell AI agents a store is safe to recommend.</strong> Unlike visual trust, AI trust signals must be in crawlable HTML or structured data: star ratings in JSON-LD AggregateRating, return policy text, SSL, shipping information, contact details. AI won't recommend a store it can't verify as trustworthy.</div></div>
-    <div class="geo-term"><div class="geo-term-name">Machine-Readable Commerce</div><div class="geo-term-def"><strong>Product and commerce data formatted for AI consumption, not just humans.</strong> Prices in schema markup, stock availability in structured data, variant information in parseable format. If your commerce data requires JavaScript to render, AI agents often cannot read it.</div></div>
-    <div class="geo-term"><div class="geo-term-name">Recommendation Readiness</div><div class="geo-term-def"><strong>A store's overall preparedness to be recommended by AI shopping agents.</strong> Composite of structured data, semantic clarity, trust signals, commerce accuracy, intent matching, and external authority. High Recommendation Readiness means AI recommends you. Low means AI skips you, regardless of product quality or brand recognition.</div></div>
-    <div class="geo-term"><div class="geo-term-name">Conversational Commerce Readiness</div><div class="geo-term-def"><strong>How well a store is prepared for AI-driven conversational shopping.</strong> When a buyer says "find me a luxury minimalist skincare brand for sensitive skin under $80," AI needs to parse that intent and match it to a store. This measures how well your store maps to natural language queries buyers ask AI assistants.</div></div>
-    <div class="geo-term"><div class="geo-term-name">AI Commerce Signals</div><div class="geo-term-def"><strong>The specific technical and content signals AI shopping agents use to evaluate stores.</strong> Includes JSON-LD schema markup, llms.txt and agents.md files, price and stock data in HTML, review markup with AggregateRating, return and shipping policy text, semantic product descriptions, and niche positioning signals.</div></div>
-    <div class="geo-term"><div class="geo-term-name">AI Readiness Score</div><div class="geo-term-def"><strong>Atom Foundry's 0 to 100 composite score measuring AI Recommendation Readiness.</strong> 8 factors: AI Structured Signals (20pts), Semantic Clarity (18pts), AI Trust Confidence (18pts), User Intent Match (14pts), AI Interpretability (12pts), Commerce Accuracy (10pts), Recommendation Confidence (5pts), External Authority Signals (3pts). Above 85 means Highly Recommendable. Below 50 means AI Invisible Risk.</div></div>
-    <div class="geo-term"><div class="geo-term-name">Agentic Commerce</div><div class="geo-term-def"><strong>The emerging model where AI agents autonomously browse, compare, and complete purchases.</strong> Shopify's Agentic Dashboard (May 2026) generates llms.txt, llms-full.txt, and agents.md for every store, enabling AI agents to read product catalogs and complete checkouts. Stores not configured for agentic commerce will be bypassed as this scales.</div></div>
-    <div class="geo-term"><div class="geo-term-name">Structured Commerce Quality</div><div class="geo-term-def"><strong>The accuracy, completeness, and machine-readability of a store's product data.</strong> High quality means prices in schema, stock accurate, product variants clearly structured, shipping and returns explicit, all data available without JavaScript.</div></div>
-    <div class="geo-term"><div class="geo-term-name">AI Citation Readiness <span class="geo-term-badge green">GEO bridge</span></div><div class="geo-term-def"><strong>How well a store is positioned to be cited by AI in response to buyer queries.</strong> GEO focuses on getting cited in AI-generated content. AI Citation Readiness for ecommerce goes further. It measures whether AI will cite your store specifically when recommending products, not just mention your brand generically.</div></div>
-  </div>
-</div>
 
-<div class="divider"><hr></div>
-
-<!-- FAQ -->
-<div class="faq-section" id="faq">
-  <div class="section-label">Frequently Asked Questions</div>
-  <h2 style="font-size:28px;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2;">GEO and AI Recommendation: FAQ</h2>
-  <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:680px;margin-bottom:0;">Common questions about GEO, AI visibility, and what it means for your Shopify store.</p>
-  <div class="faq-list">
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is GEO (Generative Engine Optimization)?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">GEO stands for Generative Engine Optimization. It is the practice of optimizing your content and store so AI systems like ChatGPT, Perplexity, Google AI Mode, and Alexa for Shopping can understand, cite, and recommend you. For Shopify stores, GEO specifically means structuring product data, trust signals, and content so AI shopping agents confidently recommend your store when buyers ask for product recommendations.</div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Why doesn't SEO equal AI recommendation readiness?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">SEO and AI recommendation optimize for completely different signals. SEO focuses on keyword ranking, backlinks, and human-readable content. AI recommendation requires structured data AI can parse, machine-readable trust signals, semantic clarity for intent matching, and commerce accuracy — prices in HTML, not just JavaScript-rendered. A Shopify store can rank number one on Google and be completely invisible to AI shopping agents.</div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is the difference between AI Visibility and AI Recommendability?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">AI Visibility means an AI agent can read your store. Your content is crawlable and parseable. AI Recommendability means an AI agent will confidently recommend your store to a buyer. These are very different. A store can be fully visible to AI and still not get recommended, because AI agents only recommend stores they can match to a specific buyer's intent, verify as trustworthy, and confirm as commerce-accurate. Recommendability is what drives revenue. Visibility alone doesn't.</div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is the AI Readiness Score and how is it calculated?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">The AI Readiness Score is a 0 to 100 composite score measuring a Shopify store's AI Recommendation Readiness across 8 factors: AI Structured Signals (20pts), Semantic Clarity (18pts), AI Trust Confidence (18pts), User Intent Match (14pts), AI Interpretability (12pts), Commerce Accuracy (10pts), Recommendation Confidence (5pts), and External Authority Signals (3pts). A score above 85 means Highly Recommendable. 70 to 84 is Moderately Recommendable. 50 to 69 is Low Recommendation Confidence. Below 50 is AI Invisible Risk.</div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How do I make my Shopify store AI recommendable?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">The fastest improvements: 1) Add Product and Organization JSON-LD schema markup in theme.liquid, 2) Make prices and stock visible in HTML without JavaScript, 3) Add machine-readable reviews with AggregateRating schema, 4) Make return and shipping policies explicit in crawlable text, 5) Create specific niche positioning that matches how buyers query AI assistants, 6) Enable Shopify's llms.txt and agents.md via the Agentic Dashboard. Run a free AI Readiness Score scan at atomfoundry.dev to see your exact gaps and dollar impact.</div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is Agentic Commerce and why does it matter?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">Agentic Commerce is the model where AI agents autonomously browse, compare, and complete purchases on behalf of buyers, without human input at each step. Shopify launched its Agentic Dashboard in May 2026, generating llms.txt, llms-full.txt, and agents.md for every store. These files let AI agents read your product catalog and complete checkouts. Stores not configured for agentic commerce will be bypassed as this model scales through 2026 and 2027.</div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What are AI Trust Signals for ecommerce stores?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">AI Trust Signals are machine-readable signals that tell AI shopping agents a store is safe to recommend. Unlike visual trust — design and badges — AI trust signals must be in crawlable HTML or structured data: star ratings in JSON-LD AggregateRating, return policy text visible without JavaScript, SSL certificate, shipping information in plain text, and contact details. AI agents will not recommend a store they cannot verify as trustworthy, regardless of how good the product actually is.</div></div>
-    <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How is GEO for ecommerce different from GEO for content sites?</span><span class="faq-chevron">▾</span></div><div class="faq-answer">GEO for content sites focuses on getting cited in AI-generated answers. GEO for ecommerce goes further: it's about getting recommended in AI shopping flows where buyers are ready to purchase. Ecommerce GEO requires commerce-specific signals that content GEO doesn't: product schema, pricing accuracy, stock availability, variant structure, checkout trust signals, and niche intent matching.</div></div>
-  </div>
-</div>
-
-<div class="divider"><hr></div>
-
-<div class="section">
-  <div class="section-label">Why Version 2.0</div>
-  <h2 class="section-title">Shopify just confirmed what we've been building</h2>
-  <p class="section-body">In May 2026, Shopify made it official: the future of e-commerce is AI-distributed. At the same time, Amazon retired Rufus and launched Alexa for Shopping, now embedding AI directly into Amazon search results. This is the most important change in e-commerce in 15 years.</p>
-  <div class="shopify-insight">
-    <div class="shopify-insight-label">Shopify · May 2026</div>
-    <div class="shopify-quote">"Your store is becoming a product database for AI agents."</div>
-    <p>The old funnel was: Google, then Website, then Checkout. The new funnel is: <strong>AI Conversation, then AI Recommendation, then Instant Purchase.</strong></p>
-    <p>AI won't just be a search engine. AI will be a <strong>recommendation engine.</strong> And Atom Foundry is the infrastructure for the recommendation economy.</p>
-  </div>
-  <div class="why-now-box">
-    <p><strong>What this means for your store:</strong> AI agents are starting to recommend products, compare stores, navigate websites, and assist purchases. Right now. Most Shopify stores are invisible to this layer.</p>
-    <p>Alexa for Shopping already serves 300M+ users. ChatGPT Shopping, Google AI Mode, Perplexity and Microsoft Copilot all have live checkout integrations. <strong>This is not a future trend. It is already happening.</strong></p>
-  </div>
-</div>
-
-<div class="section" style="padding-top:0;">
-  <div class="section-label">May 2026 Benchmark</div>
-  <h2 class="section-title">What we found after scanning 500+ US DTC stores</h2>
-  <p class="section-body">After scanning hundreds of top US DTC Shopify stores, the results confirm what we suspected: most stores are invisible to AI shopping agents, and most founders have no idea it is happening.</p>
-  <div class="benchmark-block">
-    <div class="benchmark-title">AI Recommendation Benchmark · May 2026 · 500+ US DTC Shopify stores</div>
-    <div class="benchmark-grid">
-      <div><div class="benchmark-num">51/100</div><div class="benchmark-label"><strong>Average AI Recommendation Score</strong><br>Most stores are partially visible but losing significant AI-driven traffic</div></div>
-      <div><div class="benchmark-num">72%</div><div class="benchmark-label"><strong>Missing AI Structured Signals</strong><br>AI agents cannot confidently identify what the store sells or to whom</div></div>
-      <div><div class="benchmark-num">64%</div><div class="benchmark-label"><strong>Missing AI Trust Confidence</strong><br>No machine-readable reviews or return policy. Agents skip these stores</div></div>
-      <div><div class="benchmark-num">58%</div><div class="benchmark-label"><strong>Failed Commerce Accuracy</strong><br>Price hidden behind JavaScript, out-of-stock shown as available, missing variants</div></div>
+  <div class="cta-block">
+    <h2>See your <em>AI Commerce Score</em> for free</h2>
+    <p>Free scan across all 8 factors. Find out exactly where your store stands in the AI Commerce Graph. Results in 30 seconds.</p>
+    <div class="cta-row">
+      <a href="/#score" class="btn-primary">Get My Free AI Commerce Score</a>
+      <button class="btn-secondary" onclick="window.print()">Download PDF</button>
     </div>
   </div>
 
-  <!-- CHART: Score zone visual -->
-  <div class="chart-card">
-    <div class="chart-card-title">Where 500 stores actually land on the 0 to 100 scale</div>
-    <div style="position:relative;height:200px;">
-      <canvas id="distributionChart" role="img" aria-label="Bar chart showing score distribution across 500 stores. Most stores cluster between 30 and 60, with very few above 70.">Score distribution: most stores score between 30 and 60. Very few reach above 70.</canvas>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:#555;">
-      <span style="color:#E24B4A;">AI Invisible Risk (0 to 49)</span>
-      <span style="color:#EF9F27;">Low confidence (50 to 69)</span>
-      <span style="color:#f97316;">Moderate (70 to 84)</span>
-      <span style="color:#1D9E75;">Highly Recommendable (85+)</span>
-    </div>
-  </div>
 </div>
 
-<div class="section" style="padding-top:0;">
-  <div class="section-label">Scoring Model v2.0</div>
-  <h2 class="section-title">How the AI Recommendation Score is calculated</h2>
-  <p class="section-body">The AI Recommendation Score is a 0 to 100 composite score across 8 factors. Each factor is weighted by its proven impact on AI agent recommendation behavior.</p>
-  <div class="binary-callout">A score below 50 means your store is effectively invisible in AI-driven discovery. A score above 85 means AI agents can confidently understand, trust, and recommend you. <strong>There is no middle ground.</strong></div>
-
-  <div class="score-overview">
-    <div class="score-overview-title">Score composition across 8 factors, v2.0</div>
-    <div class="score-bar-row"><div class="score-bar-label">AI Structured Signals</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:20%"></div></div><div class="score-bar-pct">20%</div></div>
-    <div class="score-bar-row"><div class="score-bar-label">Semantic Clarity</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:18%"></div></div><div class="score-bar-pct">18%</div></div>
-    <div class="score-bar-row"><div class="score-bar-label">AI Trust Confidence</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:18%"></div></div><div class="score-bar-pct">18%</div></div>
-    <div class="score-bar-row"><div class="score-bar-label">User Intent Match <span class="new-tag">New</span></div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:14%"></div></div><div class="score-bar-pct">14%</div></div>
-    <div class="score-bar-row"><div class="score-bar-label">AI Interpretability</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:12%"></div></div><div class="score-bar-pct">12%</div></div>
-    <div class="score-bar-row"><div class="score-bar-label">Commerce Accuracy</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:10%"></div></div><div class="score-bar-pct">10%</div></div>
-    <div class="score-bar-row"><div class="score-bar-label">Recommendation Confidence <span class="new-tag">New</span></div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:5%"></div></div><div class="score-bar-pct">5%</div></div>
-    <div class="score-bar-row"><div class="score-bar-label">External Authority Signals <span class="new-tag">New</span></div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:3%"></div></div><div class="score-bar-pct">3%</div></div>
-  </div>
-
-  <!-- CHART: Radar chart -->
-  <div class="chart-card">
-    <div class="chart-card-title">Industry average vs maximum — radar view of all 8 factors</div>
-    <div style="position:relative;height:320px;max-width:460px;margin:0 auto;">
-      <canvas id="radarChart" role="img" aria-label="Radar chart comparing industry average scores to the maximum possible score across 8 AI readiness factors. All factors fall significantly below their maximum.">Industry averages fall significantly below the maximum on all 8 factors. Structured signals and commerce accuracy show the largest gaps.</canvas>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;justify-content:center;font-size:12px;color:#888;">
-      <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(249,115,22,0.5);display:inline-block;"></span>Industry average</span>
-      <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:rgba(255,255,255,0.1);border:1px solid #444;display:inline-block;"></span>Maximum possible</span>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
     </div>
   </div>
-</div>
+</footer>
 
-<div class="section" style="padding-top:0;">
-  <div class="section-label">Factor Definitions</div>
-  <h2 class="section-title">The 8 factors: what we measure and why</h2>
-  <div class="factors-grid">
-    <div class="factor-card"><div class="factor-header"><div class="factor-num">01</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">AI Structured Signals</div></div><div class="factor-weight-row"><span class="factor-weight">20% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:100%"></div></div></div></div></div><div class="factor-body"><div class="factor-leak-note">Missing structured signals is the single biggest revenue leak in AI discovery. 72% of stores we scanned have this gap.</div><p class="factor-desc">JSON-LD structured data is the primary language AI agents use to understand what a store sells, at what price, and how trustworthy it is. If that database isn't structured, Alexa for Shopping, ChatGPT, Google AI Mode and Perplexity cannot read it and they skip the store entirely.</p><div class="factor-signals"><span class="signal-tag orange">Product schema</span><span class="signal-tag orange">Organization schema</span><span class="signal-tag orange">AggregateRating</span><span class="signal-tag orange">llms.txt</span><span class="signal-tag">BreadcrumbList</span><span class="signal-tag">JSON-LD format</span><span class="signal-tag">Inventory signals</span><span class="signal-tag">Variant structure</span></div></div></div>
-    <div class="factor-card"><div class="factor-header"><div class="factor-num">02</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">Semantic Clarity</div></div><div class="factor-weight-row"><span class="factor-weight">18% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:90%"></div></div></div></div></div><div class="factor-body"><p class="factor-desc">AI needs to understand: what does this store sell, to whom, why is it different. Generic messaging scores zero. Specific positioning like "minimalist skincare for sensitive skin" scores high.</p><div class="factor-signals"><span class="signal-tag orange">Specific hero messaging</span><span class="signal-tag orange">Clear USP</span><span class="signal-tag orange">Benefit-focused copy</span><span class="signal-tag">Description 150+ words</span><span class="signal-tag">FAQ presence</span><span class="signal-tag">Image alt texts</span></div></div></div>
-    <div class="factor-card"><div class="factor-header"><div class="factor-num">03</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">AI Trust Confidence</div></div><div class="factor-weight-row"><span class="factor-weight">18% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:90%"></div></div></div></div></div><div class="factor-body"><div class="factor-leak-note">64% of stores we scanned have missing or unreadable trust signals.</div><p class="factor-desc">AI won't risk recommending a store it can't verify as trustworthy. Trust signals must be crawlable and structured, not just visually present on the page.</p><div class="factor-signals"><span class="signal-tag orange">Reviews + AggregateRating</span><span class="signal-tag orange">Return policy visible</span><span class="signal-tag orange">Shipping clarity</span><span class="signal-tag">SSL certificate</span><span class="signal-tag">Trust badges</span><span class="signal-tag">Contact info</span></div></div></div>
-    <div class="factor-card is-new"><div class="factor-header"><div class="factor-num">04</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">User Intent Match</div><span class="factor-new-badge">New in v2.0</span></div><div class="factor-weight-row"><span class="factor-weight">14% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:70%"></div></div></div></div></div><div class="factor-body"><p class="factor-desc">AI ranks stores per specific buyer intent. Generic stores without clear niche positioning fail completely. Stores with explicit signals like luxury, eco, minimalist, and premium positioning are significantly more likely to be recommended.</p><div class="factor-signals"><span class="signal-tag green">Niche positioning clarity</span><span class="signal-tag green">Price tier signaling</span><span class="signal-tag green">Use-case specificity</span><span class="signal-tag green">Target audience explicit</span></div></div></div>
-    <div class="factor-card"><div class="factor-header"><div class="factor-num">05</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">AI Interpretability</div></div><div class="factor-weight-row"><span class="factor-weight">12% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:60%"></div></div></div></div></div><div class="factor-body"><p class="factor-desc">A technically inaccessible store with slow load times, JavaScript-rendered content, or popup overload cannot be fully indexed by AI agents, regardless of content quality.</p><div class="factor-signals"><span class="signal-tag orange">robots.txt present</span><span class="signal-tag orange">sitemap.xml present</span><span class="signal-tag orange">PageSpeed 70+</span><span class="signal-tag">Mobile viewport</span><span class="signal-tag">No JS-hidden content</span></div></div></div>
-    <div class="factor-card"><div class="factor-header"><div class="factor-num">06</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">Commerce Accuracy</div></div><div class="factor-weight-row"><span class="factor-weight">10% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:50%"></div></div></div></div></div><div class="factor-body"><div class="factor-leak-note">58% of stores are invisible to AI price comparisons due to inaccurate or hidden commerce data.</div><p class="factor-desc">AI agents won't recommend a product that's out of stock, at the wrong price, or with confusing variants.</p><div class="factor-signals"><span class="signal-tag orange">Price in HTML — no JS</span><span class="signal-tag orange">schema:price + priceCurrency</span><span class="signal-tag orange">Realtime stock accuracy</span><span class="signal-tag">Variant structure clear</span></div></div></div>
-    <div class="factor-card is-new"><div class="factor-header"><div class="factor-num">07</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">Recommendation Confidence</div><span class="factor-new-badge">New in v2.0</span></div><div class="factor-weight-row"><span class="factor-weight">5% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:25%"></div></div></div></div></div><div class="factor-body"><p class="factor-desc">How safely AI can predict that a customer will be satisfied after buying. AI agents are trained to optimize for user satisfaction. Stores that generate disappointment get deprioritized.</p><div class="factor-signals"><span class="signal-tag green">Delivery confidence signals</span><span class="signal-tag green">Purchase friction low</span><span class="signal-tag green">Return process clear</span><span class="signal-tag">Payment options visible</span></div></div></div>
-    <div class="factor-card is-new"><div class="factor-header"><div class="factor-num">08</div><div class="factor-header-content"><div class="factor-name-row"><div class="factor-name">External Authority Signals</div><span class="factor-new-badge">New in v2.0</span></div><div class="factor-weight-row"><span class="factor-weight">3% weight</span><div class="factor-weight-bar"><div class="factor-weight-fill" style="width:15%"></div></div></div></div></div><div class="factor-body"><p class="factor-desc">AI cross-references the wider internet: Reddit, YouTube, TikTok, blog mentions, creator endorsements. Currently 3% weight, predicted to become one of the most important factors by 2027.</p><div class="factor-signals"><span class="signal-tag green">Reddit mentions</span><span class="signal-tag green">YouTube reviews</span><span class="signal-tag green">TikTok brand presence</span><span class="signal-tag green">Creator endorsements</span><span class="signal-tag">Blog and press coverage</span></div></div></div>
-  </div>
-</div>
-
-<div class="section" style="padding-top:0;">
-  <div class="section-label">Score Interpretation</div>
-  <h2 class="section-title">What your AI Recommendation Score means</h2>
-  <div class="ranges-grid">
-    <div class="range-card green"><div class="range-score">85 to 100</div><div class="range-label"><strong style="color:#4ade80;">Highly Recommendable</strong><br>AI agents can clearly understand, trust, and recommend this store.</div></div>
-    <div class="range-card orange"><div class="range-score">70 to 84</div><div class="range-label"><strong style="color:#EF9F27;">Moderately Recommendable</strong><br>AI recommends this store but stronger signals would win more traffic.</div></div>
-    <div class="range-card orange"><div class="range-score">50 to 69</div><div class="range-label"><strong style="color:#EF9F27;">Low Rec. Confidence</strong><br>AI can see the store but misses key signals.</div></div>
-    <div class="range-card red"><div class="range-score">0 to 49</div><div class="range-label"><strong style="color:var(--red);">AI Invisible Risk</strong><br>Critical gaps prevent AI agents from recommending this store.</div></div>
-  </div>
-  <div class="context-box" style="margin-top:24px;">
-    <p><strong>Benchmark:</strong> Average AI Recommendation Score across 500+ scanned stores is <strong>51/100</strong>. Less than 12% reach the Highly Recommendable threshold of 85+.</p>
-    <p>Also see: <a href="/geo" style="color:var(--orange);">Full GEO guide for Shopify stores</a> · <a href="https://atomfoundry.dev" style="color:var(--orange);">Check your store free</a></p>
-  </div>
-</div>
-
-<div class="section" style="padding-top:0;">
-  <div class="section-label">About</div>
-  <h2 class="section-title">About Atom Foundry</h2>
-  <p class="section-body">Atom Foundry is an AI Commerce Intelligence Platform for US and CA DTC Shopify stores. We scan stores for hidden AI visibility gaps, measure recommendation probability, and provide exact fixes with dollar impact per issue.</p>
-  <div class="about-box">
-    <div class="about-avatar">D</div>
-    <div class="about-content">
-      <div class="about-name">Daniel, Founder of Atom Foundry</div>
-      <div class="about-sub">Scanning DTC stores daily · atomfoundry.dev</div>
-      <div class="about-desc">I built Atom Foundry after seeing too many DTC founders spend money on traffic that never converts. Not because their product is bad, but because their store is invisible to AI systems.<br><br>Check your store: <a href="https://atomfoundry.dev">atomfoundry.dev</a> · <a href="/geo">GEO guide</a> · Contact: <a href="mailto:founder@atomfoundry.dev">founder@atomfoundry.dev</a></div>
-    </div>
-  </div>
-</div>
-
-<div class="section" style="padding-top:0;">
-  <div class="cta-section">
-    <div class="cta-title">See your AI Recommendation Score for free</div>
-    <div class="cta-desc">Free scan · 10 seconds · No signup required · Exact dollar amount per gap</div>
-    <div class="cta-buttons">
-      <a href="https://atomfoundry.dev" class="btn-primary">Check My AI Recommendation Score</a>
-      <button class="btn-secondary" onclick="downloadPDF()">Download Methodology PDF</button>
-    </div>
-  </div>
-</div>
-
-<div class="footer">
-  <div class="footer-tagline">Find → Prove → Fix → Protect</div>
-  <div class="footer-platform">AI Commerce Intelligence Platform</div>
-  <div class="footer-line">
-    <a href="/" style="color:#666;">Home</a> &nbsp;·&nbsp;
-    <a href="/stores" style="color:#666;">Stores</a> &nbsp;·&nbsp;
-    <a href="/geo" style="color:#666;">GEO</a> &nbsp;·&nbsp;
-    <a href="/aco" style="color:#666;">ACO</a> &nbsp;·&nbsp;
-    <a href="/research" style="color:#666;">Research</a> &nbsp;·&nbsp;
-    <a href="/ai-readiness" style="color:#666;">AI Readiness</a> &nbsp;·&nbsp;
-    <a href="/shopify-ai-visibility" style="color:#666;">AI Visibility</a> &nbsp;·&nbsp;
-    <a href="/privacy-policy" style="color:#666;">Privacy</a><br>
-    AI Recommendation Score Methodology v2.0 · GEO Glossary · Updated May 2026 · atomfoundry.dev
-  </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-function downloadPDF() { window.print(); }
 function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
-
-// Score distribution bell-curve-like data across 0-100
-new Chart(document.getElementById('distributionChart'), {
-  type: 'bar',
-  data: {
-    labels: ['0-9','10-19','20-29','30-39','40-49','50-59','60-69','70-79','80-89','90-100'],
-    datasets: [{
-      label: 'Stores',
-      data: [12, 28, 45, 67, 109, 98, 72, 38, 21, 10],
-      backgroundColor: function(ctx) {
-        const idx = ctx.dataIndex;
-        if (idx <= 4) return '#E24B4A';
-        if (idx <= 6) return '#EF9F27';
-        if (idx <= 8) return '#f97316';
-        return '#1D9E75';
-      },
-      borderRadius: 4,
-      barPercentage: 0.85
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    scales: {
-      x: { grid: { display: false }, ticks: { color: '#666', font: { size: 11 } }, border: { display: false } },
-      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666', font: { size: 11 } }, border: { color: 'rgba(255,255,255,0.08)' } }
-    },
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: function(ctx) { return ' ' + ctx.parsed.y + ' stores'; } } }
-    }
-  }
-});
-
-// Radar chart
-new Chart(document.getElementById('radarChart'), {
-  type: 'radar',
-  data: {
-    labels: ['Structured\nSignals', 'Semantic\nClarity', 'Trust\nConfidence', 'Intent\nMatch', 'Interpretability', 'Commerce\nAccuracy', 'Rec.\nConfidence', 'Authority'],
-    datasets: [
-      {
-        label: 'Industry average',
-        data: [45, 54, 61, 38, 53, 62, 40, 83],
-        backgroundColor: 'rgba(249,115,22,0.15)',
-        borderColor: '#f97316',
-        borderWidth: 2,
-        pointBackgroundColor: '#f97316',
-        pointRadius: 4
-      },
-      {
-        label: 'Maximum possible',
-        data: [100, 100, 100, 100, 100, 100, 100, 100],
-        backgroundColor: 'rgba(255,255,255,0.04)',
-        borderColor: 'rgba(255,255,255,0.15)',
-        borderWidth: 1,
-        borderDash: [4, 4],
-        pointRadius: 0
-      }
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    scales: {
-      r: {
-        min: 0, max: 100,
-        grid: { color: 'rgba(255,255,255,0.08)' },
-        angleLines: { color: 'rgba(255,255,255,0.08)' },
-        ticks: { display: false },
-        pointLabels: { color: '#888', font: { size: 11 } }
-      }
-    },
-    plugins: { legend: { display: false } }
-  }
-});
 </script>
 </body>
 </html>
