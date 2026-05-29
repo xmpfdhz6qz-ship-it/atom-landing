@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Readiness Score for Shopify Stores: What It Is and Why It Matters</title>
+<meta name="description" content="The AI Readiness Score measures how well AI shopping agents can understand, trust, and recommend your Shopify store. 8-factor scoring model, 0-100 scale. Free scan in 30 seconds.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/ai-readiness">
+<meta property="og:title" content="AI Readiness Score for Shopify Stores: What It Is and Why It Matters">
+<meta property="og:description" content="The AI Readiness Score measures how well AI shopping agents can understand, trust, and recommend your Shopify store. 8-factor scoring model, 0-100 scale. Free scan in 30 seconds.">
+<meta property="og:url" content="https://atomfoundry.dev/ai-readiness">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AI Readiness Score for Shopify Stores","description":"The AI Readiness Score measures how well AI shopping agents can understand, trust, and recommend your Shopify store.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-21","url":"https://atomfoundry.dev/ai-readiness"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"AI Readiness","item":"https://atomfoundry.dev/ai-readiness"}]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.12), transparent); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.active { color: #f97316; border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.05); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
+
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.hero { padding: 56px 0 48px; }
+.breadcrumb { font-size: 12px; color: #555; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+.breadcrumb a { color: #555; }
+.breadcrumb a:hover { color: #f97316; }
+.hero-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: #f97316; }
+.hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 640px; margin-bottom: 32px; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #aaa; font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid #2a2a2a; transition: all 0.2s; }
+.btn-secondary:hover { color: #fff; border-color: #444; }
+.hero-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: #1e1e1e; border-radius: 14px; overflow: hidden; border: 1px solid #1e1e1e; }
+.hero-stat { background: #111; padding: 18px 20px; text-align: center; }
+.hero-stat-num { font-size: 28px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
+.hero-stat-label { font-size: 12px; color: #666; line-height: 1.4; }
+.section { padding: 56px 0; border-top: 1px solid #111; }
+.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,32px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 em { font-style: normal; color: #f97316; }
+.body-text { font-size: 15px; color: #aaa; line-height: 1.8; max-width: 680px; margin-bottom: 24px; }
+.body-text strong { color: #e8e8e8; }
+.body-text a { color: #f97316; text-decoration: underline; }
+.definition-box { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.3); border-radius: 16px; padding: 28px 32px; margin-bottom: 28px; }
+.definition-term { font-size: 11px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 10px; }
+.definition-text { font-size: 18px; color: #e8e8e8; line-height: 1.65; font-weight: 500; }
+.definition-text strong { color: #f97316; }
+.steps-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+.step-item { display: flex; gap: 16px; align-items: flex-start; background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; transition: border-color 0.2s; }
+.step-item:hover { border-color: rgba(249,115,22,0.25); }
+.step-num { width: 38px; height: 38px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #f97316; flex-shrink: 0; }
+.step-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.step-desc { font-size: 13px; color: #aaa; line-height: 1.6; }
+
+/* SCORE ZONES - identical to methodology */
+.zones-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 24px; }
+.zone-card { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 16px; text-align: center; }
+.zone-score { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.zone-label { font-size: 12px; color: #aaa; line-height: 1.5; }
+.zone-card.green .zone-score { color: #1D9E75; }
+.zone-card.amber .zone-score { color: #EF9F27; }
+.zone-card.orange .zone-score { color: #f97316; }
+.zone-card.red .zone-score { color: #E24B4A; }
+
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(249,115,22,0.03); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: #fff; line-height: 1.4; }
+.faq-chevron { color: #f97316; font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: #aaa; line-height: 1.75; border-top: 1px solid #1e1e1e; }
+.faq-answer a { color: #f97316; text-decoration: underline; }
+.faq-item.open .faq-answer { display: block; }
+.callout { background: #111; border-left: 3px solid #f97316; border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: #aaa; line-height: 1.7; }
+.callout strong { color: #e8e8e8; }
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 56px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: #aaa; margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: #555; margin-top: 14px; }
+.internal-links { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; flex-shrink: 0; }
+.internal-link-text strong { color: #e8e8e8; display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: #666; }
+
+/* FOOTER */
+.footer { border-top: 1px solid #1e1e1e; padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 860px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+
+@media (max-width: 600px) {
+  .wrap { padding: 0 20px; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .zones-grid { grid-template-columns: 1fr 1fr; }
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
+    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+  </div>
+  <div class="nav-links">
+    <a href="/stores">Stores</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/vocabulary">Vocabulary</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="breadcrumb">
+      <a href="/">Home</a> &rsaquo;
+      <a href="/methodology">Methodology</a> &rsaquo;
+      <span>AI Readiness</span>
+    </div>
+    <div class="hero-kicker">AI Readiness Score &middot; 2026</div>
+    <h1>The <em>AI Readiness Score</em><br>tells you exactly what AI<br>agents see in your store.</h1>
+    <p class="hero-sub">A 0 to 100 composite score measuring how well AI shopping agents can discover, understand, trust, and recommend your Shopify store. Based on 8 factors. Built from scanning 6,789 real stores.</p>
+    <div class="hero-cta-row">
+      <a href="/#score" class="btn-primary">Get My Free AI Readiness Score</a>
+      <a href="/methodology" class="btn-secondary">Full Scoring Methodology</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">45/100</div><div class="hero-stat-label">Average AI Readiness Score across 6,789 stores</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">0%</div><div class="hero-stat-label">Stores reaching Highly Recommendable (85+)</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">52%</div><div class="hero-stat-label">Stores classified as AI Visibility Risk</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">What is the AI Readiness Score</div>
+    <h2>A score that tells you <em>exactly where you stand</em></h2>
+    <div class="definition-box">
+      <div class="definition-term">AI Readiness Score</div>
+      <div class="definition-text">A <strong>0 to 100 composite score</strong> measuring how confidently AI shopping agents can discover, understand, trust, and recommend your Shopify store to buyers. Higher score means higher probability of AI recommendation.</div>
+    </div>
+    <p class="body-text">The AI Readiness Score directly predicts whether AI shopping agents like Alexa for Shopping, ChatGPT, and Google AI Mode will include your store in their recommendations when buyers ask relevant questions. Stores below 50 are systematically excluded. Stores above 85 are Highly Recommendable.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">The 8 scoring factors &middot; v3.0</div>
+    <h2>What the score <em>actually measures</em></h2>
+    <p class="body-text">AI Commerce Score v3.0: 8 factors, 100 points. Each factor is equally important in the 15% tier or weighted at 10% or 5%.</p>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">15%</div>
+        <div>
+          <div class="step-title">Semantic Visuals &amp; Image Clarity</div>
+          <div class="step-desc">AI vision systems read product images via GPT-4o Vision and compare against alt text. Generic alt tags like "product-image-4.jpg" cost you points. Added in v3.0.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">15%</div>
+        <div>
+          <div class="step-title">AI Structured Signals</div>
+          <div class="step-desc">Schema markup quality: Product, Organization, BreadcrumbList, AggregateRating, price and currency schema, llms.txt quality. Single biggest factor. Average score very low across all stores.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">15%</div>
+        <div>
+          <div class="step-title">Core Technical &amp; Interpretability</div>
+          <div class="step-desc">Crawler accessibility (GPTBot, ClaudeBot not blocked), Core Web Vitals via PageSpeed API, DOM structure quality and heading hierarchy. A technically broken store is invisible.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">15%</div>
+        <div>
+          <div class="step-title">AI Trust &amp; Transaction Confidence</div>
+          <div class="step-desc">Machine-readable trust signals: return policy in crawlable HTML (not JS modal), checkout accessibility for agents, legal identity transparency. 64% of stores fail this.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">15%</div>
+        <div>
+          <div class="step-title">Commerce &amp; Feed Accuracy</div>
+          <div class="step-desc">Price visible in HTML without JavaScript, schema:price and priceCurrency present, inventory availability consistent across feed and live page. 58% of stores fail this.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">10%</div>
+        <div>
+          <div class="step-title">User Intent Match</div>
+          <div class="step-desc">Semantic embedding comparison measuring how well product descriptions match actual buyer prompt language in that niche. Specific positioning wins. Generic copy matches nothing.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">10%</div>
+        <div>
+          <div class="step-title">Recommendation Confidence</div>
+          <div class="step-desc">AggregateRating schema with real ratingValue and reviewCount. Sentiment analysis on accessible review content. Determines how confidently AI endorses the store.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5%</div>
+        <div>
+          <div class="step-title">External Authority Signals</div>
+          <div class="step-desc">Brand mentions in external LLM indexes, Reddit, Perplexity citations. Small weight now but expected to grow significantly by 2027 as LLM training data expands.</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout"><strong>Where to start:</strong> AI Trust and Transaction Confidence and Commerce and Feed Accuracy fail in more than 60% of stores. Moving prices to server-rendered HTML and placing return policy in crawlable text are the two highest-impact fixes for most stores.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">Score zones</div>
+    <h2>What your score <em>means</em></h2>
+    <div class="zones-grid">
+      <div class="zone-card green">
+        <div class="zone-score">85 to 100</div>
+        <div class="zone-label"><strong style="color:#1D9E75;">Highly Recommendable</strong><br>AI agents understand, trust, and confidently recommend your store.</div>
+      </div>
+      <div class="zone-card amber">
+        <div class="zone-score">70 to 84</div>
+        <div class="zone-label"><strong style="color:#EF9F27;">Moderately Recommendable</strong><br>AI recommends you but stronger signals would increase frequency and position.</div>
+      </div>
+      <div class="zone-card orange">
+        <div class="zone-score">50 to 69</div>
+        <div class="zone-label"><strong style="color:#f97316;">Low Confidence</strong><br>AI can see your store but misses critical signals. Recommendations are weak or inconsistent.</div>
+      </div>
+      <div class="zone-card red">
+        <div class="zone-score">0 to 49</div>
+        <div class="zone-label"><strong style="color:#E24B4A;">AI Visibility Risk</strong><br>Critical gaps prevent AI from recommending your store. You are being skipped today.</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:20px;"><strong>Current benchmark:</strong> Average AI Readiness Score across 6,789 scanned stores is 45 out of 100. 52% of stores score below 50. Zero stores have reached the Highly Recommendable threshold of 85 or above.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>AI Readiness Score <em>questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How is the AI Readiness Score calculated?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">The AI Readiness Score v3.0 is calculated across 8 factors: Semantic Visuals and Image Clarity (15%), AI Structured Signals (15%), Core Technical and Interpretability (15%), AI Trust and Transaction Confidence (15%), Commerce and Feed Accuracy (15%), User Intent Match (10%), Recommendation Confidence (10%), and External Authority Signals (5%). Maximum score is 100. See the <a href="/methodology">full methodology</a> for details.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is a good AI Readiness Score?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">The average across 6,789 scanned stores is 45 out of 100. A score above 70 is Moderately Recommendable. Above 85 is Highly Recommendable. Currently, not one store in our dataset has reached 85 or above. Most stores have significant room to improve.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How do I improve my AI Readiness Score?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">The fastest improvements: add Product JSON-LD schema markup, move prices to server-rendered HTML, add return policy in crawlable text, sharpen niche positioning, and improve product image alt text. Run a free scan at atomfoundry.dev to see your exact gaps.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How often is the AI Readiness Score updated?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Atom Foundry scans stores continuously. Your score reflects your store at the time of the most recent scan. As you make improvements, you can re-scan your store to see your updated score.</div></div>
+    </div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related</div>
+    <div class="internal-links-grid">
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#128208;</span><div class="internal-link-text"><strong>Full Methodology</strong><span>8-factor scoring explained</span></div></a>
+      <a href="/research" class="internal-link-item"><span class="internal-link-icon">&#128300;</span><div class="internal-link-text"><strong>Research</strong><span>2026 AI Readiness findings</span></div></a>
+      <a href="/vocabulary/learn/ai-retrieval-signals" class="internal-link-item"><span class="internal-link-icon">&#128202;</span><div class="internal-link-text"><strong>AI Retrieval Signals</strong><span>All 8 factors explained</span></div></a>
+      <a href="/human-view-vs-ai-view" class="internal-link-item"><span class="internal-link-icon">&#128065;</span><div class="internal-link-text"><strong>Human View vs AI View</strong><span>What AI actually sees</span></div></a>
+      <a href="/stores" class="internal-link-item"><span class="internal-link-icon">&#127978;</span><div class="internal-link-text"><strong>Store Database</strong><span>Browse 6,789 real scores</span></div></a>
+      <a href="/vocabulary" class="internal-link-item"><span class="internal-link-icon">&#128218;</span><div class="internal-link-text"><strong>Vocabulary</strong><span>All AI Commerce terms</span></div></a>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>What is <em>your</em> AI Readiness Score?</h2>
+    <p>Find out in 30 seconds. Free scan across all 8 v3.0 factors.</p>
+    <div class="cta-row">
+      <a href="/#score" class="btn-primary">Get My Free AI Readiness Score</a>
+      <a href="/methodology" class="btn-secondary">Full Methodology</a>
+    </div>
+    <div class="cta-note">Free &middot; No signup &middot; No credit card &middot; Results in 30 seconds</div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+</script>
+</body>
+</html>
