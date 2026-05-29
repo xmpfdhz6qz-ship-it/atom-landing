@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">AI Readiness Benchmarks: Niche - Atom Foundry</title>
+<meta name="description" id="pageDesc" content="AI Readiness benchmark data for this niche. Real scores from scanned Shopify stores.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" id="pageCanonical" href="https://atomfoundry.dev/benchmarks">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.10), transparent); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
+
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+/* HERO */
+.hero { padding: 56px 0 40px; }
+.breadcrumb { font-size: 12px; color: #555; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.breadcrumb a { color: #555; }
+.breadcrumb a:hover { color: #f97316; }
+.hero-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 20px; }
+h1 { font-size: clamp(28px,5vw,52px); font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 16px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: #1D9E75; }
+.hero-sub { font-size: 16px; color: #999; line-height: 1.7; max-width: 680px; margin-bottom: 32px; }
+.hero-sub strong { color: #e8e8e8; }
+
+/* TOP STATS */
+.top-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: #1e1e1e; border-radius: 14px; overflow: hidden; border: 1px solid #1e1e1e; margin-bottom: 56px; }
+.top-stat { background: #111; padding: 20px 16px; text-align: center; }
+.top-stat-num { font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+.top-stat-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; line-height: 1.4; }
+
+/* SECTION */
+.section { margin-bottom: 56px; }
+.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(20px,3vw,28px); font-weight: 700; color: #fff; margin-bottom: 16px; line-height: 1.2; }
+h2 em { font-style: normal; color: #f97316; }
+
+/* DISTRIBUTION CARDS */
+.dist-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 14px; }
+.dist-card { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 20px; text-align: center; }
+.dist-num { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+.dist-label { font-size: 13px; color: #aaa; line-height: 1.4; margin-bottom: 4px; }
+.dist-range { font-size: 11px; color: #555; margin-bottom: 6px; }
+.dist-count { font-size: 12px; color: #555; }
+
+/* FACTOR BARS */
+.factor-list { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden; margin-bottom: 14px; }
+.factor-row { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid #0d0d0d; }
+.factor-row:last-child { border-bottom: none; }
+.factor-name { font-size: 13px; color: #aaa; width: 180px; flex-shrink: 0; }
+.factor-bar-wrap { flex: 1; height: 5px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
+.factor-bar-fill { height: 100%; border-radius: 999px; background: #E24B4A; transition: width 1s ease; }
+.factor-score { font-size: 13px; font-weight: 700; color: #E24B4A; width: 50px; text-align: right; flex-shrink: 0; }
+
+/* TOP PERFORMERS */
+.performers-list { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden; margin-bottom: 14px; }
+.performer-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #0d0d0d; transition: background 0.2s; }
+.performer-row:last-child { border-bottom: none; }
+.performer-row:hover { background: rgba(249,115,22,0.03); }
+.performer-domain { font-size: 14px; color: #e8e8e8; font-weight: 500; }
+.performer-score { font-size: 14px; font-weight: 800; color: #1D9E75; }
+
+/* NICHE PILLS */
+.niche-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.niche-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #999; border: 1px solid #1e1e1e; border-radius: 999px; padding: 6px 14px; text-decoration: none; transition: all 0.2s; cursor: pointer; }
+.niche-pill:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.niche-pill.active { color: #1D9E75; border-color: rgba(29,158,117,0.4); background: rgba(29,158,117,0.06); font-weight: 700; }
+
+/* CTA */
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin-bottom: 56px; }
+.cta-block h2 { font-size: 22px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: #aaa; margin-bottom: 24px; max-width: 560px; margin-left: auto; margin-right: auto; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.cta-note { font-size: 12px; color: #555; margin-top: 12px; }
+
+/* ALSO SEE */
+.also-see { font-size: 12px; color: #555; text-align: center; margin-bottom: 48px; }
+.also-see a { color: #f97316; }
+.also-see a:hover { text-decoration: underline; }
+
+/* LOADING */
+.loading-state { text-align: center; padding: 60px 20px; color: #555; font-size: 14px; }
+.loading-dot { display: inline-block; width: 7px; height: 7px; background: #f97316; border-radius: 50%; margin: 0 3px; animation: blink 1.4s infinite; }
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%,100%{opacity:0.2} 50%{opacity:1} }
+
+/* FOOTER */
+.footer { border-top: 1px solid #1e1e1e; padding: 32px 0; margin-top: 0; }
+.footer-inner { max-width: 860px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+
+@media (max-width: 600px) {
+  .wrap { padding: 0 20px; }
+  .top-stats { grid-template-columns: 1fr 1fr; }
+  .dist-grid { grid-template-columns: 1fr; }
+  .factor-name { width: 120px; font-size: 11px; }
+  .cta-block { padding: 28px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
+    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+  </div>
+  <div class="nav-links">
+    <a href="/stores">Stores</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/vocabulary">Vocabulary</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap" id="mainContent">
+  <div class="loading-state">
+    <div>Loading benchmark data<span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/benchmarks">Benchmarks</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const STORES_API = 'https://n8n-production-1d7c.up.railway.app/webhook/stores';
+
+const NICHES = {
+  fashion:  { label: 'Fashion',             icon: '&#128081;', db: ['fashion'] },
+  beauty:   { label: 'Beauty',              icon: '&#128132;', db: ['beauty'] },
+  health:   { label: 'Health and Wellness', icon: '&#128138;', db: ['health & wellness','health and wellness'] },
+  food:     { label: 'Food and Drink',      icon: '&#127822;', db: ['food & drink','food and drink'] },
+  home:     { label: 'Home and Living',     icon: '&#127968;', db: ['home & living','home and living'] },
+  sports:   { label: 'Sports and Outdoor',  icon: '&#127939;', db: ['sports & outdoor','sports and outdoor'] },
+  pets:     { label: 'Pets',               icon: '&#128062;', db: ['pets'] },
+  tech:     { label: 'Tech and Gadgets',   icon: '&#128187;', db: ['tech & gadgets','tech and gadgets'] },
+  kids:     { label: 'Kids and Baby',      icon: '&#129528;', db: ['kids & baby','kids and baby'] },
+  jewelry:  { label: 'Jewelry',            icon: '&#128141;', db: ['jewelry'] },
+};
+
+// Old scoring factor names displayed on the page (from screenshots)
+const FACTOR_DISPLAY = [
+  { key: 'structured', label: 'AI Structured Signals', max: 20 },
+  { key: 'semantic',   label: 'Semantic Clarity',      max: 18 },
+  { key: 'trust',      label: 'AI Trust Confidence',   max: 18 },
+  { key: 'interp',     label: 'AI Interpretability',   max: 12 },
+  { key: 'commerce',   label: 'Commerce Accuracy',     max: 10 },
+  { key: 'external',   label: 'External Authority',    max: 3  },
+];
+
+function getNicheFromPath() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const last = parts[parts.length - 1];
+  return NICHES[last] ? last : null;
+}
+
+function scoreColor(s) {
+  if (s >= 70) return '#1D9E75';
+  if (s >= 50) return '#f97316';
+  return '#E24B4A';
+}
+
+async function init() {
+  const nicheKey = getNicheFromPath();
+  if (!nicheKey) {
+    window.location.href = '/benchmarks';
+    return;
+  }
+  const niche = NICHES[nicheKey];
+
+  // Update meta
+  document.getElementById('pageTitle').textContent = `AI Readiness Benchmarks: ${niche.label} Stores 2026 - Atom Foundry`;
+  document.getElementById('pageDesc').setAttribute('content', `Real AI Readiness data for ${niche.label} Shopify stores. Average score, distribution, top performers and factor breakdown.`);
+  document.getElementById('pageCanonical').setAttribute('href', `https://atomfoundry.dev/benchmarks/${nicheKey}`);
+
+  // Fetch data
+  let rows = [];
+  try {
+    const res = await fetch(STORES_API, { headers: { Accept: 'application/json' } });
+    const data = await res.json();
+    rows = Array.isArray(data) ? data : (data.stores || []);
+  } catch(e) {}
+
+  // Filter to this niche
+  const nicheRows = rows.filter(r => {
+    const raw = (r.niche || '').toLowerCase().trim();
+    return niche.db.includes(raw);
+  });
+
+  const scores = nicheRows.map(r => Number(r.score ?? r.total_score ?? 0)).filter(s => s > 0);
+  const total = scores.length;
+  const avg = total ? Math.round(scores.reduce((a,b) => a+b, 0) / total) : 0;
+  const invisible = scores.filter(s => s < 50).length;
+  const partial = scores.filter(s => s >= 50 && s < 85).length;
+  const highly = scores.filter(s => s >= 85).length;
+  const best = total ? Math.max(...scores) : 0;
+  const invisPct = total ? Math.round(invisible/total*100) : 0;
+  const partialPct = total ? Math.round(partial/total*100) : 0;
+
+  // Top 5 performers
+  const top5 = nicheRows
+    .map(r => ({ domain: r.domain || r.store_domain || '', score: Number(r.score ?? r.total_score ?? 0) }))
+    .filter(r => r.score > 0 && r.domain)
+    .sort((a,b) => b.score - a.score)
+    .slice(0, 5);
+
+  // Factor averages: use sub-scores if available, else estimate from total
+  const factorAvgs = {};
+  FACTOR_DISPLAY.forEach(f => {
+    const vals = nicheRows.map(r => Number(r[f.key + '_score'] ?? r[f.key] ?? 0)).filter(v => v > 0);
+    factorAvgs[f.key] = vals.length > 5 ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length * 10)/10 : null;
+  });
+
+  // Build niche pills
+  const pillsHtml = Object.entries(NICHES).map(([k,n]) => {
+    const cls = k === nicheKey ? 'active' : '';
+    return `<a href="/benchmarks/${k}" class="niche-pill ${cls}">${n.icon} ${n.label}</a>`;
+  }).join('');
+
+  // Today for kicker
+  const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  const html = `
+  <div class="hero">
+    <div class="breadcrumb">
+      <a href="/">Home</a> &rsaquo;
+      <a href="/benchmarks">Benchmarks</a> &rsaquo;
+      <span>${niche.label}</span>
+    </div>
+    <div class="hero-kicker">AI Readiness Benchmarks &middot; ${niche.label.toUpperCase()} &middot; ${today.toUpperCase()}</div>
+    <h1>${niche.icon} ${niche.label} stores average<br><em>${avg}/100</em> on AI Readiness.</h1>
+    <p class="hero-sub">Real data from <strong>${total.toLocaleString('en-US')} scanned ${niche.label.toLowerCase()} Shopify stores</strong>. ${invisPct}% are classified as AI Invisible Risk. ${highly === 0 ? 'Not one store has reached Highly Recommendable status yet.' : `${highly} stores have reached Highly Recommendable status.`}</p>
+    <div class="top-stats">
+      <div class="top-stat"><div class="top-stat-num" style="color:#1D9E75;">${total.toLocaleString('en-US')}</div><div class="top-stat-label">Stores analyzed</div></div>
+      <div class="top-stat"><div class="top-stat-num" style="color:${scoreColor(avg)};">${avg}/100</div><div class="top-stat-label">Average AI score</div></div>
+      <div class="top-stat"><div class="top-stat-num" style="color:#E24B4A;">${invisPct}%</div><div class="top-stat-label">AI Invisible Risk</div></div>
+      <div class="top-stat"><div class="top-stat-num" style="color:#1D9E75;">${best}</div><div class="top-stat-label">Best score found</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">Readiness Distribution</div>
+    <h2>Where ${niche.label.toLowerCase()} stores actually stand</h2>
+    <div class="dist-grid">
+      <div class="dist-card">
+        <div class="dist-num" style="color:#E24B4A;">${invisPct}%</div>
+        <div class="dist-label">AI Invisible Risk</div>
+        <div class="dist-range">(below 50)</div>
+        <div class="dist-count">${invisible.toLocaleString('en-US')} stores</div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-num" style="color:#EF9F27;">${partialPct}%</div>
+        <div class="dist-label">Partially Visible</div>
+        <div class="dist-range">(50 to 84)</div>
+        <div class="dist-count">${partial.toLocaleString('en-US')} stores</div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-num" style="color:#1D9E75;">${highly}</div>
+        <div class="dist-label">Highly Recommendable</div>
+        <div class="dist-range">(85 or above)</div>
+        <div class="dist-count">out of ${total.toLocaleString('en-US')} stores</div>
+      </div>
+    </div>
+  </div>
+
+  ${FACTOR_DISPLAY.some(f => factorAvgs[f.key] !== null) ? `
+  <div class="section">
+    <div class="section-kicker">Factor Breakdown</div>
+    <h2>Where ${niche.label.toLowerCase()} stores fail most</h2>
+    <div class="factor-list">
+      ${FACTOR_DISPLAY.map(f => {
+        const val = factorAvgs[f.key];
+        if (val === null) return '';
+        const pct = Math.round(val/f.max*100);
+        return `<div class="factor-row">
+          <div class="factor-name">${f.label}</div>
+          <div class="factor-bar-wrap"><div class="factor-bar-fill" style="width:${pct}%"></div></div>
+          <div class="factor-score">${val}/${f.max}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>` : ''}
+
+  ${top5.length > 0 ? `
+  <div class="section">
+    <div class="section-kicker">Top Performers</div>
+    <h2>Highest scoring ${niche.label.toLowerCase()} stores</h2>
+    <div class="performers-list">
+      ${top5.map(p => `
+        <div class="performer-row">
+          <a href="/stores/${p.domain}" class="performer-domain">${p.domain}</a>
+          <div class="performer-score">${p.score}/100</div>
+        </div>`).join('')}
+    </div>
+  </div>` : ''}
+
+  <div class="section">
+    <div class="section-kicker">Browse by Category</div>
+    <h2>All niche benchmarks</h2>
+    <div class="niche-pills">${pillsHtml}</div>
+  </div>
+
+  <div class="cta-block">
+    <h2>How does your ${niche.label.toLowerCase()} store compare?</h2>
+    <p>The average ${niche.label.toLowerCase()} store scores ${avg}/100. Find out exactly where yours stands and what is costing you AI-driven revenue.</p>
+    <a href="/#score" class="btn-primary">Check My Score vs. ${niche.label} Average</a>
+    <div class="cta-note">Free &middot; No signup &middot; Results in 30 seconds</div>
+  </div>
+
+  <div class="also-see">
+    Also see: <a href="/benchmarks">All benchmarks</a> &nbsp;&middot;&nbsp; <a href="/methodology">Scoring methodology</a> &nbsp;&middot;&nbsp; <a href="/stores">Browse all stores</a> &nbsp;&middot;&nbsp; <a href="/research">Research report</a>
+  </div>
+  `;
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+init();
+</script>
+</body>
+</html>
