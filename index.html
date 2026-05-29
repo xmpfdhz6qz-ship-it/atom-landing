@@ -328,11 +328,11 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
     <div class="data-strip">
       <div><div class="data-strip-num" id="stripStores">&mdash;</div><div class="data-strip-label">DTC stores analyzed</div></div>
       <div class="data-strip-divider"></div>
-      <div><div class="data-strip-num">52%</div><div class="data-strip-label">AI Invisible Risk</div></div>
+      <div><div class="data-strip-num" id="stripRisk">52%</div><div class="data-strip-label">AI Invisible Risk</div></div>
       <div class="data-strip-divider"></div>
-      <div><div class="data-strip-num">45/100</div><div class="data-strip-label">Avg. AI Commerce Score</div></div>
+      <div><div class="data-strip-num" id="stripAvg">45/100</div><div class="data-strip-label">Avg. AI Commerce Score</div></div>
       <div class="data-strip-divider"></div>
-      <div><div class="data-strip-num">0%</div><div class="data-strip-label">Highly Recommendable</div></div>
+      <div><div class="data-strip-num" id="stripHighly">0%</div><div class="data-strip-label">Highly Recommendable</div></div>
     </div>
 
     <!-- THE SHIFT -->
@@ -370,7 +370,7 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
     <!-- OLD vs NEW -->
     <div class="section">
       <div class="section-kicker">Old world vs. new world</div>
-      <h2 class="section-title">What actually matters now in <em>e-commerce optimization</em></h2>
+      <h2 class="section-title">What actually matters now in <em>ecommerce optimization</em></h2>
       <p class="section-body">The tools that drove growth for the last decade still work. But they optimize for humans and Google. AI agents evaluate your store on entirely different criteria.</p>
       <div class="compare-grid">
         <div class="compare-col">
@@ -554,6 +554,13 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
     document.getElementById('signalsDate').innerText = 'May 2026 benchmark across ' + count.toLocaleString('en-US') + ' stores';
     document.getElementById('proofLine').innerText = 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores: ' + avg + '/100';
     document.getElementById('scorePreviewLabel').innerText = 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores';
+
+    // Live data-strip values
+    const invisPct = scores.length ? Math.round(scores.filter(s => s < 50).length / scores.length * 100) : 52;
+    const highPct = scores.length ? Math.round(scores.filter(s => s >= 85).length / scores.length * 100) : 0;
+    document.getElementById('stripRisk').innerText = invisPct + '%';
+    document.getElementById('stripAvg').innerText = avg + '/100';
+    document.getElementById('stripHighly').innerText = highPct + '%';
 
     // Animate circle to live average
     animateScore(avg);
