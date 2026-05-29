@@ -4,14 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Shopify Store AI Readiness Database: Atom Foundry</title>
-  <meta name="description" content="Browse analyzed ecommerce stores and their AI Commerce Scores. See how well AI shopping agents can understand, trust, and recommend each store.">
+  <meta name="description" content="Browse AI Commerce Scores for 6,789+ scanned DTC stores. See how well AI shopping agents can understand, trust, and recommend each store. Filter by niche and region.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://atomfoundry.dev/stores">
   <meta property="og:title" content="AI Commerce Store Database: Atom Foundry">
-  <meta property="og:description" content="Browse analyzed stores and their AI Commerce Scores.">
+  <meta property="og:description" content="Browse AI Commerce Scores for 6,789+ scanned DTC stores. Filter by niche, region, and score.">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="icon" href="/favicon.ico">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"AI Commerce Store Database","description":"AI Commerce Scores for thousands of scanned DTC Shopify stores. Measures how well AI shopping agents can understand, trust, and recommend each store.","publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"url":"https://atomfoundry.dev/stores"}</script>
   <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 100%; overflow-x: hidden; }
@@ -19,8 +22,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-se
 body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent), radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent); pointer-events: none; z-index: 0; }
 a { color: inherit; text-decoration: none; }
 .page { position: relative; z-index: 1; }
-
-/* NAV — identical to landing page */
 .nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
 .nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
 .nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
@@ -35,37 +36,33 @@ a { color: inherit; text-decoration: none; }
 .nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
 .nav-links a.cta-nav:hover { background: #ea580c; }
 @media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
-
-/* WRAP */
 .wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
-
-/* STATS BAR */
-.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin-bottom: 32px; }
+.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin-bottom: 20px; }
 .stat-cell { flex: 1; padding: 13px 16px; text-align: center; border-right: 1px solid #1e1e1e; }
 .stat-cell:last-child { border-right: none; }
 .stat-num { font-size: 21px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 3px; }
 .stat-label { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
-
-/* HERO */
-.hero { padding: 20px 0 24px; text-align: center; }
-.hero h1 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 14px; }
+/* NEW TODAY BADGE */
+.new-today-bar { background: rgba(29,158,117,0.06); border: 1px solid rgba(29,158,117,0.2); border-radius: 12px; padding: 10px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.new-today-dot { width: 8px; height: 8px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; animation: blink 2s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.new-today-text { font-size: 13px; color: #aaa; }
+.new-today-text strong { color: #1D9E75; }
+.hero { padding: 16px 0 20px; text-align: center; }
+.hero h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 12px; }
 .hero h1 em { font-style: normal; color: #f97316; }
-.hero-sub { font-size: 16px; color: #888; line-height: 1.7; max-width: 540px; margin: 0 auto 24px; }
-
-/* CONTROLS */
+.hero-sub { font-size: 15px; color: #888; line-height: 1.7; max-width: 540px; margin: 0 auto 20px; }
 .controls-box { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 14px; margin-bottom: 10px; display: grid; grid-template-columns: minmax(0,1fr) 148px 44px; gap: 8px; }
 .search-wrap { position: relative; display: flex; align-items: center; }
 .search-icon { position: absolute; left: 12px; color: #555; pointer-events: none; width: 14px; height: 14px; }
 .search { width: 100%; height: 44px; background: #080808; border: 1px solid #222; border-radius: 12px; color: #fff; font-family: inherit; font-size: 14px; padding: 0 12px 0 34px; outline: none; transition: all 0.2s; }
 .search:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.4); }
 .search::placeholder { color: #444; }
-.sort-select { height: 44px; background: #080808; border: 1px solid #222; border-radius: 12px; color: #fff; font-family: inherit; font-size: 13px; padding: 0 10px; outline: none; cursor: pointer; transition: border-color 0.2s; }
+.sort-select { height: 44px; background: #080808; border: 1px solid #222; border-radius: 12px; color: #fff; font-family: inherit; font-size: 13px; padding: 0 10px; outline: none; cursor: pointer; }
 .sort-select:focus { border-color: #f97316; }
 .refresh-btn { height: 44px; width: 44px; background: #080808; border: 1px solid #222; border-radius: 12px; color: #f97316; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .refresh-btn:hover { border-color: #f97316; background: rgba(249,115,22,0.08); }
 .refresh-btn svg { width: 14px; height: 14px; }
-
-/* FILTER BOXES */
 .filter-box { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
 .filter-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 10px; display: block; }
 .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -73,14 +70,14 @@ a { color: inherit; text-decoration: none; }
 .filter-pill:hover { border-color: rgba(249,115,22,0.4); color: #ddd; }
 .filter-pill.active { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.4); color: #f97316; }
 .pill-count { font-size: 10px; opacity: 0.6; font-weight: 500; }
-
-/* STATUS */
 .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; min-height: 22px; }
 .status { color: #555; font-size: 12px; }
 .clear-btn { font-size: 11px; color: #f97316; cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; display: none; }
 .clear-btn.visible { display: block; }
-
-/* STORE CARDS */
+/* SHOW ALL BUTTON */
+.show-all-wrap { text-align: center; padding: 16px 0 4px; }
+.show-all-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #888; background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 10px 20px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.show-all-btn:hover { color: #f97316; border-color: rgba(249,115,22,0.3); }
 .grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
 .store-card { display: block; overflow: hidden; background: #111; border: 1px solid #1e1e1e; border-radius: 14px; transition: transform 0.2s, border-color 0.2s; }
 .store-card:hover { transform: translateY(-2px); border-color: rgba(249,115,22,0.3); }
@@ -91,6 +88,7 @@ a { color: inherit; text-decoration: none; }
 .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .card-tag { font-size: 10px; color: #555; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 100px; padding: 2px 8px; }
 .card-tag.niche-tag { color: #f97316; border-color: rgba(249,115,22,0.2); background: rgba(249,115,22,0.06); }
+.card-tag.new-tag { color: #1D9E75; border-color: rgba(29,158,117,0.2); background: rgba(29,158,117,0.06); }
 .score-wrap { text-align: right; flex-shrink: 0; }
 .score { display: inline-flex; min-width: 68px; height: 40px; align-items: center; justify-content: center; border-radius: 10px; font-size: 17px; font-weight: 700; background: #0d0d0d; border: 1px solid currentColor; }
 .score.green { color: #1D9E75; }
@@ -98,8 +96,6 @@ a { color: inherit; text-decoration: none; }
 .score.orange { color: #E8A030; }
 .score.red { color: #E24B4A; }
 .score-label { display: block; margin-top: 5px; color: #444; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
-
-/* SKELETONS */
 .skeleton { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 14px 18px; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
 .skel { background: #1a1a1a; border-radius: 4px; animation: pulse 1.4s ease infinite; }
 .skel-d { height: 15px; width: 55%; margin-bottom: 7px; }
@@ -108,37 +104,29 @@ a { color: inherit; text-decoration: none; }
 .skel-tag { height: 18px; width: 55px; border-radius: 100px; }
 .skel-score { height: 40px; width: 68px; border-radius: 10px; }
 @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.55} }
-
 .empty { text-align: center; padding: 40px 20px; color: #555; font-size: 14px; background: #111; border: 1px solid #1e1e1e; border-radius: 14px; }
-
-/* CTA */
 .cta-block { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 12px; padding: 22px 24px; margin: 28px 0 20px; }
 .cta-block h2 { font-size: 17px; font-weight: 700; margin-bottom: 6px; color: #e8e8e8; }
 .cta-block p { margin: 0 0 14px; color: #888; font-size: 13px; line-height: 1.7; }
 .cta-btn { display: inline-block; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 14px; padding: 12px 22px; border-radius: 10px; border: 2px solid #dc2626; box-shadow: 0 6px 20px rgba(249,115,22,0.35); transition: all 0.25s; }
 .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(249,115,22,0.55); }
-
-/* SEO BOX */
 .seo-box { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; margin-top: 10px; }
 .seo-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #ddd; }
 .seo-box p { margin: 0 0 10px; color: #666; font-size: 13px; line-height: 1.8; }
 .seo-box p:last-child { margin-bottom: 0; }
-
-/* FOOTER */
 .footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .footer-left { font-size: 12px; color: #444; line-height: 2; }
 .footer-left a { color: #555; }
 .footer-left a:hover { color: #f97316; }
-.footer-right { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
 .footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
 .footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
 .footer-social a { color: #444; transition: color 0.2s; }
 .footer-social a:hover { color: #f97316; }
-
 @media (max-width: 600px) {
   .wrap { padding: 0 20px; }
-  .hero h1 { font-size: 26px; }
+  .hero h1 { font-size: 24px; }
   .controls-box { grid-template-columns: 1fr 44px; }
   .sort-select { display: none; }
   .card-inner { grid-template-columns: 1fr; }
@@ -175,12 +163,17 @@ a { color: inherit; text-decoration: none; }
       <div class="stat-cell"><div class="stat-num" id="stat-total">&mdash;</div><div class="stat-label">Stores analyzed</div></div>
       <div class="stat-cell"><div class="stat-num" id="stat-avg">&mdash;</div><div class="stat-label">Avg AI score</div></div>
       <div class="stat-cell"><div class="stat-num" id="stat-high">&mdash;</div><div class="stat-label">Score 70+</div></div>
-      <div class="stat-cell"><div class="stat-num" id="stat-low">&mdash;</div><div class="stat-label">Score below 30</div></div>
+      <div class="stat-cell"><div class="stat-num" id="stat-new">&mdash;</div><div class="stat-label">Added this week</div></div>
+    </div>
+
+    <div class="new-today-bar" id="newTodayBar" style="display:none;">
+      <div class="new-today-dot"></div>
+      <div class="new-today-text"><strong id="newTodayCount">0</strong> stores newly scanned in the last 24 hours</div>
     </div>
 
     <div class="hero">
       <h1>Stores that AI can <em>actually understand</em></h1>
-      <p class="hero-sub">Browse public AI Commerce Scores for DTC stores. See how well AI shopping agents can understand, trust, and recommend each one.</p>
+      <p class="hero-sub">The latest 100 newly scanned DTC stores. Filter by niche or region to explore more. Full index in <a href="/sitemap.xml" style="color:#f97316;">sitemap</a>.</p>
     </div>
 
     <div class="controls-box">
@@ -234,16 +227,22 @@ a { color: inherit; text-decoration: none; }
 
     <section class="grid" id="stores-list" aria-label="Analyzed stores"></section>
 
+    <div class="show-all-wrap" id="showAllWrap" style="display:none;">
+      <button class="show-all-btn" id="showAllBtn" type="button">
+        &#8595; Show all <span id="showAllCount">0</span> matching stores
+      </button>
+    </div>
+
     <div class="cta-block">
       <h2>Is your store invisible to AI shopping agents?</h2>
-      <p>Find out if ChatGPT, Perplexity, and Google AI Mode can understand and recommend your store. Free scan, results in 10 seconds.</p>
+      <p>Find out if ChatGPT, Perplexity, and Google AI Mode can understand and recommend your store. Free scan, results in 30 seconds.</p>
       <a class="cta-btn" href="/#score">Get My Free AI Score</a>
     </div>
 
     <section class="seo-box">
       <h2>Why this database exists</h2>
       <p>AI assistants now answer shopping questions before a buyer ever reaches Google. Stores with clear schema, trust signals, pricing, and product content are far easier for AI systems to understand and recommend.</p>
-      <p>This is the public index for Atom Foundry's AI Commerce Graph. It maps how AI systems understand, trust, and route commerce decisions across thousands of DTC stores.</p>
+      <p>This is the public index for Atom Foundry&#39;s AI Commerce Graph. It maps how AI systems understand, trust, and route commerce decisions across thousands of DTC stores. For AI agents and crawlers: the complete store index is available in <a href="/sitemap.xml" style="color:#f97316;">sitemap.xml</a>.</p>
     </section>
 
   </div>
@@ -276,13 +275,17 @@ a { color: inherit; text-decoration: none; }
 
 <script>
 const STORES_API_URL = "https://n8n-production-1d7c.up.railway.app/webhook/stores";
+const DISPLAY_LIMIT = 100; // Show latest 100 by default
 const EU_COUNTRIES = new Set(['CZ','SK','DE','AT','CH','PL','HU','RO','FR','IT','ES','NL','BE','SE','DK','FI','NO','PT','GB']);
-const state = { stores: [], query: "", sort: "newest", niche: "all", region: "all" };
+const state = { stores: [], query: "", sort: "newest", niche: "all", region: "all", showAll: false };
 const listEl = document.getElementById("stores-list");
 const statusEl = document.getElementById("status");
 const searchEl = document.getElementById("search");
 const sortEl = document.getElementById("sort");
 const clearBtn = document.getElementById("clear-btn");
+const showAllWrap = document.getElementById("showAllWrap");
+const showAllBtn = document.getElementById("showAllBtn");
+const showAllCount = document.getElementById("showAllCount");
 
 const NICHE_DB_MAP = {
   'fashion':'fashion','beauty':'beauty','health & wellness':'health',
@@ -315,6 +318,20 @@ function normalizeStore(raw) {
   return store;
 }
 
+function isNew(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return false;
+  return (Date.now() - d.getTime()) < 24 * 60 * 60 * 1000;
+}
+
+function isThisWeek(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return false;
+  return (Date.now() - d.getTime()) < 7 * 24 * 60 * 60 * 1000;
+}
+
 function scoreClass(s) {
   if (s >= 85) return "green";
   if (s >= 70) return "amber";
@@ -342,67 +359,87 @@ function formatDate(v) {
   return d.toISOString().slice(0,10);
 }
 
-function getRegionFiltered() {
-  return state.stores.filter(s => state.region === 'all' || s.region === state.region);
-}
-
 function updateStats() {
   const all = state.stores;
-  document.getElementById("stat-total").textContent = all.length || "&mdash;";
-  if (!all.length) { ["stat-avg","stat-high","stat-low"].forEach(id => document.getElementById(id).textContent = "&mdash;"); return; }
+  document.getElementById("stat-total").textContent = all.length ? all.length.toLocaleString('en-US') : '\u2014';
+  if (!all.length) { ["stat-avg","stat-high","stat-new"].forEach(id => document.getElementById(id).textContent = '\u2014'); return; }
   document.getElementById("stat-avg").textContent = Math.round(all.reduce((a,s) => a+s.score,0)/all.length);
-  document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length;
-  document.getElementById("stat-low").textContent = all.filter(s => s.score < 30).length;
+  document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length.toLocaleString('en-US');
+  document.getElementById("stat-new").textContent = all.filter(s => isThisWeek(s.date)).length.toLocaleString('en-US');
+
+  // New today badge
+  const newToday = all.filter(s => isNew(s.date)).length;
+  if (newToday > 0) {
+    document.getElementById("newTodayCount").textContent = newToday.toLocaleString('en-US');
+    document.getElementById("newTodayBar").style.display = 'flex';
+  }
 }
 
 function updateRegionCounts() {
-  document.getElementById("rc-all").textContent = state.stores.length;
-  document.getElementById("rc-usa").textContent = state.stores.filter(s => s.region === 'usa').length;
-  document.getElementById("rc-canada").textContent = state.stores.filter(s => s.region === 'canada').length;
-  document.getElementById("rc-europe").textContent = state.stores.filter(s => s.region === 'europe').length;
+  const filtered = state.stores.filter(s => state.niche === 'all' || s.niche === state.niche);
+  document.getElementById("rc-all").textContent = filtered.length;
+  document.getElementById("rc-usa").textContent = filtered.filter(s => s.region === 'usa').length;
+  document.getElementById("rc-canada").textContent = filtered.filter(s => s.region === 'canada').length;
+  document.getElementById("rc-europe").textContent = filtered.filter(s => s.region === 'europe').length;
 }
 
 function updateNicheCounts() {
-  const rs = getRegionFiltered();
-  document.getElementById("c-all").textContent = rs.length;
+  const filtered = state.stores.filter(s => state.region === 'all' || s.region === state.region);
+  document.getElementById("c-all").textContent = filtered.length;
   ['fashion','beauty','health','food','home','sports','pets','tech','kids','jewelry'].forEach(n => {
     const el = document.getElementById("c-"+n);
-    if (el) el.textContent = rs.filter(s => s.niche === n).length;
+    if (el) el.textContent = filtered.filter(s => s.niche === n).length;
   });
-  document.getElementById("c-other").textContent = rs.filter(s => s.niche === "other").length;
+  document.getElementById("c-other").textContent = filtered.filter(s => s.niche === "other").length;
 }
 
-function renderStores() {
+function getFilteredSorted() {
   const query = state.query.toLowerCase();
   let stores = state.stores.filter(s => {
-    const txt = [s.domain, s.store_name, s.country, s.platform, s.readiness].join(" ").toLowerCase();
+    const txt = [s.domain, s.store_name, s.country, s.platform].join(" ").toLowerCase();
     return (!query || txt.includes(query))
       && (state.region === 'all' || s.region === state.region)
       && (state.niche === 'all' || s.niche === state.niche);
   });
-  stores = stores.sort((a,b) => {
+  return stores.sort((a,b) => {
     if (state.sort === "best") return b.score - a.score;
     if (state.sort === "worst") return a.score - b.score;
     if (state.sort === "az") return a.domain.localeCompare(b.domain);
     return new Date(b.date||0) - new Date(a.date||0);
   });
-  listEl.innerHTML = "";
-  const hasFilter = query || state.region !== "all" || state.niche !== "all";
+}
+
+function renderStores() {
+  const allFiltered = getFilteredSorted();
+  const hasFilter = state.query || state.region !== "all" || state.niche !== "all";
   clearBtn.classList.toggle("visible", hasFilter);
-  if (!stores.length) {
+  listEl.innerHTML = "";
+
+  if (!allFiltered.length) {
     listEl.innerHTML = `<div class="empty">${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>`;
     statusEl.textContent = "0 stores";
+    showAllWrap.style.display = 'none';
     return;
   }
-  statusEl.textContent = `${stores.length.toLocaleString()} store${stores.length !== 1 ? "s" : ""}${hasFilter ? " matched" : ""}`;
+
+  // Determine how many to show
+  const limit = state.showAll ? allFiltered.length : DISPLAY_LIMIT;
+  const toShow = allFiltered.slice(0, limit);
+  const remaining = allFiltered.length - toShow.length;
+
+  statusEl.textContent = state.showAll
+    ? `${allFiltered.length.toLocaleString('en-US')} stores${hasFilter ? " matched" : ""}`
+    : `Showing ${toShow.length} newest${hasFilter ? " matched" : ""} of ${allFiltered.length.toLocaleString('en-US')} total`;
+
   const frag = document.createDocumentFragment();
-  for (const store of stores) {
+  for (const store of toShow) {
     const a = document.createElement("a");
     a.href = `/store/${encodeURIComponent(store.domain)}`;
     a.className = "store-card";
     const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase()+store.niche.slice(1) : null;
     const date = formatDate(store.date);
     const readinessLabel = store.readiness ? getLevelLabel(store.readiness) : '';
+    const newBadge = isNew(store.date) ? '<span class="card-tag new-tag">New</span>' : '';
     a.innerHTML = `<div class="card-inner"><div>
       <div class="domain">${store.domain}</div>
       ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
@@ -410,7 +447,7 @@ function renderStores() {
       <div class="card-tags">
         ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
         ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
-        ${store.platform ? `<span class="card-tag">${store.platform}</span>` : ""}
+        ${newBadge}
         ${date ? `<span class="card-tag">${date}</span>` : ""}
       </div>
     </div><div class="score-wrap">
@@ -420,6 +457,14 @@ function renderStores() {
     frag.appendChild(a);
   }
   listEl.appendChild(frag);
+
+  // Show "Show all" button if there are more
+  if (remaining > 0 && !state.showAll) {
+    showAllCount.textContent = allFiltered.length.toLocaleString('en-US');
+    showAllWrap.style.display = 'block';
+  } else {
+    showAllWrap.style.display = 'none';
+  }
 }
 
 function showSkeletons(n=8) {
@@ -429,11 +474,13 @@ function showSkeletons(n=8) {
 async function loadStores() {
   statusEl.textContent = "Loading...";
   showSkeletons();
+  state.showAll = false;
   try {
     const res = await fetch(STORES_API_URL, { headers: { "Accept": "application/json" } });
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
     const rows = Array.isArray(data) ? data : (data.stores || []);
+    // No JS-side limit on fetched data — show all if filtered, cap at 100 newest otherwise
     state.stores = rows.map(normalizeStore).filter(s => s.domain);
     updateStats();
     updateRegionCounts();
@@ -445,6 +492,12 @@ async function loadStores() {
   }
 }
 
+showAllBtn.addEventListener("click", () => {
+  state.showAll = true;
+  showAllWrap.style.display = 'none';
+  renderStores();
+});
+
 document.getElementById("region-pills").addEventListener("click", e => {
   const pill = e.target.closest(".filter-pill");
   if (!pill) return;
@@ -452,6 +505,7 @@ document.getElementById("region-pills").addEventListener("click", e => {
   pill.classList.add("active");
   state.region = pill.dataset.region;
   state.niche = "all";
+  state.showAll = false;
   document.querySelectorAll("#niche-pills .filter-pill").forEach(p => p.classList.remove("active"));
   document.querySelector('[data-niche="all"]').classList.add("active");
   updateNicheCounts();
@@ -464,14 +518,15 @@ document.getElementById("niche-pills").addEventListener("click", e => {
   document.querySelectorAll("#niche-pills .filter-pill").forEach(p => p.classList.remove("active"));
   pill.classList.add("active");
   state.niche = pill.dataset.niche;
+  state.showAll = false;
   renderStores();
 });
 
-searchEl.addEventListener("input", e => { state.query = e.target.value; renderStores(); });
+searchEl.addEventListener("input", e => { state.query = e.target.value; state.showAll = false; renderStores(); });
 sortEl.addEventListener("change", e => { state.sort = e.target.value; renderStores(); });
 document.getElementById("refresh").addEventListener("click", loadStores);
 clearBtn.addEventListener("click", () => {
-  state.query = ""; state.niche = "all"; state.region = "all";
+  state.query = ""; state.niche = "all"; state.region = "all"; state.showAll = false;
   searchEl.value = "";
   document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
   document.querySelector('[data-niche="all"]').classList.add("active");
