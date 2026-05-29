@@ -6,49 +6,53 @@
 <title>What AI Agents Actually Read: Human View vs AI View</title>
 <meta name="description" content="Your beautiful website is not what AI shopping agents see. This guide shows exactly what signals AI agents read and evaluate when they visit your ecommerce store.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://atomfoundry.dev/learn/what-ai-agents-read">
+<link rel="canonical" href="https://atomfoundry.dev/vocabulary/learn/what-ai-agents-read">
 <meta property="og:title" content="What AI Agents Actually Read: Human View vs AI View">
 <meta property="og:description" content="Your beautiful website is not what AI shopping agents see. This guide shows exactly what signals AI agents read and evaluate when they visit your ecommerce store.">
-<meta property="og:url" content="https://atomfoundry.dev/learn/what-ai-agents-read">
+<meta property="og:url" content="https://atomfoundry.dev/vocabulary/learn/what-ai-agents-read">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" href="/favicon.ico">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What AI Agents Actually Read: Human View vs AI View","description":"Your beautiful website is not what AI shopping agents see. This guide shows exactly what signals AI agents read and evaluate when they visit your ecommerce store.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/learn/what-ai-agents-read"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What AI Agents Actually Read: Human View vs AI View","description":"Your beautiful website is not what AI shopping agents see. This guide shows exactly what signals AI agents read and evaluate when they visit your ecommerce store.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/vocabulary/learn/what-ai-agents-read"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What do AI shopping agents actually read?","acceptedAnswer":{"@type":"Answer","text":"AI agents primarily read JSON-LD schema markup, server-rendered HTML text including prices and policies, heading hierarchy, and image alt text. They cannot reliably read JavaScript-rendered content, CSS-hidden elements, or information inside iframes."}},{"@type":"Question","name":"Why can AI not read JavaScript-rendered content?","acceptedAnswer":{"@type":"Answer","text":"Most AI crawlers fetch initial HTML without executing JavaScript. Content that only appears after JavaScript runs is typically not visible to AI agents. This is why prices, policies, and key product information need to be in server-rendered HTML."}},{"@type":"Question","name":"What is the most impactful fix for AI readability?","acceptedAnswer":{"@type":"Answer","text":"Adding JSON-LD schema markup is typically the highest-impact change. Product schema, Organization schema, and AggregateRating schema can increase an AI Commerce Score by 15 to 20 points."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://atomfoundry.dev/learn"},{"@type":"ListItem","position":3,"name":"What AI Agents Actually Read","item":"https://atomfoundry.dev/learn/what-ai-agents-read"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Vocabulary","item":"https://atomfoundry.dev/vocabulary"},{"@type":"ListItem","position":3,"name":"Learn","item":"https://atomfoundry.dev/vocabulary/learn"},{"@type":"ListItem","position":4,"name":"What AI Agents Actually Read","item":"https://atomfoundry.dev/vocabulary/learn/what-ai-agents-read"}]}</script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
-  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --bg: #080808; --bg2: #111; --bg3: #0d0d0d;
   --border: #1e1e1e; --border2: #2a2a2a;
-  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #fff;
 }
 body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.12), transparent); pointer-events: none; z-index: 0; }
 a { color: inherit; text-decoration: none; }
-.nav { padding: 20px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.nav-brand { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
-.nav-logo { font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+
+/* NAV - identical to landing page */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
 .nav-logo span { color: var(--orange); }
-.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
-.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; justify-content: flex-end; }
+.nav-subline { font-size: 13px; color: var(--orange); font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
 .nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
 .nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
 .nav-links a.active { color: var(--orange); border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.05); }
 .nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
 .nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
 .nav-links a.cta-nav:hover { background: var(--orange-dark); }
-@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; justify-content: flex-start; } }
-.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-.hero { padding: 64px 0 48px; }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
+
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.hero { padding: 56px 0 40px; }
 .breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .breadcrumb a { color: var(--dim); }
 .breadcrumb a:hover { color: var(--orange); }
 .hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
 h1 { font-size: clamp(28px,4.5vw,46px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
 h1 em { font-style: normal; color: var(--orange); }
-.hero-sub { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 620px; margin-bottom: 28px; }
+.hero-sub { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 660px; margin-bottom: 28px; }
 .article-meta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
 .meta-item { font-size: 12px; color: var(--dim); display: flex; align-items: center; gap: 5px; }
 .meta-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; }
@@ -58,10 +62,10 @@ h1 em { font-style: normal; color: var(--orange); }
 .tag-advanced { color: #EF9F27; background: rgba(239,159,39,0.08); border: 1px solid rgba(239,159,39,0.2); }
 .section { padding: 40px 0; border-top: 1px solid var(--border); }
 .section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
-h2 { font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 { font-size: clamp(20px,3vw,28px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
 h2 em { font-style: normal; color: var(--orange); }
 h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px; }
-.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 20px; }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 680px; margin-bottom: 20px; }
 .body-text strong { color: var(--text); }
 .body-text a { color: var(--orange); text-decoration: underline; }
 .definition-box { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.3); border-radius: 16px; padding: 24px 28px; margin: 24px 0; }
@@ -88,13 +92,6 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
 .step-num { width: 32px; height: 32px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--orange); flex-shrink: 0; }
 .step-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
 .step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-.signal-list { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 20px 0; }
-.signal-row { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,0.04); }
-.signal-row:last-child { border-bottom: none; }
-.signal-name { font-size: 13px; color: var(--muted); flex: 1; font-weight: 500; }
-.signal-bar-wrap { width: 100px; height: 5px; background: #1a1a1a; border-radius: 999px; overflow: hidden; flex-shrink: 0; }
-.signal-bar { height: 100%; border-radius: 999px; }
-.signal-impact { font-size: 11px; font-weight: 700; width: 70px; text-align: right; flex-shrink: 0; }
 .next-articles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
 .next-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; text-decoration: none; transition: all 0.2s; }
 .next-card:hover { border-color: rgba(249,115,22,0.3); transform: translateY(-2px); }
@@ -110,8 +107,7 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
 .faq-item.open .faq-chevron { transform: rotate(180deg); }
 .faq-answer { display: none; padding: 14px 20px 16px; font-size: 13px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
 .faq-item.open .faq-answer { display: block; }
-.faq-answer a { color: var(--orange); text-decoration: underline; }
-.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: #000; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
 .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
 .btn-secondary:hover { color: var(--white); border-color: #444; }
@@ -120,21 +116,26 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
 .cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 24px; }
 .cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .cta-note { font-size: 12px; color: var(--dim); margin-top: 12px; }
+
+/* FOOTER */
 .footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
-.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
-.footer-left a { color: var(--dim); }
+.footer-inner { max-width: 860px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
 .footer-left a:hover { color: var(--orange); }
-.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 0.04em; text-align: right; }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); text-align: right; }
 .footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
 .footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
 .footer-social a { color: #444; transition: color 0.2s; }
 .footer-social a:hover { color: var(--orange); }
+
 @media (max-width: 600px) {
+  .wrap { padding: 0 20px; }
   .two-col { grid-template-columns: 1fr; }
   .stat-row { grid-template-columns: 1fr 1fr; }
   .next-articles { grid-template-columns: 1fr; }
   .cta-block { padding: 24px 18px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -142,23 +143,23 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
 <nav class="nav">
   <div class="nav-brand">
     <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
-    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
+    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
   </div>
   <div class="nav-links">
-    <a href="/">Home</a>
     <a href="/stores">Stores</a>
-    <a href="/geo">GEO</a>
-    <a href="/aco">ACO</a>
     <a href="/methodology">Methodology</a>
+    <a href="/vocabulary" class="active">Vocabulary</a>
     <a href="/research" class="research">Research</a>
-    <a href="/" class="cta-nav">Free Score</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
   </div>
 </nav>
 <div class="wrap">
   <div class="hero">
     <div class="breadcrumb">
       <a href="/">Home</a> &rsaquo;
-      <a href="/learn">Learn</a> &rsaquo;
+      <a href="/vocabulary">Vocabulary</a> &rsaquo;
+      <a href="/vocabulary/learn">Learn</a> &rsaquo;
       <span>What AI Agents Actually Read</span>
     </div>
     <div class="hero-kicker">AI Commerce University</div>
@@ -176,21 +177,67 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
     <div class="section-kicker">The core insight</div>
     <h2>Two completely different <em>experiences</em></h2>
     <div class="two-col">
-      <div class="col-card"><div class="col-card-label human">What humans see</div><div class="col-item good">&#10003; Premium lifestyle photography</div><div class="col-item good">&#10003; Compelling brand story</div><div class="col-item good">&#10003; Beautiful typography</div><div class="col-item good">&#10003; Emotional product copy</div><div class="col-item good">&#10003; Trust-building design</div></div>
-      <div class="col-card"><div class="col-card-label ai">What AI agents see</div><div class="col-item bad">&#10007; image_product_hero_v3.jpg</div><div class="col-item bad">&#10007; Generic H1 with no semantic value</div><div class="col-item bad">&#10007; Price rendered via JavaScript</div><div class="col-item bad">&#10007; No Product schema detected</div><div class="col-item bad">&#10007; Return policy in JS modal</div></div>
+      <div class="col-card">
+        <div class="col-card-label human">What humans see</div>
+        <div class="col-item good">&#10003; Premium lifestyle photography</div>
+        <div class="col-item good">&#10003; Compelling brand story</div>
+        <div class="col-item good">&#10003; Beautiful typography</div>
+        <div class="col-item good">&#10003; Emotional product copy</div>
+        <div class="col-item good">&#10003; Trust-building design</div>
+      </div>
+      <div class="col-card">
+        <div class="col-card-label ai">What AI agents see</div>
+        <div class="col-item bad">&#10007; image_product_hero_v3.jpg</div>
+        <div class="col-item bad">&#10007; Generic H1 with no semantic value</div>
+        <div class="col-item bad">&#10007; Price rendered via JavaScript</div>
+        <div class="col-item bad">&#10007; No Product schema detected</div>
+        <div class="col-item bad">&#10007; Return policy in JS modal</div>
+      </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-kicker">What AI reads well</div>
     <h2>Signals that <em>AI agents can read</em></h2>
     <div class="steps-list">
-      <div class="step-item"><div class="step-num">1</div><div><div class="step-title">JSON-LD Schema Markup</div><div class="step-desc">Product schema, Organization schema, AggregateRating schema. The highest-value signals AI reads. Tells AI exactly what you sell, what it costs, and how customers rate it.</div></div></div>
-      <div class="step-item"><div class="step-num">2</div><div><div class="step-title">Server-Rendered HTML Text</div><div class="step-desc">Any text in the HTML source without JavaScript. Prices, policies, descriptions, FAQ answers. If it only appears after JavaScript runs, AI typically cannot read it.</div></div></div>
-      <div class="step-item"><div class="step-num">3</div><div><div class="step-title">Heading Hierarchy (H1, H2, H3)</div><div class="step-desc">AI uses heading structure to understand page organization. A clear hierarchy gives AI a structural map of content. Missing hierarchy makes extraction harder.</div></div></div>
-      <div class="step-item"><div class="step-num">4</div><div><div class="step-title">Image Alt Text</div><div class="step-desc">AI reads alt text, not images. "image_2847.jpg" tells AI nothing. "Organic cotton crew-neck sweatshirt in navy, 100% GOTS-certified" is rich semantic signal.</div></div></div>
-      <div class="step-item"><div class="step-num">5</div><div><div class="step-title">llms.txt and agents.md</div><div class="step-desc">Explicit structured information for AI visitors via Shopify Agentic Dashboard. Quality matters more than existence.</div></div></div>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">JSON-LD Schema Markup</div>
+          <div class="step-desc">Product schema, Organization schema, AggregateRating schema. The highest-value signals AI reads. Tells AI exactly what you sell, what it costs, and how customers rate it.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Server-Rendered HTML Text</div>
+          <div class="step-desc">Any text in the HTML source without JavaScript. Prices, policies, descriptions, FAQ answers. If it only appears after JavaScript runs, AI typically cannot read it.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Heading Hierarchy (H1, H2, H3)</div>
+          <div class="step-desc">AI uses heading structure to understand page organization. A clear hierarchy gives AI a structural map of content. Missing hierarchy makes extraction harder.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Image Alt Text</div>
+          <div class="step-desc">AI reads alt text, not images. "image_2847.jpg" tells AI nothing. "Organic cotton crew-neck sweatshirt in navy, 100% GOTS-certified" is rich semantic signal.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">llms.txt and agents.md</div>
+          <div class="step-desc">Explicit structured information for AI visitors via Shopify Agentic Dashboard. Quality matters more than existence.</div>
+        </div>
+      </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-kicker">What AI cannot read</div>
     <h2>Where most stores <em>lose AI visibility</em></h2>
@@ -217,8 +264,8 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
     <h2>See your store&#39;s <em>AI Commerce Score</em> free</h2>
     <p>Apply what you just learned. Get your real AI Commerce Score across 8 factors in 30 seconds.</p>
     <div class="cta-row">
-      <a href="/" class="btn-primary">Get My Free AI Commerce Score</a>
-      <a href="/learn" class="btn-secondary">Back to all guides</a>
+      <a href="/#score" class="btn-primary">Get My Free AI Commerce Score</a>
+      <a href="/vocabulary/learn" class="btn-secondary">Back to all guides</a>
     </div>
     <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
   </div>
@@ -227,12 +274,12 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
     <div class="section-kicker">Continue reading</div>
     <h2>Up next</h2>
     <div class="next-articles">
-      <a href="/learn/ai-retrieval-signals" class="next-card">
+      <a href="/vocabulary/learn/ai-retrieval-signals" class="next-card">
         <div class="next-card-label">Next guide</div>
         <div class="next-card-title">AI Retrieval Signals</div>
         <div class="next-card-desc">The complete breakdown of all 8 scoring factors.</div>
       </a>
-      <a href="/learn/machine-readable-commerce" class="next-card">
+      <a href="/vocabulary/learn/machine-readable-commerce" class="next-card">
         <div class="next-card-label">Also recommended</div>
         <div class="next-card-title">Machine-Readable Commerce</div>
         <div class="next-card-desc">The architectural approach to AI-readable stores.</div>
@@ -241,31 +288,31 @@ h3 { font-size: 17px; font-weight: 700; color: var(--white); margin: 24px 0 10px
   </div>
 
 </div>
-<div class="footer">
+<footer class="footer">
   <div class="footer-inner">
     <div class="footer-left">
-      <a href="/">Home</a> &nbsp;&middot;&nbsp;
-      <a href="/learn">Learn</a> &nbsp;&middot;&nbsp;
-      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
-      <a href="/ai-commerce-intelligence">AI Commerce Intelligence</a> &nbsp;&middot;&nbsp;
-      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
       <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary/learn">Learn</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
       <a href="/privacy-policy">Privacy</a><br>
-      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; AI Commerce Intelligence Platform</span>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
     </div>
     <div>
       <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
       <div class="footer-social">
-        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
-        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
       </div>
-      <div class="footer-platform">AI Commerce Intelligence Platform</div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
     </div>
   </div>
-</div>
+</footer>
+
 <script>
 function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
 </script>
