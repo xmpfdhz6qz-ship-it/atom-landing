@@ -42,12 +42,7 @@ a { color: inherit; text-decoration: none; }
 .stat-cell:last-child { border-right: none; }
 .stat-num { font-size: 21px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 3px; }
 .stat-label { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
-/* NEW TODAY BADGE */
-.new-today-bar { background: rgba(29,158,117,0.06); border: 1px solid rgba(29,158,117,0.2); border-radius: 12px; padding: 10px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-.new-today-dot { width: 8px; height: 8px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; animation: blink 2s ease infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.new-today-text { font-size: 13px; color: #aaa; }
-.new-today-text strong { color: #1D9E75; }
+
 .hero { padding: 16px 0 20px; text-align: center; }
 .hero h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 12px; }
 .hero h1 em { font-style: normal; color: #f97316; }
@@ -88,7 +83,6 @@ a { color: inherit; text-decoration: none; }
 .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .card-tag { font-size: 10px; color: #555; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 100px; padding: 2px 8px; }
 .card-tag.niche-tag { color: #f97316; border-color: rgba(249,115,22,0.2); background: rgba(249,115,22,0.06); }
-.card-tag.new-tag { color: #1D9E75; border-color: rgba(29,158,117,0.2); background: rgba(29,158,117,0.06); }
 .score-wrap { text-align: right; flex-shrink: 0; }
 .score { display: inline-flex; min-width: 68px; height: 40px; align-items: center; justify-content: center; border-radius: 10px; font-size: 17px; font-weight: 700; background: #0d0d0d; border: 1px solid currentColor; }
 .score.green { color: #1D9E75; }
@@ -166,14 +160,9 @@ a { color: inherit; text-decoration: none; }
       <div class="stat-cell"><div class="stat-num" id="stat-new">&mdash;</div><div class="stat-label">Added this week</div></div>
     </div>
 
-    <div class="new-today-bar" id="newTodayBar" style="display:none;">
-      <div class="new-today-dot"></div>
-      <div class="new-today-text"><strong id="newTodayCount">0</strong> stores newly scanned in the last 24 hours</div>
-    </div>
-
     <div class="hero">
       <h1>Stores that AI can <em>actually understand</em></h1>
-      <p class="hero-sub">The latest 100 newly scanned DTC stores. Filter by niche or region to explore more. Full index in <a href="/sitemap.xml" style="color:#f97316;">sitemap</a>.</p>
+      <p class="hero-sub">The latest 100 newly scanned DTC stores. Filter by niche or region to explore more.</p>
     </div>
 
     <div class="controls-box">
@@ -318,13 +307,6 @@ function normalizeStore(raw) {
   return store;
 }
 
-function isNew(dateStr) {
-  if (!dateStr) return false;
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return false;
-  return (Date.now() - d.getTime()) < 24 * 60 * 60 * 1000;
-}
-
 function isThisWeek(dateStr) {
   if (!dateStr) return false;
   const d = new Date(dateStr);
@@ -366,13 +348,6 @@ function updateStats() {
   document.getElementById("stat-avg").textContent = Math.round(all.reduce((a,s) => a+s.score,0)/all.length);
   document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length.toLocaleString('en-US');
   document.getElementById("stat-new").textContent = all.filter(s => isThisWeek(s.date)).length.toLocaleString('en-US');
-
-  // New today badge
-  const newToday = all.filter(s => isNew(s.date)).length;
-  if (newToday > 0) {
-    document.getElementById("newTodayCount").textContent = newToday.toLocaleString('en-US');
-    document.getElementById("newTodayBar").style.display = 'flex';
-  }
 }
 
 function updateRegionCounts() {
@@ -439,7 +414,6 @@ function renderStores() {
     const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase()+store.niche.slice(1) : null;
     const date = formatDate(store.date);
     const readinessLabel = store.readiness ? getLevelLabel(store.readiness) : '';
-    const newBadge = isNew(store.date) ? '<span class="card-tag new-tag">New</span>' : '';
     a.innerHTML = `<div class="card-inner"><div>
       <div class="domain">${store.domain}</div>
       ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
@@ -447,7 +421,6 @@ function renderStores() {
       <div class="card-tags">
         ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
         ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
-        ${newBadge}
         ${date ? `<span class="card-tag">${date}</span>` : ""}
       </div>
     </div><div class="score-wrap">
