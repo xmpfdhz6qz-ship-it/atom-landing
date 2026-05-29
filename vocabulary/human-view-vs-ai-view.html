@@ -160,6 +160,15 @@ h2 em { font-style: normal; color: var(--orange); }
 .impact-points { font-size: 12px; font-weight: 700; width: 56px; text-align: right; flex-shrink: 0; }
 
 /* SCORE ZONES */
+.zones-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 24px; }
+.zone-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; text-align: center; }
+.zone-score { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.zone-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.zone-card.green .zone-score { color: #1D9E75; }
+.zone-card.amber .zone-score { color: #EF9F27; }
+.zone-card.orange .zone-score { color: #f97316; }
+.zone-card.red .zone-score { color: #E24B4A; }
+/* OLD SCORE ZONES */
 .score-zones { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border2); border-radius: 14px; overflow: hidden; border: 1px solid var(--border2); margin: 28px 0; }
 .sz-card { background: var(--bg2); padding: 18px 14px; text-align: center; }
 .sz-range { font-size: 22px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
@@ -529,26 +538,22 @@ h2 em { font-style: normal; color: var(--orange); }
     <div class="section-kicker">Score zones</div>
     <h2>Where does your store sit on the <em>AI Commerce Scale?</em></h2>
 
-    <div class="score-zones">
-      <div class="sz-card">
-        <div class="sz-range" style="color:#1D9E75;">85 to 100</div>
-        <div class="sz-name" style="color:#1D9E75;">Highly Recommendable&trade;</div>
-        <div class="sz-desc">AI agents can clearly understand, trust, and recommend this store.</div>
+    <div class="zones-grid">
+      <div class="zone-card green">
+        <div class="zone-score">85 to 100</div>
+        <div class="zone-label"><strong style="color:#1D9E75;">Highly Recommendable</strong><br>AI agents understand, trust, and confidently recommend your store.</div>
       </div>
-      <div class="sz-card">
-        <div class="sz-range" style="color:#EF9F27;">70 to 84</div>
-        <div class="sz-name" style="color:#EF9F27;">Moderately Recommendable&trade;</div>
-        <div class="sz-desc">AI recommends this store but stronger signals would win more traffic.</div>
+      <div class="zone-card amber">
+        <div class="zone-score">70 to 84</div>
+        <div class="zone-label"><strong style="color:#EF9F27;">Moderately Recommendable</strong><br>AI recommends you but stronger signals would increase frequency and position.</div>
       </div>
-      <div class="sz-card">
-        <div class="sz-range" style="color:#E8A030;">50 to 69</div>
-        <div class="sz-name" style="color:#E8A030;">Low Rec. Confidence&trade;</div>
-        <div class="sz-desc">AI can see the store but misses key signals to recommend confidently.</div>
+      <div class="zone-card orange">
+        <div class="zone-score">50 to 69</div>
+        <div class="zone-label"><strong style="color:#f97316;">Low Confidence</strong><br>AI can see your store but misses critical signals. Recommendations are weak or inconsistent.</div>
       </div>
-      <div class="sz-card">
-        <div class="sz-range" style="color:#E24B4A;">0 to 49</div>
-        <div class="sz-name" style="color:#E24B4A;">AI Visibility Risk&trade;</div>
-        <div class="sz-desc">Critical gaps prevent AI agents from recommending this store at all.</div>
+      <div class="zone-card red">
+        <div class="zone-score">0 to 49</div>
+        <div class="zone-label"><strong style="color:#E24B4A;">AI Invisible Risk</strong><br>Critical gaps prevent AI from recommending your store. You are being skipped today.</div>
       </div>
     </div>
 
