@@ -157,7 +157,6 @@ a { color: inherit; text-decoration: none; }
       <div class="stat-cell"><div class="stat-num" id="stat-total">&mdash;</div><div class="stat-label">Stores analyzed</div></div>
       <div class="stat-cell"><div class="stat-num" id="stat-avg">&mdash;</div><div class="stat-label">Avg AI score</div></div>
       <div class="stat-cell"><div class="stat-num" id="stat-high">&mdash;</div><div class="stat-label">Score 70+</div></div>
-      <div class="stat-cell"><div class="stat-num" id="stat-new">&mdash;</div><div class="stat-label">Added this week</div></div>
     </div>
 
     <div class="hero">
@@ -307,12 +306,7 @@ function normalizeStore(raw) {
   return store;
 }
 
-function isThisWeek(dateStr) {
-  if (!dateStr) return false;
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return false;
-  return (Date.now() - d.getTime()) < 7 * 24 * 60 * 60 * 1000;
-}
+function isThisWeek(dateStr) { return false; }
 
 function scoreClass(s) {
   if (s >= 85) return "green";
@@ -347,7 +341,6 @@ function updateStats() {
   if (!all.length) { ["stat-avg","stat-high","stat-new"].forEach(id => document.getElementById(id).textContent = '\u2014'); return; }
   document.getElementById("stat-avg").textContent = Math.round(all.reduce((a,s) => a+s.score,0)/all.length);
   document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length.toLocaleString('en-US');
-  document.getElementById("stat-new").textContent = all.filter(s => isThisWeek(s.date)).length.toLocaleString('en-US');
 }
 
 function updateRegionCounts() {
