@@ -13,11 +13,9 @@
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" href="/favicon.ico">
-
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Machine-Readable Commerce: How to Build a Store AI Can Recommend","description":"Machine-Readable Commerce is the practice of structuring product data, trust signals, and pricing so AI systems can parse and verify it without human assistance.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-26","dateModified":"2026-05-26","url":"https://atomfoundry.dev/machine-readable-commerce"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Machine-Readable Commerce?","acceptedAnswer":{"@type":"Answer","text":"Machine-Readable Commerce is the practice of structuring product data, trust signals, pricing, and commerce information so AI systems can parse and verify it without human assistance. It is the architectural approach to making an ecommerce store legible to AI shopping agents."}},{"@type":"Question","name":"Why does Machine-Readable Commerce matter?","acceptedAnswer":{"@type":"Answer","text":"AI shopping agents cannot see design, cannot execute JavaScript, and cannot read images. They extract structured signals from HTML. A store optimized for human experience but not for machine readability is invisible to AI shopping agents regardless of how good the products are."}},{"@type":"Question","name":"What are the most important elements of Machine-Readable Commerce?","acceptedAnswer":{"@type":"Answer","text":"The five layers in order of impact are: structured data (JSON-LD schema markup), commerce accuracy (prices and policies in server-rendered HTML), semantic content (specific positioning and FAQ schema), trust signals (reviews and policies in crawlable text), and AI navigation (llms.txt and clean sitemap)."}},{"@type":"Question","name":"How is Machine-Readable Commerce different from SEO?","acceptedAnswer":{"@type":"Answer","text":"SEO optimizes for Google crawlers that process the same HTML humans see. Machine-Readable Commerce optimizes for AI agents that cannot execute JavaScript, cannot see images, and rely entirely on structured signals. Many SEO-optimized stores score poorly on machine readability because the signals that matter are completely different."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Machine-Readable Commerce","item":"https://atomfoundry.dev/machine-readable-commerce"}]}</script>
-
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -31,11 +29,10 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
 a { color: inherit; text-decoration: none; }
 .nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
 .nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
-.nav-logo { font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo { font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
 .nav-logo span { color: var(--orange); }
 .nav-subline { font-size: 13px; color: var(--orange); font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
 .nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
-.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 1px; }
 .nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
 .nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
 .nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
@@ -70,10 +67,7 @@ h2 em { font-style: normal; color: var(--orange); }
 .definition-text strong { color: var(--orange); }
 .callout { background: var(--bg2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
 .callout strong { color: var(--text); }
-
-/* LAYER STACK VISUAL */
 .layer-visual { display: flex; flex-direction: column; gap: 3px; margin: 28px 0; position: relative; }
-
 .layer-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 20px 20px 20px 60px; position: relative; transition: border-color 0.2s, transform 0.2s; }
 .layer-card:hover { border-color: rgba(249,115,22,0.3); transform: translateX(4px); }
 .layer-card.primary { border-color: rgba(249,115,22,0.35); background: rgba(249,115,22,0.03); }
@@ -90,14 +84,10 @@ h2 em { font-style: normal; color: var(--orange); }
 .layer-code .val { color: #c8eac8; }
 .layer-code .key { color: #a8d8a8; }
 .layer-code .comment { color: #2a4a2a; }
-
-/* STAT STRIP */
 .stat-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border2); border-radius: 14px; overflow: hidden; border: 1px solid var(--border2); margin: 28px 0; }
 .strip-cell { background: var(--bg2); padding: 18px 16px; text-align: center; }
 .strip-num { font-size: 26px; font-weight: 800; color: var(--orange); line-height: 1; margin-bottom: 4px; }
 .strip-label { font-size: 11px; color: var(--dim); line-height: 1.4; }
-
-/* BEFORE AFTER */
 .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0; }
 .ba-col { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
 .ba-col.before { border-color: rgba(226,75,74,0.2); }
@@ -109,8 +99,6 @@ h2 em { font-style: normal; color: var(--orange); }
 .ba-item:last-child { border-bottom: none; }
 .ba-col.before .ba-item { color: #f87171; }
 .ba-col.after .ba-item { color: #4ade80; }
-
-/* CHECKLIST */
 .checklist { display: flex; flex-direction: column; gap: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin: 28px 0; }
 .check-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.2s; }
 .check-row:last-child { border-bottom: none; }
@@ -123,8 +111,6 @@ h2 em { font-style: normal; color: var(--orange); }
 .check-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
 .check-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 .check-pct { font-size: 11px; font-weight: 700; color: var(--dim); flex-shrink: 0; }
-
-/* FAQ */
 .faq-list { display: flex; flex-direction: column; gap: 10px; }
 .faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
 .faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
@@ -135,15 +121,11 @@ h2 em { font-style: normal; color: var(--orange); }
 .faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
 .faq-item.open .faq-answer { display: block; }
 .faq-answer a { color: var(--orange); text-decoration: underline; }
-
-/* CTA */
 .cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 56px 0 0; }
 .cta-block h2 { font-size: 26px; margin-bottom: 10px; }
 .cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
 .cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
-
-/* INTERNAL LINKS */
 .internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
 .internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
 .internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -152,8 +134,6 @@ h2 em { font-style: normal; color: var(--orange); }
 .internal-link-icon { font-size: 16px; flex-shrink: 0; }
 .internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
 .internal-link-text span { font-size: 12px; color: var(--muted); }
-
-/* FOOTER */
 .footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
 .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
@@ -164,7 +144,6 @@ h2 em { font-style: normal; color: var(--orange); }
 .footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
 .footer-social a { color: #444; transition: color 0.2s; }
 .footer-social a:hover { color: var(--orange); }
-
 @media (max-width: 600px) {
   .before-after { grid-template-columns: 1fr; }
   .stat-strip { grid-template-columns: 1fr 1fr; }
@@ -206,7 +185,6 @@ h2 em { font-style: normal; color: var(--orange); }
       <a href="/#score" class="btn-primary">Check My Store Free</a>
       <a href="/human-view-vs-ai-view" class="btn-secondary">See Human View vs AI View</a>
     </div>
-
     <div class="stat-strip">
       <div class="strip-cell"><div class="strip-num">60%</div><div class="strip-label">Of stores have prices AI cannot read</div></div>
       <div class="strip-cell"><div class="strip-num">78%</div><div class="strip-label">Missing Product schema markup</div></div>
@@ -214,7 +192,6 @@ h2 em { font-style: normal; color: var(--orange); }
     </div>
   </div>
 
-  <!-- DEFINITION -->
   <div class="section" style="padding-top:0;border-top:none;">
     <div class="section-kicker">Definition</div>
     <h2>What is <em>Machine-Readable Commerce?</em></h2>
@@ -224,7 +201,6 @@ h2 em { font-style: normal; color: var(--orange); }
     </div>
     <p class="body-text">Most ecommerce stores are built for the human eye. Beautiful design, emotional photography, compelling copy. AI shopping agents cannot see any of that. They extract structured signals from HTML. A store optimized for human experience but not for machine readability is invisible to AI shopping agents regardless of how good the products are.</p>
     <p class="body-text">Machine-Readable Commerce does not require rebuilding your store. It requires adding the structured layer that AI agents need on top of the human layer that already exists. The two layers coexist. Improving machine readability does not change what customers see.</p>
-
     <div class="before-after">
       <div class="ba-col before">
         <div class="ba-label">&#10007; Not machine-readable</div>
@@ -247,14 +223,11 @@ h2 em { font-style: normal; color: var(--orange); }
     </div>
   </div>
 
-  <!-- THE 5 LAYERS -->
   <div class="section">
     <div class="section-kicker">The Architecture</div>
     <h2>Five layers of <em>machine-readable infrastructure</em></h2>
     <p class="body-text">Machine-Readable Commerce is built in five layers, each addressing a different dimension of AI agent comprehension. Layer 1 is the foundation. Without it the other layers provide minimal benefit. Build from the bottom up.</p>
-
     <div class="layer-visual">
-
       <div class="layer-card primary">
         <div class="layer-num active">1</div>
         <div class="layer-title">Structured Data Layer <span class="layer-impact impact-high">Highest impact</span></div>
@@ -271,7 +244,6 @@ h2 em { font-style: normal; color: var(--orange); }
 }
         </div>
       </div>
-
       <div class="layer-card">
         <div class="layer-num active">2</div>
         <div class="layer-title">Commerce Accuracy Layer <span class="layer-impact impact-high">High impact</span></div>
@@ -283,7 +255,6 @@ h2 em { font-style: normal; color: var(--orange); }
 <span class="tag">&lt;p</span> <span class="key">class</span>=<span class="val">"return-policy"</span><span class="tag">&gt;</span>Free 30-day returns<span class="tag">&lt;/p&gt;</span>
         </div>
       </div>
-
       <div class="layer-card">
         <div class="layer-num active">3</div>
         <div class="layer-title">Semantic Content Layer <span class="layer-impact impact-med">Medium impact</span></div>
@@ -295,7 +266,6 @@ h2 em { font-style: normal; color: var(--orange); }
 <span class="tag">&lt;img</span> <span class="key">alt</span>=<span class="val">"15% L-Ascorbic Acid brightening serum, 30ml glass bottle"</span><span class="tag">&gt;</span>
         </div>
       </div>
-
       <div class="layer-card">
         <div class="layer-num active">4</div>
         <div class="layer-title">Trust Signal Layer <span class="layer-impact impact-med">Medium impact</span></div>
@@ -307,7 +277,6 @@ h2 em { font-style: normal; color: var(--orange); }
 <span class="comment">// Enable in Yotpo / Judge.me / Loox settings</span>
         </div>
       </div>
-
       <div class="layer-card">
         <div class="layer-num active">5</div>
         <div class="layer-title">AI Navigation Layer <span class="layer-impact impact-med">Supporting</span></div>
@@ -320,92 +289,30 @@ h2 em { font-style: normal; color: var(--orange); }
 <span class="val"># Returns: 30-day free returns. Ships in 24h.</span>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- AUDIT CHECKLIST -->
   <div class="section">
     <div class="section-kicker">Self-Audit</div>
     <h2>Machine readability <em>checklist</em></h2>
     <p class="body-text">Run through this checklist for your own store. Check your page source for each item. The failures with the highest prevalence are listed first.</p>
-
     <div class="checklist">
-      <div class="check-row">
-        <div class="check-icon fail">&#10007;</div>
-        <div class="check-body">
-          <div class="check-title">Price in server-rendered HTML</div>
-          <div class="check-desc">View page source (Cmd+U). Is your price visible in the raw HTML without JavaScript? If not, AI cannot read it.</div>
-        </div>
-        <div class="check-pct" style="color:#E24B4A;">62% fail</div>
-      </div>
-      <div class="check-row">
-        <div class="check-icon fail">&#10007;</div>
-        <div class="check-body">
-          <div class="check-title">Product JSON-LD schema present</div>
-          <div class="check-desc">Check for &lt;script type="application/ld+json"&gt; with @type: "Product" containing name, price, brand, and description.</div>
-        </div>
-        <div class="check-pct" style="color:#E24B4A;">78% fail</div>
-      </div>
-      <div class="check-row">
-        <div class="check-icon warn">!</div>
-        <div class="check-body">
-          <div class="check-title">Return policy in crawlable HTML</div>
-          <div class="check-desc">Is your return policy text accessible in the page HTML without clicking a modal or JavaScript drawer?</div>
-        </div>
-        <div class="check-pct" style="color:#EF9F27;">54% fail</div>
-      </div>
-      <div class="check-row">
-        <div class="check-icon warn">!</div>
-        <div class="check-body">
-          <div class="check-title">AggregateRating schema from reviews</div>
-          <div class="check-desc">Does your review app output AggregateRating schema? Check Yotpo, Judge.me, or Loox settings to enable schema output.</div>
-        </div>
-        <div class="check-pct" style="color:#EF9F27;">71% fail</div>
-      </div>
-      <div class="check-row">
-        <div class="check-icon warn">!</div>
-        <div class="check-body">
-          <div class="check-title">Descriptive alt text on product images</div>
-          <div class="check-desc">View source and check img tags. Does alt text describe the product with attributes (color, material, size, use case) or just say the filename?</div>
-        </div>
-        <div class="check-pct" style="color:#EF9F27;">67% fail</div>
-      </div>
-      <div class="check-row">
-        <div class="check-icon pass">&#10003;</div>
-        <div class="check-body">
-          <div class="check-title">H1 with specific product category language</div>
-          <div class="check-desc">Does your H1 include specific category, use-case, and differentiator language that matches how buyers query AI? Not just the product name.</div>
-        </div>
-        <div class="check-pct" style="color:#EF9F27;">48% fail</div>
-      </div>
-      <div class="check-row">
-        <div class="check-icon pass">&#10003;</div>
-        <div class="check-body">
-          <div class="check-title">Organization schema on homepage</div>
-          <div class="check-desc">Does your homepage include @type: "Organization" schema with brand name, logo URL, and social profile links?</div>
-        </div>
-        <div class="check-pct" style="color:#EF9F27;">83% fail</div>
-      </div>
-      <div class="check-row">
-        <div class="check-icon pass">&#10003;</div>
-        <div class="check-body">
-          <div class="check-title">llms.txt enabled and customized</div>
-          <div class="check-desc">Go to Shopify Admin, Settings, Agentic. Is llms.txt enabled? Is it customized with specific brand positioning and buyer intent language?</div>
-        </div>
-        <div class="check-pct" style="color:var(--dim);">Most stores</div>
-      </div>
+      <div class="check-row"><div class="check-icon fail">&#10007;</div><div class="check-body"><div class="check-title">Price in server-rendered HTML</div><div class="check-desc">View page source (Cmd+U). Is your price visible in the raw HTML without JavaScript? If not, AI cannot read it.</div></div><div class="check-pct" style="color:#E24B4A;">62% fail</div></div>
+      <div class="check-row"><div class="check-icon fail">&#10007;</div><div class="check-body"><div class="check-title">Product JSON-LD schema present</div><div class="check-desc">Check for &lt;script type="application/ld+json"&gt; with @type: "Product" containing name, price, brand, and description.</div></div><div class="check-pct" style="color:#E24B4A;">78% fail</div></div>
+      <div class="check-row"><div class="check-icon warn">!</div><div class="check-body"><div class="check-title">Return policy in crawlable HTML</div><div class="check-desc">Is your return policy text accessible in the page HTML without clicking a modal or JavaScript drawer?</div></div><div class="check-pct" style="color:#EF9F27;">54% fail</div></div>
+      <div class="check-row"><div class="check-icon warn">!</div><div class="check-body"><div class="check-title">AggregateRating schema from reviews</div><div class="check-desc">Does your review app output AggregateRating schema? Check Yotpo, Judge.me, or Loox settings to enable schema output.</div></div><div class="check-pct" style="color:#EF9F27;">71% fail</div></div>
+      <div class="check-row"><div class="check-icon warn">!</div><div class="check-body"><div class="check-title">Descriptive alt text on product images</div><div class="check-desc">View source and check img tags. Does alt text describe the product with attributes (color, material, size, use case) or just say the filename?</div></div><div class="check-pct" style="color:#EF9F27;">67% fail</div></div>
+      <div class="check-row"><div class="check-icon pass">&#10003;</div><div class="check-body"><div class="check-title">H1 with specific product category language</div><div class="check-desc">Does your H1 include specific category, use-case, and differentiator language that matches how buyers query AI? Not just the product name.</div></div><div class="check-pct" style="color:#EF9F27;">48% fail</div></div>
+      <div class="check-row"><div class="check-icon pass">&#10003;</div><div class="check-body"><div class="check-title">Organization schema on homepage</div><div class="check-desc">Does your homepage include @type: "Organization" schema with brand name, logo URL, and social profile links?</div></div><div class="check-pct" style="color:#EF9F27;">83% fail</div></div>
+      <div class="check-row"><div class="check-icon pass">&#10003;</div><div class="check-body"><div class="check-title">llms.txt enabled and customized</div><div class="check-desc">Go to Shopify Admin, Settings, Agentic. Is llms.txt enabled? Is it customized with specific brand positioning and buyer intent language?</div></div><div class="check-pct" style="color:var(--dim);">Most stores</div></div>
     </div>
-
     <div class="callout"><strong>How to check your store in 60 seconds:</strong> Open your store in Chrome, press Cmd+U (or Ctrl+U on Windows) to view page source, then Cmd+F to search. Search for "price" to check if prices are in HTML. Search for "ld+json" to check for schema markup. Search for your return policy text to see if it is in the source. This tells you 80% of what you need to know.</div>
   </div>
 
-  <!-- SEO vs MRC -->
   <div class="section">
     <div class="section-kicker">Positioning</div>
     <h2>Machine-Readable Commerce vs <em>SEO</em></h2>
     <p class="body-text">SEO and Machine-Readable Commerce optimize for different systems with different requirements. Understanding the difference explains why SEO-optimized stores can still be invisible to AI shopping agents.</p>
-
     <div class="before-after">
       <div class="ba-col" style="border-color:rgba(255,255,255,0.08);">
         <div class="ba-label" style="color:#555;">SEO optimization</div>
@@ -424,11 +331,9 @@ h2 em { font-style: normal; color: var(--orange); }
         <div class="ba-item">&#8594; AI-extractable commerce accuracy</div>
       </div>
     </div>
-
     <p class="body-text">The overlap is small. Some good SEO practices like clean HTML structure and fast page load help both. But keyword optimization and backlinks have zero impact on machine readability. And the most important machine-readable signals like schema markup, server-rendered prices, and llms.txt have minimal impact on Google rankings.</p>
   </div>
 
-  <!-- FAQ -->
   <div class="section">
     <div class="section-kicker">FAQ</div>
     <h2>Machine-Readable Commerce: <em>common questions</em></h2>
@@ -480,11 +385,11 @@ h2 em { font-style: normal; color: var(--orange); }
     <div>
       <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
       <div class="footer-social">
-        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
-        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram" style="color:#444;transition:color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#444'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok" style="color:#444;transition:color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#444'"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn" style="color:#444;transition:color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#444'"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X" style="color:#444;transition:color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#444'"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube" style="color:#444;transition:color 0.2s;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#444'"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
       </div>
       <div class="footer-platform">The AI Commerce Graph&trade;</div>
     </div>
