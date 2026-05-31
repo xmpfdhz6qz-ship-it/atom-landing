@@ -52,7 +52,17 @@ a { color: inherit; text-decoration: none; }
 .domain-sublabel { font-size: 12px; color: #555; margin-bottom: 10px; }
 .store-title { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 4px; letter-spacing: -0.5px; line-height: 1.2; }
 .store-title span { color: #f97316; }
-.store-meta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; margin-top: 10px; }
+.store-meta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; margin-top: 10px; }
+/* BOT PROTECTION BADGE */
+.bot-protection-badge { display: none; background: rgba(249,115,22,0.05); border: 1px solid rgba(249,115,22,0.2); border-left: 3px solid #f97316; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; }
+.bot-protection-badge.visible { display: block; }
+.bot-protection-badge-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bot-protection-badge-icon { font-size: 16px; }
+.bot-protection-badge-title { font-size: 12px; font-weight: 700; color: #f97316; text-transform: uppercase; letter-spacing: 0.08em; }
+.bot-protection-badge-body { font-size: 13px; color: #888; line-height: 1.7; }
+.bot-protection-badge-body strong { color: #ccc; }
+.bot-protection-badge-reason { display: inline-block; margin-top: 8px; font-size: 11px; color: #f97316; background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2); border-radius: 999px; padding: 2px 10px; }
+
 .meta-tag { font-size: 11px; color: #888; background: #111; border: 1px solid #1e1e1e; padding: 3px 10px; border-radius: 100px; }
 
 /* STATUS BLOCK */
@@ -226,6 +236,19 @@ a { color: inherit; text-decoration: none; }
   <div class="store-title" id="storeTitle"></div>
   <div class="store-meta-row" id="storeMeta"></div>
 
+
+  <!-- BOT PROTECTION BADGE -->
+  <div class="bot-protection-badge" id="botProtectionBadge">
+    <div class="bot-protection-badge-header">
+      <span class="bot-protection-badge-icon">&#128737;</span>
+      <span class="bot-protection-badge-title">AI Crawler Access Restricted</span>
+    </div>
+    <div class="bot-protection-badge-body">
+      <strong>This store restricts independent AI crawler access.</strong> Our scanner &mdash; like most independent AI agents &mdash; was blocked from reading this store's content. Only major platforms with whitelisted access (OpenAI, Anthropic, Apple) may be able to reach it.<br><br>
+      This score reflects real-world AI visibility: stores that block independent crawlers are invisible to the growing ecosystem of open-source AI agents, local AI assistants, and emerging shopping agents that do not have whitelist access. This is a genuine AI Visibility Risk&trade;.
+      <div id="blockReasonTag"></div>
+    </div>
+  </div>
   <div class="ai-status-block" id="aiStatusBlock">
     <div class="ai-status-dot" id="aiStatusDot"></div>
     <div class="ai-status-content">
@@ -410,6 +433,25 @@ function buildLockedLeaks(data) {
   if (!weak.length) { document.getElementById('lockedBox').style.display='none'; return; }
   document.getElementById('lockedItems').innerHTML = weak.map(c => `<div class="locked-item"><span class="locked-icon">&#128274;</span><span>${c.text}</span></div>`).join('');
 }
+
+function showBotProtectionBadge(data) {
+  const blocked = data.homepage_blocked === true;
+  const reason = data.block_reason || '';
+  if (!blocked && (!reason || reason === 'success')) return;
+  const badge = document.getElementById('botProtectionBadge');
+  badge.classList.add('visible');
+  const reasonLabels = {
+    'cloudflare': 'Cloudflare Bot Protection',
+    'blocked_403': '403 Access Denied',
+    'js_only': 'JavaScript-Only Rendering',
+    'empty_html': 'Empty Response',
+    'offline': 'Store Offline or Unreachable'
+  };
+  const label = reasonLabels[reason] || reason;
+  if (label) {
+    document.getElementById('blockReasonTag').innerHTML = `<span class="bot-protection-badge-reason">&#128737; ${label}</span>`;
+  }
+}
 function renderPage(data) {
   const domain = data.domain || getDomain();
   const storeName = domain.split('.')[0].replace(/-/g,' ');
@@ -439,6 +481,9 @@ function renderPage(data) {
     ${level ? `<span class="meta-tag" style="color:${getColor(score)};border-color:${getColor(score)}33">${getLevelLabel(level)}</span>` : ''}
     ${agenticReady ? `<span class="meta-tag" style="color:#1D9E75;border-color:rgba(29,158,117,0.3);background:rgba(29,158,117,0.06);">Agentic ready</span>` : ''}
   `;
+  // Show bot protection badge if applicable
+  showBotProtectionBadge(data);
+
   const status = getAiStatusBlock(score);
   document.getElementById('aiStatusBlock').className = `ai-status-block ${status.cls}`;
   document.getElementById('aiStatusDot').innerHTML = status.dot;
