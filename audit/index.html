@@ -301,6 +301,7 @@ const aiVerdictText = aiScore >= 85
   ? `<span style="color:#EF9F27;">AI sees this store but competitors with higher scores win more recommendations.</span>`
   : `<span style="color:#E24B4A;">Critical gaps are preventing AI agents from recommending this store.</span>`;
 
+const visual_score    = Number(r.visual_score    || data.visual_score    || 0);
 const schema_score    = Number(r.schema_score    || data.schema_score    || 0);
 const content_score   = Number(r.content_score   || data.content_score   || 0);
 const trust_score     = Number(r.trust_score     || data.trust_score     || 0);
@@ -323,14 +324,14 @@ const factorHTML = (name, score, max) => {
 };
 
 const factorsHTML = [
-  factorHTML("AI Structured Signals",     schema_score,    20),
-  factorHTML("Semantic Clarity",           content_score,   18),
-  factorHTML("AI Trust Confidence",        trust_score,     18),
-  factorHTML("User Intent Match",          intent_score,    14),
-  factorHTML("AI Interpretability",        technical_score, 12),
-  factorHTML("Commerce Accuracy",          price_score,     10),
-  factorHTML("Recommendation Confidence",  rec_score,        5),
-  factorHTML("External Authority Signals", brand_score,      3),
+  factorHTML("Semantic Visuals & Image Clarity", visual_score,    15),
+  factorHTML("AI Structured Signals",            schema_score,    15),
+  factorHTML("Core Technical & Interpretability",technical_score, 15),
+  factorHTML("AI Trust & Transaction Confidence",trust_score,     15),
+  factorHTML("Commerce & Feed Accuracy",         price_score,     15),
+  factorHTML("User Intent Match",                intent_score,    10),
+  factorHTML("Recommendation Confidence",        rec_score,       10),
+  factorHTML("External Authority Signals",       brand_score,      5),
 ].join("");
 
 const has_llms_txt     = r.has_llms_txt     || data.has_llms_txt     || false;
@@ -344,16 +345,16 @@ const agStatus = (ok) => ok
 
 const qualityText = has_llms_txt
   ? (llms_txt_quality >= 2
-    ? "Your llms.txt quality looks good. AI agents can use it to browse your catalog."
+    ? "Shopify auto-generates this file. Yours is usable, but the auto-generated version leads with Shopify and the Shop app, not your top collections. The fix below makes it store-specific."
     : llms_txt_quality === 1
-    ? "Your llms.txt exists but the content is too thin for AI agents to use effectively."
-    : "Your llms.txt file exists but has no usable content.")
-  : "Your store does not have llms.txt. AI agents cannot browse your catalog autonomously.";
+    ? "Shopify auto-generates this file, but yours is too thin for AI agents to use effectively. The fix below rewrites it specific to your catalog."
+    : "An agentic file exists but has no usable content. The fix below provides a complete store-specific version.")
+  : "We could not read an agentic file. On Shopify these are usually auto-generated (and /llms.txt now redirects to /agents.md). The fix below provides a store-specific version to verify against.";
 
 const agenticHTML = `
   <div class="agentic-box">
     <div class="agentic-title">Shopify Agentic Files</div>
-    <div class="agentic-desc">Shopify generates these files automatically. Missing or weak files mean AI agents cannot understand, browse, or purchase from your store.</div>
+    <div class="agentic-desc">Shopify auto-generates these for every store as of May 2026. Presence is no longer the differentiator. The value is making the generic, Shopify-first file specific to your store.</div>
     <div class="agentic-row"><span class="agentic-file">llms.txt</span>${agStatus(has_llms_txt)}</div>
     <div class="agentic-row"><span class="agentic-file">llms-full.txt</span>${agStatus(has_llms_full)}</div>
     <div class="agentic-row"><span class="agentic-file">agents.md</span>${agStatus(has_agents_md)}</div>
@@ -441,6 +442,7 @@ app.innerHTML = `
   <div class="loss-label">estimated AI visibility gap. Full audit complete.</div>
   <div class="daily-loss">That is $${fmt(daily)} in missed AI-driven revenue every single day.</div>
   <div class="live-counter" id="liveCounter"></div>
+  <div style="font-size:11px;color:#666;margin-top:4px;line-height:1.5;">${r.estimated_loss_assumption || ""}</div>
 
   <div class="scores-section">
     <div class="score-row">
@@ -497,8 +499,8 @@ app.innerHTML = `
 
   <div class="section-label">Your llms.txt file</div>
   <div class="deliverable-box">
-    <div class="deliverable-title">Upload to your store root</div>
-    <div class="deliverable-desc">This file helps AI agents understand your store. Upload it as /llms.txt to your Shopify store.</div>
+    <div class="deliverable-title">Store-specific agentic file</div>
+    <div class="deliverable-desc">Shopify auto-generates a generic version. This one is built around your catalog. Note: on Shopify, /llms.txt now redirects to /agents.md, so apply this through your store's agentic settings rather than overwriting the auto-generated file blindly.</div>
     ${llmsTxtHTML}
   </div>
 
@@ -515,6 +517,7 @@ app.innerHTML = `
     <div class="revenue-row"><span class="revenue-row-label">Missed AI-driven revenue per day</span><span class="revenue-row-value" style="color:#EF9F27;">$${fmt(daily)}</span></div>
     <div class="revenue-row"><span class="revenue-row-label">Yearly if not fixed</span><span class="revenue-row-value" style="color:#E24B4A;">$${fmt(yearly)}</span></div>
   </div>
+  <div style="font-size:11px;color:#666;margin:-12px 0 24px;line-height:1.5;">${r.estimated_loss_assumption || ""}</div>
 
   <a href="#" class="pdf-btn" onclick="window.print(); return false;">Save Full Audit as PDF</a>
 
@@ -523,7 +526,7 @@ app.innerHTML = `
     <div class="founder-text">
       <div class="founder-name">Daniel, Founder at Atom Foundry</div>
       <div class="founder-sub">Scanning DTC stores daily &middot; atomfoundry.dev</div>
-      <div class="founder-quote">"Shopify made stores AI-readable. We make them AI-recommendable. These fixes are the difference between being crawled and being chosen."</div>
+      <div class="founder-quote">Shopify made stores AI-readable. We make them AI-recommendable. These fixes are the difference between being crawled and being chosen.</div>
     </div>
   </div>
 
@@ -531,7 +534,7 @@ app.innerHTML = `
   <div class="dfy-box">
     <div class="dfy-tag">Done For You</div>
     <div class="dfy-title">We fix everything. You just approve it.</div>
-    <div class="dfy-desc">You have the exact plan. Every day of delay costs $${fmt(daily)} in missed AI revenue. Our team implements all fixes directly in your store within 5 business days.</div>
+    <div class="dfy-desc">You have the exact plan. Our team implements all fixes directly in your store within 5 business days.</div>
     <ul class="dfy-features">
       <li class="dfy-feature">All AI visibility gaps fixed by our team</li>
       <li class="dfy-feature">llms.txt and schema markup implemented for you</li>
@@ -573,7 +576,7 @@ function toggleExplain() {
   if (!box) return;
   const isOpen = box.classList.contains("open");
   box.classList.toggle("open");
-  toggle.innerText = isOpen ? "&#9658; What does this score mean?" : "&#9660; What does this score mean?";
+  toggle.innerHTML = isOpen ? "&#9658; What does this score mean?" : "&#9660; What does this score mean?";
 }
 
 function copyText(id, btn) {
