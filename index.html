@@ -248,8 +248,8 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
   <!-- STATS BAR -->
   <div class="wrap">
     <div class="stats-bar">
-      <div class="stat-cell"><div class="stat-num" id="statStores">&mdash;</div><div class="stat-label">Stores analyzed</div></div>
-      <div class="stat-cell"><div class="stat-num" id="statIssues">&mdash;</div><div class="stat-label">AI issues found</div></div>
+      <div class="stat-cell"><div class="stat-num" id="statStores">...</div><div class="stat-label">Stores analyzed</div></div>
+      <div class="stat-cell"><div class="stat-num">8</div><div class="stat-label">Scoring factors</div></div>
       <div class="stat-cell"><div class="stat-num">10s</div><div class="stat-label">To see results</div></div>
     </div>
 
@@ -326,7 +326,7 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
 
     <!-- DATA STRIP -->
     <div class="data-strip">
-      <div><div class="data-strip-num" id="stripStores">&mdash;</div><div class="data-strip-label">DTC stores analyzed</div></div>
+      <div><div class="data-strip-num" id="stripStores">...</div><div class="data-strip-label">DTC stores analyzed</div></div>
       <div class="data-strip-divider"></div>
       <div><div class="data-strip-num" id="stripRisk">52%</div><div class="data-strip-label">AI Invisible Risk</div></div>
       <div class="data-strip-divider"></div>
@@ -398,14 +398,14 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
       <h2 class="section-title">Most stores score poorly on four or more of these <em>signals</em></h2>
       <p class="section-body">When an AI shopping agent evaluates your store, it reads structure and machine-readable signals. Not design. Not branding. These are the factors it weighs.</p>
       <div class="signals-section">
-        <div class="signals-label">Average across <span id="signalsCount">6,789+</span> scanned DTC stores</div>
+        <div class="signals-label">Average across <span id="signalsCount">our scanned</span> DTC stores</div>
         <div class="sig-row"><div class="sig-name">AI Interpretation</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:28%;background:#E24B4A;"></div></div><div class="sig-score" style="color:#E24B4A;">Low</div></div>
         <div class="sig-row"><div class="sig-name">Recommendation Confidence</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:22%;background:#E24B4A;"></div></div><div class="sig-score" style="color:#E24B4A;">Critical</div></div>
         <div class="sig-row"><div class="sig-name">Semantic Clarity</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:41%;background:#EF9F27;"></div></div><div class="sig-score" style="color:#EF9F27;">Partial</div></div>
         <div class="sig-row"><div class="sig-name">Trust Signals</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:35%;background:#EF9F27;"></div></div><div class="sig-score" style="color:#EF9F27;">Weak</div></div>
         <div class="sig-row"><div class="sig-name">Comparison Strength</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:18%;background:#E24B4A;"></div></div><div class="sig-score" style="color:#E24B4A;">Critical</div></div>
         <div class="sig-row"><div class="sig-name">Product Understanding</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:45%;background:#EF9F27;"></div></div><div class="sig-score" style="color:#EF9F27;">Partial</div></div>
-        <div class="signals-note" id="signalsDate">May 2026 benchmark</div>
+        <div class="signals-note" id="signalsDate">Directional pattern across scanned stores &middot; run your store for exact factor scores</div>
       </div>
     </div>
 
@@ -422,18 +422,19 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
       </div>
     </div>
 
-    <!-- FINDINGS -->
+    <!-- WHAT THE DATA SHOWS -->
     <div class="section">
-      <div class="section-kicker">Recent findings</div>
-      <h2 class="section-title">What we found when we actually <em>looked</em></h2>
+      <div class="section-kicker">What the data shows</div>
+      <h2 class="section-title">What we found across the stores we have <em>actually scanned</em></h2>
+      <p class="section-body">These figures are computed live from the stores in our database, scored on the 8-factor AI Commerce Score. They update as we scan more stores. No projections, no estimates. Just what the scores show.</p>
       <div class="findings-section">
         <div class="finding-arc">
-          <div class="finding-arc-label">Detected, fixed, recovered</div>
-          Beauty store, US. AI could not identify core product positioning. Losing $3,200 per month.<br>
-          Fix: Semantic structure improved, trust signals added above the fold.<br>
-          <span class="finding-arc-result">Recovered $2,800 per month within three weeks.</span>
+          <div class="finding-arc-label">Live across our database</div>
+          Of <span id="dataStores">...</span> DTC stores scored so far, <span id="dataRisk">...</span> fall into AI Invisible Risk (under 50/100), and <span id="dataHighly">...</span> reach Highly Recommendable (85+). The average score is <span id="dataAvg">...</span>/100.
         </div>
-        <div id="dynamicFindings"></div>
+        <div class="finding-item">The most common critical gap is missing or weak structured data, the JSON-LD that lets AI agents read what you sell, at what price, and how trustworthy you are.</div>
+        <div class="finding-item">Since Shopify began auto-generating agentic files in May 2026, the presence of llms.txt is no longer the differentiator. Quality and store-specificity are.</div>
+        <div class="finding-item">Run your own store above to see exactly which of the 8 factors are holding your score down.</div>
       </div>
     </div>
 
@@ -467,8 +468,8 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
           <span class="fpfp-arrow">&rarr;</span>
           <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
             <div class="fpfp-step-label">Prove</div>
-            <div class="fpfp-step-desc">Dollar impact per gap</div>
-            <div class="fpfp-tip">We calculate the exact revenue impact of each AI interpretation gap.</div>
+            <div class="fpfp-step-desc">Score each gap</div>
+            <div class="fpfp-tip">We show how each AI interpretation gap affects your score across the 8 factors.</div>
           </div>
           <span class="fpfp-arrow">&rarr;</span>
           <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
@@ -505,8 +506,8 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
-        <span id="footerStores">&mdash;</span> DTC stores analyzed &nbsp;&middot;&nbsp;
-        $<span id="footerLeaks">&mdash;</span>k in AI gaps found &nbsp;&middot;&nbsp; atomfoundry.dev<br>
+        <span id="footerStores">...</span> DTC stores analyzed &nbsp;&middot;&nbsp;
+        avg score <span id="footerAvg">...</span>/100 &nbsp;&middot;&nbsp; atomfoundry.dev<br>
         <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
         <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
         <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
@@ -532,7 +533,7 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
 </div>
 
 <script>
-// Live stats from stores API
+// Live stats from stores API (crawler instance holds the store database)
 (async function() {
   try {
     const res = await fetch("https://n8n-production-1d7c.up.railway.app/webhook/stores", { headers: { "Accept": "application/json" } });
@@ -542,25 +543,31 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
     if (!count) return;
     const scores = rows.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0);
     const avg = scores.length ? Math.round(scores.reduce((a,b) => a+b,0) / scores.length) : 45;
-    const issues = Math.round(count * 4.97);
-    const leaksTotal = Math.round(count * 0.96);
 
-    document.getElementById('statStores').innerText = count.toLocaleString('en-US');
-    document.getElementById('statIssues').innerText = issues.toLocaleString('en-US');
-    document.getElementById('footerStores').innerText = count.toLocaleString('en-US');
-    document.getElementById('footerLeaks').innerText = leaksTotal.toLocaleString('en-US');
-    document.getElementById('stripStores').innerText = count.toLocaleString('en-US');
-    document.getElementById('signalsCount').innerText = count.toLocaleString('en-US');
-    document.getElementById('signalsDate').innerText = 'May 2026 benchmark across ' + count.toLocaleString('en-US') + ' stores';
-    document.getElementById('proofLine').innerText = 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores: ' + avg + '/100';
-    document.getElementById('scorePreviewLabel').innerText = 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores';
+    const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+
+    setText('statStores', count.toLocaleString('en-US'));
+    setText('footerStores', count.toLocaleString('en-US'));
+    setText('stripStores', count.toLocaleString('en-US'));
+    setText('signalsCount', count.toLocaleString('en-US'));
+    setText('proofLine', 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores: ' + avg + '/100');
+    setText('scorePreviewLabel', 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores');
 
     // Live data-strip values
-    const invisPct = scores.length ? Math.round(scores.filter(s => s < 50).length / scores.length * 100) : 52;
-    const highPct = scores.length ? Math.round(scores.filter(s => s >= 85).length / scores.length * 100) : 0;
-    document.getElementById('stripRisk').innerText = invisPct + '%';
-    document.getElementById('stripAvg').innerText = avg + '/100';
-    document.getElementById('stripHighly').innerText = highPct + '%';
+    const invisCount = scores.filter(s => s < 50).length;
+    const highCount  = scores.filter(s => s >= 85).length;
+    const invisPct = scores.length ? Math.round(invisCount / scores.length * 100) : 52;
+    const highPct  = scores.length ? Math.round(highCount  / scores.length * 100) : 0;
+    setText('stripRisk', invisPct + '%');
+    setText('stripAvg', avg + '/100');
+    setText('stripHighly', highPct + '%');
+
+    // Honest data-backed section + footer
+    setText('dataStores', count.toLocaleString('en-US'));
+    setText('dataRisk', invisCount.toLocaleString('en-US') + ' (' + invisPct + '%)');
+    setText('dataHighly', highCount.toLocaleString('en-US') + ' (' + highPct + '%)');
+    setText('dataAvg', avg);
+    setText('footerAvg', avg);
 
     // Animate circle to live average
     animateScore(avg);
@@ -592,35 +599,6 @@ function animateScore(TARGET) {
     requestAnimationFrame(step);
   }, DELAY);
 }
-
-// Dynamic findings — seeded by day
-const BASE_DATE = new Date('2026-03-01');
-function seededRand(seed) { const x = Math.sin(seed + 1) * 10000; return x - Math.floor(x); }
-function getDaysSinceBase() { return Math.floor((new Date() - BASE_DATE) / (1000*60*60*24)); }
-const allFindings = [
-  { amount: '$5,800', cat: 'Pet food brand, CA', leak: "AI could not identify product category and the store was invisible in AI search results" },
-  { amount: '$2,890', cat: 'Skincare DTC, US', leak: 'Conflicting signals reduced recommendation confidence across all major AI platforms' },
-  { amount: '$3,480', cat: 'Jewelry store, US', leak: 'Inconsistent credibility signals caused AI to deprioritize the store in trust evaluation' },
-  { amount: '$3,640', cat: 'Wellness brand, US', leak: "AI could not map products to a clear use case and marked the store as semantically ambiguous" },
-  { amount: '$4,200', cat: 'Apparel brand, US', leak: 'AI interpretation score was critically low, blocking the store from recommendation queues' },
-  { amount: '$2,650', cat: 'Home goods, CA', leak: 'Structured data gaps prevented recommendation engines from reading trust signals' },
-  { amount: '$3,900', cat: 'Beauty DTC, US', leak: 'Product structure was unreadable to AI agents, causing navigation failure in agentic flows' },
-  { amount: '$3,120', cat: 'Supplement brand, US', leak: 'Generic messaging prevented confident AI recommendation due to intent mismatch' },
-  { amount: '$2,420', cat: 'Pet accessories, CA', leak: 'Ambiguous category signals confused AI classification systems' },
-  { amount: '$4,750', cat: 'Fashion DTC, US', leak: 'Unclear positioning reduced AI discoverability across all conversational platforms' },
-];
-function seededShuffle(arr, seed) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(seededRand(seed + i) * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-const shuffled = seededShuffle(allFindings, getDaysSinceBase() * 31);
-document.getElementById('dynamicFindings').innerHTML = shuffled.slice(0,4).map(f =>
-  `<div class="finding-item"><span class="finding-amount">${f.amount}/month</span> &nbsp;&middot;&nbsp; ${f.cat} &nbsp;&middot;&nbsp; ${f.leak}</div>`
-).join('');
 
 // Scan form
 document.getElementById("scanForm").addEventListener("submit", async (e) => {
