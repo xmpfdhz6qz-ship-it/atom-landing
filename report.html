@@ -221,14 +221,16 @@ function getFactorColor(pct) {
   const aiScore = row.ars_score || report.total_score || row.score || 0;
   const aiColor = getColor(aiScore);
 
-  const schema_score    = Math.min(report.schema_score    || 0, 20);
-  const content_score   = Math.min(report.content_score   || 0, 18);
-  const trust_score     = Math.min(report.trust_score     || 0, 18);
-  const intent_score    = Math.min(report.intent_score    || 0, 14);
-  const technical_score = Math.min(report.technical_score || 0, 12);
-  const price_score     = Math.min(report.price_score     || 0, 10);
-  const rec_score       = Math.min(report.rec_score       || 0,  5);
-  const brand_score     = Math.min(report.brand_score     || 0,  3);
+  // Canonical v3.0 factor maxes (15/15/15/15/15/10/10/5). content_score deprecated.
+  const visual_score    = Math.min(report.visual_score    || 0, 15);
+  const schema_score    = Math.min(report.schema_score    || 0, 15);
+  const technical_score = Math.min(report.technical_score || 0, 15);
+  const trust_score     = Math.min(report.trust_score     || 0, 15);
+  const price_score     = Math.min(report.price_score     || 0, 15);
+  const intent_score    = Math.min(report.intent_score    || 0, 10);
+  const rec_score       = Math.min(report.rec_score       || 0, 10);
+  const brand_score     = Math.min(report.brand_score     || 0,  5);
+  const content_score   = 0; // deprecated → folded into User Intent Match
 
   const lossMin     = report.estimated_loss_min || row.estimated_loss_min || 0;
   const lossDisplay = report.estimated_loss_display || ("$" + lossMin.toLocaleString("en-US") + "/month");
@@ -236,7 +238,8 @@ function getFactorColor(pct) {
 
   const statusBadge = (() => {
     if (aiScore >= 85) return { cls:"badge-high",     dot:"", text:"Highly Recommendable" };
-    if (aiScore >= 50) return { cls:"badge-medium",   dot:"", text:"Partially Visible" };
+    if (aiScore >= 70) return { cls:"badge-medium",   dot:"", text:"Moderately Recommendable" };
+    if (aiScore >= 50) return { cls:"badge-medium",   dot:"", text:"Low Recommendation Confidence" };
     return                    { cls:"badge-invisible", dot:"", text:"AI Invisible Risk" };
   })();
 
@@ -265,14 +268,14 @@ function getFactorColor(pct) {
     </div>`).join("");
 
   const factors = [
-    { name:"AI Structured Signals",     score:schema_score,    max:20, isNew:false },
-    { name:"Semantic Clarity",           score:content_score,   max:18, isNew:false },
-    { name:"AI Trust Confidence",        score:trust_score,     max:18, isNew:false },
-    { name:"User Intent Match",          score:intent_score,    max:14, isNew:true  },
-    { name:"AI Interpretability",        score:technical_score, max:12, isNew:false },
-    { name:"Commerce Accuracy",          score:price_score,     max:10, isNew:false },
-    { name:"Recommendation Confidence",  score:rec_score,       max:5,  isNew:true  },
-    { name:"External Authority Signals", score:brand_score,     max:3,  isNew:true  },
+    { name:"Semantic Visuals & Image Clarity", score:visual_score,    max:15, isNew:true  },
+    { name:"AI Structured Signals",            score:schema_score,    max:15, isNew:false },
+    { name:"Core Technical & Interpretability",score:technical_score, max:15, isNew:false },
+    { name:"AI Trust & Transaction Confidence",score:trust_score,     max:15, isNew:false },
+    { name:"Commerce & Feed Accuracy",         score:price_score,     max:15, isNew:false },
+    { name:"User Intent Match",                score:intent_score,    max:10, isNew:false },
+    { name:"Recommendation Confidence",        score:rec_score,       max:10, isNew:false },
+    { name:"External Authority Signals",       score:brand_score,     max:5,  isNew:false },
   ];
 
   const factorRowsHTML = factors.map(f => {
@@ -300,14 +303,14 @@ function getFactorColor(pct) {
 
   const agNote = has_llms_txt
     ? (llms_txt_quality >= 2
-      ? "Your llms.txt looks good. AI agents can read your store catalog."
-      : "Your llms.txt exists but the content is too thin. AI agents need more detail to recommend you confidently.")
-    : "Your store does not have llms.txt yet. AI agents cannot browse your catalog autonomously.";
+      ? "Shopify auto-generates this file for every store. We assessed yours and the content looks usable by AI agents. The deep audit makes it store-specific instead of generic."
+      : "Shopify auto-generates this file, but yours is thin. AI agents need more catalog detail to recommend you confidently. The deep audit rewrites it specific to your store.")
+    : "We could not read an agentic file on your store. On Shopify these are usually auto-generated (and /llms.txt now redirects to /agents.md). The deep audit verifies and optimizes it.";
 
   const agenticHTML = `
     <div class="agentic-box">
       <div class="agentic-title">Shopify Agentic Readiness</div>
-      <div class="agentic-desc">Shopify now generates these files for every store. Missing or weak files mean AI agents cannot understand or purchase from your store.</div>
+      <div class="agentic-desc">Shopify now auto-generates these files for every store. Presence is no longer the differentiator. Quality and store-specificity are what count.</div>
       <div class="agentic-row"><span class="agentic-file">llms.txt</span>${agStatus(has_llms_txt)}</div>
       <div class="agentic-row"><span class="agentic-file">llms-full.txt</span>${agStatus(has_llms_full)}</div>
       <div class="agentic-row"><span class="agentic-file">agents.md</span>${agStatus(has_agents_md)}</div>
@@ -328,6 +331,7 @@ function getFactorColor(pct) {
       <div class="loss-strip-amount">${lossDisplay}</div>
       <div class="loss-strip-label">estimated AI visibility gap per month</div>
       <div class="live-counter" id="liveCounter"></div>
+      <div style="font-size:11px;color:#666;margin-top:6px;line-height:1.5;">${report.estimated_loss_assumption || ""}</div>
     </div>
 
     <div class="scores-section">
@@ -343,7 +347,8 @@ function getFactorColor(pct) {
     <div class="explain-box" id="explainBox">
       <div class="explain-title">Understanding your AI Recommendation Score</div>
       <div class="explain-item"><span class="explain-highlight">85 to 100: Highly Recommendable</span><br>AI agents can clearly understand, trust, and recommend your store to shoppers.</div>
-      <div class="explain-item"><span class="explain-highlight">50 to 84: Partially Visible</span><br>AI can see your store but misses key signals. Competitors with higher scores are winning your customers.</div>
+      <div class="explain-item"><span class="explain-highlight">70 to 84: Moderately Recommendable</span><br>AI recommends you but stronger signals would increase frequency and position.</div>
+      <div class="explain-item"><span class="explain-highlight">50 to 69: Low Recommendation Confidence</span><br>AI can see your store but misses critical signals. Recommendations are weak or inconsistent.</div>
       <div class="explain-item"><span class="explain-highlight">0 to 49: AI Invisible Risk</span><br>Critical gaps prevent AI agents from recommending this store. Urgent action needed.</div>
     </div>
 
@@ -391,7 +396,7 @@ function getFactorColor(pct) {
       <div class="founder-text">
         <div class="founder-name">Daniel, Founder at Atom Foundry</div>
         <div class="founder-sub">Scanning DTC stores daily &middot; atomfoundry.dev</div>
-        <div class="founder-quote">"I scan stores every day and the pattern is clear. Stores that are not readable by AI are being systematically skipped. Your competitors are already optimizing for this."</div>
+        <div class="founder-quote">I scan stores every day and the pattern is clear. Stores that are not readable by AI are being systematically skipped. Your competitors are already optimizing for this.</div>
       </div>
     </div>
 
@@ -445,7 +450,7 @@ function toggleExplain() {
   const toggle = document.querySelector(".explain-toggle");
   if (!box) return;
   box.classList.toggle("open");
-  toggle.innerText = box.classList.contains("open") ? "&#9660; What does this score mean?" : "&#9658; What does this score mean?";
+  toggle.innerHTML = box.classList.contains("open") ? "&#9660; What does this score mean?" : "&#9658; What does this score mean?";
 }
 </script>
 </div>
