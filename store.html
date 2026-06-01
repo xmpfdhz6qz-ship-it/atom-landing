@@ -232,7 +232,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 
   <div class="domain-label">AI Commerce Score Report</div>
-  <div class="domain-sublabel">Measured against 8 AI recommendation factors &middot; v3.0</div>
+  <div class="domain-sublabel">Measured against 8 AI recommendation factors &middot; v3.1</div>
   <div class="store-title" id="storeTitle"></div>
   <div class="store-meta-row" id="storeMeta"></div>
 
@@ -284,7 +284,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 
   <div class="breakdown-box">
-    <div class="breakdown-title">AI Commerce Score v3.0 &mdash; factor breakdown</div>
+    <div class="breakdown-title">AI Commerce Score v3.1 &mdash; factor breakdown</div>
     <div class="breakdown-desc">8 factors determine how confidently AI shopping agents like Alexa for Shopping, ChatGPT, and Google AI Mode can understand, trust, and recommend this store.</div>
     <div id="factorRows"></div>
   </div>
@@ -500,15 +500,29 @@ function renderPage(data) {
     document.getElementById('lossAmount').innerHTML = `$${Number(data.estimated_loss).toLocaleString('en-US')}<span>/month</span>`;
   }
   const factors = [
-    { name:'Semantic Visuals &amp; Image Clarity',  score:Math.min(data.visual_score   ??0,15), max:15, isNew:true  },
-    { name:'AI Structured Signals',                  score:Math.min(data.schema_score   ??0,15), max:15, isNew:false },
-    { name:'Core Technical &amp; Interpretability',  score:Math.min(data.technical_score??0,15), max:15, isNew:false },
-    { name:'AI Trust &amp; Transaction Confidence',  score:Math.min(data.trust_score    ??0,15), max:15, isNew:false },
-    { name:'Commerce &amp; Feed Accuracy',           score:Math.min(data.price_score    ??0,15), max:15, isNew:false },
-    { name:'User Intent Match',                      score:Math.min(data.intent_score   ??0,10), max:10, isNew:false },
-    { name:'Recommendation Confidence',              score:Math.min(data.rec_score      ??0,10), max:10, isNew:false },
-    { name:'External Authority Signals',             score:Math.min(data.brand_score    ??0, 5), max: 5, isNew:false },
+    { name:'Semantic Visuals &amp; Image Clarity',  score:Math.min(data.visual_score  ??0,15), max:15, isNew:true  },
+    { name:'AI Structured Signals',                  score:Math.min(data.schema_score  ??0,15), max:15, isNew:false },
+    { name:'Core Technical &amp; Interpretability',  score:Math.min(data.content_score ??0,15), max:15, isNew:false },
+    { name:'AI Trust &amp; Transaction Confidence',  score:Math.min(data.trust_score   ??0,15), max:15, isNew:false },
+    { name:'Commerce &amp; Feed Accuracy',           score:Math.min(data.price_score   ??0,15), max:15, isNew:false },
+    { name:'User Intent Match',                      score:Math.min(data.intent_score  ??0,10), max:10, isNew:false },
+    { name:'Recommendation Confidence',              score:Math.min(data.rec_score     ??0,10), max:10, isNew:false },
+    { name:'External Authority Signals',             score:Math.min(data.brand_score   ??0, 5), max: 5, isNew:false },
   ];
+  // Fallback for stores scanned with old scoring (v3.0) — factors sum to 0 but total_score > 0
+  const factorSum = (data.visual_score??0) + (data.schema_score??0) + (data.content_score??0) +
+                    (data.trust_score??0) + (data.price_score??0) + (data.intent_score??0) +
+                    (data.rec_score??0) + (data.brand_score??0);
+  if (factorSum === 0 && score > 0) {
+    document.getElementById('factorRows').innerHTML = `
+      <div style="text-align:center;padding:24px 0;color:#555;font-size:13px;line-height:1.7;">
+        <div style="font-size:20px;margin-bottom:8px;">&#8987;</div>
+        <strong style="color:#888;">Factor breakdown pending rescan</strong><br>
+        This store was scanned with an earlier version of our scoring engine.<br>
+        Updated breakdown will appear after the next scan (usually within 24 hours).
+      </div>`;
+    return;
+  }
   document.getElementById('factorRows').innerHTML = factors.map(f => {
     const pct = f.max > 0 ? Math.round((f.score/f.max)*100) : 0;
     const col = getFactorColor(pct);
@@ -551,7 +565,7 @@ function renderPage(data) {
     <p>A score of ${score}/100 means AI assistants like ChatGPT, Alexa for Shopping, Perplexity, and Google AI Mode ${score>=85?'can clearly understand, trust, and recommend this store':score>=70?'can moderately recommend this store':score>=50?'can partially understand this store but miss key signals':'struggle to read, trust, and recommend this store'}. The score covers 8 factors: Semantic Visuals, AI Structured Signals, Core Technical, AI Trust, Commerce Accuracy, User Intent Match, Recommendation Confidence, and External Authority Signals.</p>
     <h3>How can ${storeNameCap} improve its AI Commerce Score?</h3>
     <p>The biggest opportunity is in the ${biggestGap.replace('_',' ')} category. ${leakCopy(biggestGap).leak} The fastest improvement: ${leakCopy(biggestGap).fix.toLowerCase()}</p>
-    <p style="margin-top:12px;font-size:12px;color:#555;">Last updated: ${scannedAt} &middot; Methodology v3.0 &middot; Powered by <a href="/" style="color:#555;">Atom Foundry</a></p>
+    <p style="margin-top:12px;font-size:12px;color:#555;">Last updated: ${scannedAt} &middot; Methodology v3.1 &middot; Powered by <a href="/" style="color:#555;">Atom Foundry</a></p>
   `;
 }
 async function init() {
