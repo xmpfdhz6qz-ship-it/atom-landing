@@ -6,44 +6,40 @@
 <title>AI Recommendation Audit | Atom Foundry</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap');
 * { box-sizing: border-box; }
 body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#080808; color:#e8e8e8; -webkit-font-smoothing:antialiased; line-height:1.6; }
 body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%; background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(249,115,22,0.12),transparent); pointer-events:none; z-index:0; }
 a { color:inherit; text-decoration:none; }
 
-/* NAV */
-.nav {
-  padding: 20px 28px; max-width: 860px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  position: relative; z-index: 10;
-}
-.nav-brand { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
-.nav-logo { font-weight: 800; font-size: 18px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; }
+/* NAV - landing style */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
 .nav-logo span { color: #f97316; }
-.nav-tagline { font-size: 13px; color: #999; font-weight: 500; }
-.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; justify-content: flex-end; }
-.nav-links a { font-size: 12px; color: #999; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
 .nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
 .nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
 .nav-links a.cta-nav:hover { background: #ea580c; }
-@media (max-width: 700px) { .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; } .nav-links { flex-wrap: wrap; } }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
 
 /* LAYOUT */
 .page { position:relative; z-index:1; }
 .container { max-width:640px; margin:0 auto; padding:28px 20px 56px; }
-#loadingState { text-align:center; padding:80px 20px; font-size:15px; color:#555; }
+#loadingState { text-align:center; padding:80px 20px; font-size:15px; color:#9a9a9a; }
 
-/* AUDIT BADGE */
-.audit-badge { display:inline-flex; align-items:center; gap:8px; background:#111; border:1px solid #1e1e1e; border-radius:999px; padding:6px 14px; font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:20px; }
-.audit-badge-dot { width:6px;height:6px; background:#1D9E75; border-radius:50%; animation:blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.3;} }
+50%{opacity:0.3;} }
 
 /* DOMAIN + LOSS */
 .domain-label { font-size:14px; color:#aaa; margin-bottom:8px; font-weight:500; }
 .loss-number { font-size:64px; font-weight:800; color:#E24B4A; line-height:1; margin-bottom:4px; letter-spacing:-0.02em; }
 .loss-label { font-size:14px; color:#aaa; margin-bottom:8px; }
 .daily-loss { font-size:18px; color:#EF9F27; font-weight:600; margin-bottom:6px; }
-.live-counter { font-size:14px; color:#888; margin-bottom:24px; min-height:22px; }
+
 
 /* SCORES */
 .scores-section { background:#111; border:1px solid #1e1e1e; border-radius:16px; padding:18px 20px; margin-bottom:8px; }
@@ -57,7 +53,7 @@ a { color:inherit; text-decoration:none; }
 /* FACTORS BOX */
 .factors-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:18px 20px; margin-top:4px; }
 .factors-box-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
-.factors-box-desc { font-size:12px; color:#666; line-height:1.5; margin-bottom:14px; }
+.factors-box-desc { font-size:12px; color:#a5a5a5; line-height:1.5; margin-bottom:14px; }
 .factor-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #141414; }
 .factor-row:last-child { border-bottom:none; }
 .factor-left { flex:1; }
@@ -75,7 +71,7 @@ a { color:inherit; text-decoration:none; }
 .explain-highlight { color:#f97316; font-weight:600; }
 
 /* SECTION LABEL */
-.section-label { font-size:10px; color:#777; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.section-label { font-size:10px; color:#aaa; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
 .section-label::after { content:""; flex:1; height:1px; background:#1a1a1a; }
 
 /* MAIN LEAK */
@@ -85,13 +81,13 @@ a { color:inherit; text-decoration:none; }
 /* AGENTIC */
 .agentic-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
 .agentic-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
-.agentic-desc { font-size:12px; color:#666; margin-bottom:14px; }
+.agentic-desc { font-size:12px; color:#a5a5a5; margin-bottom:14px; }
 .agentic-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #141414; }
 .agentic-row:last-of-type { border-bottom:none; }
 .agentic-file { font-size:13px; color:#aaa; font-family:monospace; }
 .agentic-status-ok { font-size:12px; font-weight:700; color:#1D9E75; }
 .agentic-status-bad { font-size:12px; font-weight:700; color:#E24B4A; }
-.agentic-quality { font-size:11px; color:#555; margin-top:10px; padding-top:10px; border-top:1px solid #1a1a1a; line-height:1.6; }
+.agentic-quality { font-size:11px; color:#9a9a9a; margin-top:10px; padding-top:10px; border-top:1px solid #1a1a1a; line-height:1.6; }
 
 /* ISSUE CARDS */
 .execution-cards { display:flex; flex-direction:column; gap:16px; margin-bottom:28px; }
@@ -119,9 +115,9 @@ a { color:inherit; text-decoration:none; }
 .exec-steps { list-style:none; padding:0; margin:0 0 12px 0; counter-reset:step-counter; }
 .exec-step { font-size:13px; color:#999; padding:6px 0 6px 24px; position:relative; line-height:1.5; border-bottom:1px solid rgba(255,255,255,0.04); }
 .exec-step:last-child { border-bottom:none; }
-.exec-step::before { content:counter(step-counter); counter-increment:step-counter; position:absolute; left:0; top:7px; font-size:10px; font-weight:700; color:#555; width:16px;height:16px; background:#1a1a1a; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.exec-step::before { content:counter(step-counter); counter-increment:step-counter; position:absolute; left:0; top:7px; font-size:10px; font-weight:700; color:#9a9a9a; width:16px;height:16px; background:#1a1a1a; border-radius:50%; display:flex; align-items:center; justify-content:center; }
 .exec-footer { padding:10px 18px; background:rgba(0,0,0,0.2); border-top:1px solid rgba(255,255,255,0.04); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px; }
-.exec-timeline { font-size:11px; color:#666; }
+.exec-timeline { font-size:11px; color:#a5a5a5; }
 .exec-impact-time { font-size:11px; color:#1D9E75; font-weight:600; }
 .priority-critical { font-size:11px; font-weight:700; color:#E24B4A; }
 .priority-high { font-size:11px; font-weight:700; color:#EF9F27; }
@@ -131,19 +127,19 @@ a { color:inherit; text-decoration:none; }
 /* DELIVERABLE BOX */
 .deliverable-box { background:#111; border:1px solid #1e1e1e; border-radius:16px; padding:20px; margin-bottom:20px; }
 .deliverable-title { font-size:15px; font-weight:700; color:#e8e8e8; margin-bottom:4px; }
-.deliverable-desc { font-size:13px; color:#666; margin-bottom:14px; }
+.deliverable-desc { font-size:13px; color:#a5a5a5; margin-bottom:14px; }
 
 /* CHECKLIST */
 .checklist-item { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid #1a1a1a; }
 .checklist-item:last-child { border-bottom:none; }
-.checklist-week { font-size:10px; color:#555; text-transform:uppercase; letter-spacing:0.06em; font-weight:700; min-width:44px; margin-top:2px; }
+.checklist-week { font-size:10px; color:#9a9a9a; text-transform:uppercase; letter-spacing:0.06em; font-weight:700; min-width:44px; margin-top:2px; }
 .checklist-priority { font-size:10px; font-weight:700; text-transform:uppercase; min-width:50px; margin-top:2px; }
 .checklist-priority.critical { color:#E24B4A; }
 .checklist-priority.medium { color:#EF9F27; }
 .checklist-priority.low { color:#1D9E75; }
 .checklist-content { flex:1; }
 .checklist-action { font-size:13px; color:#ddd; line-height:1.5; margin-bottom:3px; }
-.checklist-meta { font-size:11px; color:#555; }
+.checklist-meta { font-size:11px; color:#9a9a9a; }
 .checklist-yourself { font-size:10px; font-weight:700; color:#1D9E75; }
 .checklist-delegate { font-size:10px; font-weight:700; color:#EF9F27; }
 
@@ -158,7 +154,7 @@ a { color:inherit; text-decoration:none; }
 .prompt-item:last-child { margin-bottom:0; }
 .prompt-title { font-size:12px; font-weight:700; color:#f97316; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
 .prompt-text { font-size:12px; color:#888; line-height:1.6; font-family:monospace; background:#0a0a0a; border:1px solid #1a1a1a; border-radius:8px; padding:10px 12px; white-space:pre-wrap; word-break:break-word; }
-.copy-btn { margin-top:8px; font-size:11px; color:#555; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; padding:4px 10px; cursor:pointer; transition:all 0.2s; }
+.copy-btn { margin-top:8px; font-size:11px; color:#9a9a9a; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; padding:4px 10px; cursor:pointer; transition:all 0.2s; }
 .copy-btn:hover { color:#f97316; border-color:#f97316; }
 
 /* CODE BOXES */
@@ -174,14 +170,14 @@ a { color:inherit; text-decoration:none; }
 
 /* PDF BTN */
 .pdf-btn { display:block; width:100%; padding:16px; border-radius:12px; background:#111; border:1px solid #2a2a2a; color:#aaa; font-size:14px; font-weight:600; text-align:center; cursor:pointer; transition:all 0.2s; margin-bottom:24px; text-decoration:none; }
-.pdf-btn:hover { color:#ccc; border-color:#444; background:#161616; }
+.pdf-btn:hover { color:#ccc; border-color:#8a8a8a; background:#161616; }
 
 /* FOUNDER */
 .founder-box { background:#0d0d0d; border:1px solid #1e1e1e; border-left:3px solid #f97316; border-radius:12px; padding:18px 20px; margin-bottom:24px; display:flex; gap:16px; align-items:flex-start; }
 .founder-avatar { width:44px;height:44px; background:linear-gradient(135deg,#f97316,#ea580c); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; color:#000; flex-shrink:0; }
 .founder-text { flex:1; }
 .founder-name { font-size:13px; font-weight:700; color:#e8e8e8; margin-bottom:4px; }
-.founder-sub { font-size:11px; color:#666; margin-bottom:8px; }
+.founder-sub { font-size:11px; color:#a5a5a5; margin-bottom:8px; }
 .founder-quote { font-size:13px; color:#aaa; line-height:1.7; font-style:italic; }
 
 /* DFY BOX */
@@ -193,15 +189,22 @@ a { color:inherit; text-decoration:none; }
 .dfy-features { list-style:none; padding:0; margin:0 0 16px 0; }
 .dfy-feature { font-size:13px; color:#888; padding:4px 0; }
 .dfy-feature::before { content:"+ "; color:#f97316; font-weight:700; }
-.dfy-price { font-size:13px; color:#666; margin-bottom:14px; }
+.dfy-price { font-size:13px; color:#a5a5a5; margin-bottom:14px; }
 .dfy-price strong { color:#f97316; font-size:15px; }
 .dfy-cta { display:block; width:100%; padding:18px; border-radius:14px; border:2px solid #dc2626; background:linear-gradient(135deg,#f97316,#ea580c); color:#000; font-weight:900; font-size:17px; text-align:center; cursor:pointer; text-decoration:none; transition:all 0.25s; box-shadow:0 10px 25px rgba(249,115,22,0.35); }
 .dfy-cta:hover { transform:translateY(-2px); box-shadow:0 16px 35px rgba(249,115,22,0.6); }
 
-/* FOOTER */
-.footer { padding-top:20px; border-top:1px solid #1e1e1e; text-align:center; }
-.footer-tagline { font-size:16px; font-weight:700; color:#f97316; letter-spacing:0.04em; }
-.footer-platform { font-size:10px; color:#333; text-transform:uppercase; letter-spacing:0.08em; margin-top:4px; }
+/* FOOTER - landing style */
+.footer { padding: 32px 0 12px; margin-top: 32px; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; text-decoration: none; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
 
 @media (max-width:480px) {
   .loss-number { font-size:52px; }
@@ -209,6 +212,94 @@ a { color:inherit; text-decoration:none; }
   .score-num { font-size:20px; min-width:55px; }
   .score-verdict { padding-left:115px; }
 }
+
+/* ═══════════ FUTURE LOOK UPGRADE ═══════════ */
+
+/* Display font for big numbers and headings */
+
+body { font-feature-settings: "ss01","cv01"; }
+.loss-number, .score-num, .score-circle-num, .stat-num,
+.exec-card-title, .deliverable-title, .section-title, .cta-title, .dfy-title {
+  font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Layered atmospheric background: glow + faint tech grid */
+body::before {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(249,115,22,0.16), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 20%, rgba(96,165,250,0.05), transparent 55%);
+}
+body::after {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+}
+
+/* Hero loss number — dramatic gradient + glow */
+.loss-number {
+  background: linear-gradient(180deg, #ff6b4a 0%, #E24B4A 70%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 24px rgba(226,75,74,0.35));
+  letter-spacing: -0.03em;
+}
+
+/* AI score number glow */
+.score-num { text-shadow: 0 0 28px currentColor; opacity:0.98; }
+
+/* Score circle pulse aura */
+.score-circle-wrap::after {
+  content:""; position:absolute; inset:-8px; border-radius:50%;
+  box-shadow: 0 0 50px 0 rgba(249,115,22,0.12); pointer-events:none;
+}
+
+/* Cards: glassy + crisper hover lift */
+.scores-section, .deliverable-box, .agentic-box, .factors-box,
+.revenue-box, .founder-box, .main-leak-box {
+  backdrop-filter: blur(6px);
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+}
+.exec-card { backdrop-filter: blur(4px); }
+.exec-card:hover { transform: translateY(-3px) scale(1.005); }
+
+/* Factor bars — subtle inner glow */
+.factor-fill, .score-bar-fill { box-shadow: 0 0 12px -2px currentColor; }
+
+/* Section labels: brighter, more legible, tech feel */
+.section-label { color:#bcbcbc; font-size:11px; letter-spacing:0.14em; }
+.section-label::after { background: linear-gradient(90deg, #2a2a2a, transparent); }
+
+/* Headings + body legibility bump */
+.deliverable-title { font-size:16px; letter-spacing:-0.01em; }
+.deliverable-desc { font-size:13.5px; color:#9a9a9a; }
+.main-leak-text { font-size:16.5px; }
+.exec-card-title { font-size:15.5px; letter-spacing:-0.01em; }
+.exec-reason { font-size:14px; color:#bdbdbd; }
+.exec-fix-text { font-size:14px; }
+.exec-step { font-size:13.5px; color:#a8a8a8; }
+.checklist-action { font-size:13.5px; color:#e2e2e2; }
+.checklist-meta { font-size:12px; color:#8f8f8f; }
+.walkthrough-text { font-size:13.5px; color:#b3b3b3; }
+.prompt-text { font-size:12.5px; color:#9aa0a6; }
+.founder-quote { font-size:13.5px; color:#b3b3b3; }
+.agentic-desc { font-size:12.5px; color:#9a9a9a; }
+.agentic-quality { font-size:12px; color:#888; }
+
+/* Loss label / daily — more readable, less "fine print" */
+.loss-label { font-size:15px; color:#bdbdbd; }
+.daily-loss { font-size:17px; }
+
+/* CTA + DFY get a bit more presence */
+.dfy-box { box-shadow: 0 20px 60px -20px rgba(249,115,22,0.25); }
+.dfy-title { font-size:18px; }
+
+/* Smooth load-in for the whole app */
+#app { animation: auditFadeUp 0.6s ease both; }
+@keyframes auditFadeUp { from { opacity:0; transform: translateY(12px);} to {opacity:1; transform:none;} }
+/* ═══════════ /FUTURE LOOK ═══════════ */
 </style>
 </head>
 <body>
@@ -217,14 +308,15 @@ a { color:inherit; text-decoration:none; }
 <nav class="nav">
   <div class="nav-brand">
     <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
-    <div class="nav-tagline">AI Commerce Intelligence Platform</div>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
+    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
   </div>
   <div class="nav-links">
-    <a href="/">Home</a>
     <a href="/stores">Stores</a>
-    <a href="/aco">ACO</a>
     <a href="/methodology">Methodology</a>
-    <a href="/" class="cta-nav">Free Score</a>
+    <a href="/vocabulary">Vocabulary</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
   </div>
 </nav>
 
@@ -384,7 +476,7 @@ const execCardsHTML = issues.map((issue, i) => {
       </div>
     </div>
     <div class="exec-card-body">
-      <div class="exec-reason">${String(issue.reason||issue.why_it_matters||"").replace(/</g,"&lt;")}</div>
+      <div class="exec-reason">${softenText(issue.reason||issue.why_it_matters||"").replace(/</g,"&lt;")}</div>
       <div class="exec-fix-label">Exact fix</div>
       <div class="exec-fix-text">${String(issue.fix||"").replace(/</g,"&lt;")}</div>
       <ul class="exec-steps">${stepsHTML}</ul>
@@ -406,13 +498,13 @@ const checklistHTML = checklist.length > 0 ? checklist.map(item => `
       <div class="checklist-action">${String(item.action||"").replace(/</g,"&lt;")}</div>
       <div class="checklist-meta">${item.estimated_time ? item.estimated_time : ""}${item.impact ? " &middot; " + item.impact : ""}&nbsp;&nbsp;<span class="${item.do_yourself?'checklist-yourself':'checklist-delegate'}">${item.do_yourself ? "Do it yourself" : "Delegate"}</span></div>
     </div>
-  </div>`).join("") : `<div style="font-size:13px;color:#555;padding:10px 0;">Execution checklist will appear after audit generation.</div>`;
+  </div>`).join("") : `<div style="font-size:13px;color:#9a9a9a;padding:10px 0;">Execution checklist will appear after audit generation.</div>`;
 
 const walkthrough = r.written_walkthrough || "";
 const walkthroughHTML = walkthrough ? walkthrough.split("## ").filter(Boolean).map(section => {
   const lines = section.split("\n");
   return `<div class="walkthrough-section"><div class="walkthrough-heading">${lines[0].replace(/</g,"&lt;")}</div><div class="walkthrough-text">${lines.slice(1).join("\n").trim().replace(/</g,"&lt;")}</div></div>`;
-}).join("") : `<div style="font-size:13px;color:#555;padding:10px 0;">Written walkthrough will appear after audit generation.</div>`;
+}).join("") : `<div style="font-size:13px;color:#9a9a9a;padding:10px 0;">Written walkthrough will appear after audit generation.</div>`;
 
 const claudePrompts = Array.isArray(r.claude_prompts) ? r.claude_prompts : [];
 const promptsHTML = claudePrompts.length > 0 ? claudePrompts.map((p, i) => `
@@ -420,29 +512,60 @@ const promptsHTML = claudePrompts.length > 0 ? claudePrompts.map((p, i) => `
     <div class="prompt-title">${String(p.title||"Prompt " + (i+1)).replace(/</g,"&lt;")}</div>
     <div class="prompt-text" id="prompt-${i}">${String(p.prompt||"").replace(/</g,"&lt;")}</div>
     <button class="copy-btn" onclick="copyText('prompt-${i}', this)">Copy prompt</button>
-  </div>`).join("") : `<div style="font-size:13px;color:#555;padding:10px 0;">Custom prompts will appear after audit generation.</div>`;
+  </div>`).join("") : `<div style="font-size:13px;color:#9a9a9a;padding:10px 0;">Custom prompts will appear after audit generation.</div>`;
 
 const llmsTxt = r.llms_txt || "";
-const llmsTxtHTML = llmsTxt ? `<div class="code-box" id="llms-txt-box">${llmsTxt.replace(/</g,"&lt;")}</div><button class="copy-btn" style="margin-top:8px;" onclick="copyText('llms-txt-box', this)">Copy llms.txt</button>` : `<div style="font-size:13px;color:#555;padding:10px 0;">Your custom llms.txt will appear after audit generation.</div>`;
+const llmsTxtHTML = llmsTxt ? `<div class="code-box" id="llms-txt-box">${llmsTxt.replace(/</g,"&lt;")}</div><button class="copy-btn" style="margin-top:8px;" onclick="copyText('llms-txt-box', this)">Copy llms.txt</button>` : `<div style="font-size:13px;color:#9a9a9a;padding:10px 0;">Your custom llms.txt will appear after audit generation.</div>`;
 
 const schemaMk = r.schema_markup || "";
-const schemaHTML = schemaMk ? `<div class="schema-code-box" id="schema-box">${schemaMk.replace(/</g,"&lt;")}</div><button class="copy-btn" style="margin-top:8px;" onclick="copyText('schema-box', this)">Copy schema markup</button>` : `<div style="font-size:13px;color:#555;padding:10px 0;">Your schema markup will appear after audit generation.</div>`;
+const schemaHTML = schemaMk ? `<div class="schema-code-box" id="schema-box">${schemaMk.replace(/</g,"&lt;")}</div><button class="copy-btn" style="margin-top:8px;" onclick="copyText('schema-box', this)">Copy schema markup</button>` : `<div style="font-size:13px;color:#9a9a9a;padding:10px 0;">Your schema markup will appear after audit generation.</div>`;
 
-const mainLeak = r.main_leak || r.primary_failure || "AI agents may not confidently understand or recommend this store.";
+// ── Score-aware framing: high scores get "gap to the leaders", low scores get "visibility gap" ──
+const lossFraming = aiScore >= 70
+  ? "the revenue gap between you and the category leaders. You score well, but the top stores capture more AI recommendations."
+  : aiScore >= 50
+  ? "estimated AI visibility gap. You are visible, but missing the signals that win recommendations."
+  : "estimated AI visibility gap. Critical gaps are keeping AI agents from recommending you.";
+const dailyFraming = aiScore >= 70
+  ? "That is roughly $" + fmt(daily) + " a day in AI-driven revenue going to better-optimized competitors."
+  : "That is about $" + fmt(daily) + " in AI-driven revenue you are not capturing each day.";
+let mainLeak = r.main_leak || r.primary_failure || "AI agents may not confidently understand or recommend this store.";
+// Consistency guard: if a factor actually scored above 0, do not let the copy claim a total absence of it.
+// Prevents "no schema markup" while the Structured Signals bar shows 4/15, etc.
+(function reconcileLeakWithScores(){
+  const softenAbsolute = (text, scoreVal, words) => {
+    if (scoreVal > 0) {
+      let t = text;
+      words.forEach(w => {
+        // turn "no X" / "absence of X" / "lacks any X" into "limited X"
+        t = t.replace(new RegExp("\\b(no|lacks any|absence of|complete lack of|zero)\\s+" + w, "gi"), "limited " + w);
+      });
+      return t;
+    }
+    return text;
+  };
+  mainLeak = softenAbsolute(mainLeak, schema_score, ["schema markup", "structured data", "json-ld", "json\\-ld"]);
+  mainLeak = softenAbsolute(mainLeak, trust_score,  ["trust signals", "trust"]);
+})();
+// reusable softener for issue card text
+function softenText(text){
+  let t = String(text||"");
+  if (schema_score > 0) t = t.replace(/\b(no|lacks any|absence of|complete lack of|zero)\s+(schema markup|structured data|json-ld)/gi, "limited $2");
+  if (trust_score  > 0) t = t.replace(/\b(no|lacks any|absence of)\s+(trust signals|machine-readable trust)/gi, "limited $2");
+  return t;
+}
 
 document.getElementById("loadingState").style.display = "none";
 const app = document.getElementById("app");
 app.style.display = "block";
 
 app.innerHTML = `
-  <div class="audit-badge"><span class="audit-badge-dot"></span>AI Recommendation Audit &middot; atomfoundry.dev</div>
 
   <div class="domain-label">${storeDomain}</div>
   <div class="loss-number">$${fmt(monthly)}/month</div>
-  <div class="loss-label">estimated AI visibility gap. Full audit complete.</div>
-  <div class="daily-loss">That is $${fmt(daily)} in missed AI-driven revenue every single day.</div>
-  <div class="live-counter" id="liveCounter"></div>
-  <div style="font-size:11px;color:#666;margin-top:4px;line-height:1.5;">${r.estimated_loss_assumption || ""}</div>
+  <div class="loss-label">${lossFraming}</div>
+  <div class="daily-loss">${dailyFraming}</div>
+  <div style="font-size:11px;color:#a5a5a5;margin-top:4px;line-height:1.5;">${r.estimated_loss_assumption || ""}</div>
 
   <div class="scores-section">
     <div class="score-row">
@@ -517,7 +640,7 @@ app.innerHTML = `
     <div class="revenue-row"><span class="revenue-row-label">Missed AI-driven revenue per day</span><span class="revenue-row-value" style="color:#EF9F27;">$${fmt(daily)}</span></div>
     <div class="revenue-row"><span class="revenue-row-label">Yearly if not fixed</span><span class="revenue-row-value" style="color:#E24B4A;">$${fmt(yearly)}</span></div>
   </div>
-  <div style="font-size:11px;color:#666;margin:-12px 0 24px;line-height:1.5;">${r.estimated_loss_assumption || ""}</div>
+  <div style="font-size:11px;color:#a5a5a5;margin:-12px 0 24px;line-height:1.5;">${r.estimated_loss_assumption || ""}</div>
 
   <a href="#" class="pdf-btn" onclick="window.print(); return false;">Save Full Audit as PDF</a>
 
@@ -544,25 +667,38 @@ app.innerHTML = `
     </ul>
     <div class="dfy-price">One-time &middot; <strong>$899</strong> &middot; No ongoing commitment</div>
     <a href="mailto:audit@atomfoundry.dev?subject=Done-For-You%20AI%20Fix%20-%20${encodeURIComponent(storeDomain)}&body=I%20would%20like%20to%20have%20my%20AI%20visibility%20gaps%20fixed.%20My%20store%3A%20${encodeURIComponent(storeDomain)}" class="dfy-cta">Fix All My AI Gaps for $899</a>
-    <div style="font-size:11px;color:#555;text-align:center;margin-top:8px;">We will reply within 24 hours to confirm details.</div>
+    <div style="font-size:11px;color:#9a9a9a;text-align:center;margin-top:8px;">We will reply within 24 hours to confirm details.</div>
   </div>
 
-  <div class="footer">
-    <div class="footer-tagline">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
-    <div class="footer-platform">AI Commerce Intelligence Platform</div>
+  <footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service.html">Terms</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy.html">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
+    </div>
   </div>
+</footer>
 `;
 
 setTimeout(() => { const b = document.getElementById("aiBar"); if (b) b.style.width = aiScore + "%"; }, 300);
 
-const hourly = Math.round(daily / 24);
-let seconds = 0;
-const counter = document.getElementById("liveCounter");
-setInterval(() => {
-  seconds++;
-  const lost = Math.round((hourly / 3600) * seconds);
-  if (counter) counter.innerText = "$" + lost.toLocaleString("en-US") + " in missed AI-driven revenue while you are reading this";
-}, 1000);
+// live counter removed
 
 } catch (err) {
   console.error("FATAL:", err);
