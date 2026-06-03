@@ -29,7 +29,7 @@ a { color:inherit; text-decoration:none; }
 
 /* LAYOUT */
 .page { position:relative; z-index:1; }
-.container { max-width:640px; margin:0 auto; padding:28px 20px 56px; }
+.container { max-width:860px; margin:0 auto; padding:28px 28px 56px; }
 #loadingState { text-align:center; padding:80px 20px; font-size:15px; color:#9a9a9a; }
 
 50%{opacity:0.3;} }
@@ -472,7 +472,7 @@ const execCardsHTML = issues.map((issue, i) => {
       <div class="exec-num">${i+1}</div>
       <div style="flex:1;">
         <div class="exec-card-title">${String(issue.title||"AI visibility gap").replace(/</g,"&lt;")}</div>
-        <div class="exec-card-impact">${impact > 0 ? "~$" + fmt(impact) + "/month AI visibility gap" : "AI recommendation impact detected"}</div>
+        <div class="exec-card-impact">AI recommendation impact</div>
       </div>
     </div>
     <div class="exec-card-body">
@@ -496,7 +496,7 @@ const checklistHTML = checklist.length > 0 ? checklist.map(item => `
     <div class="checklist-priority ${item.priority||'medium'}">${(item.priority||'medium').toUpperCase()}</div>
     <div class="checklist-content">
       <div class="checklist-action">${String(item.action||"").replace(/</g,"&lt;")}</div>
-      <div class="checklist-meta">${item.estimated_time ? item.estimated_time : ""}${item.impact ? " &middot; " + item.impact : ""}&nbsp;&nbsp;<span class="${item.do_yourself?'checklist-yourself':'checklist-delegate'}">${item.do_yourself ? "Do it yourself" : "Delegate"}</span></div>
+      <div class="checklist-meta">${item.estimated_time ? item.estimated_time : ""}&nbsp;&nbsp;<span class="${item.do_yourself?'checklist-yourself':'checklist-delegate'}">${item.do_yourself ? "Do it yourself" : "Delegate"}</span></div>
     </div>
   </div>`).join("") : `<div style="font-size:13px;color:#9a9a9a;padding:10px 0;">Execution checklist will appear after audit generation.</div>`;
 
