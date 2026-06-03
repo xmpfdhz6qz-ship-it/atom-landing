@@ -6,6 +6,7 @@
 <title>AI Recommendation Report | Atom Foundry</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap');
 * { box-sizing: border-box; }
 body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#080808; color:#e8e8e8; -webkit-font-smoothing:antialiased; line-height:1.6; }
 body::before { content:""; position:fixed; top:0;left:0; width:100%;height:100%; background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(249,115,22,0.12),transparent); pointer-events:none; z-index:0; }
@@ -41,10 +42,10 @@ a { color:inherit; text-decoration:none; }
 
 /* LAYOUT */
 .page { position:relative; z-index:1; }
-.container { max-width:600px; margin:0 auto; padding:28px 20px 48px; }
+.container { max-width:860px; margin:0 auto; padding:28px 28px 56px; }
 
 /* LOADING */
-#loadingState { text-align:center; padding:60px 20px; font-size:15px; color:#666; }
+#loadingState { text-align:center; padding:60px 20px; font-size:15px; color:#a5a5a5; }
 
 /* DOMAIN + SCORE HERO */
 .domain-label { font-size:14px; color:#aaa; margin-bottom:8px; font-weight:500; }
@@ -59,7 +60,7 @@ a { color:inherit; text-decoration:none; }
 .loss-strip { background:#111; border:1px solid #1e1e1e; border-radius:14px; padding:18px 20px; margin-bottom:20px; text-align:center; }
 .loss-strip-amount { font-size:32px; font-weight:800; color:#E24B4A; line-height:1; margin-bottom:4px; }
 .loss-strip-label { font-size:13px; color:#888; }
-.live-counter { font-size:13px; color:#666; margin-top:6px; min-height:20px; }
+
 
 /* SCORES */
 .scores-section { background:#111; border:1px solid #1e1e1e; border-radius:16px; padding:18px 20px; margin-bottom:8px; }
@@ -73,7 +74,7 @@ a { color:inherit; text-decoration:none; }
 /* BREAKDOWN */
 .breakdown-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:14px; padding:18px 20px; margin-bottom:20px; }
 .breakdown-title { font-size:14px; font-weight:700; color:#ddd; margin-bottom:6px; }
-.breakdown-desc { font-size:13px; color:#777; line-height:1.6; margin-bottom:16px; }
+.breakdown-desc { font-size:13px; color:#aaa; line-height:1.6; margin-bottom:16px; }
 .factor-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid #141414; }
 .factor-row:last-child { border-bottom:none; padding-bottom:0; }
 .factor-left { flex:1; }
@@ -114,18 +115,18 @@ a { color:inherit; text-decoration:none; }
 /* AGENTIC */
 .agentic-box { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
 .agentic-title { font-size:13px; font-weight:700; color:#ddd; margin-bottom:4px; }
-.agentic-desc { font-size:12px; color:#666; margin-bottom:12px; line-height:1.5; }
+.agentic-desc { font-size:12px; color:#a5a5a5; margin-bottom:12px; line-height:1.5; }
 .agentic-row { display:flex; align-items:center; justify-content:space-between; padding:7px 0; border-bottom:1px solid #141414; }
 .agentic-row:last-of-type { border-bottom:none; }
 .agentic-file { font-size:13px; color:#aaa; font-family:monospace; }
 .agentic-status-ok { font-size:12px; font-weight:700; color:#1D9E75; }
 .agentic-status-bad { font-size:12px; font-weight:700; color:#E24B4A; }
-.agentic-note { font-size:12px; color:#555; margin-top:10px; padding-top:10px; border-top:1px solid #1a1a1a; line-height:1.6; font-style:italic; }
+.agentic-note { font-size:12px; color:#9a9a9a; margin-top:10px; padding-top:10px; border-top:1px solid #1a1a1a; line-height:1.6; font-style:italic; }
 
 /* CTA */
-.cta-btn { display:block; width:100%; padding:20px; border-radius:14px; border:2px solid #dc2626; background:linear-gradient(135deg,#f97316,#ea580c); color:#000; font-weight:900; font-size:17px; text-align:center; cursor:pointer; text-decoration:none; box-shadow:0 12px 30px rgba(249,115,22,0.4); transition:all 0.25s; animation:ctaPulse 2.5s infinite; margin-bottom:14px; }
+.cta-btn { display:block; width:100%; padding:20px; border-radius:14px; border:1px solid rgba(249,115,22,0.5); background:linear-gradient(135deg,#f97316,#ea580c); color:#000; font-weight:900; font-size:17px; text-align:center; cursor:pointer; text-decoration:none; box-shadow:0 12px 30px rgba(249,115,22,0.4); transition:all 0.25s; margin-bottom:14px; }
 .cta-btn:hover { transform:translateY(-2px); box-shadow:0 18px 40px rgba(249,115,22,0.65); }
-@keyframes ctaPulse { 0%,100%{box-shadow:0 0 0 rgba(249,115,22,0.4);}50%{box-shadow:0 0 30px rgba(249,115,22,0.6);} }
+50%{box-shadow:0 0 30px rgba(249,115,22,0.6);} }
 .cta-trust { font-size:13px; color:#999; text-align:center; line-height:1.8; margin-bottom:6px; }
 .cta-trust-green { font-size:13px; color:#1D9E75; text-align:center; margin-bottom:24px; }
 
@@ -142,7 +143,7 @@ a { color:inherit; text-decoration:none; }
 .founder-avatar { width:44px;height:44px; background:linear-gradient(135deg,#f97316,#ea580c); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; color:#000; flex-shrink:0; }
 .founder-text { flex:1; }
 .founder-name { font-size:13px; font-weight:700; color:#e8e8e8; margin-bottom:4px; }
-.founder-sub { font-size:11px; color:#666; margin-bottom:8px; }
+.founder-sub { font-size:11px; color:#a5a5a5; margin-bottom:8px; }
 .founder-quote { font-size:13px; color:#aaa; line-height:1.7; font-style:italic; }
 
 @media (max-width:480px) {
@@ -151,6 +152,95 @@ a { color:inherit; text-decoration:none; }
   .score-verdict { padding-left:100px; }
   .score-hero { font-size:56px; }
   .cta-btn { font-size:15px; padding:18px; }
+}
+
+/* ═══════════ FUTURE LOOK (matches audit) ═══════════ */
+.score-hero, .score-num, .loss-strip-amount, .breakdown-title,
+.what-title, .main-leak-text, .cta-btn {
+  font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+body::before {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(249,115,22,0.16), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 20%, rgba(96,165,250,0.05), transparent 55%);
+}
+body::after {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+}
+.score-hero { text-shadow: 0 0 40px currentColor; }
+.loss-strip-amount {
+  background: linear-gradient(180deg, #ff6b4a 0%, #E24B4A 70%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 16px rgba(226,75,74,0.3));
+}
+.scores-section, .breakdown-box, .agentic-box, .main-leak-box, .locked-box,
+.fix-box, .what-box, .decision-box, .founder-box, .loss-strip {
+  backdrop-filter: blur(6px);
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+}
+.factor-fill, .score-bar-fill { box-shadow: 0 0 12px -2px currentColor; }
+#app { animation: repFade 0.6s ease both; }
+@keyframes repFade { from {opacity:0; transform:translateY(12px);} to {opacity:1; transform:none;} }
+
+/* ── Čitelnost: zvětšit a zesvětlit drobné šedé ── */
+.score-hero-label { font-size:15px; color:#bdbdbd; }
+.loss-strip-label { font-size:13.5px; color:#bdbdbd; }
+.breakdown-desc { font-size:13.5px; color:#9a9a9a; }
+.factor-name { font-size:13.5px; color:#bbb; }
+.section-label { font-size:11px; color:#bcbcbc; letter-spacing:0.12em; }
+.main-leak-text { font-size:16.5px; }
+.locked-item { font-size:14px; color:#bdbdbd; }
+.fix-text { font-size:15px; }
+.agentic-desc { font-size:12.5px; color:#9a9a9a; }
+.agentic-note { font-size:12.5px; color:#8f8f8f; }
+.what-item { font-size:14px; color:#cfcfcf; }
+.decision-box { font-size:14.5px; color:#d4d4d4; }
+.founder-quote { font-size:13.5px; color:#b3b3b3; }
+.cta-trust { font-size:13.5px; color:#a5a5a5; }
+.domain-label { font-size:14.5px; color:#bdbdbd; }
+/* ═══════════ /FUTURE LOOK ═══════════ */
+
+/* ── WHAT GRID (audit contents) ── */
+.what-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.what-card { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:16px; transition:border-color 0.2s, transform 0.2s; }
+.what-card:hover { border-color:rgba(249,115,22,0.35); transform:translateY(-2px); }
+.what-card-icon { width:26px; height:26px; border-radius:7px; background:rgba(249,115,22,0.12); color:#f97316; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; font-family:'Sora',sans-serif; }
+.what-card-title { font-size:14px; font-weight:700; color:#e8e8e8; margin-bottom:6px; line-height:1.3; }
+.what-card-desc { font-size:12.5px; color:#9a9a9a; line-height:1.55; }
+
+/* ── BEFORE / AFTER ── */
+.beforeafter { display:flex; align-items:stretch; gap:14px; margin-bottom:8px; }
+.ba-col { flex:1; background:#0d0d0d; border:1px solid #1e1e1e; border-radius:14px; padding:20px; text-align:center; }
+.ba-tag { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:10px; }
+.ba-now { color:#9a9a9a; }
+.ba-after { color:#1D9E75; }
+.ba-score { font-size:46px; font-weight:800; line-height:1; margin-bottom:10px; font-family:'Sora',sans-serif; }
+.ba-desc { font-size:12.5px; color:#a5a5a5; line-height:1.5; }
+.ba-arrow { display:flex; align-items:center; color:#f97316; font-size:22px; font-weight:700; }
+.ba-note { font-size:12px; color:#8f8f8f; line-height:1.5; margin-bottom:24px; font-style:italic; }
+
+/* ── GUARANTEE ── */
+.guarantee-box { display:flex; gap:14px; align-items:flex-start; background:#0a1a0a; border:1px solid #1a2e1a; border-left:3px solid #1D9E75; border-radius:12px; padding:16px 18px; margin-bottom:24px; }
+.guarantee-icon { width:26px; height:26px; border-radius:50%; background:rgba(29,158,117,0.15); color:#1D9E75; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px; }
+.guarantee-text { font-size:13.5px; color:#bdbdbd; line-height:1.6; }
+.guarantee-text strong { color:#4ade80; display:block; margin-bottom:3px; }
+
+/* ── FAQ ── */
+.faq-box { margin-bottom:24px; }
+.faq-item { background:#0d0d0d; border:1px solid #1e1e1e; border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+.faq-item:last-child { margin-bottom:0; }
+.faq-q { font-size:14px; font-weight:700; color:#e8e8e8; margin-bottom:6px; }
+.faq-a { font-size:13px; color:#a5a5a5; line-height:1.6; }
+
+@media (max-width:640px) {
+  .what-grid { grid-template-columns:1fr; }
+  .beforeafter { flex-direction:column; }
+  .ba-arrow { transform:rotate(90deg); justify-content:center; padding:4px 0; }
 }
 </style>
 </head>
@@ -262,15 +352,15 @@ function getFactorColor(pct) {
   const lockedLeaks = Array.isArray(report.locked_leaks) && report.locked_leaks.length > 0
     ? report.locked_leaks
     : [
-        { title:"AI structured data gaps limiting recommendation reach", est_impact:"$1,200/month" },
-        { title:"Semantic clarity issues reducing AI intent matching",   est_impact:"$900/month"   },
-        { title:"Missing trust signals reducing AI confidence score",    est_impact:"$600/month"   }
+        { title:"AI structured data gaps limiting recommendation reach" },
+        { title:"Semantic clarity issues reducing AI intent matching"   },
+        { title:"Missing trust signals reducing AI confidence score"    }
       ];
 
   const lockedHTML = lockedLeaks.map(l => `
     <div class="locked-item">
       <span class="locked-icon">&#x1F512;</span>
-      <span>${l.title}${l.est_impact ? ' <span style="color:#777;">&middot; ' + l.est_impact + '</span>' : ''}</span>
+      <span>${l.title}</span>
     </div>`).join("");
 
   const factors = [
@@ -336,8 +426,7 @@ function getFactorColor(pct) {
     <div class="loss-strip">
       <div class="loss-strip-amount">${lossDisplay}</div>
       <div class="loss-strip-label">estimated AI visibility gap per month</div>
-      <div class="live-counter" id="liveCounter"></div>
-      <div style="font-size:11px;color:#666;margin-top:6px;line-height:1.5;">${report.estimated_loss_assumption || ""}</div>
+      <div style="font-size:11px;color:#a5a5a5;margin-top:6px;line-height:1.5;">${report.estimated_loss_assumption || ""}</div>
     </div>
 
     <div class="scores-section">
@@ -382,19 +471,104 @@ function getFactorColor(pct) {
     <div class="cta-trust-green">Includes custom prompts, llms.txt, and schema markup ready to implement</div>
 
     <div class="what-box">
-      <div class="what-title">What is in the full audit:</div>
-      <div class="what-item">Complete AI Recommendation breakdown across all 8 factors with specific issues</div>
-      <div class="what-item">Exact AI interpretation problems found on your store</div>
-      <div class="what-item">Execution checklist showing what to fix this week vs. delegate</div>
-      <div class="what-item">Custom Claude prompts built for your store</div>
-      <div class="what-item">llms.txt and schema markup code ready to copy and paste</div>
-      <div class="what-item">Written walkthrough of your top 3 problems explained clearly</div>
+      <div class="what-title">Everything you get in the full audit</div>
+      <div class="what-grid">
+        <div class="what-card">
+          <div class="what-card-icon">1</div>
+          <div class="what-card-title">Your competitive position</div>
+          <div class="what-card-desc">Where you rank against other stores in your category and country. The average score, the top score, and the exact gap you need to close to reach the leaders.</div>
+        </div>
+        <div class="what-card">
+          <div class="what-card-icon">2</div>
+          <div class="what-card-title">All 8 factors, fully broken down</div>
+          <div class="what-card-desc">Every factor scored, with the specific reason behind each number and what is pulling your score down.</div>
+        </div>
+        <div class="what-card">
+          <div class="what-card-icon">3</div>
+          <div class="what-card-title">The exact gaps on your store</div>
+          <div class="what-card-desc">The real AI interpretation problems found on your pages, ranked by priority, each with a precise fix and step-by-step instructions.</div>
+        </div>
+        <div class="what-card">
+          <div class="what-card-icon">4</div>
+          <div class="what-card-title">A week-by-week execution plan</div>
+          <div class="what-card-desc">What to fix first, what to delegate, and how long each item takes. No guesswork about where to start.</div>
+        </div>
+        <div class="what-card">
+          <div class="what-card-icon">5</div>
+          <div class="what-card-title">Your llms.txt, written for your store</div>
+          <div class="what-card-desc">A ready-to-use agentic file built around your real catalog and brand, not a generic template. Copy, paste, done.</div>
+        </div>
+        <div class="what-card">
+          <div class="what-card-icon">6</div>
+          <div class="what-card-title">Schema markup ready to paste</div>
+          <div class="what-card-desc">JSON-LD structured data for your store, ready to drop into your theme so AI agents can finally read what you sell.</div>
+        </div>
+        <div class="what-card">
+          <div class="what-card-icon">7</div>
+          <div class="what-card-title">Custom prompts built for your store</div>
+          <div class="what-card-desc">Prompts tailored to your products and gaps, so you can generate optimized content yourself in minutes.</div>
+        </div>
+        <div class="what-card">
+          <div class="what-card-icon">8</div>
+          <div class="what-card-title">A plain-language walkthrough</div>
+          <div class="what-card-desc">Your top problems explained without jargon, so you understand exactly why AI skips you and what changes it.</div>
+        </div>
+      </div>
     </div>
 
     <div class="decision-box">
       <strong style="color:#fff;">Your next step:</strong><br><br>
       Fix AI visibility and stop being skipped by ChatGPT and Alexa for Shopping.<br>
       Or do nothing and let competitors with higher AI scores get recommended instead.
+    </div>
+
+    <div class="section-label">What changes after the fix</div>
+    <div class="beforeafter">
+      <div class="ba-col">
+        <div class="ba-tag ba-now">Where you are now</div>
+        <div class="ba-score" style="color:${aiColor};">${aiScore}<span style="font-size:18px;color:#888;">/100</span></div>
+        <div class="ba-desc">${aiScore >= 70 ? "Recommended sometimes, but the leaders win more often." : aiScore >= 50 ? "Seen by AI, but rarely the one it recommends." : "Largely skipped when AI picks a store to recommend."}</div>
+      </div>
+      <div class="ba-arrow">&rarr;</div>
+      <div class="ba-col">
+        <div class="ba-tag ba-after">Typical after fixing</div>
+        <div class="ba-score" style="color:#1D9E75;">85+<span style="font-size:18px;color:#888;">/100</span></div>
+        <div class="ba-desc">Clearly readable, trusted, and recommendable. The level the category leaders are already at.</div>
+      </div>
+    </div>
+    <div class="ba-note">Based on the gaps found on your store. Closing structured-data and clarity gaps is what moves the score most.</div>
+
+    <div class="section-label">No risk</div>
+    <div class="guarantee-box">
+      <div class="guarantee-icon">&#10003;</div>
+      <div class="guarantee-text">
+        <strong>Delivered within 48 hours, or your money back.</strong>
+        If the audit does not show you exactly what to fix and how, we refund you in full. One-time payment, no subscription, nothing to cancel.
+      </div>
+    </div>
+
+    <div class="section-label">Common questions</div>
+    <div class="faq-box">
+      <div class="faq-item">
+        <div class="faq-q">Is this a one-time payment?</div>
+        <div class="faq-a">Yes. The audit is a single $399 payment. No subscription, no recurring charge, nothing to cancel.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do I need to install anything?</div>
+        <div class="faq-a">No. You get the findings, the ready-to-paste files, and clear instructions. You decide what to apply and when.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">I am on Shopify. Does this still apply?</div>
+        <div class="faq-a">Especially so. Shopify auto-generates agentic files for every store, which means presence no longer sets you apart. The audit makes yours specific to your catalog, which is what AI agents actually weigh.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How is this different from SEO?</div>
+        <div class="faq-a">SEO optimizes for human search on Google. This optimizes for AI shopping agents that read structure and machine-readable signals, then decide which store to recommend. Different readers, different rules.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How fast will I see results?</div>
+        <div class="faq-a">You get the audit within 48 hours. How quickly AI picks up the changes depends on your store, but the structured-data and clarity fixes are the fastest-moving levers.</div>
+      </div>
     </div>
 
     <div class="founder-box">
@@ -412,14 +586,7 @@ function getFactorColor(pct) {
 
   setTimeout(() => { const bar = document.getElementById("aiBar"); if (bar) bar.style.width = aiScore + "%"; }, 300);
 
-  const hourly = Math.round(daily / 24);
-  let seconds = 0;
-  const counter = document.getElementById("liveCounter");
-  setInterval(() => {
-    seconds++;
-    const lost = Math.round((hourly / 3600) * seconds);
-    if (counter && lost > 0) counter.innerText = "$" + lost.toLocaleString("en-US") + " in estimated AI visibility loss while reading this";
-  }, 1000);
+  // live counter removed for trust
 
   async function goCheckout(btn) {
     if (!btn) return;
