@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recommendation Density: How Broadly a Brand Appears Across Buyer Intents</title>
+<meta name="description" content="Recommendation Density measures how broadly a brand appears across adjacent buyer intents and query clusters. High density brands are harder to displace because they are present across many intents, not one.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/vocabulary/recommendation-density">
+<meta property="og:title" content="Recommendation Density: Breadth of Presence Across Intents">
+<meta property="og:description" content="How broadly a brand appears across adjacent buyer intents. Built by Atom Foundry.">
+<meta property="og:url" content="https://atomfoundry.dev/vocabulary/recommendation-density">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"DefinedTerm","name":"Recommendation Density","description":"A measure of how broadly a brand appears across adjacent buyer intents and related query clusters, not just its primary category query.","inDefinedTermSet":"https://atomfoundry.dev/vocabulary","publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is more Recommendation Density always better?","acceptedAnswer":{"@type":"Answer","text":"Density across relevant clusters is valuable. Spreading into clusters that do not fit your brand wastes effort and can confuse your identity. The goal is wide but coherent coverage of your real buyer territory."}},{"@type":"Question","name":"How is Recommendation Density measured?","acceptedAnswer":{"@type":"Answer","text":"By testing a brand appearance across a set of adjacent buyer prompts in its niche and counting how many query clusters it appears in, not just how often it wins the primary category query."}},{"@type":"Question","name":"How is density different from Recommendation Share?","acceptedAnswer":{"@type":"Answer","text":"Recommendation Share measures how often a brand wins within one defined prompt set. Density measures how many different clusters the brand appears in at all. A brand can have high share in a narrow band yet low density."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Vocabulary","item":"https://atomfoundry.dev/vocabulary"},{"@type":"ListItem","position":3,"name":"Recommendation Density","item":"https://atomfoundry.dev/vocabulary/recommendation-density"}]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c;
+  --red: #E24B4A; --green: #1D9E75; --yellow: #EF9F27;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; }
+.nav-logo span { color: var(--orange); }
+.nav-subline { font-size: 13px; color: var(--orange); font-weight: 700; letter-spacing: -0.02em; margin-top: 1px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+.nav-links a.cta-nav:hover { background: var(--orange-dark); }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
+
+/* WRAP */
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* HERO */
+.hero { padding: 64px 0 44px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 28px; }
+.term-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.term-tag { font-size: 11px; color: var(--dim); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; }
+.term-tag strong { color: var(--orange); font-weight: 700; }
+
+/* DEFINITION CARD */
+.def-card { background: var(--bg2); border: 1px solid rgba(249,115,22,0.2); border-radius: 16px; padding: 28px 30px; margin: 8px 0 16px; }
+.def-label { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.def-text { font-size: 19px; color: var(--white); line-height: 1.6; font-weight: 500; }
+
+/* SECTIONS */
+.section { padding: 48px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 18px; }
+.body-text strong { color: var(--text); }
+
+/* GRAPH VISUAL */
+.graph-visual { background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; padding: 14px; margin: 24px 0; position: relative; overflow: hidden; }
+.graph-visual svg { width: 100%; height: auto; display: block; }
+.graph-caption { text-align: center; font-size: 12px; color: var(--dim); padding: 8px 16px 4px; }
+.node-brand { fill: var(--orange); }
+.node-intent { fill: #1a1a1a; stroke: var(--border2); stroke-width: 1; }
+.node-label { fill: #aaa; font-size: 11px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; }
+.node-label-brand { fill: #fff; font-size: 12px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; }
+.edge { stroke: rgba(249,115,22,0.25); stroke-width: 1.5; }
+.edge-strong { stroke: rgba(249,115,22,0.6); stroke-width: 2.5; }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.edge-strong { animation: pulse 3s ease-in-out infinite; }
+
+/* LAYER STACK */
+.layer-stack { display: flex; flex-direction: column; gap: 8px; margin: 24px 0; }
+.layer-row { display: flex; align-items: center; gap: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; transition: border-color 0.2s; }
+.layer-row:hover { border-color: rgba(249,115,22,0.3); }
+.layer-num { width: 30px; height: 30px; border-radius: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); color: var(--orange); font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.layer-body { flex: 1; }
+.layer-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+.layer-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* EXPANDABLE BLOCKS */
+.exp-list { display: flex; flex-direction: column; gap: 10px; margin: 24px 0; }
+.exp-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.exp-q { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.exp-q:hover { background: rgba(249,115,22,0.04); }
+.exp-q-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.exp-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.exp-item.open .exp-chevron { transform: rotate(180deg); }
+.exp-a { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.exp-item.open .exp-a { display: block; }
+.exp-a a { color: var(--orange); text-decoration: underline; }
+
+/* EXAMPLE CALLOUT */
+.example { background: rgba(249,115,22,0.04); border: 1px solid rgba(249,115,22,0.15); border-radius: 12px; padding: 18px 22px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.example-label { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+.example strong { color: var(--white); }
+
+/* BUTTONS */
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 48px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; max-width: 520px; margin-left: auto; margin-right: auto; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+
+/* INTERNAL LINKS */
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; flex-shrink: 0; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
+.footer-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 0.04em; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+
+@media (max-width: 700px) {
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .node-label { font-size: 9px; }
+}
+</style><style>
+.def-card { background: var(--bg2); border: 1px solid rgba(249,115,22,0.2); border-radius: 16px; padding: 28px 30px; margin: 8px 0 16px; }
+.def-label { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.def-text { font-size: 19px; color: var(--white); line-height: 1.6; font-weight: 500; }
+.section { padding: 48px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 18px; }
+.body-text strong { color: var(--text); }
+.term-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.term-tag { font-size: 11px; color: var(--dim); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; }
+.term-tag strong { color: var(--orange); font-weight: 700; }
+.example { background: rgba(249,115,22,0.04); border: 1px solid rgba(249,115,22,0.15); border-radius: 12px; padding: 18px 22px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.example-label { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+.example strong { color: var(--white); }
+.exp-list { display: flex; flex-direction: column; gap: 10px; margin: 24px 0; }
+.exp-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.exp-q { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.exp-q:hover { background: rgba(249,115,22,0.04); }
+.exp-q-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.exp-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.exp-item.open .exp-chevron { transform: rotate(180deg); }
+.exp-a { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.exp-item.open .exp-a { display: block; }
+.exp-a a { color: var(--orange); text-decoration: underline; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 48px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; max-width: 520px; margin-left:auto; margin-right:auto; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; flex-shrink: 0; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.hero { padding: 64px 0 44px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+.graph-caption { text-align: center; font-size: 12px; color: var(--dim); padding: 8px 16px 4px; }
+/* density specific */
+.density-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; padding: 24px; margin: 24px 0; }
+.density-row { margin-bottom: 18px; }
+.density-row:last-child { margin-bottom: 0; }
+.density-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+.density-label strong { color: var(--white); font-weight: 700; }
+.cluster-bar { display: flex; gap: 4px; }
+.cluster-cell { flex: 1; height: 32px; border-radius: 6px; background: #1a1a1a; transition: background 0.6s ease, opacity 0.6s ease; }
+.cluster-cell.on { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); }
+.cluster-cell.dim { background: rgba(249,115,22,0.15); }
+.density-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+.density-tag.high { color: var(--green); background: rgba(29,158,117,0.1); }
+.density-tag.low { color: var(--red); background: rgba(226,75,74,0.1); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
+    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+  </div>
+  <div class="nav-links">
+    <a href="/stores">Stores</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/vocabulary">Vocabulary</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/vocabulary">Vocabulary</a> &rsaquo; <span>Recommendation Density</span></div>
+    <div class="hero-kicker">Key Metric &middot; Recommendation Layer</div>
+    <h1>Recommendation <em>Density</em></h1>
+    <p class="hero-sub">Appearing in one type of query is fragile. Appearing across many related ones is a moat. Density measures how widely you spread across a buyer territory.</p>
+    <div class="term-tags">
+      <span class="term-tag"><strong>Category</strong> &nbsp;Key Metric</span>
+      <span class="term-tag"><strong>Measures</strong> &nbsp;Breadth of presence</span>
+      <span class="term-tag"><strong>Related</strong> &nbsp;Recommendation Share</span>
+    </div>
+  </div>
+
+  <div class="def-card">
+    <div class="def-label">Definition</div>
+    <div class="def-text">Recommendation Density measures how broadly a brand appears across adjacent buyer intents and related query clusters, not just its primary category query. High density means a brand is woven into many parts of a buyer territory, which makes it far harder to displace.</div>
+  </div>
+
+  <div class="section" style="padding-top:36px;border-top:none;">
+    <div class="section-kicker">See the spread</div>
+    <h2>Narrow presence versus <em>deep presence</em></h2>
+    <p class="body-text">Two running shoe brands. Both appear in the main query. But one shows up only there, while the other spreads across every adjacent intent a buyer might use. Each cell is a query cluster.</p>
+
+    <div class="density-wrap" data-animate>
+      <div class="density-row">
+        <div class="density-label"><strong>Brand A</strong> <span class="density-tag low">Low density</span></div>
+        <div class="cluster-bar">
+          <div class="cluster-cell on"></div><div class="cluster-cell"></div><div class="cluster-cell"></div><div class="cluster-cell"></div><div class="cluster-cell"></div><div class="cluster-cell"></div><div class="cluster-cell"></div><div class="cluster-cell"></div>
+        </div>
+      </div>
+      <div class="density-row">
+        <div class="density-label"><strong>Brand B</strong> <span class="density-tag high">High density</span></div>
+        <div class="cluster-bar">
+          <div class="cluster-cell on"></div><div class="cluster-cell on"></div><div class="cluster-cell dim"></div><div class="cluster-cell on"></div><div class="cluster-cell on"></div><div class="cluster-cell dim"></div><div class="cluster-cell on"></div><div class="cluster-cell on"></div>
+        </div>
+      </div>
+      <div class="graph-caption">Clusters left to right: best running shoes, flat feet, marathon training, trail, wide feet, recovery, injury prevention, beginners.</div>
+    </div>
+
+    <div class="example">
+      <div class="example-label">Example</div>
+      A running shoe brand wins <strong>71 percent</strong> of best running shoes prompts. But it also shows up in flat feet, marathon training, and injury prevention queries. That cross intent presence is high Recommendation Density, and it is why competitors struggle to push it out.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">Why it matters</div>
+    <h2>Density is <em>resilience</em></h2>
+    <div class="exp-list">
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">It survives changes in how buyers ask</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">Buyers phrase queries in endless ways. A brand present in only one phrasing disappears the moment buyers shift wording. A dense brand stays present because it covers the whole territory, not one entry point.</div></div>
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">It is harder to displace</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">To knock out a low density brand a competitor only has to win one cluster. To knock out a dense brand they have to win many at once, which is far more expensive. Density is a structural moat.</div></div>
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">It differs from Share</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a"><a href="/vocabulary/recommendation-share">Recommendation Share</a> measures how often you win within one prompt set. Density measures how many different sets you appear in at all. You can have high share in a narrow band and still have low density.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">How to build it</div>
+    <h2>Spread across <em>adjacent intents</em></h2>
+    <p class="body-text">Density grows when your content speaks to the full range of ways buyers describe a need, not just the headline category.</p>
+    <div class="exp-list">
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">Map the adjacent intents in your niche</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">List the use cases, problems, and contexts buyers attach to your category. Each one is a cluster you can enter with the right language.</div></div>
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">Write for use cases, not just products</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">A shoe is not just a shoe. It is for flat feet, for marathons, for recovery. Content that names these contexts connects you to those clusters. See <a href="/vocabulary/semantic-clarity">Semantic Clarity</a>.</div></div>
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">Strengthen the graph connections</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">Every cluster you enter is a new edge in the <a href="/vocabulary/ai-commerce-graph">AI Commerce Graph</a>. More edges, more density, more resilience.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>Questions about <em>Recommendation Density</em></h2>
+    <div class="exp-list">
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">Is more density always better?</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">Density across relevant clusters is valuable. Spreading into clusters that do not fit your brand wastes effort and can confuse your identity. The goal is wide but coherent coverage of your real territory.</div></div>
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">How is density measured?</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">By testing your appearance across a set of adjacent buyer prompts in your niche and counting how many clusters you show up in, not just how often you win the main one.</div></div>
+      <div class="exp-item"><div class="exp-q" onclick="toggleExp(this)"><span class="exp-q-text">Where do I start?</span><span class="exp-chevron">&#9662;</span></div><div class="exp-a">A free AI Commerce Score shows your signal strength, which is the base every cluster connection is built on.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>See how wide your <em>presence spreads</em></h2>
+    <p>Get a free AI Commerce Score and find the foundation your density is built on.</p>
+    <div class="cta-row">
+      <a href="/#score" class="btn-primary">Get My Free AI Commerce Score</a>
+      <a href="/vocabulary" class="btn-secondary">Back to Vocabulary</a>
+    </div>
+    <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related terms</div>
+    <div class="internal-links-grid">
+      <a href="/vocabulary/recommendation-share" class="internal-link-item"><span class="internal-link-icon">&#128202;</span><div class="internal-link-text"><strong>Recommendation Share</strong><span>How often you win a prompt set</span></div></a>
+      <a href="/vocabulary/recommendation-graph" class="internal-link-item"><span class="internal-link-icon">&#128376;</span><div class="internal-link-text"><strong>Recommendation Graph</strong><span>The network your clusters live in</span></div></a>
+      <a href="/vocabulary/recommendation-position" class="internal-link-item"><span class="internal-link-icon">&#129351;</span><div class="internal-link-text"><strong>Recommendation Position</strong><span>Where in the answer you land</span></div></a>
+      <a href="/vocabulary/ai-commerce-graph" class="internal-link-item"><span class="internal-link-icon">&#128279;</span><div class="internal-link-text"><strong>AI Commerce Graph</strong><span>Every cluster is an edge</span></div></a>
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#9881;&#65039;</span><div class="internal-link-text"><strong>Methodology</strong><span>How the 8 factors are measured</span></div></a>
+      <a href="/vocabulary" class="internal-link-item"><span class="internal-link-icon">&#128218;</span><div class="internal-link-text"><strong>Vocabulary</strong><span>Every AI Commerce term defined</span></div></a>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary/learn">Learn</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleExp(el) { el.closest('.exp-item').classList.toggle('open'); }
+</script>
+
+<script>
+function toggleExp(el){el.closest('.exp-item').classList.toggle('open');}
+</script>
+</body>
+</html>
