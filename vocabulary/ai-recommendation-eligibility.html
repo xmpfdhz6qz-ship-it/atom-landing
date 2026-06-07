@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Recommendation Eligibility: The Threshold to Be Recommended at All</title>
+<meta name="description" content="AI Recommendation Eligibility is the threshold a store must clear before AI will even consider recommending it. Below the line you are never in the running. Here are the gates you have to pass.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/ai-recommendation-eligibility">
+<meta property="og:title" content="AI Recommendation Eligibility: The Threshold to Be Recommended">
+<meta property="og:description" content="Before AI ranks stores, it filters them. Eligibility is the gate. Below the threshold you are not competing, you are excluded. Here is how to clear it.">
+<meta property="og:url" content="https://atomfoundry.dev/ai-recommendation-eligibility">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AI Recommendation Eligibility: The Threshold to Be Recommended at All","description":"AI Recommendation Eligibility is the threshold a store must clear before AI will even consider recommending it.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-06-05","dateModified":"2026-06-05","url":"https://atomfoundry.dev/ai-recommendation-eligibility"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is AI Recommendation Eligibility?","acceptedAnswer":{"@type":"Answer","text":"AI Recommendation Eligibility is the threshold a store must clear before an AI agent will even consider recommending it. Recommendation is a two-stage process: first the agent filters stores down to those eligible, then it ranks the eligible ones. If you are below the eligibility line you are not ranked low, you are excluded entirely and never appear."}},{"@type":"Question","name":"How is eligibility different from ranking?","acceptedAnswer":{"@type":"Answer","text":"Eligibility is a gate, ranking is an order. Eligibility decides whether you make it into the consideration set at all. Ranking then decides where you sit among the stores that qualified. Optimizing your ranking is pointless if you have not first cleared eligibility, because you are not yet in the set being ranked."}},{"@type":"Question","name":"What does a store need to become eligible?","acceptedAnswer":{"@type":"Answer","text":"At minimum an AI agent needs to read your content, verify you are trustworthy, confirm what you sell, and match you to the buyer intent. These map to the readability, trust, structured-signal, and relevance factors in the AI Commerce Score. A store that is readable but unverifiable, or trustworthy but irrelevant to the query, stays below the eligibility threshold."}}]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+
+/* CANONICAL NAV */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: var(--orange); }
+.nav-subline { font-size: 13px; color: var(--orange); font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+.nav-links a.cta-nav:hover { background: var(--orange-dark); }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
+
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.hero { padding: 64px 0 40px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 32px; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.section { padding: 52px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 22px; }
+.body-text strong { color: var(--text); }
+.callout { background: var(--bg2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+
+/* DEFINITION */
+.definition-box { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.3); border-radius: 16px; padding: 26px 30px; margin: 8px 0 4px; }
+.definition-term { font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 10px; }
+.definition-text { font-size: 17px; color: var(--text); line-height: 1.65; font-weight: 500; }
+.definition-text strong { color: var(--orange); }
+
+/* THRESHOLD VISUAL */
+.threshold-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px; margin: 26px 0; }
+.threshold-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 20px; text-align: center; }
+.threshold-track { position: relative; height: 230px; border-radius: 12px; overflow: hidden; background: linear-gradient(180deg, rgba(29,158,117,0.10) 0%, rgba(29,158,117,0.04) 38%, rgba(226,75,74,0.05) 42%, rgba(226,75,74,0.12) 100%); border: 1px solid var(--border); }
+.threshold-line { position: absolute; left: 0; right: 0; top: 40%; border-top: 2px dashed var(--orange); }
+.threshold-line-label { position: absolute; right: 12px; top: -10px; background: var(--orange); color: #000; font-size: 10px; font-weight: 800; padding: 2px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; }
+.threshold-zone { position: absolute; left: 16px; font-size: 12px; }
+.threshold-zone.elig { top: 16px; color: #4ade80; }
+.threshold-zone.inelig { bottom: 16px; color: #f87171; }
+.threshold-zone strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+.threshold-dot { position: absolute; display: flex; align-items: center; gap: 7px; }
+.threshold-dot .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.threshold-dot .dot-label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+/* GATES */
+.gates { display: flex; flex-direction: column; gap: 8px; margin: 24px 0 10px; }
+.gate { display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: center; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 15px 18px; transition: border-color 0.2s; }
+.gate:hover { border-color: rgba(249,115,22,0.25); }
+.gate-num { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2); }
+.gate-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+.gate-q { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.gate-factor { font-size: 10px; font-weight: 700; color: #1D9E75; text-align: right; white-space: nowrap; flex-shrink: 0; }
+.gate-arrow { text-align: center; color: #333; font-size: 13px; line-height: 1; }
+.gate-final { background: linear-gradient(135deg, rgba(29,158,117,0.1), rgba(29,158,117,0.03)); border: 1px solid rgba(29,158,117,0.3); border-radius: 12px; padding: 16px 20px; text-align: center; }
+.gate-final-text { font-size: 14px; font-weight: 700; color: #4ade80; }
+
+/* STEPS */
+.steps-list { display: flex; flex-direction: column; gap: 10px; margin: 22px 0; }
+.step-item { display: flex; gap: 14px; align-items: flex-start; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; transition: border-color 0.2s; }
+.step-item:hover { border-color: rgba(249,115,22,0.2); }
+.step-num { width: 30px; height: 30px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--orange); flex-shrink: 0; }
+.step-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(249,115,22,0.04); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.faq-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.faq-item.open .faq-answer { display: block; }
+
+/* CTA + INTERNAL */
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 52px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+
+/* CANONICAL FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 52px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 0.04em; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+@media (max-width: 600px) {
+  .gate { grid-template-columns: 40px 1fr; }
+  .gate-factor { grid-column: 2; text-align: left; margin-top: 4px; }
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
+    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+  </div>
+  <div class="nav-links">
+    <a href="/stores">Stores</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/vocabulary">Vocabulary</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/vocabulary">Vocabulary</a> &rsaquo; <span>AI Recommendation Eligibility</span></div>
+    <div class="hero-kicker">The Gate &middot; AI Commerce Intelligence</div>
+    <h1>AI Recommendation<br><em>Eligibility</em></h1>
+    <p class="hero-sub">Before AI ranks stores, it filters them. Eligibility is that filter. Below the threshold you are not ranked low, you are excluded from the set entirely. Most stores spend their effort on ranking when they have not yet cleared the gate.</p>
+    <div class="hero-cta-row">
+      <a href="/#score" class="btn-primary">Am I Eligible? Check Free</a>
+      <a href="/recommendation-confidence" class="btn-secondary">Recommendation Confidence</a>
+    </div>
+  </div>
+
+  <div class="section" style="border-top:none;padding-top:0;">
+    <div class="section-kicker">What it is</div>
+    <h2>A gate, <em>not a ranking</em></h2>
+
+    <div class="definition-box">
+      <div class="definition-term">AI Recommendation Eligibility</div>
+      <div class="definition-text"><strong>AI Recommendation Eligibility</strong> is the threshold a store must clear before an AI agent will even consider recommending it. Below the line you are not competing for a position, you are excluded from the consideration set.</div>
+    </div>
+
+    <p class="body-text">Recommendation happens in two stages. First the agent filters every candidate store down to those that qualify. Then it ranks the ones that made it through. The mistake almost everyone makes is optimizing for the second stage while failing the first. If you have not cleared eligibility, there is no ranking to improve, because you are not yet in the set being ranked.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">The line</div>
+    <h2>Above or below the <em>threshold</em></h2>
+    <p class="body-text">Eligibility is a line, not a slope. A store sits above it and competes, or below it and disappears. Two stores can be a hair apart on quality and land on opposite sides of the line, with completely different outcomes.</p>
+
+    <div class="threshold-box">
+      <div class="threshold-label">The eligibility threshold</div>
+      <div class="threshold-track">
+        <div class="threshold-zone elig"><strong>Eligible</strong>in the consideration set</div>
+        <div class="threshold-line"><span class="threshold-line-label">Threshold</span></div>
+        <div class="threshold-zone inelig"><strong>Ineligible</strong>never shown, at any rank</div>
+        <div class="threshold-dot" style="top:18%;left:42%;"><span class="dot" style="background:#4ade80;"></span><span class="dot-label">verified, relevant store</span></div>
+        <div class="threshold-dot" style="top:26%;left:60%;"><span class="dot" style="background:#4ade80;"></span><span class="dot-label">eligible</span></div>
+        <div class="threshold-dot" style="top:62%;left:30%;"><span class="dot" style="background:#f87171;"></span><span class="dot-label">unverified visibility</span></div>
+        <div class="threshold-dot" style="top:78%;left:54%;"><span class="dot" style="background:#f87171;"></span><span class="dot-label">readable but unconfirmed</span></div>
+      </div>
+    </div>
+    <div class="callout"><strong>This is why ranking advice fails for most stores.</strong> Tips about appearing higher only help stores already above the line. If you are below it, the only move that matters is clearing the threshold. Everything else is optimizing a position you do not yet hold.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">The gates</div>
+    <h2>What you have to <em>pass</em></h2>
+    <p class="body-text">Eligibility is not one check, it is a series. Each gate asks a question, and an agent has to answer yes to all of them before you enter the set. These map directly to factors in the AI Commerce Score.</p>
+
+    <div class="gates">
+      <div class="gate">
+        <div class="gate-num">&#128065;&#65039;</div>
+        <div>
+          <div class="gate-name">Can AI read you?</div>
+          <div class="gate-q">Content is server-rendered and extractable, not locked behind scripts.</div>
+        </div>
+        <div class="gate-factor">AI Readability</div>
+      </div>
+      <div class="gate-arrow">&#8595;</div>
+      <div class="gate">
+        <div class="gate-num">&#128274;</div>
+        <div>
+          <div class="gate-name">Can AI verify you?</div>
+          <div class="gate-q">Trust is machine-readable: rating schema, return policy, real identity.</div>
+        </div>
+        <div class="gate-factor">AI Trust Confidence</div>
+      </div>
+      <div class="gate-arrow">&#8595;</div>
+      <div class="gate">
+        <div class="gate-num">&#128290;</div>
+        <div>
+          <div class="gate-name">Can AI confirm what you sell?</div>
+          <div class="gate-q">Structured data states product, price, and availability as facts.</div>
+        </div>
+        <div class="gate-factor">AI Structured Signals</div>
+      </div>
+      <div class="gate-arrow">&#8595;</div>
+      <div class="gate">
+        <div class="gate-num">&#127919;</div>
+        <div>
+          <div class="gate-name">Do you match the buyer?</div>
+          <div class="gate-q">Positioning is specific enough to map to a real buyer intent.</div>
+        </div>
+        <div class="gate-factor">Semantic Relevance</div>
+      </div>
+      <div class="gate-arrow">&#8595;</div>
+      <div class="gate-final">
+        <div class="gate-final-text">&#10003; Eligible: now you enter the ranking</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">The weakest gate decides</div>
+    <h2>Eligibility is <em>your lowest gate</em></h2>
+    <p class="body-text">Because every gate has to pass, your eligibility is set by your weakest one, not your average. A store can be brilliantly readable, beautifully structured, and perfectly relevant, and still be ineligible because trust is unverifiable. One closed gate keeps you out, no matter how strong the others are.</p>
+    <div class="callout"><strong>Find the closed gate first.</strong> The fastest path to eligibility is not improving what already works, it is finding the single gate that is shut and opening it. That one change often moves a store from invisible in AI answers to suddenly present.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">How to clear it</div>
+    <h2>Getting <em>above the line</em></h2>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Find your weakest gate</div>
+          <div class="step-desc">Run a free AI Commerce Score and look for the lowest factor, not the average. That gate is what is keeping you ineligible, and it is where the first fix belongs.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Open it before polishing the rest</div>
+          <div class="step-desc">Resist the urge to improve a strong area. Fix the closed gate first, because eligibility is gated by the weakest link, and that is the only change that moves you across the line.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Re-check that all gates pass</div>
+          <div class="step-desc">Re-scan and confirm every gate now answers yes: readable, verifiable, confirmed, and relevant. Eligibility requires all four, so check the full set, not just the one you fixed.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Then optimize ranking</div>
+          <div class="step-desc">Once you are eligible, ranking advice finally applies to you. Now <a href="/recommendation-confidence" style="color:var(--orange);text-decoration:underline;">Recommendation Confidence</a> decides how prominently you appear among the stores that qualified.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>AI Recommendation Eligibility: <em>common questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is AI Recommendation Eligibility?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">It is the threshold a store must clear before an AI agent will even consider recommending it. Recommendation is a two-stage process: first the agent filters stores down to those eligible, then it ranks the eligible ones. If you are below the eligibility line you are not ranked low, you are excluded entirely and never appear.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How is eligibility different from ranking?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Eligibility is a gate, ranking is an order. Eligibility decides whether you make it into the consideration set at all. Ranking then decides where you sit among the stores that qualified. Optimizing your ranking is pointless if you have not first cleared eligibility, because you are not yet in the set being ranked.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What does a store need to become eligible?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">At minimum an AI agent needs to read your content, verify you are trustworthy, confirm what you sell, and match you to the buyer intent. These map to the readability, trust, structured-signal, and relevance factors in the AI Commerce Score. A store that is readable but unverifiable, or trustworthy but irrelevant to the query, stays below the threshold.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">How do I know which gate is failing?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">A free AI Commerce Score breaks your store into factors and shows the lowest one. Because eligibility is set by your weakest gate, that lowest factor is almost always what is keeping you out of recommendations, and it is where to start.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>Are you <em>eligible</em> to be recommended?</h2>
+    <p>The free AI Commerce Score shows which gates you pass, which one is closed, and exactly how far you are from the eligibility threshold.</p>
+    <div class="cta-row">
+      <a href="/#score" class="btn-primary">Get My Free AI Commerce Score</a>
+      <a href="/methodology" class="btn-secondary">Read the Methodology</a>
+    </div>
+    <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related</div>
+    <div class="internal-links-grid">
+      <a href="/recommendation-confidence" class="internal-link-item"><span class="internal-link-icon">&#11088;</span><div class="internal-link-text"><strong>Recommendation Confidence</strong><span>Ranking once eligible</span></div></a>
+      <a href="/unverified-visibility" class="internal-link-item"><span class="internal-link-icon">&#9888;&#65039;</span><div class="internal-link-text"><strong>Unverified Visibility</strong><span>Stalled below the line</span></div></a>
+      <a href="/ai-trust-confidence" class="internal-link-item"><span class="internal-link-icon">&#128274;</span><div class="internal-link-text"><strong>AI Trust Confidence</strong><span>The verification gate</span></div></a>
+      <a href="/ai-structured-signals" class="internal-link-item"><span class="internal-link-icon">&#128290;</span><div class="internal-link-text"><strong>AI Structured Signals</strong><span>The confirmation gate</span></div></a>
+      <a href="/ai-commerce-score" class="internal-link-item"><span class="internal-link-icon">&#128200;</span><div class="internal-link-text"><strong>AI Commerce Score</strong><span>All 8 factors explained</span></div></a>
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#128208;</span><div class="internal-link-text"><strong>Methodology</strong><span>How we score stores</span></div></a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service.html">Terms</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy.html">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
+    </div>
+  </div>
+</div>
+<script>
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+</script>
+</body>
+</html>
