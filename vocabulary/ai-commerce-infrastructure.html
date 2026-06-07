@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Commerce Infrastructure: The Machine-Readable Layers Every Store Needs</title>
+<meta name="description" content="AI Commerce Infrastructure is the full set of machine-readable layers a store exposes so AI can discover, understand, trust, and transact: llms.txt, llms-full.txt, agents.md, schema, and a product feed. The plumbing of agentic commerce.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/ai-commerce-infrastructure">
+<meta property="og:title" content="AI Commerce Infrastructure: The Plumbing of Agentic Commerce">
+<meta property="og:description" content="From llms.txt at your domain root down to agents.md at checkout, these are the machine-readable layers AI agents move through. Here is the full stack.">
+<meta property="og:url" content="https://atomfoundry.dev/ai-commerce-infrastructure">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"AI Commerce Infrastructure: The Machine-Readable Layers Every Store Needs","description":"AI Commerce Infrastructure is the full set of machine-readable layers a store exposes so AI can discover, understand, trust, and transact.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-06-05","dateModified":"2026-06-05","url":"https://atomfoundry.dev/ai-commerce-infrastructure"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is AI Commerce Infrastructure?","acceptedAnswer":{"@type":"Answer","text":"AI Commerce Infrastructure is the full set of machine-readable layers a store exposes so AI agents can discover, understand, trust, and transact with it. It includes llms.txt and llms-full.txt at the domain root, agents.md for checkout, JSON-LD schema on every page, a clean product feed, and crawlable policies. Each layer answers a different question an agent has on its way to a recommendation or purchase."}},{"@type":"Question","name":"What is the difference between llms.txt, llms-full.txt, and agents.md?","acceptedAnswer":{"@type":"Answer","text":"llms.txt is a concise overview of your store that AI reads first. llms-full.txt is the complete version with your full catalogue and detailed descriptions. agents.md contains the checkout instructions an autonomous agent follows to complete a purchase. On Shopify the Agentic Dashboard generates all three automatically, though the auto-generated content usually needs optimizing."}},{"@type":"Question","name":"Do I have to build all of this manually?","acceptedAnswer":{"@type":"Answer","text":"No. Shopify generates the llms files and agents.md automatically, and most themes provide base schema. The work is less about creating these layers from nothing and more about making sure each one is present, accurate, optimized, and consistent with the others, because a gap or contradiction in any layer weakens the whole stack."}}]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --orange-dark: #ea580c; --red: #E24B4A; --green: #1D9E75;
+  --bg: #0A0A0A; --bg2: #111111; --bg3: #0d0d0d;
+  --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #ffffff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+
+/* CANONICAL NAV */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: var(--orange); }
+.nav-subline { font-size: 13px; color: var(--orange); font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--orange); border-color: rgba(249,115,22,0.4); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: var(--orange); color: #000; font-weight: 700; border-color: var(--orange); }
+.nav-links a.cta-nav:hover { background: var(--orange-dark); }
+@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
+
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.hero { padding: 64px 0 40px; }
+.breadcrumb { font-size: 12px; color: var(--dim); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.breadcrumb a { color: var(--dim); }
+.breadcrumb a:hover { color: var(--orange); }
+.hero-kicker { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 999px; padding: 5px 14px; font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 20px; }
+h1 { font-size: clamp(32px,5vw,52px); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 18px; letter-spacing: -0.02em; }
+h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 600px; margin-bottom: 32px; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: black; font-weight: 900; font-size: 15px; padding: 16px 28px; border-radius: 12px; text-decoration: none; border: 2px solid #dc2626; transition: all 0.25s; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.55); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; }
+.btn-secondary:hover { color: var(--white); border-color: #444; }
+.section { padding: 52px 0; border-top: 1px solid var(--border); }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+h2 { font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+h2 em { font-style: normal; color: var(--orange); }
+.body-text { font-size: 15px; color: var(--muted); line-height: 1.85; max-width: 660px; margin-bottom: 22px; }
+.body-text strong { color: var(--text); }
+.callout { background: var(--bg2); border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.callout strong { color: var(--text); }
+
+/* DEFINITION */
+.definition-box { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.3); border-radius: 16px; padding: 26px 30px; margin: 8px 0 4px; }
+.definition-term { font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 10px; }
+.definition-text { font-size: 17px; color: var(--text); line-height: 1.65; font-weight: 500; }
+.definition-text strong { color: var(--orange); }
+
+/* STACK DIAGRAM */
+.stack-diagram { display: flex; flex-direction: column; gap: 8px; margin: 26px 0 14px; }
+.layer { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; position: relative; transition: border-color 0.2s; }
+.layer:hover { border-color: rgba(249,115,22,0.3); }
+.layer-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+.layer-name { font-size: 14px; font-weight: 800; color: var(--white); display: flex; align-items: center; gap: 9px; }
+.layer-step { width: 22px; height: 22px; border-radius: 6px; background: rgba(249,115,22,0.14); border: 1px solid rgba(249,115,22,0.25); color: var(--orange); font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.layer-files { display: flex; gap: 6px; flex-wrap: wrap; }
+.layer-chip { font-size: 10.5px; font-family: 'SF Mono',monospace; color: #4ade80; background: rgba(29,158,117,0.08); border: 1px solid rgba(29,158,117,0.18); border-radius: 6px; padding: 2px 8px; }
+.layer-desc { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.stack-arrow { text-align: center; color: #333; font-size: 14px; line-height: 1; }
+.stack-caption { text-align: center; font-size: 12px; color: var(--dim); margin-top: 2px; }
+
+/* FILE REFERENCE */
+.ref-list { display: flex; flex-direction: column; gap: 10px; margin: 22px 0; }
+.ref-item { display: grid; grid-template-columns: 150px 1fr; gap: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 15px 18px; align-items: flex-start; transition: border-color 0.2s; }
+.ref-item:hover { border-color: rgba(249,115,22,0.2); }
+.ref-file { font-family: 'SF Mono',monospace; font-size: 12.5px; color: var(--orange); font-weight: 600; word-break: break-all; }
+.ref-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.ref-desc a { color: var(--orange); text-decoration: underline; }
+@media (max-width: 600px) { .ref-item { grid-template-columns: 1fr; gap: 4px; } }
+
+/* STEPS */
+.steps-list { display: flex; flex-direction: column; gap: 10px; margin: 22px 0; }
+.step-item { display: flex; gap: 14px; align-items: flex-start; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; transition: border-color 0.2s; }
+.step-item:hover { border-color: rgba(249,115,22,0.2); }
+.step-num { width: 30px; height: 30px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--orange); flex-shrink: 0; }
+.step-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-question { padding: 18px 22px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; user-select: none; transition: background 0.2s; }
+.faq-question:hover { background: rgba(249,115,22,0.04); }
+.faq-question-text { font-size: 15px; font-weight: 600; color: var(--white); line-height: 1.4; }
+.faq-chevron { color: var(--orange); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-answer { display: none; padding: 16px 22px 18px; font-size: 14px; color: var(--muted); line-height: 1.75; border-top: 1px solid var(--border); }
+.faq-item.open .faq-answer { display: block; }
+
+/* CTA + INTERNAL */
+.cta-block { background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 40px 36px; text-align: center; margin: 52px 0 0; }
+.cta-block h2 { font-size: 26px; margin-bottom: 10px; }
+.cta-block p { font-size: 15px; color: var(--muted); margin-bottom: 28px; }
+.cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.cta-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+.internal-links { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-top: 32px; }
+.internal-links-label { font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 14px; }
+.internal-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.internal-link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: border-color 0.2s; }
+.internal-link-item:hover { border-color: rgba(249,115,22,0.3); }
+.internal-link-icon { font-size: 16px; }
+.internal-link-text strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
+.internal-link-text span { font-size: 12px; color: var(--muted); }
+
+/* CANONICAL FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 52px; }
+.footer-inner { max-width: 780px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 13px; color: var(--dim); line-height: 1.8; }
+.footer-left a { color: var(--dim); }
+.footer-left a:hover { color: var(--orange); }
+.footer-right { font-size: 14px; font-weight: 700; color: var(--orange); letter-spacing: 0.04em; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: var(--orange); }
+@media (max-width: 600px) {
+  .internal-links-grid { grid-template-columns: 1fr; }
+  .cta-block { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+    <div class="nav-subline">The AI Commerce Graph&trade;</div>
+    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+  </div>
+  <div class="nav-links">
+    <a href="/stores">Stores</a>
+    <a href="/methodology">Methodology</a>
+    <a href="/vocabulary">Vocabulary</a>
+    <a href="/research" class="research">Research</a>
+    <a href="/#score" class="cta-nav">Free Score</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/vocabulary">Vocabulary</a> &rsaquo; <span>AI Commerce Infrastructure</span></div>
+    <div class="hero-kicker">Architecture &middot; AI Commerce Intelligence</div>
+    <h1>AI Commerce<br><em>Infrastructure</em></h1>
+    <p class="hero-sub">Before an AI agent can recommend or buy from your store, it moves through a stack of machine-readable layers, from a file at your domain root down to the checkout instructions. AI Commerce Infrastructure is that stack. It is the plumbing of agentic commerce.</p>
+    <div class="hero-cta-row">
+      <a href="/#score" class="btn-primary">Check My Infrastructure</a>
+      <a href="/llms-txt" class="btn-secondary">Start with llms.txt</a>
+    </div>
+  </div>
+
+  <div class="section" style="border-top:none;padding-top:0;">
+    <div class="section-kicker">What it is</div>
+    <h2>The plumbing AI <em>moves through</em></h2>
+
+    <div class="definition-box">
+      <div class="definition-term">AI Commerce Infrastructure</div>
+      <div class="definition-text"><strong>AI Commerce Infrastructure</strong> is the full set of machine-readable layers a store exposes so AI agents can discover, understand, trust, and transact with it: llms.txt and llms-full.txt, agents.md, JSON-LD schema, a product feed, and crawlable policies.</div>
+    </div>
+
+    <p class="body-text">Most store owners think about one layer at a time. They add schema, or they hear about llms.txt and turn it on. But an AI agent does not experience your store as separate features. It moves through them in sequence, and a gap in any layer stops it before it reaches the next. Infrastructure is the right way to think about it: a stack where every layer has to hold.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">The stack</div>
+    <h2>How AI moves <em>through your store</em></h2>
+    <p class="body-text">From first contact at your domain root down to a completed purchase, here is the order an agent travels in and what lives at each layer.</p>
+
+    <div class="stack-diagram">
+      <div class="layer">
+        <div class="layer-top">
+          <div class="layer-name"><span class="layer-step">1</span>Discovery</div>
+          <div class="layer-files"><span class="layer-chip">llms.txt</span><span class="layer-chip">robots.txt</span></div>
+        </div>
+        <div class="layer-desc">At the domain root, the agent reads who you are and what you sell before crawling a single page. This is the first impression and it sets the frame for everything after.</div>
+      </div>
+      <div class="stack-arrow">&#8595;</div>
+      <div class="layer">
+        <div class="layer-top">
+          <div class="layer-name"><span class="layer-step">2</span>Catalogue</div>
+          <div class="layer-files"><span class="layer-chip">llms-full.txt</span><span class="layer-chip">product feed</span></div>
+        </div>
+        <div class="layer-desc">The full inventory in structured form: every product, price, and category. The agent learns your complete range without crawling each product page one by one.</div>
+      </div>
+      <div class="stack-arrow">&#8595;</div>
+      <div class="layer">
+        <div class="layer-top">
+          <div class="layer-name"><span class="layer-step">3</span>Page</div>
+          <div class="layer-files"><span class="layer-chip">JSON-LD schema</span><span class="layer-chip">server-rendered HTML</span></div>
+        </div>
+        <div class="layer-desc">On the individual product page, the agent confirms the facts: price, availability, rating, and brand as labelled structured data it can trust rather than guess.</div>
+      </div>
+      <div class="stack-arrow">&#8595;</div>
+      <div class="layer">
+        <div class="layer-top">
+          <div class="layer-name"><span class="layer-step">4</span>Transaction</div>
+          <div class="layer-files"><span class="layer-chip">agents.md</span><span class="layer-chip">crawlable policies</span></div>
+        </div>
+        <div class="layer-desc">Finally, the checkout instructions and the return and shipping terms an autonomous agent needs to complete a purchase on a buyer's behalf.</div>
+      </div>
+    </div>
+    <div class="stack-caption">A gap at any layer stops the agent before it reaches the next.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">File reference</div>
+    <h2>Every layer, <em>explained</em></h2>
+    <div class="ref-list">
+      <div class="ref-item">
+        <div class="ref-file">/llms.txt</div>
+        <div class="ref-desc">A concise overview of your store at the domain root: positioning, key categories, trust summary. The first file AI reads. See the <a href="/llms-txt">llms.txt guide</a>.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-file">/llms-full.txt</div>
+        <div class="ref-desc">The complete version with your full catalogue and detailed product descriptions, used by agents that want to browse your entire range.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-file">/agents.md</div>
+        <div class="ref-desc">Checkout instructions for autonomous agents: how to add to cart, apply details, and complete a purchase on a buyer's behalf.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-file">JSON-LD schema</div>
+        <div class="ref-desc">Per-page structured data confirming product, price, rating, and identity. See <a href="/ai-structured-signals">AI Structured Signals</a>.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-file">product feed</div>
+        <div class="ref-desc">A structured catalogue of everything you sell with prices and availability that must stay consistent with the live store.</div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-file">policy pages</div>
+        <div class="ref-desc">Returns, shipping, and contact as crawlable text pages, so the agent can read and verify the terms it needs before recommending you.</div>
+      </div>
+    </div>
+    <div class="callout"><strong>Shopify generates the first three for you.</strong> The Agentic Dashboard auto-creates llms.txt, llms-full.txt, and agents.md for every store. The work is not building them from scratch, it is making sure each layer is accurate, optimized, and consistent with the rest.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">How to build it</div>
+    <h2>Standing up the <em>full stack</em></h2>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Optimize the discovery layer</div>
+          <div class="step-desc">Open your llms.txt and replace the generic auto-generated text with specific positioning, categories, price ranges, and a trust summary. This is the frame for everything below it.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Confirm the catalogue is complete</div>
+          <div class="step-desc">Check that llms-full.txt and your product feed reflect your real range, with prices and availability that match the store. Stale catalogue data quietly misleads every agent that reads it.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Layer schema on every page</div>
+          <div class="step-desc">Add and validate Product, Organization, and AggregateRating schema so the page layer hands agents confirmed facts instead of prose to interpret.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Make the transaction layer readable</div>
+          <div class="step-desc">Ensure agents.md is present and your return, shipping, and contact policies live on crawlable pages, so an agent can complete the journey rather than stalling at checkout.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-kicker">FAQ</div>
+    <h2>AI Commerce Infrastructure: <em>common questions</em></h2>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is AI Commerce Infrastructure?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">It is the full set of machine-readable layers a store exposes so AI agents can discover, understand, trust, and transact with it. It includes llms.txt and llms-full.txt at the domain root, agents.md for checkout, JSON-LD schema on every page, a clean product feed, and crawlable policies. Each layer answers a different question an agent has on its way to a recommendation or purchase.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">What is the difference between llms.txt, llms-full.txt, and agents.md?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">llms.txt is a concise overview of your store that AI reads first. llms-full.txt is the complete version with your full catalogue and detailed descriptions. agents.md contains the checkout instructions an autonomous agent follows to complete a purchase. On Shopify the Agentic Dashboard generates all three automatically, though the auto-generated content usually needs optimizing.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Do I have to build all of this manually?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">No. Shopify generates the llms files and agents.md automatically, and most themes provide base schema. The work is less about creating these layers from nothing and more about making sure each one is present, accurate, optimized, and consistent with the others, because a gap or contradiction in any layer weakens the whole stack.</div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span class="faq-question-text">Which layer should I fix first?</span><span class="faq-chevron">&#9662;</span></div><div class="faq-answer">Start at the top. The discovery layer, your llms.txt, frames how every agent reads everything below it, and it is usually the most neglected. Then work down to schema and the transaction layer. A free AI Commerce Score shows which layers are weakest so you can prioritise.</div></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h2>Is your <em>infrastructure</em> complete?</h2>
+    <p>The free AI Commerce Score checks each layer of your stack and shows where an agent would stall on the way to recommending you.</p>
+    <div class="cta-row">
+      <a href="/#score" class="btn-primary">Get My Free AI Commerce Score</a>
+      <a href="/methodology" class="btn-secondary">Read the Methodology</a>
+    </div>
+    <div class="cta-note">Free. No credit card. Results in 30 seconds.</div>
+  </div>
+
+  <div class="internal-links">
+    <div class="internal-links-label">Related</div>
+    <div class="internal-links-grid">
+      <a href="/llms-txt" class="internal-link-item"><span class="internal-link-icon">&#128196;</span><div class="internal-link-text"><strong>llms.txt</strong><span>The discovery layer</span></div></a>
+      <a href="/ai-structured-signals" class="internal-link-item"><span class="internal-link-icon">&#128290;</span><div class="internal-link-text"><strong>AI Structured Signals</strong><span>The page layer</span></div></a>
+      <a href="/agent-readable-commerce" class="internal-link-item"><span class="internal-link-icon">&#9881;&#65039;</span><div class="internal-link-text"><strong>Agent-Readable Commerce</strong><span>A store AI can read</span></div></a>
+      <a href="/ai-trust-confidence" class="internal-link-item"><span class="internal-link-icon">&#128274;</span><div class="internal-link-text"><strong>AI Trust Confidence</strong><span>The trust layer</span></div></a>
+      <a href="/ai-commerce-score" class="internal-link-item"><span class="internal-link-icon">&#128200;</span><div class="internal-link-text"><strong>AI Commerce Score</strong><span>All 8 factors explained</span></div></a>
+      <a href="/methodology" class="internal-link-item"><span class="internal-link-icon">&#128208;</span><div class="internal-link-text"><strong>Methodology</strong><span>How we score stores</span></div></a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service.html">Terms</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy.html">Privacy</a><br>
+      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+    </div>
+    <div>
+      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+      <div class="footer-platform">The AI Commerce Graph&trade;</div>
+    </div>
+  </div>
+</div>
+<script>
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+</script>
+</body>
+</html>
