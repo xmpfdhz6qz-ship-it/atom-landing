@@ -388,14 +388,19 @@ fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 
   .then(r => r.json())
   .then(d => {
     const rows = Array.isArray(d) ? d : (d.stores || []);
-    const count = rows.filter(r => (r.domain || r.store_domain || '')).length;
+    const valid = rows.filter(r => (r.domain || r.store_domain || ''));
+    const count = valid.length; // incl. blocked (matches Stores page)
     if (!count) return;
-    const scores = rows.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0);
+    // Blocked sites were scanned but have no score, so keep them out of averages and percentages
+    const isBlocked = r => r.homepage_blocked === true || String(r.readiness_level || '').toLowerCase() === 'blocked';
+    const scoredRows = valid.filter(r => !isBlocked(r));
+    const scores = scoredRows.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0);
+    const scoredCount = scores.length;
     const avg = scores.length ? Math.round(scores.reduce((a,b) => a+b,0) / scores.length) : 38;
-    const invisible = scores.length ? Math.round(scores.filter(s => s < 50).length / scores.length * 100) : 62;
-    const partial = scores.length ? Math.round(scores.filter(s => s >= 50 && s < 85).length / scores.length * 100) : 31;
+    const invisible = scoredCount ? Math.round(scores.filter(s => s < 50).length / scoredCount * 100) : 62;
+    const partial = scoredCount ? Math.round(scores.filter(s => s >= 50 && s < 85).length / scoredCount * 100) : 31;
     const highCount = scores.filter(s => s >= 85).length;
-    const highPct = scores.length ? Math.round(highCount / scores.length * 100) : 7;
+    const highPct = scoredCount ? Math.round(highCount / scoredCount * 100) : 7;
 
     document.getElementById('statStores').textContent = count.toLocaleString('en-US');
     document.getElementById('statAvg').textContent = avg + '/100';
@@ -404,9 +409,9 @@ fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 
     document.getElementById('liveInvisible').textContent = invisible + '%';
     document.getElementById('livePartial').textContent = partial + '%';
     document.getElementById('statHighly').textContent = highCount.toLocaleString('en-US') + ' stores';
-    document.getElementById('distChartTitle').textContent = 'Score distribution across ' + count.toLocaleString('en-US') + ' scanned stores &mdash; May 2026';
-    document.getElementById('finding1').innerHTML = '<strong>' + invisible + '% of analyzed stores score below 50 out of 100</strong> and are classified as AI Invisible Risk. When buyers ask ChatGPT or Alexa for Shopping for product recommendations, these stores are systematically excluded from the answer.';
-    document.getElementById('finding1src').textContent = 'Live data across ' + count.toLocaleString('en-US') + ' stores &mdash; May 2026';
+    document.getElementById('distChartTitle').textContent = 'Score distribution across ' + count.toLocaleString('en-US') + ' scanned stores \u2014 May 2026';
+    document.getElementById('finding1').innerHTML = '<strong>' + invisible + '% of scored stores score below 50 out of 100</strong> and are classified as AI Invisible Risk. When buyers ask ChatGPT or Alexa for Shopping for product recommendations, these stores are systematically excluded from the answer.';
+    document.getElementById('finding1src').textContent = 'Live data across ' + scoredCount.toLocaleString('en-US') + ' scored stores \u2014 May 2026';
 
     donutChart.data.datasets[0].data = [invisible, Math.max(0, 100-invisible-highPct-10), 10, highPct];
     donutChart.update();
@@ -422,7 +427,7 @@ const donutChart = new Chart(document.getElementById('donutChart'), {
   options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + '%' } } } }
 });
 
-// Niche chart &mdash; 8000 store data
+// Niche chart — 8000 store data
 new Chart(document.getElementById('nicheChart'), {
   type: 'bar',
   data: {
