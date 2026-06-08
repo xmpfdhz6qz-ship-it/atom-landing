@@ -539,31 +539,39 @@ input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249
     const res = await fetch("https://n8n-production-1d7c.up.railway.app/webhook/stores", { headers: { "Accept": "application/json" } });
     const data = await res.json();
     const rows = Array.isArray(data) ? data : (data.stores || []);
-    const count = rows.filter(r => (r.domain || r.store_domain || "")).length;
-    if (!count) return;
-    const scores = rows.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0);
+    const valid = rows.filter(r => (r.domain || r.store_domain || ""));
+    if (!valid.length) return;
+
+    // A blocked site was still scanned, so it counts toward "analyzed",
+    // but it has no score and must stay out of averages and percentages.
+    const isBlocked = (r) => r.homepage_blocked === true || String(r.readiness_level || "").toLowerCase() === "blocked";
+    const totalScanned = valid.length;                                  // incl. blocked
+    const scoredRows = valid.filter(r => !isBlocked(r));                // quality scans only
+    const scores = scoredRows.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0);
+    const scoredCount = scores.length;
     const avg = scores.length ? Math.round(scores.reduce((a,b) => a+b,0) / scores.length) : 45;
 
     const setText = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
 
-    setText('statStores', count.toLocaleString('en-US'));
-    setText('footerStores', count.toLocaleString('en-US'));
-    setText('stripStores', count.toLocaleString('en-US'));
-    setText('signalsCount', count.toLocaleString('en-US'));
-    setText('proofLine', 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores: ' + avg + '/100');
-    setText('scorePreviewLabel', 'Average AI Commerce Score\u2122 across ' + count.toLocaleString('en-US') + ' scanned stores');
+    // Headline counts = everything we scanned (matches the Stores page)
+    setText('statStores', totalScanned.toLocaleString('en-US'));
+    setText('footerStores', totalScanned.toLocaleString('en-US'));
+    setText('stripStores', totalScanned.toLocaleString('en-US'));
+    setText('signalsCount', totalScanned.toLocaleString('en-US'));
+    setText('proofLine', 'Average AI Commerce Score\u2122 across ' + totalScanned.toLocaleString('en-US') + ' scanned stores: ' + avg + '/100');
+    setText('scorePreviewLabel', 'Average AI Commerce Score\u2122 across ' + totalScanned.toLocaleString('en-US') + ' scanned stores');
 
-    // Live data-strip values
+    // Averages and percentages = quality scans only (blocked excluded)
     const invisCount = scores.filter(s => s < 50).length;
     const highCount  = scores.filter(s => s >= 85).length;
-    const invisPct = scores.length ? Math.round(invisCount / scores.length * 100) : 52;
-    const highPct  = scores.length ? Math.round(highCount  / scores.length * 100) : 0;
+    const invisPct = scoredCount ? Math.round(invisCount / scoredCount * 100) : 52;
+    const highPct  = scoredCount ? Math.round(highCount  / scoredCount * 100) : 0;
     setText('stripRisk', invisPct + '%');
     setText('stripAvg', avg + '/100');
     setText('stripHighly', highPct + '%');
 
-    // Honest data-backed section + footer
-    setText('dataStores', count.toLocaleString('en-US'));
+    // "scored so far" = quality scans only
+    setText('dataStores', scoredCount.toLocaleString('en-US'));
     setText('dataRisk', invisCount.toLocaleString('en-US') + ' (' + invisPct + '%)');
     setText('dataHighly', highCount.toLocaleString('en-US') + ' (' + highPct + '%)');
     setText('dataAvg', avg);
