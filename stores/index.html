@@ -64,11 +64,15 @@ a { color: inherit; text-decoration: none; }
 .filter-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; border: 1px solid #1e1e1e; background: #0d0d0d; color: #777; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-family: inherit; user-select: none; }
 .filter-pill:hover { border-color: rgba(249,115,22,0.4); color: #ddd; }
 .filter-pill.active { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.4); color: #f97316; }
+.filter-pill.blocked-pill.active { background: rgba(226,75,74,0.1); border-color: rgba(226,75,74,0.45); color: #E24B4A; }
 .pill-count { font-size: 10px; opacity: 0.6; font-weight: 500; }
 .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; min-height: 22px; }
 .status { color: #555; font-size: 12px; }
 .clear-btn { font-size: 11px; color: #f97316; cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; display: none; }
 .clear-btn.visible { display: block; }
+.blocked-note { background: rgba(226,75,74,0.06); border: 1px solid rgba(226,75,74,0.2); border-left: 3px solid #E24B4A; border-radius: 0 10px 10px 0; padding: 12px 16px; margin-bottom: 10px; font-size: 13px; color: #c98; line-height: 1.6; display: none; }
+.blocked-note.visible { display: block; }
+.blocked-note strong { color: #E24B4A; }
 /* SHOW ALL BUTTON */
 .show-all-wrap { text-align: center; padding: 16px 0 4px; }
 .show-all-btn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #888; background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 10px 20px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
@@ -76,20 +80,25 @@ a { color: inherit; text-decoration: none; }
 .grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
 .store-card { display: block; overflow: hidden; background: #111; border: 1px solid #1e1e1e; border-radius: 14px; transition: transform 0.2s, border-color 0.2s; }
 .store-card:hover { transform: translateY(-2px); border-color: rgba(249,115,22,0.3); }
+.store-card.is-blocked:hover { border-color: rgba(226,75,74,0.35); }
 .card-inner { padding: 14px 18px; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; align-items: center; }
 .domain { font-size: 15px; font-weight: 700; color: #e8e8e8; letter-spacing: -0.2px; overflow-wrap: anywhere; }
 .store-name-label { font-size: 12px; color: #666; margin-top: 2px; }
 .readiness-label { font-size: 12px; color: #666; margin-top: 3px; text-transform: capitalize; }
+.readiness-label.blocked { color: #E24B4A; text-transform: none; }
 .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .card-tag { font-size: 10px; color: #555; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 100px; padding: 2px 8px; }
 .card-tag.niche-tag { color: #f97316; border-color: rgba(249,115,22,0.2); background: rgba(249,115,22,0.06); }
+.card-tag.reason-tag { color: #E24B4A; border-color: rgba(226,75,74,0.25); background: rgba(226,75,74,0.07); }
 .score-wrap { text-align: right; flex-shrink: 0; }
 .score { display: inline-flex; min-width: 68px; height: 40px; align-items: center; justify-content: center; border-radius: 10px; font-size: 17px; font-weight: 700; background: #0d0d0d; border: 1px solid currentColor; }
 .score.green { color: #1D9E75; }
 .score.amber { color: #EF9F27; }
 .score.orange { color: #E8A030; }
 .score.red { color: #E24B4A; }
+.score.blocked { color: #555; font-size: 18px; }
 .score-label { display: block; margin-top: 5px; color: #444; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+.score-label.blocked { color: #E24B4A; }
 .skeleton { background: #111; border: 1px solid #1e1e1e; border-radius: 14px; padding: 14px 18px; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
 .skel { background: #1a1a1a; border-radius: 4px; animation: pulse 1.4s ease infinite; }
 .skel-d { height: 15px; width: 55%; margin-bottom: 7px; }
@@ -187,6 +196,7 @@ a { color: inherit; text-decoration: none; }
         <button class="filter-pill" data-region="usa">&#127482;&#127480; USA <span class="pill-count" id="rc-usa">0</span></button>
         <button class="filter-pill" data-region="canada">&#127464;&#127462; Canada <span class="pill-count" id="rc-canada">0</span></button>
         <button class="filter-pill" data-region="europe">&#127466;&#127482; Europe <span class="pill-count" id="rc-europe">0</span></button>
+        <button class="filter-pill blocked-pill" data-region="blocked">&#128683; Blocked <span class="pill-count" id="rc-blocked">0</span></button>
       </div>
     </div>
 
@@ -206,6 +216,10 @@ a { color: inherit; text-decoration: none; }
         <button class="filter-pill" data-niche="jewelry">&#128141; Jewelry <span class="pill-count" id="c-jewelry">0</span></button>
         <button class="filter-pill" data-niche="other">&#10022; Other <span class="pill-count" id="c-other">0</span></button>
       </div>
+    </div>
+
+    <div class="blocked-note" id="blocked-note">
+      <strong>Blocked stores.</strong> These sites stopped our crawler before AI could read them (bot protection, offline, or JavaScript-only pages). They are recorded, kept out of scoring, and automatically retried after a month.
     </div>
 
     <div class="status-row">
@@ -274,6 +288,7 @@ const clearBtn = document.getElementById("clear-btn");
 const showAllWrap = document.getElementById("showAllWrap");
 const showAllBtn = document.getElementById("showAllBtn");
 const showAllCount = document.getElementById("showAllCount");
+const blockedNote = document.getElementById("blocked-note");
 
 const NICHE_DB_MAP = {
   'fashion':'fashion','beauty':'beauty','health & wellness':'health',
@@ -281,6 +296,12 @@ const NICHE_DB_MAP = {
   'pets':'pets','tech & gadgets':'tech','kids & baby':'kids',
   'jewelry':'jewelry','other':'other'
 };
+
+const BLOCK_REASON_LABELS = {
+  offline: 'Offline', cloudflare: 'Cloudflare', blocked_403: '403 Blocked',
+  js_only: 'JS only', empty_html: 'Empty page'
+};
+function blockReasonLabel(r) { return BLOCK_REASON_LABELS[r] || 'Blocked'; }
 
 function getRegion(country) {
   if (!country) return 'other';
@@ -291,22 +312,24 @@ function getRegion(country) {
   return 'other';
 }
 
+function truthy(v) { return v === true || v === 'true' || v === 1 || v === '1'; }
+
 function normalizeStore(raw) {
   const domain = String(raw.domain || raw.store_domain || "").replace(/^www\./, "").toLowerCase();
+  const blocked = truthy(raw.homepage_blocked) || String(raw.readiness_level || "").toLowerCase() === 'blocked';
   const store = {
     domain, store_name: raw.store_name || "",
     score: Number(raw.score ?? raw.total_score ?? 0),
     date: raw.date || raw.scanned_at || raw.created_at || "",
     country: raw.country || "", platform: raw.platform || "",
-    readiness: raw.readiness_level || ""
+    readiness: raw.readiness_level || "",
+    blocked, block_reason: raw.block_reason || ""
   };
   const dbNiche = raw.niche ? NICHE_DB_MAP[raw.niche.toLowerCase()] : null;
   store.niche = dbNiche || "other";
   store.region = getRegion(store.country);
   return store;
 }
-
-function isThisWeek(dateStr) { return false; }
 
 function scoreClass(s) {
   if (s >= 85) return "green";
@@ -336,37 +359,48 @@ function formatDate(v) {
 }
 
 function updateStats() {
-  const all = state.stores;
+  const all = state.stores;                       // all scans = scored + blocked
+  const scored = all.filter(s => !s.blocked);     // quality scans only
+  // Total counts every scan, including blocked ones (a block is still a result)
   document.getElementById("stat-total").textContent = all.length ? all.length.toLocaleString('en-US') : '\u2014';
-  if (!all.length) { ["stat-avg","stat-high","stat-new"].forEach(id => document.getElementById(id).textContent = '\u2014'); return; }
-  document.getElementById("stat-avg").textContent = Math.round(all.reduce((a,s) => a+s.score,0)/all.length);
-  document.getElementById("stat-high").textContent = all.filter(s => s.score >= 70).length.toLocaleString('en-US');
+  // Average and 70+ are computed from quality scans only, so blocked sites don't drag them down
+  if (!scored.length) { ["stat-avg","stat-high"].forEach(id => document.getElementById(id).textContent = '\u2014'); return; }
+  document.getElementById("stat-avg").textContent = Math.round(scored.reduce((a,s) => a+s.score,0)/scored.length);
+  document.getElementById("stat-high").textContent = scored.filter(s => s.score >= 70).length.toLocaleString('en-US');
 }
 
 function updateRegionCounts() {
   const filtered = state.stores.filter(s => state.niche === 'all' || s.niche === state.niche);
-  document.getElementById("rc-all").textContent = filtered.length;
-  document.getElementById("rc-usa").textContent = filtered.filter(s => s.region === 'usa').length;
-  document.getElementById("rc-canada").textContent = filtered.filter(s => s.region === 'canada').length;
-  document.getElementById("rc-europe").textContent = filtered.filter(s => s.region === 'europe').length;
+  const scored = filtered.filter(s => !s.blocked);
+  document.getElementById("rc-all").textContent = scored.length;
+  document.getElementById("rc-usa").textContent = scored.filter(s => s.region === 'usa').length;
+  document.getElementById("rc-canada").textContent = scored.filter(s => s.region === 'canada').length;
+  document.getElementById("rc-europe").textContent = scored.filter(s => s.region === 'europe').length;
+  document.getElementById("rc-blocked").textContent = filtered.filter(s => s.blocked).length;
 }
 
 function updateNicheCounts() {
-  const filtered = state.stores.filter(s => state.region === 'all' || s.region === state.region);
-  document.getElementById("c-all").textContent = filtered.length;
+  const inRegion = state.stores.filter(s => {
+    if (state.region === 'blocked') return s.blocked;
+    if (s.blocked) return false;
+    return state.region === 'all' || s.region === state.region;
+  });
+  document.getElementById("c-all").textContent = inRegion.length;
   ['fashion','beauty','health','food','home','sports','pets','tech','kids','jewelry'].forEach(n => {
     const el = document.getElementById("c-"+n);
-    if (el) el.textContent = filtered.filter(s => s.niche === n).length;
+    if (el) el.textContent = inRegion.filter(s => s.niche === n).length;
   });
-  document.getElementById("c-other").textContent = filtered.filter(s => s.niche === "other").length;
+  document.getElementById("c-other").textContent = inRegion.filter(s => s.niche === "other").length;
 }
 
 function getFilteredSorted() {
   const query = state.query.toLowerCase();
   let stores = state.stores.filter(s => {
     const txt = [s.domain, s.store_name, s.country, s.platform].join(" ").toLowerCase();
-    return (!query || txt.includes(query))
-      && (state.region === 'all' || s.region === state.region)
+    if (query && !txt.includes(query)) return false;
+    if (state.region === 'blocked') return s.blocked && (state.niche === 'all' || s.niche === state.niche);
+    if (s.blocked) return false; // blocked stores never appear in normal views
+    return (state.region === 'all' || s.region === state.region)
       && (state.niche === 'all' || s.niche === state.niche);
   });
   return stores.sort((a,b) => {
@@ -379,52 +413,72 @@ function getFilteredSorted() {
 
 function renderStores() {
   const allFiltered = getFilteredSorted();
+  const isBlockedView = state.region === 'blocked';
   const hasFilter = state.query || state.region !== "all" || state.niche !== "all";
   clearBtn.classList.toggle("visible", hasFilter);
+  blockedNote.classList.toggle("visible", isBlockedView);
   listEl.innerHTML = "";
 
   if (!allFiltered.length) {
-    listEl.innerHTML = `<div class="empty">${state.stores.length ? "No stores match this filter." : "No stores found yet."}</div>`;
+    const msg = isBlockedView ? "No blocked stores in this view." : (state.stores.length ? "No stores match this filter." : "No stores found yet.");
+    listEl.innerHTML = `<div class="empty">${msg}</div>`;
     statusEl.textContent = "0 stores";
     showAllWrap.style.display = 'none';
     return;
   }
 
-  // Determine how many to show
   const limit = state.showAll ? allFiltered.length : DISPLAY_LIMIT;
   const toShow = allFiltered.slice(0, limit);
   const remaining = allFiltered.length - toShow.length;
 
   statusEl.textContent = state.showAll
-    ? `${allFiltered.length.toLocaleString('en-US')} stores${hasFilter ? " matched" : ""}`
-    : `Showing ${toShow.length} newest${hasFilter ? " matched" : ""} of ${allFiltered.length.toLocaleString('en-US')} total`;
+    ? `${allFiltered.length.toLocaleString('en-US')} ${isBlockedView ? "blocked stores" : "stores"}${hasFilter && !isBlockedView ? " matched" : ""}`
+    : `Showing ${toShow.length}${isBlockedView ? " blocked" : " newest"}${hasFilter && !isBlockedView ? " matched" : ""} of ${allFiltered.length.toLocaleString('en-US')} total`;
 
   const frag = document.createDocumentFragment();
   for (const store of toShow) {
     const a = document.createElement("a");
     a.href = `/store/${encodeURIComponent(store.domain)}`;
-    a.className = "store-card";
+    a.className = "store-card" + (store.blocked ? " is-blocked" : "");
     const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase()+store.niche.slice(1) : null;
     const date = formatDate(store.date);
-    const readinessLabel = store.readiness ? getLevelLabel(store.readiness) : '';
-    a.innerHTML = `<div class="card-inner"><div>
-      <div class="domain">${store.domain}</div>
-      ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
-      ${readinessLabel ? `<div class="readiness-label">${readinessLabel}</div>` : ""}
-      <div class="card-tags">
-        ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
-        ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
-        ${date ? `<span class="card-tag">${date}</span>` : ""}
-      </div>
-    </div><div class="score-wrap">
-      <div class="score ${scoreClass(store.score)}">${store.score}</div>
-      <span class="score-label">/100 AI score</span>
-    </div></div>`;
+
+    if (store.blocked) {
+      const reason = blockReasonLabel(store.block_reason);
+      a.innerHTML = `<div class="card-inner"><div>
+        <div class="domain">${store.domain}</div>
+        ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
+        <div class="readiness-label blocked">Not readable by AI</div>
+        <div class="card-tags">
+          <span class="card-tag reason-tag">${reason}</span>
+          ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
+          ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
+          ${date ? `<span class="card-tag">${date}</span>` : ""}
+        </div>
+      </div><div class="score-wrap">
+        <div class="score blocked">&#128683;</div>
+        <span class="score-label blocked">Blocked</span>
+      </div></div>`;
+    } else {
+      const readinessLabel = store.readiness ? getLevelLabel(store.readiness) : '';
+      a.innerHTML = `<div class="card-inner"><div>
+        <div class="domain">${store.domain}</div>
+        ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
+        ${readinessLabel ? `<div class="readiness-label">${readinessLabel}</div>` : ""}
+        <div class="card-tags">
+          ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
+          ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
+          ${date ? `<span class="card-tag">${date}</span>` : ""}
+        </div>
+      </div><div class="score-wrap">
+        <div class="score ${scoreClass(store.score)}">${store.score}</div>
+        <span class="score-label">/100 AI score</span>
+      </div></div>`;
+    }
     frag.appendChild(a);
   }
   listEl.appendChild(frag);
 
-  // Show "Show all" button if there are more
   if (remaining > 0 && !state.showAll) {
     showAllCount.textContent = allFiltered.length.toLocaleString('en-US');
     showAllWrap.style.display = 'block';
@@ -446,7 +500,6 @@ async function loadStores() {
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
     const rows = Array.isArray(data) ? data : (data.stores || []);
-    // No JS-side limit on fetched data — show all if filtered, cap at 100 newest otherwise
     state.stores = rows.map(normalizeStore).filter(s => s.domain);
     updateStats();
     updateRegionCounts();
