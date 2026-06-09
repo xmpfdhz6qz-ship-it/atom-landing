@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The AI Commerce Intelligence Framework&trade; | Atom Foundry</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The AI Commerce Intelligence Framework: the layered model for how AI systems read, understand, trust, recommend, and route customers to businesses. Built by Atom Foundry.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent),
+              radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent);
+  pointer-events: none; z-index: 0;
+}
+.page { position: relative; z-index: 1; }
+.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
+
+/* ── NAV ── */
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
+.nav-links a.framework:hover { color: #29c48f; border-color: rgba(29,158,117,0.6); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+
+/* ── PAGE SUB-MENU (sticky, tells you what is where) ── */
+.fw-menu-bar { position: sticky; top: 0; z-index: 50; background: rgba(8,8,8,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid #161616; margin-bottom: 44px; }
+.fw-menu { max-width: 860px; margin: 0 auto; padding: 11px 28px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.fw-menu-link { position: relative; font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 6px 13px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; cursor: pointer; }
+.fw-menu-link:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.fw-menu-link.active { color: #1D9E75; border-color: rgba(29,158,117,0.4); background: rgba(29,158,117,0.07); }
+.fw-tip { position: absolute; top: calc(100% + 9px); left: 50%; transform: translateX(-50%) translateY(6px); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 9px 13px; width: 200px; font-size: 11.5px; color: #aaa; line-height: 1.5; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 99; text-align: center; }
+.fw-menu-link:hover .fw-tip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── HERO ── */
+.fw-hero { padding: 8px 0 8px; text-align: center; }
+.fw-kicker { font-size: 11px; color: #f97316; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 16px; }
+.fw-hero h1 { font-size: clamp(32px, 5.5vw, 56px); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px; }
+.fw-hero h1 em { font-style: normal; color: #f97316; }
+.fw-hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 600px; margin: 0 auto; }
+.fw-byline { margin-top: 22px; font-size: 13px; color: #666; }
+.fw-byline strong { color: #aaa; font-weight: 600; }
+
+/* ── HERO DIAGRAM ── */
+.fw-hero-img { margin: 36px auto 0; max-width: 560px; }
+
+/* ── SECTION SHELL ── */
+.fw-section { margin: 0 0 64px; scroll-margin-top: 80px; }
+.fw-sec-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.fw-sec-title { font-size: clamp(24px, 3.4vw, 34px); font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.15; letter-spacing: -0.01em; }
+.fw-sec-title em { font-style: normal; color: #f97316; }
+.fw-sec-body { font-size: 15.5px; color: #9a9a9a; line-height: 1.85; max-width: 680px; }
+.fw-sec-body p { margin-bottom: 14px; }
+.fw-sec-body p:last-child { margin-bottom: 0; }
+.fw-sec-body strong { color: #ddd; font-weight: 600; }
+
+/* ── CLICKABLE IMAGE ── */
+.fw-zoom { display: block; border: 1px solid #1e1e1e; border-radius: 16px; overflow: hidden; cursor: zoom-in; transition: border-color 0.2s, transform 0.2s; background: #0f0f0f; }
+.fw-zoom:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+.fw-zoom img { display: block; width: 100%; height: auto; }
+.fw-zoom-cap { font-size: 11.5px; color: #555; text-align: center; margin-top: 9px; }
+
+/* ── LAYER CARD ── */
+.fw-layers { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
+.fw-layer { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 18px; overflow: hidden; transition: border-color 0.2s; }
+.fw-layer:hover { border-color: #2a2a2a; }
+.fw-layer.is-core { border-color: rgba(249,115,22,0.4); box-shadow: 0 0 0 1px rgba(249,115,22,0.15), 0 16px 40px rgba(249,115,22,0.06); }
+.fw-layer-grid { display: grid; grid-template-columns: 1fr 300px; gap: 0; }
+.fw-layer-text { padding: 26px 28px; }
+.fw-layer-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.fw-layer-num { font-size: 13px; font-weight: 800; color: #f97316; background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); border-radius: 8px; padding: 3px 9px; flex-shrink: 0; }
+.is-core .fw-layer-num { color: #000; background: #f97316; border-color: #f97316; }
+.fw-layer-name { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+.fw-layer-name em { font-style: normal; color: #f97316; }
+.fw-layer-q { font-size: 14px; color: #1D9E75; font-weight: 600; margin-bottom: 12px; }
+.fw-layer-desc { font-size: 14px; color: #999; line-height: 1.7; margin-bottom: 16px; }
+.fw-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.fw-chip { font-size: 12px; color: #bbb; background: #161616; border: 1px solid #222; border-radius: 999px; padding: 5px 12px; }
+.fw-chip.tm { color: #fb923c; border-color: rgba(249,115,22,0.25); }
+.fw-layer-visual { border-left: 1px solid #1e1e1e; background: #0a0a0a; display: flex; align-items: center; justify-content: center; padding: 18px; }
+.fw-layer-visual .fw-zoom { border: none; border-radius: 10px; background: transparent; }
+.fw-layer-visual .fw-zoom:hover { transform: none; }
+
+/* simple layers (purchase / revenue) */
+.fw-mini-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.fw-mini { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 24px; }
+.fw-mini-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.fw-mini-name { font-size: 18px; font-weight: 800; color: #fff; }
+.fw-mini-desc { font-size: 13px; color: #999; line-height: 1.6; }
+
+/* ── GRAPH / FUTURE FEATURE BLOCK ── */
+.fw-feature { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 18px; padding: 30px 32px; margin-top: 24px; display: grid; grid-template-columns: 1fr 320px; gap: 28px; align-items: center; }
+.fw-feature.reverse { grid-template-columns: 320px 1fr; }
+.fw-feature-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.fw-feature-title em { font-style: normal; color: #f97316; }
+.fw-feature-body { font-size: 14.5px; color: #999; line-height: 1.75; margin-bottom: 16px; }
+.fw-maps { display: flex; flex-wrap: wrap; gap: 7px; }
+
+/* ── STORY ── */
+.fw-story { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 18px; padding: 32px; margin-top: 24px; }
+.fw-story-head { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; flex-wrap: wrap; }
+.fw-photo { width: 84px; height: 84px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #f97316; cursor: zoom-in; transition: transform 0.2s; }
+.fw-photo:hover { transform: scale(1.04); }
+.fw-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fw-story-name { font-size: 20px; font-weight: 800; color: #fff; }
+.fw-story-role { font-size: 13px; color: #f97316; font-weight: 600; margin-top: 2px; }
+.fw-story-body { font-size: 14.5px; color: #9a9a9a; line-height: 1.85; }
+.fw-story-body p { margin-bottom: 14px; }
+.fw-story-body p:last-child { margin-bottom: 0; }
+.fw-story-body .lead { color: #ddd; font-weight: 600; }
+.fw-story-pull { color: #fb923c; font-weight: 600; font-style: italic; }
+
+/* ── ARTICLES / EXPANDABLE PLACEHOLDER ── */
+.fw-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
+.fw-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 24px; text-decoration: none; display: block; transition: border-color 0.2s, transform 0.2s; }
+.fw-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+.fw-card-tag { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+.fw-card-title { font-size: 15px; color: #ddd; font-weight: 600; line-height: 1.45; }
+.fw-card-sub { font-size: 12.5px; color: #666; margin-top: 6px; }
+
+/* ── CTA ── */
+.fw-cta { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin: 0 0 8px; }
+.fw-cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+.fw-cta-title em { font-style: normal; color: #f97316; }
+.fw-cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; }
+.fw-cta-btn { display: inline-block; padding: 18px 40px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
+.fw-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+
+/* ── FOOTER ── */
+.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; text-decoration: none; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+
+/* ── LIGHTBOX ── */
+.lb { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 999; padding: 28px; cursor: zoom-out; }
+.lb.open { display: flex; }
+.lb img { max-width: 100%; max-height: 90vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
+.lb-close { position: absolute; top: 20px; right: 26px; font-size: 34px; color: #888; cursor: pointer; line-height: 1; font-weight: 300; }
+.lb-close:hover { color: #fff; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .fw-layer-grid { grid-template-columns: 1fr; }
+  .fw-layer-visual { border-left: none; border-top: 1px solid #1e1e1e; }
+  .fw-feature, .fw-feature.reverse { grid-template-columns: 1fr; }
+  .fw-feature.reverse .fw-feature-media { order: 2; }
+}
+@media (max-width: 640px) {
+  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .nav-links { flex-wrap: wrap; }
+  .wrap { padding: 0 20px; }
+  .fw-menu { padding: 10px 20px; }
+  .fw-hero h1 { font-size: 28px; }
+  .fw-hero-sub { font-size: 16px; }
+  .fw-mini-row { grid-template-columns: 1fr; }
+  .fw-cards { grid-template-columns: 1fr; }
+  .fw-story { padding: 22px 20px; }
+  .fw-cta { padding: 28px 20px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-platform { text-align: left; }
+  .footer-social { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- NAV (canonical) -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+      <div class="nav-subline">The AI Commerce Graph&trade;</div>
+      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+    </div>
+    <div class="nav-links">
+      <a href="/stores">Stores</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/vocabulary">Vocabulary</a>
+      <a href="/framework" class="framework">Framework</a>
+      <a href="/research" class="research">Research</a>
+      <a href="/#score" class="cta-nav">Free Score</a>
+    </div>
+  </nav>
+
+  <!-- PAGE MENU (sticky, hover tells you what is where) -->
+  <div class="fw-menu-bar">
+    <div class="fw-menu">
+      <a class="fw-menu-link" href="#overview">Overview<span class="fw-tip">Why visibility is no longer enough, and what comes after it.</span></a>
+      <a class="fw-menu-link" href="#layers">The 7 Layers<span class="fw-tip">Readability, Understanding, Trust, Recommendation, Confidence, Purchase, Revenue.</span></a>
+      <a class="fw-menu-link" href="#graph">AI Commerce Graph&trade;<span class="fw-tip">The data layer mapping businesses, products, trust and recommendations.</span></a>
+      <a class="fw-menu-link" href="#future">The Shift<span class="fw-tip">Why the future of commerce is recommendation, not traffic.</span></a>
+      <a class="fw-menu-link" href="#story">My Story<span class="fw-tip">Who is building Atom Foundry, and why.</span></a>
+      <a class="fw-menu-link" href="#insights">Insights<span class="fw-tip">Essays and research behind the framework.</span></a>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <header class="fw-hero">
+      <div class="fw-kicker">The Atom Foundry Framework</div>
+      <h1>The AI Commerce<br><em>Intelligence Framework&trade;</em></h1>
+      <p class="fw-hero-sub">The framework for understanding how AI systems discover, evaluate, recommend, and route customers to businesses.</p>
+      <div class="fw-byline">By <strong>Daniel Pokorny</strong>, Founder of Atom Foundry</div>
+      <div class="fw-hero-img">
+        <a class="fw-zoom" data-full="img/framework/ai-commerce-intelligence-framework.png">
+          <img src="img/framework/ai-commerce-intelligence-framework.png" alt="The AI Commerce Intelligence Framework: seven layers from AI Readability through Understanding, Trust, Recommendation Intelligence, Decision Confidence, Purchase, to Revenue." loading="lazy">
+        </a>
+        <div class="fw-zoom-cap">Click to enlarge</div>
+      </div>
+    </header>
+
+    <!-- OVERVIEW -->
+    <section class="fw-section" id="overview">
+      <div class="fw-sec-kicker">Why this exists</div>
+      <h2 class="fw-sec-title">Visibility is not the goal. <em>Recommendation</em> is.</h2>
+      <div class="fw-sec-body">
+        <p>For decades, growth started with traffic. More clicks, more impressions, more rankings. That worked when search engines were the main way people discovered products.</p>
+        <p>Today, millions of buying decisions start with a conversation. People ask ChatGPT, Gemini, Claude, and Perplexity which product, brand, or store they should choose. The challenge is no longer simply being found. <strong>The challenge is being recommended.</strong></p>
+        <p>A business can be visible and still never be recommended. It can rank and still never be chosen. It can even be trusted and still lose to a competitor that is easier to understand. Before a business can be recommended, it has to move through several layers. It must become readable, then understood, then trusted. Only then does recommendation happen, and only then can a customer decide with confidence.</p>
+      </div>
+    </section>
+
+    <!-- THE 7 LAYERS -->
+    <section class="fw-section" id="layers">
+      <div class="fw-sec-kicker">The framework</div>
+      <h2 class="fw-sec-title">The seven layers of <em>AI Commerce Intelligence&trade;</em></h2>
+      <div class="fw-sec-body">
+        <p>Each layer builds on the one before it. A weak layer caps everything above it: there is no understanding without readability, and no recommendation without trust.</p>
+      </div>
+
+      <div class="fw-layers">
+
+        <!-- LAYER 01 -->
+        <article class="fw-layer">
+          <div class="fw-layer-grid">
+            <div class="fw-layer-text">
+              <div class="fw-layer-head"><span class="fw-layer-num">01</span><span class="fw-layer-name">AI <em>Readability</em>&trade;</span></div>
+              <div class="fw-layer-q">Can AI read your business?</div>
+              <div class="fw-layer-desc">AI systems cannot understand what they cannot read. This layer measures how accessible and machine-readable your business is. It is the foundation: without readability, there is no understanding.</div>
+              <div class="fw-chips">
+                <span class="fw-chip">Structured Data</span>
+                <span class="fw-chip">Product Data</span>
+                <span class="fw-chip">Content Structure</span>
+                <span class="fw-chip">Crawlability</span>
+                <span class="fw-chip">Accessibility</span>
+              </div>
+            </div>
+            <div class="fw-layer-visual">
+              <a class="fw-zoom" data-full="img/framework/ai-readability.png">
+                <img src="img/framework/ai-readability.png" alt="AI Readability measures Structured Data, Product Data, Content Structure, Crawlability, and Accessibility." loading="lazy">
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- LAYER 02 -->
+        <article class="fw-layer">
+          <div class="fw-layer-grid">
+            <div class="fw-layer-text">
+              <div class="fw-layer-head"><span class="fw-layer-num">02</span><span class="fw-layer-name">AI <em>Understanding</em>&trade;</span></div>
+              <div class="fw-layer-q">Can AI understand what you sell?</div>
+              <div class="fw-layer-desc">Being readable does not mean being understood. A system can see your product page and still misread what you sell, who it is for, or when it should be recommended. This layer measures whether AI correctly interprets your business.</div>
+              <div class="fw-chips">
+                <span class="fw-chip">Product Clarity</span>
+                <span class="fw-chip">Category Clarity</span>
+                <span class="fw-chip">Entity Recognition</span>
+                <span class="fw-chip">Semantic Consistency</span>
+                <span class="fw-chip">Intent Alignment</span>
+              </div>
+            </div>
+            <div class="fw-layer-visual">
+              <a class="fw-zoom" data-full="img/framework/ai-understanding.png">
+                <img src="img/framework/ai-understanding.png" alt="AI Understanding measures Product Clarity, Category Clarity, Entity Recognition, Semantic Consistency, and Intent Alignment." loading="lazy">
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- LAYER 03 -->
+        <article class="fw-layer">
+          <div class="fw-layer-grid">
+            <div class="fw-layer-text">
+              <div class="fw-layer-head"><span class="fw-layer-num">03</span><span class="fw-layer-name">AI <em>Trust</em>&trade;</span></div>
+              <div class="fw-layer-q">Can AI trust your business?</div>
+              <div class="fw-layer-desc">Trust has always mattered. The difference now is that machines evaluate it alongside humans. Reviews, mentions, authority, and consistency all shape whether a business appears credible, and trust directly influences recommendation.</div>
+              <div class="fw-chips">
+                <span class="fw-chip">Reviews</span>
+                <span class="fw-chip">Brand Mentions</span>
+                <span class="fw-chip">Authority Signals</span>
+                <span class="fw-chip">Reputation</span>
+                <span class="fw-chip">Consistency</span>
+              </div>
+            </div>
+            <div class="fw-layer-visual">
+              <a class="fw-zoom" data-full="img/framework/ai-trust.png">
+                <img src="img/framework/ai-trust.png" alt="AI Trust measures Reviews, Brand Mentions, Authority Signals, Reputation, and Consistency." loading="lazy">
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- LAYER 04 - CORE -->
+        <article class="fw-layer is-core">
+          <div class="fw-layer-grid">
+            <div class="fw-layer-text">
+              <div class="fw-layer-head"><span class="fw-layer-num">04</span><span class="fw-layer-name">Recommendation <em>Intelligence</em>&trade;</span></div>
+              <div class="fw-layer-q">Will AI recommend you?</div>
+              <div class="fw-layer-desc">This is where commerce changes. Recommendation is the moment a system decides one option is better than another for a specific intent. A business recommended consistently gains a powerful advantage, not because it gets more traffic, but because it becomes the answer.</div>
+              <div class="fw-chips">
+                <span class="fw-chip">Recommendation Frequency</span>
+                <span class="fw-chip">Recommendation Position</span>
+                <span class="fw-chip tm">Recommendation Share&trade;</span>
+                <span class="fw-chip">Competitor Comparison</span>
+                <span class="fw-chip">Intent Match</span>
+              </div>
+            </div>
+            <div class="fw-layer-visual">
+              <a class="fw-zoom" data-full="img/framework/recommendation-intelligence.png">
+                <img src="img/framework/recommendation-intelligence.png" alt="Recommendation Intelligence measures Recommendation Frequency, Position, Share, Competitor Comparison, and Intent Match." loading="lazy">
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- LAYER 05 -->
+        <article class="fw-layer">
+          <div class="fw-layer-grid">
+            <div class="fw-layer-text">
+              <div class="fw-layer-head"><span class="fw-layer-num">05</span><span class="fw-layer-name">Decision <em>Confidence</em>&trade;</span></div>
+              <div class="fw-layer-q">Will customers feel confident enough to buy?</div>
+              <div class="fw-layer-desc">Recommendation alone is not enough. The customer still has to decide. When confidence is low, hesitation appears, and hesitation kills conversions. Most conversion problems are really confidence problems: people are not saying no, they just are not sure enough to say yes.</div>
+              <div class="fw-chips">
+                <span class="fw-chip">Trust Signals</span>
+                <span class="fw-chip">Clarity</span>
+                <span class="fw-chip">Proof</span>
+                <span class="fw-chip">Risk Reduction</span>
+                <span class="fw-chip">Decision Friction</span>
+              </div>
+            </div>
+            <div class="fw-layer-visual">
+              <a class="fw-zoom" data-full="img/framework/decision-confidence.png">
+                <img src="img/framework/decision-confidence.png" alt="Decision Confidence measures Trust Signals, Clarity, Proof, Risk Reduction, and Decision Friction." loading="lazy">
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- LAYERS 06 + 07 -->
+        <div class="fw-mini-row">
+          <div class="fw-mini">
+            <div class="fw-mini-head"><span class="fw-layer-num">06</span><span class="fw-mini-name">Purchase</span></div>
+            <div class="fw-mini-desc">The transaction. The point where readability, understanding, trust, recommendation, and confidence turn into a real buying action.</div>
+          </div>
+          <div class="fw-mini">
+            <div class="fw-mini-head"><span class="fw-layer-num">07</span><span class="fw-mini-name">Revenue</span></div>
+            <div class="fw-mini-desc">The outcome. Sustainable revenue is the result of being chosen, again and again, by both humans and the AI systems guiding them.</div>
+          </div>
+        </div>
+
+      </div><!-- /fw-layers -->
+    </section>
+
+    <!-- AI COMMERCE GRAPH -->
+    <section class="fw-section" id="graph">
+      <div class="fw-sec-kicker">The data layer</div>
+      <h2 class="fw-sec-title">The <em>AI Commerce Graph&trade;</em></h2>
+      <div class="fw-feature">
+        <div class="fw-feature-text">
+          <div class="fw-feature-title">The infrastructure layer beneath the framework</div>
+          <div class="fw-feature-body">Behind the framework sits a data layer. The AI Commerce Graph&trade; maps the relationships between businesses, products, categories, trust signals, mentions, and recommendations. The goal is simple: understand how intelligent systems discover, evaluate, and connect businesses to customer intent.</div>
+          <div class="fw-maps">
+            <span class="fw-chip">Businesses</span>
+            <span class="fw-chip">Products</span>
+            <span class="fw-chip">Categories</span>
+            <span class="fw-chip">Mentions</span>
+            <span class="fw-chip">Trust Signals</span>
+            <span class="fw-chip tm">Recommendations</span>
+          </div>
+        </div>
+        <div class="fw-feature-media">
+          <a class="fw-zoom" data-full="img/framework/ai-commerce-graph.png">
+            <img src="img/framework/ai-commerce-graph.png" alt="The AI Commerce Graph maps Businesses, Products, Categories, Mentions, Trust Signals, and Recommendations." loading="lazy">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE SHIFT / FUTURE -->
+    <section class="fw-section" id="future">
+      <div class="fw-sec-kicker">Where this is going</div>
+      <h2 class="fw-sec-title">The future of commerce is <em>recommendation</em></h2>
+      <div class="fw-feature reverse">
+        <div class="fw-feature-media">
+          <a class="fw-zoom" data-full="img/framework/future-of-commerce.png">
+            <img src="img/framework/future-of-commerce.png" alt="The future of commerce is not traffic. The future of commerce is recommendation. Businesses will compete to be understood, trusted, and recommended." loading="lazy">
+          </a>
+        </div>
+        <div class="fw-feature-text">
+          <div class="fw-feature-title">Not traffic. Not rankings. <em>Recommendation.</em></div>
+          <div class="fw-feature-body">Businesses will keep competing for attention, but attention alone will not be enough. They will increasingly compete to be understood, trusted, recommended, and chosen by intelligent systems. Atom Foundry researches how businesses become discovered, understood, trusted, recommended, and chosen, so they can prepare for that future before it arrives.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MY STORY -->
+    <section class="fw-section" id="story">
+      <div class="fw-sec-kicker">The founder</div>
+      <h2 class="fw-sec-title">My <em>story</em></h2>
+      <div class="fw-story">
+        <div class="fw-story-head">
+          <div class="fw-photo" data-full="img/framework/daniel-pokorny.jpg">
+            <img src="img/framework/daniel-pokorny.jpg" alt="Daniel Pokorny, founder of Atom Foundry." loading="lazy">
+          </div>
+          <div>
+            <div class="fw-story-name">Daniel Pokorny</div>
+            <div class="fw-story-role">Founder, Atom Foundry</div>
+          </div>
+        </div>
+        <div class="fw-story-body">
+          <p class="lead">Hi, I am Daniel and this is my story.</p>
+          <p>I grew up in a tiny village in the Ore Mountains in the north of the Czech Republic. The kind of place where everybody knows everybody, and where you learn pretty quickly that if you want something, you usually have to figure it out yourself.</p>
+          <p>I was curious about the world from an early age. At sixteen, I started traveling abroad through internships and exchange programs. It was the first time I saw how differently people think, work, and build things. Looking back, those experiences probably shaped me more than any school ever did.</p>
+          <p>My career did not begin in technology. It began in restaurants. Like many people, I started where there was an opportunity. I worked in hospitality and learned how to deal with people, pressure, problems, and the occasional impossible customer who somehow wanted everything at once.</p>
+          <p>Eventually I moved into project management at a company focused on professional kitchens and gastronomy projects. Besides designing commercial kitchens, I was also responsible for two e-commerce stores. That was where something clicked. When I took over those stores, they generated around 2 million Czech crowns a year. Over time, through constant improvements, testing, and a lot of learning, they grew to around 9 million annually. For the first time, I experienced what it feels like to build something that grows because of thousands of small decisions made consistently over time. I was hooked.</p>
+          <p>Later I moved into a completely different industry and became a project manager for a company specializing in industrial cooling systems. One of the biggest projects of my career took me to Denmark, where I was responsible for a project worth around 100 million euros for a major cable manufacturing company. Everything went according to plan. The project was delivered successfully. The timelines were met. The budgets were under control. From the outside, it looked like a great career move.</p>
+          <p>The only problem was that I was spending months away from home. Away from my wife. Away from my son. And one evening, standing hundreds of kilometers from home, I realized something that sounds obvious now. <span class="fw-story-pull">Success is a strange thing when the people you want to share it with are not there.</span></p>
+          <p>That project changed me. Not because it failed, but because it succeeded. It forced me to ask what I actually wanted to build with my life. The answer was not another corporate project. The answer was Atom Foundry.</p>
+          <p>I have always loved e-commerce. I have always loved solving problems. I have always loved building systems. And now we live in a time where a single person can create things that previously required entire teams. Instead of watching that transformation from the sidelines, I wanted to be part of it.</p>
+          <p>Today I spend my time researching how AI systems discover businesses, understand products, evaluate trust, and ultimately decide what deserves to be recommended. For decades, businesses focused on ranking in search engines. Now a new question is emerging: <strong>will AI recommend you when someone asks for the best option?</strong> That question fascinates me, and finding the answer has become my life's work.</p>
+          <p>Sometimes I still think about that kid growing up in a small village in the mountains. If you had told him that one day he would be building technology in a field that did not even exist yet, he probably would have laughed and gone back outside. But life has a funny way of taking you places you never planned to go, and I have a feeling this journey is only just beginning.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSIGHTS / EXPANDABLE: add articles, reports, talks here -->
+    <section class="fw-section" id="insights">
+      <div class="fw-sec-kicker">Behind the framework</div>
+      <h2 class="fw-sec-title">Essays &amp; <em>research</em></h2>
+      <div class="fw-sec-body">
+        <p>The thinking and the data behind the framework. This section grows as new essays, reports, and research are published.</p>
+      </div>
+      <div class="fw-cards">
+        <!-- ADD NEW ARTICLE CARDS HERE (copy one block, change tag / title / href) -->
+        <a class="fw-card" href="#" target="_blank" rel="noopener">
+          <div class="fw-card-tag">Essay</div>
+          <div class="fw-card-title">The AI Commerce Intelligence Framework&trade;</div>
+          <div class="fw-card-sub">The full essay on Medium &middot; add link</div>
+        </a>
+        <a class="fw-card" href="/research">
+          <div class="fw-card-tag">Research</div>
+          <div class="fw-card-title">What we found across the stores we have scanned</div>
+          <div class="fw-card-sub">Live data from the AI Commerce Graph&trade;</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="fw-cta">
+      <div class="fw-cta-title">Where does your store sit in the <em>framework?</em></div>
+      <div class="fw-cta-sub">Get your free AI Commerce Score in 10 seconds. See exactly where your store stands on readability, understanding, trust, and recommendation readiness.</div>
+      <a href="/#score" class="fw-cta-btn">Get My Free AI Score</a>
+      <div style="font-size:12px;color:#444;margin-top:12px;">Free &middot; No signup &middot; No credit card &middot; Results in 10 seconds</div>
+    </section>
+
+  </div><!-- /wrap -->
+
+  <!-- FOOTER (canonical) -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        Atom Foundry &nbsp;&middot;&nbsp; The AI Commerce Intelligence Framework&trade; &nbsp;&middot;&nbsp; atomfoundry.dev<br>
+        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
+        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+        <a href="/terms-of-service.html">Terms</a> &nbsp;&middot;&nbsp;
+        <a href="/privacy-policy.html">Privacy</a><br>
+        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+      </div>
+      <div>
+        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+        <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lightbox">
+  <span class="lb-close" id="lbClose">&times;</span>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<script>
+// Lightbox: any element with data-full opens its image enlarged
+(function () {
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  function open(src, alt) { lbImg.src = src; lbImg.alt = alt || ''; lb.classList.add('open'); }
+  function close() { lb.classList.remove('open'); lbImg.src = ''; }
+  document.querySelectorAll('[data-full]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var inner = el.querySelector('img');
+      open(el.getAttribute('data-full'), inner ? inner.alt : '');
+    });
+  });
+  lb.addEventListener('click', close);
+  document.getElementById('lbClose').addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+
+// Sticky menu: highlight the section currently in view + smooth scroll
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.fw-menu-link'));
+  var map = {};
+  links.forEach(function (l) {
+    var id = l.getAttribute('href').slice(1);
+    map[id] = l;
+    l.addEventListener('click', function (e) {
+      var target = document.getElementById(id);
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+  var sections = links.map(function (l) { return document.getElementById(l.getAttribute('href').slice(1)); }).filter(Boolean);
+  function onScroll() {
+    var pos = window.scrollY + 120;
+    var current = null;
+    sections.forEach(function (s) { if (s.offsetTop <= pos) current = s.id; });
+    links.forEach(function (l) { l.classList.remove('active'); });
+    if (current && map[current]) map[current].classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
