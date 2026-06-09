@@ -29,6 +29,8 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
 .nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
 .nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
 .nav-links a.active { color: #f97316; border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.05); }
+.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
+.nav-links a.framework:hover { color: #29c48f; border-color: rgba(29,158,117,0.6); }
 .nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
 .nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
 .nav-links a.cta-nav:hover { background: #ea580c; }
@@ -150,17 +152,13 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
   .footer-platform { text-align: left; }
 }
 
-/* ── PRINT STYLES ── */
+/* PRINT STYLES */
 @media print {
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   body { background: #080808 !important; color: #e8e8e8 !important; font-size: 11pt; }
   body::before { display: none; }
   .nav, .footer, .cta-box, .topics-grid, .method-grid, .hero, .stats-grid { display: none !important; }
-
-  /* Watermark */
   .print-watermark { display: block !important; position: fixed; bottom: 28px; right: 28px; font-size: 9pt; color: rgba(249,115,22,0.25); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; z-index: 9999; }
-
-  /* Page breaks */
   .print-page-break { page-break-before: always; display: block; }
   .report-card { page-break-inside: avoid; margin-bottom: 0; border: 1px solid #333 !important; }
   .report-card-header { page-break-after: avoid; }
@@ -169,14 +167,11 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
   .chart-section { page-break-inside: avoid; }
   .observation { page-break-inside: avoid; }
   .section { page-break-inside: avoid; }
-
-  /* Print title page */
   .print-cover { display: block !important; text-align: center; padding: 80px 40px; page-break-after: always; }
   .print-cover h1 { font-size: 28pt; font-weight: 800; color: #fff; margin-bottom: 16px; }
   .print-cover .print-cover-sub { font-size: 14pt; color: #888; margin-bottom: 8px; }
   .print-cover .print-cover-brand { font-size: 12pt; color: #f97316; font-weight: 700; margin-top: 40px; }
   .print-cover .print-cover-date { font-size: 10pt; color: #555; margin-top: 8px; }
-
   a { color: inherit !important; text-decoration: none !important; }
   canvas { max-width: 100% !important; }
 }
@@ -212,6 +207,7 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
     <a href="/stores">Stores</a>
     <a href="/methodology">Methodology</a>
     <a href="/vocabulary">Vocabulary</a>
+    <a href="/framework" class="framework">Framework</a>
     <a href="/research" class="active research">Research</a>
     <a href="/#score" class="cta-nav">Free Score</a>
   </div>
@@ -264,7 +260,7 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
     </div>
   </div>
 
-  <!-- CHART 2: Niche scores (LIVE) &mdash; moved up -->
+  <!-- CHART 2: Niche scores (LIVE) -->
   <div class="chart-section">
     <div class="chart-title">Average AI score by niche &mdash; May 2026</div>
     <div style="position:relative;height:260px;">
@@ -359,6 +355,7 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
         <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
         <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
         <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
         <a href="/research">Research</a> &nbsp;&middot;&nbsp;
         <a href="/privacy-policy">Privacy</a><br>
         <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
@@ -427,7 +424,7 @@ const donutChart = new Chart(document.getElementById('donutChart'), {
   options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + '%' } } } }
 });
 
-// Niche chart — 8000 store data
+// Niche chart -- 8000 store data
 new Chart(document.getElementById('nicheChart'), {
   type: 'bar',
   data: {
@@ -448,12 +445,10 @@ new Chart(document.getElementById('nicheChart'), {
 
 // Print function for individual reports
 function printReport(storeCount) {
-  // Hide everything except the selected report
   document.querySelectorAll('.report-card').forEach(card => {
     card.style.display = card.id === 'report-' + storeCount ? 'block' : 'none';
   });
   window.print();
-  // Restore all cards after print
   setTimeout(() => {
     document.querySelectorAll('.report-card').forEach(card => { card.style.display = 'block'; });
   }, 1000);
