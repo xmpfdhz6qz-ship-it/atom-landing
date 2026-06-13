@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The State of AI Recommendations in Home &amp; Living: Atom Foundry</title>
+<meta name="description" content="We asked an AI model 20 high-intent home and living shopping questions, 20 times each. Across 4,000 recommendations, how often a brand is recommended has no meaningful relationship to how AI-ready its store is. Fifth and final niche.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/research/state-of-ai-recommendations-home-living">
+<meta property="og:title" content="The State of AI Recommendations in Home &amp; Living">
+<meta property="og:description" content="Fifth and final niche. Recommendation frequency has no meaningful relationship to AI Commerce Score. The famous home names win on fame, not on store quality.">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The State of AI Recommendations in Home & Living","description":"How AI recommends home and living brands across 20 high-intent shopping prompts, and how recommendation relates to store readiness. Fifth and final niche in the series.","author":{"@type":"Organization","name":"Atom Foundry"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-06-12","url":"https://atomfoundry.dev/research/state-of-ai-recommendations-home-living","about":["Recommendation Intelligence","AI Commerce","Home and Living ecommerce"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"AI Recommendations in Home & Living: Recommendation Share dataset","description":"4000 brand recommendations captured from 20 high-intent home and living shopping prompts run 20 times each (400 prompt-runs) through a single AI model, mapped to measured store AI Commerce Scores. Marketplaces separated from single-brand stores.","creator":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"url":"https://atomfoundry.dev/research/state-of-ai-recommendations-home-living","measurementTechnique":"Recommendation Share, Recommendation Frequency, Recommendation Position","variableMeasured":["Recommendation Share","Recommendation Frequency","Recommendation Position","AI Commerce Score"]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent), radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.page { position: relative; z-index: 1; }
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.research.active { background: rgba(239,159,39,0.14); border-color: rgba(239,159,39,0.55); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
+.hero { padding: 22px 0 8px; }
+.hero-kicker { font-size: 11px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 14px; }
+.hero h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px; }
+.hero h1 em { font-style: normal; color: #f97316; }
+.hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 600px; }
+.byline { font-size: 12px; color: #555; margin-top: 16px; }
+.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin: 32px 0 8px; }
+.stat-cell { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid #1e1e1e; }
+.stat-cell:last-child { border-right: none; }
+.stat-num { font-size: 22px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 10.5px; color: #777; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+.section { margin: 48px 0; }
+.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+.section-title em { font-style: normal; color: #f97316; }
+.section-body { font-size: 15px; color: #aaa; line-height: 1.85; max-width: 680px; }
+.section-body strong { color: #e8e8e8; }
+.method-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 28px; margin-top: 8px; }
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-bottom: 18px; }
+.method-item { font-size: 13px; color: #999; padding: 7px 0; border-bottom: 1px solid #161616; }
+.method-item span { color: #e8e8e8; font-weight: 600; }
+.metric-defs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 16px; }
+.metric-card { background: #0a0a0a; border: 1px solid #1e1e1e; border-radius: 12px; padding: 14px 16px; }
+.metric-card h4 { font-size: 13px; color: #f97316; font-weight: 700; margin-bottom: 6px; }
+.metric-card p { font-size: 12px; color: #888; line-height: 1.6; }
+.limits { font-size: 12.5px; color: #777; line-height: 1.7; margin-top: 18px; padding-top: 16px; border-top: 1px solid #161616; }
+.limits strong { color: #999; }
+.lb-table { width: 100%; border-collapse: collapse; margin-top: 8px; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; overflow: hidden; }
+.lb-table thead th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: #666; font-weight: 600; text-align: left; padding: 12px 14px; border-bottom: 1px solid #1e1e1e; background: #0c0c0c; }
+.lb-table thead th.num { text-align: right; }
+.lb-table td { padding: 11px 14px; border-bottom: 1px solid #151515; font-size: 13px; vertical-align: middle; }
+.lb-table tr:last-child td { border-bottom: none; }
+.lb-rank { color: #555; font-weight: 700; width: 30px; }
+.lb-brand { color: #e8e8e8; font-weight: 600; }
+.lb-flag { font-size: 9px; color: #777; border: 1px solid #2a2a2a; border-radius: 100px; padding: 1px 7px; margin-left: 6px; font-weight: 500; vertical-align: middle; }
+.lb-num { text-align: right; color: #bbb; white-space: nowrap; }
+.lb-bar-wrap { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; margin-top: 5px; }
+.lb-bar { height: 100%; border-radius: 999px; }
+.lb-scorecell { text-align: right; white-space: nowrap; }
+.lb-score { font-weight: 800; font-size: 15px; }
+.lb-score.off { color: #444; }
+.lb-zone { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+.lb-zone.off { color: #555; }
+.chart-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 24px 12px; margin-top: 8px; }
+.sc-tick { fill: #555; font-size: 11px; font-family: inherit; }
+.sc-axis { fill: #888; font-size: 12px; font-weight: 600; font-family: inherit; }
+.sc-label { fill: #ccc; font-size: 11px; font-family: inherit; }
+.chart-legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; padding-top: 14px; border-top: 1px solid #161616; }
+.legend-item { font-size: 11px; color: #888; display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
+.callout strong { color: #4ade80; }
+.callout.warn { background: #1a0d0a; border-color: #2e1a1a; border-left-color: #E24B4A; }
+.callout.warn strong { color: #f87171; }
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.split-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; }
+.split-card .big { font-size: 34px; font-weight: 800; color: #f97316; line-height: 1; }
+.split-card .lbl { font-size: 13px; color: #999; margin-top: 6px; line-height: 1.5; }
+.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin: 40px 0 8px; }
+.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+.cta-title em { font-style: normal; color: #f97316; }
+.cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; max-width: 520px; margin-left: auto; margin-right: auto; }
+.cta-btn { display: inline-block; padding: 16px 36px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+@media (max-width: 640px) {
+  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .nav-links { flex-wrap: wrap; }
+  .wrap { padding: 0 18px; }
+  .hero h1 { font-size: 28px; }
+  .stats-bar { flex-wrap: wrap; }
+  .stat-cell { flex: 1 0 50%; border-bottom: 1px solid #1e1e1e; }
+  .method-grid, .metric-defs, .split2 { grid-template-columns: 1fr; }
+  .lb-table thead th.hide-m, .lb-table td.hide-m { display: none; }
+  .cta-section { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+      <div class="nav-subline">The AI Commerce Graph&trade;</div>
+      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+    </div>
+    <div class="nav-links">
+      <a href="/stores">Stores</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/vocabulary">Vocabulary</a>
+      <a href="/framework" class="framework">Framework</a>
+      <a href="/research" class="research active">Research</a>
+      <a href="/#score" class="cta-nav">Free Score</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="hero-kicker">Recommendation Intelligence Research&trade;</div>
+      <h1>The State of AI Recommendations in <em>Home &amp; Living</em></h1>
+      <p class="hero-sub">We asked one AI model 20 high-intent home and living shopping questions, 20 times each. This is the fifth and final niche in the series, and it closes the loop on a pattern we have now seen five times.</p>
+      <div class="byline">Atom Foundry &middot; June 2026 &middot; Fifth and final in the Recommendation Intelligence Research&trade; series</div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-cell"><div class="stat-num">4,000</div><div class="stat-label">Recommendations</div></div>
+      <div class="stat-cell"><div class="stat-num">271</div><div class="stat-label">Distinct brands</div></div>
+      <div class="stat-cell"><div class="stat-num">20</div><div class="stat-label">Shopping intents</div></div>
+      <div class="stat-cell"><div class="stat-num">400</div><div class="stat-label">Prompt-runs</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">How we measured it</div>
+      <h2 class="section-title">Methodology, <em>up front</em></h2>
+      <p class="section-body">Identical method to the first four reports, so all five are directly comparable. Everything below is computed from real captured responses. Nothing is estimated or projected.</p>
+      <div class="method-box">
+        <div class="method-grid">
+          <div class="method-item">Category: <span>Home &amp; Living</span></div>
+          <div class="method-item">Model: <span>one model (gpt-4o-mini)</span></div>
+          <div class="method-item">Intents: <span>20 high-intent prompts</span></div>
+          <div class="method-item">Runs per intent: <span>20</span></div>
+          <div class="method-item">Prompt-runs total: <span>400</span></div>
+          <div class="method-item">Recommendations captured: <span>4,000</span></div>
+        </div>
+        <div class="metric-defs">
+          <div class="metric-card"><h4>Recommendation Share&trade;</h4><p>A brand's share of all recommendations captured. The whole field sums to 100 percent.</p></div>
+          <div class="metric-card"><h4>Recommendation Frequency&trade;</h4><p>In what percent of the 400 prompt-runs the brand appeared at least once.</p></div>
+          <div class="metric-card"><h4>Recommendation Position&trade;</h4><p>Average rank in the answer when the brand appeared. Lower is better.</p></div>
+        </div>
+        <div class="limits"><strong>Marketplaces are not brands.</strong> Home and living is the most marketplace-driven category we have measured. Retailers and department stores (Amazon, Wayfair, Etsy, Home Depot, Lowe's, Macy's, Nordstrom, and others) were separated out and excluded from the brand-level analysis. Vertical own-brand stores such as IKEA, West Elm, and Crate &amp; Barrel are kept as brands, because they sell their own line through their own store. <strong>Cleanups we made and disclose:</strong> two brands were hand-corrected after the automatic match picked the wrong store (Crate &amp; Barrel had matched a sub-brand domain, Parachute had not matched at all), and a handful of name variants such as the two spellings of Wsthof were merged. <strong>Other limits:</strong> one model, one category, one point in time. Each intent ran 20 times. Brands map to the real stores we measure where a match exists; the rest are off-index, never invented.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Who AI recommends</div>
+      <h2 class="section-title">The home &amp; living <em>recommendation leaderboard</em></h2>
+      <p class="section-body">Top 20 brands by frequency across all 4,000 recommendations, with retailers excluded. The last column is each brand's real AI Commerce Score&trade; from our index. The two runaway leaders, IKEA and West Elm, are recommended in nearly half of all prompts while their stores sit only in the Low band.</p>
+      <table class="lb-table">
+        <thead><tr>
+          <th>#</th><th>Brand</th>
+          <th class="num">Share&trade;</th>
+          <th class="num">Freq&trade;</th>
+          <th class="num hide-m">Pos&trade;</th>
+          <th class="num">AI Commerce Score&trade;</th>
+        </tr></thead>
+        <tbody>
+<tr>
+      <td class="lb-rank">1</td>
+      <td class="lb-brand">IKEA</td>
+      <td class="lb-num">4.8%<div class="lb-bar-wrap"><div class="lb-bar" style="width:100.0%;background:#f97316;"></div></div></td>
+      <td class="lb-num">48.3%</td>
+      <td class="lb-num hide-m">5.3</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">64</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">2</td>
+      <td class="lb-brand">West Elm</td>
+      <td class="lb-num">4.7%<div class="lb-bar-wrap"><div class="lb-bar" style="width:97.9%;background:#f97316;"></div></div></td>
+      <td class="lb-num">47.0%</td>
+      <td class="lb-num hide-m">3.7</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">60</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">3</td>
+      <td class="lb-brand">Pottery Barn <span class="lb-flag">off-index</span></td>
+      <td class="lb-num">4.2%<div class="lb-bar-wrap"><div class="lb-bar" style="width:87.5%;background:#f97316;"></div></div></td>
+      <td class="lb-num">41.5%</td>
+      <td class="lb-num hide-m">6.0</td>
+      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">4</td>
+      <td class="lb-brand">Brooklinen</td>
+      <td class="lb-num">2.2%<div class="lb-bar-wrap"><div class="lb-bar" style="width:45.8%;background:#f97316;"></div></div></td>
+      <td class="lb-num">21.8%</td>
+      <td class="lb-num hide-m">1.5</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">38</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">5</td>
+      <td class="lb-brand">Parachute</td>
+      <td class="lb-num">2.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:41.7%;background:#f97316;"></div></div></td>
+      <td class="lb-num">19.5%</td>
+      <td class="lb-num hide-m">2.8</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">55</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">6</td>
+      <td class="lb-brand">L.L. Bean</td>
+      <td class="lb-num">1.7%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.4%;background:#f97316;"></div></div></td>
+      <td class="lb-num">17.3%</td>
+      <td class="lb-num hide-m">6.5</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">68</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">7</td>
+      <td class="lb-brand">Boll &amp; Branch</td>
+      <td class="lb-num">1.7%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.4%;background:#f97316;"></div></div></td>
+      <td class="lb-num">17.3%</td>
+      <td class="lb-num hide-m">2.7</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">51</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">8</td>
+      <td class="lb-brand">Crate &amp; Barrel</td>
+      <td class="lb-num">1.7%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.4%;background:#f97316;"></div></div></td>
+      <td class="lb-num">17.0%</td>
+      <td class="lb-num hide-m">6.4</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">50</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">9</td>
+      <td class="lb-brand">CB2</td>
+      <td class="lb-num">1.7%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.4%;background:#f97316;"></div></div></td>
+      <td class="lb-num">16.8%</td>
+      <td class="lb-num hide-m">5.4</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">59</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">10</td>
+      <td class="lb-brand">Saatva</td>
+      <td class="lb-num">1.2%<div class="lb-bar-wrap"><div class="lb-bar" style="width:25.0%;background:#f97316;"></div></div></td>
+      <td class="lb-num">11.8%</td>
+      <td class="lb-num hide-m">4.0</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">51</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">11</td>
+      <td class="lb-brand">Coyuchi</td>
+      <td class="lb-num">1.1%<div class="lb-bar-wrap"><div class="lb-bar" style="width:22.9%;background:#f97316;"></div></div></td>
+      <td class="lb-num">10.8%</td>
+      <td class="lb-num hide-m">5.7</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">44</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">12</td>
+      <td class="lb-brand">Tempur-Pedic <span class="lb-flag">off-index</span></td>
+      <td class="lb-num">1.1%<div class="lb-bar-wrap"><div class="lb-bar" style="width:22.9%;background:#f97316;"></div></div></td>
+      <td class="lb-num">10.8%</td>
+      <td class="lb-num hide-m">1.4</td>
+      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">13</td>
+      <td class="lb-brand">Casper</td>
+      <td class="lb-num">1.1%<div class="lb-bar-wrap"><div class="lb-bar" style="width:22.9%;background:#f97316;"></div></div></td>
+      <td class="lb-num">10.5%</td>
+      <td class="lb-num hide-m">6.0</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#EF9F27;">73</span><span class="lb-zone" style="color:#EF9F27;">Moderately</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">14</td>
+      <td class="lb-brand">Purple</td>
+      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:20.8%;background:#f97316;"></div></div></td>
+      <td class="lb-num">10.3%</td>
+      <td class="lb-num hide-m">2.6</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">56</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">15</td>
+      <td class="lb-brand">Flexispot <span class="lb-flag">off-index</span></td>
+      <td class="lb-num">1.2%<div class="lb-bar-wrap"><div class="lb-bar" style="width:25.0%;background:#f97316;"></div></div></td>
+      <td class="lb-num">9.8%</td>
+      <td class="lb-num hide-m">6.1</td>
+      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">16</td>
+      <td class="lb-brand">Ashley Furniture</td>
+      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:20.8%;background:#f97316;"></div></div></td>
+      <td class="lb-num">9.8%</td>
+      <td class="lb-num hide-m">7.5</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">57</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">17</td>
+      <td class="lb-brand">Autonomous</td>
+      <td class="lb-num">0.9%<div class="lb-bar-wrap"><div class="lb-bar" style="width:18.8%;background:#f97316;"></div></div></td>
+      <td class="lb-num">9.3%</td>
+      <td class="lb-num hide-m">6.2</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">56</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">18</td>
+      <td class="lb-brand">Herman Miller</td>
+      <td class="lb-num">0.9%<div class="lb-bar-wrap"><div class="lb-bar" style="width:18.8%;background:#f97316;"></div></div></td>
+      <td class="lb-num">8.5%</td>
+      <td class="lb-num hide-m">3.1</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">28</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">19</td>
+      <td class="lb-brand">Cuisinart</td>
+      <td class="lb-num">0.8%<div class="lb-bar-wrap"><div class="lb-bar" style="width:16.7%;background:#f97316;"></div></div></td>
+      <td class="lb-num">8.0%</td>
+      <td class="lb-num hide-m">5.0</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">37</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
+    </tr>
+<tr>
+      <td class="lb-rank">20</td>
+      <td class="lb-brand">Nectar</td>
+      <td class="lb-num">0.8%<div class="lb-bar-wrap"><div class="lb-bar" style="width:16.7%;background:#f97316;"></div></div></td>
+      <td class="lb-num">8.0%</td>
+      <td class="lb-num hide-m">6.6</td>
+      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">46</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The central finding</div>
+      <h2 class="section-title">Once again, recommendation has <em>no real link</em> to readiness</h2>
+      <p class="section-body">The correlation between Recommendation Frequency&trade; and AI Commerce Score&trade; is <strong>r = 0.108 (n = 71)</strong>, statistically indistinguishable from zero. In a field of 71 single-brand stores, how often AI recommends a home brand tells you essentially nothing about how AI-ready its store is. Each dot is one brand.</p>
+      <div class="chart-box">
+        <svg viewBox="0 0 720 430" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scatter plot of recommendation frequency versus AI Commerce Score for home and living brands, showing no meaningful relationship">
+  <line x1="64" y1="374.0" x2="696" y2="374.0" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="378.0" text-anchor="end" class="sc-tick">0</text><line x1="64" y1="287.5" x2="696" y2="287.5" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="291.5" text-anchor="end" class="sc-tick">25</text><line x1="64" y1="201.0" x2="696" y2="201.0" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="205.0" text-anchor="end" class="sc-tick">50</text><line x1="64" y1="114.5" x2="696" y2="114.5" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="118.5" text-anchor="end" class="sc-tick">75</text><line x1="64" y1="28.0" x2="696" y2="28.0" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="32.0" text-anchor="end" class="sc-tick">100</text><line x1="64.0" y1="28" x2="64.0" y2="374" stroke="#141414" stroke-width="1"/><text x="64.0" y="394" text-anchor="middle" class="sc-tick">0%</text><line x1="190.4" y1="28" x2="190.4" y2="374" stroke="#141414" stroke-width="1"/><text x="190.4" y="394" text-anchor="middle" class="sc-tick">10%</text><line x1="316.8" y1="28" x2="316.8" y2="374" stroke="#141414" stroke-width="1"/><text x="316.8" y="394" text-anchor="middle" class="sc-tick">20%</text><line x1="443.2" y1="28" x2="443.2" y2="374" stroke="#141414" stroke-width="1"/><text x="443.2" y="394" text-anchor="middle" class="sc-tick">30%</text><line x1="569.6" y1="28" x2="569.6" y2="374" stroke="#141414" stroke-width="1"/><text x="569.6" y="394" text-anchor="middle" class="sc-tick">40%</text><line x1="696.0" y1="28" x2="696.0" y2="374" stroke="#141414" stroke-width="1"/><text x="696.0" y="394" text-anchor="middle" class="sc-tick">50%</text><line x1="64" y1="201.0" x2="696" y2="201.0" stroke="#E8A030" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="4 4"/><line x1="64" y1="131.8" x2="696" y2="131.8" stroke="#EF9F27" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="4 4"/><line x1="64" y1="79.9" x2="696" y2="79.9" stroke="#1D9E75" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="4 4"/>
+  <circle cx="674.5" cy="152.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>IKEA: 48.3% frequency, score 64</title></circle><circle cx="658.1" cy="166.4" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>West Elm: 47.0% frequency, score 60</title></circle><circle cx="339.6" cy="242.5" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Brooklinen: 21.8% frequency, score 38</title></circle><circle cx="310.5" cy="183.7" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Parachute: 19.5% frequency, score 55</title></circle><circle cx="282.7" cy="197.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Boll &amp; Branch: 17.3% frequency, score 51</title></circle><circle cx="282.7" cy="138.7" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>L.L. Bean: 17.3% frequency, score 68</title></circle><circle cx="278.9" cy="201.0" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Crate &amp; Barrel: 17.0% frequency, score 50</title></circle><circle cx="276.4" cy="169.9" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>CB2: 16.8% frequency, score 59</title></circle><circle cx="213.2" cy="197.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Saatva: 11.8% frequency, score 51</title></circle><circle cx="200.5" cy="221.8" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Coyuchi: 10.8% frequency, score 44</title></circle><circle cx="196.7" cy="121.4" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Casper: 10.5% frequency, score 73</title></circle><circle cx="194.2" cy="180.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Purple: 10.3% frequency, score 56</title></circle><circle cx="187.9" cy="176.8" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Ashley Furniture: 9.8% frequency, score 57</title></circle><circle cx="181.6" cy="180.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Autonomous: 9.3% frequency, score 56</title></circle><circle cx="171.4" cy="277.1" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Herman Miller: 8.5% frequency, score 28</title></circle><circle cx="165.1" cy="246.0" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Cuisinart: 8.0% frequency, score 37</title></circle><circle cx="165.1" cy="214.8" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Nectar: 8.0% frequency, score 46</title></circle><circle cx="156.3" cy="97.2" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Article: 7.3% frequency, score 80</title></circle><circle cx="146.2" cy="197.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Snowe: 6.5% frequency, score 51</title></circle><circle cx="137.3" cy="294.4" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Humanscale: 5.8% frequency, score 23</title></circle><circle cx="137.3" cy="197.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Steelcase: 5.8% frequency, score 51</title></circle><circle cx="137.3" cy="304.8" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Anthropologie: 5.8% frequency, score 20</title></circle><circle cx="133.5" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Room &amp; Board: 5.5% frequency, score 14</title></circle><circle cx="127.2" cy="176.8" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Helix: 5.0% frequency, score 57</title></circle><circle cx="127.2" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>The Sill: 5.0% frequency, score 14</title></circle><circle cx="127.2" cy="159.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Corelle: 5.0% frequency, score 62</title></circle><circle cx="127.2" cy="107.6" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Uplift Desk: 5.0% frequency, score 77</title></circle><circle cx="127.2" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Bath &amp; Body Works: 5.0% frequency, score 14</title></circle><circle cx="127.2" cy="214.8" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Voluspa: 5.0% frequency, score 46</title></circle><circle cx="127.2" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Fully: 5.0% frequency, score 14</title></circle><circle cx="127.2" cy="135.3" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Secretlab: 5.0% frequency, score 69</title></circle><circle cx="127.2" cy="201.0" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Global: 5.0% frequency, score 50</title></circle><circle cx="127.2" cy="149.1" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>GreenPan: 5.0% frequency, score 65</title></circle><circle cx="124.7" cy="142.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Wüsthof: 4.8% frequency, score 67</title></circle><circle cx="120.9" cy="207.9" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Sleep Number: 4.5% frequency, score 48</title></circle><circle cx="114.6" cy="145.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Leesa: 4.0% frequency, score 66</title></circle><circle cx="114.6" cy="114.5" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Brooklyn Bedding: 4.0% frequency, score 75</title></circle><circle cx="114.6" cy="124.9" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Bloomscape: 4.0% frequency, score 72</title></circle><circle cx="114.6" cy="156.0" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Brookstone: 4.0% frequency, score 63</title></circle><circle cx="114.6" cy="124.9" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Ruggable: 4.0% frequency, score 72</title></circle><circle cx="108.2" cy="159.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Homesick: 3.5% frequency, score 62</title></circle><circle cx="99.4" cy="131.8" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Eddie Bauer: 2.8% frequency, score 70</title></circle><circle cx="99.4" cy="149.1" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Joybird: 2.8% frequency, score 65</title></circle><circle cx="89.3" cy="218.3" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Pendleton: 2.0% frequency, score 45</title></circle><circle cx="86.8" cy="142.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Muji: 1.8% frequency, score 67</title></circle><circle cx="83.0" cy="201.0" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Cultiver: 1.5% frequency, score 50</title></circle><circle cx="80.4" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Ugg: 1.3% frequency, score 14</title></circle><circle cx="80.4" cy="311.7" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>The Citizenry: 1.3% frequency, score 18</title></circle><circle cx="80.4" cy="169.9" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Rough Linen: 1.3% frequency, score 59</title></circle><circle cx="76.6" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Serena &amp; Lily: 1.0% frequency, score 14</title></circle><circle cx="76.6" cy="173.3" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Buffy: 1.0% frequency, score 58</title></circle><circle cx="74.1" cy="124.9" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Amerisleep: 0.8% frequency, score 72</title></circle><circle cx="74.1" cy="135.3" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Nest Bedding: 0.8% frequency, score 69</title></circle><circle cx="74.1" cy="311.7" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Le Creuset: 0.8% frequency, score 18</title></circle><circle cx="74.1" cy="284.0" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Molecule: 0.8% frequency, score 26</title></circle><circle cx="70.3" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Floyd: 0.5% frequency, score 14</title></circle><circle cx="70.3" cy="152.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Misen: 0.5% frequency, score 64</title></circle><circle cx="70.3" cy="104.1" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Burrow: 0.5% frequency, score 78</title></circle><circle cx="70.3" cy="156.0" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Sheex: 0.5% frequency, score 63</title></circle><circle cx="70.3" cy="111.0" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>GhostBed: 0.5% frequency, score 76</title></circle><circle cx="67.8" cy="173.3" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Sijo: 0.3% frequency, score 58</title></circle><circle cx="67.8" cy="149.1" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Frette: 0.3% frequency, score 65</title></circle><circle cx="67.8" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>LAFCO: 0.3% frequency, score 14</title></circle><circle cx="67.8" cy="190.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Nautica: 0.3% frequency, score 53</title></circle><circle cx="67.8" cy="183.7" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Natori: 0.3% frequency, score 55</title></circle><circle cx="67.8" cy="211.4" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Magic Linen: 0.3% frequency, score 47</title></circle><circle cx="67.8" cy="166.4" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Moft: 0.3% frequency, score 60</title></circle><circle cx="67.8" cy="246.0" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Gibson: 0.3% frequency, score 37</title></circle><circle cx="67.8" cy="214.8" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Maison Margiela: 0.3% frequency, score 46</title></circle><circle cx="67.8" cy="149.1" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Lands' End: 0.3% frequency, score 65</title></circle><circle cx="67.8" cy="259.8" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Arhaus: 0.3% frequency, score 33</title></circle>
+  <text x="288.9" y="218.0" text-anchor="start" class="sc-label">Crate &amp; Barrel</text><text x="181.4" y="280.6" text-anchor="start" class="sc-label">Herman Miller</text><text x="349.6" y="246.0" text-anchor="start" class="sc-label">Brooklinen</text><text x="292.7" y="142.2" text-anchor="start" class="sc-label">L.L. Bean</text><text x="320.5" y="187.2" text-anchor="start" class="sc-label">Parachute</text><text x="648.1" y="169.9" text-anchor="end" class="sc-label">West Elm</text><text x="166.3" y="100.7" text-anchor="start" class="sc-label">Article</text><text x="206.7" y="124.9" text-anchor="start" class="sc-label">Casper</text><text x="684.5" y="156.1" text-anchor="start" class="sc-label">IKEA</text><text x="286.4" y="173.4" text-anchor="start" class="sc-label">CB2</text>
+  <text x="380" y="422" text-anchor="middle" class="sc-axis">Recommendation Frequency&trade; (percent of prompts)</text>
+  <text x="16" y="201" text-anchor="middle" class="sc-axis" transform="rotate(-90 16 201)">AI Commerce Score&trade;</text>
+</svg>
+        <div class="chart-legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#1D9E75;"></span>Highly (85+)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#EF9F27;"></span>Moderately (70 to 84)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#E8A030;"></span>Low (50 to 69)</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#E24B4A;"></span>AI Invisible (under 50)</div>
+        </div>
+      </div>
+      <div class="callout warn">The famous home names win on fame. <strong>IKEA</strong> (48.3 percent of prompts, score 64) and <strong>West Elm</strong> (47.0 percent, score 60) dominate, and <strong>Pottery Barn</strong> (41.5 percent) is not even in our index. Meanwhile the best-built stores in the set, <strong>Article</strong> (80), <strong>Burrow</strong> (78), <strong>Uplift Desk</strong> (77), and <strong>GhostBed</strong> (76), each appear in 7 percent of prompts or fewer.</div>
+      <p class="section-body" style="margin-top:20px;">The average AI Commerce Score&trade; across all on-index recommended brands is just <strong>50.7</strong>, right at the edge of the AI Invisible band. AI is recommending a category of brands whose stores, on average, sit at the threshold of being unreadable to the very agents doing the recommending.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Five niches, one pattern</div>
+      <h2 class="section-title">This was the <em>fifth</em> category, and the answer never changed</h2>
+      <p class="section-body">Across beauty, supplements, coffee, pets, and now home and living, we have captured more than 20,000 recommendations and measured the same thing every time: the relationship between how often AI recommends a brand and how AI-ready its store is.</p>
+      <table class="lb-table" style="margin-top:18px;">
+        <thead><tr><th>Category</th><th class="num">Recommendations</th><th class="num">Freq vs Score (r)</th><th>Relationship</th></tr></thead>
+        <tbody>
+          <tr><td class="lb-brand">Beauty</td><td class="lb-num">4,000</td><td class="lb-num">0.17</td><td>None</td></tr>
+          <tr><td class="lb-brand">Supplements</td><td class="lb-num">4,000</td><td class="lb-num">-0.015</td><td>None</td></tr>
+          <tr><td class="lb-brand">Coffee</td><td class="lb-num">4,000</td><td class="lb-num">0.019</td><td>None</td></tr>
+          <tr><td class="lb-brand">Pets</td><td class="lb-num">4,000</td><td class="lb-num">-0.366</td><td>Weak negative</td></tr>
+          <tr><td class="lb-brand">Home &amp; Living</td><td class="lb-num">4,000</td><td class="lb-num">0.108</td><td>None</td></tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top:20px;">Five categories, more than 20,000 recommendations, and <strong>not once</strong> is recommendation frequency meaningfully and positively related to store readiness. Three times the link is zero, once it is faintly negative, and here it is zero again. The conclusion is no longer a single finding, it is a replicated result: <strong>AI recommends from fame, not from store quality.</strong></div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">What maps to a real store</div>
+      <h2 class="section-title">The most <em>marketplace-driven</em> category yet</h2>
+      <p class="section-body">Home and living runs through marketplaces more than any category we have measured. Around one in five recommendations went to a retailer or department store such as Amazon, Wayfair, Home Depot, or Macy's, all separated out and kept entirely out of the brand analysis. At the same time, on-index coverage was the highest of any niche, because so many home brands run real stores we have already scored.</p>
+      <div class="split2">
+        <div class="split-card"><div class="big">~60%</div><div class="lbl">of recommendations map to a single-brand store we actually measure (on-index), the highest of any niche</div></div>
+        <div class="split-card"><div class="big">~21%</div><div class="lbl">go to retailers and marketplaces, the highest share of any niche, separated out from the brand analysis</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">What it means</div>
+      <h2 class="section-title">Visibility is not <em>recommendation</em>, and recommendation is not <em>readiness</em></h2>
+      <p class="section-body">Today AI recommends from memory. It reaches for the household names it saw most during training, IKEA, West Elm, Pottery Barn, even when their stores sit in the Low band or are not in the index at all, and it overlooks the modern direct-to-consumer brands building the most readable, trustworthy stores. That bias is baked into the model, and it is temporary. As AI shopping moves from recalling names to live retrieval and agents that browse, compare, and check out, the advantage shifts to the stores an agent can actually read, trust, and act on.</p>
+      <p class="section-body" style="margin-top:14px;">That is the gap this research exposes and the one the <a href="/framework" style="color:#1D9E75;">Recommendation Intelligence Framework&trade;</a> is built to close: AI Readability, AI Understanding, AI Trust, Recommendation Intelligence, and Decision Confidence. The brands coasting on fame today have the most to lose when the model changes. The modern brands building machine-legible stores now are the ones that keep the recommendation when memory stops being enough.</p>
+    </div>
+
+    <div class="cta-section">
+      <div class="cta-title">Will AI still <em>recommend</em> you when it has to read your store?</div>
+      <div class="cta-sub">Get your free AI Commerce Score&trade; in 10 seconds and see exactly where your store stands on the signals that decide AI recommendations.</div>
+      <a href="/#score" class="cta-btn">Get My Free AI Score</a>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
+        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+        <a href="/privacy-policy">Privacy</a><br>
+        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+      </div>
+      <div>
+        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+        <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
