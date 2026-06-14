@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Fame Study: Why AI Recommends Some Brands and Not Others | Atom Foundry</title>
+<meta name="description" content="We analyzed the 200 most-recommended brands across five ecommerce categories. AI recommends by fame, not store quality: public fame signals explain 24.9% of how often a brand is recommended, store readiness only 2.1%. And the recommendations are stable, not random.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/research/the-fame-study">
+<meta property="og:title" content="The Fame Study: AI Recommends by Fame, Not Store Quality">
+<meta property="og:description" content="Across the 200 most-recommended brands, fame explains 12x more of AI recommendation than store quality. The most-recommended and least-recommended brands have nearly identical stores. The difference is fame.">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The Fame Study: Why AI Recommends Some Brands and Not Others","description":"An analysis of the 200 most-recommended brands across five ecommerce categories. Public fame signals explain 24.9% of recommendation frequency, store readiness only 2.1%, and recommendations are stable rather than random.","author":{"@type":"Organization","name":"Atom Foundry"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-06-14","url":"https://atomfoundry.dev/research/the-fame-study","about":["Recommendation Intelligence","AI Commerce","AI Fame","Generative Engine Optimization"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"The Fame Study Dataset","description":"The 200 most-recommended brands across five ecommerce categories, matched to public fame signals (Wikipedia pageviews, language editions, article length, name length), store AI Commerce Scores, and recommendation stability across 20 runs per intent.","creator":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"url":"https://atomfoundry.dev/research/the-fame-study","measurementTechnique":"Multiple regression, Spearman correlation, recommendation stability analysis","variableMeasured":["Recommendation Frequency","AI Fame","AI Commerce Score","Recommendation Stability"]}</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent), radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.page { position: relative; z-index: 1; }
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.research.active { background: rgba(239,159,39,0.14); border-color: rgba(239,159,39,0.55); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
+.hero { padding: 22px 0 8px; }
+.hero-kicker { font-size: 11px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 14px; }
+.hero h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px; }
+.hero h1 em { font-style: normal; color: #f97316; }
+.hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 620px; }
+.byline { font-size: 12px; color: #555; margin-top: 16px; }
+.byline a { color: #EF9F27; }
+.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin: 32px 0 8px; }
+.stat-cell { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid #1e1e1e; }
+.stat-cell:last-child { border-right: none; }
+.stat-num { font-size: 22px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 10.5px; color: #777; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+.section { margin: 48px 0; }
+.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+.section-title em { font-style: normal; color: #f97316; }
+.section-body { font-size: 15px; color: #aaa; line-height: 1.85; max-width: 680px; }
+.section-body strong { color: #e8e8e8; }
+.section-body p { margin-bottom: 14px; }
+.method-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 28px; margin-top: 8px; }
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-bottom: 18px; }
+.method-item { font-size: 13px; color: #999; padding: 7px 0; border-bottom: 1px solid #161616; }
+.method-item span { color: #e8e8e8; font-weight: 600; }
+.limits { font-size: 12.5px; color: #777; line-height: 1.7; margin-top: 18px; padding-top: 16px; border-top: 1px solid #161616; }
+.limits strong { color: #999; }
+.chart-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 24px 18px; margin-top: 8px; }
+.chart-title { font-size: 14px; color: #e8e8e8; font-weight: 700; margin-bottom: 2px; }
+.chart-sub { font-size: 12px; color: #777; margin-bottom: 16px; }
+.chart-cap { font-size: 12px; color: #888; line-height: 1.6; margin-top: 14px; padding-top: 14px; border-top: 1px solid #161616; }
+.chart-cap strong { color: #f97316; }
+.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
+.callout strong { color: #4ade80; }
+.callout.warn { background: #1a0d0a; border-color: #2e1a1a; border-left-color: #E24B4A; }
+.callout.warn strong { color: #f87171; }
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.split-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; }
+.split-card .big { font-size: 34px; font-weight: 800; color: #f97316; line-height: 1; }
+.split-card .lbl { font-size: 13px; color: #999; margin-top: 6px; line-height: 1.5; }
+.three { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 18px; }
+.three .split-card .big { font-size: 28px; }
+.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin: 40px 0 8px; }
+.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+.cta-title em { font-style: normal; color: #f97316; }
+.cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; max-width: 520px; margin-left: auto; margin-right: auto; }
+.cta-btn { display: inline-block; padding: 16px 36px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+.sc-tick { fill: #555; font-size: 11px; font-family: inherit; }
+.sc-axis { fill: #aaa; font-size: 12px; font-weight: 600; font-family: inherit; }
+.sc-val { fill: #fff; font-size: 13px; font-weight: 800; font-family: inherit; }
+.sc-grp { fill: #ccc; font-size: 12px; font-weight: 600; font-family: inherit; }
+@media (max-width: 640px) {
+  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .nav-links { flex-wrap: wrap; }
+  .wrap { padding: 0 18px; }
+  .hero h1 { font-size: 28px; }
+  .stats-bar { flex-wrap: wrap; }
+  .stat-cell { flex: 1 0 50%; border-bottom: 1px solid #1e1e1e; }
+  .method-grid, .split2, .three { grid-template-columns: 1fr; }
+  .cta-section { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+      <div class="nav-subline">The AI Commerce Graph&trade;</div>
+      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+    </div>
+    <div class="nav-links">
+      <a href="/stores">Stores</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/vocabulary">Vocabulary</a>
+      <a href="/framework" class="framework">Framework</a>
+      <a href="/research" class="research active">Research</a>
+      <a href="/#score" class="cta-nav">Free Score</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="hero-kicker">Recommendation Intelligence Research&trade; &middot; The Fame Study</div>
+      <h1>AI recommends by <em>fame</em>, not by store quality</h1>
+      <p class="hero-sub">We took the 200 most-recommended brands across five ecommerce categories and asked what actually separates the brands AI names from the brands it ignores. The answer is not how good their store is. It is how famous they are. And even fame explains only a quarter of it.</p>
+      <div class="byline">Atom Foundry &middot; June 2026 &middot; Part two of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research&trade;</a> series</div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-cell"><div class="stat-num">200</div><div class="stat-label">Brands analyzed</div></div>
+      <div class="stat-cell"><div class="stat-num">24.9%</div><div class="stat-label">Explained by fame</div></div>
+      <div class="stat-cell"><div class="stat-num">2.1%</div><div class="stat-label">Explained by store quality</div></div>
+      <div class="stat-cell"><div class="stat-num">~12&times;</div><div class="stat-label">Fame over quality</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Where this comes from</div>
+      <h2 class="section-title">First we proved store quality <em>does not</em> drive recommendation</h2>
+      <div class="section-body">
+        <p>In the first part of this series we captured 20,000 AI product recommendations across beauty, supplements, coffee, pets, and home and living, and matched every one to the measured AI-readiness of the real store behind the brand. Across all five categories the relationship between how AI-ready a store is and how often AI recommends it was statistically indistinguishable from zero.</p>
+        <p>That answered the first question and raised a harder one. If a clean, well-structured, machine-readable store is not what earns the recommendation, then what is? This study is the attempt to answer it with the same discipline: real numbers, no invented deltas, and an honest account of what we could and could not measure.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The headline finding</div>
+      <h2 class="section-title">Fame outweighs store quality roughly <em>twelve to one</em></h2>
+      <div class="section-body">
+        <p>We took the 200 most-recommended brands and, for each one, measured public fame signals that do not depend on the store at all: how many people read its Wikipedia article, in how many languages that article exists, how long the article is, and how short and nameable the brand is. We then ran a multiple regression against how often each brand is actually recommended, and compared it directly against the store's own AI Commerce Score on the same brands.</p>
+      </div>
+
+      <div class="chart-box">
+        <div class="chart-title">What explains how often a brand is recommended?</div>
+        <div class="chart-sub">Share of recommendation frequency explained (R&sup2;), measured on the same on-index brands</div>
+        <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="Store quality explains 2.1 percent, public fame signals explain 24.9 percent">
+          <!-- track helper -->
+          <line x1="250" y1="20" x2="250" y2="170" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- bar 1: store quality -->
+          <text x="238" y="58" text-anchor="end" class="sc-axis">Store quality</text>
+          <text x="238" y="74" text-anchor="end" class="sc-tick">AI Commerce Score</text>
+          <rect x="250" y="44" width="430" height="28" rx="5" fill="#161616"/>
+          <rect x="250" y="44" width="9" height="28" rx="4" fill="#E24B4A"/>
+          <text x="270" y="63" class="sc-val">2.1%</text>
+          <!-- bar 2: fame -->
+          <text x="238" y="128" text-anchor="end" class="sc-axis">Public fame signals</text>
+          <text x="238" y="144" text-anchor="end" class="sc-tick">Wikipedia + nameability</text>
+          <rect x="250" y="114" width="430" height="28" rx="5" fill="#161616"/>
+          <rect x="250" y="114" width="107" height="28" rx="4" fill="#f97316"/>
+          <text x="367" y="133" class="sc-val">24.9%</text>
+          <!-- scale -->
+          <text x="250" y="190" class="sc-tick">0%</text>
+          <text x="680" y="190" text-anchor="end" class="sc-tick">100% of recommendation frequency</text>
+        </svg>
+        <div class="chart-cap"><strong>Read it honestly:</strong> fame is by far the stronger factor, but notice how much track is empty. Even fame leaves about three quarters of the outcome unexplained. Store quality barely moves the needle at all.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The same finding, in plain brands</div>
+      <h2 class="section-title">The most-recommended and least-recommended brands have <em>nearly identical stores</em></h2>
+      <div class="section-body">
+        <p>Regression can feel abstract, so here is the same truth in plain terms. We sorted the 200 brands by how often they are recommended and compared the top 50 against the bottom 50. The top group is recommended about six times more often. You would expect their stores to be far better. They are not.</p>
+      </div>
+
+      <div class="chart-box">
+        <div class="chart-title">Top 50 vs bottom 50 most-recommended brands</div>
+        <div class="chart-sub">Same store quality. Very different fame.</div>
+        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="Store quality is nearly identical between top and bottom brands, while Wikipedia presence differs by two times">
+          <!-- Panel A: store score -->
+          <text x="175" y="28" text-anchor="middle" class="sc-grp">Store quality score (0&ndash;100)</text>
+          <!-- baseline -->
+          <line x1="60" y1="200" x2="290" y2="200" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- top bar: 50.8 -->
+          <rect x="95" y="98" width="60" height="102" rx="5" fill="#666"/>
+          <text x="125" y="90" text-anchor="middle" class="sc-val">50.8</text>
+          <text x="125" y="218" text-anchor="middle" class="sc-tick">Top 50</text>
+          <!-- bottom bar: 49.8 -->
+          <rect x="195" y="100" width="60" height="100" rx="5" fill="#444"/>
+          <text x="225" y="92" text-anchor="middle" class="sc-val">49.8</text>
+          <text x="225" y="218" text-anchor="middle" class="sc-tick">Bottom 50</text>
+          <text x="175" y="244" text-anchor="middle" class="sc-tick" fill="#777">a one-point gap: basically identical</text>
+          <!-- divider -->
+          <line x1="350" y1="20" x2="350" y2="230" stroke="#161616" stroke-width="1"/>
+          <!-- Panel B: has wikipedia -->
+          <text x="525" y="28" text-anchor="middle" class="sc-grp">Has a Wikipedia article</text>
+          <line x1="410" y1="200" x2="640" y2="200" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- top: 56% -->
+          <rect x="445" y="88" width="60" height="112" rx="5" fill="#f97316"/>
+          <text x="475" y="80" text-anchor="middle" class="sc-val">56%</text>
+          <text x="475" y="218" text-anchor="middle" class="sc-tick">Top 50</text>
+          <!-- bottom: 28% -->
+          <rect x="545" y="144" width="60" height="56" rx="5" fill="#7a3a12"/>
+          <text x="575" y="136" text-anchor="middle" class="sc-val">28%</text>
+          <text x="575" y="218" text-anchor="middle" class="sc-tick">Bottom 50</text>
+          <text x="525" y="244" text-anchor="middle" class="sc-tick" fill="#777">twice as likely to be famous</text>
+        </svg>
+        <div class="chart-cap"><strong>The winners are not better built. They are better known.</strong> Median Wikipedia readership tells the same story even more sharply: about 1,660 monthly readers for the top group, and zero for the median brand in the bottom group.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The part most people get wrong</div>
+      <h2 class="section-title">These recommendations are not random. They are <em>stable</em></h2>
+      <div class="section-body">
+        <p>It would be comforting to think the unexplained majority is just noise, that AI picks brands more or less at random and there is nothing to understand. We tested that directly. Every shopping question was run twenty times, and we measured how often the answer changed.</p>
+        <p>It almost never does. The same question puts the same brand in the top spot between 78 and 91 percent of the time, and across twenty runs only two or three brands ever reach first place. The brand-level variation across runs is effectively zero.</p>
+      </div>
+
+      <div class="chart-box">
+        <div class="chart-title">How consistent is the top recommendation?</div>
+        <div class="chart-sub">Share of runs that return the same brand in first place, by category</div>
+        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="Top recommendation consistency ranges from 78 to 91 percent across the five categories">
+          <line x1="180" y1="12" x2="180" y2="222" stroke="#1e1e1e" stroke-width="1"/>
+          <!-- rows: value out of 100, scale 180..660 = 480px -->
+          <!-- Home 77.8 -->
+          <text x="168" y="36" text-anchor="end" class="sc-axis">Home &amp; Living</text>
+          <rect x="180" y="22" width="480" height="22" rx="4" fill="#161616"/>
+          <rect x="180" y="22" width="373" height="22" rx="4" fill="#1D9E75"/>
+          <text x="565" y="38" class="sc-val">78%</text>
+          <!-- Beauty 84.3 -->
+          <text x="168" y="76" text-anchor="end" class="sc-axis">Beauty</text>
+          <rect x="180" y="62" width="480" height="22" rx="4" fill="#161616"/>
+          <rect x="180" y="62" width="405" height="22" rx="4" fill="#1D9E75"/>
+          <text x="597" y="78" class="sc-val">84%</text>
+          <!-- Pets 85.0 -->
+          <text x="168" y="116" text-anchor="end" class="sc-axis">Pets</text>
+          <rect x="180" y="102" width="480" height="22" rx="4" fill="#161616"/>
+          <rect x="180" y="102" width="408" height="22" rx="4" fill="#1D9E75"/>
+          <text x="600" y="118" class="sc-val">85%</text>
+          <!-- Coffee 86.3 -->
+          <text x="168" y="156" text-anchor="end" class="sc-axis">Coffee</text>
+          <rect x="180" y="142" width="480" height="22" rx="4" fill="#161616"/>
+          <rect x="180" y="142" width="414" height="22" rx="4" fill="#1D9E75"/>
+          <text x="606" y="158" class="sc-val">86%</text>
+          <!-- Supplements 90.8 -->
+          <text x="168" y="196" text-anchor="end" class="sc-axis">Supplements</text>
+          <rect x="180" y="182" width="480" height="22" rx="4" fill="#161616"/>
+          <rect x="180" y="182" width="436" height="22" rx="4" fill="#1D9E75"/>
+          <text x="628" y="198" class="sc-val">91%</text>
+          <text x="180" y="240" class="sc-tick">0%</text>
+          <text x="660" y="240" text-anchor="end" class="sc-tick">100% consistent</text>
+        </svg>
+        <div class="chart-cap"><strong>This changes the whole picture.</strong> The unexplained majority is not chaos. It is a fixed hierarchy. AI reliably selects the same brands; what it selects on is simply not visible from the store or from public fame.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The conclusion</div>
+      <h2 class="section-title">Three measurements, one answer</h2>
+      <div class="three">
+        <div class="split-card"><div class="big">2.1%</div><div class="lbl"><strong style="color:#e8e8e8">Store quality barely matters.</strong> A cleaner, more machine-readable store does almost nothing for how often AI recommends you.</div></div>
+        <div class="split-card"><div class="big">24.9%</div><div class="lbl"><strong style="color:#e8e8e8">Fame matters more, but not most.</strong> Public prominence explains about twelve times more than store quality, yet still leaves three quarters unexplained.</div></div>
+        <div class="split-card"><div class="big">~85%</div><div class="lbl"><strong style="color:#e8e8e8">And it is stable.</strong> The same brands win again and again. The hierarchy is consistent, just invisible to ordinary metrics.</div></div>
+      </div>
+      <div class="callout warn">
+        <strong>What this means for a brand:</strong> if you are not already inside the winning set, you are not invisible by accident or by bad luck on a given day. You are invisible consistently, for reasons that neither your store quality nor any public fame metric will reveal. The only way to know where you actually stand is to measure the recommendations themselves.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Method &amp; honesty</div>
+      <h2 class="section-title">How we measured it, and what we could not</h2>
+      <div class="method-box">
+        <div class="method-grid">
+          <div class="method-item">Brands analyzed: <span>200 most-recommended across 5 categories</span></div>
+          <div class="method-item">Recommendation data: <span>20 runs per intent, gpt-4o-mini</span></div>
+          <div class="method-item">Fame signals: <span>Wikipedia views, language editions, article length, name length</span></div>
+          <div class="method-item">Entity matching: <span>Wikidata, commercial entities only, humans excluded</span></div>
+          <div class="method-item">Models used: <span>multiple regression, Spearman correlation</span></div>
+          <div class="method-item">Stability: <span>top-1 consistency across 20 runs per intent</span></div>
+        </div>
+        <div class="limits">
+          <strong>Limitations, stated plainly.</strong> Wikipedia is a rough proxy for fame, not a perfect one. It captures encyclopedic prominence, while the fame that actually drives recommendation is more likely commercial presence across reviews, listicles, and forums. Two signals we believe matter, advertising spend and reliable web or Reddit mention volume, are not freely or credibly obtainable, so they are excluded by design rather than estimated. The store-quality comparison rests on the brands for which we hold a measured store (30 in the top group, 18 in the bottom). The individual weights inside the fame regression should not be read on their own, because the fame signals overlap; the valid figure is the combined R&sup2;. Every number here comes from a real query, never an assumed delta.
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <div class="cta-title">Find out where <em>your</em> brand stands</div>
+      <div class="cta-sub">The market measures whether AI can see you. We measure why AI chooses you, or why it chooses someone else instead. Get a Recommendation Intelligence read on your category.</div>
+      <a href="/#score" class="cta-btn">Get your Free Score</a>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
+        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+        <a href="/privacy-policy">Privacy</a><br>
+        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+      </div>
+      <div>
+        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+        <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
