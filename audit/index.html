@@ -391,7 +391,7 @@ const competitiveHTML = comp ? (() => {
   const yourCol = getColor(comp.your_score);
   const aboveAvg = comp.your_score >= comp.avg_score;
   const verdict = aboveAvg
-    ? `<span style="color:#1D9E75;">Above the ${comp.niche} average. You are in the top ${comp.percentile}% of stores we have scored in your category.</span>`
+    ? `<span style="color:#1D9E75;">Above the ${comp.niche} average. You are in the top ${Math.max(1, Math.round(comp.your_rank / comp.peer_count * 100))}% of stores we have scored in your category.</span>`
     : `<span style="color:#EF9F27;">Below the ${comp.niche} average. Most stores in your category score higher, which means AI agents have stronger alternatives to recommend.</span>`;
   const barRow = (label, val, col) => {
     const pct = Math.max(2, Math.min(100, val));
