@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Commerce Research &mdash; Atom Foundry</title>
-<meta name="description" content="Data-driven research on AI recommendation readiness across 11,000+ Shopify stores. Real findings, real data, no guesswork.">
+<meta name="description" content="Data-driven research on AI recommendation readiness across thousands of Shopify stores. Real findings, real data, no guesswork.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://atomfoundry.dev/research">
 <meta property="og:title" content="AI Commerce Research &mdash; Atom Foundry">
@@ -13,7 +13,10 @@
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" href="/favicon.ico">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"2026 AI Recommendation Readiness Research &mdash; Atom Foundry","description":"Data-driven research on AI recommendation readiness across 11,000+ Shopify stores.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-01","dateModified":"2026-05-30","url":"https://atomfoundry.dev/research"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"2026 AI Recommendation Readiness Research — Atom Foundry","description":"Data-driven research on AI recommendation readiness across thousands of Shopify and DTC stores.","author":{"@type":"Person","name":"Daniel Pokorny","url":"https://atomfoundry.dev"},"publisher":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-01","dateModified":"2026-06-16","url":"https://atomfoundry.dev/research"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Atom Foundry","item":"https://atomfoundry.dev"},{"@type":"ListItem","position":2,"name":"Research","item":"https://atomfoundry.dev/research"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"AI Recommendations Across Commerce 2026","description":"AI shopping recommendations captured across five commerce categories (Beauty, Supplements, Coffee, Pets, Home & Living) from high-intent buyer prompts, matched to measured AI Commerce Scores of the real stores behind each recommended brand.","url":"https://atomfoundry.dev/research","creator":{"@type":"Organization","name":"Atom Foundry","url":"https://atomfoundry.dev"},"datePublished":"2026-05-01","dateModified":"2026-06-16","keywords":["AI recommendations","ecommerce","recommendation intelligence","AI commerce score","agentic commerce"],"measurementTechnique":"High-intent buyer prompts repeated across runs; captured AI recommendations matched to crawled store scores","variableMeasured":["Recommendation frequency","AI Commerce Score","Correlation between recommendation frequency and store score"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Atom Foundry Published Research Reports","itemListElement":[{"@type":"ListItem","position":1,"name":"The State of AI Recommendations Across Commerce 2026","url":"https://atomfoundry.dev/research/ai-recommendations-across-commerce-2026"},{"@type":"ListItem","position":2,"name":"AI Recommends by Fame, Not by Store Quality","url":"https://atomfoundry.dev/research/the-fame-study"},{"@type":"ListItem","position":3,"name":"The State of AI Recommendations in Home & Living","url":"https://atomfoundry.dev/research/state-of-ai-recommendations-home-living"},{"@type":"ListItem","position":4,"name":"The State of AI Recommendations in Pets","url":"https://atomfoundry.dev/research/state-of-ai-recommendations-pets"},{"@type":"ListItem","position":5,"name":"The State of AI Recommendations in Coffee","url":"https://atomfoundry.dev/research/state-of-ai-recommendations-coffee"},{"@type":"ListItem","position":6,"name":"The State of AI Recommendations in Supplements","url":"https://atomfoundry.dev/research/state-of-ai-recommendations-supplements"},{"@type":"ListItem","position":7,"name":"The State of AI Recommendations in Beauty","url":"https://atomfoundry.dev/research/state-of-ai-recommendations-beauty"}]}</script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { width: 100%; overflow-x: hidden; }
@@ -189,7 +192,7 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
 <div class="print-cover">
   <div style="font-size:11pt;color:#f97316;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:32px;">Atom Foundry Research</div>
   <h1>2026 AI Recommendation<br>Readiness Report</h1>
-  <div class="print-cover-sub">Comprehensive analysis of AI recommendation readiness<br>across 11,000+ DTC and Shopify stores</div>
+  <div class="print-cover-sub">Comprehensive analysis of AI recommendation readiness<br>across thousands of DTC and Shopify stores</div>
   <div class="print-cover-brand">atomfoundry.dev &middot; The AI Commerce Graph&trade;</div>
   <div class="print-cover-date">May 2026 &middot; By Daniel Pokorny, Founder</div>
 </div>
@@ -573,6 +576,25 @@ fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 
 
     donutChart.data.datasets[0].data = [invisible, Math.max(0, 100-invisible-highPct-10), 10, highPct];
     donutChart.update();
+
+    // Live average AI score by niche, straight from the DB (blocked excluded)
+    const byNiche = {};
+    scoredRows.forEach(r => {
+      const niche = String(r.niche || '').trim();
+      if (!niche) return;
+      const s = Number(r.total_score ?? r.score ?? 0);
+      if (s <= 0) return;
+      (byNiche[niche] = byNiche[niche] || []).push(s);
+    });
+    const nicheAvgs = Object.entries(byNiche)
+      .map(([n, arr]) => [n.replace(/\b\w/g, c => c.toUpperCase()), Math.round(arr.reduce((a,b) => a+b,0) / arr.length), arr.length])
+      .filter(x => x[2] >= 5)
+      .sort((a,b) => b[1] - a[1]);
+    if (nicheAvgs.length >= 3 && typeof nicheChart !== 'undefined') {
+      nicheChart.data.labels = nicheAvgs.map(x => x[0]);
+      nicheChart.data.datasets[0].data = nicheAvgs.map(x => x[1]);
+      nicheChart.update();
+    }
   }).catch(() => {});
 
 // Donut chart (starts with 8000-store data as default)
@@ -585,8 +607,8 @@ const donutChart = new Chart(document.getElementById('donutChart'), {
   options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + '%' } } } }
 });
 
-// Niche chart -- 8000 store data
-new Chart(document.getElementById('nicheChart'), {
+// Niche chart -- starts with default data, overwritten by live DB below
+const nicheChart = new Chart(document.getElementById('nicheChart'), {
   type: 'bar',
   data: {
     labels: ['Home & Living', 'Fashion', 'Tech & Gadgets', 'Sports & Outdoor', 'Beauty', 'Health & Wellness', 'Food & Drink', 'Kids & Baby', 'Pets', 'Jewelry'],
