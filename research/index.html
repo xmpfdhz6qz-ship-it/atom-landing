@@ -500,6 +500,39 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
     </div>
   </div>
 
+  <!-- EXPLORE MORE (internal linking) -->
+  <div class="section">
+    <div class="section-kicker">Explore more</div>
+    <h2 class="section-title">Where this <em>connects</em></h2>
+    <p class="section-body" style="margin-bottom:24px;">The research sits on top of everything else we build. Here is how it links together.</p>
+    <div class="topics-grid">
+      <a href="/framework" class="topic-card" style="text-decoration:none;display:block;">
+        <div class="topic-icon">&#129518;</div>
+        <div class="topic-name">The Framework</div>
+        <div class="topic-desc">The seven-layer model behind the research: how AI reads, understands, trusts, and recommends a business.</div>
+        <span class="topic-status">Read the framework &rarr;</span>
+      </a>
+      <a href="/methodology" class="topic-card" style="text-decoration:none;display:block;">
+        <div class="topic-icon">&#128300;</div>
+        <div class="topic-name">Methodology v3.1</div>
+        <div class="topic-desc">The 8-factor, 100-point model used to score every store referenced in these reports.</div>
+        <span class="topic-status">See how we score &rarr;</span>
+      </a>
+      <a href="/stores" class="topic-card" style="text-decoration:none;display:block;">
+        <div class="topic-icon">&#128202;</div>
+        <div class="topic-name">Store Database</div>
+        <div class="topic-desc">Browse the live AI Commerce Scores behind the brands in these studies. Filter by niche and score.</div>
+        <span class="topic-status">Browse the data &rarr;</span>
+      </a>
+      <a href="/vocabulary" class="topic-card" style="text-decoration:none;display:block;">
+        <div class="topic-icon">&#128214;</div>
+        <div class="topic-name">Vocabulary</div>
+        <div class="topic-desc">Every term used across the research, defined. Recommendation Share, AI Trust, and the rest.</div>
+        <span class="topic-status">Open the glossary &rarr;</span>
+      </a>
+    </div>
+  </div>
+
   <!-- CTA -->
   <div class="section">
     <div class="cta-box">
@@ -613,14 +646,14 @@ const nicheChart = new Chart(document.getElementById('nicheChart'), {
   data: {
     labels: ['Home & Living', 'Fashion', 'Tech & Gadgets', 'Sports & Outdoor', 'Beauty', 'Health & Wellness', 'Food & Drink', 'Kids & Baby', 'Pets', 'Jewelry'],
     datasets: [{ label: 'Avg AI score', data: [48, 45, 42, 41, 40, 39, 36, 32, 30, 26],
-      backgroundColor: ctx => { const v = ctx.raw; return v >= 50 ? '#1D9E75' : v >= 40 ? '#EF9F27' : '#E24B4A'; },
+      backgroundColor: ctx => { const v = ctx.raw; return v >= 85 ? '#1D9E75' : v >= 70 ? '#f97316' : v >= 50 ? '#EF9F27' : '#E24B4A'; },
       borderRadius: 4, barPercentage: 0.65 }]
   },
   options: {
     responsive: true, maintainAspectRatio: false,
     scales: {
       x: { grid: { display: false }, ticks: { color: '#aaa', font: { size: 11 } }, border: { display: false } },
-      y: { min: 0, max: 60, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666', font: { size: 11 } }, border: { color: 'rgba(255,255,255,0.08)' } }
+      y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666', font: { size: 11 } }, border: { color: 'rgba(255,255,255,0.08)' } }
     },
     plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + ' / 100' } } }
   }
