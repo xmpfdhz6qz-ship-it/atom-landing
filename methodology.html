@@ -142,6 +142,15 @@ h2 em { font-style: normal; color: var(--orange); }
 .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted); font-weight: 600; font-size: 14px; padding: 14px 24px; border-radius: 12px; text-decoration: none; border: 1px solid var(--border2); transition: all 0.2s; cursor: pointer; font-family: inherit; }
 .btn-secondary:hover { color: var(--white); border-color: #444; }
 
+/* EXPLORE GRID */
+.explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+.explore-card { display: block; background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; transition: all 0.2s; }
+.explore-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+.explore-card-name { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.explore-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.explore-card-arrow { font-size: 11px; color: var(--orange); margin-top: 9px; display: block; font-weight: 600; }
+@media (max-width: 640px) { .explore-grid { grid-template-columns: 1fr; } }
+
 /* FOOTER */
 .footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 56px; }
 .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
@@ -208,7 +217,7 @@ h2 em { font-style: normal; color: var(--orange); }
     <div class="section-kicker">Why this scoring model exists</div>
     <h2>AI shopping agents are <em>already routing commerce</em></h2>
     <p class="body-text">Shopify confirmed it in May 2026. AI-referred orders are growing rapidly, and they convert at higher rates and carry higher average order value than organic traffic. The shift from search-first to recommendation-first commerce is happening right now, not in the future.</p>
-    <p class="body-text">The problem is that AI agents evaluate stores on completely different signals than Google does. Schema markup, machine-readable trust, semantic clarity, visual consistency, feed accuracy. Most stores have never optimized for any of these. They rank well on Google and are invisible to AI.</p>
+    <p class="body-text">The problem is that AI agents evaluate stores on completely different signals than Google does. Schema markup, machine-readable trust, semantic clarity, visual consistency, feed accuracy &mdash; all defined in our <a href="/vocabulary" style="color:var(--orange);">AI Commerce vocabulary</a>. Most stores have never optimized for any of these. They rank well on Google and are invisible to AI.</p>
     <div class="shopify-insight">
       <div class="shopify-insight-label">Shopify &middot; May 2026</div>
       <p>Your store is becoming a product database for AI agents. The question is whether that database is readable.</p>
@@ -221,7 +230,7 @@ h2 em { font-style: normal; color: var(--orange); }
   <div class="section">
     <div class="section-kicker">Score composition</div>
     <h2>Eight factors, <em>100 points total</em></h2>
-    <p class="body-text">Each factor is weighted by its real impact on AI recommendation behavior, measured across thousands of stores. The weights reflect what actually moves the needle on whether AI includes or excludes a store from its recommendations.</p>
+    <p class="body-text">Each factor is weighted by its real impact on <a href="/research" style="color:var(--orange);">AI recommendation behavior</a>, measured across thousands of stores. The weights reflect what actually moves the needle on whether AI includes or excludes a store from its recommendations.</p>
 
     <div class="score-overview">
       <div class="score-overview-title">AI Commerce Score v3.1 &middot; Factor weights</div>
@@ -529,7 +538,7 @@ h2 em { font-style: normal; color: var(--orange); }
   <div class="section">
     <div class="section-kicker">Score interpretation</div>
     <h2>What your <em>AI Commerce Score means</em></h2>
-    <p class="body-text">The score is a direct predictor of AI recommendation probability. Below 50 and AI systems are systematically excluding your store. Above 85 and AI agents can recommend you with high confidence. The average across <span class="m-stores">thousands of</span> scanned stores is <span class="m-avg">&mdash;</span>.</p>
+    <p class="body-text">The score is a direct predictor of AI recommendation probability. Below 50 and AI systems are systematically excluding your store. Above 85 and AI agents can recommend you with high confidence. The average across <span class="m-stores">thousands of</span> <a href="/stores" style="color:var(--orange);">scanned stores</a> is <span class="m-avg">&mdash;</span>.</p>
     <div class="zones-grid">
       <div class="zone-card green">
         <div class="zone-score">85 to 100</div>
@@ -555,7 +564,7 @@ h2 em { font-style: normal; color: var(--orange); }
   <div class="section">
     <div class="section-kicker">About</div>
     <h2>About <em>Atom Foundry</em></h2>
-    <p class="body-text">Atom Foundry is the AI Commerce Graph. We map how AI systems understand, trust, and route commerce decisions to merchants. We scan stores, score them across these 8 factors, and show exactly what to fix and what it costs to leave it broken.</p>
+    <p class="body-text">Atom Foundry is the <a href="/framework" style="color:var(--orange);">AI Commerce Graph</a>. We map how AI systems understand, trust, and route commerce decisions to merchants. We scan stores, score them across these 8 factors, and show exactly what to fix and what it costs to leave it broken.</p>
     <div class="about-box">
       <div class="about-avatar">D</div>
       <div>
@@ -563,6 +572,45 @@ h2 em { font-style: normal; color: var(--orange); }
         <div class="about-sub">Scanning DTC stores daily &middot; atomfoundry.dev</div>
         <div class="about-desc">I built Atom Foundry because the shift from search to recommendation is real and most founders have no way to measure it. The AI Commerce Score is the first tool that actually tells you where you stand in the new layer that decides who gets discovered.<br><br>Contact: <a href="mailto:founder@atomfoundry.dev">founder@atomfoundry.dev</a></div>
       </div>
+    </div>
+  </div>
+
+  <!-- EXPLORE -->
+  <div class="section">
+    <div class="section-kicker">Explore the platform</div>
+    <h2>Where this <em>connects</em></h2>
+    <p class="body-text">The methodology is one piece. Here is how it links to the rest of Atom Foundry.</p>
+    <div class="explore-grid">
+      <a href="/framework" class="explore-card">
+        <div class="explore-card-name">The Framework</div>
+        <div class="explore-card-desc">The seven-layer model these 8 factors feed into: AI readability, understanding, trust, and recommendation.</div>
+        <span class="explore-card-arrow">Read the framework &rarr;</span>
+      </a>
+      <a href="/stores" class="explore-card">
+        <div class="explore-card-name">Store Database</div>
+        <div class="explore-card-desc">Browse live AI Commerce Scores for real DTC stores, all scored on this methodology.</div>
+        <span class="explore-card-arrow">Browse the data &rarr;</span>
+      </a>
+      <a href="/research" class="explore-card">
+        <div class="explore-card-name">Research</div>
+        <div class="explore-card-desc">What AI actually recommends across five commerce categories, measured directly.</div>
+        <span class="explore-card-arrow">Read the research &rarr;</span>
+      </a>
+      <a href="/vocabulary" class="explore-card">
+        <div class="explore-card-name">Vocabulary</div>
+        <div class="explore-card-desc">Every term used in this methodology, defined with examples.</div>
+        <span class="explore-card-arrow">Open the glossary &rarr;</span>
+      </a>
+      <a href="/vocabulary/learn" class="explore-card">
+        <div class="explore-card-name">Learn Guides</div>
+        <div class="explore-card-desc">Free guides on how AI shopping systems discover and recommend stores.</div>
+        <span class="explore-card-arrow">Start learning &rarr;</span>
+      </a>
+      <a href="/#score" class="explore-card">
+        <div class="explore-card-name">Free AI Commerce Score</div>
+        <div class="explore-card-desc">Scan your own store across all 8 factors in 10 seconds.</div>
+        <span class="explore-card-arrow">Scan my store &rarr;</span>
+      </a>
     </div>
   </div>
 
