@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Recommendation Intelligence Report: Activewear</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --orange: #f97316; --red: #E24B4A; --green: #1D9E75; --amber: #EF9F27;
+  --bg: #080808; --bg2: #111; --bg3: #0f0f0f; --border: #1e1e1e; --border2: #2a2a2a;
+  --text: #e8e8e8; --muted: #aaa; --dim: #666; --white: #fff;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; padding: 0 0 60px; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+/* page divider for visual sectioning */
+.pagemark { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700; text-align: center; padding: 8px; margin: 46px 0 0; border-top: 1px solid var(--border); }
+
+.head { padding: 40px 0 24px; border-bottom: 1px solid var(--border); }
+.logo { font-weight: 800; font-size: 16px; color: var(--white); letter-spacing: -0.3px; margin-bottom: 22px; }
+.logo span { color: var(--orange); }
+.kicker { font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 10px; }
+h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; color: var(--white); line-height: 1.13; letter-spacing: -0.02em; margin-bottom: 12px; }
+h1 span { color: var(--orange); }
+.sub { font-size: 15px; color: var(--muted); max-width: 620px; }
+.meta-bar { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 18px; margin-top: 22px; font-size: 12.5px; color: var(--dim); line-height: 1.7; }
+.meta-bar strong { color: var(--muted); }
+
+/* CEO exec summary - full panel */
+.ceo { background: linear-gradient(150deg, rgba(249,115,22,0.08), rgba(249,115,22,0.015)); border: 1px solid rgba(249,115,22,0.3); border-radius: 16px; padding: 28px 30px; margin-top: 26px; }
+.ceo .tag { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 800; margin-bottom: 14px; }
+.ceo p { font-size: 16.5px; color: var(--white); line-height: 1.65; margin-bottom: 13px; font-weight: 500; }
+.ceo p:last-child { margin-bottom: 0; }
+.ceo p span { color: var(--orange); font-weight: 800; }
+.ceo .small { font-size: 13px; color: var(--muted); font-weight: 400; }
+
+/* snapshot */
+.snapshot { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border2); border: 1px solid var(--border2); border-radius: 14px; overflow: hidden; margin: 22px 0 0; }
+.snap { background: var(--bg2); padding: 18px 16px; text-align: center; }
+.snap .n { font-size: 27px; font-weight: 800; line-height: 1; margin-bottom: 5px; color: var(--white); }
+.snap .n.warn { color: var(--red); }
+.snap .l { font-size: 10.5px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.3; }
+@media (max-width:640px){ .snapshot { grid-template-columns: 1fr 1fr; } }
+
+/* section */
+.section { margin-top: 34px; }
+.section-kicker { font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 8px; }
+.section h2 { font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 6px; letter-spacing: -0.01em; }
+.section .note { font-size: 13.5px; color: var(--muted); margin-bottom: 16px; max-width: 640px; line-height: 1.6; }
+
+/* leaderboard */
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 6px; }
+th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--dim); font-weight: 700; padding: 9px 14px; border-bottom: 1px solid var(--border2); }
+th.num, td.num { text-align: right; }
+td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+tr.client td { background: rgba(249,115,22,0.08); }
+td.rank { color: var(--dim); font-variant-numeric: tabular-nums; width: 40px; }
+td.brand { color: var(--white); font-weight: 600; }
+td.brand .you { display: inline-block; font-size: 10px; font-weight: 800; color: var(--orange); background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3); border-radius: 5px; padding: 1px 7px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.04em; vertical-align: middle; }
+.bar-cell { width: 170px; }
+.bar-track { height: 7px; background: var(--bg2); border-radius: 999px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 999px; background: #555; }
+.bar-fill.client { background: var(--orange); }
+.pct { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--text); width: 50px; }
+.poscol { color: var(--dim); font-variant-numeric: tabular-nums; width: 60px; font-size: 13px; }
+
+/* positioning map */
+.map-wrap { background: var(--bg3); border: 1px solid var(--border2); border-radius: 16px; padding: 24px 26px 18px; margin-top: 6px; }
+.map { position: relative; height: 380px; margin: 10px 0 0; border-left: 2px solid var(--border2); border-bottom: 2px solid var(--border2); }
+.map .ylab { position: absolute; left: -12px; top: -28px; font-size: 11px; color: var(--muted); font-weight: 700; }
+.map .xlab { position: absolute; right: 0; bottom: -26px; font-size: 11px; color: var(--muted); font-weight: 700; }
+.map .axhint { position: absolute; font-size: 10px; color: var(--dim); }
+.bubble { position: absolute; border-radius: 50%; transform: translate(-50%, 50%); display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; color: #fff; border: 1.5px solid rgba(255,255,255,0.25); white-space: nowrap; }
+.bubble.win { background: rgba(120,120,120,0.5); }
+.bubble.client { background: rgba(249,115,22,0.65); border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,0.2); }
+.bubble .lbl { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+.map-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 34px; font-size: 11.5px; color: var(--muted); }
+.map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* language gap - two columns */
+.gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+.gap-col { border-radius: 14px; padding: 20px 22px; }
+.gap-col.win { background: var(--bg3); border: 1px solid var(--border2); }
+.gap-col.client { background: linear-gradient(135deg, rgba(249,115,22,0.07), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.28); }
+.gap-col .h { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 13px; }
+.gap-col.win .h { color: var(--muted); }
+.gap-col.client .h { color: var(--orange); }
+.gap-chip { display: inline-block; border-radius: 999px; padding: 6px 13px; font-size: 12.5px; font-weight: 600; margin: 0 6px 8px 0; }
+.gap-col.win .gap-chip { background: rgba(255,255,255,0.06); border: 1px solid var(--border2); color: var(--muted); }
+.gap-col.client .gap-chip { background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.3); color: #fb923c; }
+.gap-insight { background: linear-gradient(135deg, rgba(249,115,22,0.16), rgba(249,115,22,0.06)); border: 1px solid rgba(249,115,22,0.4); border-radius: 12px; padding: 17px 20px; margin-top: 14px; font-size: 14px; color: var(--white); line-height: 1.6; }
+.gap-insight b { color: var(--orange); }
+@media (max-width:640px){ .gap-grid { grid-template-columns: 1fr; } }
+
+/* missing */
+.missing-list { display: flex; flex-direction: column; gap: 1px; background: var(--border2); border: 1px solid var(--border2); border-radius: 12px; overflow: hidden; margin-top: 6px; }
+.missing-row { background: var(--bg3); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 13.5px; }
+.missing-q { color: var(--text); }
+.missing-winner { color: var(--dim); font-size: 12.5px; flex-shrink: 0; }
+.missing-winner b { color: var(--muted); }
+
+/* cross-category */
+.xcat { background: var(--bg3); border: 1px solid var(--border2); border-radius: 16px; padding: 22px 26px; margin-top: 6px; }
+.xcat-row { display: flex; align-items: center; gap: 14px; padding: 7px 0; }
+.xcat-name { width: 150px; font-size: 13px; color: var(--muted); flex-shrink: 0; }
+.xcat-bar { flex: 1; height: 18px; background: var(--bg2); border-radius: 5px; overflow: hidden; position: relative; }
+.xcat-fill { height: 100%; background: linear-gradient(90deg, rgba(226,75,74,0.8), rgba(249,115,22,0.7)); border-radius: 5px; }
+.xcat-val { width: 50px; text-align: right; font-size: 13px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+.xcat-note { font-size: 13px; color: var(--muted); margin-top: 14px; line-height: 1.6; }
+.xcat-note b { color: var(--orange); }
+
+/* takeaway */
+.takeaway { background: linear-gradient(150deg, rgba(29,158,117,0.08), rgba(29,158,117,0.015)); border: 1px solid rgba(29,158,117,0.3); border-radius: 16px; padding: 26px 30px; margin-top: 34px; }
+.takeaway .tag { font-size: 10px; color: var(--green); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 800; margin-bottom: 12px; }
+.takeaway p { font-size: 15.5px; color: var(--white); line-height: 1.65; margin-bottom: 12px; }
+.takeaway p:last-child { margin-bottom: 0; }
+.takeaway p span { color: #4ade80; font-weight: 700; }
+
+/* foot */
+.foot { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 42px; font-size: 12px; color: var(--dim); line-height: 1.8; }
+.foot .scope { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.foot .scope strong { color: var(--muted); }
+.foot b { color: var(--orange); }
+@media print { body { background:#fff; color:#111; } h1,h2,.snap .n,td.brand,.ceo p,.takeaway p,.gap-insight { color:#111 !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="head">
+    <div class="logo">ATOM <span>FOUNDRY</span></div>
+    <div class="kicker">AI Recommendation Intelligence Report</div>
+    <h1>How AI recommends in activewear, and where <span>one premium brand</span> actually stands</h1>
+    <div class="sub">An example report: what ChatGPT recommends when a shopper asks for activewear, where this brand lands, who wins instead, and the language gap that explains why.</div>
+    <div class="meta-bar">
+      <strong>How this was measured:</strong> We asked ChatGPT 20 high-intent activewear shopping questions, each run 20 times to capture variance, for 400 recommendation observations. For every answer we recorded which brands were recommended and in what position, and the reason the model gave. The client brand is anonymized; competitor names are shown as the model recommended them. Measured on ChatGPT; other AI models are being added.
+    </div>
+  </div>
+
+  <!-- CEO SUMMARY -->
+  <div class="ceo">
+    <div class="tag">Executive summary &middot; for the CEO</div>
+    <p>When shoppers ask AI what activewear to buy, this brand is named in <span>15% of conversations</span>. It is completely absent from the other <span>85%</span>.</p>
+    <p>The brands AI recommends ahead of it, <span>Nike, Under Armour, and Adidas</span>, do not win on product quality. They win because AI understands them as performance brands. AI understands this brand as a <span>fashion</span> brand, so it quietly routes every performance question elsewhere.</p>
+    <p class="small">This is not a visibility problem that more ads or SEO will fix. It is a recommendation problem: AI has already decided what this brand is for, and it is leaving most of the category on the table. Based on 400 measured recommendations in this category alone.</p>
+  </div>
+
+  <div class="pagemark">Part 1 &middot; Diagnosis &middot; where the brand stands today</div>
+
+  <!-- SNAPSHOT -->
+  <div class="section">
+    <div class="snapshot">
+      <div class="snap"><div class="n warn">14.8%</div><div class="l">Recommendation Share</div></div>
+      <div class="snap"><div class="n">5 / 20</div><div class="l">Buyer questions present</div></div>
+      <div class="snap"><div class="n">4.7</div><div class="l">Avg. position when shown</div></div>
+      <div class="snap"><div class="n warn">#15</div><div class="l">Rank in category</div></div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="section">
+    <div class="section-kicker">The competitor landscape</div>
+    <h2>Who AI recommends in activewear</h2>
+    <div class="note">Recommendation Share across all 20 buyer questions, with the average position each brand holds when it appears. The client sits at #15, and never higher than position 3 when it does show up.</div>
+    <table>
+      <thead><tr><th>#</th><th>Brand</th><th class="bar-cell">Recommendation Share</th><th class="num">%</th><th class="num">Avg pos</th></tr></thead>
+      <tbody>
+        <tr><td class="rank">1</td><td class="brand">Nike</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td><td class="pct num">57.3</td><td class="poscol num">2.4</td></tr>
+        <tr><td class="rank">2</td><td class="brand">Under Armour</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:89.5%"></div></div></td><td class="pct num">51.3</td><td class="poscol num">4.5</td></tr>
+        <tr><td class="rank">3</td><td class="brand">Adidas</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:82.5%"></div></div></td><td class="pct num">47.3</td><td class="poscol num">3.7</td></tr>
+        <tr><td class="rank">4</td><td class="brand">Reebok</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:74.2%"></div></div></td><td class="pct num">42.5</td><td class="poscol num">7.3</td></tr>
+        <tr><td class="rank">5</td><td class="brand">Lululemon</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:62.5%"></div></div></td><td class="pct num">35.8</td><td class="poscol num">2.3</td></tr>
+        <tr><td class="rank">6</td><td class="brand">Puma</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:56.4%"></div></div></td><td class="pct num">32.3</td><td class="poscol num">7.4</td></tr>
+        <tr><td class="rank">7</td><td class="brand">Fabletics</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div></td><td class="pct num">27.5</td><td class="poscol num">7.0</td></tr>
+        <tr><td class="rank">8</td><td class="brand">Athleta</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:43.3%"></div></div></td><td class="pct num">24.8</td><td class="poscol num">4.9</td></tr>
+        <tr><td class="rank">9</td><td class="brand">Gymshark</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:43.3%"></div></div></td><td class="pct num">24.8</td><td class="poscol num">6.5</td></tr>
+        <tr class="client"><td class="rank">15</td><td class="brand">This brand<span class="you">Client</span></td><td class="bar-cell"><div class="bar-track"><div class="bar-fill client" style="width:25.8%"></div></div></td><td class="pct num">14.8</td><td class="poscol num">4.7</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- POSITIONING MAP -->
+  <div class="section">
+    <div class="section-kicker">Recommendation Positioning Map</div>
+    <h2>The category, mapped by how often AI recommends each brand</h2>
+    <div class="note">Read it like this. Higher up the page means AI recommends the brand more often. Further to the right means the brand shows up across more of the 20 buyer questions. Bigger bubble means broader presence. The strong brands cluster top right. The client sits low and to the left: rarely recommended, and only in a handful of lifestyle questions.</div>
+    <div class="map-wrap">
+      <div class="map">
+        <div class="ylab">Recommended more often &uarr;</div>
+        <div class="xlab">Appears in more buyer questions &rarr;</div>
+
+        <!-- bubbles: left%=breadth(intents/14*90+5), bottom%=share/60*90, size by intents -->
+        <!-- Nike: 14 intents, 57.3% -->
+        <div class="bubble win" style="left:92%; bottom:96%; width:58px; height:58px;"><span class="lbl">Nike</span></div>
+        <!-- Adidas: 13, 47.3 -->
+        <div class="bubble win" style="left:86%; bottom:79%; width:54px; height:54px;"><span class="lbl">Adidas</span></div>
+        <!-- Under Armour: 12, 51.3 -->
+        <div class="bubble win" style="left:79%; bottom:86%; width:52px; height:52px;"><span class="lbl">U.Armour</span></div>
+        <!-- Reebok: 10, 42.5 -->
+        <div class="bubble win" style="left:66%; bottom:71%; width:46px; height:46px;"><span class="lbl">Reebok</span></div>
+        <!-- Lululemon: 9, 35.8 -->
+        <div class="bubble win" style="left:60%; bottom:60%; width:44px; height:44px;"><span class="lbl">Lulu</span></div>
+        <!-- Gymshark: 7, 24.8 -->
+        <div class="bubble win" style="left:47%; bottom:42%; width:38px; height:38px;"><span class="lbl">Gymshk</span></div>
+        <!-- Athleta: 6, 24.8 -->
+        <div class="bubble win" style="left:40%; bottom:42%; width:36px; height:36px;"><span class="lbl">Athleta</span></div>
+        <!-- New Balance: 6, 20.3 -->
+        <div class="bubble win" style="left:40%; bottom:34%; width:34px; height:34px;"><span class="lbl">N.Bal</span></div>
+        <!-- CLIENT: 5, 14.8 -->
+        <div class="bubble client" style="left:33%; bottom:25%; width:40px; height:40px;"><span class="lbl">Client</span></div>
+      </div>
+      <div class="map-legend">
+        <span><span class="dot" style="background:rgba(120,120,120,0.6)"></span> Competitors AI recommends</span>
+        <span><span class="dot" style="background:var(--orange)"></span> This brand</span>
+        <span>Bubble size = how many buyer questions the brand appears in</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagemark">Part 2 &middot; The why &middot; the language gap that explains the position</div>
+
+  <!-- LANGUAGE GAP -->
+  <div class="section">
+    <div class="section-kicker">Competitive language gap &middot; most actionable</div>
+    <h2>AI describes the winners and this brand in completely different words</h2>
+    <div class="note">These are the actual reasons ChatGPT gave when recommending each brand. This is the model's own language, not our interpretation. The gap between the two columns is the whole story.</div>
+    <div class="gap-grid">
+      <div class="gap-col win">
+        <div class="h">What AI says about the winners</div>
+        <span class="gap-chip">moisture-wicking technology</span>
+        <span class="gap-chip">cushioning &amp; support</span>
+        <span class="gap-chip">durability</span>
+        <span class="gap-chip">stability for heavy lifts</span>
+        <span class="gap-chip">performance fabrics</span>
+        <span class="gap-chip">built for intense workouts</span>
+      </div>
+      <div class="gap-col client">
+        <div class="h">What AI says about this brand</div>
+        <span class="gap-chip">stylish</span>
+        <span class="gap-chip">fashionable</span>
+        <span class="gap-chip">chic</span>
+        <span class="gap-chip">comfortable for casual wear</span>
+        <span class="gap-chip">perfect for yoga</span>
+        <span class="gap-chip">fashion-forward</span>
+      </div>
+    </div>
+    <div class="gap-insight">
+      AI has filed this brand under <b>fashion</b>, not <b>performance</b>. That one framing decides everything that follows. The brand wins the lifestyle questions like yoga and leggings, and disappears from every performance question like gym wear, moisture wicking, and training, because AI does not connect it to that language at all.
+    </div>
+  </div>
+
+  <!-- BLIND SPOTS -->
+  <div class="section">
+    <div class="section-kicker">The blind spots</div>
+    <h2>Buyer questions where the brand never appears</h2>
+    <div class="note">High-intent questions where the brand was recommended zero times across 20 runs, and the brand AI named first instead. Every one of these is a performance-framed question.</div>
+    <div class="missing-list">
+      <div class="missing-row"><span class="missing-q">best gym wear for men</span><span class="missing-winner">AI's #1: <b>Nike</b></span></div>
+      <div class="missing-row"><span class="missing-q">best moisture wicking shirts</span><span class="missing-winner">AI's #1: <b>Under Armour</b></span></div>
+      <div class="missing-row"><span class="missing-q">best fitness tracker</span><span class="missing-winner">AI's #1: <b>Apple</b></span></div>
+      <div class="missing-row"><span class="missing-q">best adjustable dumbbells</span><span class="missing-winner">AI's #1: <b>Bowflex</b></span></div>
+      <div class="missing-row"><span class="missing-q">best home gym equipment</span><span class="missing-winner">AI's #1: <b>Peloton</b></span></div>
+    </div>
+  </div>
+
+  <div class="pagemark">Part 3 &middot; The pattern &middot; this is how AI behaves everywhere</div>
+
+  <!-- CROSS CATEGORY -->
+  <div class="section">
+    <div class="section-kicker">Cross-category context</div>
+    <h2>This is not specific to activewear</h2>
+    <div class="note">Across 10 categories and roughly 40,000 measured recommendations, the same pattern holds: a small set of famous names dominates, and everyone else fights over the remainder. Below is how much of each category the single top brand captures.</div>
+    <div class="xcat">
+      <div class="xcat-row"><div class="xcat-name">Coffee</div><div class="xcat-bar"><div class="xcat-fill" style="width:96.5%"></div></div><div class="xcat-val">96.5%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Supplements</div><div class="xcat-bar"><div class="xcat-fill" style="width:66.8%"></div></div><div class="xcat-val">66.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Electronics</div><div class="xcat-bar"><div class="xcat-fill" style="width:63.3%"></div></div><div class="xcat-val">63.3%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Fitness &amp; Activewear</div><div class="xcat-bar"><div class="xcat-fill" style="width:57.3%"></div></div><div class="xcat-val">57.3%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Beauty</div><div class="xcat-bar"><div class="xcat-fill" style="width:55.8%"></div></div><div class="xcat-val">55.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Home &amp; Living</div><div class="xcat-bar"><div class="xcat-fill" style="width:55.5%"></div></div><div class="xcat-val">55.5%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Fashion &amp; Apparel</div><div class="xcat-bar"><div class="xcat-fill" style="width:51.3%"></div></div><div class="xcat-val">51.3%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Food &amp; Snacks</div><div class="xcat-bar"><div class="xcat-fill" style="width:43.8%"></div></div><div class="xcat-val">43.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Pets</div><div class="xcat-bar"><div class="xcat-fill" style="width:27.8%"></div></div><div class="xcat-val">27.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Wellness &amp; Sleep</div><div class="xcat-bar"><div class="xcat-fill" style="width:23%"></div></div><div class="xcat-val">23.0%</div></div>
+      <div class="xcat-note">The winners are always the famous names: <b>Apple</b> in electronics, <b>Nike</b> in fitness, <b>Everlane</b> in fashion. Never a surprising challenger. The more concentrated the category, the more closed the club, and the harder it is for any brand to enter it.</div>
+    </div>
+  </div>
+
+  <!-- TAKEAWAY -->
+  <div class="takeaway">
+    <div class="tag">What this means for a brand</div>
+    <p>The old question was <span>"can people find us?"</span> The new question is <span>"does AI recommend us, and as what?"</span> Those are different problems with different answers.</p>
+    <p>This brand does not have a quality problem or a visibility problem. It has a <span>framing problem</span>. AI has decided what it is for, and that decision, not the product, governs which half of the category it gets to compete in.</p>
+    <p>What is measurable today: exactly where a brand stands, who beats it, in which questions it is absent, and the language AI ties to the winners. We do not claim a button to move a brand up on command. We make the invisible decision visible, which is the first thing anyone has to see before they can act on it.</p>
+  </div>
+
+  <!-- FOOT -->
+  <div class="foot">
+    <div class="scope">
+      <strong>Scope and honesty.</strong> This is an example report built from real measured data in the activewear category. It reflects one model (ChatGPT) at one point in time. Recommendation behavior shifts across models and over time, and more models are being added. Figures describe where a brand currently stands when AI recommends. We deliberately make no revenue projections and promise no guaranteed movement. We measure the current reality.
+    </div>
+    <b>Atom Foundry</b> &middot; Recommendation Intelligence&trade; &middot; atomfoundry.dev
+  </div>
+
+</div>
+</body>
+</html>
