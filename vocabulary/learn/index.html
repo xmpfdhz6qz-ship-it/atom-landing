@@ -190,7 +190,7 @@ h2 em { font-style: normal; color: var(--orange); }
     <p class="hero-sub">Ten guides covering everything from what AI agents read to how Recommendation Share is measured. Built for ecommerce founders and marketers who want to understand and win the AI recommendation layer.</p>
     <div class="stat-strip">
       <div class="strip-cell"><div class="strip-num">10</div><div class="strip-label">Free guides published</div></div>
-      <div class="strip-cell"><div class="strip-num" id="storeCount">thousands</div><div class="strip-label">Stores analyzed for real data</div></div>
+      <div class="strip-cell"><div class="strip-num" id="storeCount">66,086</div><div class="strip-label">Stores analyzed for real data</div></div>
       <div class="strip-cell"><div class="strip-num">0</div><div class="strip-label">Cost to read every guide</div></div>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -545,25 +545,25 @@ window.addEventListener('load', () => {
   }, 400);
 });
 (async function() {
-  try {
-    const res = await fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 'Accept': 'application/json' } });
-    const data = await res.json();
-    const rows = Array.isArray(data) ? data : (data.stores || []);
-    const count = rows.filter(r => r.domain || r.store_domain).length;
-    if (count > 0) {
-      const el = document.getElementById('storeCount');
-      if (el) {
-        let n = 0;
-        const step = Math.ceil(count / 50);
-        const timer = setInterval(() => {
-          n = Math.min(n + step, count);
-          el.textContent = n.toLocaleString('en-US');
-          if (n >= count) clearInterval(timer);
-        }, 30);
+    try {
+      const res = await fetch('https://n8n-production-1d7c.up.railway.app/webhook/site-stats', { headers: { 'Accept': 'application/json' } });
+      const d = await res.json();
+      const st = Array.isArray(d) ? d[0] : (d && d.data ? d.data[0] : d);
+      const count = Number(st && st.total_scanned);
+      if (count > 0) {
+        const el = document.getElementById('storeCount');
+        if (el) {
+          let n = 0;
+          const step = Math.ceil(count / 50);
+          const timer = setInterval(() => {
+            n = Math.min(n + step, count);
+            el.textContent = n.toLocaleString('en-US');
+            if (n >= count) clearInterval(timer);
+          }, 30);
+        }
       }
-    }
-  } catch(e) {}
-})();
+    } catch(e) {}
+  })();
 </script>
 </body>
 </html>
