@@ -406,7 +406,6 @@ h2 em { font-style: normal; color: #f97316; }
 </div>
 
 <script>
-const STORES_API = 'https://n8n-production-1d7c.up.railway.app/webhook/stores';
 
 const NICHES = {
   fashion:  { label: 'Fashion',           icon: '👗' },
@@ -461,102 +460,77 @@ function tagLabel(score) {
 
 async function loadBenchmarks() {
   try {
-    const res = await fetch(STORES_API, { headers: { 'Accept': 'application/json' } });
-    if (!res.ok) throw new Error('fetch failed');
-    const data = await res.json();
-    const rows = Array.isArray(data) ? data : (data.stores || []);
-
-    // Update top stats
-    const total = rows.length;
+    const [sd, nd] = await Promise.all([
+      fetch('https://n8n-production-1d7c.up.railway.app/webhook/site-stats', { headers: { 'Accept': 'application/json' } }).then(r => r.json()),
+      fetch('https://n8n-production-1d7c.up.railway.app/webhook/niche-stats', { headers: { 'Accept': 'application/json' } }).then(r => r.json())
+    ]);
+    const s = Array.isArray(sd) ? sd[0] : (sd && sd.data ? sd.data[0] : sd);
+    const total = s ? Number(s.total_scanned) : 0;
     document.getElementById('totalStores').textContent = total.toLocaleString('en-US');
-
-    if (total > 0) {
-      const scores = rows.map(r => Number(r.score ?? r.total_score ?? 0)).filter(s => s > 0);
-      const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
-      const invisiblePct = Math.round((scores.filter(s => s < 50).length / scores.length) * 100);
-      const highPct = Math.round((scores.filter(s => s >= 85).length / scores.length) * 100);
-      document.getElementById('avgScore').textContent = avg;
-      document.getElementById('invisiblePct').textContent = invisiblePct + '%';
-      document.getElementById('highPct').textContent = highPct + '%';
+    if (s && s.total_scanned != null) {
+      document.getElementById('avgScore').textContent = Number(s.avg_score);
+      document.getElementById('invisiblePct').textContent = Number(s.invis_pct) + '%';
+      document.getElementById('highPct').textContent = Number(s.high_pct) + '%';
     }
-
-    // Bucket by DB niche only — same logic as stores page
-    const buckets = {};
-    for (const r of rows) {
-      const score = Number(r.score ?? r.total_score ?? 0);
-      if (!score) continue;
-
-      const rawNiche = (r.niche || '').toLowerCase().trim();
-      const niche = NICHE_DB_MAP[rawNiche] || null;
-      if (!niche) continue; // no fallback — stores with no DB niche are excluded (same as stores page)
-
-      if (!buckets[niche]) buckets[niche] = [];
-      buckets[niche].push(score);
-    }
-
+    const niches = Array.isArray(nd) ? nd : (nd && nd.data ? nd.data : []);
+    const byKey = {};
+    niches.forEach(n => { byKey[n.niche_key] = n; });
     const grid = document.getElementById('benchmarkGrid');
     if (!grid) return;
     grid.innerHTML = '';
-
     const nicheOrder = ['fashion','beauty','health','food','home','sports','pets','tech','kids','jewelry'];
     let rendered = 0;
-
     for (const key of nicheOrder) {
-      const scores = buckets[key];
-      if (!scores || scores.length < 3) continue;
-      const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
-      const invisible = scores.filter(s => s < 50).length;
-      const invisPct = Math.round((invisible / scores.length) * 100);
-      const best = Math.max(...scores);
+      const n = byKey[key];
+      if (!n || Number(n.store_count) < 3) continue;
+      const avg = Number(n.avg_score);
+      const cnt = Number(n.store_count);
+      const invisPct = Number(n.invis_pct);
+      const best = Number(n.best_score);
       const col = scoreColor(avg);
       const barColor = col === 'green' ? '#1D9E75' : col === 'orange' ? '#f97316' : '#E24B4A';
       const barW = Math.round((avg / 100) * 100);
-
       const card = document.createElement('a');
       card.className = 'bench-card';
       card.href = `/benchmarks/${key}`;
       card.innerHTML = `
-        <div class="bench-header">
-          <div class="bench-niche">
-            <div class="bench-icon">${NICHES[key].icon}</div>
-            <div>
-              <div class="bench-name">${NICHES[key].label}</div>
-              <div class="bench-count">${scores.length.toLocaleString('en-US')} stores analyzed</div>
-            </div>
-          </div>
-          <span class="bench-tag ${tagClass(avg)}">${tagLabel(avg)}</span>
-        </div>
-        <div class="bench-score-row">
-          <div>
-            <div class="bench-score ${col}">${avg}</div>
-            <div class="bench-max">/100 avg</div>
-          </div>
-          <div class="bench-bar-wrap">
-            <div class="bench-bar-fill" style="width:${barW}%;background:${barColor};"></div>
-          </div>
-        </div>
-        <div class="bench-stats">
-          <div class="bench-stat">AI Invisible Risk: <strong style="color:#E24B4A;">${invisPct}%</strong></div>
-          <div class="bench-stat">Best score: <strong style="color:#1D9E75;">${best}/100</strong></div>
-        </div>`;
+<div class="bench-header">
+<div class="bench-niche">
+<div class="bench-icon">${NICHES[key].icon}</div>
+<div>
+<div class="bench-name">${NICHES[key].label}</div>
+<div class="bench-count">${cnt.toLocaleString('en-US')} stores analyzed</div>
+</div>
+</div>
+<span class="bench-tag ${tagClass(avg)}">${tagLabel(avg)}</span>
+</div>
+<div class="bench-score-row">
+<div>
+<div class="bench-score ${col}">${avg}</div>
+<div class="bench-max">/100 avg</div>
+</div>
+<div class="bench-bar-wrap">
+<div class="bench-bar-fill" style="width:${barW}%;background:${barColor};"></div>
+</div>
+</div>
+<div class="bench-stats">
+<div class="bench-stat">AI Invisible Risk: <strong style="color:#E24B4A;">${invisPct}%</strong></div>
+<div class="bench-stat">Best score: <strong style="color:#1D9E75;">${best}/100</strong></div>
+</div>`;
       grid.appendChild(card);
       rendered++;
     }
-
     if (rendered === 0) {
       grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Not enough category data yet. Check back soon.</div>';
     }
-
     const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     document.getElementById('dataNoteNiche').textContent =
       `Data from ${total.toLocaleString('en-US')} scanned US, CA and Europe DTC Shopify stores. Updated continuously. Last refresh: ${today}.`;
-
   } catch(e) {
     const grid = document.getElementById('benchmarkGrid');
-    if (grid) grid.innerHTML = `<div class="loading-state" style="grid-column:1/-1;color:#555;">Could not load benchmark data. Please try again later.</div>`;
+    if (grid) grid.innerHTML = '<div class="loading-state" style="grid-column:1/-1;">Could not load benchmark data.</div>';
   }
 }
-
 loadBenchmarks();
 </script>
 </body>
