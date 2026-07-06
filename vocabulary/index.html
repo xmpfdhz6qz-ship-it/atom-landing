@@ -205,7 +205,7 @@ h1 em { font-style: normal; color: var(--orange); }
       <span class="vocab-meta-dot">&middot;</span>
       <span class="vocab-meta-item">Updated May 2026</span>
       <span class="vocab-meta-dot">&middot;</span>
-      <span class="vocab-meta-item"><span id="liveStores">thousands of</span> stores analyzed</span>
+      <span class="vocab-meta-item"><span id="liveStores">66,086</span> stores analyzed</span>
     </div>
   </div>
   <!-- SUB-NAV -->
@@ -241,8 +241,8 @@ h1 em { font-style: normal; color: var(--orange); }
       <div class="term-body">
         <div class="term-definition">The AI Commerce Score is the composite 0 to 100 measurement of how well AI shopping agents can understand, trust, and recommend a store across 8 scored factors. Every store Atom Foundry scans receives one.</div>
         <div class="term-live-stat">
-          <div class="tls-num" id="avgScore">45/100</div>
-          <div class="tls-label">average AI Commerce Score across <span id="liveCount">thousands of</span> scanned stores</div>
+          <div class="tls-num" id="avgScore">56/100</div>
+          <div class="tls-label">average AI Commerce Score across <span id="liveCount">66,086</span> scanned stores</div>
           <div class="tls-bar-wrap"><div class="tls-bar" id="avgBar" style="width:45%"></div></div>
           <div class="tls-zones"><span style="color:#E24B4A;">0</span><span style="color:#EF9F27;">50</span><span style="color:#EF9F27;">70</span><span style="color:#1D9E75;">85</span><span style="color:#1D9E75;">100</span></div>
         </div>
@@ -1455,20 +1455,19 @@ function copyDef(btn) {
   if (tc) tc.textContent = total + ' terms defined';
 })();
 (async function() {
-  try {
-    const res = await fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores', { headers: { 'Accept': 'application/json' } });
-    const data = await res.json();
-    const rows = Array.isArray(data) ? data : (data.stores || []);
-    const count = rows.filter(r => r.domain || r.store_domain).length;
-    if (!count) return;
-    const scores = rows.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0);
-    const avg = scores.length ? Math.round(scores.reduce((a,b) => a+b,0) / scores.length) : 45;
-    document.getElementById('liveStores').textContent = count.toLocaleString('en-US');
-    document.getElementById('liveCount').textContent = count.toLocaleString('en-US');
-    document.getElementById('avgScore').textContent = avg + '/100';
-    setTimeout(() => { const b = document.getElementById('avgBar'); if(b) b.style.width = avg + '%'; }, 400);
-  } catch(e) {}
-})();
+    try {
+      const res = await fetch('https://n8n-production-1d7c.up.railway.app/webhook/site-stats', { headers: { 'Accept': 'application/json' } });
+      const d = await res.json();
+      const st = Array.isArray(d) ? d[0] : (d && d.data ? d.data[0] : d);
+      if (!st || st.total_scanned == null) return;
+      const count = Number(st.total_scanned).toLocaleString('en-US');
+      const avg = Number(st.avg_score);
+      document.getElementById('liveStores').textContent = count;
+      document.getElementById('liveCount').textContent = count;
+      document.getElementById('avgScore').textContent = avg + '/100';
+      setTimeout(() => { const b = document.getElementById('avgBar'); if(b) b.style.width = avg + '%'; }, 400);
+    } catch(e) {}
+  })();
 </script>
 
 </body>
