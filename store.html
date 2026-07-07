@@ -487,6 +487,46 @@ function renderPage(data) {
   const rawGap = data.biggest_gap || 'schema';
   const biggestGap = rawGap.includes('|') ? 'schema' : rawGap;
   const mainLeak = data.main_leak || leakCopy(biggestGap).leak;
+
+  // --- AI loop closure: canonical + machine-readable store entity ---
+  try {
+    var _canon = 'https://atomfoundry.dev/store/' + domain;
+    var _c = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+    _c.setAttribute('rel','canonical'); _c.setAttribute('href', _canon);
+    if (!_c.parentNode) document.head.appendChild(_c);
+    var _ld = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": _canon + "#webpage",
+          "url": _canon,
+          "name": storeNameCap + " \u2014 AI Commerce Score",
+          "about": { "@id": _canon + "#store" },
+          "isPartOf": { "@id": "https://atomfoundry.dev/#website" }
+        },
+        {
+          "@type": "Organization",
+          "@id": _canon + "#store",
+          "name": storeNameCap,
+          "url": "https://" + domain,
+          "additionalProperty": [{
+            "@type": "PropertyValue",
+            "name": "AI Commerce Score",
+            "value": score,
+            "maxValue": 100,
+            "description": "How ready this store is for AI shopping agents, measured by Atom Foundry."
+          }]
+        }
+      ]
+    };
+    var _prev = document.getElementById('storeLd'); if (_prev) _prev.remove();
+    var _sc = document.createElement('script');
+    _sc.type = 'application/ld+json'; _sc.id = 'storeLd';
+    _sc.textContent = JSON.stringify(_ld);
+    document.head.appendChild(_sc);
+  } catch(e) {}
+
   const quickFix = data.quick_fix || leakCopy(biggestGap).fix;
   const agenticReady = data.has_llms_txt && data.has_llms_full && data.has_agents_md;
   document.title = `${storeNameCap} AI Commerce Score: ${score}/100 &mdash; Atom Foundry`;
@@ -496,6 +536,7 @@ function renderPage(data) {
   document.getElementById('bcDomain').textContent = domain;
   document.getElementById('storeTitle').innerHTML = `${storeNameCap} <span>(${domain})</span>`;
   document.getElementById('storeMeta').innerHTML = `
+        <a class="meta-tag" href="https://${domain}" target="_blank" rel="nofollow noopener" style="color:#f97316;font-weight:700;text-decoration:none;">Visit store \u2192</a>
     <span class="meta-tag">Scanned ${scannedAt}</span>
     ${platform ? `<span class="meta-tag">${platform.charAt(0).toUpperCase()+platform.slice(1)}</span>` : ''}
     ${country ? `<span class="meta-tag">${country}</span>` : ''}
