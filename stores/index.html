@@ -368,10 +368,24 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <script>
-const STORES_API_URL = "https://n8n-production-1d7c.up.railway.app/webhook/stores";
-const DISPLAY_LIMIT = 100; // Show latest 100 by default
-const EU_COUNTRIES = new Set(['CZ','SK','DE','AT','CH','PL','HU','RO','FR','IT','ES','NL','BE','SE','DK','FI','NO','PT','GB']);
-const state = { stores: [], query: "", sort: "newest", niche: "all", region: "all", showAll: false };
+const BASE = "https://n8n-production-1d7c.up.railway.app/webhook";
+const PAGE_SIZE = 100;
+const NICHE_DB_MAP = {
+  'fashion':'fashion','beauty':'beauty','health & wellness':'health','health and wellness':'health',
+  'food & drink':'food','food and drink':'food','home & living':'home','home and living':'home',
+  'sports & outdoor':'sports','sports and outdoor':'sports','pets':'pets',
+  'tech & gadgets':'tech','tech and gadgets':'tech','kids & baby':'kids','kids and baby':'kids',
+  'jewelry':'jewelry','other':'other'
+};
+const BLOCK_REASON_LABELS = { offline:'Offline', cloudflare:'Cloudflare', blocked_403:'403 Blocked', js_only:'JS only', empty_html:'Empty page' };
+const LEVEL_LABELS = {
+  'highly_recommendable':'Highly Recommendable','moderately_recommendable':'Moderately Recommendable',
+  'low_recommendation_confidence':'Low Rec. Confidence','ai_invisible_risk':'AI Invisible Risk',
+  'ai_ready':'Highly Recommendable','ai_partial':'Partially Visible','ai_invisible':'AI Invisible Risk'
+};
+
+const state = { query:"", sort:"newest", niche:"all", region:"all", offset:0, hasMore:false, loading:false };
+
 const listEl = document.getElementById("stores-list");
 const statusEl = document.getElementById("status");
 const searchEl = document.getElementById("search");
@@ -382,271 +396,153 @@ const showAllBtn = document.getElementById("showAllBtn");
 const showAllCount = document.getElementById("showAllCount");
 const blockedNote = document.getElementById("blocked-note");
 
-const NICHE_DB_MAP = {
-  'fashion':'fashion','beauty':'beauty','health & wellness':'health',
-  'food & drink':'food','home & living':'home','sports & outdoor':'sports',
-  'pets':'pets','tech & gadgets':'tech','kids & baby':'kids',
-  'jewelry':'jewelry','other':'other'
-};
+function truthy(v){ return v===true||v==='true'||v===1||v==='1'; }
+function blockReasonLabel(r){ return BLOCK_REASON_LABELS[r] || 'Blocked'; }
+function getLevelLabel(level){ return LEVEL_LABELS[level] || (level||'').replace(/_/g,' '); }
+function scoreClass(s){ if(s>=85)return"green"; if(s>=70)return"amber"; if(s>=50)return"orange"; return"red"; }
+function formatDate(v){ if(!v)return""; const d=new Date(v); if(isNaN(d.getTime()))return String(v).slice(0,10); return d.toISOString().slice(0,10); }
 
-const BLOCK_REASON_LABELS = {
-  offline: 'Offline', cloudflare: 'Cloudflare', blocked_403: '403 Blocked',
-  js_only: 'JS only', empty_html: 'Empty page'
-};
-function blockReasonLabel(r) { return BLOCK_REASON_LABELS[r] || 'Blocked'; }
-
-function getRegion(country) {
-  if (!country) return 'other';
-  const c = country.toUpperCase();
-  if (c === 'US') return 'usa';
-  if (c === 'CA') return 'canada';
-  if (EU_COUNTRIES.has(c)) return 'europe';
-  return 'other';
-}
-
-function truthy(v) { return v === true || v === 'true' || v === 1 || v === '1'; }
-
-function normalizeStore(raw) {
-  const domain = String(raw.domain || raw.store_domain || "").replace(/^www\./, "").toLowerCase();
-  const blocked = truthy(raw.homepage_blocked) || String(raw.readiness_level || "").toLowerCase() === 'blocked';
-  const store = {
-    domain, store_name: raw.store_name || "",
-    score: Number(raw.score ?? raw.total_score ?? 0),
-    date: raw.date || raw.scanned_at || raw.created_at || "",
-    country: raw.country || "", platform: raw.platform || "",
-    readiness: raw.readiness_level || "",
-    blocked, block_reason: raw.block_reason || ""
+function normalizeStore(raw){
+  const domain = String(raw.domain||raw.store_domain||"").replace(/^www\./,"").toLowerCase();
+  const blocked = truthy(raw.homepage_blocked) || String(raw.readiness||raw.readiness_level||"").toLowerCase()==='blocked';
+  const dbNiche = raw.niche ? NICHE_DB_MAP[String(raw.niche).toLowerCase()] : null;
+  return {
+    domain, store_name: raw.store_name||"",
+    score: Number(raw.score != null ? raw.score : (raw.total_score||0)),
+    date: raw.date || raw.scanned_at || "",
+    country: raw.country||"", platform: raw.platform||"",
+    readiness: raw.readiness || raw.readiness_level || "",
+    blocked, block_reason: raw.block_reason||"",
+    niche: dbNiche || "other"
   };
-  const dbNiche = raw.niche ? NICHE_DB_MAP[raw.niche.toLowerCase()] : null;
-  store.niche = dbNiche || "other";
-  store.region = getRegion(store.country);
-  return store;
 }
 
-function scoreClass(s) {
-  if (s >= 85) return "green";
-  if (s >= 70) return "amber";
-  if (s >= 50) return "orange";
-  return "red";
+function storeAnchor(store){
+  const a = document.createElement("a");
+  a.href = "/store/" + encodeURIComponent(store.domain);
+  a.className = "store-card" + (store.blocked ? " is-blocked" : "");
+  const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase()+store.niche.slice(1) : null;
+  const date = formatDate(store.date);
+  if (store.blocked) {
+    const reason = blockReasonLabel(store.block_reason);
+    a.innerHTML = `<div class="card-inner"><div>
+      <div class="domain">${store.domain}</div>
+      ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
+      <div class="readiness-label blocked">Not readable by AI</div>
+      <div class="card-tags">
+        <span class="card-tag reason-tag">${reason}</span>
+        ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
+        ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
+        ${date ? `<span class="card-tag">${date}</span>` : ""}
+      </div>
+    </div><div class="score-wrap">
+      <div class="score blocked">&#128683;</div>
+      <span class="score-label blocked">Blocked</span>
+    </div></div>`;
+  } else {
+    const readinessLabel = store.readiness ? getLevelLabel(store.readiness) : '';
+    a.innerHTML = `<div class="card-inner"><div>
+      <div class="domain">${store.domain}</div>
+      ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
+      ${readinessLabel ? `<div class="readiness-label">${readinessLabel}</div>` : ""}
+      <div class="card-tags">
+        ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
+        ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
+        ${date ? `<span class="card-tag">${date}</span>` : ""}
+      </div>
+    </div><div class="score-wrap">
+      <div class="score ${scoreClass(store.score)}">${store.score}</div>
+      <span class="score-label">/100 AI score</span>
+    </div></div>`;
+  }
+  return a;
 }
 
-function getLevelLabel(level) {
-  const map = {
-    'highly_recommendable': 'Highly Recommendable',
-    'moderately_recommendable': 'Moderately Recommendable',
-    'low_recommendation_confidence': 'Low Rec. Confidence',
-    'ai_invisible_risk': 'AI Invisible Risk',
-    'ai_ready': 'Highly Recommendable',
-    'ai_partial': 'Partially Visible',
-    'ai_invisible': 'AI Invisible Risk'
-  };
-  return map[level] || level.replace(/_/g,' ');
+function showSkeletons(n=8){
+  listEl.innerHTML = Array.from({length:n}).map(() => `<div class="skeleton"><div><div class="skel skel-d"></div><div class="skel skel-s"></div><div class="skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div><div class="skel skel-score"></div></div>`).join("");
 }
 
-function formatDate(v) {
-  if (!v) return "";
-  const d = new Date(v);
-  if (isNaN(d.getTime())) return String(v).slice(0,10);
-  return d.toISOString().slice(0,10);
+async function loadHeadlineStats(){
+  try {
+    const r = await fetch(BASE + "/site-stats", { headers:{ "Accept":"application/json" } });
+    const d = await r.json();
+    const s = Array.isArray(d) ? d[0] : (d && d.data ? d.data[0] : d);
+    if (!s || s.total_scanned == null) return;
+    document.getElementById("stat-total").textContent = Number(s.total_scanned).toLocaleString('en-US');
+    document.getElementById("stat-avg").textContent = Number(s.avg_score);
+    document.getElementById("stat-high").textContent = Number(s.high70_count).toLocaleString('en-US');
+  } catch(e){}
 }
 
-function updateStats() {
-  const all = state.stores;                       // all scans = scored + blocked
-  const scored = all.filter(s => !s.blocked);     // quality scans only
-  // Total counts every scan, including blocked ones (a block is still a result)
-  document.getElementById("stat-total").textContent = all.length ? all.length.toLocaleString('en-US') : '\u2014';
-  // Average and 70+ are computed from quality scans only, so blocked sites don't drag them down
-  if (!scored.length) { ["stat-avg","stat-high"].forEach(id => document.getElementById(id).textContent = '\u2014'); return; }
-  document.getElementById("stat-avg").textContent = Math.round(scored.reduce((a,s) => a+s.score,0)/scored.length);
-  document.getElementById("stat-high").textContent = scored.filter(s => s.score >= 70).length.toLocaleString('en-US');
-}
-
-function updateRegionCounts() {
-  const filtered = state.stores.filter(s => state.niche === 'all' || s.niche === state.niche);
-  const scored = filtered.filter(s => !s.blocked);
-  document.getElementById("rc-all").textContent = scored.length;
-  document.getElementById("rc-usa").textContent = scored.filter(s => s.region === 'usa').length;
-  document.getElementById("rc-canada").textContent = scored.filter(s => s.region === 'canada').length;
-  document.getElementById("rc-europe").textContent = scored.filter(s => s.region === 'europe').length;
-  document.getElementById("rc-blocked").textContent = filtered.filter(s => s.blocked).length;
-}
-
-function updateNicheCounts() {
-  const inRegion = state.stores.filter(s => {
-    if (state.region === 'blocked') return s.blocked;
-    if (s.blocked) return false;
-    return state.region === 'all' || s.region === state.region;
-  });
-  document.getElementById("c-all").textContent = inRegion.length;
-  ['fashion','beauty','health','food','home','sports','pets','tech','kids','jewelry'].forEach(n => {
-    const el = document.getElementById("c-"+n);
-    if (el) el.textContent = inRegion.filter(s => s.niche === n).length;
-  });
-  document.getElementById("c-other").textContent = inRegion.filter(s => s.niche === "other").length;
-}
-
-function getFilteredSorted() {
-  const query = state.query.toLowerCase();
-  let stores = state.stores.filter(s => {
-    const txt = [s.domain, s.store_name, s.country, s.platform].join(" ").toLowerCase();
-    if (query && !txt.includes(query)) return false;
-    if (state.region === 'blocked') return s.blocked && (state.niche === 'all' || s.niche === state.niche);
-    if (s.blocked) return false; // blocked stores never appear in normal views
-    return (state.region === 'all' || s.region === state.region)
-      && (state.niche === 'all' || s.niche === state.niche);
-  });
-  return stores.sort((a,b) => {
-    if (state.sort === "best") return b.score - a.score;
-    if (state.sort === "worst") return a.score - b.score;
-    if (state.sort === "az") return a.domain.localeCompare(b.domain);
-    return new Date(b.date||0) - new Date(a.date||0);
-  });
-}
-
-function renderStores() {
-  const allFiltered = getFilteredSorted();
+async function loadStores(reset){
+  if (state.loading) return;
+  state.loading = true;
   const isBlockedView = state.region === 'blocked';
   const hasFilter = state.query || state.region !== "all" || state.niche !== "all";
   clearBtn.classList.toggle("visible", hasFilter);
   blockedNote.classList.toggle("visible", isBlockedView);
-  listEl.innerHTML = "";
-
-  if (!allFiltered.length) {
-    const msg = isBlockedView ? "No blocked stores in this view." : (state.stores.length ? "No stores match this filter." : "No stores found yet.");
-    listEl.innerHTML = `<div class="empty">${msg}</div>`;
-    statusEl.textContent = "0 stores";
-    showAllWrap.style.display = 'none';
-    return;
-  }
-
-  const limit = state.showAll ? allFiltered.length : DISPLAY_LIMIT;
-  const toShow = allFiltered.slice(0, limit);
-  const remaining = allFiltered.length - toShow.length;
-
-  statusEl.textContent = state.showAll
-    ? `${allFiltered.length.toLocaleString('en-US')} ${isBlockedView ? "blocked stores" : "stores"}${hasFilter && !isBlockedView ? " matched" : ""}`
-    : `Showing ${toShow.length}${isBlockedView ? " blocked" : " newest"}${hasFilter && !isBlockedView ? " matched" : ""} of ${allFiltered.length.toLocaleString('en-US')} total`;
-
-  const frag = document.createDocumentFragment();
-  for (const store of toShow) {
-    const a = document.createElement("a");
-    a.href = `/store/${encodeURIComponent(store.domain)}`;
-    a.className = "store-card" + (store.blocked ? " is-blocked" : "");
-    const nicheLabel = store.niche !== "other" ? store.niche.charAt(0).toUpperCase()+store.niche.slice(1) : null;
-    const date = formatDate(store.date);
-
-    if (store.blocked) {
-      const reason = blockReasonLabel(store.block_reason);
-      a.innerHTML = `<div class="card-inner"><div>
-        <div class="domain">${store.domain}</div>
-        ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
-        <div class="readiness-label blocked">Not readable by AI</div>
-        <div class="card-tags">
-          <span class="card-tag reason-tag">${reason}</span>
-          ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
-          ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
-          ${date ? `<span class="card-tag">${date}</span>` : ""}
-        </div>
-      </div><div class="score-wrap">
-        <div class="score blocked">&#128683;</div>
-        <span class="score-label blocked">Blocked</span>
-      </div></div>`;
-    } else {
-      const readinessLabel = store.readiness ? getLevelLabel(store.readiness) : '';
-      a.innerHTML = `<div class="card-inner"><div>
-        <div class="domain">${store.domain}</div>
-        ${store.store_name && store.store_name !== store.domain ? `<div class="store-name-label">${store.store_name}</div>` : ""}
-        ${readinessLabel ? `<div class="readiness-label">${readinessLabel}</div>` : ""}
-        <div class="card-tags">
-          ${nicheLabel ? `<span class="card-tag niche-tag">${nicheLabel}</span>` : ""}
-          ${store.country ? `<span class="card-tag">${store.country}</span>` : ""}
-          ${date ? `<span class="card-tag">${date}</span>` : ""}
-        </div>
-      </div><div class="score-wrap">
-        <div class="score ${scoreClass(store.score)}">${store.score}</div>
-        <span class="score-label">/100 AI score</span>
-      </div></div>`;
-    }
-    frag.appendChild(a);
-  }
-  listEl.appendChild(frag);
-
-  if (remaining > 0 && !state.showAll) {
-    showAllCount.textContent = allFiltered.length.toLocaleString('en-US');
-    showAllWrap.style.display = 'block';
-  } else {
-    showAllWrap.style.display = 'none';
-  }
-}
-
-function showSkeletons(n=8) {
-  listEl.innerHTML = Array.from({length:n}).map(() => `<div class="skeleton"><div><div class="skel skel-d"></div><div class="skel skel-s"></div><div class="skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div><div class="skel skel-score"></div></div>`).join("");
-}
-
-async function loadStores() {
-  statusEl.textContent = "Loading...";
-  showSkeletons();
-  state.showAll = false;
+  if (reset){ state.offset = 0; showSkeletons(); statusEl.textContent = "Loading..."; showAllWrap.style.display = 'none'; }
+  else { showAllBtn.textContent = "Loading..."; }
+  const params = new URLSearchParams({ limit:String(PAGE_SIZE), offset:String(state.offset), sort:state.sort, niche:state.niche, region:state.region });
+  if (state.query) params.set('q', state.query);
   try {
-    const res = await fetch(STORES_API_URL, { headers: { "Accept": "application/json" } });
+    const res = await fetch(BASE + "/stores-list?" + params.toString(), { headers:{ "Accept":"application/json" } });
     if (!res.ok) throw new Error("HTTP " + res.status);
     const data = await res.json();
-    const rows = Array.isArray(data) ? data : (data.stores || []);
-    state.stores = rows.map(normalizeStore).filter(s => s.domain);
-    updateStats();
-    updateRegionCounts();
-    updateNicheCounts();
-    renderStores();
-  } catch(err) {
-    statusEl.textContent = "Could not load data.";
-    listEl.innerHTML = `<div class="empty">Could not connect to the stores endpoint.</div>`;
+    const raw = data.stores || (Array.isArray(data) ? data : []);
+    const rows = raw.map(normalizeStore).filter(s => s.domain);
+    state.hasMore = !!data.hasMore;
+    if (reset) listEl.innerHTML = "";
+    if (!rows.length && reset){
+      const msg = isBlockedView ? "No blocked stores in this view." : "No stores match this filter.";
+      listEl.innerHTML = `<div class="empty">${msg}</div>`;
+      statusEl.textContent = "0 stores"; showAllWrap.style.display = 'none'; state.loading = false; return;
+    }
+    const frag = document.createDocumentFragment();
+    rows.forEach(s => frag.appendChild(storeAnchor(s)));
+    listEl.appendChild(frag);
+    state.offset += rows.length;
+    statusEl.textContent = "Showing " + state.offset.toLocaleString('en-US') + (isBlockedView ? " blocked" : "") + (hasFilter && !isBlockedView ? " matched" : "") + (state.hasMore ? "+" : "") + " stores";
+    if (state.hasMore){ showAllBtn.textContent = "Load more"; if(showAllCount) showAllCount.textContent = ""; showAllWrap.style.display = 'block'; }
+    else { showAllWrap.style.display = 'none'; }
+  } catch(err){
+    if (reset){ statusEl.textContent = "Could not load data."; listEl.innerHTML = `<div class="empty">Could not connect to the stores endpoint.</div>`; }
+    else { showAllBtn.textContent = "Load more"; }
   }
+  state.loading = false;
 }
 
-showAllBtn.addEventListener("click", () => {
-  state.showAll = true;
-  showAllWrap.style.display = 'none';
-  renderStores();
-});
+let searchTimer;
+searchEl.addEventListener("input", e => { state.query = e.target.value; clearTimeout(searchTimer); searchTimer = setTimeout(() => loadStores(true), 300); });
+sortEl.addEventListener("change", e => { state.sort = e.target.value; loadStores(true); });
+showAllBtn.addEventListener("click", () => loadStores(false));
+document.getElementById("refresh").addEventListener("click", () => { loadHeadlineStats(); loadStores(true); });
 
 document.getElementById("region-pills").addEventListener("click", e => {
-  const pill = e.target.closest(".filter-pill");
-  if (!pill) return;
+  const pill = e.target.closest(".filter-pill"); if (!pill) return;
   document.querySelectorAll("#region-pills .filter-pill").forEach(p => p.classList.remove("active"));
   pill.classList.add("active");
-  state.region = pill.dataset.region;
-  state.niche = "all";
-  state.showAll = false;
+  state.region = pill.dataset.region; state.niche = "all";
   document.querySelectorAll("#niche-pills .filter-pill").forEach(p => p.classList.remove("active"));
-  document.querySelector('[data-niche="all"]').classList.add("active");
-  updateNicheCounts();
-  renderStores();
+  const na = document.querySelector('[data-niche="all"]'); if (na) na.classList.add("active");
+  loadStores(true);
 });
-
 document.getElementById("niche-pills").addEventListener("click", e => {
-  const pill = e.target.closest(".filter-pill");
-  if (!pill) return;
+  const pill = e.target.closest(".filter-pill"); if (!pill) return;
   document.querySelectorAll("#niche-pills .filter-pill").forEach(p => p.classList.remove("active"));
   pill.classList.add("active");
-  state.niche = pill.dataset.niche;
-  state.showAll = false;
-  renderStores();
+  state.niche = pill.dataset.niche; loadStores(true);
 });
-
-searchEl.addEventListener("input", e => { state.query = e.target.value; state.showAll = false; renderStores(); });
-sortEl.addEventListener("change", e => { state.sort = e.target.value; renderStores(); });
-document.getElementById("refresh").addEventListener("click", loadStores);
 clearBtn.addEventListener("click", () => {
-  state.query = ""; state.niche = "all"; state.region = "all"; state.showAll = false;
-  searchEl.value = "";
+  state.query=""; state.niche="all"; state.region="all"; searchEl.value="";
   document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
-  document.querySelector('[data-niche="all"]').classList.add("active");
-  document.querySelector('[data-region="all"]').classList.add("active");
-  updateNicheCounts();
-  renderStores();
+  const na=document.querySelector('[data-niche="all"]'); if(na) na.classList.add("active");
+  const ra=document.querySelector('[data-region="all"]'); if(ra) ra.classList.add("active");
+  loadStores(true);
 });
 
-loadStores();
+loadHeadlineStats();
+loadStores(true);
 </script>
 </body>
 </html>
