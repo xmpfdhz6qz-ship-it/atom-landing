@@ -212,7 +212,6 @@ h2 em { font-style: normal; color: #f97316; }
 </footer>
 
 <script>
-const STORES_API = 'https://n8n-production-1d7c.up.railway.app/webhook/stores';
 
 const NICHES = {
   fashion:  { label: 'Fashion',             icon: '&#128081;', db: ['fashion'] },
@@ -312,45 +311,35 @@ async function init() {
   injectNicheSchema(nicheKey, niche);
 
   // Fetch data
-  let rows = [];
-  try {
-    const res = await fetch(STORES_API, { headers: { Accept: 'application/json' } });
-    const data = await res.json();
-    rows = Array.isArray(data) ? data : (data.stores || []);
-  } catch(e) {}
+  let nicheRow = null, top5 = [];
+    try {
+      const [nd, sd] = await Promise.all([
+        fetch('https://n8n-production-1d7c.up.railway.app/webhook/niche-stats', { headers: { Accept: 'application/json' } }).then(r => r.json()),
+        fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores-list?niche=' + nicheKey + '&sort=best&limit=5', { headers: { Accept: 'application/json' } }).then(r => r.json())
+      ]);
+      const niches = Array.isArray(nd) ? nd : (nd && nd.data ? nd.data : []);
+      nicheRow = niches.find(n => n.niche_key === nicheKey) || null;
+      const rawTop = sd && sd.stores ? sd.stores : (Array.isArray(sd) ? sd : []);
+      top5 = rawTop.map(r => ({ domain: String(r.domain || '').replace(/^www\./, ''), score: Number(r.score != null ? r.score : (r.total_score || 0)) }))
+                   .filter(r => r.domain && r.score > 0).slice(0, 5);
+    } catch(e) {}
 
-  // Filter to this niche
-  const nicheRows = rows.filter(r => {
-    const raw = (r.niche || '').toLowerCase().trim();
-    return niche.db.includes(raw);
-  });
+    const total = nicheRow ? Number(nicheRow.store_count) : 0;
+    const avg = nicheRow ? Number(nicheRow.avg_score) : 0;
+    const invisPct = nicheRow ? Number(nicheRow.invis_pct) : 0;
+    const highPct = nicheRow ? Number(nicheRow.high_pct) : 0;
+    const partialPct = Math.max(0, 100 - invisPct - highPct);
+    const best = nicheRow ? Number(nicheRow.best_score) : 0;
+    const invisible = Math.round(total * invisPct / 100);
+    const highly = Math.round(total * highPct / 100);
+    const partial = Math.max(0, total - invisible - highly);
+    const factorAvgs = {};
+    FACTOR_DISPLAY.forEach(f => {
+      const v = nicheRow ? Number(nicheRow[f.key + '_avg']) : null;
+      factorAvgs[f.key] = (nicheRow && total > 5 && !isNaN(v)) ? v : null;
+    });
 
-  const scores = nicheRows.map(r => Number(r.score ?? r.total_score ?? 0)).filter(s => s > 0);
-  const total = scores.length;
-  const avg = total ? Math.round(scores.reduce((a,b) => a+b, 0) / total) : 0;
-  const invisible = scores.filter(s => s < 50).length;
-  const partial = scores.filter(s => s >= 50 && s < 85).length;
-  const highly = scores.filter(s => s >= 85).length;
-  const best = total ? Math.max(...scores) : 0;
-  const invisPct = total ? Math.round(invisible/total*100) : 0;
-  const partialPct = total ? Math.round(partial/total*100) : 0;
-
-  // Top 5 performers
-  const top5 = nicheRows
-    .map(r => ({ domain: r.domain || r.store_domain || '', score: Number(r.score ?? r.total_score ?? 0) }))
-    .filter(r => r.score > 0 && r.domain)
-    .sort((a,b) => b.score - a.score)
-    .slice(0, 5);
-
-  // Factor averages: use sub-scores if available, else section stays hidden
-  const factorAvgs = {};
-  FACTOR_DISPLAY.forEach(f => {
-    const vals = nicheRows.map(r => Number(r[f.key + '_score'] ?? r[f.key] ?? 0)).filter(v => v > 0);
-    factorAvgs[f.key] = vals.length > 5 ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length * 10)/10 : null;
-  });
-
-  // Build niche pills
-  const pillsHtml = Object.entries(NICHES).map(([k,n]) => {
+    const pillsHtml = Object.entries(NICHES).map(([k,n]) => {
     const cls = k === nicheKey ? 'active' : '';
     return `<a href="/benchmarks/${k}" class="niche-pill ${cls}">${n.icon} ${n.label}</a>`;
   }).join('');
