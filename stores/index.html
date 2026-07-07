@@ -462,15 +462,32 @@ function showSkeletons(n=8){
   listEl.innerHTML = Array.from({length:n}).map(() => `<div class="skeleton"><div><div class="skel skel-d"></div><div class="skel skel-s"></div><div class="skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div><div class="skel skel-score"></div></div>`).join("");
 }
 
-async function loadHeadlineStats(){
+async function loadStatsAndCounts(){
   try {
-    const r = await fetch(BASE + "/site-stats", { headers:{ "Accept":"application/json" } });
-    const d = await r.json();
-    const s = Array.isArray(d) ? d[0] : (d && d.data ? d.data[0] : d);
-    if (!s || s.total_scanned == null) return;
-    document.getElementById("stat-total").textContent = Number(s.total_scanned).toLocaleString('en-US');
-    document.getElementById("stat-avg").textContent = Number(s.avg_score);
-    document.getElementById("stat-high").textContent = Number(s.high70_count).toLocaleString('en-US');
+    const [sd, nd] = await Promise.all([
+      fetch(BASE + "/site-stats", { headers:{ "Accept":"application/json" } }).then(r => r.json()),
+      fetch(BASE + "/niche-stats", { headers:{ "Accept":"application/json" } }).then(r => r.json())
+    ]);
+    const s = Array.isArray(sd) ? sd[0] : (sd && sd.data ? sd.data[0] : sd);
+    const fmt = n => Number(n).toLocaleString('en-US');
+    const setC = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = fmt(v); };
+    let scored = null;
+    if (s && s.total_scanned != null) {
+      document.getElementById("stat-total").textContent = fmt(s.total_scanned);
+      document.getElementById("stat-avg").textContent = Number(s.avg_score);
+      document.getElementById("stat-high").textContent = fmt(s.high70_count);
+      scored = Number(s.scored_count);
+      setC("rc-all", s.scored_count);
+      setC("rc-usa", s.usa_count);
+      setC("rc-canada", s.canada_count);
+      setC("rc-europe", s.europe_count);
+      setC("rc-blocked", s.blocked_count);
+      setC("c-all", s.scored_count);
+    }
+    const niches = Array.isArray(nd) ? nd : (nd && nd.data ? nd.data : []);
+    let sum = 0;
+    niches.forEach(n => { const c = Number(n.store_count) || 0; sum += c; setC("c-" + n.niche_key, c); });
+    if (scored != null) setC("c-other", Math.max(0, scored - sum));
   } catch(e){}
 }
 
@@ -516,7 +533,7 @@ let searchTimer;
 searchEl.addEventListener("input", e => { state.query = e.target.value; clearTimeout(searchTimer); searchTimer = setTimeout(() => loadStores(true), 300); });
 sortEl.addEventListener("change", e => { state.sort = e.target.value; loadStores(true); });
 showAllBtn.addEventListener("click", () => loadStores(false));
-document.getElementById("refresh").addEventListener("click", () => { loadHeadlineStats(); loadStores(true); });
+document.getElementById("refresh").addEventListener("click", () => { loadStatsAndCounts(); loadStores(true); });
 
 document.getElementById("region-pills").addEventListener("click", e => {
   const pill = e.target.closest(".filter-pill"); if (!pill) return;
@@ -541,7 +558,7 @@ clearBtn.addEventListener("click", () => {
   loadStores(true);
 });
 
-loadHeadlineStats();
+loadStatsAndCounts();
 loadStores(true);
 </script>
 </body>
