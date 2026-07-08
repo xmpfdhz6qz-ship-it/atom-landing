@@ -1,4 +1,5 @@
 // Atom Foundry — lightweight AI-visit beacon (fires only for AI/bot user-agents).
+// Sent as text/plain so it's a "simple request" — no CORS preflight.
 (function () {
   try {
     var ua = navigator.userAgent || '';
@@ -20,10 +21,8 @@
       country: '', referer: document.referrer || '', ua: ua.slice(0, 300)
     });
     var url = 'https://n8n-production-1d7c.up.railway.app/webhook/ai-visit';
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
-    } else {
-      fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: payload, keepalive: true }).catch(function () {});
-    }
+    var blob = new Blob([payload], { type: 'text/plain' }); // text/plain = no preflight
+    if (navigator.sendBeacon && navigator.sendBeacon(url, blob)) return;
+    fetch(url, { method: 'POST', body: payload, headers: { 'content-type': 'text/plain' }, keepalive: true, mode: 'no-cors' }).catch(function () {});
   } catch (e) {}
 })();
