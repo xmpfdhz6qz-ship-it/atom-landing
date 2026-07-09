@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Traffic — Atom Foundry (private)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --orange:#f97316; --green:#1D9E75; --amber:#EF9F27; --red:#E24B4A; --bg:#080808; --bg2:#111; --border:#1e1e1e; --text:#e8e8e8; --muted:#aaa; --dim:#666; }
+body { font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:32px 20px 80px; }
+.wrap { max-width:1000px; margin:0 auto; }
+.head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:6px; }
+h1 { font-size:26px; font-weight:800; color:#fff; letter-spacing:-0.02em; }
+h1 span { color:var(--orange); }
+.priv { font-size:11px; color:var(--dim); border:1px solid var(--border); border-radius:6px; padding:3px 8px; text-transform:uppercase; letter-spacing:0.08em; }
+.sub { font-size:13px; color:var(--dim); margin-bottom:26px; }
+.cards { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:28px; }
+.card { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+.card .n { font-size:30px; font-weight:800; color:var(--orange); line-height:1; }
+.card .l { font-size:12px; color:var(--dim); margin-top:6px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.panel { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-bottom:16px; }
+.panel h2 { font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:14px; font-weight:700; }
+.row { display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:13px; }
+.row:last-child { border-bottom:none; }
+.row .lbl { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.row .val { font-weight:700; color:#fff; font-variant-numeric:tabular-nums; }
+.bar { height:6px; background:#1a1a1a; border-radius:99px; overflow:hidden; flex:1.4; }
+.bar > i { display:block; height:100%; background:linear-gradient(90deg,var(--orange),var(--amber)); }
+.tag { font-size:10px; padding:2px 7px; border-radius:5px; font-weight:700; }
+.t-retrieval { color:var(--green); background:rgba(29,158,117,0.12); }
+.t-training { color:var(--orange); background:rgba(249,115,22,0.12); }
+.t-search { color:var(--amber); background:rgba(239,159,39,0.12); }
+.t-other { color:var(--dim); background:#161616; }
+.mono { font-family:ui-monospace,Menlo,monospace; font-size:12px; color:var(--muted); }
+.trend { display:flex; align-items:flex-end; gap:4px; height:90px; margin-top:8px; }
+.trend > div { flex:1; background:var(--orange); border-radius:3px 3px 0 0; min-height:2px; position:relative; opacity:0.85; }
+.trend .d { position:absolute; bottom:-18px; left:0; right:0; text-align:center; font-size:9px; color:var(--dim); }
+.msg { text-align:center; padding:60px 20px; color:var(--muted); }
+.msg h2 { color:#fff; margin-bottom:10px; font-size:18px; }
+.refresh { font-size:12px; color:var(--dim); cursor:pointer; border:1px solid var(--border); border-radius:6px; padding:4px 10px; }
+.refresh:hover { color:var(--orange); border-color:rgba(249,115,22,0.4); }
+.card.warn .n{color:var(--red);} @media (max-width:720px){ .cards{grid-template-columns:repeat(2,1fr);} .grid2{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>AI <span>Traffic</span></h1>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span class="priv">Private</span>
+      <span class="refresh" id="refresh">Refresh</span>
+    </div>
+  </div>
+  <div class="sub">Which AI agents read atomfoundry.dev, what they read, and which stores they pulled. Beacon-based — captures bots that render JS.</div>
+  <div id="content"><div class="msg">Loading…</div></div>
+</div>
+<script>
+const BASE = "https://n8n-production-1d7c.up.railway.app/webhook";
+const params = new URLSearchParams(location.search);
+const key = params.get('key') || '';
+const content = document.getElementById('content');
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => Number(n||0).toLocaleString('en-US');
+const typeTag = t => `<span class="tag t-${esc(t||'other')}">${esc(t||'other')}</span>`;
+function ago(ts){ if(!ts)return''; const d=(Date.now()-new Date(ts).getTime())/1000; if(d<60)return Math.floor(d)+'s'; if(d<3600)return Math.floor(d/60)+'m'; if(d<86400)return Math.floor(d/3600)+'h'; return Math.floor(d/86400)+'d'; }
+
+function bars(rows, lblFn, max){
+  if(!rows||!rows.length) return '<div class="row"><span class="lbl" style="color:#555">No data yet.</span></div>';
+  return rows.map(r=>{
+    const v=Number(r.visits||0); const w=max?Math.round(100*v/max):0;
+    return `<div class="row"><span class="lbl">${lblFn(r)}</span><span class="bar"><i style="width:${w}%"></i></span><span class="val">${fmt(v)}</span></div>`;
+  }).join('');
+}
+
+function render(d){
+  const s=d.summary||{};
+  const maxBot=Math.max(1,...(d.by_bot||[]).map(x=>+x.visits));
+  const maxPage=Math.max(1,...(d.top_pages||[]).map(x=>+x.visits));
+  const maxStore=Math.max(1,...(d.stores||[]).map(x=>+x.visits));
+  const maxDay=Math.max(1,...(d.trend||[]).map(x=>+x.visits));
+  const typeTotal=(d.by_type||[]).reduce((a,x)=>a+ +x.visits,0)||1;
+
+  content.innerHTML = `
+    <div class="cards">
+      <div class="card"><div class="n">${fmt(s.total)}</div><div class="l">Total AI visits</div></div>
+      <div class="card"><div class="n">${fmt(s.today)}</div><div class="l">Today</div></div>
+      <div class="card"><div class="n">${fmt(s.bots)}</div><div class="l">Distinct bots</div></div>
+      <div class="card"><div class="n">${fmt(s.stores)}</div><div class="l">Stores AI read</div></div>
+      <div class="card warn"><div class="n">${fmt(s.probes)}</div><div class="l">Spoofed probes</div></div>
+    </div>
+
+    <div class="panel">
+      <h2>Visits per day</h2>
+      <div class="trend">${(d.trend||[]).map(t=>`<div style="height:${Math.round(100*(+t.visits)/maxDay)}%" title="${esc(t.day)}: ${fmt(t.visits)}"></div>`).join('')||'<span style="color:#555;font-size:12px">No data yet.</span>'}</div>
+    </div>
+
+    <div class="grid2">
+      <div class="panel">
+        <h2>Who reads you</h2>
+        ${bars(d.by_bot, r=>`${esc(r.bot)} ${typeTag(r.bot_type)} <span class="mono">· ${ago(r.last_seen)} ago</span>`, maxBot)}
+      </div>
+      <div class="panel">
+        <h2>Retrieval vs training</h2>
+        ${(d.by_type||[]).map(t=>`<div class="row"><span class="lbl">${typeTag(t.bot_type)}</span><span class="bar"><i style="width:${Math.round(100*(+t.visits)/typeTotal)}%"></i></span><span class="val">${fmt(t.visits)}</span></div>`).join('')||'<div class="row"><span class="lbl" style="color:#555">No data yet.</span></div>'}
+        <div style="font-size:11px;color:#555;margin-top:10px;">Retrieval = AI reading you to answer a user right now.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Stores AI pulled <span style="color:#555;font-weight:400;text-transform:none;letter-spacing:0">— which merchants AI actually read</span></h2>
+      ${bars(d.stores, r=>`<span class="mono">${esc(r.store_domain)}</span> <span style="color:#555">· ${esc(r.bots)}</span>`, maxStore)}
+    </div>
+
+    <div class="grid2">
+      <div class="panel">
+        <h2>Top pages</h2>
+        ${bars(d.top_pages, r=>`<span class="mono">${esc(r.path)}</span>`, maxPage)}
+      </div>
+      <div class="panel">
+        <h2>Recent activity</h2>
+        ${(d.recent||[]).slice(0,15).map(r=>`<div class="row"><span class="lbl">${esc(r.bot)} ${typeTag(r.bot_type)} <span class="mono">${esc(r.path)}</span></span><span class="val" style="color:#666;font-weight:500">${ago(r.visited_at)}</span></div>`).join('')||'<div class="row"><span class="lbl" style="color:#555">No data yet.</span></div>'}
+      </div>
+    </div>
+    ${(d.probes_list&&d.probes_list.length)?`<div class="panel" style="border-color:rgba(226,75,74,0.3)">
+      <h2 style="color:var(--red)">Spoofed / attack probes <span style="color:#555;font-weight:400;text-transform:none;letter-spacing:0">— fake AI user-agents scanning for secrets (harmless on a static site)</span></h2>
+      ${d.probes_list.map(r=>`<div class="row"><span class="lbl">${esc(r.bot)} <span class="mono" style="color:var(--red)">${esc(r.path)}</span></span><span class="val" style="color:#666;font-weight:500">${ago(r.visited_at)}</span></div>`).join('')}
+    </div>`:''}`;
+}
+
+async function load(){
+  if(!key){ content.innerHTML = `<div class="msg"><h2>Access key required</h2>Add <span class="mono">?key=YOUR_TOKEN</span> to the URL.</div>`; return; }
+  content.innerHTML = '<div class="msg">Loading…</div>';
+  try {
+    const res = await fetch(BASE + "/ai-traffic?key=" + encodeURIComponent(key), { headers:{ "Accept":"application/json" } });
+    if(res.status === 403){ content.innerHTML = `<div class="msg"><h2>Invalid key</h2>Check the token in your URL.</div>`; return; }
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const d = await res.json();
+    render(d);
+  } catch(e){
+    content.innerHTML = `<div class="msg"><h2>Could not load</h2>${esc(e.message||e)}</div>`;
+  }
+}
+document.getElementById('refresh').addEventListener('click', load);
+load();
+</script>
+</body>
+</html>
