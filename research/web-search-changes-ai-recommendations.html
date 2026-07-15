@@ -55,7 +55,7 @@
     {
       "@type": "Article",
       "datePublished": "2026-07-12",
-      "dateModified": "2026-07-12",
+      "dateModified": "2026-07-14",
       "image": "https://atomfoundry.dev/images/research/web-search-changes-recommendations.png",
       "@id": "https://atomfoundry.dev/research/web-search-changes-ai-recommendations#article",
       "headline": "Web Search Rewrites 77% of AI Product Recommendations",
@@ -254,7 +254,8 @@ a { color: inherit; text-decoration: none; }
 
       <div class="section-kicker">The headline</div>
       <h2 class="section-title">77% of recommendations changed</h2>
-      <p class="section-body">On the same model, the overlap between search-on and search-off recommendations was 23%. In other words, 77% of the recommended brands changed when we turned web search on. Same model, same questions, same number of runs. One toggle.</p>
+      <p class="section-body">On the same model, the overlap between search-on and search-off recommendations was 23%. In other words, <strong>77% of the recommended brands changed (95% CI 74&ndash;80%)</strong> when we turned web search on. Same model, same questions, same number of runs. One toggle.</p>
+      <p class="section-body">That interval comes from a cluster bootstrap resampling the 50 intents rather than the individual brand-intent pairs, because brands cluster inside intents and the pairs are not independent. A naive binomial would have given a tighter interval, 75 to 79%. The wider one is the honest one.</p>
       <p class="section-body">With search off, the model recommends from memory. It names the brands it saw most often during training, which skews heavily toward the famous ones. With search on, it throws most of those out and recommends whatever its retrieval surfaces in the moment. These are not small adjustments to a stable list. They are two largely different lists.</p>
 
       <div class="section-kicker">The control</div>
@@ -274,6 +275,14 @@ a { color: inherit; text-decoration: none; }
         <img src="/images/research/web-search-by-category.png" alt="Horizontal bar chart titled Search rewrites recommendations by category. Ten bars show the percent of AI product recommendations that change when web search is enabled: Pets 88%, Coffee 83%, Supplements 80%, Wellness 78%, Food 76%, Beauty 76%, Home 73%, Electronics 73%, Fashion 70%, Fitness 61%. The more fragmented the market, the higher the number." style="width:100%;height:auto;border-radius:14px;border:1px solid #1e1e1e;">
       </figure>
       <p class="section-body">Pets, interestingly, has been the most extreme category in every study we&rsquo;ve run. It was the sharpest in our earlier quality-versus-recommendation work too. Something about that market makes AI recommendations unusually unstable. We don&rsquo;t fully understand it yet.</p>
+
+      <div class="section-kicker">The stress test</div>
+      <h2 class="section-title">We tried to break the category finding before publishing it</h2>
+      <p class="section-body">Before this went out, a data engineer raised a fair objection: how do we know that&rsquo;s the category and not the prompts? Generic questions like &ldquo;best dog food&rdquo; should lean on retrieval harder than specific ones like &ldquo;best cat litter for odor control.&rdquo; If our 50 prompts skew generic in some categories and specific in others, what looks like market structure could just be prompt style.</p>
+      <p class="section-body">So we tagged all 50 prompts, generic or specific, and split the results. Pooled, generic prompts changed 74.2% and specific prompts changed 80.0%. Specific changed <em>more</em>, the opposite of the prediction. We could have stopped there and declared the objection handled.</p>
+      <p class="section-body">That would have been wrong. Inside each individual category, specificity has no consistent direction at all: generic changes more in five categories, specific in four. The pooled gap was composition, not causation. The categories that happen to hold most of our specific prompts (coffee, pets, wellness) are also the categories that change the most, so specific prompts <em>appear</em> to change more purely because of where they live. This is Simpson&rsquo;s paradox, and it made the pooled number worse than useless: it looked like an answer.</p>
+      <p class="section-body">The real test is holding specificity constant and looking at the category effect inside each stratum. Generic prompts only: Coffee 89.8% down to Fitness 62.4%, a 27-point spread. Specific prompts only: Pets 94.4% down to Fitness 52.6%, a 42-point spread. Fitness is lowest in both. Coffee and Pets are highest in both. The category ranking survives when prompt style is controlled for. Across the ten categories, the correlation between a category&rsquo;s share of generic prompts and its change rate is &minus;0.56; if the confound were real, that would need to be strongly positive.</p>
+      <p class="section-body"><strong>Where this is still weak, stated plainly.</strong> The cells are thin. Coffee has exactly one generic prompt, Fitness has exactly one specific prompt, and Electronics has no specific prompts at all, so the 42-point spread in the specific stratum leans on a single prompt at one end. The correlation of &minus;0.56 across ten categories is not statistically significant; the critical value at that sample size is roughly 0.63. And the prompt mix was not designed to be balanced, it simply happened that way. So the honest claim is that we looked for the confound and found the opposite, and the category effect survives stratification. Not that no confound exists. A balanced design would settle it cleanly, and that is what the next study will use.</p>
 
       <div class="section-kicker">The wall</div>
       <h2 class="section-title">What we still can&rsquo;t measure</h2>
