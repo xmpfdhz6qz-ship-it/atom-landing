@@ -698,17 +698,22 @@ Promise.all([
     const highCount = Number(s.high_count);
     document.getElementById('statStores').textContent = f(count);
     document.getElementById('statAvg').textContent = avg + '/100';
-    document.getElementById('statRisk').textContent = invisible + '%';
-    document.getElementById('statHighPct').textContent = highPct + '%';
-    document.getElementById('liveInvisible').textContent = invisible + '%';
-    document.getElementById('livePartial').textContent = partial + '%';
+    document.getElementById('statRisk').textContent = Number.isFinite(invisible) ? invisible + '%' : '\u2014';
+    document.getElementById('statHighPct').textContent = Number.isFinite(highPct) ? highPct + '%' : '\u2014';
+    document.getElementById('liveInvisible').textContent = Number.isFinite(invisible) ? invisible + '%' : '\u2014';
+    document.getElementById('livePartial').textContent = Number.isFinite(partial) ? partial + '%' : '\u2014';
     document.getElementById('statHighly').textContent = f(highCount) + ' stores';
     document.getElementById('distChartTitle').textContent = 'Score distribution across ' + f(count) + ' scanned stores';
     document.getElementById('finding1').innerHTML = '<strong>' + invisible + '% of scored stores score below 50 out of 100</strong> and are classified as AI Invisible Risk. When buyers ask ChatGPT or Alexa for Shopping for product recommendations, these stores are systematically excluded from the answer.';
     document.getElementById('finding1src').textContent = 'Live data across ' + f(scoredCount) + ' scored stores';
     if (typeof donutChart !== 'undefined') {
-      donutChart.data.datasets[0].data = [invisible, Math.max(0, 100 - invisible - highPct - 10), 10, highPct];
-      donutChart.update();
+      // Measured buckets straight from the DB. Nothing derived, nothing hardcoded.
+      const buckets = [Number(s.invis_pct), Number(s.low_pct), Number(s.mod_pct), Number(s.high_pct)];
+      // If any bucket is missing, keep the existing chart rather than render NaN.
+      if (buckets.every(v => Number.isFinite(v))) {
+        donutChart.data.datasets[0].data = buckets;
+        donutChart.update();
+      }
     }
   }
   const niches = Array.isArray(nd) ? nd : (nd && nd.data ? nd.data : []);
