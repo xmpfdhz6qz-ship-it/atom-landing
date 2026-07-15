@@ -55,7 +55,7 @@
     {
       "@type": "Article",
       "datePublished": "2026-07-12",
-      "dateModified": "2026-07-14",
+      "dateModified": "2026-07-15",
       "image": "https://atomfoundry.dev/images/research/web-search-changes-recommendations.png",
       "@id": "https://atomfoundry.dev/research/web-search-changes-ai-recommendations#article",
       "headline": "Web Search Rewrites 77% of AI Product Recommendations",
@@ -210,7 +210,9 @@ a { color: inherit; text-decoration: none; }
   .lb-table thead th.hide-m, .lb-table td.hide-m { display: none; }
   .cta-section { padding: 28px 20px; }
 }
-</style><body>
+</style>
+</head>
+<body>
 <div class="page">
 
   <nav class="nav">
@@ -238,6 +240,11 @@ a { color: inherit; text-decoration: none; }
       <div class="byline">Atom Foundry &middot; July 2026 &middot; Controlled experiment</div>
     </div>
 
+    <div style="margin:28px 0;padding:16px 20px;border-left:3px solid #EF9F27;background:rgba(239,159,39,0.06);border-radius:0 10px 10px 0;">
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#EF9F27;margin-bottom:8px;">Correction &middot; 15 July 2026</div>
+      <p style="font-size:14px;color:#b4b8bc;line-height:1.7;margin:0;">An earlier version of this piece claimed that changing the model moved only about 6% of recommendations. That number was derived rather than measured, and it was wrong. Measured directly, swapping gpt-4o-mini for gpt-4o with search off in both cases changes 66.9% of the recommended brands. The 77% search effect is unaffected and stands. See <em>The control</em> below for the full correction.</p>
+    </div>
+
     <figure style="margin:36px 0;">
       <img src="/images/research/web-search-changes-recommendations.png" alt="Bar chart: Turn web search on, and 77% of AI recommendations change. A horizontal bar shows 77% in orange labeled Rewritten by search and 23% in grey labeled Held. Same model gpt-4o, same 50 buying prompts, only variable is browsing. n = 50 prompts x 10 runs x 2 conditions, brand-set overlap." style="width:100%;height:auto;border-radius:14px;border:1px solid #1e1e1e;">
     </figure>
@@ -259,13 +266,12 @@ a { color: inherit; text-decoration: none; }
       <p class="section-body">With search off, the model recommends from memory. It names the brands it saw most often during training, which skews heavily toward the famous ones. With search on, it throws most of those out and recommends whatever its retrieval surfaces in the moment. These are not small adjustments to a stable list. They are two largely different lists.</p>
 
       <div class="section-kicker">The control</div>
-      <h2 class="section-title">It was the search, not the model</h2>
-      <p class="section-body">The obvious objection: maybe gpt-4o just recommends different brands than gpt-4o-mini, and we were measuring model differences, not search. So we isolated it. Same model, search on versus off. Then, separately, the effect of model size with search held off.</p>
-      <p class="section-body">Changing the model size (mini to 4o), no browsing, moved about 6% of recommendations. Turning on web search, same model, changed 77%. Which model you ask barely matters. Whether it can browse changes almost everything.</p>
-
-      <figure style="margin:28px 0;">
-        <img src="/images/research/web-search-vs-model-size.png" alt="Bar chart titled What actually decides the recommendation. Two bars compare two changes. Changing the model size from mini to 4o with search off moved about 6 percent of recommendations. Turning on web search on the same model changed 77 percent. Retrieval moves recommendations far more than model size." style="width:100%;height:auto;border-radius:14px;border:1px solid #1e1e1e;">
-      </figure>
+      <h2 class="section-title">A correction: we got the model comparison wrong</h2>
+      <p class="section-body">The obvious objection to the headline was that gpt-4o might simply recommend different brands than gpt-4o-mini, and that we were measuring a model difference rather than a search effect. So we ran gpt-4o with search off as a control. That comparison, gpt-4o with search versus gpt-4o without, is clean: same model, same run, one variable. It is where the 77% comes from and it stands.</p>
+      <p class="section-body"><strong>The mistake was what we said next.</strong> An earlier version of this piece claimed that changing the model size moved only about 6% of recommendations, and concluded that which model you ask barely matters. That 6% was never measured. It was derived, by subtracting two different overlap figures from two different comparisons, which is not the same quantity at all. We published arithmetic and called it a result.</p>
+      <p class="section-body">Measured properly, gpt-4o-mini without search against gpt-4o without search, <strong>66.9% of the recommended brands changed</strong>. Not 6%. Swapping the model rewrites roughly two thirds of the answer, which is close to what turning on search does.</p>
+      <p class="section-body"><strong>An honest caveat on that 67%.</strong> The mini runs and the gpt-4o control runs were collected twelve days apart, so that figure mixes the model change with whatever drifted in between. We cannot separate the two from this data. The search comparison does not have that problem, because both conditions ran together. So: 77% is a clean measurement, 67% is a real but confounded one. Either way, the original claim that model choice barely matters is dead.</p>
+      <p class="section-body">Which leaves a better finding than the one we started with. Switch the model and roughly two thirds of the recommendations change. Turn on browsing and roughly three quarters change. <strong>There is no such thing as what AI recommends.</strong> There is only what a particular model, in a particular configuration, at a particular moment, recommends. Anyone selling you a position in AI recommendations should be asked which AI, in which mode, and on what day.</p>
 
       <div class="section-kicker">The texture</div>
       <h2 class="section-title">It depends on the category</h2>
