@@ -210,6 +210,14 @@ a { color: inherit; text-decoration: none; }
   .lb-table thead th.hide-m, .lb-table td.hide-m { display: none; }
   .cta-section { padding: 28px 20px; }
 }
+
+.sub-head { font-size: 17px; font-weight: 700; color: #e8e8e8; margin: 30px 0 10px; letter-spacing: -0.01em; }
+.art-list { max-width: 680px; margin: 14px 0 20px; padding-left: 0; list-style: none; }
+.art-list li { font-size: 15px; color: #aaa; line-height: 1.7; padding: 7px 0 7px 22px; position: relative; }
+.art-list li:before { content: "\2022"; color: #f97316; position: absolute; left: 4px; top: 7px; font-weight: 700; }
+.art-list li strong { color: #e8e8e8; }
+.note { max-width: 680px; font-size: 13.5px; color: #7a7f85; line-height: 1.75; border-left: 2px solid #262626; padding: 2px 0 2px 16px; margin: 18px 0 22px; font-style: italic; }
+.lede { font-size: 17px; color: #cfd3d6; line-height: 1.8; max-width: 680px; margin-bottom: 18px; }
 </style>
 </head>
 <body>
@@ -257,7 +265,14 @@ a { color: inherit; text-decoration: none; }
 
       <div class="section-kicker">The setup</div>
       <h2 class="section-title">One model, one toggle</h2>
-      <p class="section-body">50 buying prompts across 10 ecommerce categories. 10 runs per prompt per condition, to control for run-to-run randomness. One model, gpt-4o. The only variable we changed was whether web search was enabled. For each condition we collected the set of recommended brands, then measured how many brands appeared in both. We also ran the whole thing against gpt-4o-mini, to separate the effect of search from the effect of using a bigger model.</p>
+      <p class="lede">The design is deliberately boring. Change one thing, hold everything else still.</p>
+      <ul class="art-list">
+        <li><strong>50 buying prompts</strong> across 10 ecommerce categories: pets, beauty, supplements, coffee, fashion, fitness, food, home, wellness, electronics.</li>
+        <li><strong>10 runs per prompt, per condition</strong>, to average out run-to-run randomness.</li>
+        <li><strong>One model: gpt-4o.</strong> The only variable we changed was whether web search was enabled.</li>
+        <li><strong>The measurement:</strong> for each condition we collected the set of recommended brands, then counted how many appeared in both.</li>
+      </ul>
+      <p class="section-body">We also ran the whole thing against gpt-4o-mini, to separate the effect of search from the effect of using a bigger model. That turned out to matter more than we expected, and not in the way we first reported.</p>
 
       <div class="section-kicker">The headline</div>
       <h2 class="section-title">77% of recommendations changed</h2>
@@ -267,28 +282,55 @@ a { color: inherit; text-decoration: none; }
 
       <div class="section-kicker">The control</div>
       <h2 class="section-title">A correction: we got the model comparison wrong</h2>
-      <p class="section-body">The obvious objection to the headline was that gpt-4o might simply recommend different brands than gpt-4o-mini, and that we were measuring a model difference rather than a search effect. So we ran gpt-4o with search off as a control. That comparison, gpt-4o with search versus gpt-4o without, is clean: same model, same run, one variable. It is where the 77% comes from and it stands.</p>
-      <p class="section-body"><strong>The mistake was what we said next.</strong> An earlier version of this piece claimed that changing the model size moved only about 6% of recommendations, and concluded that which model you ask barely matters. That 6% was never measured. It was derived, by subtracting two different overlap figures from two different comparisons, which is not the same quantity at all. We published arithmetic and called it a result.</p>
-      <p class="section-body">Measured properly, gpt-4o-mini without search against gpt-4o without search, <strong>66.9% of the recommended brands changed</strong>. Not 6%. Swapping the model rewrites roughly two thirds of the answer, which is close to what turning on search does.</p>
-      <p class="section-body"><strong>An honest caveat on that 67%.</strong> The mini runs and the gpt-4o control runs were collected twelve days apart, so that figure mixes the model change with whatever drifted in between. We cannot separate the two from this data. The search comparison does not have that problem, because both conditions ran together. So: 77% is a clean measurement, 67% is a real but confounded one. Either way, the original claim that model choice barely matters is dead.</p>
-      <p class="section-body">Which leaves a better finding than the one we started with. Switch the model and roughly two thirds of the recommendations change. Turn on browsing and roughly three quarters change. <strong>There is no such thing as what AI recommends.</strong> There is only what a particular model, in a particular configuration, at a particular moment, recommends. Anyone selling you a position in AI recommendations should be asked which AI, in which mode, and on what day.</p>
+      <p class="lede">The obvious objection to the headline: maybe gpt-4o simply recommends different brands than gpt-4o-mini, and we were measuring a model difference rather than a search effect.</p>
+      <p class="section-body">So we ran gpt-4o with search off as a control. That comparison &mdash; gpt-4o with search versus gpt-4o without &mdash; is clean: same model, same run, one variable. It is where the 77% comes from, and it stands.</p>
+
+      <div class="sub-head">The mistake was what we said next</div>
+      <p class="section-body">An earlier version of this piece claimed that changing the model moved only about 6% of recommendations, and concluded that which model you ask barely matters.</p>
+      <p class="section-body">That 6% was never measured. We derived it, by subtracting two overlap figures from two different comparisons and treating the gap as the model effect. It is not the same quantity. We published arithmetic and called it a result.</p>
+      <p class="section-body">Measured properly &mdash; gpt-4o-mini without search against gpt-4o without search &mdash; <strong>66.9% of the recommended brands changed.</strong> Not 6%. Swapping the model rewrites roughly two thirds of the answer, close to what turning on search does.</p>
+
+      <div class="sub-head">An honest caveat</div>
+      <p class="section-body">The mini runs and the gpt-4o control runs were collected twelve days apart, so that figure mixes the model change with whatever drifted in between. We could not separate them from that data.</p>
+      <p class="section-body">We have since re-run both conditions in the same window, which removes the ambiguity: the clean model effect is <strong>68.9%</strong> (95% CI 66&ndash;71). The search comparison never had this problem, because both conditions ran together.</p>
+
+      <div class="sub-head">What it leaves</div>
+      <p class="section-body">A better finding than the one we started with. Switch the model and roughly two thirds of the recommendations change. Turn on browsing and roughly three quarters change.</p>
+      <p class="section-body"><strong>There is no such thing as what AI recommends.</strong> There is only what a particular model, in a particular configuration, at a particular moment, recommends.</p>
+      <p class="section-body">Anyone selling you a position in AI recommendations should be asked which AI, in which mode, and on what day.</p>
 
       <div class="section-kicker">The baseline nobody measures</div>
-      <h2 class="section-title">Ask the same model twice and 47% of the brands change</h2>
-      <p class="section-body">Every number above is a comparison between two conditions. But we never asked the obvious question: how different are two answers when <em>nothing</em> changes at all? These models run at a temperature setting that makes them non-deterministic. The same question, asked twice in the same second, does not return the same answer.</p>
+      <h2 class="section-title">Ask the same model twice and half the brands change</h2>
+      <p class="lede">Every number above compares two conditions. But we never asked the obvious question: how different are two answers when <em>nothing</em> changes at all?</p>
+      <p class="section-body">These models are non-deterministic. The same question, asked twice in the same second, does not return the same answer.</p>
       <p class="section-body">So we split a single sweep in half. Runs one to five against runs six to ten. Same model, same configuration, same moment. The only variable is the dice.</p>
-      <p class="section-body"><strong>47% of the recommended brands were different.</strong> Nothing changed. No new model, no browsing, no time passing. Just asking twice.</p>
-      <p class="section-body">That is the floor, and it reframes everything. When we say browsing changed 77% of recommendations, the intuitive reading is that the baseline is zero, that without the toggle the answer would have stayed put. It would not have. The baseline is 47%. So the honest way to read the study is against that floor, with every comparison measured at matched run counts:</p>
-      <p class="section-body" style="font-family:ui-monospace,Menlo,monospace;font-size:14px;line-height:2;background:#0e0e0e;border:1px solid #1e1e1e;border-radius:10px;padding:18px 22px;">
-        Ask twice, change nothing &nbsp;&nbsp;&rarr;&nbsp; <strong style="color:#8b9095;">47% different</strong> &nbsp;(the floor)<br>
-        Wait three days &nbsp;&nbsp;&rarr;&nbsp; <strong style="color:#8b9095;">45% different</strong> &nbsp;(at the floor: no drift)<br>
-        Swap the model &nbsp;&nbsp;&rarr;&nbsp; <strong style="color:#EF9F27;">67% different</strong> &nbsp;(~16 points above)<br>
-        Turn on web search &nbsp;&nbsp;&rarr;&nbsp; <strong style="color:#f97316;">76% different</strong> &nbsp;(~29 points above)
+      <p class="section-body"><strong>47% of the recommended brands were different.</strong> Nothing changed. Just asking twice.</p>
+
+      <div class="sub-head">The trap we walked into</div>
+      <p class="section-body">Our first instinct was to subtract. If the floor is 47% and search changes 77%, then search is worth 30 points.</p>
+      <p class="section-body">That is wrong, and it is the same mistake as the 6% earlier in this piece: a difference between two noisy measurements, dressed up as a quantity. It also assumes there is one floor, when in fact the floor is different for every comparison.</p>
+
+      <div class="sub-head">The right test</div>
+      <p class="section-body">Pool the runs from both conditions. Reshuffle which run belongs to which label. Recompute the change rate. Repeat ten thousand times.</p>
+      <p class="section-body">That gives a null distribution: what the change rate looks like when the condition label means nothing. The observed value either sits inside that distribution or it does not. No subtraction.</p>
+      <p class="section-body" style="font-family:ui-monospace,Menlo,monospace;font-size:13px;line-height:1.9;background:#0e0e0e;border:1px solid #1e1e1e;border-radius:10px;padding:18px 22px;max-width:680px;">
+        <span style="color:#8b9095;">comparison &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; observed &nbsp;&nbsp; null &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p</span><br>
+        Turn on web search &nbsp;&nbsp;&nbsp; <strong style="color:#f97316;">76.9%</strong> &nbsp;&nbsp;&nbsp;&nbsp; 39.1% &nbsp;&nbsp; &lt;0.001 &nbsp;<span style="color:#1D9E75;">real</span><br>
+        Swap the model &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#EF9F27;">68.9%</strong> &nbsp;&nbsp;&nbsp;&nbsp; 54.5% &nbsp;&nbsp; &lt;0.001 &nbsp;<span style="color:#1D9E75;">real</span><br>
+        Wait three days &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#8b9095;">45.3%</strong> &nbsp;&nbsp;&nbsp;&nbsp; 45.6% &nbsp;&nbsp; 0.73 &nbsp;&nbsp;&nbsp;<span style="color:#E24B4A;">nothing</span>
       </p>
-      <p class="section-body">Two things fall out of that. First, <strong>there is no drift.</strong> We re-ran the identical condition three days later and got 45% different, which is indistinguishable from the 47% you get by asking twice in the same second. Over three days, with the same model in the same mode, the recommendation hierarchy does not move. It only looks like it moves because the model is noisy.</p>
-      <p class="section-body">Second, and this is the part that should worry anyone selling AI visibility: <strong>if you measure a brand's AI recommendation position with a single query, roughly half of what you are looking at is a coin flip.</strong> Not a trend, not an improvement, not the result of anything you did. Noise. The only way to see a real signal is to ask many times and compare distributions.</p>
-      <p class="section-body">One more thing worth noticing. The noise floor is not constant. With browsing off it is 47%. With browsing on it is <strong>27%</strong>. Retrieval nearly halves the randomness. When the model has something to read it stops guessing, and the answer gets more repeatable. The smaller model is noisier still, at 57%.</p>
-      <p class="section-body"><strong>Where this is soft:</strong> we compare each effect against the noise floor by subtraction, which is a rule of thumb rather than a formal test. A permutation test would give a proper null distribution and we have not run one. The gaps here are wide enough that we doubt it changes the conclusion, but it is an open item and we would rather flag it than let it pass.</p>
+      <p class="section-body">Search and model survive. <strong>Drift does not.</strong> We re-ran an identical condition three days later and the result sits exactly on top of the null. Over three days, with the same model in the same mode, the hierarchy does not move. It only looked like it moved because the model is noisy.</p>
+      <p class="section-body">Notice the null is different every time. Pooling a small model with a large one gives a noisy null (54.5%). Pooling browsing-off with browsing-on gives a lower one (39.1%), because browsing is more repeatable. This is exactly why subtracting a single number from everything was never going to work.</p>
+
+      <div class="sub-head">What this means if you sell anything online</div>
+      <p class="section-body"><strong>Measure a brand&rsquo;s recommendation position with a single query and roughly half of what you see is a coin flip.</strong> Not a trend. Not an improvement. Not something you caused.</p>
+      <p class="section-body">The only way to see signal is to ask many times and compare distributions against a null. Most tools ask once.</p>
+
+      <div class="sub-head">The noise is not constant</div>
+      <p class="section-body">With browsing off it is 47%. With browsing on it is <strong>27%</strong>. Retrieval nearly halves the randomness: when the model has something to read, it stops guessing. The smaller model is noisier still, at 57%.</p>
+      <p class="section-body">And it is tempting to assume you can just run more and make the noise go away. We measured the floor at one run per side, then two, three, four, five: <strong>51.9%, 48.5%, 47.0%, 46.1%, 45.6%.</strong></p>
+      <p class="section-body">It falls, but it flattens fast, and it is heading somewhere in the mid-forties rather than zero. More sampling buys less than you would hope. The randomness looks like a property of the model, not of our budget.</p>
+      <p class="note">That last figure is an extrapolation from five points, not a measurement.</p>
 
       <div class="section-kicker">The texture</div>
       <h2 class="section-title">It depends on the category</h2>
@@ -301,11 +343,32 @@ a { color: inherit; text-decoration: none; }
 
       <div class="section-kicker">The stress test</div>
       <h2 class="section-title">We tried to break the category finding before publishing it</h2>
-      <p class="section-body">Before this went out, a data engineer raised a fair objection: how do we know that&rsquo;s the category and not the prompts? Generic questions like &ldquo;best dog food&rdquo; should lean on retrieval harder than specific ones like &ldquo;best cat litter for odor control.&rdquo; If our 50 prompts skew generic in some categories and specific in others, what looks like market structure could just be prompt style.</p>
-      <p class="section-body">So we tagged all 50 prompts, generic or specific, and split the results. Pooled, generic prompts changed 74.2% and specific prompts changed 80.0%. Specific changed <em>more</em>, the opposite of the prediction. We could have stopped there and declared the objection handled.</p>
-      <p class="section-body">That would have been wrong. Inside each individual category, specificity has no consistent direction at all: generic changes more in five categories, specific in four. The pooled gap was composition, not causation. The categories that happen to hold most of our specific prompts (coffee, pets, wellness) are also the categories that change the most, so specific prompts <em>appear</em> to change more purely because of where they live. This is Simpson&rsquo;s paradox, and it made the pooled number worse than useless: it looked like an answer.</p>
-      <p class="section-body">The real test is holding specificity constant and looking at the category effect inside each stratum. Generic prompts only: Coffee 89.8% down to Fitness 62.4%, a 27-point spread. Specific prompts only: Pets 94.4% down to Fitness 52.6%, a 42-point spread. Fitness is lowest in both. Coffee and Pets are highest in both. The category ranking survives when prompt style is controlled for. Across the ten categories, the correlation between a category&rsquo;s share of generic prompts and its change rate is &minus;0.56; if the confound were real, that would need to be strongly positive.</p>
-      <p class="section-body"><strong>Where this is still weak, stated plainly.</strong> The cells are thin. Coffee has exactly one generic prompt, Fitness has exactly one specific prompt, and Electronics has no specific prompts at all, so the 42-point spread in the specific stratum leans on a single prompt at one end. The correlation of &minus;0.56 across ten categories is not statistically significant; the critical value at that sample size is roughly 0.63. And the prompt mix was not designed to be balanced, it simply happened that way. So the honest claim is that we looked for the confound and found the opposite, and the category effect survives stratification. Not that no confound exists. A balanced design would settle it cleanly, and that is what the next study will use.</p>
+      <p class="lede">A data engineer raised a fair objection: how do we know that&rsquo;s the category and not the prompts?</p>
+      <p class="section-body">Broad questions like &ldquo;best dog food&rdquo; should lean on retrieval harder than narrow ones like &ldquo;best cat litter for odor control.&rdquo; If our 50 prompts skew broad in some categories and narrow in others, what looks like market structure could just be prompt style.</p>
+      <p class="section-body">So we tagged all 50 prompts and split the results.</p>
+
+      <div class="sub-head">The number that looked like an answer</div>
+      <p class="section-body">Pooled, broad prompts changed 74.2% and narrow prompts changed 80.0%. Narrow changed <em>more</em> &mdash; the opposite of the prediction. We could have stopped there and declared the objection handled.</p>
+      <p class="section-body">That would have been wrong.</p>
+      <p class="section-body">Inside each individual category, prompt style has no consistent direction at all: broad changes more in five categories, narrow in four. The pooled gap was composition, not causation. The categories that happen to hold most of our narrow prompts are also the categories that change the most, so narrow prompts <em>appear</em> to change more purely because of where they live.</p>
+      <p class="section-body">This is Simpson&rsquo;s paradox, and it made the pooled number worse than useless: it looked like an answer.</p>
+
+      <div class="sub-head">The real test</div>
+      <p class="section-body">Hold specificity constant and look at the category effect inside each stratum.</p>
+      <ul class="art-list">
+        <li><strong>Broad prompts only:</strong> Coffee 89.8% down to Fitness 62.4%. A 27-point spread.</li>
+        <li><strong>Narrow prompts only:</strong> Pets 94.4% down to Fitness 52.6%. A 42-point spread.</li>
+      </ul>
+      <p class="section-body">Fitness is lowest in both. Coffee and Pets are highest in both. The category ranking survives when prompt style is controlled for. Across the ten categories, the correlation between a category&rsquo;s share of broad prompts and its change rate is &minus;0.56 &mdash; if the confound were real, that would need to be strongly positive.</p>
+
+      <div class="sub-head">Where this is still weak</div>
+      <p class="section-body">We would rather say this than have someone find it.</p>
+      <ul class="art-list">
+        <li><strong>The cells are thin.</strong> Coffee has exactly one broad prompt. Fitness has exactly one narrow prompt. Electronics has none. The 42-point spread leans on a single prompt at one end.</li>
+        <li><strong>The correlation is not significant.</strong> &minus;0.56 across ten categories, where the critical value is roughly 0.63. A direction, not a proof.</li>
+        <li><strong>The prompt mix was not designed.</strong> It happened. A balanced grid would settle this cleanly, and that is what the next study will use.</li>
+      </ul>
+      <p class="section-body">So the honest claim is that we looked for the confound and found the opposite, and the category effect survives stratification. Not that no confound exists.</p>
 
       <div class="section-kicker">The wall</div>
       <h2 class="section-title">What we still can&rsquo;t measure</h2>
