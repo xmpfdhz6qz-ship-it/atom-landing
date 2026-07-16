@@ -283,12 +283,12 @@ a { color: inherit; text-decoration: none; }
       <div class="section-kicker">The control</div>
       <h2 class="section-title">A correction: we got the model comparison wrong</h2>
       <p class="lede">The obvious objection to the headline: maybe gpt-4o simply recommends different brands than gpt-4o-mini, and we were measuring a model difference rather than a search effect.</p>
-      <p class="section-body">So we ran gpt-4o with search off as a control. That comparison gpt-4o with search versus gpt-4o without is clean: same model, same run, one variable. It is where the 77% comes from, and it stands.</p>
+      <p class="section-body">So we ran gpt-4o with search off as a control. That comparison &mdash; gpt-4o with search versus gpt-4o without &mdash; is clean: same model, same run, one variable. It is where the 77% comes from, and it stands.</p>
 
       <div class="sub-head">The mistake was what we said next</div>
       <p class="section-body">An earlier version of this piece claimed that changing the model moved only about 6% of recommendations, and concluded that which model you ask barely matters.</p>
       <p class="section-body">That 6% was never measured. We derived it, by subtracting two overlap figures from two different comparisons and treating the gap as the model effect. It is not the same quantity. We published arithmetic and called it a result.</p>
-      <p class="section-body">Measured properly gpt-4o-mini without search against gpt-4o without search <strong>66.9% of the recommended brands changed.</strong> Not 6%. Swapping the model rewrites roughly two thirds of the answer, close to what turning on search does.</p>
+      <p class="section-body">Measured properly &mdash; gpt-4o-mini without search against gpt-4o without search &mdash; <strong>66.9% of the recommended brands changed.</strong> Not 6%. Swapping the model rewrites roughly two thirds of the answer, close to what turning on search does.</p>
 
       <div class="sub-head">An honest caveat</div>
       <p class="section-body">The mini runs and the gpt-4o control runs were collected twelve days apart, so that figure mixes the model change with whatever drifted in between. We could not separate them from that data.</p>
@@ -328,9 +328,20 @@ a { color: inherit; text-decoration: none; }
 
       <div class="sub-head">The noise is not constant</div>
       <p class="section-body">With browsing off it is 47%. With browsing on it is <strong>27%</strong>. Retrieval nearly halves the randomness: when the model has something to read, it stops guessing. The smaller model is noisier still, at 57%.</p>
-      <p class="section-body">And it is tempting to assume you can just run more and make the noise go away. We measured the floor at one run per side, then two, three, four, five: <strong>51.9%, 48.5%, 47.0%, 46.1%, 45.6%.</strong></p>
-      <p class="section-body">It falls, but it flattens fast, and it is heading somewhere in the mid-forties rather than zero. More sampling buys less than you would hope. The randomness looks like a property of the model, not of our budget.</p>
-      <p class="note">That last figure is an extrapolation from five points, not a measurement.</p>
+      <p class="section-body">And it is tempting to assume you can just run more and make the noise go away. So we ran a sweep at twenty runs per condition instead of ten, and measured the floor at every split from one run per side up to ten.</p>
+      <p class="section-body" style="font-family:ui-monospace,Menlo,monospace;font-size:13px;line-height:1.9;background:#0e0e0e;border:1px solid #1e1e1e;border-radius:10px;padding:18px 22px;max-width:680px;">
+        <span style="color:#8b9095;">runs per side &nbsp;&nbsp;&nbsp; noise floor</span><br>
+        1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 49.9%<br>
+        2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47.4%<br>
+        3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 46.4%<br>
+        4 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#EF9F27;">46.1%</strong><br>
+        5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#EF9F27;">46.1%</strong><br>
+        6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#EF9F27;">46.0%</strong><br>
+        8 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#EF9F27;">46.1%</strong><br>
+        10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#EF9F27;">46.1%</strong>
+      </p>
+      <p class="section-body">It falls for the first three, then <strong>stops dead at 46.1% and does not move again.</strong> Doubling the sampling from five runs to ten changes nothing. Not a tenth of a point.</p>
+      <p class="section-body">So the noise is not a budget problem. You cannot buy determinism back by running more. <strong>The randomness is a property of the model itself</strong> &mdash; there is a stable core of brands and a tail long enough that every query pulls different edges of it, no matter how many times you ask.</p>
 
       <div class="section-kicker">The texture</div>
       <h2 class="section-title">It depends on the category</h2>
