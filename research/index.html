@@ -269,6 +269,13 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
   .print-watermark { display: none; }
   .print-page-break { display: none; }
 }
+
+.ai-sitemap { border-top:1px solid #161616; margin-top:22px; padding:16px 0 4px; }
+.ai-sitemap-inner { max-width:1080px; margin:0 auto; padding:0 24px; display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; }
+.ai-sitemap-label { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#4a4a4a; margin-right:4px; font-family:ui-monospace,Menlo,monospace; }
+.ai-sitemap a { font-size:12px; color:#666; text-decoration:none; transition:color .2s; }
+.ai-sitemap a:hover { color:#f97316; }
+@media (max-width:640px){ .ai-sitemap-inner{ gap:8px 12px; } }
 </style>
 </head>
 <body>
@@ -369,7 +376,7 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
         <div>
           <div class="report-badge">&#9889; New &middot; Controlled experiment</div>
           <div class="report-title">Web Search Rewrites 77% of AI Product Recommendations</div>
-          <div class="report-meta">Same model, same 50 buying prompts. Turn web search on and <strong>77% of recommended brands change</strong> (95% CI 74&ndash;80%). Memory versus retrieval, cleanly isolated and stress-tested against the obvious confound.</div>
+          <div class="report-meta">Same model, same 50 buying prompts. Turn web search on and <strong>77% of recommended brands change</strong> (95% CI 74&ndash;80%). Memory versus retrieval, cleanly isolated &mdash; and stress-tested against the obvious confound.</div>
         </div>
         <div class="report-actions">
           <a href="/research/web-search-changes-ai-recommendations" class="btn-primary">Read the report &rarr;</a>
@@ -678,7 +685,35 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
       </div>
     </div>
   </div>
-</footer>
+
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/framework">AI Readiness Framework</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/research">Research</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web search vs AI recommendations</a>
+        <a href="/ai-commerce-intelligence">AI Commerce Intelligence</a>
+        <a href="/founders-reality-check">Founder&rsquo;s Reality Check</a>
+      </div>
+    </nav>
+
+    <div class="lab-note" style="border-top:1px solid #161616;margin-top:22px;padding:18px 0 4px;">
+      <div style="max-width:1080px;margin:0 auto;padding:0 24px;">
+        <span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4a4a4a;">Research infrastructure &middot; Founder Lab</span>
+        <p style="font-size:13px;color:#666;margin-top:10px;line-height:1.65;max-width:720px;">
+          Atom Foundry operates its own live Shopify store, <a href="https://founder.atomfoundry.dev" rel="nofollow" style="color:#8b9095;text-decoration:underline;">Founder Lab</a>, as a permanent controlled experiment. Most measurement of AI commerce is observational: you watch stores you don&rsquo;t control and infer what matters. Founder Lab lets us do the opposite. We own every variable, so we can change one thing at a time &mdash; a product description, a schema field, a trust signal &mdash; and watch, in real time, how AI systems respond.
+        </p>
+        <p style="font-size:13px;color:#666;margin-top:10px;line-height:1.65;max-width:720px;">
+          What we measure there goes beyond a single score. We track how each change moves the store&rsquo;s AI Commerce Score&trade;, but also which AI agents crawl the store and when, which pages they read, whether they retrieve it in live shopping answers, and how its recommendation profile shifts over time. It is a live sensor for the same signals we measure across the wider commerce graph &mdash; validated on a store we fully control. Over time, Founder Lab becomes the causal ground truth behind Atom Foundry&rsquo;s research: the place where we confirm what actually moves AI behavior, before we claim it anywhere else.
+        </p>
+      </div>
+    </div>
+  </footer>
 
 </div>
 </div>
