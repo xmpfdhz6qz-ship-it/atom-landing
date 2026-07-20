@@ -49,6 +49,7 @@
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
       "about": { "@id": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets#dataset" },
       "breadcrumb": { "@id": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets#breadcrumb" }
     },
     {
@@ -72,7 +73,6 @@
       "creator": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
       "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets",
-      "isPartOf": { "@id": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets#webpage" },
       "measurementTechnique": "Recommendation Share, Recommendation Frequency, Recommendation Position",
       "variableMeasured": ["Recommendation Share", "Recommendation Frequency", "Recommendation Position", "AI Commerce Score"]
     },
@@ -211,7 +211,6 @@ a { color: inherit; text-decoration: none; }
 </head>
 <body>
 <div class="page">
-
   <nav class="nav">
     <div class="nav-brand">
       <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
@@ -227,23 +226,19 @@ a { color: inherit; text-decoration: none; }
       <a href="/#score" class="cta-nav">Free Score</a>
     </div>
   </nav>
-
   <div class="wrap">
-
     <div class="hero">
       <div class="hero-kicker">Recommendation Intelligence Research&trade;</div>
       <h1>The State of AI Recommendations in <em>Pets</em></h1>
       <p class="hero-sub">We asked one AI model 20 high-intent pet shopping questions, 20 times each. Then we checked the same thing we checked in beauty, supplements, and coffee, and pets gave a different, sharper answer.</p>
       <div class="byline">Atom Foundry &middot; June 2026 &middot; Fourth in the Recommendation Intelligence Research&trade; series</div>
     </div>
-
     <div class="stats-bar">
       <div class="stat-cell"><div class="stat-num">4,000</div><div class="stat-label">Recommendations</div></div>
       <div class="stat-cell"><div class="stat-num">405</div><div class="stat-label">Distinct brands</div></div>
       <div class="stat-cell"><div class="stat-num">20</div><div class="stat-label">Shopping intents</div></div>
       <div class="stat-cell"><div class="stat-num">400</div><div class="stat-label">Prompt-runs</div></div>
     </div>
-
     <div class="section">
       <div class="section-kicker">How we measured it</div>
       <h2 class="section-title">Methodology, <em>up front</em></h2>
@@ -265,7 +260,6 @@ a { color: inherit; text-decoration: none; }
         <div class="limits"><strong>Marketplaces are not brands.</strong> Retailers and marketplaces (Chewy, Petco, Amazon, PetSmart, Frisco) were separated out and excluded from the brand-level analysis. The contest measured here is between single brands and their own stores. <strong>A note on pets:</strong> the biggest food names (Purina, Royal Canin, Hill's, Taste of the Wild) are not in our store index, so they appear off-index and stay out of the correlation. One brand, Wellness, was dropped from the on-index set after we found its name had auto-matched to an unrelated health-directory domain; we report it off-index rather than attach a wrong store. <strong>Other limits:</strong> one model, one category, one point in time. Each intent ran 20 times. Brands map to the real stores we measure where a match exists; the rest are off-index, never invented.</div>
       </div>
     </div>
-
     <div class="section">
       <div class="section-kicker">Who AI recommends</div>
       <h2 class="section-title">The pet <em>recommendation leaderboard</em></h2>
@@ -442,7 +436,6 @@ a { color: inherit; text-decoration: none; }
         </tbody>
       </table>
     </div>
-
     <div class="section">
       <div class="section-kicker">The central finding</div>
       <h2 class="section-title">In pets, being recommended is if anything a sign of a <em>worse</em> store</h2>
@@ -466,7 +459,6 @@ a { color: inherit; text-decoration: none; }
       <p class="section-body" style="margin-top:20px;">This is the clearest inversion we have measured. The legacy food giants AI grew up on dominate the answers, and the modern direct-to-consumer brands building the most readable stores are the ones it overlooks. The average AI Commerce Score&trade; across all on-index recommended brands is just <strong>52.7</strong>.</p>
       <div class="callout">Four categories now. Beauty came in at r = 0.17, supplements at r = -0.015, coffee at r = 0.019, and pets at r = -0.366. Across more than 16,000 recommendations, recommendation frequency is <strong>never positively related</strong> to store readiness. In three categories the link is zero; in pets it tilts negative. Being recommended is a sign of fame, not of a better store.</div>
     </div>
-
     <div class="section">
       <div class="section-kicker">What maps to a real store</div>
       <h2 class="section-title">Brands, not <em>retailers</em></h2>
@@ -477,20 +469,17 @@ a { color: inherit; text-decoration: none; }
       </div>
       <p class="section-body" style="margin-top:18px;">Two things drive that low on-index share. So much of pet commerce runs through Chewy and Petco rather than brand stores, and the biggest brands of all, Purina, Royal Canin, and Hill's, are not in our index. They are recommended on pure brand fame, not because an agent read and rated their store.</p>
     </div>
-
     <div class="section">
       <div class="section-kicker">What it means</div>
       <h2 class="section-title">Visibility is not <em>recommendation</em>, and recommendation is not <em>readiness</em></h2>
       <p class="section-body">Today AI recommends from memory. It reaches for the names it saw most during training, which in pets means the legacy food giants, even when their stores are weak or absent and the best modern stores go unnamed. That bias is baked in, and it is temporary. As AI shopping moves from recalling names to live retrieval and agents that browse, compare, and check out, the advantage shifts to the stores an agent can actually read, trust, and act on.</p>
       <p class="section-body" style="margin-top:14px;">That is the gap this research exposes and the one the <a href="/framework" style="color:#1D9E75;">Recommendation Intelligence Framework&trade;</a> is built to close: AI Readability, AI Understanding, AI Trust, Recommendation Intelligence, and Decision Confidence. The brands coasting on fame today are the ones with the most to lose when the model changes. The modern brands building readable, trustworthy, machine-legible stores now are the ones that keep the recommendation when memory stops being enough.</p>
     </div>
-
     <div class="cta-section">
       <div class="cta-title">Will AI still <em>recommend</em> you when it has to read your store?</div>
       <div class="cta-sub">Get your free AI Commerce Score&trade; in 10 seconds and see exactly where your store stands on the signals that decide AI recommendations.</div>
       <a href="/#score" class="cta-btn">Get My Free AI Score</a>
     </div>
-
     <!-- INTERNAL LINKING: flagship + sibling niches + framework -->
     <div class="related">
       <div class="section-kicker">Keep reading</div>
@@ -530,9 +519,7 @@ a { color: inherit; text-decoration: none; }
       </div>
       <p class="related-more"><a href="/research">&larr; All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp; <a href="/stores">Stores</a></p>
     </div>
-
   </div>
-
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
@@ -557,7 +544,6 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div>
   </footer>
-
 </div>
 </body>
 </html>
