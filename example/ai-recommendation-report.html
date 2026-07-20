@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Recommendation Intelligence Report: Activewear</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --ink: #1d1d1f;
+    --gray: #6e6e73;
+    --gray-light: #86868b;
+    --line: #d2d2d7;
+    --bg: #ffffff;
+    --bg-alt: #f5f5f7;
+    --accent: #c2410c;
+  }
+  html{ -webkit-font-smoothing: antialiased; }
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .container{ max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+  .prose{ max-width: 660px; }
+  .center{ text-align: center; margin-left: auto; margin-right: auto; }
+  section{ padding: 100px 0; }
+  section.alt{ background: var(--bg-alt); }
+  section.tight{ padding: 76px 0; }
+
+  p{ text-align: left; }
+  h1{ font-size: clamp(38px, 5.4vw, 64px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; color: var(--ink); }
+  h2{ font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.12; color: var(--ink); }
+  h3{ font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  p{ font-size: 20px; color: var(--gray); line-height: 1.55; font-weight: 400; }
+  p.lead{ font-size: 24px; color: var(--ink); font-weight: 500; }
+  p.small{ font-size: 17px; }
+  .accent{ color: var(--accent); }
+  .ink{ color: var(--ink); font-weight: 600; }
+  .chapter{ text-align: center; font-size: 15px; color: var(--gray-light); letter-spacing: 0.01em; margin-bottom: 18px; }
+
+  .logo-slot{ border: 1.5px dashed var(--line); border-radius: 10px; padding: 10px 22px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--gray-light); text-transform: uppercase; display: inline-block; }
+  .head-top{ text-align: center; margin-bottom: 54px; }
+  .kicker{ font-size: 15px; color: var(--gray-light); margin-bottom: 18px; }
+  .hero-copy{ text-align: center; margin: 0 auto; }
+  .hero-copy h1{ margin-bottom: 24px; }
+  .hero-copy p{ font-size: 22px; margin: 0 auto; }
+  .meta-bar{ margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); font-size: 16px; color: var(--gray); line-height: 1.7; max-width: 760px; margin-left: auto; margin-right: auto; text-align: left; }
+  .meta-bar b{ color: var(--ink); }
+
+  .stat-row{ display: flex; gap: 70px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+  .stat{ text-align: center; }
+  .stat .num{ font-size: clamp(44px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
+  .stat .num.accent{ color: var(--accent); }
+  .stat .label{ font-size: 16px; color: var(--gray); margin-top: 12px; max-width: 190px; }
+
+  table{ width: 100%; border-collapse: collapse; margin-top: 8px; }
+  th{ text-align: left; font-size: 14px; font-weight: 600; color: var(--gray-light); padding: 12px 10px; border-bottom: 1px solid var(--line); }
+  th.num, td.num{ text-align: right; }
+  td{ padding: 16px 10px; border-bottom: 1px solid var(--line); font-size: 18px; color: var(--ink); vertical-align: middle; }
+  tr.client td{ font-weight: 700; }
+  tr.client{ background: transparent; }
+  .rank-cell{ color: var(--gray-light); width: 34px; }
+  .bar-cell{ width: 220px; }
+  .bar-track{ height: 6px; background: var(--bg-alt); border-radius: 3px; overflow: hidden; }
+  .bar-fill{ height: 100%; background: var(--line); border-radius: 3px; }
+  .bar-fill.client{ background: var(--accent); }
+  .tag-you{ display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); border-radius: 5px; padding: 1px 7px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.03em; vertical-align: middle; }
+
+  .map svg{ width: 100%; height: auto; display: block; }
+
+  .gap-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 50px; }
+  .gap-col h4{ font-size: 15px; color: var(--gray-light); font-weight: 600; margin-bottom: 20px; }
+  .chip{ display: inline-block; border: 1px solid var(--line); color: var(--gray); border-radius: 20px; padding: 8px 16px; font-size: 16px; margin: 0 8px 10px 0; }
+  .chip.win{ color: var(--ink); border-color: var(--gray-light); }
+  .chip.client{ color: var(--accent); border-color: var(--accent); }
+  @media (max-width: 680px){ .gap-grid{ grid-template-columns: 1fr; gap: 30px; } }
+
+  .list-row{ display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line); font-size: 19px; }
+  .list-row:last-child{ border-bottom: 1px solid var(--line); }
+  .list-row .q{ color: var(--ink); }
+  .list-row .a{ color: var(--gray-light); font-size: 16px; white-space: nowrap; }
+  .list-row .a b{ color: var(--gray); font-weight: 600; }
+
+  .xcat-row{ display: flex; align-items: center; gap: 20px; padding: 12px 0; }
+  .xcat-name{ width: 190px; flex-shrink: 0; font-size: 17px; color: var(--gray); }
+  .xcat-name.self{ color: var(--ink); font-weight: 600; }
+  .xcat-bar{ flex: 1; height: 10px; background: var(--bg-alt); border-radius: 5px; overflow: hidden; }
+  .xcat-fill{ height: 100%; background: var(--line); border-radius: 5px; }
+  .xcat-fill.self{ background: var(--accent); }
+  .xcat-val{ width: 60px; text-align: right; font-size: 17px; font-weight: 600; color: var(--ink); }
+
+  .services{ margin-top: 50px; }
+  .service{ padding: 34px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 60px 1fr; gap: 26px; }
+  .service:last-child{ border-bottom: 1px solid var(--line); }
+  .service .n{ font-size: 20px; font-weight: 700; color: var(--line); }
+  .service h3{ margin-bottom: 8px; }
+  .service p{ margin: 0; }
+  @media (max-width: 640px){ .service{ grid-template-columns: 34px 1fr; } }
+
+  .closing p{ font-size: 22px; }
+  .closing h2{ margin-bottom: 22px; }
+
+  footer{ padding: 60px 0 80px; }
+  footer .foot-row{ display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-top: 30px; border-top: 1px solid var(--line); }
+  footer p.small{ color: var(--gray-light); margin: 0; max-width: 640px; }
+</style>
+</head>
+<body>
+
+<section class="tight">
+  <div class="container">
+    <div class="head-top">
+      <div class="logo-slot" style="margin-bottom: 40px;">Your logo here</div>
+      <div class="kicker">AI Recommendation Intelligence Report</div>
+    </div>
+    <div class="hero-copy">
+      <h1>How AI recommends in activewear,<br>and where one premium brand<br>actually stands.</h1>
+      <p class="prose center">An example report: what ChatGPT recommends when a shopper asks for activewear, where this brand lands, who wins instead, the language gap that explains why, and how much of any single answer is noise.</p>
+      <div class="meta-bar">
+        <b>How this was measured.</b> We asked ChatGPT 20 high intent activewear shopping questions, each run 20 times to capture variance, for 400 recommendation observations. For every answer we recorded which brands were recommended and in what position, and the reason the model gave. The client brand is anonymized; competitor names are shown as the model recommended them. Measured on ChatGPT; other AI models are being added.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container">
+    <div class="chapter">Executive summary &middot; for the CEO</div>
+    <div class="prose center">
+      <p class="lead">When shoppers ask AI what activewear to buy, this brand is named in 15 percent of conversations. It is completely absent from the other 85 percent.</p>
+      <p style="margin-top: 22px;">The brands AI recommends ahead of it, Nike, Under Armour, and Adidas, do not win on product quality. They win because AI understands them as performance brands. AI understands this brand as a fashion brand, so it quietly routes every performance question elsewhere.</p>
+      <p style="margin-top: 22px;">This is not a visibility problem that more ads or SEO will fix. It is a recommendation problem, and the fix starts with language, not the website. Three concrete moves are set out later in this report.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="chapter">Part 1 &middot; Diagnosis &middot; where the brand stands today</div>
+    <div class="stat-row">
+      <div class="stat"><div class="num accent">14.8%</div><div class="label">recommendation share</div></div>
+      <div class="stat"><div class="num">5 / 20</div><div class="label">buyer questions present</div></div>
+      <div class="stat"><div class="num">4.7</div><div class="label">avg. position when shown</div></div>
+      <div class="stat"><div class="num accent">#15</div><div class="label">rank in category</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container">
+    <div class="prose">
+      <h2>Who AI recommends in activewear</h2>
+      <p style="margin-top: 14px;">Recommendation share across all 20 buyer questions, with the average position each brand holds when it appears. The client sits at 15, and never higher than position 3 when it does show up.</p>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Brand</th><th class="bar-cell">Share</th><th class="num">%</th><th class="num">Avg pos</th></tr></thead>
+      <tbody>
+        <tr><td class="rank-cell">1</td><td>Nike</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></td><td class="num">57.3</td><td class="num">2.4</td></tr>
+        <tr><td class="rank-cell">2</td><td>Under Armour</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:89.5%"></div></div></td><td class="num">51.3</td><td class="num">4.5</td></tr>
+        <tr><td class="rank-cell">3</td><td>Adidas</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:82.5%"></div></div></td><td class="num">47.3</td><td class="num">3.7</td></tr>
+        <tr><td class="rank-cell">4</td><td>Reebok</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:74.2%"></div></div></td><td class="num">42.5</td><td class="num">7.3</td></tr>
+        <tr><td class="rank-cell">5</td><td>Lululemon</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:62.5%"></div></div></td><td class="num">35.8</td><td class="num">2.3</td></tr>
+        <tr><td class="rank-cell">6</td><td>Puma</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:56.4%"></div></div></td><td class="num">32.3</td><td class="num">7.4</td></tr>
+        <tr><td class="rank-cell">7</td><td>Fabletics</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div></td><td class="num">27.5</td><td class="num">7.0</td></tr>
+        <tr><td class="rank-cell">8</td><td>Athleta</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:43.3%"></div></div></td><td class="num">24.8</td><td class="num">4.9</td></tr>
+        <tr><td class="rank-cell">9</td><td>Gymshark</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:43.3%"></div></div></td><td class="num">24.8</td><td class="num">6.5</td></tr>
+        <tr class="client"><td class="rank-cell">15</td><td>This brand<span class="tag-you">Client</span></td><td class="bar-cell"><div class="bar-track"><div class="bar-fill client" style="width:25.8%"></div></div></td><td class="num">14.8</td><td class="num">4.7</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="prose">
+      <h2>The category, mapped</h2>
+      <p style="margin-top: 14px;">Higher means AI recommends the brand more often. Further right means it shows up across more buyer questions. The strong brands cluster top right. The client sits low and to the left, rarely recommended, and only in a handful of lifestyle questions.</p>
+    </div>
+    <div class="map" style="margin-top: 50px;">
+      <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="270" x2="860" y2="270" stroke="#d2d2d7" stroke-width="1"/>
+        <line x1="60" y1="10" x2="60" y2="270" stroke="#d2d2d7" stroke-width="1"/>
+        <text x="60" y="0" font-size="14" fill="#86868b" font-family="-apple-system, sans-serif">Recommended more often</text>
+        <text x="860" y="292" font-size="14" fill="#86868b" font-family="-apple-system, sans-serif" text-anchor="end">Appears in more buyer questions</text>
+
+        <circle cx="796" cy="30" r="20" fill="#e8e8ed"/>
+        <text x="796" y="10" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">Nike</text>
+
+        <circle cx="748" cy="72" r="19" fill="#e8e8ed"/>
+        <text x="748" y="52" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">Adidas</text>
+
+        <circle cx="692" cy="55" r="18" fill="#e8e8ed"/>
+        <text x="692" y="35" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">U. Armour</text>
+
+        <circle cx="588" cy="92" r="16" fill="#e8e8ed"/>
+        <text x="588" y="74" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">Reebok</text>
+
+        <circle cx="540" cy="120" r="15" fill="#e8e8ed"/>
+        <text x="540" y="103" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">Lululemon</text>
+
+        <circle cx="436" cy="165" r="13" fill="#e8e8ed"/>
+        <text x="436" y="150" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">Gymshark</text>
+
+        <circle cx="380" cy="165" r="12" fill="#e8e8ed"/>
+        <text x="380" y="195" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">Athleta</text>
+
+        <circle cx="330" cy="185" r="12" fill="#e8e8ed"/>
+        <text x="330" y="215" font-size="13" fill="#1d1d1f" text-anchor="middle" font-family="-apple-system, sans-serif">New Balance</text>
+
+        <circle cx="230" cy="220" r="16" fill="#c2410c"/>
+        <text x="230" y="225" font-size="12" fill="#ffffff" text-anchor="middle" font-family="-apple-system, sans-serif" font-weight="700">You</text>
+        <text x="230" y="252" font-size="13" fill="#c2410c" text-anchor="middle" font-family="-apple-system, sans-serif" font-weight="600">This brand</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container">
+    <div class="chapter">Part 2 &middot; The why &middot; the language gap that explains the position</div>
+    <div class="prose center">
+      <h2>AI describes the winners and this brand in completely different words</h2>
+      <p style="margin-top: 14px;">These are the actual reasons ChatGPT gave when recommending each brand. This is the model's own language, not our interpretation.</p>
+    </div>
+    <div class="gap-grid">
+      <div class="gap-col">
+        <h4>What AI says about the winners</h4>
+        <span class="chip win">moisture wicking technology</span>
+        <span class="chip win">cushioning &amp; support</span>
+        <span class="chip win">durability</span>
+        <span class="chip win">stability for heavy lifts</span>
+        <span class="chip win">performance fabrics</span>
+        <span class="chip win">built for intense workouts</span>
+      </div>
+      <div class="gap-col">
+        <h4>What AI says about this brand</h4>
+        <span class="chip client">stylish</span>
+        <span class="chip client">fashionable</span>
+        <span class="chip client">chic</span>
+        <span class="chip client">comfortable for casual wear</span>
+        <span class="chip client">perfect for yoga</span>
+        <span class="chip client">fashion forward</span>
+      </div>
+    </div>
+    <div class="prose center" style="margin-top: 40px;">
+      <p class="lead">AI has filed this brand under fashion, not performance. That one framing decides everything that follows, and it is the single most actionable finding in this report.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="prose">
+      <h2>Buyer questions where the brand never appears</h2>
+      <p style="margin-top: 14px;">High intent questions where the brand was recommended zero times across 20 runs, and the brand AI named first instead. Every one of these is performance framed.</p>
+    </div>
+    <div style="margin-top: 30px;">
+      <div class="list-row"><span class="q">best gym wear for men</span><span class="a">AI's #1: <b>Nike</b></span></div>
+      <div class="list-row"><span class="q">best moisture wicking shirts</span><span class="a">AI's #1: <b>Under Armour</b></span></div>
+      <div class="list-row"><span class="q">best fitness tracker</span><span class="a">AI's #1: <b>Apple</b></span></div>
+      <div class="list-row"><span class="q">best adjustable dumbbells</span><span class="a">AI's #1: <b>Bowflex</b></span></div>
+      <div class="list-row"><span class="q">best home gym equipment</span><span class="a">AI's #1: <b>Peloton</b></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container">
+    <div class="chapter">Part 3 &middot; The pattern &middot; this is how AI behaves everywhere</div>
+    <div class="prose center">
+      <h2>This is not specific to activewear</h2>
+      <p style="margin-top: 14px;">Across 10 categories and roughly 40,000 measured recommendations, a small set of famous names dominates, and everyone else fights over the remainder. This is how much of each category the single top brand captures.</p>
+    </div>
+    <div style="margin-top: 46px; max-width: 700px; margin-left:auto; margin-right:auto;">
+      <div class="xcat-row"><div class="xcat-name">Coffee</div><div class="xcat-bar"><div class="xcat-fill" style="width:96.5%"></div></div><div class="xcat-val">96.5%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Supplements</div><div class="xcat-bar"><div class="xcat-fill" style="width:66.8%"></div></div><div class="xcat-val">66.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Electronics</div><div class="xcat-bar"><div class="xcat-fill" style="width:63.3%"></div></div><div class="xcat-val">63.3%</div></div>
+      <div class="xcat-row"><div class="xcat-name self">Fitness &amp; Activewear</div><div class="xcat-bar"><div class="xcat-fill self" style="width:57.3%"></div></div><div class="xcat-val">57.3%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Beauty</div><div class="xcat-bar"><div class="xcat-fill" style="width:55.8%"></div></div><div class="xcat-val">55.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Home &amp; Living</div><div class="xcat-bar"><div class="xcat-fill" style="width:55.5%"></div></div><div class="xcat-val">55.5%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Fashion &amp; Apparel</div><div class="xcat-bar"><div class="xcat-fill" style="width:51.3%"></div></div><div class="xcat-val">51.3%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Food &amp; Snacks</div><div class="xcat-bar"><div class="xcat-fill" style="width:43.8%"></div></div><div class="xcat-val">43.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Pets</div><div class="xcat-bar"><div class="xcat-fill" style="width:27.8%"></div></div><div class="xcat-val">27.8%</div></div>
+      <div class="xcat-row"><div class="xcat-name">Wellness &amp; Sleep</div><div class="xcat-bar"><div class="xcat-fill" style="width:23%"></div></div><div class="xcat-val">23.0%</div></div>
+    </div>
+    <div class="prose center" style="margin-top: 40px;">
+      <p>The winners are always the famous names: Apple in electronics, Nike in fitness, Everlane in fashion. Never a surprising challenger. The more concentrated the category, the harder it is for any brand to enter it.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="chapter">Part 4 &middot; What we tested and found nothing</div>
+    <div class="prose center">
+      <p class="lead">Most of what agencies measure does not move this number.</p>
+      <p style="margin-top: 18px;">Most AI visibility tools score on site technical quality: schema markup, page speed, structured data. We tested whether any of that predicts whether AI recommends a brand.</p>
+    </div>
+    <div class="stat-row" style="margin-top: 50px;">
+      <div class="stat"><div class="num accent">0.7%</div><div class="label">store quality correlation</div></div>
+      <div class="stat"><div class="num accent">68.9%</div><div class="label">change when the model is swapped</div></div>
+      <div class="stat"><div class="num">~0%</div><div class="label">drift over three days</div></div>
+      <div class="stat"><div class="num">61.4%</div><div class="label">rank stability month over month</div></div>
+    </div>
+    <div class="prose center" style="margin-top: 50px;">
+      <p>Fixing a website will not fix this. The AI does not grade page speed or schema markup, it already formed an opinion about a brand from what it learned long before today. Which AI model answers, and whether it is browsing the live web, moves the outcome far more than anything a technical audit can touch.</p>
+      <p style="margin-top: 18px;">We checked 599 audited stores against a catalog of 60,325 and found a correlation of 0.7 percent, close to noise. Swapping the underlying AI model, same prompts, same day, changes 68.9 percent of recommendations, a 95 percent confidence interval of 66 to 71 percent, permutation test p under 0.001. Running the same query three days apart shows no measurable drift, p equals 0.73, statistically the same as measuring nothing twice. And once a brand is a repeat winner, its position barely moves, 61.4 percent rank stability from June to July, the number worth tracking over time, not a single screenshot.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container">
+    <div class="chapter">Part 5 &middot; Methodology &middot; why one query is a coin flip</div>
+    <div class="prose center">
+      <p class="lead">Ask the same question twice and the answer changes, so one screenshot proves nothing.</p>
+      <p style="margin-top: 18px;">Run the identical question against the identical model on the identical day, and the two answers still disagree. That is the baseline every claim in this report has to be read against.</p>
+    </div>
+    <table style="max-width: 500px; margin: 46px auto 0;">
+      <thead><tr><th>Runs pooled per side</th><th class="num">Brands that still differ</th></tr></thead>
+      <tbody>
+        <tr><td>1 vs 1</td><td class="num">49.9%</td></tr>
+        <tr><td>2 vs 2</td><td class="num">47.4%</td></tr>
+        <tr><td>3 vs 3</td><td class="num">46.4%</td></tr>
+        <tr><td>4 vs 4</td><td class="num">46.1%</td></tr>
+        <tr><td>5 vs 5</td><td class="num">46.1%</td></tr>
+        <tr><td>10 vs 10</td><td class="num">46.1%</td></tr>
+      </tbody>
+    </table>
+    <div class="prose center" style="margin-top: 46px;">
+      <p>The floor falls for the first three runs, then goes flat at 46.1 percent and does not move again. It is a property of the model itself, a stable core of brands it names almost every time, and a long tail it shuffles on every call. Every number in this report is built from repeated runs, not one lucky or unlucky query.</p>
+      <p style="margin-top: 18px;">Turning web search on drops the noise floor from 47 to 27 percent. In activewear specifically, turning search on changes 60.8 percent of what gets recommended, against a permutation null median of 24.2 percent, p equals 0.0001, in line with the 76.9 percent swing measured across all ten categories together. This early read covers 5 of the 20 buyer questions in the category, the rest is the next data pull already scoped as part of onboarding.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="chapter">Part 6 &middot; Where to start &middot; the three moves the data actually supports</div>
+    <div class="prose center">
+      <p class="lead">Fix the words before you fix the website.</p>
+      <p style="margin-top: 18px;">This is not a guarantee that a number moves by a fixed amount. It is the three places this dataset points to first, in priority order.</p>
+    </div>
+    <div class="services">
+      <div class="service">
+        <div class="n">01</div>
+        <div>
+          <h3>Close the language gap</h3>
+          <p>Rewrite the product and category pages the brand controls to use the vocabulary AI already rewards in this category: moisture wicking, durability, cushioning, stability, performance fabrics, instead of style led language alone.</p>
+        </div>
+      </div>
+      <div class="service">
+        <div class="n">02</div>
+        <div>
+          <h3>Answer the missing questions directly</h3>
+          <p>Publish content and product pages that speak plainly to the buyer questions the brand is currently invisible on. AI tends to recommend what it can clearly match to the question being asked.</p>
+        </div>
+      </div>
+      <div class="service">
+        <div class="n">03</div>
+        <div>
+          <h3>Stop judging visibility by one chat</h3>
+          <p>Results shift by up to 68.9 percent when the model changes and roughly 60.8 percent when search is toggled. Track recommendations across models and search conditions, on a schedule.</p>
+        </div>
+      </div>
+    </div>
+    <div class="prose center" style="margin-top: 40px;">
+      <p>We cannot promise that doing these three things moves the brand from 15 to 30 percent, nobody honestly can yet. What we can say is these are the only three places in this dataset where the brand's own actions, rather than the model's mood that day, plausibly make a difference.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt closing">
+  <div class="container prose center">
+    <h2>The old question was whether people could find the brand.<br>The new question is whether AI recommends it, and as what.</h2>
+    <p style="margin-top: 22px;">This brand does not have a quality problem. It has a framing problem, sitting on top of a measurement problem most reports never disclose. We do not claim a button that moves a brand up on command. We make the invisible decision visible, and we show how much of it is signal before anyone acts on it.</p>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="container prose center">
+    <h2>The new job of marketing.</h2>
+    <p style="margin-top: 22px;">The direction is already set out above: close the language gap, answer the missing performance questions, and track recommendations across models and search conditions instead of trusting one afternoon's chat. Getting AI to describe a brand the way the brand describes itself is not a side project anymore. It is becoming the main job of marketing, the same way ranking on Google search became the main job for a previous generation of marketers.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-row">
+      <div class="logo-slot">Your logo</div>
+      <p class="small">This is an example report built from real measured data in the activewear category. It reflects one model at one point in time, read against a measured noise floor rather than a single snapshot. We make no revenue projections and promise no guaranteed movement.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
