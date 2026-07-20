@@ -49,6 +49,7 @@
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
       "about": { "@id": "https://atomfoundry.dev/research/the-fame-study#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/the-fame-study#dataset" },
       "breadcrumb": { "@id": "https://atomfoundry.dev/research/the-fame-study#breadcrumb" }
     },
     {
@@ -74,7 +75,6 @@
       "creator": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
       "url": "https://atomfoundry.dev/research/the-fame-study",
-      "isPartOf": { "@id": "https://atomfoundry.dev/research/the-fame-study#webpage" },
       "measurementTechnique": "Multiple regression, Spearman correlation, recommendation stability analysis",
       "variableMeasured": ["Recommendation Frequency", "AI Fame", "AI Commerce Score", "Recommendation Stability"]
     },
@@ -199,7 +199,6 @@ a { color: inherit; text-decoration: none; }
 </head>
 <body>
 <div class="page">
-
   <nav class="nav">
     <div class="nav-brand">
       <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
@@ -215,30 +214,25 @@ a { color: inherit; text-decoration: none; }
       <a href="/#score" class="cta-nav">Free Score</a>
     </div>
   </nav>
-
   <div class="wrap">
-
     <div style="margin:20px 0 4px;padding:18px 22px;border-left:3px solid #E24B4A;background:rgba(226,75,74,0.07);border-radius:0 12px 12px 0;">
       <div style="font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#E24B4A;margin-bottom:9px;">Correction &middot; 17 July 2026</div>
-      <p style="font-size:14.5px;color:#c8ccd0;line-height:1.75;margin:0 0 10px;"><strong style="color:#fff;">The headline of this study was wrong.</strong> We reported that public fame explains 24.9% of how often AI recommends a brand, twelve times more than store quality. That figure was measured on 87 brands, and those 87 were not a random sample &mdash; they were the brands that a broken brand-to-store join happened to match.</p>
+      <p style="font-size:14.5px;color:#c8ccd0;line-height:1.75;margin:0 0 10px;"><strong style="color:#fff;">The headline of this study was wrong.</strong> We reported that public fame explains 24.9% of how often AI recommends a brand, twelve times more than store quality. That figure was measured on 87 brands, and those 87 were not a random sample, they were the brands that a broken brand-to-store join happened to match.</p>
       <p style="font-size:14.5px;color:#c8ccd0;line-height:1.75;margin:0 0 10px;">We rebuilt the join and re-ran the identical regression on <strong style="color:#fff;">872 brands</strong>. Fame explains <strong style="color:#fff;">1.2%</strong> (adjusted 0.7%), which sits on top of the permuted null. Store quality explains <strong style="color:#fff;">0.7%</strong>. The twelve-to-one ratio is gone: both are indistinguishable from noise.</p>
       <p style="font-size:14.5px;color:#c8ccd0;line-height:1.75;margin:0;">What survives: the stability finding, which never depended on that join. What dies: fame as an explanation. We are leaving the mistake documented in place rather than quietly editing it out.</p>
     </div>
-
     <div class="hero">
       <div class="hero-kicker">Recommendation Intelligence Research&trade; &middot; The Fame Study</div>
       <h1>Neither store quality <em>nor fame</em> explains AI recommendations</h1>
       <p class="hero-sub">We took the most-recommended brands across five ecommerce categories and asked what separates the brands AI names from the ones it ignores. We first answered: fame. That answer was wrong, and this page now says so. Re-measured properly, neither store quality nor public fame predicts recommendation. What does still hold is that the recommendations are stable, which makes the emptiness stranger, not less.</p>
       <div class="byline">Atom Foundry &middot; June 2026, corrected 17 July 2026 &middot; Part two of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research&trade;</a> series</div>
     </div>
-
     <div class="stats-bar">
       <div class="stat-cell"><div class="stat-num">872</div><div class="stat-label">Brands re-measured</div></div>
       <div class="stat-cell"><div class="stat-num" style="color:#E24B4A;">1.2%</div><div class="stat-label">Explained by fame</div></div>
       <div class="stat-cell"><div class="stat-num" style="color:#E24B4A;">0.7%</div><div class="stat-label">Explained by store quality</div></div>
       <div class="stat-cell"><div class="stat-num" style="color:#8b9095;">78&ndash;91%</div><div class="stat-label">Still stable</div></div>
     </div>
-
     <div class="section">
       <div class="section-kicker">Where this comes from</div>
       <h2 class="section-title">First we proved store quality <em>does not</em> drive recommendation</h2>
@@ -247,12 +241,11 @@ a { color: inherit; text-decoration: none; }
         <p>That answered the first question and raised a harder one. If a clean, well-structured, machine-readable store is not what earns the recommendation, then what is? This study is the attempt to answer it with the same discipline: real numbers, no invented deltas, and an honest account of what we could and could not measure.</p>
       </div>
     </div>
-
     <div class="section">
       <div class="section-kicker">The headline finding, retracted</div>
       <h2 class="section-title">Fame does <em>not</em> outweigh store quality. Neither one works.</h2>
       <div class="section-body">
-        <p><strong>What we originally published:</strong> we took the 200 most-recommended brands, measured public fame signals that do not depend on the store at all &mdash; Wikipedia readership, language editions, article length, brand nameability &mdash; ran a multiple regression against recommendation frequency, and found fame explained 24.9% against store quality's 2.1%. Roughly twelve to one.</p>
+        <p><strong>What we originally published:</strong> we took the 200 most-recommended brands, measured public fame signals that do not depend on the store at all- Wikipedia readership, language editions, article length, brand nameability- ran a multiple regression against recommendation frequency, and found fame explained 24.9% against store quality's 2.1%. Roughly twelve to one.</p>
         <p><strong>Why it was wrong.</strong> That regression ran on 87 brands. Not 200 &mdash; 87, because only those had both a fame signal and a matched store. We treated that as an apples-to-apples subset. It was not. Those 87 were selected by a brand-to-store join built in June, and when we rebuilt the join in July we found it had matched only a fraction of the brands, and not at random. The sample was an artifact of a bug.</p>
         <p><strong>What the same regression gives on the corrected data.</strong> Same four predictors, same outcome, same method. 872 brands instead of 87:</p>
       </div>
@@ -285,13 +278,11 @@ a { color: inherit; text-decoration: none; }
       <div class="callout warn">
         <strong>One precision that matters.</strong> This kills the claim that <em>our fame measurement</em> predicts recommendation. It does not prove fame is irrelevant. Wikipedia was always a rough proxy, and we said so in the original limitations: it captures encyclopedic prominence, not commercial presence across reviews, listicles and forums. So the honest statement is that we have no evidence fame drives recommendation, not that it doesn't. The difference matters, and we are not going to blur it to save the headline.
       </div>
-
       <div class="section-kicker">The same finding, in plain brands</div>
       <h2 class="section-title">The most-recommended and least-recommended brands have <em>nearly identical stores</em></h2>
       <div class="section-body">
         <p>Regression can feel abstract, so here is the same truth in plain terms. We sorted the 200 brands by how often they are recommended and compared the top 50 against the bottom 50. The top group is recommended about six times more often. You would expect their stores to be far better. They are not.</p>
       </div>
-
       <div class="chart-box">
         <div class="chart-title">Top 50 vs bottom 50 most-recommended brands</div>
         <div class="chart-sub">Same store quality. Very different fame.</div>
@@ -327,7 +318,6 @@ a { color: inherit; text-decoration: none; }
         <div class="chart-cap" style="border-left:2px solid #E24B4A;padding-left:14px;"><strong style="color:#f87171;">Treat this chart with suspicion too.</strong> The store-quality half rests on 30 brands in the top group and 18 in the bottom &mdash; and those came from the same broken join as the retracted 24.9%. The one-point gap may well be real, and it points the same way as the corrected regression (store quality doesn't separate winners from losers). But we have not re-measured it, so we are flagging it rather than leaning on it.</div>
       </div>
     </div>
-
     <div class="section">
       <div class="section-kicker">The part most people get wrong</div>
       <h2 class="section-title">These recommendations are not random. They are <em>stable</em></h2>
@@ -335,7 +325,6 @@ a { color: inherit; text-decoration: none; }
         <p>It would be comforting to think the unexplained majority is just noise, that AI picks brands more or less at random and there is nothing to understand. We tested that directly. Every shopping question was run twenty times, and we measured how often the answer changed.</p>
         <p>It almost never does. The same question puts the same brand in the top spot between 78 and 91 percent of the time, and across twenty runs only two or three brands ever reach first place. The brand-level variation across runs is effectively zero.</p>
       </div>
-
       <div class="chart-box">
         <div class="chart-title">How consistent is the top recommendation?</div>
         <div class="chart-sub">Share of runs that return the same brand in first place, by category</div>
@@ -373,7 +362,6 @@ a { color: inherit; text-decoration: none; }
         <div class="chart-cap" style="border-left:2px solid #1D9E75;padding-left:14px;"><strong style="color:#4ade80;">This part survives the correction.</strong> Stability was measured directly from the recommendation runs and never touched the brand-to-store join, so the bug that killed the fame figure does not reach it. And it makes the corrected picture stranger, not weaker: the same brands win again and again, reliably, and neither their store nor their public prominence explains why.</div>
       </div>
     </div>
-
     <div class="section">
       <div class="section-kicker">The conclusion</div>
       <h2 class="section-title">Three measurements, and <em>no</em> answer</h2>
@@ -386,7 +374,6 @@ a { color: inherit; text-decoration: none; }
         <strong>What this means for a brand:</strong> if you are not already inside the winning set, you are not invisible by accident or by bad luck on a given day. You are invisible consistently &mdash; and after correcting our own work, we have to state plainly that we cannot tell you why. Not store quality. Not any public fame signal we can measure. Anyone selling you a route into AI recommendations is selling something they have not measured. The only thing that can be measured today is where you actually stand.
       </div>
     </div>
-
     <div class="section">
       <div class="section-kicker">Method &amp; honesty</div>
       <h2 class="section-title">How we measured it, and what we could not</h2>
@@ -404,13 +391,11 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
     </div>
-
     <div class="cta-section">
       <div class="cta-title">Find out where <em>your</em> brand stands</div>
       <div class="cta-sub">The market measures whether AI can see you. We measure why AI chooses you, or why it chooses someone else instead. Get a Recommendation Intelligence read on your category.</div>
       <a href="/#score" class="cta-btn">Get your Free Score</a>
     </div>
-
     <!-- INTERNAL LINKING: flagship (part one) + the five source niches; framework in more-line -->
     <div class="related">
       <div class="section-kicker">Keep reading</div>
@@ -450,9 +435,7 @@ a { color: inherit; text-decoration: none; }
       </div>
       <p class="related-more"><a class="fw" href="/framework">Recommendation Intelligence Framework&trade;</a> &nbsp;&middot;&nbsp; <a href="/research">All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp; <a href="/stores">Stores</a></p>
     </div>
-
   </div>
-
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
@@ -477,7 +460,6 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div>
   </footer>
-
 </div>
 </body>
 </html>
