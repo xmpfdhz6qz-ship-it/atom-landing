@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Recommendation Intelligence Report for Agencies</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --ink: #1d1d1f;
+    --gray: #6e6e73;
+    --gray-light: #86868b;
+    --line: #d2d2d7;
+    --bg: #ffffff;
+    --bg-alt: #f5f5f7;
+    --accent: #c2410c;
+  }
+  html{ -webkit-font-smoothing: antialiased; }
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .container{ max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+  .prose{ max-width: 640px; }
+  .center{ text-align: center; margin-left: auto; margin-right: auto; }
+  section{ padding: 110px 0; }
+  section.alt{ background: var(--bg-alt); }
+  section.tight{ padding: 80px 0; }
+  hr.rule{ border: none; border-top: 1px solid var(--line); }
+
+  /* type scale, kept small and consistent on purpose */
+  p{ text-align: left; }
+  h1{ font-size: clamp(40px, 6vw, 76px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; color: var(--ink); }
+  h2{ font-size: clamp(30px, 4vw, 46px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; color: var(--ink); }
+  h3{ font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  p{ font-size: 20px; color: var(--gray); line-height: 1.55; font-weight: 400; }
+  p.lead{ font-size: 24px; color: var(--ink); font-weight: 500; }
+  p.small{ font-size: 17px; }
+  .accent{ color: var(--accent); }
+  .ink{ color: var(--ink); font-weight: 600; }
+
+  /* top lockup: agency logo placeholder */
+  .lockup{ display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 56px; }
+  .logo-slot{ border: 1.5px dashed var(--line); border-radius: 10px; padding: 10px 22px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--gray-light); text-transform: uppercase; }
+  .lockup-x{ color: var(--line); font-size: 20px; font-weight: 300; }
+  .af-wordmark{ font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); }
+  .af-wordmark span{ color: var(--accent); }
+  .lockup-caption{ text-align: center; font-size: 14px; color: var(--gray-light); margin-top: -36px; margin-bottom: 60px; }
+  .lockup-caption{ text-align: left; margin-left: auto; margin-right: auto; max-width: 640px; }
+
+  .hero-copy{ text-align: center; margin: 0 auto; }
+  .hero-copy h1{ margin-bottom: 26px; }
+  .hero-copy p{ font-size: 22px; margin: 0 auto; }
+
+  /* hero graphic: minimal dot plot */
+  .hero-graphic{ margin-top: 90px; }
+  .hero-graphic svg{ width: 100%; height: auto; display: block; }
+
+  /* two column feature rows, text led, no icons */
+  .rows{ display: flex; flex-direction: column; }
+  .row{ display: grid; grid-template-columns: 300px 1fr; gap: 60px; padding: 44px 0; border-top: 1px solid var(--line); }
+  .row:last-child{ border-bottom: 1px solid var(--line); }
+  .row h3{ font-size: 24px; }
+  .row p{ margin: 0; }
+  @media (max-width: 720px){ .row{ grid-template-columns: 1fr; gap: 12px; } }
+
+  /* big stat showcase, apple spec style */
+  .stat-row{ display: flex; gap: 90px; justify-content: center; flex-wrap: wrap; margin-top: 56px; }
+  .stat{ text-align: center; }
+  .stat .num{ font-size: clamp(56px, 8vw, 96px); font-weight: 700; letter-spacing: -0.03em; color: var(--ink); line-height: 1; }
+  .stat .num.accent{ color: var(--accent); }
+  .stat .label{ font-size: 18px; color: var(--gray); margin-top: 14px; max-width: 220px; }
+
+  /* mock report cover cards, used to demonstrate white label */
+  .cover-gallery{ display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 70px; }
+  .cover-card{ width: 220px; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 22px 20px; }
+  .cover-card .cover-logo{ font-size: 12px; font-weight: 700; letter-spacing: 0.03em; color: var(--gray-light); text-transform: uppercase; border: 1px dashed var(--line); display: inline-block; padding: 5px 10px; border-radius: 6px; margin-bottom: 22px; }
+  .cover-card .cover-title{ font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.35; margin-bottom: 18px; }
+  .cover-card .bar{ height: 7px; background: var(--bg-alt); border-radius: 4px; margin-bottom: 8px; }
+  .cover-card .bar.w60{ width: 60%; }
+  .cover-card .bar.w80{ width: 80%; }
+  .cover-card .bar.w40{ width: 40%; }
+  .cover-card .cover-foot{ margin-top: 20px; font-size: 11px; color: var(--gray-light); }
+
+  /* numbered service list, text weight for hierarchy, no colored boxes */
+  .services{ margin-top: 60px; }
+  .service{ padding: 38px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 70px 1fr; gap: 30px; }
+  .service:last-child{ border-bottom: 1px solid var(--line); }
+  .service .n{ font-size: 22px; font-weight: 700; color: var(--line); }
+  .service h3{ margin-bottom: 8px; }
+  .service p{ margin: 0; }
+  @media (max-width: 640px){ .service{ grid-template-columns: 40px 1fr; } }
+
+  .closing h2{ margin-bottom: 22px; }
+  .closing p{ font-size: 22px; }
+
+  footer{ padding: 60px 0 80px; }
+  footer .foot-row{ display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-top: 30px; border-top: 1px solid var(--line); }
+  footer .af-wordmark{ font-size: 15px; }
+  footer p.small{ color: var(--gray-light); margin: 0; }
+</style>
+</head>
+<body>
+
+<section class="tight">
+  <div class="container">
+    <div class="lockup">
+      <div class="logo-slot">Your logo here</div>
+    </div>
+    <div class="lockup-caption">This space is built for your logo. The report ships as fully yours.</div>
+
+    <div class="hero-copy">
+      <h1>Show your clients exactly<br>where AI already sees them.</h1>
+      <p class="prose center">A ready to present intelligence report your agency can put its own name on, built from real measured AI recommendation data, not a schema audit.</p>
+    </div>
+
+    <div class="hero-graphic container">
+      <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+        <line x1="60" y1="220" x2="860" y2="220" stroke="#d2d2d7" stroke-width="1"/>
+        <line x1="60" y1="20" x2="60" y2="220" stroke="#d2d2d7" stroke-width="1"/>
+        <circle cx="740" cy="55" r="17" fill="#e8e8ed"/>
+        <circle cx="660" cy="80" r="15" fill="#e8e8ed"/>
+        <circle cx="600" cy="105" r="13" fill="#e8e8ed"/>
+        <circle cx="520" cy="130" r="12" fill="#e8e8ed"/>
+        <circle cx="440" cy="150" r="10" fill="#e8e8ed"/>
+        <circle cx="360" cy="168" r="9" fill="#e8e8ed"/>
+        <circle cx="180" cy="188" r="15" fill="#c2410c"/>
+        <text x="180" y="192" font-size="11" fill="#ffffff" text-anchor="middle" font-family="-apple-system, sans-serif" font-weight="700">You</text>
+        <text x="60" y="14" font-size="13" fill="#86868b" font-family="-apple-system, sans-serif">Recommended more often</text>
+        <text x="740" y="242" font-size="13" fill="#86868b" font-family="-apple-system, sans-serif" text-anchor="end">Appears across more buyer questions</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container">
+    <div class="prose center">
+      <h2>Everyone is measuring the wrong thing.</h2>
+      <p class="lead" style="margin-top: 22px;">Most AI visibility tools score schema markup, page speed, structured data. We checked whether any of that predicts if AI actually recommends a brand.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="num accent">0.7%</div>
+        <div class="label">correlation between site technical quality and being recommended</div>
+      </div>
+      <div class="stat">
+        <div class="num">69%</div>
+        <div class="label">of recommendations change just from swapping the underlying AI model</div>
+      </div>
+      <div class="stat">
+        <div class="num">46%</div>
+        <div class="label">of brands differ even asking the identical question twice, the noise every report has to clear</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="prose center" style="margin-bottom: 20px;">
+      <h2>One report, five clear ideas.</h2>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <h3>Where a brand stands</h3>
+        <p>A leaderboard and a positioning map showing exactly who AI recommends in the client's category, and where the client currently ranks against them.</p>
+      </div>
+      <div class="row">
+        <h3>The language gap</h3>
+        <p>The actual words AI uses to describe the winners, next to the words it uses for the client. This is the single most persuasive page in the report, and it writes the brief for what to fix.</p>
+      </div>
+      <div class="row">
+        <h3>What predicts a recommendation, and what does not</h3>
+        <p>Store quality barely matters. Model choice and search conditions matter enormously. Most agency tools are optimizing the wrong layer, and this report shows the client why.</p>
+      </div>
+      <div class="row">
+        <h3>The methodology, disclosed</h3>
+        <p>A measured noise floor and permutation tested figures, not a single ChatGPT screenshot. It is the difference between a claim and a citable number.</p>
+      </div>
+      <div class="row">
+        <h3>Three moves, grounded in the data</h3>
+        <p>Concrete next steps in priority order, closing the language gap, answering the missing buyer questions, tracking across models. No guarantees, just direction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container">
+    <div class="prose center">
+      <h2>Built for your brand, from the start.</h2>
+      <p style="margin-top: 20px;">Every report ships as a clean, self contained page. Swap the logo, the color accent, the sender. Nothing in it points anywhere but back to you.</p>
+    </div>
+    <div class="cover-gallery">
+      <div class="cover-card">
+        <div class="cover-logo">Agency A</div>
+        <div class="cover-title">AI Recommendation Intelligence Report</div>
+        <div class="bar w80"></div>
+        <div class="bar w60"></div>
+        <div class="bar w40"></div>
+        <div class="cover-foot">Prepared for the client</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-logo">Agency B</div>
+        <div class="cover-title">AI Recommendation Intelligence Report</div>
+        <div class="bar w80"></div>
+        <div class="bar w60"></div>
+        <div class="bar w40"></div>
+        <div class="cover-foot">Prepared for the client</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-logo">Agency C</div>
+        <div class="cover-title">AI Recommendation Intelligence Report</div>
+        <div class="bar w80"></div>
+        <div class="bar w60"></div>
+        <div class="bar w40"></div>
+        <div class="cover-foot">Prepared for the client</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="prose center" style="margin-bottom: 10px;">
+      <h2>What your team sells next.</h2>
+      <p style="margin-top: 20px;">The report does not end at the diagnosis. Each finding points straight at a service your agency already offers.</p>
+    </div>
+    <div class="services">
+      <div class="service">
+        <div class="n">01</div>
+        <div>
+          <h3>Copy and positioning</h3>
+          <p>The language gap becomes the brief for a rewrite: product pages, category pages, the vocabulary AI already rewards in that category.</p>
+        </div>
+      </div>
+      <div class="service">
+        <div class="n">02</div>
+        <div>
+          <h3>Content against the blind spots</h3>
+          <p>The exact buyer questions the client is invisible on become a content calendar, not a guess.</p>
+        </div>
+      </div>
+      <div class="service">
+        <div class="n">03</div>
+        <div>
+          <h3>Ongoing monitoring</h3>
+          <p>A single check is close to a coin flip. Tracking recommendations across models and search conditions on a schedule is a retainer, not a one time report.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt closing">
+  <div class="container prose center">
+    <h2>The report is the opener.<br>Your agency is the answer.</h2>
+    <p style="margin-top: 22px;">Bring your own logo, your own price, your own client relationship. The measurement work is already done.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-row">
+      <div class="logo-slot" style="margin:0;">Your logo</div>
+      <p class="small">Prepared by your agency</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
