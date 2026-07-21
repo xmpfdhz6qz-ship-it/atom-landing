@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does: Atom Foundry</title>
+<meta name="description" content="Four external signals tested against recommendation frequency all land near zero: store quality 0.7%, fame 1.2%, web traces 0.2%, intent within the recommended set 1.2%. One thing predicts 61.4%: what the model recommended last month. It does not drift for 15 days either.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/research/the-model-predicts-itself">
+<meta property="og:title" content="Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.">
+<meta property="og:description" content="Store quality, fame, web traces, intent: four independent signals, all near zero. June position predicts July position at R squared 61.4%, the strongest number in this entire series. And it does not move for 15 days.">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#webpage",
+      "url": "https://atomfoundry.dev/research/the-model-predicts-itself",
+      "name": "Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.",
+      "description": "Four external signals tested against recommendation frequency all land near zero: store quality 0.7%, fame 1.2%, web traces 0.2%, intent within the recommended set 1.2%. One thing predicts 61.4%: what the model recommended last month. It does not drift for 15 days either.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#dataset" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#breadcrumb" }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#article",
+      "headline": "Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.",
+      "description": "Every external signal tested in this series, store quality, fame, web traces, and intent, lands near zero. June recommendation position predicts July position at R squared 61.4%, Pearson, across 1,082 brand-intent pairs, and shows zero drift across a 15 day window.",
+      "author": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "datePublished": "2026-07-21",
+      "url": "https://atomfoundry.dev/research/the-model-predicts-itself",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#webpage" },
+      "about": ["Recommendation Intelligence", "AI Commerce", "Recommendation Stability", "Generative Engine Optimization"]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#dataset",
+      "name": "Does past model behavior predict future recommendation better than any external brand signal?",
+      "description": "Pearson correlation of June recommendation position and frequency against July position and frequency, 1,082 brand-intent pairs across the same 50 intents, plus a 15 day drift check and four external-signal correlations: store quality, public fame, web traces, and intent within the recommended set.",
+      "creator": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/the-model-predicts-itself",
+      "measurementTechnique": "Pearson correlation across independent time periods and datasets, plus repeated-measures drift comparison at 1, 14, and 15 day intervals",
+      "variableMeasured": ["Position Self-Correlation", "Frequency Self-Correlation", "Position to Frequency Cross-Correlation", "Drift at 15 Days", "Web Trace Correlation to Frequency"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://atomfoundry.dev/research" },
+        { "@type": "ListItem", "position": 3, "name": "The Model Predicts Itself", "item": "https://atomfoundry.dev/research/the-model-predicts-itself" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent), radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.page { position: relative; z-index: 1; }
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.research.active { background: rgba(239,159,39,0.14); border-color: rgba(239,159,39,0.55); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
+.hero { padding: 22px 0 8px; }
+.hero-kicker { font-size: 11px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 14px; }
+.hero h1 { font-size: clamp(28px, 4.6vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px; }
+.hero h1 em { font-style: normal; color: #f97316; }
+.hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 660px; }
+.byline { font-size: 12px; color: #555; margin-top: 16px; }
+.byline a { color: #EF9F27; }
+.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin: 32px 0 8px; }
+.stat-cell { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid #1e1e1e; }
+.stat-cell:last-child { border-right: none; }
+.stat-num { font-size: 22px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 10.5px; color: #777; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+.section { margin: 48px 0; }
+.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+.section-title em { font-style: normal; color: #f97316; }
+.section-body { font-size: 15px; color: #aaa; line-height: 1.85; max-width: 680px; }
+.section-body strong { color: #e8e8e8; }
+.section-body p { margin-bottom: 14px; }
+.method-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 28px; margin-top: 8px; }
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-bottom: 18px; }
+.method-item { font-size: 13px; color: #999; padding: 7px 0; border-bottom: 1px solid #161616; }
+.method-item span { color: #e8e8e8; font-weight: 600; }
+.limits { font-size: 12.5px; color: #777; line-height: 1.7; margin-top: 18px; padding-top: 16px; border-top: 1px solid #161616; }
+.limits strong { color: #999; }
+.chart-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 24px 18px; margin-top: 8px; }
+.chart-title { font-size: 14px; color: #e8e8e8; font-weight: 700; margin-bottom: 2px; }
+.chart-sub { font-size: 12px; color: #777; margin-bottom: 16px; }
+.chart-cap { font-size: 12px; color: #888; line-height: 1.6; margin-top: 14px; padding-top: 14px; border-top: 1px solid #161616; }
+.chart-cap strong { color: #f97316; }
+.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
+.callout strong { color: #4ade80; }
+.callout.warn { background: #1a0d0a; border-color: #2e1a1a; }
+.callout.warn strong { color: #f87171; }
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.split-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; }
+.split-card .big { font-size: 30px; font-weight: 800; color: #f97316; line-height: 1; }
+.split-card .lbl { font-size: 13px; color: #999; margin-top: 6px; line-height: 1.5; }
+.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin: 40px 0 8px; }
+.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+.cta-title em { font-style: normal; color: #f97316; }
+.cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; max-width: 520px; margin-left: auto; margin-right: auto; }
+.cta-btn { display: inline-block; padding: 16px 36px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+.sc-tick { fill: #555; font-size: 11px; font-family: inherit; }
+.sc-axis { fill: #aaa; font-size: 12px; font-weight: 600; font-family: inherit; }
+.sc-val { fill: #fff; font-size: 13px; font-weight: 800; font-family: inherit; }
+.sc-grp { fill: #ccc; font-size: 12px; font-weight: 600; font-family: inherit; }
+.legend-row { display: flex; gap: 20px; margin-bottom: 4px; font-size: 12px; color: #999; }
+.legend-row span.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+.related { margin: 48px 0 8px; }
+.related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 18px; }
+.related-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 18px 20px; transition: all 0.2s; display: block; }
+.related-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+.related-card .rc-kicker { font-size: 10px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 6px; }
+.related-card.flagship .rc-kicker { color: #f97316; }
+.related-card .rc-title { font-size: 15px; color: #fff; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
+.related-card .rc-desc { font-size: 12px; color: #888; line-height: 1.5; }
+.related-more { margin-top: 16px; font-size: 14px; color: #777; }
+.related-more a { color: #EF9F27; }
+.related-more a:hover { color: #f97316; }
+.related-more a.fw { color: #1D9E75; }
+@media (max-width: 640px) {
+  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .nav-links { flex-wrap: wrap; }
+  .wrap { padding: 0 18px; }
+  .hero h1 { font-size: 26px; }
+  .stats-bar { flex-wrap: wrap; }
+  .stat-cell { flex: 1 0 50%; border-bottom: 1px solid #1e1e1e; }
+  .method-grid, .split2 { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="nav">
+    <div class="nav-brand">
+      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+      <div class="nav-subline">The AI Commerce Graph&trade;</div>
+      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+    </div>
+    <div class="nav-links">
+      <a href="/stores">Stores</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/vocabulary">Vocabulary</a>
+      <a href="/framework" class="framework">Framework</a>
+      <a href="/research" class="research active">Research</a>
+      <a href="/#score" class="cta-nav">Free Score</a>
+    </div>
+  </nav>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-kicker">Recommendation Intelligence Research&trade; &middot; The Strongest Signal We Have</div>
+      <h1>Nothing about your brand predicts recommendation. The model's <em>own past behavior</em> does.</h1>
+      <p class="hero-sub">Store quality explains 0.7% of who gets recommended. Public fame explains 1.2%. Web traces explain 0.2%. Intent, the one factor that separates recommended stores from the rest, explains 1.2% of frequency once you are already in. Four independent signals, four numbers within a rounding error of zero. Then we asked a different question: does what the model recommended last month predict what it recommends this month? That number is 61.4%, and it still has not moved after 15 days.</p>
+      <div class="byline">Atom Foundry &middot; July 2026 &middot; Recommendation Intelligence Research&trade; series</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-cell"><div class="stat-num">1,082</div><div class="stat-label">Brand-intent pairs, month to month</div></div>
+      <div class="stat-cell"><div class="stat-num">61.4%</div><div class="stat-label">R squared, position predicts position</div></div>
+      <div class="stat-cell"><div class="stat-num">0.2%</div><div class="stat-label">Weakest external signal, web traces</div></div>
+      <div class="stat-cell"><div class="stat-num" style="color:#1D9E75;">0 pts</div><div class="stat-label">Drift after 15 days</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Where this comes from</div>
+      <h2 class="section-title">We ran out of external things to test</h2>
+      <div class="section-body">
+        <p>By this point in the series we had tested store quality, public fame, and how intent separates recommended stores from stores that never get picked. All three landed close to zero: 0.7%, 1.2%, and 1.2%. One layer was still untouched: web traces, meaning how visible a brand is across the open web, not just its own store.</p>
+        <p>We measured it using distinct domains mentioning the brand, whether the brand's own site turns up at all, and mentions on review sites, comparing our most reliably recommended brands, the 301-brand core that survives every model and search setting we test, against everything else.</p>
+      </div>
+      <div class="method-box" style="margin-top:20px;">
+        <div class="method-grid">
+          <div class="method-item">Distinct domains, core: <span>8.1</span></div>
+          <div class="method-item">Distinct domains, rest: <span>7.9</span></div>
+          <div class="method-item">Own site present, core: <span>58%</span></div>
+          <div class="method-item">Own site present, rest: <span>44%</span></div>
+          <div class="method-item">Review site mentions, core: <span>2.7</span></div>
+          <div class="method-item">Correlation to frequency: <span>r = 0.046, R squared = 0.2%</span></div>
+        </div>
+        <div class="limits"><strong>A handicap we are disclosing.</strong> The search API we used for this measurement rejects quoted phrase queries on its free tier, so every search ran unquoted, which is a looser and noisier match than we would prefer. Both groups took the same handicap, so the comparison between them still holds, but the absolute counts should be read as approximate.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Four signals, four zeros</div>
+      <h2 class="section-title">Every external layer we have tested lands in the <em>same place</em></h2>
+      <p class="section-body">Put the four correlations next to each other and the pattern is not subtle. Store quality, fame, web presence, and intent all sit within a point of zero. Then look at what happens when you stop asking about the brand entirely and ask about the model instead.</p>
+      <div class="chart-box">
+        <div class="chart-title">R squared against recommendation frequency, four external signals and one internal one</div>
+        <div class="chart-sub">Each bar is how much of recommendation frequency that signal explains on its own</div>
+        <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="Store quality explains 0.7 percent of recommendation frequency, public fame 1.2 percent, web traces 0.2 percent, and intent within the recommended set 1.2 percent. Position last month predicting position this month explains 61.4 percent, far larger than all four external signals combined">
+          <line x1="170" y1="14" x2="170" y2="234" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="2 3"/>
+
+          <text x="160" y="42" text-anchor="end" class="sc-axis">Store quality</text>
+          <rect x="170" y="30" width="5" height="22" rx="2" fill="#3a3a3a"/>
+          <text x="182" y="45" class="sc-val" fill="#999">0.7%</text>
+
+          <text x="160" y="82" text-anchor="end" class="sc-axis">Public fame</text>
+          <rect x="170" y="70" width="9" height="22" rx="2" fill="#3a3a3a"/>
+          <text x="186" y="85" class="sc-val" fill="#999">1.2%</text>
+
+          <text x="160" y="122" text-anchor="end" class="sc-axis">Web traces</text>
+          <rect x="170" y="110" width="2" height="22" rx="1" fill="#3a3a3a"/>
+          <text x="179" y="125" class="sc-val" fill="#999">0.2%</text>
+
+          <text x="160" y="162" text-anchor="end" class="sc-axis">Intent, within set</text>
+          <rect x="170" y="150" width="9" height="22" rx="2" fill="#3a3a3a"/>
+          <text x="186" y="165" class="sc-val" fill="#999">1.2%</text>
+
+          <text x="160" y="206" text-anchor="end" class="sc-axis" font-weight="800" fill="#fff">Position, month to month</text>
+          <rect x="170" y="190" width="460" height="26" rx="4" fill="#f97316"/>
+          <text x="640" y="207" class="sc-val" fill="#f97316" font-size="15">61.4%</text>
+
+          <text x="20" y="252" class="sc-tick">Four independent brand signals land within one point of zero. Only the model's own past output clears sixty percent.</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The test</div>
+      <h2 class="section-title">Ask the model what <em>it</em> did last time</h2>
+      <p class="section-body">We took June recommendation data and July recommendation data, two genuinely separate periods pulled from different tables, spanning a model change in between, and matched them on 1,082 brand-intent pairs built from the same 50 intents. Then we correlated June's position and frequency against July's, using Pearson correlation on the raw values.</p>
+      <div class="method-box">
+        <div class="method-grid">
+          <div class="method-item">Brand-intent pairs: <span>1,082</span></div>
+          <div class="method-item">Intents: <span>same 50, both periods</span></div>
+          <div class="method-item">Periods compared: <span>June vs July</span></div>
+          <div class="method-item">Method: <span>Pearson correlation</span></div>
+          <div class="method-item">Circularity: <span>different periods, different tables</span></div>
+          <div class="method-item">Model: <span>changed between periods</span></div>
+        </div>
+        <div class="limits"><strong>Why this is not circular.</strong> This is not the same measurement correlated with itself. June and July come from different collection runs, stored in different tables, spanning a change to the underlying model. If June still predicts July under those conditions, the thing being measured is more stable than the pipeline that measured it.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The finding</div>
+      <h2 class="section-title">The strongest number in this <em>entire series</em></h2>
+      <p class="section-body">June's position predicts July's position at <strong>r = 0.784, R squared = 61.4%</strong>. June's frequency predicts July's frequency at <strong>r = 0.737, R squared = 54.4%</strong>. And June's position predicts July's frequency at <strong>r = negative 0.565, R squared = 31.9%</strong>, negative because a better position number, lower is better, lines up with a higher frequency, which is exactly what you would expect if position and frequency are two views of the same underlying stability.</p>
+      <div class="chart-box">
+        <div class="chart-title">How well June predicts July</div>
+        <div class="chart-sub">Pearson R squared, 1,082 brand-intent pairs, same 50 intents both periods</div>
+        <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="June position predicts July position with R squared 61.4 percent and r 0.784. June frequency predicts July frequency with R squared 54.4 percent and r 0.737. June position predicts July frequency with R squared 31.9 percent and r negative 0.565">
+          <text x="160" y="34" text-anchor="end" class="sc-axis">Position &rarr; Position</text>
+          <rect x="170" y="20" width="460" height="26" rx="4" fill="#f97316"/>
+          <text x="640" y="37" class="sc-val" fill="#f97316" font-size="14">61.4%</text>
+          <text x="176" y="38" font-size="10.5" fill="#1a0d00" font-family="inherit">r = 0.784</text>
+
+          <text x="160" y="88" text-anchor="end" class="sc-axis">Frequency &rarr; Frequency</text>
+          <rect x="170" y="74" width="407" height="26" rx="4" fill="#EF9F27"/>
+          <text x="588" y="91" class="sc-val" fill="#EF9F27" font-size="14">54.4%</text>
+          <text x="176" y="92" font-size="10.5" fill="#1a0d00" font-family="inherit">r = 0.737</text>
+
+          <text x="160" y="142" text-anchor="end" class="sc-axis">Position &rarr; Frequency</text>
+          <rect x="170" y="128" width="239" height="26" rx="4" fill="#c2691a"/>
+          <text x="420" y="145" class="sc-val" fill="#c2691a" font-size="14">31.9%</text>
+          <text x="176" y="146" font-size="10.5" fill="#1a0d00" font-family="inherit">r = -0.565</text>
+
+          <text x="20" y="178" class="sc-tick">Across a month, a model change, and separate datasets. Not the same measurement correlated with itself.</text>
+        </svg>
+      </div>
+      <div class="callout warn">
+        <strong>Do not mix this with the 53.6% ceiling.</strong> That earlier number was Spearman, and Spearman's version of this same self-prediction test comes out at 91.3%, not 61.4%. So 61.4% is roughly two thirds of what is achievable by this measure, not further ahead of the ceiling than seems possible. Pearson and Spearman answer related but different questions and should never be reported as if they were the same statistic.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The companion finding</div>
+      <h2 class="section-title">And it does not move for <em>15 days</em></h2>
+      <p class="section-body">A signal that predicts itself a month out is only useful if it also holds steady in between. We already knew that comparing the same sweep against itself produces about 44% turnover from ordinary noise, nothing to do with real change. We extended that same comparison out to 1 day apart, 14 days apart, and 15 days apart, on 234,283 scans across 57,242 domains.</p>
+      <div class="chart-box">
+        <div class="chart-title">Percent of top picks that changed, by how far apart the two scans were</div>
+        <div class="chart-sub">Baseline is the same sweep compared with itself, three repeats shown as small points</div>
+        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="Within-sweep baseline noise averages about 43.3 percent. One day apart is 44.6 percent, 14 days apart is 44.7 percent, 15 days apart is 44.4 percent, all indistinguishable from the baseline noise on a 0 to 100 percent scale">
+          <line x1="40" y1="20" x2="660" y2="20" stroke="#161616" stroke-width="1"/>
+          <line x1="40" y1="65" x2="660" y2="65" stroke="#161616" stroke-width="1"/>
+          <line x1="40" y1="110" x2="660" y2="110" stroke="#161616" stroke-width="1"/>
+          <line x1="40" y1="155" x2="660" y2="155" stroke="#161616" stroke-width="1"/>
+          <line x1="40" y1="200" x2="660" y2="200" stroke="#161616" stroke-width="1"/>
+          <text x="30" y="24" text-anchor="end" class="sc-tick">100%</text>
+          <text x="30" y="69" text-anchor="end" class="sc-tick">75%</text>
+          <text x="30" y="114" text-anchor="end" class="sc-tick">50%</text>
+          <text x="30" y="159" text-anchor="end" class="sc-tick">25%</text>
+          <text x="30" y="204" text-anchor="end" class="sc-tick">0%</text>
+
+          <circle cx="90" cy="120.6" r="3" fill="#555"/>
+          <circle cx="100" cy="121.2" r="3" fill="#555"/>
+          <circle cx="110" cy="124.2" r="3" fill="#555"/>
+
+          <path d="M100,122 L280,119.7 L480,119.5 L600,120.1" stroke="#f97316" stroke-width="2.5" fill="none"/>
+          <circle cx="100" cy="122" r="5" fill="#f97316"/>
+          <circle cx="280" cy="119.7" r="5" fill="#f97316"/>
+          <circle cx="480" cy="119.5" r="5" fill="#f97316"/>
+          <circle cx="600" cy="120.1" r="5" fill="#f97316"/>
+
+          <text x="100" y="100" text-anchor="middle" class="sc-val" fill="#f97316">43.3%</text>
+          <text x="280" y="103" text-anchor="middle" class="sc-val" fill="#f97316">44.6%</text>
+          <text x="480" y="103" text-anchor="middle" class="sc-val" fill="#f97316">44.7%</text>
+          <text x="600" y="103" text-anchor="middle" class="sc-val" fill="#f97316">44.4%</text>
+
+          <text x="100" y="222" text-anchor="middle" class="sc-tick">within one sweep</text>
+          <text x="280" y="222" text-anchor="middle" class="sc-tick">1 day apart</text>
+          <text x="480" y="222" text-anchor="middle" class="sc-tick">14 days apart</text>
+          <text x="600" y="222" text-anchor="middle" class="sc-tick">15 days apart</text>
+
+          <text x="40" y="244" class="sc-tick">On a full 0 to 100 percent scale, four measurements spread across 15 days sit on top of one another.</text>
+        </svg>
+      </div>
+      <div class="callout">
+        <strong>Nothing moves in 15 days.</strong> The gap between the noise floor and every later measurement rounds to zero. Waiting longer between scans does not reveal drift because there is no drift to reveal in this window.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Why it matters</div>
+      <h2 class="section-title">This kills monitoring as a product, and tells you what to sell instead</h2>
+      <p class="section-body">Put the two findings together. Recommendation is not explained by anything measurable about the brand in the world, not its store, not its fame, not its web presence. It is explained, at 61.4%, by what the model already did last time. And that state does not drift for at least 15 days. That is not a weak signal buried in noise. It is a stable, self-consistent, internal property of the model, and external brand attributes barely touch it.</p>
+      <p class="section-body">The practical consequence is blunt: there is nothing to monitor day to day, because nothing changes day to day. A single, well-timed scan tells you what will still be true weeks later. Continuous tracking would be selling reassurance about a number that was never going to move.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Supporting evidence</div>
+      <h2 class="section-title">Two more signs this is <em>structural</em>, not noisy</h2>
+      <div class="split2">
+        <div class="split-card">
+          <div class="big">28.5 to 30.3</div>
+          <div class="lbl">Top 3 brands' combined share of recommendations across 10 categories, coffee to food and snacks. A range of 1.8 points. The same concentration law holds everywhere we look.</div>
+        </div>
+        <div class="split-card">
+          <div class="big" style="color:#E24B4A;">53.4 vs 55.0</div>
+          <div class="lbl">Total score, our most stable core brands versus everyone else recommended. The core has worse stores, not better, echoing the same reversal we found across the full population.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <div class="cta-title">Your store might already be <em>locked in</em>, one way or the other</div>
+      <div class="cta-sub">Get your free AI Commerce Score&trade; in 10 seconds. Since the signal that matters most is not your store attributes, this tells you where you actually stand.</div>
+      <a href="/#score" class="cta-btn">Get My Free AI Score</a>
+    </div>
+
+    <div class="related">
+      <div class="section-kicker">Keep reading</div>
+      <h2 class="section-title">The rest of the <em>research series</em></h2>
+      <p class="section-body">This is the strongest number in the whole series. Read the null results it stands against for full context.</p>
+      <div class="related-grid">
+        <a class="related-card flagship" href="/research/ai-recommendations-across-commerce-2026">
+          <div class="rc-kicker">&#9733; Flagship</div>
+          <div class="rc-title">Across Commerce 2026</div>
+          <div class="rc-desc">20,000 recommendations, 1,490 brands, five categories. The full synthesis.</div>
+        </a>
+        <a class="related-card" href="/research/candidacy-vs-selection">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">Candidacy vs Selection</div>
+          <div class="rc-desc">Full population, 60,924 stores. One factor gets you in. It wins you nothing.</div>
+        </a>
+        <a class="related-card" href="/research/the-fame-study">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">The Fame Study, Corrected</div>
+          <div class="rc-desc">Public fame explains 1.2% of recommendation, sitting on the noise floor.</div>
+        </a>
+        <a class="related-card" href="/research/search-changes-the-vocabulary">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">Search Changes the Vocabulary</div>
+          <div class="rc-desc">With search on, the model names ingredients. With it off, impressions.</div>
+        </a>
+        <a class="related-card" href="/research/ai-confabulates-its-reasons">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">29,633 Reasons, 90% Unique</div>
+          <div class="rc-desc">The model writes a fresh justification for every pick. Asking it why does not work.</div>
+        </a>
+        <a class="related-card" href="/research/ai-knows-your-website">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">AI Knows Your Website</div>
+          <div class="rc-desc">The model names the correct domain 75.9% of the time. It still won't recommend you.</div>
+        </a>
+      </div>
+      <p class="related-more"><a class="fw" href="/framework">Recommendation Intelligence Framework&trade;</a> &nbsp;&middot;&nbsp; <a href="/research">All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp; <a href="/stores">Stores</a></p>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
+        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+        <a href="/privacy-policy">Privacy</a><br>
+        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+      </div>
+      <div>
+        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+        <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
