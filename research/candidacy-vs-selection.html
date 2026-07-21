@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candidacy vs Selection: One Store Factor Gets You In. It Wins You Nothing: Atom Foundry</title>
+<meta name="description" content="Every prior test in this series measured brands already being recommended. We tested the full population instead, 599 recommended stores against 60,325 that were never recommended once. One factor separates the two groups. It still predicts nothing about who wins inside that group.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/research/candidacy-vs-selection">
+<meta property="og:title" content="Candidacy vs Selection: One Store Factor Gets You In. It Wins You Nothing.">
+<meta property="og:description" content="599 recommended stores vs 60,325 that never made it, full population, not a restricted sample. Intent separates who gets in. It does not predict who wins once you're there.">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#webpage",
+      "url": "https://atomfoundry.dev/research/candidacy-vs-selection",
+      "name": "Candidacy vs Selection: One Store Factor Gets You In. It Wins You Nothing.",
+      "description": "Every prior test in this series measured brands already being recommended. We tested the full population instead, 599 recommended stores against 60,325 that were never recommended once. One factor separates the two groups. It still predicts nothing about who wins inside that group.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": { "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#dataset" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#breadcrumb" }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#article",
+      "headline": "Candidacy vs Selection: One Store Factor Gets You In. It Wins You Nothing.",
+      "description": "A full-population test correcting for range restriction in every earlier study. 599 recommended stores vs 60,325 never recommended. Intent separates membership in the recommended set across 9 of 9 niches, but does not predict frequency within it, r = 0.112, R squared = 1.2%.",
+      "author": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "datePublished": "2026-07-21",
+      "url": "https://atomfoundry.dev/research/candidacy-vs-selection",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#webpage" },
+      "about": ["Recommendation Intelligence", "AI Commerce", "Range Restriction", "Generative Engine Optimization"]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#dataset",
+      "name": "Does a better store get recommended at all, not just recommended more?",
+      "description": "Full-population comparison of 599 stores that appeared in at least one AI recommendation against 60,325 stores that never appeared in any, across all AI Commerce Score components. Intent score separates the groups by 39% and holds across 9 of 9 niches, but does not predict recommendation frequency within the recommended group, R squared = 1.2%.",
+      "creator": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/candidacy-vs-selection",
+      "measurementTechnique": "Full-population group comparison, not range-restricted, across 8-factor AI Commerce Score components, niche-stratified robustness check, Pearson correlation to frequency",
+      "variableMeasured": ["Total Score", "Intent Score", "Visual Score", "Schema Score", "Technical Score", "Trust Score", "Price Score", "Brand Score", "Recommendation Frequency"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/research/candidacy-vs-selection#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://atomfoundry.dev/research" },
+        { "@type": "ListItem", "position": 3, "name": "Candidacy vs Selection", "item": "https://atomfoundry.dev/research/candidacy-vs-selection" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent), radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.page { position: relative; z-index: 1; }
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.research.active { background: rgba(239,159,39,0.14); border-color: rgba(239,159,39,0.55); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
+.hero { padding: 22px 0 8px; }
+.hero-kicker { font-size: 11px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 14px; }
+.hero h1 { font-size: clamp(28px, 4.6vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px; }
+.hero h1 em { font-style: normal; color: #f97316; }
+.hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 640px; }
+.byline { font-size: 12px; color: #555; margin-top: 16px; }
+.byline a { color: #EF9F27; }
+.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin: 32px 0 8px; }
+.stat-cell { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid #1e1e1e; }
+.stat-cell:last-child { border-right: none; }
+.stat-num { font-size: 22px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 10.5px; color: #777; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+.section { margin: 48px 0; }
+.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+.section-title em { font-style: normal; color: #f97316; }
+.section-body { font-size: 15px; color: #aaa; line-height: 1.85; max-width: 680px; }
+.section-body strong { color: #e8e8e8; }
+.section-body p { margin-bottom: 14px; }
+.method-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 28px; margin-top: 8px; }
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-bottom: 18px; }
+.method-item { font-size: 13px; color: #999; padding: 7px 0; border-bottom: 1px solid #161616; }
+.method-item span { color: #e8e8e8; font-weight: 600; }
+.limits { font-size: 12.5px; color: #777; line-height: 1.7; margin-top: 18px; padding-top: 16px; border-top: 1px solid #161616; }
+.limits strong { color: #999; }
+.chart-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 24px 18px; margin-top: 8px; }
+.chart-title { font-size: 14px; color: #e8e8e8; font-weight: 700; margin-bottom: 2px; }
+.chart-sub { font-size: 12px; color: #777; margin-bottom: 16px; }
+.chart-cap { font-size: 12px; color: #888; line-height: 1.6; margin-top: 14px; padding-top: 14px; border-top: 1px solid #161616; }
+.chart-cap strong { color: #f97316; }
+.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
+.callout strong { color: #4ade80; }
+.callout.warn { background: #1a0d0a; border-color: #2e1a1a; }
+.callout.warn strong { color: #f87171; }
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.split-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; }
+.split-card .big { font-size: 30px; font-weight: 800; color: #f97316; line-height: 1; }
+.split-card .lbl { font-size: 13px; color: #999; margin-top: 6px; line-height: 1.5; }
+.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin: 40px 0 8px; }
+.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+.cta-title em { font-style: normal; color: #f97316; }
+.cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; max-width: 520px; margin-left: auto; margin-right: auto; }
+.cta-btn { display: inline-block; padding: 16px 36px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+.sc-tick { fill: #555; font-size: 11px; font-family: inherit; }
+.sc-axis { fill: #aaa; font-size: 12px; font-weight: 600; font-family: inherit; }
+.sc-val { fill: #fff; font-size: 13px; font-weight: 800; font-family: inherit; }
+.sc-grp { fill: #ccc; font-size: 12px; font-weight: 600; font-family: inherit; }
+.legend-row { display: flex; gap: 20px; margin-bottom: 4px; font-size: 12px; color: #999; }
+.legend-row span.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+.related { margin: 48px 0 8px; }
+.related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 18px; }
+.related-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 18px 20px; transition: all 0.2s; display: block; }
+.related-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+.related-card .rc-kicker { font-size: 10px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 6px; }
+.related-card.flagship .rc-kicker { color: #f97316; }
+.related-card .rc-title { font-size: 15px; color: #fff; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
+.related-card .rc-desc { font-size: 12px; color: #888; line-height: 1.5; }
+.related-more { margin-top: 16px; font-size: 14px; color: #777; }
+.related-more a { color: #EF9F27; }
+.related-more a:hover { color: #f97316; }
+.related-more a.fw { color: #1D9E75; }
+@media (max-width: 640px) {
+  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .nav-links { flex-wrap: wrap; }
+  .wrap { padding: 0 18px; }
+  .hero h1 { font-size: 26px; }
+  .stats-bar { flex-wrap: wrap; }
+  .stat-cell { flex: 1 0 50%; border-bottom: 1px solid #1e1e1e; }
+  .method-grid, .split2 { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="nav">
+    <div class="nav-brand">
+      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+      <div class="nav-subline">The AI Commerce Graph&trade;</div>
+      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+    </div>
+    <div class="nav-links">
+      <a href="/stores">Stores</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/vocabulary">Vocabulary</a>
+      <a href="/framework" class="framework">Framework</a>
+      <a href="/research" class="research active">Research</a>
+      <a href="/#score" class="cta-nav">Free Score</a>
+    </div>
+  </nav>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-kicker">Recommendation Intelligence Research&trade; &middot; Candidacy vs Selection</div>
+      <h1>Every store we tested was already in the game. We never checked who <em>doesn't make it</em>.</h1>
+      <p class="hero-sub">Every correlation in this series so far, including the ones that found nothing, was measured only among brands the model already recommends. That is a range-restricted sample. We had never asked whether a better store gets recommended at all. So we tested the full population: 599 stores that appeared in at least one recommendation against 60,325 that never appeared in any. One factor separates the two groups. It still predicts nothing about who wins once you are in it.</p>
+      <div class="byline">Atom Foundry &middot; July 2026 &middot; Recommendation Intelligence Research&trade; series</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-cell"><div class="stat-num">60,924</div><div class="stat-label">Stores, full population</div></div>
+      <div class="stat-cell"><div class="stat-num">599</div><div class="stat-label">Ever recommended</div></div>
+      <div class="stat-cell"><div class="stat-num">55.4 vs 56.0</div><div class="stat-label">Total score, recommended vs never</div></div>
+      <div class="stat-cell"><div class="stat-num" style="color:#1D9E75;">+39%</div><div class="stat-label">Intent gap, the one real separator</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Where this comes from</div>
+      <h2 class="section-title">The catch: we only ever looked at brands already in the room</h2>
+      <div class="section-body">
+        <p>Every prior test that correlated store quality with recommendation frequency ran the comparison among brands the model already recommends. That answers whether a better store, once it is being recommended, gets recommended more often. It never asks the more basic question: does a better store get recommended in the first place, or does it never even enter consideration?</p>
+        <p>Those are different questions with different samples. Restricting to brands already recommended can hide a real effect that only shows up at the gate, before frequency ever becomes relevant. So we dropped the restriction and compared the full population of scanned stores: everyone who ever appeared in a recommendation against everyone who never did.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The test</div>
+      <h2 class="section-title">599 recommended. <em>60,325 never</em>.</h2>
+      <p class="section-body">We split every scanned store into two groups based on a single question: did this store appear in at least one AI recommendation, ever, or not. Then we compared the AI Commerce Score and each of its components across the full population, no restriction to brands already winning recommendations.</p>
+      <div class="method-box">
+        <div class="method-grid">
+          <div class="method-item">Total stores scanned: <span>60,924</span></div>
+          <div class="method-item">Recommended at least once: <span>599</span></div>
+          <div class="method-item">Never recommended: <span>60,325</span></div>
+          <div class="method-item">Compared: <span>total score and 7 score components</span></div>
+          <div class="method-item">Intent robustness check: <span>9 of 9 niches</span></div>
+          <div class="method-item">Frequency correlation: <span>r = 0.112, R squared = 1.2%</span></div>
+        </div>
+        <div class="limits"><strong>What we are not reporting.</strong> An earlier pass also compared raw review counts and average price between the two groups. We are leaving both out. A later data-quality check found review count populated for only 9.4% of the 66,085 scanned stores and average price for 66.7%, which means those two comparisons were mostly comparing empty fields, not real values. Only the score components below are computed for every scanned store regardless of raw-field coverage, so only those are reported here.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The result</div>
+      <h2 class="section-title">Recommended stores are not better. They are <em>marginally worse</em>.</h2>
+      <p class="section-body">Across the full population, recommended stores scored <strong>55.4</strong> on average against <strong>56.0</strong> for stores that were never recommended. That is a real number now, not a restricted-sample artifact. The 0.7% correlation this series already reported was measured among recommended brands only. This test removes that restriction entirely, across 60,924 stores, and the gap still does not appear. If anything it points the wrong way.</p>
+      <div class="chart-box">
+        <div class="chart-title">Score components, recommended vs never recommended</div>
+        <div class="chart-sub">Full population, 599 recommended stores against 60,325 that were never recommended</div>
+        <div class="legend-row">
+          <span><span class="sw" style="background:#f97316;"></span>Recommended (599)</span>
+          <span><span class="sw" style="background:#3a3a3a;"></span>Never recommended (60,325)</span>
+        </div>
+        <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="Score components compared between recommended and never recommended stores. Intent 5.13 versus 3.70, visual 7.43 versus 7.22, schema 3.83 versus 3.53, technical 11.27 versus 12.13, trust 10.42 versus 11.06, price 8.25 versus 8.94, brand 3.07 versus 3.14. Intent is the only component with a large proportional gap">
+          <text x="150" y="58" text-anchor="end" class="sc-axis">intent</text>
+          <rect x="160" y="44" width="118" height="14" rx="3" fill="#f97316"/>
+          <text x="284" y="55" class="sc-val" fill="#f97316">5.13</text>
+          <rect x="160" y="60" width="85" height="14" rx="3" fill="#3a3a3a"/>
+          <text x="251" y="71" class="sc-tick" fill="#999">3.70</text>
+
+          <text x="150" y="104" text-anchor="end" class="sc-axis">visual</text>
+          <rect x="160" y="90" width="172" height="14" rx="3" fill="#f97316"/>
+          <text x="338" y="101" class="sc-val" fill="#f97316">7.43</text>
+          <rect x="160" y="106" width="167" height="14" rx="3" fill="#3a3a3a"/>
+          <text x="333" y="117" class="sc-tick" fill="#999">7.22</text>
+
+          <text x="150" y="150" text-anchor="end" class="sc-axis">schema</text>
+          <rect x="160" y="136" width="88" height="14" rx="3" fill="#f97316"/>
+          <text x="254" y="147" class="sc-val" fill="#f97316">3.83</text>
+          <rect x="160" y="152" width="81" height="14" rx="3" fill="#3a3a3a"/>
+          <text x="247" y="163" class="sc-tick" fill="#999">3.53</text>
+
+          <text x="150" y="196" text-anchor="end" class="sc-axis">technical</text>
+          <rect x="160" y="182" width="260" height="14" rx="3" fill="#f97316"/>
+          <text x="426" y="193" class="sc-val" fill="#f97316">11.27</text>
+          <rect x="160" y="198" width="280" height="14" rx="3" fill="#3a3a3a"/>
+          <text x="446" y="209" class="sc-tick" fill="#999">12.13</text>
+
+          <text x="150" y="242" text-anchor="end" class="sc-axis">trust</text>
+          <rect x="160" y="228" width="240" height="14" rx="3" fill="#f97316"/>
+          <text x="406" y="239" class="sc-val" fill="#f97316">10.42</text>
+          <rect x="160" y="244" width="255" height="14" rx="3" fill="#3a3a3a"/>
+          <text x="421" y="255" class="sc-tick" fill="#999">11.06</text>
+
+          <text x="150" y="288" text-anchor="end" class="sc-axis">price</text>
+          <rect x="160" y="274" width="190" height="14" rx="3" fill="#f97316"/>
+          <text x="356" y="285" class="sc-val" fill="#f97316">8.25</text>
+          <rect x="160" y="290" width="206" height="14" rx="3" fill="#3a3a3a"/>
+          <text x="372" y="301" class="sc-tick" fill="#999">8.94</text>
+
+          <text x="150" y="334" text-anchor="end" class="sc-axis">brand</text>
+          <rect x="160" y="320" width="71" height="14" rx="3" fill="#f97316"/>
+          <text x="237" y="331" class="sc-val" fill="#f97316">3.07</text>
+          <rect x="160" y="336" width="73" height="14" rx="3" fill="#3a3a3a"/>
+          <text x="239" y="347" class="sc-tick" fill="#999">3.14</text>
+
+          <text x="20" y="380" class="sc-tick">Recommended stores score higher on intent, visual, and schema, and lower on technical, trust, and price. Same total either way.</text>
+        </svg>
+        <div class="chart-cap">Recommended stores trade technical, trust, and price for intent. The total comes out the same. <strong>Intent is the only gap large enough to matter</strong>, roughly 39% higher for recommended stores. The rest move by single-digit percentages.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Testing the one real gap</div>
+      <h2 class="section-title">Intent holds up under <em>every</em> check we ran</h2>
+      <p class="section-body">A single gap this size could easily be an artifact of category mix, circular scoring, or which brands happen to own their own store. We tested for all three, plus whether the gap actually predicts anything once a store is in the recommended set.</p>
+      <div class="split2">
+        <div class="split-card">
+          <div class="big">9 of 9</div>
+          <div class="lbl">Niches show the gap, range +0.78 to +1.59 points. Not a category artifact.</div>
+        </div>
+        <div class="split-card">
+          <div class="big">0.20 to 0.29</div>
+          <div class="lbl">Intent's correlation with the store's other score factors. A free-floating brand-recognition signal would not correlate with anything.</div>
+        </div>
+        <div class="split-card">
+          <div class="big">1.40 vs 1.53</div>
+          <div class="lbl">Gap size in brand-owned stores versus independent ones, nearly identical. Not a brand-selection artifact.</div>
+        </div>
+        <div class="split-card">
+          <div class="big" style="color:#E24B4A;">R&sup2; = 1.2%</div>
+          <div class="lbl">Once a store is in the recommended set, intent does not predict how often it gets picked, r = 0.112. Same magnitude as the fame study, on the null.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Why it matters</div>
+      <h2 class="section-title">Store quality gets you <em>candidacy</em>, not <em>selection</em></h2>
+      <p class="section-body">One store factor genuinely separates the brands that ever get recommended from the brands that never do, and it survives niche breakdown, circularity checks, and a brand-ownership split. That is real. But the same factor, measured only among brands already in the recommended set, predicts almost nothing about which of them wins more often. Getting into the game and winning it are governed by different things.</p>
+      <p class="section-body">One confound is worth naming directly: 3.70% of Magento stores appear in the recommended group against 0.79% of Shopify stores, a 4.7x difference. That looks dramatic until you notice Magento stores in this dataset skew older and larger, the platform itself is not doing the work. It is a marker for something else, not a lever anyone can pull.</p>
+      <div class="callout warn">
+        <strong>What correlation can never settle:</strong> direction. Brands with sharply positioned stores may be recommended because their positioning is clear, or their positioning may be clear because they are already successful enough to invest in it. Both stories produce the same correlation. Nothing in this data, or any observational data, can tell them apart.
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <div class="cta-title">Does your store even <em>make the list</em>?</div>
+      <div class="cta-sub">Get your free AI Commerce Score&trade; in 10 seconds and see where your intent signal stands against the 599 stores that made it into AI recommendations.</div>
+      <a href="/#score" class="cta-btn">Get My Free AI Score</a>
+    </div>
+
+    <div class="related">
+      <div class="section-kicker">Keep reading</div>
+      <h2 class="section-title">The rest of the <em>research series</em></h2>
+      <p class="section-body">This full-population test sits on top of everything else in the series. Read them together for the complete picture.</p>
+      <div class="related-grid">
+        <a class="related-card flagship" href="/research/ai-recommendations-across-commerce-2026">
+          <div class="rc-kicker">&#9733; Flagship</div>
+          <div class="rc-title">Across Commerce 2026</div>
+          <div class="rc-desc">20,000 recommendations, 1,490 brands, five categories. The full synthesis.</div>
+        </a>
+        <a class="related-card" href="/research/the-fame-study">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">The Fame Study, Corrected</div>
+          <div class="rc-desc">Public fame explains 1.2% of recommendation, sitting on the noise floor.</div>
+        </a>
+        <a class="related-card" href="/research/search-changes-the-vocabulary">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">Search Changes the Vocabulary</div>
+          <div class="rc-desc">With search on, the model names ingredients. With it off, impressions.</div>
+        </a>
+        <a class="related-card" href="/research/ai-confabulates-its-reasons">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">29,633 Reasons, 90% Unique</div>
+          <div class="rc-desc">The model writes a fresh justification for every pick. Asking it why does not work.</div>
+        </a>
+        <a class="related-card" href="/research/ai-knows-your-website">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">AI Knows Your Website</div>
+          <div class="rc-desc">The model names the correct domain 75.9% of the time. It still won't recommend you.</div>
+        </a>
+        <a class="related-card" href="/research/web-search-changes-ai-recommendations">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">Web Search Rewrites 77%</div>
+          <div class="rc-desc">Turning on browsing changes 77% of recommended brands.</div>
+        </a>
+      </div>
+      <p class="related-more"><a class="fw" href="/framework">Recommendation Intelligence Framework&trade;</a> &nbsp;&middot;&nbsp; <a href="/research">All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp; <a href="/stores">Stores</a></p>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
+        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+        <a href="/privacy-policy">Privacy</a><br>
+        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+      </div>
+      <div>
+        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+        <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
