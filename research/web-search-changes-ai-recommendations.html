@@ -63,7 +63,6 @@
       "description": "On the same model, turning web search on changed 77% of AI product recommendations. Search off, AI recommends from memory; search on, from live retrieval. A controlled study across 50 buying prompts. AI recommends from fame, not store quality.",
       "author": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
-      "datePublished": "2026-06-13",
       "url": "https://atomfoundry.dev/research/web-search-changes-ai-recommendations",
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
       "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/web-search-changes-ai-recommendations#webpage" },
@@ -164,9 +163,9 @@ a { color: inherit; text-decoration: none; }
 .chart-legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; padding-top: 14px; border-top: 1px solid #161616; }
 .legend-item { font-size: 11px; color: #888; display: flex; align-items: center; gap: 6px; }
 .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
+.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
 .callout strong { color: #4ade80; }
-.callout.warn { background: #1a0d0a; border-color: #2e1a1a; border-left-color: #E24B4A; }
+.callout.warn { background: #1a0d0a; border-color: #2e1a1a; }
 .callout.warn strong { color: #f87171; }
 .split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
 .split-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; }
@@ -214,7 +213,7 @@ a { color: inherit; text-decoration: none; }
 .art-list { max-width: 680px; margin: 14px 0 20px; padding-left: 0; list-style: none; }
 .art-list li { font-size: 15px; color: #aaa; line-height: 1.7; padding: 7px 0 7px 22px; position: relative; }
 .art-list li:before { content: "\2022"; color: #f97316; position: absolute; left: 4px; top: 7px; font-weight: 700; }
-.note { max-width: 680px; font-size: 13.5px; color: #7a7f85; line-height: 1.75; border-left: 2px solid #262626; padding: 2px 0 2px 16px; margin: 18px 0 22px; font-style: italic; }
+.note { max-width: 680px; font-size: 13.5px; color: #7a7f85; line-height: 1.75; background: #111214; border-radius: 8px; padding: 10px 16px; margin: 18px 0 22px; font-style: italic; }
 .lede { font-size: 17px; color: #cfd3d6; line-height: 1.8; max-width: 680px; margin-bottom: 18px; }
 </style>
 </head>
@@ -242,7 +241,7 @@ a { color: inherit; text-decoration: none; }
       <p class="hero-sub">We asked one AI model the same 50 buying questions twice. The only thing we changed was whether it could browse the web. 77% of the brands it recommended changed. This is a controlled look at the layer almost nobody measures: the difference between what AI recommends from memory and what it recommends from live retrieval.</p>
       <div class="byline">Atom Foundry &middot; July 2026 &middot; Controlled experiment</div>
     </div>
-    <div style="margin:28px 0;padding:16px 20px;border-left:3px solid #EF9F27;background:rgba(239,159,39,0.06);border-radius:0 10px 10px 0;">
+    <div style="margin:28px 0;padding:16px 20px;background:rgba(239,159,39,0.06);border-radius:10px;">
       <div style="font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#EF9F27;margin-bottom:8px;">Correction &middot; 15 July 2026</div>
       <p style="font-size:14px;color:#b4b8bc;line-height:1.7;margin:0;">An earlier version of this piece claimed that changing the model moved only about 6% of recommendations. That number was derived rather than measured, and it was wrong. Measured directly, swapping gpt-4o-mini for gpt-4o with search off in both cases changes 66.9% of the recommended brands. The 77% search effect is unaffected and stands. See <em>The control</em> below for the full correction.</p>
     </div>
@@ -266,20 +265,20 @@ a { color: inherit; text-decoration: none; }
       <p class="section-body">We also ran the whole thing against gpt-4o-mini, to separate the effect of search from the effect of using a bigger model. That turned out to matter more than we expected, and not in the way we first reported.</p>
       <div class="section-kicker">The headline</div>
       <h2 class="section-title">77% of recommendations changed</h2>
-      <p class="section-body">On the same model, the overlap between search-on and search-off recommendations was 23%. In other words, <strong>77% of the recommended brands changed (95% CI 74&ndash;80%)</strong> when we turned web search on. Same model, same questions, same number of runs. One toggle.</p>
+      <p class="section-body">On the same model, the overlap between search-on and search-off recommendations was 23%. In other words, <strong>77% of the recommended brands changed (95% CI 74 to 80%)</strong> when we turned web search on. Same model, same questions, same number of runs. One toggle.</p>
       <p class="section-body">That interval comes from a cluster bootstrap resampling the 50 intents rather than the individual brand-intent pairs, because brands cluster inside intents and the pairs are not independent. A naive binomial would have given a tighter interval, 75 to 79%. The wider one is the honest one.</p>
       <p class="section-body">With search off, the model recommends from memory. It names the brands it saw most often during training, which skews heavily toward the famous ones. With search on, it throws most of those out and recommends whatever its retrieval surfaces in the moment. These are not small adjustments to a stable list. They are two largely different lists.</p>
       <div class="section-kicker">The control</div>
       <h2 class="section-title">A correction: we got the model comparison wrong</h2>
       <p class="lede">The obvious objection to the headline: maybe gpt-4o simply recommends different brands than gpt-4o-mini, and we were measuring a model difference rather than a search effect.</p>
-      <p class="section-body">So we ran gpt-4o with search off as a control. That comparison- gpt-4o with search versus gpt-4o without- is clean: same model, same run, one variable. It is where the 77% comes from, and it stands.</p>
+      <p class="section-body">So we ran gpt-4o with search off as a control. That comparison, gpt-4o with search versus gpt-4o without, is clean: same model, same run, one variable. It is where the 77% comes from, and it stands.</p>
       <div class="sub-head">The mistake was what we said next</div>
       <p class="section-body">An earlier version of this piece claimed that changing the model moved only about 6% of recommendations, and concluded that which model you ask barely matters.</p>
       <p class="section-body">That 6% was never measured. We derived it, by subtracting two overlap figures from two different comparisons and treating the gap as the model effect. It is not the same quantity. We published arithmetic and called it a result.</p>
-      <p class="section-body">Measured properly- gpt-4o-mini without search against gpt-4o without search <strong>66.9% of the recommended brands changed.</strong> Not 6%. Swapping the model rewrites roughly two thirds of the answer, close to what turning on search does.</p>
+      <p class="section-body">Measured properly, gpt-4o-mini without search against gpt-4o without search, <strong>66.9% of the recommended brands changed.</strong> Not 6%. Swapping the model rewrites roughly two thirds of the answer, close to what turning on search does.</p>
       <div class="sub-head">An honest caveat</div>
       <p class="section-body">The mini runs and the gpt-4o control runs were collected twelve days apart, so that figure mixes the model change with whatever drifted in between. We could not separate them from that data.</p>
-      <p class="section-body">We have since re-run both conditions in the same window, which removes the ambiguity: the clean model effect is <strong>68.9%</strong> (95% CI 66&ndash;71). The search comparison never had this problem, because both conditions ran together.</p>
+      <p class="section-body">We have since re-run both conditions in the same window, which removes the ambiguity: the clean model effect is <strong>68.9%</strong> (95% CI 66 to 71). The search comparison never had this problem, because both conditions ran together.</p>
       <div class="sub-head">What it leaves</div>
       <p class="section-body">A better finding than the one we started with. Switch the model and roughly two thirds of the recommendations change. Turn on browsing and roughly three quarters change.</p>
       <p class="section-body"><strong>There is no such thing as what AI recommends.</strong> There is only what a particular model, in a particular configuration, at a particular moment, recommends.</p>
@@ -322,7 +321,7 @@ a { color: inherit; text-decoration: none; }
         10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong style="color:#EF9F27;">46.1%</strong>
       </p>
       <p class="section-body">It falls for the first three, then <strong>stops dead at 46.1% and does not move again.</strong> Doubling the sampling from five runs to ten changes nothing. Not a tenth of a point.</p>
-      <p class="section-body">So the noise is not a budget problem. You cannot buy determinism back by running more. <strong>The randomness is a property of the model itself</strong> there is a stable core of brands and a tail long enough that every query pulls different edges of it, no matter how many times you ask.</p>
+      <p class="section-body">So the noise is not a budget problem. You cannot buy determinism back by running more. <strong>The randomness is a property of the model itself.</strong> There is a stable core of brands and a tail long enough that every query pulls different edges of it, no matter how many times you ask.</p>
       <div class="section-kicker">The texture</div>
       <h2 class="section-title">It depends on the category</h2>
       <p class="section-body">The effect was not uniform. Browsing rewrote recommendations far more in some categories than others. Pets: 88% of recommendations changed. Fitness: 61%. The pattern: the more fragmented and long-tail the market, the more browsing overrides memory. In categories dominated by a few household names, the model&rsquo;s memory and its search mostly agree. In categories full of small brands, they don&rsquo;t, and search wins.</p>
@@ -333,10 +332,10 @@ a { color: inherit; text-decoration: none; }
       <div class="section-kicker">The stress test</div>
       <h2 class="section-title">We tried to break the category finding before publishing it</h2>
       <p class="lede">A data engineer raised a fair objection: how do we know that&rsquo;s the category and not the prompts?</p>
-      <p class="section-body">Broad questions like &ldquo;best dog food&rdquo; should lean on retrieval harder than narrow ones like &ldquo;best cat litter for odor control.&rdquo; If our 50 prompts skew broad in some categories and narrow in others, what looks like market structure could just be prompt style.</p>
+      <p class="section-body">Broad questions like best dog food should lean on retrieval harder than narrow ones like best cat litter for odor control. If our 50 prompts skew broad in some categories and narrow in others, what looks like market structure could just be prompt style.</p>
       <p class="section-body">So we tagged all 50 prompts and split the results.</p>
       <div class="sub-head">The number that looked like an answer</div>
-      <p class="section-body">Pooled, broad prompts changed 74.2% and narrow prompts changed 80.0%. Narrow changed <em>more</em> the opposite of the prediction. We could have stopped there and declared the objection handled.</p>
+      <p class="section-body">Pooled, broad prompts changed 74.2% and narrow prompts changed 80.0%. Narrow changed <em>more</em>, the opposite of the prediction. We could have stopped there and declared the objection handled.</p>
       <p class="section-body">That would have been wrong.</p>
       <p class="section-body">Inside each individual category, prompt style has no consistent direction at all: broad changes more in five categories, narrow in four. The pooled gap was composition, not causation. The categories that happen to hold most of our narrow prompts are also the categories that change the most, so narrow prompts <em>appear</em> to change more purely because of where they live.</p>
       <p class="section-body">This is Simpson&rsquo;s paradox, and it made the pooled number worse than useless: it looked like an answer.</p>
@@ -346,12 +345,12 @@ a { color: inherit; text-decoration: none; }
         <li><strong>Broad prompts only:</strong> Coffee 89.8% down to Fitness 62.4%. A 27-point spread.</li>
         <li><strong>Narrow prompts only:</strong> Pets 94.4% down to Fitness 52.6%. A 42-point spread.</li>
       </ul>
-      <p class="section-body">Fitness is lowest in both. Coffee and Pets are highest in both. The category ranking survives when prompt style is controlled for. Across the ten categories, the correlation between a category&rsquo;s share of broad prompts and its change rate is &minus;0.56 if the confound were real, that would need to be strongly positive.</p>
+      <p class="section-body">Fitness is lowest in both. Coffee and Pets are highest in both. The category ranking survives when prompt style is controlled for. Across the ten categories, the correlation between a category&rsquo;s share of broad prompts and its change rate is minus 0.56. If the confound were real, that would need to be strongly positive.</p>
       <div class="sub-head">Where this is still weak</div>
       <p class="section-body">We would rather say this than have someone find it.</p>
       <ul class="art-list">
         <li><strong>The cells are thin.</strong> Coffee has exactly one broad prompt. Fitness has exactly one narrow prompt. Electronics has none. The 42-point spread leans on a single prompt at one end.</li>
-        <li><strong>The correlation is not significant.</strong> &minus;0.56 across ten categories, where the critical value is roughly 0.63. A direction, not a proof.</li>
+        <li><strong>The correlation is not significant.</strong> Minus 0.56 across ten categories, where the critical value is roughly 0.63. A direction, not a proof.</li>
         <li><strong>The prompt mix was not designed.</strong> It happened. A balanced grid would settle this cleanly, and that is what the next study will use.</li>
       </ul>
       <p class="section-body">So the honest claim is that we looked for the confound and found the opposite, and the category effect survives stratification. Not that no confound exists.</p>
