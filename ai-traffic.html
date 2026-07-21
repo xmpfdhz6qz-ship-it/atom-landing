@@ -9,56 +9,85 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --orange:#f97316; --orange-deep:#c2410c;
-  --green:#1D9E75; --amber:#EF9F27; --red:#E24B4A;
-  --bg:#080808; --panel:#0e0e0e;
-  --line:#1e1e1e; --line-2:#262626;
-  --text:#f2f2f2; --muted:#b4b8bc; --dim:#8b9095; --faint:#5c6165;
+  --green:#1D9E75; --amber:#EF9F27; --red:#E24B4A; --cyan:#38bdf8;
+  --bg:#050505; --panel:#0b0d0e;
+  --line:#1c1f21; --line-2:#262b2e;
+  --text:#f2f4f5; --muted:#b4b8bc; --dim:#868c91; --faint:#565c60;
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
 }
 body {
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   background:var(--bg); color:var(--text); font-size:16px; line-height:1.55;
-  padding:0 20px 100px; -webkit-font-smoothing:antialiased;
+  padding:0 20px 110px; -webkit-font-smoothing:antialiased;
+  position:relative;
 }
-body::before { content:""; position:fixed; inset:0; background:radial-gradient(ellipse 70% 45% at 50% -8%, rgba(249,115,22,0.10), transparent); pointer-events:none; }
-.wrap { max-width:1080px; margin:0 auto; position:relative; }
-
+/* futuristic backdrop: soft glow + faint moving grid */
+body::before {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -8%, rgba(249,115,22,0.12), transparent),
+    radial-gradient(ellipse 55% 35% at 100% 15%, rgba(56,189,248,0.06), transparent);
+}
+body::after {
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.35;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size:34px 34px;
+  animation:gridshift 24s linear infinite;
+}
+@keyframes gridshift { from{background-position:0 0,0 0;} to{background-position:0 340px,340px 0;} }
+@media (prefers-reduced-motion:reduce){ body::after{animation:none} }
+.wrap { max-width:1120px; margin:0 auto; position:relative; z-index:1; }
 .top { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding:44px 0 30px; flex-wrap:wrap; }
 .eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--orange); display:flex; align-items:center; gap:9px; margin-bottom:12px; }
 .pulse { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 0 rgba(29,158,117,0.6); animation:pulse 2.4s infinite; }
 @keyframes pulse { 70% { box-shadow:0 0 0 7px rgba(29,158,117,0); } 100% { box-shadow:0 0 0 0 rgba(29,158,117,0); } }
 @media (prefers-reduced-motion:reduce){ .pulse{animation:none} }
-h1 { font-size:40px; font-weight:800; letter-spacing:-0.03em; line-height:1.05; }
+.cursor { display:inline-block; width:7px; background:var(--orange); margin-left:1px; animation:blink 1.1s steps(1) infinite; }
+@keyframes blink { 50%{opacity:0;} }
+h1 { font-size:40px; font-weight:800; letter-spacing:-0.03em; line-height:1.05; text-shadow:0 0 26px rgba(249,115,22,0.28); }
 h1 em { font-style:normal; color:var(--orange); }
-.lede { font-size:16px; color:var(--muted); max-width:640px; margin-top:14px; }
-.lede-cz { font-size:14px; color:var(--dim); max-width:640px; margin-top:6px; }
-.controls { display:flex; gap:8px; align-items:center; padding-top:6px; }
+.lede { font-size:16px; color:var(--muted); max-width:660px; margin-top:14px; }
+.lede-cz { font-size:14px; color:var(--dim); max-width:660px; margin-top:6px; }
+.controls { display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+.clock { font-family:var(--mono); font-size:20px; font-weight:700; color:var(--text); letter-spacing:.02em; text-shadow:0 0 16px rgba(255,255,255,0.12); }
+.clock small { display:block; font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin-top:2px; text-align:right; }
+.controls-row { display:flex; gap:8px; align-items:center; }
 .chip { font-family:var(--mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--dim); border:1px solid var(--line-2); border-radius:7px; padding:7px 12px; background:var(--panel); }
 button.chip { cursor:pointer; transition:.18s; }
 button.chip:hover { color:var(--orange); border-color:rgba(249,115,22,.45); }
 button.chip:focus-visible { outline:2px solid var(--orange); outline-offset:2px; }
-
-.readout { display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel); margin-bottom:22px; }
-.cell { padding:20px 22px; border-right:1px solid var(--line); }
+button.chip.live-on { color:#0a0a0a; background:var(--green); border-color:var(--green); box-shadow:0 0 18px rgba(29,158,117,.45); }
+.readout { display:grid; grid-template-columns:repeat(6,1fr); border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel); margin-bottom:22px; box-shadow:0 0 0 1px rgba(255,255,255,0.02) inset; }
+.cell { padding:20px 18px; border-right:1px solid var(--line); position:relative; }
 .cell:last-child { border-right:none; }
-.cell .k { font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--faint); }
-.cell .v { font-family:var(--mono); font-size:34px; font-weight:700; color:var(--text); line-height:1.15; margin-top:10px; letter-spacing:-0.02em; }
-.cell .cz { font-size:12.5px; color:var(--dim); margin-top:3px; }
-.cell.accent .v { color:var(--orange); }
-.cell.danger .v { color:var(--red); }
-
-.panel { border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:22px 24px 24px; margin-bottom:18px; }
+.cell .k { font-family:var(--mono); font-size:10px; letter-spacing:0.13em; text-transform:uppercase; color:var(--faint); }
+.cell .v { font-family:var(--mono); font-size:30px; font-weight:700; color:var(--text); line-height:1.15; margin-top:10px; letter-spacing:-0.02em; }
+.cell .cz { font-size:12px; color:var(--dim); margin-top:3px; }
+.cell.accent .v { color:var(--orange); text-shadow:0 0 18px rgba(249,115,22,.35); }
+.cell.danger .v { color:var(--red); text-shadow:0 0 18px rgba(226,75,74,.3); }
+.cell.cyan .v { color:var(--cyan); text-shadow:0 0 18px rgba(56,189,248,.35); }
+/* HUD corner brackets on panels */
+.panel { border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:22px 24px 24px; margin-bottom:18px; position:relative; overflow:hidden; }
+.panel::before, .panel::after { content:""; position:absolute; width:14px; height:14px; border:2px solid rgba(249,115,22,0.35); pointer-events:none; }
+.panel::before { top:-1px; left:-1px; border-right:none; border-bottom:none; border-radius:6px 0 0 0; }
+.panel::after { bottom:-1px; right:-1px; border-left:none; border-top:none; border-radius:0 0 6px 0; }
+.panel.cyan-frame::before, .panel.cyan-frame::after { border-color:rgba(56,189,248,0.4); }
+.scanline { position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--orange), transparent); opacity:.55; animation:sweep 3.6s linear infinite; }
+@keyframes sweep { from{transform:translateX(-100%);} to{transform:translateX(100%);} }
+@media (prefers-reduced-motion:reduce){ .scanline{animation:none} }
 .ph { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:2px; }
 .ph h2 { font-size:16px; font-weight:700; letter-spacing:-0.01em; }
 .ph .aside { font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
 .pcz { font-size:13px; color:var(--dim); margin-bottom:20px; }
 .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-
 .spectrum { display:flex; height:14px; border-radius:99px; overflow:hidden; background:#181818; margin:4px 0 18px; }
 .spectrum span { display:block; height:100%; }
 .sp-retrieval { background:linear-gradient(90deg,#1D9E75,#25c491); }
 .sp-training { background:linear-gradient(90deg,var(--orange-deep),var(--orange)); }
 .sp-search { background:linear-gradient(90deg,#b8791d,var(--amber)); }
+.sp-capability_probe { background:linear-gradient(90deg,#0369a1,var(--cyan)); }
 .sp-other { background:#33383c; }
 .splegend { display:grid; gap:13px; }
 .spitem { display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; }
@@ -67,38 +96,38 @@ button.chip:focus-visible { outline:2px solid var(--orange); outline-offset:2px;
 .spitem .nm { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--text); }
 .spitem .ds { font-size:12.5px; color:var(--dim); }
 .spitem .num { font-family:var(--mono); font-size:16px; font-weight:700; }
-
 .rows { display:grid; }
 .r { display:grid; grid-template-columns:minmax(0,1.15fr) 84px minmax(70px,1fr) 46px; align-items:center; gap:14px; padding:11px 0; border-bottom:1px solid rgba(255,255,255,.045); }
 .r:last-child { border-bottom:none; }
 .r .who { display:flex; flex-direction:column; min-width:0; }
 .r .nm { font-family:var(--mono); font-size:14px; font-weight:600; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.r .seen { font-size:11.5px; color:var(--faint); font-family:var(--mono); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.r .seen { font-size:11px; color:var(--faint); font-family:var(--mono); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.r .seen b { color:var(--dim); font-weight:600; }
 .r .val { font-family:var(--mono); font-size:16px; font-weight:700; text-align:right; }
 .track { height:7px; background:#191919; border-radius:99px; overflow:hidden; }
 .track i { display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,var(--orange-deep),var(--orange)); }
 .track.g i { background:linear-gradient(90deg,#157a5a,var(--green)); }
-
-.tag { font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; padding:4px 8px; border-radius:5px; font-weight:700; text-align:center; text-transform:lowercase; }
+.track.c i { background:linear-gradient(90deg,#0369a1,var(--cyan)); }
+.tag { font-family:var(--mono); font-size:10px; letter-spacing:.05em; padding:4px 7px; border-radius:5px; font-weight:700; text-align:center; text-transform:lowercase; white-space:nowrap; }
 .t-retrieval { color:#3ddba4; background:rgba(29,158,117,.14); }
 .t-training  { color:#fb923c; background:rgba(249,115,22,.14); }
 .t-search    { color:#f3b551; background:rgba(239,159,39,.14); }
+.t-capability_probe { color:#7dd3fc; background:rgba(56,189,248,.14); }
 .t-other     { color:var(--dim); background:#1a1a1a; }
-
 .feed .f { display:grid; grid-template-columns:minmax(0,auto) 84px minmax(0,1fr) auto; gap:12px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.045); font-family:var(--mono); font-size:13px; }
 .feed .f:last-child { border-bottom:none; }
-.feed .bot { font-weight:600; white-space:nowrap; }
+.feed .bot { font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .feed .path { color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.feed .t { color:var(--faint); font-size:11.5px; white-space:nowrap; text-align:right; }
-
+.feed .t { color:var(--faint); font-size:11px; white-space:nowrap; text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:1px; }
+.feed .t b { color:var(--dim); font-weight:600; font-size:12px; }
 .trend { display:flex; align-items:flex-end; gap:12px; height:132px; padding-bottom:28px; margin-top:6px; }
 .col { flex:0 1 76px; max-width:76px; display:flex; flex-direction:column; justify-content:flex-end; height:100%; position:relative; }
-.col b { display:block; background:linear-gradient(180deg,var(--orange),var(--orange-deep)); border-radius:4px 4px 0 0; min-height:3px; }
+.col b { display:block; background:linear-gradient(180deg,var(--orange),var(--orange-deep)); border-radius:4px 4px 0 0; min-height:3px; box-shadow:0 0 12px rgba(249,115,22,.25); }
 .col .c { font-family:var(--mono); font-size:12px; color:var(--text); font-weight:700; text-align:center; margin-bottom:6px; }
 .col .d { position:absolute; bottom:-24px; left:0; right:0; text-align:center; font-family:var(--mono); font-size:11px; color:var(--faint); }
-
 .danger-panel { border-color:rgba(226,75,74,.28); }
 .danger-panel h2 { color:var(--red); }
+.danger-panel::before, .danger-panel::after { border-color:rgba(226,75,74,.4); }
 .empty { font-size:14px; color:var(--dim); padding:10px 0; }
 .empty b { display:block; color:var(--muted); font-weight:600; margin-bottom:2px; }
 .msg { text-align:center; padding:90px 20px; }
@@ -106,11 +135,13 @@ button.chip:focus-visible { outline:2px solid var(--orange); outline-offset:2px;
 .msg p { color:var(--muted); }
 .msg .mono { font-family:var(--mono); color:var(--orange); }
 .foot { font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.08em; text-transform:uppercase; text-align:center; margin-top:34px; }
+.badge-live { display:inline-flex; align-items:center; gap:6px; }
 @media (max-width:860px){
-  .readout{grid-template-columns:repeat(2,1fr);} .cell{border-bottom:1px solid var(--line);}
+  .readout{grid-template-columns:repeat(3,1fr);} .cell{border-bottom:1px solid var(--line);}
   .grid2{grid-template-columns:1fr;} h1{font-size:32px;}
   .r{grid-template-columns:minmax(0,1fr) 76px 42px;} .r .track{display:none;}
   .feed .f{grid-template-columns:minmax(0,auto) 76px minmax(0,1fr);} .feed .t{display:none;}
+  .controls{align-items:flex-start;}
 }
 </style>
 </head>
@@ -118,29 +149,40 @@ button.chip:focus-visible { outline:2px solid var(--orange); outline-offset:2px;
 <div class="wrap">
   <header class="top">
     <div>
-      <div class="eyebrow"><span class="pulse"></span> Live signal · Atom Foundry</div>
+      <div class="eyebrow"><span class="pulse"></span> Live signal · Atom Foundry<span class="cursor">&nbsp;</span></div>
       <h1>AI <em>Traffic</em></h1>
-      <p class="lede">Which AI agents read atomfoundry.dev, what they read, and which stores they pulled.</p>
-      <p class="lede-cz">Kteří AI agenti čtou atomfoundry.dev, co čtou a které eshopy si načetli. Zachytí boty, kteří spouští JavaScript.</p>
+      <p class="lede">Which AI agents read atomfoundry.dev, what they read, which stores they pulled, and now which AI Readiness endpoints they queried &mdash; down to the exact day and hour.</p>
+      <p class="lede-cz">Kteří AI agenti čtou atomfoundry.dev, co čtou, které eshopy si načetli a nově i kdo si ověřoval naše AI Readiness endpointy (status/discovery/capabilities) &mdash; s přesným dnem a hodinou.</p>
     </div>
     <div class="controls">
-      <span class="chip">Private</span>
-      <button class="chip" id="refresh">Refresh</button>
+      <div class="clock" id="clock">--:--:--<small id="clockDate">— &middot; TEĎ / NOW</small></div>
+      <div class="controls-row">
+        <span class="chip">Private</span>
+        <button class="chip" id="autoBtn">Auto ↻ off</button>
+        <button class="chip" id="refresh">Refresh</button>
+      </div>
     </div>
   </header>
   <div id="content"><div class="msg"><h2>Reading signal…</h2><p>Načítám data…</p></div></div>
-  <div class="foot">Atom Foundry · Recommendation Intelligence</div>
+  <div class="foot">Atom Foundry · Recommendation Intelligence · <span id="lastLoad">—</span></div>
 </div>
-
 <script>
 const BASE = "https://n8n-production-1d7c.up.railway.app/webhook";
 const key = new URLSearchParams(location.search).get('key') || '';
 const content = document.getElementById('content');
-
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt = n => Number(n||0).toLocaleString('en-US');
 const tag = t => `<span class="tag t-${esc(t||'other')}">${esc(t||'other')}</span>`;
 const pct = (v,max) => Math.max(2, Math.round(100*Number(v||0)/(max||1)));
+const pad2 = n => String(n).padStart(2,'0');
+
+// Absolute date+time — this is the "which day, which hour" view requested.
+function fmtDT(ts){
+  if(!ts) return '—';
+  const d = new Date(ts);
+  if (isNaN(d.getTime())) return '—';
+  return `${pad2(d.getDate())}.${pad2(d.getMonth()+1)}.${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+}
 function ago(ts){ if(!ts) return '—'; const d=(Date.now()-new Date(ts).getTime())/1000;
   if(d<60) return Math.floor(d)+'s'; if(d<3600) return Math.floor(d/60)+'m';
   if(d<86400) return Math.floor(d/3600)+'h'; return Math.floor(d/86400)+'d'; }
@@ -149,8 +191,24 @@ const TYPE_CZ = {
   retrieval:'čte tě, aby právě teď odpovědělo uživateli',
   training:'učí se z tebe do parametrické paměti',
   search:'klasické vyhledávání a indexace',
+  capability_probe:'agent si ověřoval, co web umí (status/discovery/capabilities)',
   other:'nezařazeno'
 };
+const TYPE_EN = {
+  retrieval:'reading you to answer a user right now',
+  training:'learning from you into parametric memory',
+  search:'classic search and indexing',
+  capability_probe:'checking what the site can do (status/discovery/capabilities)',
+  other:'unclassified'
+};
+
+// live wall clock — mission-control feel
+function tickClock(){
+  const now = new Date();
+  document.getElementById('clock').firstChild.textContent = `${pad2(now.getHours())}:${pad2(now.getMinutes())}:${pad2(now.getSeconds())}`;
+  document.getElementById('clockDate').textContent = `${pad2(now.getDate())}.${pad2(now.getMonth()+1)}.${now.getFullYear()} · TEĎ / NOW`;
+}
+setInterval(tickClock, 1000); tickClock();
 
 function emptyState(en, cz){ return `<div class="empty"><b>${en}</b>${cz}</div>`; }
 
@@ -164,48 +222,71 @@ function render(d){
   const maxDay = Math.max(1, ...trend.map(x=>+x.visits));
   const typeTotal = types.reduce((a,x)=>a + +x.visits, 0) || 1;
 
+  // AI Readiness Layer — derived client-side from any path starting with /api/ai/
+  // Works the moment the n8n logging change ships, no extra backend aggregation needed.
+  const readinessRecent = recent.filter(r => (r.path||'').startsWith('/api/ai/'));
+  const readinessPages = pages.filter(r => (r.path||'').startsWith('/api/ai/'));
+  const readinessTotal = readinessPages.reduce((a,x)=>a + +x.visits, 0);
+  const maxReadiness = Math.max(1, ...readinessPages.map(x=>+x.visits));
+  const ENDPOINT_LABEL = { '/api/ai/status':'status', '/api/ai/discovery':'discovery', '/api/ai/capabilities':'capabilities' };
+
   content.innerHTML = `
     <section class="readout">
       <div class="cell accent"><div class="k">Total reads</div><div class="v">${fmt(s.total)}</div><div class="cz">Celkem AI návštěv</div></div>
       <div class="cell"><div class="k">Today</div><div class="v">${fmt(s.today)}</div><div class="cz">Dnes</div></div>
       <div class="cell"><div class="k">Agents</div><div class="v">${fmt(s.bots)}</div><div class="cz">Různých botů</div></div>
       <div class="cell"><div class="k">Stores pulled</div><div class="v">${fmt(s.stores)}</div><div class="cz">Eshopů, co AI četla</div></div>
+      <div class="cell cyan"><div class="k">Readiness queries</div><div class="v">${fmt(readinessTotal)}</div><div class="cz">Dotazy na status/discovery/capabilities</div></div>
       <div class="cell danger"><div class="k">Spoofed</div><div class="v">${fmt(s.probes)}</div><div class="cz">Podvržené skeny</div></div>
     </section>
 
+    <section class="panel cyan-frame">
+      <div class="scanline" style="background:linear-gradient(90deg, transparent, var(--cyan), transparent);"></div>
+      <div class="ph"><h2>AI Readiness Layer</h2><span class="aside">status · discovery · capabilities</span></div>
+      <p class="pcz">Kdo si zjišťoval, co Atom Foundry umí — místo pouhého čtení obsahu. Přesný den a hodina u každého dotazu.</p>
+      ${ readinessRecent.length ? `
+        <div class="rows">
+          ${readinessRecent.slice(0,10).map(r=>`<div class="r" style="grid-template-columns:minmax(0,1fr) 100px minmax(140px,auto)">
+            <span class="who"><span class="nm">${esc(r.bot)}</span></span>
+            <span class="tag t-capability_probe">${esc(ENDPOINT_LABEL[r.path]||r.path)}</span>
+            <span class="seen" style="text-align:right"><b>${fmtDT(r.visited_at)}</b><br>před ${ago(r.visited_at)} / ${ago(r.visited_at)} ago</span>
+          </div>`).join('')}
+        </div>` : emptyState('No readiness queries logged yet.','Zatím žádný dotaz na /api/ai/* — jakmile n8n logging naběhne, objeví se zde automaticky.') }
+    </section>
+
     <section class="panel">
+      <div class="scanline"></div>
       <div class="ph"><h2>Read spectrum</h2><span class="aside">why they came</span></div>
-      <p class="pcz">Proč tě AI četla — kvůli odpovědi uživateli, nebo kvůli učení.</p>
-      ${types.length ? `
+      <p class="pcz">Proč tě AI četla — kvůli odpovědi uživateli, kvůli učení, nebo si jen ověřovala možnosti webu.</p>
+      ${ types.length ? `
         <div class="spectrum">
           ${types.map(t=>`<span class="sp-${esc(t.bot_type)}" style="width:${Math.round(100*(+t.visits)/typeTotal)}%" title="${esc(t.bot_type)}: ${fmt(t.visits)}"></span>`).join('')}
         </div>
         <div class="splegend">
           ${types.map(t=>`<div class="spitem">
             <span class="dot sp-${esc(t.bot_type)}"></span>
-            <span class="txt"><span class="nm">${esc(t.bot_type)}</span> <span class="ds">— ${esc(TYPE_CZ[t.bot_type]||'')}</span></span>
+            <span class="txt"><span class="nm">${esc(t.bot_type)}</span> <span class="ds">— ${esc(TYPE_CZ[t.bot_type]||'')} / ${esc(TYPE_EN[t.bot_type]||'')}</span></span>
             <span class="num">${fmt(t.visits)}</span>
           </div>`).join('')}
-        </div>` : emptyState('No reads yet.','Zatím tě žádná AI nečetla.')}
+        </div>` : emptyState('No reads yet.','Zatím tě žádná AI nečetla.') }
     </section>
 
     <div class="grid2">
       <section class="panel">
         <div class="ph"><h2>Who reads you</h2></div>
-        <p class="pcz">Kdo tě čte</p>
+        <p class="pcz">Kdo tě čte &mdash; s přesným dnem a hodinou poslední návštěvy</p>
         <div class="rows">${ bots.length ? bots.map(r=>`<div class="r">
-          <span class="who"><span class="nm">${esc(r.bot)}</span><span class="seen">před ${ago(r.last_seen)}</span></span>
+          <span class="who"><span class="nm">${esc(r.bot)}</span><span class="seen"><b>${fmtDT(r.last_seen)}</b> · před ${ago(r.last_seen)}</span></span>
           ${tag(r.bot_type)}
-          <span class="track ${r.bot_type==='retrieval'?'g':''}"><i style="width:${pct(r.visits,maxBot)}%"></i></span>
+          <span class="track ${r.bot_type==='retrieval'?'g':r.bot_type==='capability_probe'?'c':''}"><i style="width:${pct(r.visits,maxBot)}%"></i></span>
           <span class="val">${fmt(r.visits)}</span></div>`).join('') : emptyState('No agents yet.','Zatím žádní agenti.') }</div>
       </section>
-
       <section class="panel">
         <div class="ph"><h2>Top pages</h2></div>
         <p class="pcz">Nejčtenější stránky</p>
         <div class="rows">${ pages.length ? pages.map(r=>`<div class="r" style="grid-template-columns:minmax(0,1.6fr) minmax(70px,1fr) 46px">
           <span class="who"><span class="nm">${esc(r.path)}</span></span>
-          <span class="track"><i style="width:${pct(r.visits,maxPage)}%"></i></span>
+          <span class="track ${(r.path||'').startsWith('/api/ai/')?'c':''}"><i style="width:${pct(r.visits,maxPage)}%"></i></span>
           <span class="val">${fmt(r.visits)}</span></div>`).join('') : emptyState('No pages yet.','Zatím žádné stránky.') }</div>
       </section>
     </div>
@@ -225,31 +306,50 @@ function render(d){
       <section class="panel">
         <div class="ph"><h2>Reads per day</h2></div>
         <p class="pcz">Návštěvy po dnech</p>
-        <div class="trend">${ trend.length ? trend.map(t=>`<div class="col">
+        <div class="trend">${ trend.length ? trend.map(t=>`<div class="col" title="${esc(t.day)}: ${fmt(t.visits)}">
           <span class="c">${fmt(t.visits)}</span>
           <b style="height:${Math.round(100*(+t.visits)/maxDay)}%"></b>
           <span class="d">${esc(String(t.day||'').slice(5))}</span></div>`).join('') : emptyState('No history yet.','Zatím žádná historie.') }</div>
       </section>
-
       <section class="panel feed">
-        <div class="ph"><h2>Signal log</h2><span class="aside">latest reads</span></div>
-        <p class="pcz">Poslední aktivita</p>
-        ${ recent.length ? recent.slice(0,14).map(r=>`<div class="f">
+        <div class="ph"><h2>Signal log</h2><span class="aside">day &middot; hour &middot; who</span></div>
+        <p class="pcz">Poslední aktivita &mdash; den, hodina a kdo přišel</p>
+        ${ recent.length ? recent.slice(0,18).map(r=>`<div class="f">
           <span class="bot">${esc(r.bot)}</span>${tag(r.bot_type)}
-          <span class="path">${esc(r.path)}</span><span class="t">${ago(r.visited_at)}</span></div>`).join('')
+          <span class="path">${esc(r.path)}</span>
+          <span class="t"><b>${fmtDT(r.visited_at)}</b>před ${ago(r.visited_at)}</span></div>`).join('')
           : emptyState('No activity yet.','Zatím žádná aktivita.') }
       </section>
     </div>
 
     ${ probes.length ? `<section class="panel danger-panel feed">
       <div class="ph"><h2>Spoofed probes</h2><span class="aside">fake AI user-agents scanning for secrets</span></div>
-      <p class="pcz">Podvržené AI user-agenty hledající tajné soubory. Na statickém webu neškodné — všechny dostaly 404.</p>
+      <p class="pcz">Podvržené AI user-agenty hledající tajné soubory. Na statickém webu neškodné — všechny dostaly 404. Den a hodina u každého pokusu:</p>
       ${ probes.map(r=>`<div class="f" style="grid-template-columns:minmax(0,auto) minmax(0,1fr) auto">
         <span class="bot">${esc(r.bot)}</span>
         <span class="path" style="color:var(--red)">${esc(r.path)}</span>
-        <span class="t">${ago(r.visited_at)}</span></div>`).join('') }
+        <span class="t"><b>${fmtDT(r.visited_at)}</b>před ${ago(r.visited_at)}</span></div>`).join('') }
     </section>` : '' }`;
 }
+
+let liveTimer = null;
+function setLive(on){
+  const btn = document.getElementById('autoBtn');
+  if (liveTimer) { clearInterval(liveTimer); liveTimer = null; }
+  if (on) {
+    btn.textContent = 'Auto ↻ 15s';
+    btn.classList.add('live-on');
+    liveTimer = setInterval(load, 15000);
+  } else {
+    btn.textContent = 'Auto ↻ off';
+    btn.classList.remove('live-on');
+  }
+  btn.dataset.on = on ? '1' : '0';
+}
+document.getElementById('autoBtn').addEventListener('click', () => {
+  const btn = document.getElementById('autoBtn');
+  setLive(btn.dataset.on !== '1');
+});
 
 async function load(){
   if(!key){
@@ -266,6 +366,7 @@ async function load(){
     }
     if(!res.ok) throw new Error('HTTP ' + res.status);
     render(await res.json());
+    document.getElementById('lastLoad').textContent = 'last updated ' + fmtDT(new Date().toISOString()) + ' / naposledy aktualizováno';
   } catch(e){
     content.innerHTML = `<div class="msg"><h2>Could not load</h2><p>${esc(e.message||e)}<br>Nepodařilo se načíst data.</p></div>`;
   }
