@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search Does Not Just Change Who AI Recommends. It Changes the Words It Uses: Atom Foundry</title>
+<meta name="description" content="Same 50 prompts, same categories, only search toggled on or off. The brands the model recommends already change 77% of the time. Now the vocabulary too: with search on, the model names ingredients and specifications. With it off, impressions.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/research/search-changes-the-vocabulary">
+<meta property="og:title" content="Search Does Not Just Change Who AI Recommends. It Changes the Words It Uses.">
+<meta property="og:description" content="With search on, the model names ingredients and specifications, monohydrate up 21x, provides up 20x, whey up 17x. With search off, it falls back on impressions. Retrieval pulls facts. Memory pulls a feeling.">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#webpage",
+      "url": "https://atomfoundry.dev/research/search-changes-the-vocabulary",
+      "name": "Search Does Not Just Change Who AI Recommends. It Changes the Words It Uses.",
+      "description": "Same 50 prompts, same categories, only search toggled on or off. The brands the model recommends already change 77% of the time. Now the vocabulary too: with search on, the model names ingredients and specifications. With it off, impressions.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": { "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#dataset" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#breadcrumb" }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#article",
+      "headline": "Search Does Not Just Change Who AI Recommends. It Changes the Words It Uses.",
+      "description": "Normalized word-frequency analysis across search-on and search-off conditions, same 50 prompts and categories both ways. Ingredient and specification words rise sharply with search on. Impression language dominates with search off.",
+      "author": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "datePublished": "2026-07-21",
+      "url": "https://atomfoundry.dev/research/search-changes-the-vocabulary",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#webpage" },
+      "about": ["Recommendation Intelligence", "AI Commerce", "Retrieval Augmented Generation", "Generative Engine Optimization"]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#dataset",
+      "name": "How does search availability change the vocabulary AI uses to describe brands?",
+      "description": "Word-frequency ratios between search-on and search-off model outputs, normalized by total word volume, same 50 prompts and categories held constant across both conditions. Ingredient and specification terms rise up to 21x with search on.",
+      "creator": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/search-changes-the-vocabulary",
+      "measurementTechnique": "Normalized word-frequency ratio between paired search-on and search-off conditions, same prompt set and categories",
+      "variableMeasured": ["Word Frequency Ratio", "Vocabulary Category (ingredient/spec vs impression)"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/research/search-changes-the-vocabulary#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://atomfoundry.dev/research" },
+        { "@type": "ListItem", "position": 3, "name": "Search Does Not Just Change Who AI Recommends. It Changes the Words It Uses.", "item": "https://atomfoundry.dev/research/search-changes-the-vocabulary" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent), radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent); pointer-events: none; z-index: 0; }
+a { color: inherit; text-decoration: none; }
+.page { position: relative; z-index: 1; }
+.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
+.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
+.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
+.nav-logo span { color: #f97316; }
+.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
+.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
+.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
+.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
+.nav-links a.research.active { background: rgba(239,159,39,0.14); border-color: rgba(239,159,39,0.55); }
+.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
+.nav-links a.cta-nav:hover { background: #ea580c; }
+.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
+.hero { padding: 22px 0 8px; }
+.hero-kicker { font-size: 11px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 14px; }
+.hero h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px; }
+.hero h1 em { font-style: normal; color: #f97316; }
+.hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 620px; }
+.byline { font-size: 12px; color: #555; margin-top: 16px; }
+.byline a { color: #EF9F27; }
+.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin: 32px 0 8px; }
+.stat-cell { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid #1e1e1e; }
+.stat-cell:last-child { border-right: none; }
+.stat-num { font-size: 22px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 10.5px; color: #777; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+.section { margin: 48px 0; }
+.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
+.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+.section-title em { font-style: normal; color: #f97316; }
+.section-body { font-size: 15px; color: #aaa; line-height: 1.85; max-width: 680px; }
+.section-body strong { color: #e8e8e8; }
+.section-body p { margin-bottom: 14px; }
+.method-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 28px; margin-top: 8px; }
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-bottom: 18px; }
+.method-item { font-size: 13px; color: #999; padding: 7px 0; border-bottom: 1px solid #161616; }
+.method-item span { color: #e8e8e8; font-weight: 600; }
+.limits { font-size: 12.5px; color: #777; line-height: 1.7; margin-top: 18px; padding-top: 16px; border-top: 1px solid #161616; }
+.limits strong { color: #999; }
+.chart-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 24px 18px; margin-top: 8px; }
+.chart-title { font-size: 14px; color: #e8e8e8; font-weight: 700; margin-bottom: 2px; }
+.chart-sub { font-size: 12px; color: #777; margin-bottom: 16px; }
+.chart-cap { font-size: 12px; color: #888; line-height: 1.6; margin-top: 14px; padding-top: 14px; border-top: 1px solid #161616; }
+.chart-cap strong { color: #f97316; }
+.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
+.callout strong { color: #4ade80; }
+.callout.warn { background: #1a0d0a; border-color: #2e1a1a; }
+.callout.warn strong { color: #f87171; }
+.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+.split-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; }
+.split-card .big { font-size: 34px; font-weight: 800; color: #f97316; line-height: 1; }
+.split-card .lbl { font-size: 13px; color: #999; margin-top: 6px; line-height: 1.5; }
+.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin: 40px 0 8px; }
+.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
+.cta-title em { font-style: normal; color: #f97316; }
+.cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; max-width: 520px; margin-left: auto; margin-right: auto; }
+.cta-btn { display: inline-block; padding: 16px 36px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
+.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-left { font-size: 12px; color: #444; line-height: 2; }
+.footer-left a { color: #555; }
+.footer-left a:hover { color: #f97316; }
+.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
+.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
+.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+.footer-social a { color: #444; transition: color 0.2s; }
+.footer-social a:hover { color: #f97316; }
+.sc-tick { fill: #555; font-size: 11px; font-family: inherit; }
+.sc-axis { fill: #aaa; font-size: 12px; font-weight: 600; font-family: inherit; }
+.sc-val { fill: #fff; font-size: 13px; font-weight: 800; font-family: inherit; }
+.sc-grp { fill: #ccc; font-size: 12px; font-weight: 600; font-family: inherit; }
+.related { margin: 48px 0 8px; }
+.related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 18px; }
+.related-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 18px 20px; transition: all 0.2s; display: block; }
+.related-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
+.related-card .rc-kicker { font-size: 10px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 6px; }
+.related-card.flagship .rc-kicker { color: #f97316; }
+.related-card .rc-title { font-size: 15px; color: #fff; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
+.related-card .rc-desc { font-size: 12px; color: #888; line-height: 1.5; }
+.related-more { margin-top: 16px; font-size: 14px; color: #777; }
+.related-more a { color: #EF9F27; }
+.related-more a:hover { color: #f97316; }
+.related-more a.fw { color: #1D9E75; }
+@media (max-width: 640px) {
+  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .nav-links { flex-wrap: wrap; }
+  .wrap { padding: 0 18px; }
+  .hero h1 { font-size: 28px; }
+  .stats-bar { flex-wrap: wrap; }
+  .stat-cell { flex: 1 0 50%; border-bottom: 1px solid #1e1e1e; }
+  .method-grid, .split2 { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <nav class="nav">
+    <div class="nav-brand">
+      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
+      <div class="nav-subline">The AI Commerce Graph&trade;</div>
+      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+    </div>
+    <div class="nav-links">
+      <a href="/stores">Stores</a>
+      <a href="/methodology">Methodology</a>
+      <a href="/vocabulary">Vocabulary</a>
+      <a href="/framework" class="framework">Framework</a>
+      <a href="/research" class="research active">Research</a>
+      <a href="/#score" class="cta-nav">Free Score</a>
+    </div>
+  </nav>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-kicker">Recommendation Intelligence Research&trade; &middot; The Vocabulary Test</div>
+      <h1>Turn on search, and AI stops describing your brand. It starts <em>reading the label</em>.</h1>
+      <p class="hero-sub">We already know search changes which brands get recommended: 77% of picks flip when browsing is switched on. This time we held the brands and prompts constant and looked only at the words. With search on, the model reaches for ingredients and specifications. With search off, it reaches for impressions. Retrieval pulls facts. Memory pulls a feeling.</p>
+      <div class="byline">Atom Foundry &middot; July 2026 &middot; Recommendation Intelligence Research&trade; series</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-cell"><div class="stat-num">50</div><div class="stat-label">Prompts, both conditions</div></div>
+      <div class="stat-cell"><div class="stat-num">21x</div><div class="stat-label">Largest word-frequency shift</div></div>
+      <div class="stat-cell"><div class="stat-num">27%</div><div class="stat-label">Noise floor, search on</div></div>
+      <div class="stat-cell"><div class="stat-num">47%</div><div class="stat-label">Noise floor, search off</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Where this comes from</div>
+      <h2 class="section-title">We already knew search changes the brands. Does it change the <em>language</em>?</h2>
+      <div class="section-body">
+        <p>Our browsing study established that turning search on changes 76.9% of recommended brands, far above the 39.1% you would expect from noise alone. That answered which brands the model reaches for. It did not answer what the model says once it has reached for them.</p>
+        <p>If search genuinely changes what the model is working from, not just which name comes out the other end, that should show up in the vocabulary itself. A model reasoning from a product page it just read should describe things differently than a model reasoning from whatever impression of a brand it already carries in memory.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The test</div>
+      <h2 class="section-title">Same prompts, <em>twice</em>. Only search flipped.</h2>
+      <p class="section-body">We ran the same 50 prompts through the model twice, once with search available and once without, holding category constant across both runs. Then we counted word frequency in each condition and normalized by total word volume, so a word that just appears more because search-on responses are longer does not get credit it has not earned.</p>
+      <div class="method-box">
+        <div class="method-grid">
+          <div class="method-item">Prompts: <span>50, identical both conditions</span></div>
+          <div class="method-item">Conditions: <span>search on vs search off</span></div>
+          <div class="method-item">Held constant: <span>category, prompt set</span></div>
+          <div class="method-item">Scoring: <span>normalized word-frequency ratio</span></div>
+          <div class="method-item">Largest shift: <span>monohydrate, 21x</span></div>
+          <div class="method-item">Status: <span>corroborated, not preliminary</span></div>
+        </div>
+        <div class="limits"><strong>What is shown here.</strong> The nine words below are the largest ratio shifts we found, not an exhaustive list of every word that moved. We are showing the words with the clearest signal, not claiming these are the only ones that changed.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">The finding</div>
+      <h2 class="section-title">With search on, the model talks like it read the <em>label</em></h2>
+      <p class="section-body">Every word at the top of the list is a composition or specification term: monohydrate, whey, ashwagandha, chamomile, creatine, and collagen are ingredient names. Leggings and provides are specification language, the kind of word that shows up when a claim needs to be precise rather than pleasant.</p>
+      <div class="chart-box">
+        <div class="chart-title">Which words shift most when search is turned on</div>
+        <div class="chart-sub">Normalized word-frequency ratio, search on divided by search off, same 50 prompts and categories both ways</div>
+        <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" width="100%" role="img" aria-label="Word frequency ratios between search on and search off conditions. Monohydrate 21 times, provides 20 times, whey 17 times, leggings 15 times, ashwagandha 14 times, chamomile 5.9 times, creatine 5.7 times, collagen 4.9 times, third party 3.3 times">
+          <text x="160" y="14" text-anchor="start" font-size="10.5" fill="#555" font-family="inherit">word</text>
+          <text x="20" y="14" font-size="10.5" fill="#555" font-family="inherit"></text>
+
+          <text x="150" y="34" text-anchor="end" class="sc-axis">monohydrate</text>
+          <rect x="160" y="22" width="500" height="18" rx="4" fill="#f97316"/>
+          <text x="668" y="35" class="sc-val" fill="#f97316">21x</text>
+
+          <text x="150" y="62" text-anchor="end" class="sc-axis">provides</text>
+          <rect x="160" y="50" width="476" height="18" rx="4" fill="#f97316"/>
+          <text x="644" y="63" class="sc-val" fill="#f97316">20x</text>
+
+          <text x="150" y="90" text-anchor="end" class="sc-axis">whey</text>
+          <rect x="160" y="78" width="405" height="18" rx="4" fill="#f97316"/>
+          <text x="573" y="91" class="sc-val" fill="#f97316">17x</text>
+
+          <text x="150" y="118" text-anchor="end" class="sc-axis">leggings</text>
+          <rect x="160" y="106" width="357" height="18" rx="4" fill="#f97316"/>
+          <text x="525" y="119" class="sc-val" fill="#f97316">15x</text>
+
+          <text x="150" y="146" text-anchor="end" class="sc-axis">ashwagandha</text>
+          <rect x="160" y="134" width="333" height="18" rx="4" fill="#f97316"/>
+          <text x="501" y="147" class="sc-val" fill="#f97316">14x</text>
+
+          <text x="150" y="174" text-anchor="end" class="sc-axis">chamomile</text>
+          <rect x="160" y="162" width="140" height="18" rx="4" fill="#EF9F27"/>
+          <text x="308" y="175" class="sc-val" fill="#EF9F27">5.9x</text>
+
+          <text x="150" y="202" text-anchor="end" class="sc-axis">creatine</text>
+          <rect x="160" y="190" width="136" height="18" rx="4" fill="#EF9F27"/>
+          <text x="304" y="203" class="sc-val" fill="#EF9F27">5.7x</text>
+
+          <text x="150" y="230" text-anchor="end" class="sc-axis">collagen</text>
+          <rect x="160" y="218" width="117" height="18" rx="4" fill="#EF9F27"/>
+          <text x="285" y="231" class="sc-val" fill="#EF9F27">4.9x</text>
+
+          <text x="150" y="258" text-anchor="end" class="sc-axis">third party</text>
+          <rect x="160" y="246" width="79" height="18" rx="4" fill="#EF9F27"/>
+          <text x="247" y="259" class="sc-val" fill="#EF9F27">3.3x</text>
+
+          <text x="20" y="282" class="sc-tick">All nine are composition, ingredient, or specification words. None are brand-feeling words.</text>
+        </svg>
+        <div class="chart-cap">Without search, the model does not use these words nearly as often. It reaches instead for <strong>impressions</strong>: general, pleasant, unverifiable language about a brand rather than anything specific enough to be checked against a product page.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-kicker">Why it matters</div>
+      <h2 class="section-title">Retrieval pulls <em>facts</em>. Memory pulls a <em>feeling</em>.</h2>
+      <p class="section-body">This lines up exactly with what we already knew about how confident the model is in each condition. In the browsing study, the noise floor, how often the model changes its own answer for no reason at all, sits at 47% with search off and drops to 27% with search on. The model is not just picking different words when it can read a product page. It is guessing less.</p>
+      <p class="section-body">That is the whole story in one line: when the model has something concrete to read, it reports what it read. When it does not, it reaches into memory for a general impression and states that instead, with the same fluent confidence either way. The vocabulary shift is not decoration. It is a visible trace of a model doing two different things depending on whether retrieval is available.</p>
+      <div class="callout">
+        <strong>What this means:</strong> the words on your product page are not just for shoppers. When the model can retrieve your page, the language on it becomes the language the model uses to describe you. When it cannot, or does not, the model falls back on whatever generic impression of your category it already carries, and your specific composition, specifications, and claims never enter the answer at all.
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <div class="cta-title">Is your product page even <em>readable</em> when AI goes looking?</div>
+      <div class="cta-sub">Get your free AI Commerce Score&trade; in 10 seconds and see whether your store gives AI something concrete to retrieve, or leaves it guessing from memory.</div>
+      <a href="/#score" class="cta-btn">Get My Free AI Score</a>
+    </div>
+
+    <div class="related">
+      <div class="section-kicker">Keep reading</div>
+      <h2 class="section-title">The rest of the <em>research series</em></h2>
+      <p class="section-body">This vocabulary shift is the direct companion to our browsing study. Read them together to see both what changes and how.</p>
+      <div class="related-grid">
+        <a class="related-card flagship" href="/research/ai-recommendations-across-commerce-2026">
+          <div class="rc-kicker">&#9733; Flagship</div>
+          <div class="rc-title">Across Commerce 2026</div>
+          <div class="rc-desc">20,000 recommendations, 1,490 brands, five categories. The full synthesis.</div>
+        </a>
+        <a class="related-card" href="/research/web-search-changes-ai-recommendations">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">Web Search Rewrites 77%</div>
+          <div class="rc-desc">Turning on browsing changes 77% of recommended brands.</div>
+        </a>
+        <a class="related-card" href="/research/ai-confabulates-its-reasons">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">29,633 Reasons, 90% Unique</div>
+          <div class="rc-desc">The model writes a fresh justification for every pick. Asking it why does not work.</div>
+        </a>
+        <a class="related-card" href="/research/ai-knows-your-website">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">AI Knows Your Website</div>
+          <div class="rc-desc">The model names the correct domain 75.9% of the time. It still won't recommend you.</div>
+        </a>
+        <a class="related-card" href="/research/the-fame-study">
+          <div class="rc-kicker">Study</div>
+          <div class="rc-title">The Fame Study, Corrected</div>
+          <div class="rc-desc">Public fame explains 1.2% of recommendation, sitting on the noise floor.</div>
+        </a>
+        <a class="related-card" href="/research/state-of-ai-recommendations-supplements">
+          <div class="rc-kicker">Category report</div>
+          <div class="rc-title">Supplements</div>
+          <div class="rc-desc">4,000 recommendations, 367 brands. Frequency vs readiness r = &minus;0.015.</div>
+        </a>
+      </div>
+      <p class="related-more"><a class="fw" href="/framework">Recommendation Intelligence Framework&trade;</a> &nbsp;&middot;&nbsp; <a href="/research">All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp; <a href="/stores">Stores</a></p>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
+        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
+        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
+        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
+        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+        <a href="/privacy-policy">Privacy</a><br>
+        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+      </div>
+      <div>
+        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+        <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
