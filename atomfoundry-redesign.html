@@ -388,7 +388,7 @@
 
   <div class="niche-chart-section">
     <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
-    <div class="niche-overall"><b>57</b><span>/100 avg across 66,087 scanned stores</span></div>
+    <div class="niche-overall"><b id="nicheOverallNum" data-target="57">0</b><span>/100 avg across 66,087 scanned stores</span></div>
     <div class="niche-chart" id="nicheChart">
       <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">Fashion</div></div>
       <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Beauty<br>Risk: 17% · Best: 93/100</div><div class="niche-bar-label">Beauty</div></div>
@@ -694,17 +694,35 @@
 
   // Animate the niche chart bars in with a stagger, either shortly after
   // load (it sits near the top of the page) or when scrolled into view.
+  // The overall average number counts up in sync with the bars.
   (function(){
     const chart = document.getElementById('nicheChart');
     if (!chart) return;
     const bars = Array.from(chart.querySelectorAll('.niche-bar'));
+    const overallNum = document.getElementById('nicheOverallNum');
     let played = false;
+
+    function countUp(el, target, duration){
+      const start = performance.now();
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
     function playChart(){
       if (played) return;
       played = true;
       bars.forEach((bar, i) => {
         setTimeout(() => bar.classList.add('is-visible'), i * 90);
       });
+      if (overallNum) {
+        const target = Number(overallNum.dataset.target) || 0;
+        countUp(overallNum, target, 1200);
+      }
     }
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
