@@ -72,6 +72,19 @@
   }
   nav.links a:hover{color:var(--orange);}
 
+  /* ---------- MASTHEAD ---------- */
+  .masthead{padding:96px 0 64px;background:var(--cream);}
+  .masthead-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  .masthead-h1{font-family:var(--serif);font-size:clamp(32px,4.6vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:820px;margin-bottom:22px;}
+  .masthead-h1 em{color:var(--orange);}
+  .masthead-sub{font-size:16px;color:var(--gray-700);line-height:1.65;font-weight:500;max-width:600px;margin-bottom:34px;}
+  .masthead-cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .cta-square{display:inline-flex;align-items:center;justify-content:center;padding:16px 28px;font-size:14px;font-weight:700;border-radius:0;transition:background .25s ease, color .25s ease, border-color .25s ease, transform .2s ease;}
+  .cta-square-primary{background:var(--black);color:var(--white);}
+  .cta-square-primary:hover{background:var(--orange);transform:translateY(-1px);}
+  .cta-square-secondary{background:transparent;color:var(--black);border:1.5px solid var(--black);}
+  .cta-square-secondary:hover{border-color:var(--orange);color:var(--orange);}
+
   /* ---------- HERO ---------- */
   .hero{padding:64px 0 40px;text-align:left;background:var(--cream);}
   .hero-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
@@ -123,10 +136,11 @@
 
   /* ---------- NICHE CHART (flat, embedded in the page, no card) ---------- */
   .niche-chart-section{margin-top:72px;}
-  .niche-chart-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px;}
-  .niche-chart-label{font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
-  .niche-chart-stores{font-size:14px;font-weight:700;color:var(--gray-700);white-space:nowrap;}
-  .niche-chart-stores b{font-family:var(--serif);font-weight:800;color:var(--black);font-size:15px;}
+  .niche-chart-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:14px;margin-bottom:8px;}
+  .niche-chart-label{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
+  .niche-chart-stores{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
+  .niche-chart-stores::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
+  .niche-chart-stores b{font-family:var(--serif);font-weight:800;color:var(--black);font-size:17px;}
   .niche-overall{display:flex;align-items:baseline;gap:10px;margin-bottom:32px;}
   .niche-overall b{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--orange);letter-spacing:-0.02em;line-height:1;}
   .niche-overall span{font-size:14px;color:var(--gray-700);font-weight:600;}
@@ -305,6 +319,8 @@
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .scan-row{flex-direction:column;align-items:stretch;gap:14px;}
     .scan-row-label{max-width:none;}
+    .masthead{padding:72px 0 48px;}
+    .masthead-inner{padding:0 24px;}
   }
   @media (max-width:680px){
     .nav-inner{flex-direction:column;gap:16px;padding:20px;}
@@ -328,6 +344,10 @@
     .niche-chart{height:150px;gap:4px;}
     .scan-row{flex-direction:column;align-items:stretch;gap:14px;margin-top:18px;}
     .scan-row-label{max-width:none;}
+    .masthead{padding:56px 0 40px;}
+    .masthead-inner{padding:0 20px;}
+    .masthead-cta-row{flex-direction:column;align-items:stretch;}
+    .cta-square{width:100%;}
     .niche-bar-value{font-size:11px;}
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     section{padding:52px 20px;}
@@ -369,6 +389,18 @@
     </nav>
   </div>
 </header>
+
+<!-- MASTHEAD -->
+<section class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-h1">Understand why AI recommends <em>one brand over another.</em></h1>
+    <p class="masthead-sub">We measure how AI discovers, evaluates and recommends ecommerce stores. Then we turn those findings into practical tools.</p>
+    <div class="masthead-cta-row">
+      <a href="#score" class="cta-square cta-square-primary">Get Your AI Commerce Score</a>
+      <a href="#research" class="cta-square cta-square-secondary">Explore Research</a>
+    </div>
+  </div>
+</section>
 
 <!-- HERO -->
 <section class="hero" id="score">
