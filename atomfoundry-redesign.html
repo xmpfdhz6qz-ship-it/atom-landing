@@ -221,17 +221,24 @@
 
   /* ---------- PRODUCTS GRID ---------- */
   .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:var(--maxw);margin:0 auto;}
-  .mini-card{border-radius:var(--radius);padding:26px 22px;background:var(--card);display:flex;flex-direction:column;transition:transform .3s ease, box-shadow .3s ease;}
+  .mini-card{border-radius:var(--radius);padding:36px 28px;background:var(--card);display:flex;flex-direction:column;min-height:220px;transition:transform .3s ease, box-shadow .3s ease;}
   .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
-  .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.25;margin-bottom:6px;}
-  .mini-card-tag{font-size:12.5px;color:var(--gray-700);font-weight:600;margin-bottom:14px;}
-  .mini-card-price{font-size:21px;font-weight:800;margin-bottom:14px;}
+  .mini-card-title{font-family:var(--serif);font-size:18px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:10px;}
+  .mini-card-tag{font-size:13.5px;color:var(--gray-700);font-weight:600;line-height:1.5;margin-bottom:22px;flex:1;}
+  .mini-card-price{font-size:22px;font-weight:800;margin-bottom:18px;}
   .mini-card-price.free{color:var(--green);}
   .mini-card-price.paid{color:var(--orange);}
   .mini-card-price.soon{color:var(--gray-500);font-size:13px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700;}
-  .mini-card-desc{font-size:13.5px;color:var(--gray-700);line-height:1.55;margin-bottom:18px;flex:1;}
   .mini-card-cta{margin-top:auto;font-size:13.5px;font-weight:700;color:var(--black);transition:color .2s ease;}
   .mini-card-cta:hover{color:var(--orange);}
+
+  /* sentence below the cards, unrolls left-to-right when the section is hovered */
+  .products-reveal{max-width:var(--maxw);margin:40px auto 0;}
+  .products-reveal-inner{
+    display:inline-block;max-width:640px;
+    color:var(--gray-700);font-size:18px;font-weight:400;line-height:1.6;
+  }
+  .products-reveal-num{color:var(--orange);font-weight:800;font-size:22px;}
 
   /* ---------- COMPARE GRID ---------- */
   .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;}
@@ -503,44 +510,42 @@
 </div>
 </section>
 
-<!-- HOW CAN YOU WORK WITH US -->
+<!-- FROM RESEARCH TO PRODUCTS -->
 <section id="products">
   <div class="products-head">
-    <h2 class="products-h2">How Can You <em>Work With Us</em></h2>
+    <h2 class="products-h2">From Research <em>to Products</em></h2>
     <p class="section-headline">Everything we build starts with research. Everything we learn becomes a product.</p>
     <p class="products-sub">Every experiment we run becomes something useful. Some findings become free tools. Others become detailed reports or long-term monitoring.</p>
   </div>
   <div class="products-grid" id="pricing">
     <div class="mini-card" id="product-score">
       <div class="mini-card-title">AI Commerce Score</div>
-      <div class="mini-card-tag">Start here.</div>
+      <div class="mini-card-tag">Measure your AI readiness.</div>
       <div class="mini-card-price free">Free</div>
-      <div class="mini-card-desc">Measure how AI reads your store across all readiness factors.</div>
       <a href="#score" class="mini-card-cta">Get Score →</a>
     </div>
 
     <div class="mini-card" id="product-report">
       <div class="mini-card-title">AI Readiness Report</div>
-      <div class="mini-card-tag">Complete breakdown.</div>
+      <div class="mini-card-tag">Complete store analysis.</div>
       <div class="mini-card-price paid">$399</div>
-      <div class="mini-card-desc">Everything in the Score plus rankings, fixes and detailed analysis.</div>
       <a href="#pricing" class="mini-card-cta">Learn more →</a>
     </div>
 
     <div class="mini-card" id="product-monitoring">
       <div class="mini-card-title">AI Monitoring</div>
+      <div class="mini-card-tag">Track changes over time.</div>
       <div class="mini-card-price soon">Coming soon</div>
-      <div class="mini-card-desc">Track changes over time.</div>
     </div>
 
     <div class="mini-card" id="product-recommendation">
       <div class="mini-card-title">Recommendation Intelligence</div>
-      <div class="mini-card-tag">Custom research</div>
+      <div class="mini-card-tag">Understand AI decisions.</div>
       <div class="mini-card-price paid">$1299</div>
-      <div class="mini-card-desc">Understand why AI recommends competitors instead of your brand.</div>
       <a href="#pricing" class="mini-card-cta">Learn more →</a>
     </div>
   </div>
+  <p class="products-reveal"><span class="products-reveal-inner">Every product is built and validated using our research across <b class="products-reveal-num" data-target="66087">0</b> e-commerce stores.</span></p>
 </section>
 
 
@@ -731,6 +736,18 @@
 </footer>
 
 <script>
+  // Shared count-up helper (eased, comma-formatted) used by several sections.
+  function countUp(el, target, duration){
+    const start = performance.now();
+    function step(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   // Navbar always stays visible (sticky) but goes compact once the page
   // is scrolled down: the wordmark collapses from "ATOM FOUNDRY" to "AF"
   // and the padding tightens. Scrolling back near the top restores it.
@@ -766,17 +783,6 @@
     const storesNum = document.getElementById('nicheStoresNum');
     let played = false;
 
-    function countUp(el, target, duration){
-      const start = performance.now();
-      function step(now){
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target).toLocaleString('en-US');
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    }
-
     function playChart(){
       if (played) return;
       played = true;
@@ -802,6 +808,30 @@
       io.observe(chart);
     } else {
       window.addEventListener('load', () => setTimeout(playChart, 400));
+    }
+  })();
+
+  // Products section: the sentence below the cards is always visible;
+  // only its store count animates, counting up once when scrolled into view.
+  (function(){
+    const section = document.getElementById('products');
+    if (!section) return;
+    const num = section.querySelector('.products-reveal-num');
+    if (!num) return;
+    let played = false;
+    function play(){
+      if (played) return;
+      played = true;
+      const target = Number(num.dataset.target) || 0;
+      countUp(num, target, 1400);
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) play(); });
+      }, { threshold: 0.3 });
+      io.observe(section);
+    } else {
+      window.addEventListener('load', () => setTimeout(play, 400));
     }
   })();
 </script>
