@@ -215,7 +215,7 @@
 
   /* ---------- PRODUCTS HEAD (left-aligned, masthead-style h2) ---------- */
   .products-head{max-width:var(--maxw);margin:0 auto 48px;text-align:left;}
-  .products-h2{font-family:var(--serif);font-size:clamp(38px,6vw,68px);font-weight:800;letter-spacing:-0.02em;line-height:1.06;max-width:920px;margin-bottom:22px;}
+  .products-h2{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:920px;margin-bottom:22px;}
   .products-h2 em{color:var(--orange);}
   .products-sub{margin-top:16px;color:var(--gray-700);font-size:16px;line-height:1.6;max-width:600px;}
 
@@ -231,6 +231,13 @@
   .mini-card-price.soon{color:var(--gray-500);font-size:13px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700;}
   .mini-card-cta{margin-top:auto;font-size:13.5px;font-weight:700;color:var(--black);transition:color .2s ease;}
   .mini-card-cta:hover{color:var(--orange);}
+  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;margin-bottom:20px;flex:1;}
+  .research-findings-num{color:var(--orange);}
+
+  /* "explore all reports" link below the research grid */
+  .products-explore{max-width:var(--maxw);margin:36px auto 0;}
+  .products-explore-link{font-size:15px;font-weight:700;color:var(--black);transition:color .2s ease;}
+  .products-explore-link:hover{color:var(--orange);}
 
   /* sentence below the cards, unrolls left-to-right when the section is hovered */
   .products-reveal{max-width:var(--maxw);margin:40px auto 0;}
@@ -240,16 +247,6 @@
   }
   .products-reveal-num{color:var(--orange);font-weight:800;font-size:22px;}
 
-  /* ---------- COMPARE GRID ---------- */
-  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;}
-  .compare-col{border:none;background:var(--card);border-radius:4px;padding:28px;}
-  .compare-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:16px;}
-  .compare-col-label.old{color:var(--gray-500);}
-  .compare-col-label.new{color:var(--green);}
-  .compare-item{font-size:14px;padding:8px 0;border-bottom:1px solid var(--card-line);color:var(--gray-700);}
-  .compare-item:last-child{border-bottom:none;}
-  .compare-item.struck{text-decoration:line-through;text-decoration-color:var(--gray-300);color:var(--gray-500);}
-  .compare-item.bright{color:var(--black);font-weight:500;}
 
   /* ---------- SIGNALS ---------- */
   .signals-box{max-width:var(--maxw);margin:0 auto;border:none;background:var(--card);border-radius:var(--radius);padding:32px;}
@@ -326,7 +323,7 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
-    .products-grid, .compare-grid, .steps-row{grid-template-columns:1fr 1fr;}
+    .products-grid, .steps-row{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .masthead{padding:72px 0 48px;}
     .masthead-inner{padding:0 24px;}
@@ -360,7 +357,7 @@
     .niche-bar-value{font-size:11px;}
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     section{padding:52px 20px;}
-    .products-grid, .compare-grid, .steps-row{grid-template-columns:1fr;}
+    .products-grid, .steps-row{grid-template-columns:1fr;}
     .sig-name{width:130px;font-size:12px;}
     .final-cta{padding:44px 24px;border-radius:4px;}
     .final-cta h2{white-space:normal;}
@@ -550,30 +547,40 @@
 </section>
 
 
-<!-- OLD VS NEW -->
-<section class="alt">
-  <div class="section-head">
-    <span class="tag">OLD WORLD VS. NEW WORLD</span>
-    <h2>What actually matters now in <em>ecommerce optimization</em></h2>
-    <p>The tools that drove growth for the last decade still work. But they optimize for humans and Google. AI agents evaluate your store on entirely different criteria.</p>
+<!-- RESEARCH FINDINGS -->
+<section class="alt" id="research-findings">
+  <div class="products-head">
+    <h2 class="products-h2">Research that changed how we think about <em>AI recommendations</em></h2>
+    <p class="section-headline">Research across <b class="research-findings-num" data-target="66087">0</b> e-commerce stores has already challenged several assumptions.</p>
   </div>
-  <div class="compare-grid">
-    <div class="compare-col">
-      <div class="compare-col-label old">What used to matter</div>
-      <div class="compare-item struck">SEO keyword ranking</div>
-      <div class="compare-item struck">Paid ads and retargeting</div>
-      <div class="compare-item struck">Landing page conversion</div>
-      <div class="compare-item struck">CRO and A/B testing</div>
-      <div class="compare-item struck">Visual design quality</div>
+  <div class="products-grid">
+    <div class="mini-card">
+      <div class="mini-card-title">AI Commerce Score doesn't predict recommendations</div>
+      <div class="mini-card-tag">Our flagship finding.</div>
+      <p class="mini-card-body">Across five industries, store quality alone did not explain why AI recommends one brand over another.</p>
+      <a href="https://atomfoundry.dev/research#flagship" class="mini-card-cta">→ Read the flagship report</a>
     </div>
-    <div class="compare-col">
-      <div class="compare-col-label new">What AI agents evaluate</div>
-      <div class="compare-item bright">AI discoverability signals</div>
-      <div class="compare-item bright">Recommendation confidence</div>
-      <div class="compare-item bright">Structured product intelligence</div>
-      <div class="compare-item bright">Machine-readable trust</div>
-      <div class="compare-item bright">Semantic positioning clarity</div>
+
+    <div class="mini-card">
+      <div class="mini-card-title">Web Search changes 77% of recommendations</div>
+      <p class="mini-card-body">The same model. The same prompts. Only web search changed. 77% of recommendations changed.</p>
+      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">→ Read study</a>
     </div>
+
+    <div class="mini-card">
+      <div class="mini-card-title">AI knows your website. It still won't recommend you.</div>
+      <p class="mini-card-body">AI correctly identifies stores far more often than it recommends them. Recognition and recommendation are different mechanisms.</p>
+      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">→ Read study</a>
+    </div>
+
+    <div class="mini-card">
+      <div class="mini-card-title">Candidacy ≠ Selection</div>
+      <p class="mini-card-body">Store quality helps brands enter the candidate set. Once inside, it explains almost nothing about who actually gets recommended.</p>
+      <a href="https://atomfoundry.dev/research#category-reports" class="mini-card-cta">→ Read study</a>
+    </div>
+  </div>
+  <div class="products-explore">
+    <a href="https://atomfoundry.dev/research" class="products-explore-link">Explore all 15 public research reports →</a>
   </div>
 </section>
 
@@ -812,29 +819,28 @@
     }
   })();
 
-  // Products section: the sentence below the cards is always visible;
-  // only its store count animates, counting up once when scrolled into view.
-  (function(){
-    const section = document.getElementById('products');
-    if (!section) return;
-    const num = section.querySelector('.products-reveal-num');
-    if (!num) return;
+  // Count a number up once its element scrolls into view. Reused for every
+  // standalone stat on the page (products sentence, research headline, etc.)
+  function observeCountUp(el, duration){
+    if (!el) return;
     let played = false;
     function play(){
       if (played) return;
       played = true;
-      const target = Number(num.dataset.target) || 0;
-      countUp(num, target, 1400);
+      const target = Number(el.dataset.target) || 0;
+      countUp(el, target, duration || 1400);
     }
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) play(); });
       }, { threshold: 0.3 });
-      io.observe(section);
+      io.observe(el);
     } else {
       window.addEventListener('load', () => setTimeout(play, 400));
     }
-  })();
+  }
+  observeCountUp(document.querySelector('.products-reveal-num'), 1400);
+  observeCountUp(document.querySelector('.research-findings-num'), 1400);
 </script>
 
 </body>
