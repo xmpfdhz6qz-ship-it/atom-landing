@@ -115,6 +115,7 @@
   .masthead-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
   .masthead-h1{font-family:var(--serif);font-size:clamp(38px,6vw,68px);font-weight:800;letter-spacing:-0.02em;line-height:1.06;max-width:920px;margin-bottom:26px;}
   .masthead-h1 em{color:var(--orange);}
+  .masthead-lede{font-size:19px;color:var(--black);font-weight:700;line-height:1.5;max-width:640px;margin-bottom:16px;}
   .masthead-sub{font-size:16px;color:var(--gray-700);line-height:1.65;font-weight:500;max-width:600px;margin-bottom:34px;}
   .masthead-cta-row{display:flex;gap:14px;flex-wrap:wrap;}
   .cta-square{display:inline-flex;align-items:center;justify-content:center;padding:16px 28px;font-size:14px;font-weight:700;border-radius:0;transition:background .25s ease, color .25s ease, border-color .25s ease, transform .2s ease;}
@@ -232,6 +233,27 @@
   }
   .mini-card-cta:hover{background:var(--orange);color:var(--black);}
 
+  /* Research Findings: same card language, but broken into an asymmetric
+     "bento" layout instead of a uniform 4-up row — one big card, two
+     stacked smaller ones, one wide banner card underneath. */
+  .research-grid{grid-template-columns:1.35fr 1fr;grid-template-rows:auto auto auto;}
+  .research-grid .mini-card:nth-child(1){grid-column:1;grid-row:1 / span 2;min-height:100%;}
+  .research-grid .mini-card:nth-child(1) .mini-card-title{font-size:23px;max-width:420px;}
+  .research-grid .mini-card:nth-child(2){grid-column:2;grid-row:1;min-height:0;}
+  .research-grid .mini-card:nth-child(3){grid-column:2;grid-row:2;min-height:0;}
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:12px;}
+  .mini-card-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:4px 0 22px;padding-top:18px;border-top:1px solid var(--card-line);}
+  .mini-card-stats div{display:flex;flex-direction:column;gap:2px;}
+  .mini-card-stats b{font-size:20px;font-weight:800;color:var(--black);}
+  .mini-card-stats span{font-size:11.5px;color:var(--gray-700);}
+
+  /* wide banner card underneath: title left, one memorable line centered,
+     button right — pushed down an extra 50% versus the row gap above it */
+  .research-grid .mini-card-banner{grid-column:1 / span 2;grid-row:3;min-height:0;margin-top:10px;flex-direction:row;align-items:center;justify-content:space-between;gap:28px;}
+  .mini-card-banner .mini-card-title{margin-bottom:0;flex:0 0 auto;max-width:260px;}
+  .mini-card-banner-line{flex:1;text-align:center;font-family:var(--serif);font-size:17px;font-weight:700;letter-spacing:-0.01em;color:var(--black);margin:0;}
+  .mini-card-banner .mini-card-cta{width:auto;margin-top:0;flex:0 0 auto;}
+
   /* ---------- BUILT IN PUBLIC (lab) ---------- */
   .lab-divider{max-width:var(--maxw);margin:44px auto 0;border:none;border-top:1px solid var(--card-line);}
   .lab-closing{max-width:var(--maxw);margin:28px auto 0;}
@@ -285,6 +307,12 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
+    .research-grid .mini-card{grid-column:auto;grid-row:auto;min-height:220px;}
+    .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
+    .research-grid .mini-card-banner{grid-column:1 / span 2;flex-direction:column;align-items:stretch;gap:0;margin-top:20px;}
+    .mini-card-banner .mini-card-title{margin-bottom:10px;max-width:none;}
+    .mini-card-banner-line{text-align:left;margin-bottom:20px;}
+    .mini-card-banner .mini-card-cta{width:100%;margin-top:auto;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .masthead{padding:72px 0 48px;}
     .masthead-inner{padding:0 24px;}
@@ -322,6 +350,8 @@
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     section{padding:52px 20px;}
     .products-grid{grid-template-columns:1fr;}
+    .research-grid .mini-card-banner{grid-column:1;}
+    .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
     .sig-name{width:130px;font-size:12px;}
     .final-cta{padding:44px 24px;border-radius:4px;}
     .final-cta h2{white-space:normal;}
@@ -424,6 +454,7 @@
 <section class="masthead">
   <div class="masthead-inner">
     <h1 class="masthead-h1">Understand why AI recommends <em>one brand over another.</em></h1>
+    <p class="masthead-lede">AI shopping agents already influence millions of buying decisions. We're measuring how they choose.</p>
     <p class="masthead-sub">We measure how AI discovers, evaluates and recommends ecommerce stores. Then we turn those findings into practical tools.</p>
     <div class="masthead-cta-row">
       <a href="#score" class="cta-square cta-square-primary">Get Your AI Commerce Score</a>
@@ -519,30 +550,37 @@
     <p class="section-headline">Built from <b class="research-findings-num" data-target="66087">0</b> analyzed stores and tens of thousands of AI recommendations.</p>
     <p class="products-sub">We don't publish opinions. We publish experiments. The strongest findings become tools, reports and products.</p>
   </div>
-  <div class="products-grid">
+  <div class="products-grid research-grid">
     <div class="mini-card">
+      <div class="mini-card-eyebrow">The State of AI Recommendations Across Commerce 2026</div>
       <div class="mini-card-title">Store quality doesn't predict recommendations</div>
       <div class="mini-card-tag">Measured using the AI Commerce Score.</div>
       <p class="mini-card-body">66,087 stores. Five industries. Almost no relationship.</p>
-      <a href="https://atomfoundry.dev/research#flagship" class="mini-card-cta">→ Read the flagship report</a>
+      <div class="mini-card-stats">
+        <div><b>20,000</b><span>Recommendations</span></div>
+        <div><b>1,490</b><span>Distinct brands</span></div>
+        <div><b>5</b><span>Categories</span></div>
+        <div><b>100</b><span>Shopping intents</span></div>
+      </div>
+      <a href="https://atomfoundry.dev/research#flagship" class="mini-card-cta">Read report →</a>
     </div>
 
     <div class="mini-card">
       <div class="mini-card-title">Web Search changes 77% of recommendations</div>
       <p class="mini-card-body">Same model. Same prompts. Only browsing changed.</p>
-      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">→ Read the study</a>
+      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">Explore findings →</a>
     </div>
 
     <div class="mini-card">
       <div class="mini-card-title">AI knows your website. Still won't recommend you.</div>
       <p class="mini-card-body">Recognition. Understanding. Recommendation. Three different things.</p>
-      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">→ Read the study</a>
+      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">See methodology →</a>
     </div>
 
-    <div class="mini-card">
+    <div class="mini-card mini-card-banner">
       <div class="mini-card-title">Getting considered isn't getting recommended</div>
-      <p class="mini-card-body">Enter the candidate set. Still lose the recommendation. Different mechanisms.</p>
-      <a href="https://atomfoundry.dev/research#category-reports" class="mini-card-cta">→ Read the study</a>
+      <p class="mini-card-banner-line">Recommendation Candidate ≠ Recommendation Winner</p>
+      <a href="https://atomfoundry.dev/research#category-reports" class="mini-card-cta">View dataset →</a>
     </div>
   </div>
   <div class="products-explore">
@@ -638,6 +676,7 @@
         <a href="#methodology">Methodology</a>
         <a href="#vocabulary">Vocabulary</a>
         <a href="#score">AI Commerce Score™</a>
+        <a href="#product-recommendation">Recommendation Intelligence</a>
         <a href="#stores">Stores</a>
       </div>
       <div class="footer-col">
