@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agent Snapshot — See when AI agents visit your store</title>
+<meta name="description" content="AI Agent Snapshot shows you exactly when ChatGPT, Claude, and Perplexity visit your Shopify store, which pages they read, and how often they come back.">
+<meta name="robots" content="noindex, nofollow">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; overflow-x: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #080808;
+  color: #e8e8e8;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+.mono { font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
+
+/* nav */
+.nav { padding: 32px 0 0; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 10px; }
+.nav-mark { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid #e8e8e8; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nav-mark svg { width: 15px; height: 15px; }
+.nav-word { font-weight: 700; font-size: 15px; letter-spacing: 0.01em; color: #e8e8e8; }
+.nav-visit {
+  display: flex; align-items: center; gap: 10px; background: #0a0a0a; border: 1px solid #1e1e1e;
+  border-radius: 8px; padding: 9px 14px;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.8), inset -1px -1px 2px rgba(255,255,255,0.06);
+}
+.nav-visit .eq { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+.nav-visit .eq span { width: 2px; background: #4ade80; }
+.nav-visit .eq span:nth-child(1){ height:5px; } .nav-visit .eq span:nth-child(2){ height:10px; }
+.nav-visit .eq span:nth-child(3){ height:7px; }
+.nav-visit-label { font-size: 11px; letter-spacing: 0.08em; color: #cfcfcc; text-transform: uppercase; }
+.nav-visit-count { font-size: 12px; color: #4ade80; font-weight: 700; }
+
+/* hero */
+.hero { padding: 56px 0 0; max-width: 640px; }
+h1 { font-size: clamp(32px, 5.6vw, 52px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 10px; }
+h1 .accent { color: #4ade80; }
+.hero-sub { font-size: 20px; color: #8a8a8a; font-weight: 500; margin-bottom: 18px; }
+.hero-desc { font-size: 15px; color: #777; line-height: 1.6; max-width: 480px; margin-bottom: 28px; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid #1e1e1e; border-radius: 10px; padding: 10px 14px;
+  font-size: 12px; letter-spacing: 0.04em; color: #999; margin-bottom: 44px;
+}
+.badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.7); flex-shrink: 0; }
+.badge .badge-text { display: flex; flex-direction: column; line-height: 1.4; }
+.badge .badge-label { font-size: 10px; letter-spacing: 0.1em; color: #888; }
+.badge a { color: #4ade80; font-weight: 600; }
+
+/* waitlist */
+.waitlist { margin-top: 40px; }
+.waitlist-label { font-size: 12px; color: #666; margin-bottom: 10px; }
+.form { display: flex; gap: 10px; max-width: 420px; }
+.form input {
+  flex: 1; background: #0f0f0f; border: 1px solid #262626; border-radius: 10px;
+  padding: 13px 16px; font-size: 14px; color: #e8e8e8; font-family: inherit;
+}
+.form input::placeholder { color: #555; }
+.form input:focus { outline: none; border-color: #4ade80; }
+.form button {
+  background: #4ade80; color: #080808; border: none; border-radius: 10px;
+  padding: 13px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: inherit; white-space: nowrap; transition: transform 0.15s, background 0.15s;
+}
+.form button:hover { background: #6ee89e; transform: translateY(-1px); }
+.form-success { display: none; font-size: 14px; color: #4ade80; padding: 13px 0; }
+
+/* screenshot proof */
+.proof { margin: 44px 0 56px; position: relative; }
+.browser {
+  background: #0c0c0c; border: 1px solid #1e1e1e; border-radius: 14px; overflow: hidden;
+}
+.browser-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #1a1a1a; }
+.browser-dot { width: 9px; height: 9px; border-radius: 50%; background: #2a2a2a; }
+.browser-url {
+  margin-left: 10px; font-size: 11px; color: #666; background: #050505; border: 1px solid #1a1a1a;
+  border-radius: 100px; padding: 4px 12px; display: flex; align-items: center; gap: 6px;
+}
+.browser-url svg { width: 10px; height: 10px; opacity: 0.6; }
+.browser-body { position: relative; background: #fff; }
+.site-banner { text-align: center; font-size: 10px; color: #555; padding: 8px 20px; border-bottom: 1px solid #eee; }
+.site-nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #eee; }
+.site-nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 12px; color: #111; }
+.site-nav-mark { width: 20px; height: 20px; border-radius: 50%; border: 1.3px solid #111; display: flex; align-items: center; justify-content: center; }
+.site-nav-mark svg { width: 9px; height: 9px; }
+.site-nav-links { display: flex; gap: 16px; font-size: 10.5px; color: #888; }
+.site-hero { padding: 30px 20px 26px; background: linear-gradient(135deg,#f5f5f4,#eceae7); }
+.site-hero h2 { font-size: 20px; font-weight: 800; color: #111; letter-spacing: -0.01em; margin-bottom: 6px; }
+.site-hero p { font-size: 11px; color: #777; max-width: 260px; }
+.site-products { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; padding: 18px 20px 24px; }
+.site-product { background: #f2f2f0; border-radius: 8px; aspect-ratio: 1; }
+
+/* agent activity panel */
+.agent-panel {
+  position: absolute; top: 40px; right: 20px; width: 240px;
+  background: #050505; border: 1px solid #1e1e1e; border-radius: 12px;
+  padding: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  font-size: 11px;
+}
+.agent-panel-title { font-size: 10px; color: #7a7a78; letter-spacing: 0.08em; margin-bottom: 12px; }
+.agent-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 12px; }
+.agent-stat { background: #0a0a0a; border-radius: 6px; padding: 7px; }
+.agent-stat b { display: block; font-size: 15px; color: #e8e8e8; }
+.agent-stat.live b { color: #4ade80; }
+.agent-stat span { font-size: 8.5px; color: #6a6a68; }
+.agent-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 7px; background: #0a0a0a; border-radius: 5px; margin-bottom: 5px; font-size: 10px; }
+.agent-row b { color: #e8e8e8; font-weight: 600; }
+.agent-row span { color: #6a6a68; font-size: 8.5px; text-transform: uppercase; }
+.agent-sub { font-size: 8.5px; color: #4a4a48; letter-spacing: 0.06em; margin: 10px 0 6px; }
+.agent-page { display: flex; justify-content: space-between; padding: 5px 0; font-size: 9.5px; color: #999; border-bottom: 1px solid #141414; }
+.agent-page b { color: #e8e8e8; font-weight: 600; }
+.agent-page em { font-style: normal; color: #555; }
+
+/* no-dashboard concept */
+.concept { margin: 8px 0 8px; }
+.concept-kicker { text-align: center; font-size: 11px; letter-spacing: 0.1em; color: #555; margin-bottom: 8px; }
+.concept-title { text-align: center; font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.01em; margin-bottom: 12px; }
+.concept-desc { text-align: center; font-size: 14.5px; color: #888; line-height: 1.7; max-width: 480px; margin: 0 auto 40px; }
+
+.concept-demo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.demo-label { font-size: 10.5px; letter-spacing: 0.08em; color: #555; margin-bottom: 16px; text-align: center; }
+
+/* the square + fanned dials */
+.demo-square-wrap { display: flex; align-items: center; justify-content: center; gap: 22px; min-height: 150px; }
+.demo-square {
+  width: 40px; height: 40px; background: #0a0a0a; border: 1px solid #262626; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.8), inset -1px -1px 2px rgba(255,255,255,0.05);
+}
+.demo-square svg { width: 16px; height: 16px; }
+.dials { display: flex; flex-direction: column; gap: 14px; }
+.dial-wrap { display: flex; align-items: center; gap: 10px; }
+.dial {
+  width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.dial b { position: relative; z-index: 1; font-size: 13px; color: #fff; }
+.dial::before { content: ''; position: absolute; inset: 4px; background: #080808; border-radius: 50%; }
+.dial-1 { background: conic-gradient(#4ade80 0% 70%, #1e1e1e 70% 100%); }
+.dial-2 { background: conic-gradient(#4ade80 0% 40%, #1e1e1e 40% 100%); }
+.dial-3 { background: conic-gradient(#4ade80 0% 90%, #1e1e1e 90% 100%); }
+.dial-label { font-size: 10px; color: #777; }
+
+/* email mock */
+.demo-email { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 12px; overflow: hidden; }
+.email-head { padding: 14px 16px; border-bottom: 1px solid #1a1a1a; }
+.email-from { font-size: 10.5px; color: #666; }
+.email-subject { font-size: 14px; font-weight: 700; color: #fff; margin-top: 4px; }
+.email-body { padding: 16px; font-size: 12.5px; color: #999; line-height: 1.65; }
+.email-body p { margin-bottom: 10px; }
+.email-body p:last-child { margin-bottom: 0; }
+.email-body b { color: #ccc; }
+.tag.retrieval { background: #4ade80; }
+.tag.training { background: #f59e0b; }
+.tag.search { background: #60a5fa; }
+.tag.probe { background: #22d3ee; }
+
+/* features strip */
+.features { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 28px 0 0; border-top: 1px solid #141414; font-size: 13px; color: #888; }
+.features span { color: #4ade80; margin-right: 6px; }
+
+/* footer */
+.footer { padding: 48px 0 40px; margin-top: 24px; font-size: 12px; color: #444; }
+.footer a { color: #666; }
+.footer a:hover { color: #4ade80; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+  .form { flex-direction: column; }
+  .agent-panel { position: static; width: 100%; margin-top: 14px; border-radius: 0 0 14px 14px; }
+  .site-products { grid-template-columns: repeat(2,1fr); }
+  .concept-demo { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#e8e8e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+      </div>
+      <div class="nav-word">AI AGENT SNAPSHOT</div>
+    </div>
+    <div class="nav-visit">
+      <div class="eq"><span></span><span></span><span></span></div>
+      <span class="nav-visit-label mono">AI VISIT</span>
+      <span class="nav-visit-count">4</span>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1><span class="accent">AI agents</span> are already visiting your store.</h1>
+    <div class="hero-sub">Now you can see them.</div>
+    <p class="hero-desc">AI Agent Snapshot shows you exactly when ChatGPT, Claude, and Perplexity read your store, which pages they visit, and how often they come back. Real detection, not estimates.</p>
+
+    <div class="badge mono">
+      <span class="dot"></span>
+      <div class="badge-text">
+        <span class="badge-label">LIVE ON OUR DOMAIN</span>
+        <a href="https://founder.atomfoundry.dev" target="_blank" rel="noopener">founder.atomfoundry.dev</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="browser">
+      <div class="browser-bar">
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+        <div class="browser-url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          founder.atomfoundry.dev
+        </div>
+      </div>
+      <div class="browser-body">
+        <div class="site-banner">Built for founders. Every purchase supports independent research.</div>
+        <div class="site-nav">
+          <div class="site-nav-brand">
+            <div class="site-nav-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></div>
+            FOUNDER LAB
+          </div>
+          <div class="site-nav-links"><span>SHOP</span><span>RESEARCH</span><span>ABOUT</span><span>FAQ</span></div>
+        </div>
+        <div class="site-hero">
+          <h2>Built for founders.</h2>
+          <p>Minimal gear for people building companies, products and ideas.</p>
+        </div>
+        <div class="site-products">
+          <div class="site-product"></div>
+          <div class="site-product"></div>
+          <div class="site-product"></div>
+          <div class="site-product"></div>
+        </div>
+
+        <div class="agent-panel">
+          <div class="agent-panel-title">AGENT ACTIVITY</div>
+          <div class="agent-stats">
+            <div class="agent-stat"><b>4</b><span>Today</span></div>
+            <div class="agent-stat"><b>2</b><span>Unique bots</span></div>
+            <div class="agent-stat live"><b>22m</b><span>Last seen</span></div>
+          </div>
+          <div class="agent-row"><b>Claude-User</b><span>Probe &middot; 3</span></div>
+          <div class="agent-row"><b>Unknown</b><span>Probe &middot; 1</span></div>
+          <div class="agent-sub mono">PAGES VISITED</div>
+          <div class="agent-page"><b>Claude-User</b><em>/ai/status &middot; 23m</em></div>
+          <div class="agent-page"><b>Claude-User</b><em>/ai/discovery &middot; 22m</em></div>
+          <div class="agent-page"><b>Unknown</b><em>/ai/status &middot; 41m</em></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="concept">
+    <div class="concept-kicker mono">NO DASHBOARD TO CHECK</div>
+    <div class="concept-title">Just a square, and an inbox.</div>
+    <p class="concept-desc">One small icon lives quietly in your admin. Click it, and a few dials fan out at the edge of the screen, like an instrument cluster. Click again, they're gone. The rest happens on its own: the moment an AI agent reads your store, you get an email that says exactly what happened.</p>
+
+    <div class="concept-demo">
+      <div>
+        <div class="demo-label mono">IN YOUR ADMIN</div>
+        <div class="demo-square-wrap">
+          <div class="demo-square">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-8 4 16 2-8h6"/></svg>
+          </div>
+          <div class="dials">
+            <div class="dial-wrap">
+              <div class="dial dial-1"><b>4</b></div>
+              <div class="dial-label mono">TODAY</div>
+            </div>
+            <div class="dial-wrap">
+              <div class="dial dial-2"><b>2</b></div>
+              <div class="dial-label mono">BOTS</div>
+            </div>
+            <div class="dial-wrap">
+              <div class="dial dial-3"><b>22m</b></div>
+              <div class="dial-label mono">LAST SEEN</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="demo-label mono">IN YOUR INBOX</div>
+        <div class="demo-email">
+          <div class="email-head">
+            <div class="email-from">AI Agent Snapshot &lt;alerts@atomfoundry.dev&gt;</div>
+            <div class="email-subject">Perplexity just read 3 pages on your store</div>
+          </div>
+          <div class="email-body">
+            <p>At <b>14:32</b>, <b>Perplexity-User</b> visited <b>/products/founder-trucker-cap</b>, <b>/collections/apparel</b>, and <b>/policies/refund-policy</b>.</p>
+            <p>This is the first visit from this agent in <b>6 days</b>.</p>
+            <p>No action needed, just keeping you posted.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="waitlist">
+    <div class="waitlist-label mono">WANT THIS ON YOUR STORE?</div>
+    <form class="form" id="waitlist-form">
+      <input type="email" id="waitlist-email" placeholder="you@yourstore.com" required autocomplete="email">
+      <button type="submit">Get early access</button>
+    </form>
+    <div class="form-success mono" id="waitlist-success">You're on the list. We'll be in touch.</div>
+  </div>
+
+  <footer class="footer">
+    An experiment by <a href="https://atomfoundry.dev">Atom Foundry</a> &middot; built and proven live on <a href="https://founder.atomfoundry.dev">Founder Lab</a>, our own Shopify store.
+  </footer>
+</div>
+
+<script>
+document.getElementById('waitlist-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var form = document.getElementById('waitlist-form');
+  var button = form.querySelector('button');
+  var email = document.getElementById('waitlist-email').value;
+  button.disabled = true;
+  button.textContent = 'Sending...';
+
+  fetch('https://n8n-production-1d7c.up.railway.app/webhook/ai-agent-snapshot-waitlist', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email,
+      source: 'ai-agent-snapshot-landing',
+      referrer: document.referrer || ''
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if (data && data.ok) {
+      form.style.display = 'none';
+      document.getElementById('waitlist-success').style.display = 'block';
+    } else {
+      button.disabled = false;
+      button.textContent = 'Get early access';
+      alert('Please enter a valid email address.');
+    }
+  })
+  .catch(function(){
+    button.disabled = false;
+    button.textContent = 'Get early access';
+    alert('Something went wrong. Please try again.');
+  });
+});
+</script>
+</body>
+</html>
