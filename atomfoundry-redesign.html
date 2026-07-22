@@ -89,9 +89,16 @@
   .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
   .scan-note span{margin:0 8px;}
 
+  /* ---------- SCAN ROW (text + scan box side by side) ---------- */
+  .scan-row{display:flex;align-items:center;gap:28px;margin-top:22px;}
+  .scan-row-label{margin:0;flex-shrink:0;max-width:220px;font-weight:700;color:var(--black);}
+  .scan-row-action{flex:1;min-width:280px;}
+  .scan-row-action .scan-box{margin-top:0;}
+  .scan-row-action .scan-note{margin-top:12px;}
+
   /* ---------- HERO SPLIT (menu + copy) ---------- */
   .hero-split{display:grid;grid-template-columns:220px 1fr;gap:100px;align-items:start;}
-  .hero-copy{min-width:0;max-width:640px;margin:0 auto;}
+  .hero-copy{min-width:0;max-width:720px;margin:0 auto;}
   @media (min-width:901px){ .hero h1{white-space:nowrap;} }
   .hero-menu{display:flex;flex-direction:column;gap:14px;padding-top:6px;}
   .hero-menu-label{font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
@@ -112,17 +119,20 @@
 
   /* ---------- SCORE PANEL ---------- */
   .score-panel{margin:44px 0 0;padding-top:32px;border-top:1px solid var(--gray-300);}
-  .score-panel-updated{font-size:12px;color:var(--gray-500);margin-top:14px;}
+  .score-panel-updated{font-size:14px;color:var(--gray-500);margin-top:14px;font-weight:600;}
 
   /* ---------- NICHE CHART (flat, embedded in the page, no card) ---------- */
   .niche-chart-section{margin-top:72px;}
-  .niche-chart-label{font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;margin-bottom:8px;}
+  .niche-chart-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px;}
+  .niche-chart-label{font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
+  .niche-chart-stores{font-size:14px;font-weight:700;color:var(--gray-700);white-space:nowrap;}
+  .niche-chart-stores b{font-family:var(--serif);font-weight:800;color:var(--black);font-size:15px;}
   .niche-overall{display:flex;align-items:baseline;gap:10px;margin-bottom:32px;}
   .niche-overall b{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--orange);letter-spacing:-0.02em;line-height:1;}
   .niche-overall span{font-size:14px;color:var(--gray-700);font-weight:600;}
 
   .niche-chart{
-    display:flex;align-items:flex-end;gap:10px;height:230px;
+    display:flex;align-items:flex-end;gap:6px;height:230px;
     border-bottom:2px solid var(--black);
   }
   .niche-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative;cursor:pointer;}
@@ -293,6 +303,8 @@
     .hero-copy{margin:0;}
     .hero-menu a{font-size:13px;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .scan-row{flex-direction:column;align-items:stretch;gap:14px;}
+    .scan-row-label{max-width:none;}
   }
   @media (max-width:680px){
     .nav-inner{flex-direction:column;gap:16px;padding:20px;}
@@ -311,8 +323,11 @@
     .hero-menu-label{width:100%;}
     .score-panel{margin-top:32px;padding-top:24px;}
     .niche-chart-section{margin-top:56px;}
+    .niche-chart-head{gap:8px;}
     .niche-overall b{font-size:34px;}
-    .niche-chart{height:150px;gap:6px;}
+    .niche-chart{height:150px;gap:4px;}
+    .scan-row{flex-direction:column;align-items:stretch;gap:14px;margin-top:18px;}
+    .scan-row-label{max-width:none;}
     .niche-bar-value{font-size:11px;}
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     section{padding:52px 20px;}
@@ -376,18 +391,25 @@
       <p class="sub">Most ecommerce stores were built for people.</p>
       <p class="sub">AI evaluates them differently.</p>
       <p class="sub">AI Commerce Score™ measures how prepared your store is for AI discovery, evaluation, and recommendation.</p>
-      <p class="sub" style="font-weight:700;color:var(--black);">See where your store stands in minutes.</p>
 
-      <div class="scan-box">
-        <input type="text" placeholder="yourstorename.com">
-        <button>Get My Free AI Commerce Score</button>
+      <div class="scan-row">
+        <p class="sub scan-row-label">See where your store stands in minutes.</p>
+        <div class="scan-row-action">
+          <div class="scan-box">
+            <input type="text" placeholder="yourstorename.com">
+            <button>Get My Free AI Commerce Score</button>
+          </div>
+          <div class="scan-note">No signup <span>·</span> No setup <span>·</span> Free <span>·</span> Results in 10 seconds</div>
+        </div>
       </div>
-      <div class="scan-note">No signup <span>·</span> No setup <span>·</span> Free <span>·</span> Results in 10 seconds</div>
     </div>
   </div>
 
   <div class="niche-chart-section">
-    <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
+    <div class="niche-chart-head">
+      <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
+      <div class="niche-chart-stores"><b id="nicheStoresNum" data-target="66087">0</b> Stores analyzed</div>
+    </div>
     <div class="niche-overall"><b id="nicheOverallNum" data-target="57">0</b><span>/100 avg across 66,087 scanned stores</span></div>
     <div class="niche-chart" id="nicheChart">
       <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">Fashion</div></div>
@@ -405,8 +427,6 @@
 
   <div class="score-panel">
     <div class="chip-row">
-      <span class="chip"><b>66,087</b>Stores analyzed</span>
-      <span class="chip-sep">·</span>
       <span class="chip"><b>8</b>Scoring factors</span>
       <span class="chip-sep">·</span>
       <span class="chip"><i style="background:var(--red);"></i>0–49 AI Invisible Risk</span>
@@ -700,6 +720,7 @@
     if (!chart) return;
     const bars = Array.from(chart.querySelectorAll('.niche-bar'));
     const overallNum = document.getElementById('nicheOverallNum');
+    const storesNum = document.getElementById('nicheStoresNum');
     let played = false;
 
     function countUp(el, target, duration){
@@ -707,7 +728,7 @@
       function step(now){
         const p = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target);
+        el.textContent = Math.round(eased * target).toLocaleString('en-US');
         if (p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
@@ -722,6 +743,10 @@
       if (overallNum) {
         const target = Number(overallNum.dataset.target) || 0;
         countUp(overallNum, target, 1200);
+      }
+      if (storesNum) {
+        const target = Number(storesNum.dataset.target) || 0;
+        countUp(storesNum, target, 1400);
       }
     }
     if ('IntersectionObserver' in window) {
