@@ -149,7 +149,7 @@
   .chip-sep{margin:0 14px;color:var(--gray-300);}
 
   /* ---------- SCORE PANEL ---------- */
-  .score-panel{margin:44px 0 0;padding-top:32px;border-top:1px solid var(--gray-300);}
+  .score-panel{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--gray-300);}
 
   /* ---------- NICHE CHART (flat, embedded in the page, no card) ---------- */
   .niche-chart-section{margin-top:0;}
@@ -164,20 +164,23 @@
   .niche-overall span{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
 
   /* flat, card-language chart — no gradients or glossy caps, same sharp
-     4px radius / hairline / black+orange system as the rest of the page */
+     4px radius / hairline / black+orange system as the rest of the page.
+     Bleeds edge-to-edge (full viewport width) for extra visual weight. */
   .niche-chart{
     display:flex;align-items:flex-end;gap:0;height:230px;
-    background:var(--card);border-radius:var(--radius);
+    background:var(--card);border-radius:0;
     border-bottom:2px solid var(--black);
-    padding:24px 8px 0;
+    padding:24px 40px 0;
     position:relative;
+    width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+    box-sizing:border-box;
   }
-  .niche-chart-watermark{position:absolute;top:10px;right:14px;font-size:11px;font-weight:500;color:var(--gray-500);letter-spacing:0.02em;pointer-events:none;}
-  .niche-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative;cursor:pointer;padding:0 6px;border-right:1px solid var(--card-line);}
+  .niche-chart-watermark{margin-top:9px;padding-left:40px;font-size:11px;font-weight:500;color:var(--gray-500);letter-spacing:0.02em;}
+  .niche-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative;cursor:pointer;padding:0 10px;border-right:1px solid var(--card-line);}
   .niche-bar:last-child{border-right:none;}
   .niche-bar-value{font-size:15px;font-weight:800;color:var(--black);margin-bottom:10px;transition:color .2s ease, transform .25s ease;}
   .niche-bar-fill{
-    position:relative;width:100%;max-width:56px;
+    position:relative;width:100%;max-width:100px;
     height:0%;border-radius:var(--radius) var(--radius) 0 0;
     transition:height 1.1s cubic-bezier(.16,.8,.4,1), background .2s ease;
     transform-origin:bottom center;
@@ -334,12 +337,13 @@
     .hero-inner{padding:0 20px;}
     .scan-box{flex-direction:column;border-radius:4px;}
     .scan-box button{width:100%;}
-    .score-panel{margin-top:32px;padding-top:24px;}
+    .score-panel{margin-top:20px;padding-top:14px;}
     .niche-chart-head{gap:8px;}
     .niche-overall b{font-size:34px;}
     .niche-chart-stores b{font-size:28px;}
-    .niche-chart{height:150px;padding:16px 4px 0;}
+    .niche-chart{height:150px;padding:16px 16px 0;}
     .niche-bar{padding:0 3px;}
+    .niche-chart-watermark{padding-left:16px;}
     .masthead{padding:56px 0 40px;}
     .masthead-inner{padding:0 20px;}
     .masthead-cta-row{flex-direction:column;align-items:stretch;}
@@ -471,7 +475,6 @@
       <div class="niche-overall"><b id="nicheOverallNum" data-target="57">0</b><span>/100 avg across 66,087 scanned stores</span></div>
     </div>
     <div class="niche-chart" id="nicheChart">
-      <span class="niche-chart-watermark">AI Commerce Bar™</span>
       <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">Fashion</div></div>
       <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Beauty<br>Risk: 17% · Best: 93/100</div><div class="niche-bar-label">Beauty</div></div>
       <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Health and Wellness<br>Risk: 19% · Best: 94/100</div><div class="niche-bar-label">Health</div></div>
@@ -483,6 +486,7 @@
       <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Kids and Baby<br>Risk: 19% · Best: 83/100</div><div class="niche-bar-label">Kids</div></div>
       <div class="niche-bar" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Jewelry<br>Risk: 13% · Best: 85/100</div><div class="niche-bar-label">Jewelry</div></div>
     </div>
+    <div class="niche-chart-watermark">AI Commerce Bar™</div>
   </div>
 
   <div class="score-panel">
@@ -793,7 +797,7 @@
         fill.style.transition = 'none';
         fill.style.height = '0%';
         requestAnimationFrame(() => {
-          fill.style.transition = '';
+          fill.style.transition = 'height 1.9s cubic-bezier(.16,.8,.4,1)';
           requestAnimationFrame(() => { fill.style.height = target; });
         });
       });
