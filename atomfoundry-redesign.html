@@ -211,37 +211,21 @@
   .section-head p{margin-top:16px;color:var(--gray-700);font-size:16px;line-height:1.6;}
   .section-head p a{color:var(--orange);border-bottom:1px solid transparent;transition:border-color .2s ease;}
   .section-head p a:hover{border-color:var(--orange);}
+  .section-headline{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--black);margin-top:18px;line-height:1.4;}
 
-  /* ---------- PATHS (two audiences) ---------- */
-  .paths-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--maxw);margin:0 auto;}
-  .path{border-radius:var(--radius);padding:34px;border:none;background:var(--card);display:flex;flex-direction:column;transition:transform .3s ease, box-shadow .3s ease;}
-  .path:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
-  .path-tag{display:inline-flex;align-self:flex-start;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:6px 14px;border-radius:999px;margin-bottom:18px;background:var(--white);color:var(--gray-700);border:none;}
-  .path-title{font-family:var(--serif);font-size:23px;font-weight:800;line-height:1.25;margin-bottom:10px;}
-  .path-lead{font-size:14px;color:var(--gray-700);line-height:1.6;margin-bottom:24px;}
-  .path-step{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--card-line);}
-  .path-step:first-of-type{border-top:none;padding-top:0;}
-  .path-step-num{flex-shrink:0;width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--off-white);color:var(--black);}
-  .path-step-body{flex:1;}
-  .path-step-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px;}
-  .path-step-name{font-size:15px;font-weight:600;}
-  .path-step-price{font-size:13px;font-weight:700;flex-shrink:0;}
-  .path-step-price.free{color:var(--green);}
-  .path-step-price.paid{color:var(--orange);}
-  .path-step-price.soon{color:var(--gray-500);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;}
-  .path-step-desc{font-size:13px;color:var(--gray-700);line-height:1.55;}
-  .path-deliv{display:flex;flex-direction:column;margin-bottom:6px;}
-  .path-deliv-item{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--card-line);font-size:14px;color:var(--gray-700);line-height:1.55;align-items:flex-start;}
-  .path-deliv-item:first-child{border-top:none;padding-top:0;}
-  .path-deliv-check{color:var(--green);flex-shrink:0;font-weight:800;font-size:14px;margin-top:1px;}
-  .path-deliv-item strong{color:var(--black);}
-  .bonus-tag{display:inline-block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--green);background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.3);border-radius:4px;padding:1px 7px;margin-right:7px;vertical-align:middle;}
-  .path-price-line{display:flex;align-items:baseline;gap:10px;margin:18px 0 22px;padding-top:18px;border-top:1px solid var(--card-line);}
-  .path-price-big{font-size:28px;font-weight:800;}
-  .path-price-note{font-size:11.5px;color:var(--gray-500);line-height:1.4;}
-  .path-cta{margin-top:auto;display:block;text-align:center;padding:15px;border-radius:4px;font-weight:700;font-size:14px;background:var(--black);color:var(--white);transition:background .25s ease, transform .2s ease;}
-  .path-cta:hover{background:var(--orange);transform:translateY(-1px);}
-  .path-cta-sub{font-size:11.5px;color:var(--gray-500);text-align:center;margin-top:10px;}
+  /* ---------- PRODUCTS GRID ---------- */
+  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:var(--maxw);margin:0 auto;}
+  .mini-card{border-radius:var(--radius);padding:26px 22px;background:var(--card);display:flex;flex-direction:column;transition:transform .3s ease, box-shadow .3s ease;}
+  .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.25;margin-bottom:6px;}
+  .mini-card-tag{font-size:12.5px;color:var(--gray-700);font-weight:600;margin-bottom:14px;}
+  .mini-card-price{font-size:21px;font-weight:800;margin-bottom:14px;}
+  .mini-card-price.free{color:var(--green);}
+  .mini-card-price.paid{color:var(--orange);}
+  .mini-card-price.soon{color:var(--gray-500);font-size:13px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700;}
+  .mini-card-desc{font-size:13.5px;color:var(--gray-700);line-height:1.55;margin-bottom:18px;flex:1;}
+  .mini-card-cta{margin-top:auto;font-size:13.5px;font-weight:700;color:var(--black);transition:color .2s ease;}
+  .mini-card-cta:hover{color:var(--orange);}
 
   /* ---------- COMPARE GRID ---------- */
   .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;}
@@ -329,7 +313,7 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
-    .paths-grid, .compare-grid, .steps-row{grid-template-columns:1fr 1fr;}
+    .products-grid, .compare-grid, .steps-row{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .masthead{padding:72px 0 48px;}
     .masthead-inner{padding:0 24px;}
@@ -362,7 +346,7 @@
     .niche-bar-value{font-size:11px;}
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     section{padding:52px 20px;}
-    .paths-grid, .compare-grid, .steps-row{grid-template-columns:1fr;}
+    .products-grid, .compare-grid, .steps-row{grid-template-columns:1fr;}
     .sig-name{width:130px;font-size:12px;}
     .final-cta{padding:44px 24px;border-radius:4px;}
     .final-cta h2{white-space:normal;}
@@ -386,8 +370,6 @@
       </a>
     </div>
     <nav class="links">
-      <a href="https://atomfoundry.dev/redesign#what-we-do" class="nav-trigger">What We Do</a>
-
       <div class="nav-item">
         <a href="https://atomfoundry.dev/redesign#research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         <div class="dropdown">
@@ -428,6 +410,16 @@
         <div class="dropdown">
           <a href="https://atomfoundry.dev/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
           <a href="https://atomfoundry.dev/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#pricing" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="https://atomfoundry.dev/redesign#score" class="dd-item"><span class="dd-title">AI Commerce Score</span></a>
+          <a href="https://atomfoundry.dev/redesign#pricing" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="https://atomfoundry.dev/redesign#pricing" class="dd-item"><span class="dd-title">AI Monitoring (Soon)</span></a>
+          <a href="https://atomfoundry.dev/redesign#pricing" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
         </div>
       </div>
 
@@ -505,60 +497,42 @@
 </div>
 </section>
 
-<!-- TWO WAYS TO WORK WITH US -->
-<section id="what-we-do">
+<!-- HOW CAN YOU WORK WITH US -->
+<section id="products">
   <div class="section-head">
-    <span class="tag">TWO WAYS TO WORK WITH US</span>
-    <h2>Find out where you stand, <em>then go deeper.</em></h2>
-    <p>Start free. Go further when you want the full picture of how AI sees and recommends a store.</p>
+    <h2>How Can You Work With Us</h2>
+    <p class="section-headline">Everything we build starts with research. Everything we learn becomes a product.</p>
+    <p>Every experiment we run becomes something useful. Some findings become free tools. Others become detailed reports or long-term monitoring.</p>
   </div>
-  <div class="paths-grid" id="pricing">
-    <div class="path">
-      <span class="path-tag">🛍 For store owners</span>
-      <div class="path-title">Your store, scored and ranked</div>
-      <div class="path-lead">See how AI reads your store today, then get the full readiness picture and where you rank against every store we have scanned.</div>
-      <div class="path-step">
-        <div class="path-step-num">1</div>
-        <div class="path-step-body">
-          <div class="path-step-top"><span class="path-step-name">Free AI Commerce Score</span><span class="path-step-price free">Free</span></div>
-          <div class="path-step-desc">Your AI Commerce Score™ in 10 seconds, plus how your store performs across all 8 readiness factors.</div>
-        </div>
-      </div>
-      <div class="path-step">
-        <div class="path-step-num">2</div>
-        <div class="path-step-body">
-          <div class="path-step-top"><span class="path-step-name">Full AI Readiness Report</span><span class="path-step-price paid">$399</span></div>
-          <div class="path-step-desc">The complete breakdown of all 8 factors with exact fixes, plus where your store ranks against every store in our database in your category.</div>
-        </div>
-      </div>
-      <div class="path-step">
-        <div class="path-step-num">3</div>
-        <div class="path-step-body">
-          <div class="path-step-top"><span class="path-step-name">Monitoring</span><span class="path-step-price soon">On the way</span></div>
-          <div class="path-step-desc">Ongoing rescans that track how your readiness and ranking move over time. Coming soon.</div>
-        </div>
-      </div>
-      <a href="#score" class="path-cta">Start with the free score →</a>
-      <div class="path-cta-sub">No signup · No credit card · Results in 10 seconds</div>
+  <div class="products-grid" id="pricing">
+    <div class="mini-card" id="product-score">
+      <div class="mini-card-title">AI Commerce Score</div>
+      <div class="mini-card-tag">Start here.</div>
+      <div class="mini-card-price free">Free</div>
+      <div class="mini-card-desc">Measure how AI reads your store across all readiness factors.</div>
+      <a href="#score" class="mini-card-cta">Get Score →</a>
     </div>
 
-    <div class="path">
-      <span class="path-tag">★ For agencies</span>
-      <div class="path-title">See why AI picks your client's competitors</div>
-      <div class="path-lead">A Recommendation Intelligence report for one of your clients: where they actually stand when AI recommends, and who wins instead.</div>
-      <div class="path-deliv">
-        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>Your client's <strong>Recommendation Share</strong>: how often AI recommends them when a shopper asks</span></div>
-        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>The exact buyer questions where your client is <strong>invisible</strong>, and which brand AI recommends first instead</span></div>
-        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>The attributes AI ties to the winners: <strong>the language your client has to own</strong> to enter the conversation</span></div>
-        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>Run on <strong>20 buyer questions you choose</strong> for your client's category</span></div>
-        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span><span class="bonus-tag">Bonus</span>An extra set of questions from us, layered on top of yours</span></div>
-      </div>
-      <div class="path-price-line">
-        <span class="path-price-big">$399</span>
-        <span class="path-price-note">per client report · measured on ChatGPT today, other AI models coming</span>
-      </div>
-      <a href="mailto:founder@atomfoundry.dev?subject=Recommendation%20Intelligence%20report" class="path-cta">Email me to start →</a>
-      <div class="path-cta-sub">founder@atomfoundry.dev · written, no call required</div>
+    <div class="mini-card" id="product-report">
+      <div class="mini-card-title">AI Readiness Report</div>
+      <div class="mini-card-tag">Complete breakdown.</div>
+      <div class="mini-card-price paid">$399</div>
+      <div class="mini-card-desc">Everything in the Score plus rankings, fixes and detailed analysis.</div>
+      <a href="#pricing" class="mini-card-cta">Learn more →</a>
+    </div>
+
+    <div class="mini-card" id="product-monitoring">
+      <div class="mini-card-title">AI Monitoring</div>
+      <div class="mini-card-price soon">Coming soon</div>
+      <div class="mini-card-desc">Track changes over time.</div>
+    </div>
+
+    <div class="mini-card" id="product-recommendation">
+      <div class="mini-card-title">Recommendation Intelligence</div>
+      <div class="mini-card-tag">Custom research</div>
+      <div class="mini-card-price paid">$1299</div>
+      <div class="mini-card-desc">Understand why AI recommends competitors instead of your brand.</div>
+      <a href="#pricing" class="mini-card-cta">Learn more →</a>
     </div>
   </div>
 </section>
