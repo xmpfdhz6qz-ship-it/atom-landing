@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atom Foundry — The AI Commerce Graph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f8f7f3;
+    --orange:#ff6a1a;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --radius:6px;
+    --maxw:1200px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  em{font-style:normal;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(248,247,243,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:28px 24px;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:32px;
+  }
+  .nav-brand{display:flex;flex-direction:column;gap:0;}
+  .logo{display:flex;align-items:center;gap:14px;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-icon{width:44px;height:44px;flex-shrink:0;}
+  .logo-word{font-weight:800;font-size:22px;letter-spacing:-0.01em;display:flex;gap:6px;}
+  .logo-word .atom{color:var(--black);}
+  .logo-word .foundry{color:var(--orange);}
+  .logo-tagline{font-size:11.5px;font-weight:700;color:var(--orange);letter-spacing:0.4px;text-transform:uppercase;margin-top:8px;}
+  .nav-tagline-long{font-size:12px;color:var(--gray-500);line-height:1.6;max-width:420px;margin-top:8px;font-weight:500;}
+
+  nav.links{display:flex;gap:30px;align-items:center;padding-top:6px;}
+  nav.links a{
+    font-size:12px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.08em;
+    position:relative;padding:4px 2px;transition:color .25s ease;white-space:nowrap;
+  }
+  nav.links a:hover{color:var(--orange);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:64px 32px 40px;text-align:left;background:var(--cream);}
+  .hero-inner{max-width:var(--maxw);margin:0 auto;}
+  .eyebrow{font-size:13px;font-weight:600;color:var(--orange);letter-spacing:0.5px;margin-bottom:16px;}
+  .hero h1{font-family:var(--serif);font-size:clamp(30px,4.6vw,50px);font-weight:800;letter-spacing:-0.02em;line-height:1.12;max-width:760px;margin:0 0 18px;}
+  .hero h1 em{color:var(--orange);}
+  .hero p.sub{font-size:clamp(16px,2vw,19px);color:var(--gray-700);max-width:560px;margin:0 0 12px;line-height:1.5;font-weight:400;}
+
+  .scan-box{max-width:600px;margin:0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+  .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+  .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:12px;color:var(--black);background:transparent;}
+  .scan-box input::placeholder{color:var(--gray-500);}
+  .scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+  .scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+  .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+  .scan-note span{margin:0 8px;}
+
+  /* ---------- SCORE PANEL ---------- */
+  .score-panel{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:16px 48px;
+    max-width:900px;margin:56px 0 0;padding-top:36px;
+    border-top:1px solid var(--gray-300);text-align:left;
+  }
+  .score-panel-stat{font-size:16px;color:var(--gray-700);display:flex;align-items:baseline;gap:10px;}
+  .score-panel-stat b{font-size:28px;font-weight:800;color:var(--black);letter-spacing:-0.01em;}
+  .score-panel-updated{font-size:12px;color:var(--gray-500);}
+
+  /* ---------- HERO SPLIT (menu + chart) ---------- */
+  .hero-split{display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start;margin-top:48px;}
+  .hero-menu{display:flex;flex-direction:column;gap:13px;padding-top:4px;}
+  .hero-menu-label{font-family:var(--serif);font-size:14px;font-weight:800;color:var(--black);margin-bottom:4px;}
+  .hero-menu a{font-size:13px;font-weight:600;color:var(--gray-700);transition:color .2s ease;}
+  .hero-menu a:hover{color:var(--orange);}
+  .hero-menu a.strong{color:var(--black);font-weight:700;padding-top:8px;border-top:1px solid var(--gray-300);margin-top:4px;}
+
+  /* ---------- NICHE CHART (merged 3D columns) ---------- */
+  .niche-chart-col{min-width:0;}
+  .niche-chart-label{font-size:12px;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:10px;}
+  .niche-overall{display:flex;align-items:baseline;gap:10px;margin-bottom:24px;}
+  .niche-overall b{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--black);letter-spacing:-0.02em;line-height:1;}
+  .niche-overall span{font-size:13px;color:var(--gray-700);}
+
+  .niche-chart{
+    display:flex;align-items:flex-end;height:230px;
+    border:1px solid var(--gray-300);border-radius:14px;
+    overflow:hidden;background:var(--white);padding:22px 0 0;
+  }
+  .niche-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative;border-right:1px solid var(--white);}
+  .niche-bar:last-child{border-right:none;}
+  .niche-bar-value{font-size:12.5px;font-weight:800;color:var(--black);margin-bottom:8px;}
+  .niche-bar-fill{
+    position:relative;width:100%;
+    height:0%;
+    transition:height 1.1s cubic-bezier(.16,.8,.4,1);
+    background:linear-gradient(150deg,
+      color-mix(in srgb, var(--bar-color) 42%, white) 0%,
+      var(--bar-color) 48%,
+      color-mix(in srgb, var(--bar-color) 55%, black) 100%);
+  }
+  .niche-bar-fill::before{
+    /* faceted top cap, gives the 3D read without shine */
+    content:"";position:absolute;top:-7px;left:0;right:0;height:12px;
+    background:color-mix(in srgb, var(--bar-color) 25%, white);
+    clip-path:polygon(0% 100%, 18% 0%, 82% 0%, 100% 100%);
+  }
+  .niche-bar.is-visible .niche-bar-fill{height:var(--h);}
+  .niche-bar-label{font-size:10.5px;color:var(--gray-700);margin-top:12px;text-align:center;font-weight:700;line-height:1.25;padding:0 2px 14px;}
+  .niche-bar-count{font-size:9.5px;color:var(--gray-500);margin-top:2px;text-align:center;}
+
+  .niche-tip{
+    position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);
+    background:var(--black);border-radius:8px;padding:9px 12px;width:150px;
+    font-size:11px;color:var(--white);line-height:1.5;opacity:0;
+    transition:all .2s ease;pointer-events:none;z-index:20;text-align:left;
+  }
+  .niche-bar:hover .niche-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .niche-chart-legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;}
+  .niche-chart-legend span{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--gray-700);}
+  .niche-chart-legend i{width:10px;height:10px;border-radius:3px;display:inline-block;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:80px 24px;}
+  section.alt{background:var(--off-white);}
+  .section-head{max-width:680px;margin:0 auto 48px;text-align:center;}
+  .section-head .tag{font-size:13px;font-weight:600;color:var(--orange);margin-bottom:12px;display:block;}
+  .section-head h2{font-family:var(--serif);font-size:clamp(26px,3.6vw,42px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;}
+  .section-head h2 em{color:var(--orange);}
+  .section-head p{margin-top:16px;color:var(--gray-700);font-size:16px;line-height:1.6;}
+  .section-head p a{color:var(--orange);border-bottom:1px solid transparent;transition:border-color .2s ease;}
+  .section-head p a:hover{border-color:var(--orange);}
+
+  /* ---------- PATHS (two audiences) ---------- */
+  .paths-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--maxw);margin:0 auto;}
+  .path{border-radius:var(--radius);padding:34px;border:1px solid var(--gray-300);background:var(--white);display:flex;flex-direction:column;transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease;}
+  .path:hover{border-color:var(--orange);}
+  .path-tag{display:inline-flex;align-self:flex-start;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:6px 14px;border-radius:999px;margin-bottom:18px;background:var(--off-white);color:var(--gray-700);border:1px solid var(--gray-300);}
+  .path-title{font-family:var(--serif);font-size:23px;font-weight:800;line-height:1.25;margin-bottom:10px;}
+  .path-lead{font-size:14px;color:var(--gray-700);line-height:1.6;margin-bottom:24px;}
+  .path-step{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--gray-300);}
+  .path-step:first-of-type{border-top:none;padding-top:0;}
+  .path-step-num{flex-shrink:0;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--off-white);color:var(--black);}
+  .path-step-body{flex:1;}
+  .path-step-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px;}
+  .path-step-name{font-size:15px;font-weight:600;}
+  .path-step-price{font-size:13px;font-weight:700;flex-shrink:0;}
+  .path-step-price.free{color:var(--green);}
+  .path-step-price.paid{color:var(--orange);}
+  .path-step-price.soon{color:var(--gray-500);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;}
+  .path-step-desc{font-size:13px;color:var(--gray-700);line-height:1.55;}
+  .path-deliv{display:flex;flex-direction:column;margin-bottom:6px;}
+  .path-deliv-item{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--gray-300);font-size:14px;color:var(--gray-700);line-height:1.55;align-items:flex-start;}
+  .path-deliv-item:first-child{border-top:none;padding-top:0;}
+  .path-deliv-check{color:var(--green);flex-shrink:0;font-weight:800;font-size:14px;margin-top:1px;}
+  .path-deliv-item strong{color:var(--black);}
+  .bonus-tag{display:inline-block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--green);background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.3);border-radius:5px;padding:1px 7px;margin-right:7px;vertical-align:middle;}
+  .path-price-line{display:flex;align-items:baseline;gap:10px;margin:18px 0 22px;padding-top:18px;border-top:1px solid var(--gray-300);}
+  .path-price-big{font-size:28px;font-weight:800;}
+  .path-price-note{font-size:11.5px;color:var(--gray-500);line-height:1.4;}
+  .path-cta{margin-top:auto;display:block;text-align:center;padding:15px;border-radius:12px;font-weight:700;font-size:14px;background:var(--black);color:var(--white);transition:background .25s ease, transform .2s ease;}
+  .path-cta:hover{background:var(--orange);transform:translateY(-1px);}
+  .path-cta-sub{font-size:11.5px;color:var(--gray-500);text-align:center;margin-top:10px;}
+
+  /* ---------- COMPARE GRID ---------- */
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;}
+  .compare-col{border:1px solid var(--gray-300);border-radius:16px;padding:28px;}
+  .compare-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:16px;}
+  .compare-col-label.old{color:var(--gray-500);}
+  .compare-col-label.new{color:var(--green);}
+  .compare-item{font-size:14px;padding:8px 0;border-bottom:1px solid var(--gray-300);color:var(--gray-700);}
+  .compare-item:last-child{border-bottom:none;}
+  .compare-item.struck{text-decoration:line-through;text-decoration-color:var(--gray-300);color:var(--gray-500);}
+  .compare-item.bright{color:var(--black);font-weight:500;}
+
+  /* ---------- SIGNALS ---------- */
+  .signals-box{max-width:var(--maxw);margin:0 auto;border:1px solid var(--gray-300);border-radius:var(--radius);padding:32px;}
+  .signals-label{font-size:12px;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:20px;text-align:center;}
+  .sig-row{display:flex;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid var(--gray-300);}
+  .sig-row:last-child{border-bottom:none;}
+  .sig-name{font-size:13px;color:var(--gray-700);font-weight:500;width:200px;flex-shrink:0;}
+  .sig-bar-wrap{flex:1;height:6px;background:var(--gray-300);border-radius:999px;overflow:hidden;}
+  .sig-bar-fill{height:100%;border-radius:999px;background:var(--orange);}
+  .sig-score{font-size:12px;font-weight:700;width:60px;text-align:right;flex-shrink:0;}
+  .signals-note{font-size:12px;color:var(--gray-500);text-align:center;margin-top:20px;font-style:italic;}
+
+  /* ---------- RESEARCH CARD ---------- */
+  .research-card{display:block;max-width:var(--maxw);margin:0 auto;border:1px solid var(--gray-300);border-radius:var(--radius);padding:32px;transition:border-color .25s ease, transform .25s ease;}
+  .research-card:hover{border-color:var(--orange);transform:translateY(-3px);}
+  .research-card-kicker{font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:10px;}
+  .research-card-title{font-family:var(--serif);font-size:24px;font-weight:800;line-height:1.25;margin-bottom:20px;letter-spacing:-0.02em;}
+  .research-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--gray-300);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+  .research-stat{padding:16px 8px;text-align:center;border-right:1px solid var(--gray-300);}
+  .research-stat:last-child{border-right:none;}
+  .research-stat-num{font-size:19px;font-weight:800;color:var(--orange);line-height:1;}
+  .research-stat-num.warn{color:var(--red);}
+  .research-stat-label{font-size:10px;color:var(--gray-500);margin-top:6px;text-transform:uppercase;letter-spacing:0.04em;}
+  .research-card-cta{font-size:14px;color:var(--orange);font-weight:700;}
+
+  /* ---------- FUTURE BOX ---------- */
+  .future-box{max-width:var(--maxw);margin:0 auto;border:1px solid var(--gray-300);border-radius:var(--radius);padding:32px;}
+  .future-title{font-size:19px;font-weight:700;color:var(--orange);margin-bottom:12px;}
+  .future-body{font-size:14px;color:var(--gray-700);line-height:1.7;margin-bottom:22px;}
+  .future-item{font-size:14px;color:var(--gray-700);padding:10px 0;border-bottom:1px solid var(--gray-300);display:flex;align-items:flex-start;gap:10px;line-height:1.55;}
+  .future-item:last-child{border-bottom:none;}
+  .future-item-arrow{color:var(--orange);flex-shrink:0;font-weight:700;}
+
+  /* ---------- FPFP ---------- */
+  .fpfp-box{max-width:var(--maxw);margin:0 auto;border:1px solid var(--gray-300);border-radius:var(--radius);padding:28px;}
+  .fpfp-row{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;}
+  .fpfp-step{position:relative;padding:12px 16px;cursor:default;text-align:center;}
+  .fpfp-step-label{font-size:18px;font-weight:800;color:var(--orange);}
+  .fpfp-step-desc{font-size:13px;color:var(--gray-700);margin-top:6px;}
+  .fpfp-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);background:var(--black);border-radius:10px;padding:12px 14px;width:200px;font-size:12px;color:var(--white);line-height:1.5;opacity:0;transition:all .25s ease;pointer-events:none;z-index:99;}
+  .fpfp-step:hover .fpfp-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+  .fpfp-arrow{color:var(--gray-300);font-size:16px;padding:0 2px;}
+  .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;max-width:var(--maxw);margin-left:auto;margin-right:auto;}
+  .step-card{border:1px solid var(--gray-300);border-radius:16px;padding:24px 18px;text-align:center;transition:border-color .25s ease;}
+  .step-card:hover{border-color:var(--orange);}
+  .step-num{font-size:34px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:10px;}
+  .step-text{font-size:14px;color:var(--gray-700);line-height:1.5;}
+
+  /* ---------- EXPLORE GRID ---------- */
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{text-align:center;background:var(--black);color:var(--white);border-radius:28px;max-width:var(--maxw);margin:0 auto;padding:76px 40px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(26px,4vw,44px);font-weight:800;letter-spacing:-0.02em;margin-bottom:16px;}
+  .final-cta p{color:#a1a1a6;max-width:520px;margin:0 auto 32px;font-size:16px;}
+  .final-cta .scan-box{background:#1d1d1f;border:1px solid #3a3a3c;}
+  .final-cta .scan-box input{color:var(--white);}
+  .final-cta .scan-box input::placeholder{color:#8e8e93;}
+  .final-cta .scan-note{color:#8e8e93;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:56px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-links{display:flex;flex-wrap:wrap;gap:22px;margin-bottom:28px;font-size:13px;color:var(--gray-700);}
+  .footer-links a{transition:color .25s ease;}
+  .footer-links a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .footer-tagline{font-size:13px;font-weight:700;color:var(--orange);}
+  .social-row{display:flex;gap:16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);padding:18px 0 32px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-500);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .paths-grid, .compare-grid, .steps-row{grid-template-columns:1fr 1fr;}
+    .hero-split{grid-template-columns:160px 1fr;gap:32px;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-direction:column;gap:16px;padding:20px;}
+    .logo-icon{width:38px;height:38px;}
+    .logo-word{font-size:18px;}
+    nav.links{padding-top:0;}
+    .nav-tagline-long{max-width:none;}
+    .hero{padding:48px 20px 32px;}
+    .scan-box{flex-direction:column;border-radius:16px;}
+    .scan-box button{width:100%;}
+    .hero-split{grid-template-columns:1fr;gap:28px;}
+    .hero-menu{flex-direction:row;flex-wrap:wrap;gap:14px 20px;}
+    .hero-menu-label{width:100%;}
+    .score-panel{flex-direction:column;gap:14px;margin-top:32px;padding-top:24px;}
+    .niche-overall b{font-size:34px;}
+    .niche-chart{height:150px;}
+    .niche-bar-value{font-size:10px;}
+    .niche-bar-label{font-size:9px;padding-bottom:10px;}
+    .niche-bar-count{display:none;}
+    section{padding:52px 20px;}
+    .paths-grid, .compare-grid, .steps-row{grid-template-columns:1fr;}
+    .sig-name{width:130px;font-size:12px;}
+    .final-cta{padding:52px 24px;border-radius:20px;}
+    .research-stats{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="#" class="logo">
+        <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="fGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff9a3d"/>
+              <stop offset="100%" stop-color="#ff6a1a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="47" fill="#1d1d1f" stroke="var(--orange)" stroke-width="3"/>
+          <path d="M40 72 L52 30 L64 72 L56 72 L53.5 63 L45 63 L42.5 72 Z M47 55 L52 39 L57 55 Z" fill="#ffffff" transform="translate(-6,0)"/>
+          <path d="M55 30 L82 30 L78 40 L61 40 L59 47 L74 47 L70 57 L57 57 L52 72 L44 72 Z" fill="url(#fGrad)" transform="translate(2,0) scale(0.95)"/>
+        </svg>
+        <span class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></span>
+      </a>
+      <div class="logo-tagline">The AI Commerce Graph™</div>
+      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+    </div>
+    <nav class="links">
+      <a href="#what-we-do">What We Do</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="score">
+<div class="hero-inner">
+  <div class="eyebrow">FREE AI COMMERCE SCORE™</div>
+  <h1>Will <em>AI recommend</em> your store?</h1>
+  <p class="sub">Most ecommerce stores were built for people. AI evaluates them differently.</p>
+  <p class="sub">AI Commerce Score™ measures how prepared your store is for AI discovery, evaluation, and recommendation.</p>
+  <p class="sub" style="font-weight:700;color:var(--black);margin-bottom:36px;">See where your store stands in minutes.</p>
+
+  <div class="scan-box">
+    <input type="text" placeholder="yourstorename.com">
+    <button>Get My Free AI Commerce Score</button>
+  </div>
+  <div class="scan-note">No signup <span>·</span> No setup <span>·</span> Free <span>·</span> Results in 10 seconds</div>
+
+  <div class="hero-split">
+    <aside class="hero-menu">
+      <div class="hero-menu-label">Category</div>
+      <a href="#framework">Framework</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#research">Research</a>
+      <a href="#stores">Stores</a>
+      <a href="#vocabulary">Vocabulary</a>
+      <a href="#">Learn</a>
+      <a href="https://atomfoundry.dev/founders-reality-check" class="strong">Founder's Reality Check</a>
+    </aside>
+
+    <div class="niche-chart-col">
+      <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
+      <div class="niche-overall"><b>57</b><span>/100 avg across 66,087 scanned stores</span></div>
+      <div class="niche-chart" id="nicheChart">
+        <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">👗 Fashion</div><div class="niche-bar-count">11.7k</div></div>
+        <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Beauty<br>Risk: 17% · Best: 93/100</div><div class="niche-bar-label">💄 Beauty</div><div class="niche-bar-count">4.2k</div></div>
+        <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Health and Wellness<br>Risk: 19% · Best: 94/100</div><div class="niche-bar-label">💊 Health</div><div class="niche-bar-count">3.3k</div></div>
+        <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Food and Drink<br>Risk: 20% · Best: 87/100</div><div class="niche-bar-label">🍎 Food</div><div class="niche-bar-count">7.2k</div></div>
+        <div class="niche-bar" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Home and Living<br>Risk: 15% · Best: 92/100</div><div class="niche-bar-label">🏠 Home</div><div class="niche-bar-count">7.7k</div></div>
+        <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Sports and Outdoor<br>Risk: 17% · Best: 89/100</div><div class="niche-bar-label">🏃 Sports</div><div class="niche-bar-count">5.6k</div></div>
+        <div class="niche-bar" style="--h:45%;"><div class="niche-bar-value">54</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Pets<br>Risk: 24% · Best: 84/100</div><div class="niche-bar-label">🐾 Pets</div><div class="niche-bar-count">1.6k</div></div>
+        <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Tech and Gadgets<br>Risk: 18% · Best: 93/100</div><div class="niche-bar-label">💻 Tech</div><div class="niche-bar-count">3.5k</div></div>
+        <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Kids and Baby<br>Risk: 19% · Best: 83/100</div><div class="niche-bar-label">🧸 Kids</div><div class="niche-bar-count">2.0k</div></div>
+        <div class="niche-bar" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Jewelry<br>Risk: 13% · Best: 85/100</div><div class="niche-bar-label">💍 Jewelry</div><div class="niche-bar-count">2.0k</div></div>
+      </div>
+      <div class="niche-chart-legend">
+        <span><i style="background:var(--red);"></i>0–49 AI Invisible Risk</span>
+        <span><i style="background:var(--orange);"></i>50–69 Low Confidence</span>
+        <span><i style="background:var(--amber);"></i>70–84 Moderately Recommendable</span>
+        <span><i style="background:var(--green);"></i>85–100 Highly Recommendable</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-panel">
+    <div class="score-panel-stat"><b>66,087</b><span>Stores analyzed</span></div>
+    <div class="score-panel-stat"><b>8</b><span>Scoring factors</span></div>
+    <div class="score-panel-stat"><b>10s</b><span>To see results</span></div>
+    <div class="score-panel-updated">Live data · updated Jul 22, 2026</div>
+  </div>
+</div>
+</section>
+
+<!-- TWO WAYS TO WORK WITH US -->
+<section id="what-we-do">
+  <div class="section-head">
+    <span class="tag">TWO WAYS TO WORK WITH US</span>
+    <h2>Find out where you stand, <em>then go deeper.</em></h2>
+    <p>Start free. Go further when you want the full picture of how AI sees and recommends a store.</p>
+  </div>
+  <div class="paths-grid" id="pricing">
+    <div class="path">
+      <span class="path-tag">🛍 For store owners</span>
+      <div class="path-title">Your store, scored and ranked</div>
+      <div class="path-lead">See how AI reads your store today, then get the full readiness picture and where you rank against every store we have scanned.</div>
+      <div class="path-step">
+        <div class="path-step-num">1</div>
+        <div class="path-step-body">
+          <div class="path-step-top"><span class="path-step-name">Free AI Commerce Score</span><span class="path-step-price free">Free</span></div>
+          <div class="path-step-desc">Your AI Commerce Score™ in 10 seconds, plus how your store performs across all 8 readiness factors.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-step-num">2</div>
+        <div class="path-step-body">
+          <div class="path-step-top"><span class="path-step-name">Full AI Readiness Report</span><span class="path-step-price paid">$399</span></div>
+          <div class="path-step-desc">The complete breakdown of all 8 factors with exact fixes, plus where your store ranks against every store in our database in your category.</div>
+        </div>
+      </div>
+      <div class="path-step">
+        <div class="path-step-num">3</div>
+        <div class="path-step-body">
+          <div class="path-step-top"><span class="path-step-name">Monitoring</span><span class="path-step-price soon">On the way</span></div>
+          <div class="path-step-desc">Ongoing rescans that track how your readiness and ranking move over time. Coming soon.</div>
+        </div>
+      </div>
+      <a href="#score" class="path-cta">Start with the free score →</a>
+      <div class="path-cta-sub">No signup · No credit card · Results in 10 seconds</div>
+    </div>
+
+    <div class="path">
+      <span class="path-tag">★ For agencies</span>
+      <div class="path-title">See why AI picks your client's competitors</div>
+      <div class="path-lead">A Recommendation Intelligence report for one of your clients: where they actually stand when AI recommends, and who wins instead.</div>
+      <div class="path-deliv">
+        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>Your client's <strong>Recommendation Share</strong>: how often AI recommends them when a shopper asks</span></div>
+        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>The exact buyer questions where your client is <strong>invisible</strong>, and which brand AI recommends first instead</span></div>
+        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>The attributes AI ties to the winners: <strong>the language your client has to own</strong> to enter the conversation</span></div>
+        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span>Run on <strong>20 buyer questions you choose</strong> for your client's category</span></div>
+        <div class="path-deliv-item"><span class="path-deliv-check">✓</span><span><span class="bonus-tag">Bonus</span>An extra set of questions from us, layered on top of yours</span></div>
+      </div>
+      <div class="path-price-line">
+        <span class="path-price-big">$399</span>
+        <span class="path-price-note">per client report · measured on ChatGPT today, other AI models coming</span>
+      </div>
+      <a href="mailto:founder@atomfoundry.dev?subject=Recommendation%20Intelligence%20report" class="path-cta">Email me to start →</a>
+      <div class="path-cta-sub">founder@atomfoundry.dev · written, no call required</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- OLD VS NEW -->
+<section class="alt">
+  <div class="section-head">
+    <span class="tag">OLD WORLD VS. NEW WORLD</span>
+    <h2>What actually matters now in <em>ecommerce optimization</em></h2>
+    <p>The tools that drove growth for the last decade still work. But they optimize for humans and Google. AI agents evaluate your store on entirely different criteria.</p>
+  </div>
+  <div class="compare-grid">
+    <div class="compare-col">
+      <div class="compare-col-label old">What used to matter</div>
+      <div class="compare-item struck">SEO keyword ranking</div>
+      <div class="compare-item struck">Paid ads and retargeting</div>
+      <div class="compare-item struck">Landing page conversion</div>
+      <div class="compare-item struck">CRO and A/B testing</div>
+      <div class="compare-item struck">Visual design quality</div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-col-label new">What AI agents evaluate</div>
+      <div class="compare-item bright">AI discoverability signals</div>
+      <div class="compare-item bright">Recommendation confidence</div>
+      <div class="compare-item bright">Structured product intelligence</div>
+      <div class="compare-item bright">Machine-readable trust</div>
+      <div class="compare-item bright">Semantic positioning clarity</div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNALS -->
+<section id="methodology">
+  <div class="section-head">
+    <span class="tag">WHAT AI ACTUALLY SEES</span>
+    <h2>Most stores score poorly on <em>four or more</em> signals.</h2>
+    <p>When an AI shopping agent evaluates your store, it reads structure and machine-readable signals — not design, not branding. Each factor is defined in our <a href="#vocabulary">AI Commerce vocabulary</a>.</p>
+  </div>
+  <div class="signals-box">
+    <div class="signals-label">Average across 66,087 DTC stores</div>
+    <div class="sig-row"><div class="sig-name">AI Interpretation</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:28%;"></div></div><div class="sig-score">Low</div></div>
+    <div class="sig-row"><div class="sig-name">Recommendation Confidence</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:22%;"></div></div><div class="sig-score">Critical</div></div>
+    <div class="sig-row"><div class="sig-name">Semantic Clarity</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:41%;"></div></div><div class="sig-score">Partial</div></div>
+    <div class="sig-row"><div class="sig-name">Trust Signals</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:35%;"></div></div><div class="sig-score">Weak</div></div>
+    <div class="sig-row"><div class="sig-name">Comparison Strength</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:18%;"></div></div><div class="sig-score">Critical</div></div>
+    <div class="sig-row"><div class="sig-name">Product Understanding</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:45%;"></div></div><div class="sig-score">Partial</div></div>
+    <div class="signals-note">Directional pattern across scanned stores · run your store for exact factor scores</div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="alt" id="research">
+  <div class="section-head">
+    <span class="tag">RECOMMENDATION INTELLIGENCE RESEARCH™</span>
+    <h2>We measured what AI <em>actually recommends</em></h2>
+    <p>We asked an AI model 20 high-intent beauty shopping questions, 20 times each, and captured 4,000 recommendations. Then we checked something nobody else is measuring: does being recommended have anything to do with how AI-ready your store is? It does not. The correlation is r = 0.17, statistically indistinguishable from zero.</p>
+  </div>
+  <a href="#" class="research-card">
+    <div class="research-card-kicker">First in the series</div>
+    <div class="research-card-title">The State of AI Recommendations in Beauty</div>
+    <div class="research-stats">
+      <div class="research-stat"><div class="research-stat-num">4,000</div><div class="research-stat-label">Recommendations</div></div>
+      <div class="research-stat"><div class="research-stat-num">238</div><div class="research-stat-label">Brands</div></div>
+      <div class="research-stat"><div class="research-stat-num">20</div><div class="research-stat-label">Intents</div></div>
+      <div class="research-stat"><div class="research-stat-num warn">r = 0.17</div><div class="research-stat-label">Freq vs Score</div></div>
+    </div>
+    <div class="research-card-cta">Read the report →</div>
+  </a>
+</section>
+
+<!-- FUTURE -->
+<section>
+  <div class="section-head">
+    <span class="tag">WHERE THIS IS GOING</span>
+    <h2>AI is becoming the new <em>shopping layer</em></h2>
+  </div>
+  <div class="future-box">
+    <div class="future-title">AI is the new shopping layer.</div>
+    <div class="future-body">Alexa for Shopping, ChatGPT, Google AI Mode, and Perplexity now recommend products to hundreds of millions of buyers. Shopify confirmed it: your store is becoming a product database for AI agents.</div>
+    <div class="future-item"><span class="future-item-arrow">→</span>AI recommends products and drives purchase decisions in conversation</div>
+    <div class="future-item"><span class="future-item-arrow">→</span>AI agents browse, compare, and buy autonomously via Agentic Storefronts</div>
+    <div class="future-item"><span class="future-item-arrow">→</span>Stores invisible to AI lose a growing share of discovery every single day</div>
+    <div class="future-item"><span class="future-item-arrow">→</span>Stores that close AI gaps in 2026 will dominate AI discovery in 2027</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="alt">
+  <div class="section-head">
+    <span class="tag">HOW IT WORKS</span>
+    <h2>Find the gap. Prove the cost. <em>Fix it.</em></h2>
+  </div>
+  <div class="fpfp-box">
+    <div class="fpfp-row">
+      <div class="fpfp-step">
+        <div class="fpfp-step-label">Find</div>
+        <div class="fpfp-step-desc">Scan your store</div>
+        <div class="fpfp-tip">We scan your store and identify exactly what AI systems cannot understand or recommend.</div>
+      </div>
+      <span class="fpfp-arrow">→</span>
+      <div class="fpfp-step">
+        <div class="fpfp-step-label">Prove</div>
+        <div class="fpfp-step-desc">Score each gap</div>
+        <div class="fpfp-tip">We show how each AI interpretation gap affects your score across the 8 factors.</div>
+      </div>
+      <span class="fpfp-arrow">→</span>
+      <div class="fpfp-step">
+        <div class="fpfp-step-label">Fix</div>
+        <div class="fpfp-step-desc">Exact actions to take</div>
+        <div class="fpfp-tip">You get specific, actionable fixes to improve AI readability and recommendation confidence.</div>
+      </div>
+      <span class="fpfp-arrow">→</span>
+      <div class="fpfp-step">
+        <div class="fpfp-step-label">Protect</div>
+        <div class="fpfp-step-desc">Ongoing monitoring</div>
+        <div class="fpfp-tip">Ongoing monitoring catches new AI readability issues before they cost you revenue.</div>
+      </div>
+    </div>
+  </div>
+  <div class="steps-row">
+    <div class="step-card"><div class="step-num">1</div><div class="step-text">Paste your store URL</div></div>
+    <div class="step-card"><div class="step-num">2</div><div class="step-text">See your AI Commerce Score™ across 8 factors</div></div>
+    <div class="step-card"><div class="step-num">3</div><div class="step-text">Get the exact fix to become AI recommendable</div></div>
+  </div>
+</section>
+
+
+<!-- FINAL CTA -->
+<section>
+  <div class="final-cta">
+    <h2>Will AI systems recommend your store?</h2>
+    <p>Get your free AI Commerce Score in 10 seconds. See exactly where you stand on clarity, trust, structured data, and recommendation readiness.</p>
+    <div class="scan-box">
+      <input type="text" placeholder="Paste your store URL">
+      <button>Get My Free Score</button>
+    </div>
+    <div class="scan-note">Free <span>·</span> No signup <span>·</span> No credit card <span>·</span> Results in 10 seconds</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#stores">Stores</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#vocabulary">Vocabulary</a>
+      <a href="#framework">Framework</a>
+      <a href="#research">Research</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#">Benchmarks</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+    </div>
+    <div class="footer-meta">
+      <div>
+        <div>66,087 DTC stores analyzed · avg score 56/100 · atomfoundry.dev</div>
+        <div style="margin-top:6px;">© 2026 Atom Foundry · The AI Commerce Graph™ · atomfoundry.dev</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="footer-tagline">Find → Prove → Fix → Protect</div>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="#stores">Store database</a>
+        <a href="#">Category benchmarks</a>
+        <a href="#vocabulary">AI Commerce Vocabulary</a>
+        <a href="#">AI Commerce University</a>
+        <a href="#framework">AI Readiness Framework</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#research">Research</a>
+        <a href="#">AI Commerce Intelligence</a>
+        <a href="#">Founder's Reality Check</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Animate the niche chart bars in with a stagger, either shortly after
+  // load (it sits near the top of the page) or when scrolled into view.
+  (function(){
+    const chart = document.getElementById('nicheChart');
+    if (!chart) return;
+    const bars = Array.from(chart.querySelectorAll('.niche-bar'));
+    let played = false;
+    function playChart(){
+      if (played) return;
+      played = true;
+      bars.forEach((bar, i) => {
+        setTimeout(() => bar.classList.add('is-visible'), i * 90);
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) playChart(); });
+      }, { threshold: 0.3 });
+      io.observe(chart);
+    }
+    window.addEventListener('load', () => setTimeout(playChart, 400));
+  })();
+</script>
+
+</body>
+</html>
