@@ -59,18 +59,17 @@
   .nav-brand{display:flex;align-items:center;}
   .logo{display:flex;align-items:center;transition:opacity .25s ease;}
   .logo:hover{opacity:0.8;}
-  .logo-word-wrap{position:relative;height:30px;display:flex;align-items:center;}
-  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;display:flex;align-items:center;gap:2px;line-height:1;}
-  .logo-word .atom{color:var(--black);}
-  .logo-word .foundry{color:var(--orange);}
-  /* full wordmark dissolves away (fades + wipes from the right, as if truly
-     vanishing) as the nav goes compact, all on the same vertical plane as AF */
-  .logo-word-full{overflow:hidden;white-space:nowrap;max-width:320px;opacity:1;transition:max-width .6s cubic-bezier(.65,0,.35,1),opacity .45s ease;}
-  header.nav.nav-compact .logo-word-full{max-width:0;opacity:0;transition:max-width .6s cubic-bezier(.65,0,.35,1),opacity .35s ease;}
-  /* only "AF" is left behind, sitting right next to each other, perfectly
-     centered on the same line as the full wordmark it replaces */
-  .logo-word-short{position:absolute;left:0;top:50%;transform:translateY(-50%);align-items:center;line-height:1;gap:1px;opacity:0;pointer-events:none;transition:opacity .4s ease .32s;}
-  header.nav.nav-compact .logo-word-short{opacity:1;transition:opacity .4s ease .3s;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  /* plain single-line inline text — no flexbox here, so there is no wrap
+     edge-case possible; the whole wordmark is always exactly one line */
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  /* "TOM" and "OUNDRY" are true erase-tails: they wipe away right-to-left
+     (the Y goes first) as the nav goes compact, leaving "A" and "F" sitting
+     next to each other — one continuous wipe, no crossfade, no swap */
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
 
   nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
   .nav-item{position:relative;display:flex;align-items:center;}
@@ -279,7 +278,6 @@
   .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
   .footer-col a:hover{color:var(--orange);}
   .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
-  .footer-tagline{font-size:13px;font-weight:700;color:var(--orange);}
   .social-row{display:flex;gap:16px;margin-top:8px;}
   .social-row a{color:var(--gray-500);transition:color .25s ease;}
   .social-row a:hover{color:var(--orange);}
@@ -301,7 +299,7 @@
     .nav-inner{flex-direction:column;align-items:flex-start;gap:14px;padding:18px 20px;}
     header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
     .logo-word{font-size:24px;}
-    .logo-word-full{max-width:260px;}
+    .logo-word .tail{max-width:160px;}
     nav.links{justify-content:flex-start;gap:12px 16px;}
     .nav-trigger{font-size:12px;}
     .nav-item{flex-direction:column;align-items:flex-start;}
@@ -341,8 +339,9 @@
     <div class="nav-brand">
       <a href="#" class="logo">
         <span class="logo-word-wrap">
-          <span class="logo-word logo-word-full"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></span>
-          <span class="logo-word logo-word-short"><span class="atom">A</span><span class="foundry">F</span></span>
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
         </span>
       </a>
     </div>
@@ -676,7 +675,6 @@
     </div>
     <div class="footer-meta">
       <div>66,087 DTC stores analyzed · avg score 57/100 · © 2026 Atom Foundry</div>
-      <div class="footer-tagline">Find → Prove → Fix → Protect</div>
     </div>
   </div>
 </footer>
