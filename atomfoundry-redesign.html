@@ -16,13 +16,13 @@
     --gray-500:#938f81;
     --gray-700:#4a463c;
     --black:#161512;
-    --cream:#f8f7f3;
+    --cream:#f0eee6;
     --orange:#ff6a1a;
     --green:#1D9E75;
     --amber:#e0a233;
     --red:#d93c3c;
     --bar-gray:#847e6d;
-    --card:#e6e2d6;
+    --card:#e3dacc;
     --card-line:rgba(22,21,18,0.09);
     --radius:6px;
     --maxw:1440px;
@@ -46,33 +46,35 @@
   /* ---------- NAV ---------- */
   header.nav{
     position:sticky;top:0;z-index:1000;
-    background:rgba(248,247,243,0.88);
+    background:rgba(240,238,230,0.88);
     backdrop-filter:saturate(160%) blur(16px);
     -webkit-backdrop-filter:saturate(160%) blur(16px);
-    transition:transform .35s ease;
   }
-  header.nav.nav-hidden{transform:translateY(-100%);}
   .nav-inner{
-    max-width:var(--maxw);margin:0 auto;padding:28px 32px;
-    display:flex;align-items:flex-start;justify-content:space-between;gap:32px;
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .3s ease;
   }
-  .nav-brand{display:flex;flex-direction:column;gap:0;}
-  .logo{display:flex;align-items:center;gap:14px;transition:opacity .25s ease;}
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
   .logo:hover{opacity:0.8;}
-  .logo-icon{width:44px;height:44px;flex-shrink:0;}
-  .logo-word{font-weight:800;font-size:22px;letter-spacing:-0.01em;display:flex;gap:6px;}
+  .logo-word-wrap{position:relative;height:26px;display:flex;align-items:center;}
+  .logo-word{font-weight:800;font-size:22px;letter-spacing:-0.01em;display:flex;gap:6px;transition:opacity .3s ease;}
   .logo-word .atom{color:var(--black);}
   .logo-word .foundry{color:var(--orange);}
-  .logo-tagline{font-size:11.5px;font-weight:700;color:var(--orange);letter-spacing:0.4px;text-transform:uppercase;margin-top:8px;}
-  .nav-tagline-long{font-size:12px;color:var(--gray-500);line-height:1.6;max-width:420px;margin-top:8px;font-weight:500;}
+  .logo-word-short{position:absolute;left:0;top:0;opacity:0;pointer-events:none;}
+  header.nav.nav-compact .logo-word-full{opacity:0;}
+  header.nav.nav-compact .logo-word-short{opacity:1;}
 
-  nav.links{display:flex;gap:30px;align-items:center;padding-top:6px;}
+  nav.links{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:flex-end;row-gap:8px;}
   nav.links a{
     font-size:12px;font-weight:700;color:var(--black);
     text-transform:uppercase;letter-spacing:0.08em;
     position:relative;padding:4px 2px;transition:color .25s ease;white-space:nowrap;
   }
   nav.links a:hover{color:var(--orange);}
+  nav.links a.strong{color:var(--orange);}
 
   /* ---------- MASTHEAD ---------- */
   .masthead{padding:96px 0 64px;background:var(--cream);}
@@ -100,13 +102,6 @@
   .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
   .scan-note span{margin:0 8px;}
 
-  /* ---------- CATEGORY MENU ROW ---------- */
-  .hero-menu-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;padding-bottom:26px;border-bottom:1px solid var(--gray-300);margin-bottom:8px;}
-  .hero-menu-label{font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.1em;}
-  .hero-menu-row a{font-size:14px;font-weight:800;color:var(--black);text-transform:uppercase;letter-spacing:0.02em;transition:color .2s ease;}
-  .hero-menu-row a:hover{color:var(--orange);}
-  .hero-menu-row a.strong{color:var(--orange);}
-
   /* ---------- META ROW (flat, no bubbles, square swatches) ---------- */
   .chip-row{display:flex;flex-wrap:wrap;align-items:center;row-gap:8px;}
   .chip{
@@ -123,7 +118,7 @@
   .score-panel-updated{font-size:14px;color:var(--gray-500);margin-top:14px;font-weight:600;}
 
   /* ---------- NICHE CHART (flat, embedded in the page, no card) ---------- */
-  .niche-chart-section{margin-top:36px;}
+  .niche-chart-section{margin-top:0;}
   .niche-chart-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:14px;margin-bottom:8px;}
   .niche-chart-label{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
   .niche-chart-stores{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
@@ -301,27 +296,20 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
     .paths-grid, .compare-grid, .steps-row{grid-template-columns:1fr 1fr;}
-    .hero-menu-row{gap:10px 20px;}
-    .hero-menu-row a{font-size:13px;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .masthead{padding:72px 0 48px;}
     .masthead-inner{padding:0 24px;}
   }
   @media (max-width:680px){
-    .nav-inner{flex-direction:column;gap:16px;padding:20px;}
-    .logo-icon{width:38px;height:38px;}
-    .logo-word{font-size:18px;}
-    nav.links{padding-top:0;}
-    .nav-tagline-long{max-width:none;}
+    .nav-inner{flex-direction:column;align-items:flex-start;gap:14px;padding:18px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+    .logo-word{font-size:19px;}
+    nav.links{justify-content:flex-start;gap:14px 18px;}
     .hero{padding:40px 0 32px;}
     .hero-inner{padding:0 20px;}
     .scan-box{flex-direction:column;border-radius:16px;}
     .scan-box button{width:100%;}
-    .hero-menu-row{gap:10px 16px;padding-bottom:20px;}
-    .hero-menu-row a{font-size:13px;}
-    .hero-menu-label{width:100%;}
     .score-panel{margin-top:32px;padding-top:24px;}
-    .niche-chart-section{margin-top:28px;}
     .niche-chart-head{gap:8px;}
     .niche-overall b{font-size:34px;}
     .niche-chart{height:150px;gap:4px;}
@@ -349,24 +337,22 @@
   <div class="nav-inner">
     <div class="nav-brand">
       <a href="#" class="logo">
-        <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="fGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff9a3d"/>
-              <stop offset="100%" stop-color="#ff6a1a"/>
-            </linearGradient>
-          </defs>
-          <circle cx="50" cy="50" r="47" fill="#1d1d1f" stroke="var(--orange)" stroke-width="3"/>
-          <path d="M40 72 L52 30 L64 72 L56 72 L53.5 63 L45 63 L42.5 72 Z M47 55 L52 39 L57 55 Z" fill="#ffffff" transform="translate(-6,0)"/>
-          <path d="M55 30 L82 30 L78 40 L61 40 L59 47 L74 47 L70 57 L57 57 L52 72 L44 72 Z" fill="url(#fGrad)" transform="translate(2,0) scale(0.95)"/>
-        </svg>
-        <span class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></span>
+        <span class="logo-word-wrap">
+          <span class="logo-word logo-word-full"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></span>
+          <span class="logo-word logo-word-short"><span class="atom">A</span><span class="foundry">F</span></span>
+        </span>
       </a>
-      <div class="logo-tagline">The AI Commerce Graph™</div>
-      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
     </div>
     <nav class="links">
+      <a href="#framework">Framework</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#research">Research</a>
+      <a href="#stores">Stores</a>
+      <a href="#vocabulary">Vocabulary</a>
+      <a href="#">Learn</a>
+      <a href="https://atomfoundry.dev/founders-reality-check" class="strong">Founder's Reality Check</a>
       <a href="#what-we-do">What We Do</a>
+      <a href="#">About</a>
     </nav>
   </div>
 </header>
@@ -386,17 +372,6 @@
 <!-- HERO -->
 <section class="hero">
 <div class="hero-inner">
-  <nav class="hero-menu-row">
-    <span class="hero-menu-label">Category</span>
-    <a href="#framework">Framework</a>
-    <a href="#methodology">Methodology</a>
-    <a href="#research">Research</a>
-    <a href="#stores">Stores</a>
-    <a href="#vocabulary">Vocabulary</a>
-    <a href="#">Learn</a>
-    <a href="https://atomfoundry.dev/founders-reality-check" class="strong">Founder's Reality Check</a>
-  </nav>
-
   <div class="niche-chart-section">
     <div class="niche-chart-head">
       <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
@@ -680,20 +655,19 @@
 </footer>
 
 <script>
-  // Hide the navbar when scrolling down, reveal it when scrolling up.
+  // Navbar always stays visible (sticky) but goes compact once the page
+  // is scrolled down: the wordmark collapses from "ATOM FOUNDRY" to "AF"
+  // and the padding tightens. Scrolling back near the top restores it.
   (function(){
     const nav = document.querySelector('header.nav');
     if (!nav) return;
-    let lastY = window.scrollY;
     let ticking = false;
     function onScroll(){
-      const y = window.scrollY;
-      if (y > lastY && y > 120) {
-        nav.classList.add('nav-hidden');
-      } else if (y < lastY) {
-        nav.classList.remove('nav-hidden');
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-compact');
+      } else {
+        nav.classList.remove('nav-compact');
       }
-      lastY = y;
       ticking = false;
     }
     window.addEventListener('scroll', () => {
@@ -702,6 +676,7 @@
         ticking = true;
       }
     });
+    onScroll();
   })();
 
   // Animate the niche chart bars in with a stagger, either shortly after
