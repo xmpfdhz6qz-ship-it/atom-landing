@@ -568,10 +568,17 @@
   .se-dot{fill:var(--black);transform:scale(0);transform-box:fill-box;transform-origin:50% 50%;transition:transform .35s cubic-bezier(.16,.8,.4,1) calc(900ms + var(--i,0) * 45ms), fill .3s ease;}
   .score-engine-visual.in-view .se-dot{transform:scale(1);}
   .se-dot.is-active{fill:var(--orange);transform:scale(1.35);}
-  .se-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:190px;text-align:center;pointer-events:none;}
-  .se-core-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);line-height:1.4;}
-  .se-core-num-wrap{position:relative;height:54px;margin:4px 0 2px;}
-  .se-core-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:46px;font-weight:800;letter-spacing:-0.02em;color:var(--black);opacity:0;}
+  /* the ring/spokes/dots are SVG, so they shrink automatically with the
+     chart on small screens — but this center text is an HTML overlay
+     with fixed px sizes, which would NOT shrink on its own and would
+     overflow the core circle once the chart gets small on a phone. Use
+     clamp() so it scales down smoothly with the viewport (roughly
+     tracking the chart's own responsive size in the single-column
+     mobile layout) instead of a single breakpoint snap. */
+  .se-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(96px,30vw,190px);text-align:center;pointer-events:none;}
+  .se-core-label{font-size:clamp(8px,2.1vw,12px);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);line-height:1.4;}
+  .se-core-num-wrap{position:relative;height:clamp(28px,8vw,54px);margin:4px 0 2px;}
+  .se-core-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:clamp(24px,7vw,46px);font-weight:800;letter-spacing:-0.02em;color:var(--black);opacity:0;}
   .se-core-num.is-hover-num{color:var(--orange);}
   /* one-time entrance fade for the default "100", timed to land after the
      spokes/dots/labels finish drawing in */
@@ -581,7 +588,7 @@
      .is-hovering toggles, overriding any leftover entrance delay */
   .score-engine-visual.is-hovering .se-core-num.is-default-num{opacity:0;transition:none;}
   .score-engine-visual.is-hovering .se-core-num.is-hover-num{opacity:1;transition:none;}
-  .se-core-sub{font-size:13px;color:var(--gray-500);font-weight:600;}
+  .se-core-sub{font-size:clamp(9px,2.3vw,13px);color:var(--gray-500);font-weight:600;}
   .se-label{
     position:absolute;top:0;left:0;width:112px;
     transform:translate(-50%,-50%);text-align:center;
@@ -745,6 +752,8 @@
     .topics-grid{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
+    .scan-box{flex-direction:column;border-radius:4px;}
+    .scan-box button{width:100%;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
   }
