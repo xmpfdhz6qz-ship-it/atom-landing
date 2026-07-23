@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atom Foundry — The AI Commerce Graph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  em{font-style:normal;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(240,238,230,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .6s cubic-bezier(.65,0,.35,1);
+  }
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  /* plain single-line inline text — no flexbox here, so there is no wrap
+     edge-case possible; the whole wordmark is always exactly one line */
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  /* "TOM" and "OUNDRY" are true erase-tails: they wipe away right-to-left
+     (the Y goes first) as the nav goes compact, leaving "A" and "F" sitting
+     next to each other — one continuous wipe, no crossfade, no swap */
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{
+    font-size:13px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.07em;
+    position:relative;padding:4px 2px;white-space:nowrap;
+    text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+    transition:color .2s ease, text-decoration-color .2s ease;
+  }
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-chevron{
+    display:inline-flex;width:10px;height:7px;margin-left:6px;
+    vertical-align:middle;color:currentColor;
+    transition:transform .2s ease;
+  }
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  /* hover-only effects live behind a real hover query — on touch devices
+     (iOS Safari especially) an element with :hover styles needs a first
+     "ghost" tap just to register the hover state before a second tap
+     actually fires the click, which is why menu items needed two taps */
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+
+  /* ---------- MOBILE NAV TOGGLE (hidden on desktop) ---------- */
+  /* button itself is a full 44px touch target; the visible bars inside
+     are smaller and centered so it doesn't look oversized */
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ---------- NAV DROPDOWNS ---------- */
+  .dropdown{
+    position:absolute;top:100%;left:0;margin-top:6px;
+    background:var(--cream);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+    padding:12px;width:max-content;max-width:300px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:1100;
+  }
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+  .dd-desc{display:block;font-size:11.5px;color:var(--gray-700);margin-top:3px;font-weight:500;text-transform:none;letter-spacing:0;line-height:1.4;}
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{padding:96px 0 64px;background:var(--cream);}
+  .masthead-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  .masthead-h1{font-family:var(--serif);font-size:clamp(38px,6vw,68px);font-weight:800;letter-spacing:-0.02em;line-height:1.06;max-width:920px;margin-bottom:26px;}
+  .masthead-h1 em{color:var(--orange);}
+  .masthead-lede{font-size:19px;color:var(--black);font-weight:700;line-height:1.5;max-width:640px;margin-bottom:16px;}
+  .masthead-sub{font-size:16px;color:var(--gray-700);line-height:1.65;font-weight:500;max-width:600px;margin-bottom:34px;}
+  .masthead-cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .cta-square{display:inline-flex;align-items:center;justify-content:center;padding:16px 28px;font-size:14px;font-weight:700;border-radius:0;transition:background .25s ease, color .25s ease, border-color .25s ease, transform .2s ease;}
+  .cta-square-primary{background:var(--black);color:var(--white);}
+  .cta-square-primary:hover{background:var(--orange);transform:translateY(-1px);}
+  .cta-square-secondary{background:transparent;color:var(--black);border:1.5px solid var(--black);}
+  .cta-square-secondary:hover{border-color:var(--orange);color:var(--orange);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:56px 0 40px;text-align:left;background:var(--cream);}
+  .hero-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+
+  .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+  .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+  .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+  .scan-box input::placeholder{color:var(--gray-500);}
+  .scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+  .scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+  .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+  .scan-note span{margin:0 8px;}
+
+  /* ---------- META ROW (flat, no bubbles, square swatches) ---------- */
+  .chip-row{display:flex;flex-wrap:wrap;align-items:center;row-gap:10px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:600;color:var(--gray-700);
+    white-space:nowrap;
+  }
+  .chip i{width:9px;height:9px;border-radius:2px;display:inline-block;flex-shrink:0;}
+  .chip b{font-size:16px;font-weight:800;color:var(--black);}
+  .chip-sep{margin:0 14px;color:var(--gray-300);}
+
+  /* ---------- SCORE PANEL ---------- */
+  .score-panel{margin:8px 0 0;padding-top:12px;border-top:1px solid var(--gray-300);}
+
+  /* ---------- NICHE CHART (flat, embedded in the page, no card) ---------- */
+  .niche-chart-section{margin-top:0;}
+  .niche-chart-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:14px;margin-bottom:32px;}
+  .niche-chart-label{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
+  .niche-chart-stores{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;display:flex;align-items:baseline;gap:8px;}
+  .niche-chart-stores::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
+  .niche-chart-stores b{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
+  .niche-overall{display:flex;align-items:baseline;gap:10px;}
+  .niche-overall::before{content:"·";margin-right:4px;color:var(--gray-300);font-weight:700;}
+  .niche-overall b{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--orange);letter-spacing:-0.02em;line-height:1;}
+  .niche-overall span{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
+
+  /* flat, card-language chart — no gradients or glossy caps, same sharp
+     4px radius / hairline / black+orange system as the rest of the page.
+     Same width as the navbar/hero content column, not edge-to-edge. */
+  .niche-chart{
+    display:flex;align-items:flex-end;gap:0;height:230px;
+    background:var(--card);border-radius:var(--radius);
+    border-bottom:2px solid var(--black);
+    padding:24px 20px 0;
+    position:relative;
+    box-sizing:border-box;
+  }
+  .niche-chart-watermark{margin-top:9px;padding-left:28px;font-size:11px;font-weight:500;color:var(--gray-500);letter-spacing:0.02em;}
+  .niche-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative;cursor:pointer;padding:0 8px;border-right:1px solid var(--card-line);}
+  .niche-bar:last-child{border-right:none;}
+  .niche-bar-value{font-size:15px;font-weight:800;color:var(--black);margin-bottom:10px;transition:color .2s ease, transform .25s ease;}
+  .niche-bar-fill{
+    position:relative;width:100%;max-width:80px;
+    height:0%;border-radius:var(--radius) var(--radius) 0 0;
+    transition:height 1.1s cubic-bezier(.16,.8,.4,1), background .2s ease;
+    transform-origin:bottom center;
+    background:var(--bar-color);
+  }
+  .niche-bar.is-visible .niche-bar-fill{height:var(--h);}
+  .niche-bar:hover .niche-bar-value{transform:translateY(-3px);color:var(--orange);}
+  .niche-bar-label{font-size:14px;color:var(--gray-700);margin-top:14px;text-align:center;font-weight:700;line-height:1.25;padding:0 2px 16px;transition:color .2s ease;}
+  .niche-bar:hover .niche-bar-label{color:var(--black);}
+
+  .niche-tip{
+    position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(6px);
+    background:var(--black);border-radius:4px;padding:9px 12px;width:170px;
+    font-size:11px;color:var(--white);line-height:1.5;opacity:0;
+    transition:all .2s ease;pointer-events:none;z-index:50;text-align:left;
+  }
+  .niche-bar:hover .niche-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .niche-chart-legend{margin-top:28px;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:80px 24px;}
+  section.alt{background:var(--off-white);}
+  .section-headline{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--black);margin-top:18px;line-height:1.4;}
+  .products-def{font-size:17px;color:var(--gray-700);font-weight:500;line-height:1.6;max-width:680px;}
+
+  /* ---------- PRODUCTS HEAD (left-aligned, masthead-style h2) ---------- */
+  .products-head{max-width:var(--maxw);margin:0 auto 48px;text-align:left;}
+  .products-h2{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:920px;margin-bottom:22px;}
+  .products-h2 em{color:var(--orange);}
+  .products-sub{margin-top:16px;color:var(--gray-700);font-size:16px;line-height:1.6;max-width:600px;}
+
+  /* ---------- PRODUCTS GRID ---------- */
+  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:var(--maxw);margin:0 auto;}
+  .mini-card{border-radius:var(--radius);padding:36px 28px;background:var(--card);display:flex;flex-direction:column;min-height:220px;transition:transform .3s ease, box-shadow .3s ease;}
+  .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .mini-card-title{font-family:var(--serif);font-size:18px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:10px;}
+  .mini-card-tag{font-size:13.5px;color:var(--gray-700);font-weight:600;line-height:1.5;margin-bottom:22px;flex:1;}
+  .mini-card-price{font-size:22px;font-weight:800;margin-bottom:18px;}
+  .mini-card-price.free{color:var(--green);}
+  .mini-card-price.paid{color:var(--orange);}
+  .mini-card-price.soon{color:var(--gray-500);font-size:13px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700;}
+  .mini-card-cta{
+    margin-top:auto;display:flex;align-items:center;justify-content:center;
+    width:100%;box-sizing:border-box;white-space:nowrap;
+    background:var(--black);color:var(--white);
+    font-size:13.5px;font-weight:700;
+    padding:13px 16px;border-radius:var(--radius);
+    transition:background .2s ease, color .2s ease;
+  }
+  .mini-card-cta:hover{background:var(--orange);color:var(--black);}
+
+  /* Research Findings: same card language, but broken into an asymmetric
+     "bento" layout instead of a uniform 4-up row — one big card, two
+     stacked smaller ones, one wide banner card underneath. */
+  .research-grid{grid-template-columns:1.35fr 1fr;grid-template-rows:auto auto auto;}
+  /* nth-child placement only applies on desktop — kept behind a min-width
+     query so it can never outrank the mobile reset below (a bare :nth-child
+     selector is MORE specific than a plain class selector and would win
+     regardless of source order otherwise, which is what broke mobile) */
+  @media (min-width:901px){
+    .research-grid .mini-card:nth-child(1){grid-column:1;grid-row:1 / span 2;min-height:100%;}
+    .research-grid .mini-card:nth-child(1) .mini-card-title{font-size:23px;max-width:420px;}
+    .research-grid .mini-card:nth-child(2){grid-column:2;grid-row:1;min-height:0;}
+    .research-grid .mini-card:nth-child(3){grid-column:2;grid-row:2;min-height:0;}
+  }
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:12px;}
+  .mini-card-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:4px 0 22px;padding-top:18px;border-top:1px solid var(--card-line);}
+  .mini-card-stats div{display:flex;flex-direction:column;gap:2px;}
+  .mini-card-stats b{font-size:20px;font-weight:800;color:var(--black);}
+  .mini-card-stats span{font-size:11.5px;color:var(--gray-700);}
+
+  /* wide banner card underneath: title left, one memorable line centered,
+     button right — pushed down an extra 50% versus the row gap above it */
+  .research-grid .mini-card-banner{grid-column:1 / span 2;grid-row:3;min-height:0;margin-top:10px;flex-direction:row;align-items:center;justify-content:space-between;gap:28px;}
+  .mini-card-banner .mini-card-title{margin-bottom:0;flex:0 0 auto;max-width:260px;}
+  .mini-card-banner-line{flex:1;text-align:center;font-family:var(--serif);font-size:17px;font-weight:700;letter-spacing:-0.01em;color:var(--black);margin:0;}
+  .mini-card-banner .mini-card-cta{width:auto;margin-top:0;flex:0 0 auto;}
+
+  /* ---------- BUILT IN PUBLIC (lab) ---------- */
+  .lab-divider{max-width:var(--maxw);margin:44px auto 0;border:none;border-top:1px solid var(--card-line);}
+  .lab-closing{max-width:var(--maxw);margin:28px auto 0;}
+  .lab-closing-inner{display:inline-block;max-width:640px;color:var(--gray-700);font-size:16px;line-height:1.6;}
+  .lab-cta-row{max-width:var(--maxw);margin:28px auto 0;display:flex;gap:14px;flex-wrap:wrap;}
+  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;margin-bottom:20px;flex:1;}
+  .research-findings-num{color:var(--orange);}
+
+  /* "explore all reports" link below the research grid */
+  .products-explore{max-width:var(--maxw);margin:36px auto 0;display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;row-gap:8px;}
+  .products-stats{font-size:14px;color:var(--gray-700);font-weight:600;white-space:nowrap;}
+  .products-stats-sep{margin:0 12px;color:var(--gray-300);}
+  .products-explore-link{font-size:14px;font-weight:700;color:var(--black);white-space:nowrap;transition:color .2s ease;}
+  .products-explore-link:hover{color:var(--orange);}
+
+  /* sentence below the cards, unrolls left-to-right when the section is hovered */
+  .products-reveal{max-width:var(--maxw);margin:40px auto 0;}
+  .products-reveal-inner{
+    display:inline-block;white-space:nowrap;
+    color:var(--gray-700);font-size:18px;font-weight:400;line-height:1.6;
+  }
+  .products-reveal-num{color:var(--orange);font-weight:800;font-size:22px;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);max-width:var(--maxw);margin:0 auto;padding:48px 56px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;white-space:nowrap;}
+  .final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+  .final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+  .final-cta .scan-box{max-width:640px;margin:0 auto;padding:6px;}
+  .final-cta .scan-box input{padding:12px 18px;font-size:15px;}
+  .final-cta .scan-box button{padding:12px 22px;font-size:14px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col .logo-word{margin-bottom:14px;}
+  .footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{color:var(--black);font-weight:700;}
+  .footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+
+  /* ---------- COOKIE CONSENT (small, bottom-right, non-blocking) ---------- */
+  .cookie-banner{
+    position:fixed;right:20px;bottom:20px;z-index:2000;
+    width:100%;max-width:320px;
+    background:var(--cream);border:1px solid var(--card-line);border-radius:var(--radius);
+    box-shadow:0 24px 48px -18px rgba(22,21,18,0.28);
+    padding:20px;
+    opacity:0;visibility:hidden;transform:translateY(16px);
+    transition:opacity .35s ease, transform .35s ease, visibility .35s;
+  }
+  .cookie-banner.is-visible{opacity:1;visibility:visible;transform:translateY(0);}
+  .cookie-banner-title{font-family:var(--serif);font-size:15px;font-weight:800;color:var(--black);margin-bottom:8px;}
+  .cookie-banner-text{font-size:12.5px;color:var(--gray-700);line-height:1.55;margin-bottom:16px;}
+  .cookie-banner-actions{display:flex;align-items:center;gap:16px;}
+  .cookie-banner-accept{
+    flex:1;text-align:center;background:var(--black);color:var(--white);
+    font-size:13px;font-weight:700;padding:11px 14px;border:none;border-radius:var(--radius);
+    cursor:pointer;transition:background .2s ease,color .2s ease;
+  }
+  .cookie-banner-accept:hover{background:var(--orange);color:var(--black);}
+  .cookie-banner-decline{background:none;border:none;font-size:12.5px;font-weight:700;color:var(--gray-700);cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color .2s ease;}
+  .cookie-banner-decline:hover{color:var(--black);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .products-grid{grid-template-columns:1fr 1fr;}
+    .research-grid .mini-card{grid-column:auto;grid-row:auto;min-height:220px;}
+    .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
+    .research-grid .mini-card-banner{grid-column:1 / span 2;flex-direction:column;align-items:stretch;gap:0;margin-top:20px;}
+    .mini-card-banner .mini-card-title{margin-bottom:10px;max-width:none;}
+    .mini-card-banner-line{text-align:left;margin-bottom:20px;}
+    .mini-card-banner .mini-card-cta{width:100%;margin-top:auto;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .masthead{padding:72px 0 48px;}
+    .masthead-inner{padding:0 24px;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+  }
+  @media (max-width:680px){
+    .products-reveal-inner{white-space:normal;font-size:15px;}
+    .products-stats, .products-explore-link{white-space:normal;text-align:center;}
+    .products-explore-sep{display:none;}
+    .mini-card-cta{white-space:normal;text-align:center;}
+    /* collapsed hamburger nav: brand + toggle stay on one row, the full
+       link list (and its dropdowns) hide behind the toggle so the header
+       doesn't eat the whole first screen on a phone */
+    .nav-inner{flex-wrap:wrap;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-trigger{font-size:13px;width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid var(--card-line);}
+    .nav-item{flex-direction:column;align-items:stretch;}
+    .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    .hero{padding:40px 0 32px;}
+    .hero-inner{padding:0 20px;}
+    .scan-box{flex-direction:column;border-radius:4px;}
+    .scan-box button{width:100%;}
+    .score-panel{margin-top:20px;padding-top:14px;}
+    /* the "·" separators (chip-sep, and the ::before dots on the stat
+       lines) are meant to sit BETWEEN items on one line — once the row
+       wraps to one item per line on a phone, a leftover separator at the
+       start of a line drags its own margin along and knocks that line out
+       of alignment with everything else. Just drop them on mobile so
+       every line sits flush with the same left edge. */
+    .chip-sep{display:none;}
+    .chip-row{flex-direction:column;align-items:flex-start;}
+    .niche-chart-stores::before,.niche-overall::before{display:none;}
+    .niche-chart-head{gap:8px;flex-direction:column;align-items:flex-start;}
+    .niche-overall b{font-size:34px;}
+    .niche-chart-stores b{font-size:28px;}
+    /* 10 categories don't fit a phone screen without colliding — give each
+       bar a fixed column width and let the chart scroll sideways instead
+       of squeezing labels until they overlap each other */
+    .niche-chart{height:150px;padding:16px 16px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .niche-bar{flex:0 0 60px;padding:0 6px;}
+    .niche-chart-watermark{padding-left:19px;}
+    .masthead{padding:56px 0 40px;}
+    .masthead-inner{padding:0 20px;}
+    .masthead-cta-row{flex-direction:column;align-items:stretch;}
+    .cta-square{width:100%;}
+    .niche-bar-value{font-size:11px;}
+    .niche-bar-label{font-size:10px;padding-bottom:10px;}
+    section{padding:52px 20px;}
+    .products-grid{grid-template-columns:1fr;}
+    .research-grid .mini-card-banner{grid-column:1;}
+    .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
+    .sig-name{width:130px;font-size:12px;}
+    .final-cta{padding:44px 24px;border-radius:4px;}
+    .final-cta h2{white-space:normal;}
+    .final-cta .scan-box{max-width:none;}
+    .research-stats{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+    .cookie-banner{right:12px;bottom:12px;left:12px;max-width:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="#" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="https://atomfoundry.dev/research#flagship" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="https://atomfoundry.dev/research#mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="https://atomfoundry.dev/research#category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="https://atomfoundry.dev/research#founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="https://atomfoundry.dev/framework#overview" class="dd-item"><span class="dd-title">Overview</span><span class="dd-desc">Why visibility is no longer enough, and what comes after it.</span></a>
+          <a href="https://atomfoundry.dev/framework#layers" class="dd-item"><span class="dd-title">The 7 Layers</span><span class="dd-desc">Readability, Understanding, Trust, Recommendation, Confidence, Purchase, Revenue.</span></a>
+          <a href="https://atomfoundry.dev/framework#graph" class="dd-item"><span class="dd-title">AI Commerce Graph™</span><span class="dd-desc">The data layer mapping businesses, products, trust and recommendations.</span></a>
+          <a href="https://atomfoundry.dev/framework#future" class="dd-item"><span class="dd-title">The Shift</span><span class="dd-desc">Why the future of commerce is recommendation, not traffic.</span></a>
+          <a href="https://atomfoundry.dev/framework#insights" class="dd-item"><span class="dd-title">Insights</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="https://atomfoundry.dev/redesign#methodology" class="dd-item"><span class="dd-title">AI Commerce Score™ Methodology v3.1</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="https://atomfoundry.dev/redesign#stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="https://atomfoundry.dev/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="https://atomfoundry.dev/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#pricing" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="https://atomfoundry.dev/redesign#score" class="dd-item"><span class="dd-title">AI Commerce Score™</span></a>
+          <a href="https://atomfoundry.dev/redesign#pricing" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="https://atomfoundry.dev/redesign#pricing" class="dd-item"><span class="dd-title">AI Monitoring (Soon)</span></a>
+          <a href="https://atomfoundry.dev/redesign#pricing" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="https://atomfoundry.dev/founders-reality-check#every-job" class="dd-item"><span class="dd-title">Every Job. Every Day.</span></a>
+          <a href="https://atomfoundry.dev/founders-reality-check#boring-work" class="dd-item"><span class="dd-title">Nobody Sees the Boring Work.</span></a>
+          <a href="https://atomfoundry.dev/founders-reality-check#loneliest-meeting" class="dd-item"><span class="dd-title">The Loneliest Meeting You'll Ever Have.</span></a>
+          <a href="https://atomfoundry.dev/founders-reality-check#consistency" class="dd-item"><span class="dd-title">Nobody Claps for Consistency.</span></a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="https://atomfoundry.dev/redesign#" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="https://atomfoundry.dev/about" class="dd-item"><span class="dd-title">Atom Foundry</span><span class="dd-desc">What we are, and why we exist.</span></a>
+          <a href="https://atomfoundry.dev/about#story" class="dd-item"><span class="dd-title">My Story</span><span class="dd-desc">Who is building Atom Foundry, and why.</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- MASTHEAD -->
+<section class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-h1">Understand why AI recommends <em>one brand over another.</em></h1>
+    <p class="masthead-lede">AI shopping agents already influence millions of buying decisions. We're measuring how they choose.</p>
+    <p class="masthead-sub">We measure how AI discovers, evaluates and recommends e-commerce stores. Then we turn those findings into practical tools.</p>
+    <div class="masthead-cta-row">
+      <a href="#score" class="cta-square cta-square-primary">Get Your AI Commerce Score™</a>
+      <a href="#research" class="cta-square cta-square-secondary">Explore Research</a>
+    </div>
+  </div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-inner">
+  <div class="niche-chart-section">
+    <div class="niche-chart-head">
+      <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
+      <div class="niche-chart-stores"><b id="nicheStoresNum" data-target="66087">0</b> Stores analyzed</div>
+      <div class="niche-overall"><b id="nicheOverallNum" data-target="57">0</b><span>/100 avg across 66,087 scanned stores</span></div>
+    </div>
+    <div class="niche-chart" id="nicheChart">
+      <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">Fashion</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Beauty<br>Risk: 17% · Best: 93/100</div><div class="niche-bar-label">Beauty</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Health and Wellness<br>Risk: 19% · Best: 94/100</div><div class="niche-bar-label">Health</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Food and Drink<br>Risk: 20% · Best: 87/100</div><div class="niche-bar-label">Food</div></div>
+      <div class="niche-bar" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Home and Living<br>Risk: 15% · Best: 92/100</div><div class="niche-bar-label">Home</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Sports and Outdoor<br>Risk: 17% · Best: 89/100</div><div class="niche-bar-label">Sports</div></div>
+      <div class="niche-bar" style="--h:45%;"><div class="niche-bar-value">54</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Pets<br>Risk: 24% · Best: 84/100</div><div class="niche-bar-label">Pets</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Tech and Gadgets<br>Risk: 18% · Best: 93/100</div><div class="niche-bar-label">Tech</div></div>
+      <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Kids and Baby<br>Risk: 19% · Best: 83/100</div><div class="niche-bar-label">Kids</div></div>
+      <div class="niche-bar" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Jewelry<br>Risk: 13% · Best: 85/100</div><div class="niche-bar-label">Jewelry</div></div>
+    </div>
+    <div class="niche-chart-watermark">AI Commerce Bar™</div>
+  </div>
+
+  <div class="score-panel">
+    <div class="chip-row">
+      <span class="chip"><b>8</b>Scoring factors</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--red);"></i>0–49 AI Invisible Risk</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--orange);"></i>50–69 Low Confidence</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--amber);"></i>70–84 Moderately Recommendable</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--green);"></i>85–100 Highly Recommendable</span>
+      <span class="chip-sep">·</span>
+      <span class="chip">Live data · updated Jul 22, 2026</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FROM RESEARCH TO PRODUCTS -->
+<section id="products">
+  <div class="products-head">
+    <h2 class="products-h2">From Research <em>to Products</em></h2>
+    <p class="section-headline">Everything we build starts with research. Everything we learn becomes a product.</p>
+    <p class="products-sub">Every experiment we run becomes something useful. Some findings become free tools. Others become detailed reports or long-term monitoring.</p>
+  </div>
+  <div class="products-grid" id="pricing">
+    <div class="mini-card" id="product-score">
+      <div class="mini-card-title">AI Commerce Score™</div>
+      <div class="mini-card-tag">Measure your AI readiness.</div>
+      <div class="mini-card-price free">Free</div>
+      <a href="#score" class="mini-card-cta">Get Score →</a>
+    </div>
+
+    <div class="mini-card" id="product-report">
+      <div class="mini-card-title">AI Readiness Report</div>
+      <div class="mini-card-tag">Complete store analysis.</div>
+      <div class="mini-card-price paid">$399</div>
+      <a href="#pricing" class="mini-card-cta">Learn more →</a>
+    </div>
+
+    <div class="mini-card" id="product-monitoring">
+      <div class="mini-card-title">AI Monitoring</div>
+      <div class="mini-card-tag">Track changes over time.</div>
+      <div class="mini-card-price soon">Coming soon</div>
+    </div>
+
+    <div class="mini-card" id="product-recommendation">
+      <div class="mini-card-title">Recommendation Intelligence</div>
+      <div class="mini-card-tag">Understand AI decisions.</div>
+      <div class="mini-card-price paid">$1299</div>
+      <a href="#pricing" class="mini-card-cta">Learn more →</a>
+    </div>
+  </div>
+  <p class="products-reveal"><span class="products-reveal-inner">Every product is built and validated using our research across <b class="products-reveal-num" data-target="66087">0</b> e-commerce stores.</span></p>
+</section>
+
+
+<!-- RESEARCH FINDINGS -->
+<section class="alt" id="research-findings">
+  <div class="products-head">
+    <h2 class="products-h2">Research that challenged <em>AI commerce assumptions</em></h2>
+    <p class="products-def">AI Commerce Intelligence™ is the study of how AI shopping systems discover, evaluate, compare, and recommend brands.</p>
+    <p class="section-headline">Built from <b class="research-findings-num" data-target="66087">0</b> analyzed stores and tens of thousands of AI recommendations.</p>
+    <p class="products-sub">We don't publish opinions. We publish experiments. The strongest findings become tools, reports and products.</p>
+  </div>
+  <div class="products-grid research-grid">
+    <div class="mini-card">
+      <div class="mini-card-eyebrow">The State of AI Recommendations Across Commerce 2026</div>
+      <div class="mini-card-title">Store quality doesn't predict recommendations</div>
+      <div class="mini-card-tag">Measured using the AI Commerce Score™.</div>
+      <p class="mini-card-body">66,087 stores. Five industries. Almost no relationship.</p>
+      <div class="mini-card-stats">
+        <div><b>20,000</b><span>Recommendations</span></div>
+        <div><b>1,490</b><span>Distinct brands</span></div>
+        <div><b>5</b><span>Categories</span></div>
+        <div><b>100</b><span>Shopping intents</span></div>
+      </div>
+      <a href="https://atomfoundry.dev/research#flagship" class="mini-card-cta">Read report →</a>
+    </div>
+
+    <div class="mini-card">
+      <div class="mini-card-title">Web Search changes 77% of recommendations</div>
+      <p class="mini-card-body">Same model. Same prompts. Only browsing changed.</p>
+      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">Explore findings →</a>
+    </div>
+
+    <div class="mini-card">
+      <div class="mini-card-title">AI knows your website. Still won't recommend you.</div>
+      <p class="mini-card-body">Recognition. Understanding. Recommendation. Three different things.</p>
+      <a href="https://atomfoundry.dev/research#mechanism-studies" class="mini-card-cta">See methodology →</a>
+    </div>
+
+    <div class="mini-card mini-card-banner">
+      <div class="mini-card-title">Getting considered isn't getting recommended</div>
+      <p class="mini-card-banner-line">Recommendation Candidate ≠ Recommendation Winner</p>
+      <a href="https://atomfoundry.dev/research#category-reports" class="mini-card-cta">View dataset →</a>
+    </div>
+  </div>
+  <div class="products-explore">
+    <span class="products-stats">15 public studies <span class="products-stats-sep">·</span> 66,087 stores <span class="products-stats-sep">·</span> 40,000+ recommendations <span class="products-stats-sep">·</span> 1,490 brands</span>
+    <span class="products-stats-sep products-explore-sep">·</span>
+    <a href="https://atomfoundry.dev/research" class="products-explore-link">Browse all public research →</a>
+  </div>
+</section>
+
+<!-- BUILT IN PUBLIC -->
+<section class="alt" id="lab">
+  <div class="products-head">
+    <h2 class="products-h2">Built <em>in public.</em></h2>
+    <p class="section-headline">Every experiment, every finding and every product starts in our own laboratory before it reaches customers.</p>
+  </div>
+  <div class="products-grid">
+    <div class="mini-card" id="founder-lab">
+      <div class="mini-card-title">Founder Lab</div>
+      <div class="mini-card-tag">Our own Shopify store.</div>
+      <a href="https://atomfoundry.dev/founder-lab" class="mini-card-cta">→ Follow the experiments</a>
+    </div>
+
+    <div class="mini-card" id="research">
+      <div class="mini-card-title">Research</div>
+      <div class="mini-card-tag">15 public studies.</div>
+      <a href="https://atomfoundry.dev/research" class="mini-card-cta">→ Browse research</a>
+    </div>
+
+    <div class="mini-card" id="methodology">
+      <div class="mini-card-title">Methodology</div>
+      <div class="mini-card-tag">How every experiment is measured.</div>
+      <a href="https://atomfoundry.dev/methodology" class="mini-card-cta">→ See methodology</a>
+    </div>
+
+    <div class="mini-card" id="vocabulary">
+      <div class="mini-card-title">AI Commerce Vocabulary</div>
+      <div class="mini-card-tag">The language behind Recommendation Intelligence.</div>
+      <a href="https://atomfoundry.dev/vocabulary" class="mini-card-cta">→ Browse glossary</a>
+    </div>
+  </div>
+
+  <hr class="lab-divider">
+
+  <p class="lab-closing"><span class="lab-closing-inner">We're still learning. Every new experiment is published. Every validated finding becomes a product. Every product helps merchants understand AI recommendations.</span></p>
+
+  <div class="lab-cta-row">
+    <a href="https://atomfoundry.dev/research" class="cta-square cta-square-secondary">Explore Research →</a>
+    <a href="https://atomfoundry.dev/founder-lab" class="cta-square cta-square-secondary">Founder Lab →</a>
+    <a href="#score" class="cta-square cta-square-primary">Get Your Score →</a>
+  </div>
+</section>
+
+
+<!-- FINAL CTA -->
+<section id="score">
+  <div class="final-cta">
+    <h2>AI Commerce Score™</h2>
+    <div class="final-cta-tag">Measure your AI readiness.</div>
+    <p>Get your free AI Commerce Score™ in 10 seconds. See exactly where you stand on clarity, trust, structured data, and recommendation readiness.</p>
+    <div class="scan-box">
+      <input type="text" placeholder="Paste your store URL">
+      <button>Get My Free Score</button>
+    </div>
+    <div class="scan-note">Free <span>·</span> No signup <span>·</span> No credit card <span>·</span> Results in 10 seconds</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="#research">Flagship Report</a>
+        <a href="#research">Mechanism Studies</a>
+        <a href="#research">Category Reports</a>
+        <a href="#founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="#framework">AI Commerce Framework</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#vocabulary">Vocabulary</a>
+        <a href="#score">AI Commerce Score™</a>
+        <a href="#product-recommendation">Recommendation Intelligence</a>
+        <a href="#stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="#pricing">AI Commerce Score™</a>
+        <a href="#pricing">AI Readiness Report</a>
+        <a href="#pricing">AI Monitoring</a>
+        <a href="#pricing">Recommendation Intelligence</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="https://atomfoundry.dev/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="#">Research Library</a>
+        <a href="#founder-lab">Founder Lab</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#vocabulary">Vocabulary</a>
+        <a href="#">Learn</a>
+        <a href="#">AI Commerce Intelligence</a>
+        <a href="#">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,087</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,087 DTC stores analyzed · avg score 57/100 · © 2026 Atom Foundry</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Shared count-up helper (eased, comma-formatted) used by several sections.
+  function countUp(el, target, duration){
+    const start = performance.now();
+    function step(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Navbar always stays visible (sticky) but goes compact once the page
+  // is scrolled down: the wordmark collapses from "ATOM FOUNDRY" to "AF"
+  // and the padding tightens. Scrolling back near the top restores it.
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-compact');
+      } else {
+        nav.classList.remove('nav-compact');
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    });
+    onScroll();
+  })();
+
+  // Mobile hamburger nav: the toggle shows/hides the full link list (which
+  // is display:none by default below 680px). Every top-level item has a
+  // dropdown, so on mobile the ENTIRE row (not just the small chevron —
+  // that hit target was too easy to miss) toggles that item's submenu
+  // open/closed (accordion-style) instead of following the link straight
+  // through; the real destinations are the links inside the dropdown.
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return; // desktop still uses hover
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+
+    // Close the mobile menu if the viewport grows past the breakpoint
+    // (e.g. rotating a tablet) so it doesn't get stuck open on desktop.
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 680) closeMenu();
+    });
+
+    // Scrolling the page away from the menu should close it on its own —
+    // nobody wants to hunt for the X button first.
+    window.addEventListener('scroll', () => {
+      if (nav.classList.contains('nav-mobile-open')) closeMenu();
+    }, { passive: true });
+  })();
+
+  // Animate the niche chart bars in with a stagger, either shortly after
+  // load (it sits near the top of the page) or when scrolled into view.
+  // The overall average number counts up in sync with the bars.
+  (function(){
+    const chart = document.getElementById('nicheChart');
+    if (!chart) return;
+    const bars = Array.from(chart.querySelectorAll('.niche-bar'));
+    const overallNum = document.getElementById('nicheOverallNum');
+    const storesNum = document.getElementById('nicheStoresNum');
+    let played = false;
+
+    // Color each bar by its own score, matching the 4-tier legend below
+    // the chart (0-49 red, 50-69 orange, 70-84 amber, 85-100 green).
+    function scoreColor(score){
+      if (score < 50) return 'var(--red)';
+      if (score < 70) return 'var(--orange)';
+      if (score < 85) return 'var(--amber)';
+      return 'var(--green)';
+    }
+    bars.forEach(bar => {
+      const valueEl = bar.querySelector('.niche-bar-value');
+      const fill = bar.querySelector('.niche-bar-fill');
+      if (!valueEl || !fill) return;
+      const score = parseInt(valueEl.textContent, 10);
+      if (!isNaN(score)) fill.style.setProperty('--bar-color', scoreColor(score));
+    });
+
+    // On hover, replay the rise-from-zero animation instead of just
+    // sitting there — snap the fill to 0%, force a reflow, then let the
+    // existing CSS transition carry it back up to its target height.
+    bars.forEach(bar => {
+      const fill = bar.querySelector('.niche-bar-fill');
+      if (!fill) return;
+      bar.addEventListener('mouseenter', () => {
+        const target = bar.style.getPropertyValue('--h');
+        fill.style.transition = 'none';
+        fill.style.height = '0%';
+        requestAnimationFrame(() => {
+          fill.style.transition = 'height 1.9s cubic-bezier(.16,.8,.4,1)';
+          requestAnimationFrame(() => { fill.style.height = target; });
+        });
+      });
+    });
+
+    function playChart(){
+      if (played) return;
+      played = true;
+      bars.forEach((bar, i) => {
+        setTimeout(() => bar.classList.add('is-visible'), i * 90);
+      });
+      if (overallNum) {
+        const target = Number(overallNum.dataset.target) || 0;
+        countUp(overallNum, target, 1200);
+      }
+      if (storesNum) {
+        const target = Number(storesNum.dataset.target) || 0;
+        countUp(storesNum, target, 1400);
+      }
+    }
+    // Only play once the chart is actually scrolled into view, so the
+    // visitor sees the bars and numbers count up rather than finding
+    // them already finished off-screen.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) playChart(); });
+      }, { threshold: 0.3 });
+      io.observe(chart);
+    } else {
+      window.addEventListener('load', () => setTimeout(playChart, 400));
+    }
+  })();
+
+  // Count a number up once its element scrolls into view. Reused for every
+  // standalone stat on the page (products sentence, research headline, etc.)
+  function observeCountUp(el, duration){
+    if (!el) return;
+    let played = false;
+    function play(){
+      if (played) return;
+      played = true;
+      const target = Number(el.dataset.target) || 0;
+      countUp(el, target, duration || 1400);
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) play(); });
+      }, { threshold: 0.3 });
+      io.observe(el);
+    } else {
+      window.addEventListener('load', () => setTimeout(play, 400));
+    }
+  }
+  observeCountUp(document.querySelector('.products-reveal-num'), 1400);
+  observeCountUp(document.querySelector('.research-findings-num'), 1400);
+
+  // Cookie consent — small, bottom-right, non-blocking. Shows once per
+  // browser (remembered in localStorage) after a short delay so it doesn't
+  // slam into view the instant the page loads. Accept/Decline don't wire
+  // up to real tracking yet — that comes later — this just records the
+  // choice and dismisses the banner.
+  (function(){
+    const banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+    const KEY = 'af_cookie_consent';
+    let stored;
+    try { stored = localStorage.getItem(KEY); } catch (e) { stored = null; }
+    if (stored) return;
+
+    setTimeout(() => banner.classList.add('is-visible'), 900);
+
+    function dismiss(choice){
+      banner.classList.remove('is-visible');
+      try { localStorage.setItem(KEY, choice); } catch (e) {}
+    }
+    document.getElementById('cookieAccept').addEventListener('click', () => dismiss('accepted'));
+    document.getElementById('cookieDecline').addEventListener('click', () => dismiss('declined'));
+  })();
+</script>
+
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-title">Cookies</div>
+  <p class="cookie-banner-text">We use cookies to run this site and understand how visitors — human and AI — find and evaluate it. See our <a href="#" style="color:var(--black);text-decoration:underline;">cookie policy</a>.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-banner-accept" id="cookieAccept">Accept</button>
+    <button class="cookie-banner-decline" id="cookieDecline">Decline</button>
+  </div>
+</div>
+
+</body>
+</html>
