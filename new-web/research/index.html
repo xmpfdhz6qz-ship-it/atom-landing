@@ -404,14 +404,18 @@
      back — both use black text, not white, per the latest feedback. ---------- */
   .findings-grid{
     display:grid;grid-template-columns:repeat(4,1fr);
-    grid-auto-rows:150px;grid-auto-flow:dense;gap:16px;margin-top:28px;
+    grid-auto-rows:172px;grid-auto-flow:dense;gap:16px;margin-top:28px;
   }
   @media (min-width:901px){
     .findings-grid .finding-card:nth-child(1){grid-column:span 2;grid-row:span 2;}
+    .findings-grid .finding-card:nth-child(4){grid-row:span 2;}
     .findings-grid .finding-card:nth-child(5){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(8){grid-column:span 2;}
+    .findings-grid .finding-card:nth-child(7){grid-column:span 2;}
+    .findings-grid .finding-card:nth-child(8){grid-column:span 2;grid-row:span 2;}
+    .findings-grid .finding-card:nth-child(10){grid-row:span 2;}
     .findings-grid .finding-card:nth-child(11){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(15){grid-column:span 2;}
+    .findings-grid .finding-card:nth-child(13){grid-column:span 2;}
+    .findings-grid .finding-card:nth-child(15){grid-column:span 2;grid-row:span 2;}
   }
   .finding-card{
     --flip-dir:180deg;
@@ -432,7 +436,7 @@
   }
   .finding-face{
     position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-    border-radius:var(--radius);padding:20px 22px;
+    border-radius:var(--radius);padding:20px 22px;overflow:hidden;
     display:flex;flex-direction:column;justify-content:center;
   }
   .finding-face-front{background:var(--card);}
@@ -442,16 +446,18 @@
     justify-content:space-between;
   }
   .finding-tier1 .finding-face-back{background:rgba(254,106,3,0.55);}
-  .finding-tier{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:10px;}
   .finding-title{font-family:var(--serif);font-weight:800;font-size:16px;line-height:1.32;letter-spacing:-0.01em;color:inherit;}
   .finding-tier1 .finding-face-front .finding-title{font-size:23px;font-weight:900;line-height:1.22;}
-  .finding-face-back .finding-title{font-size:17px;margin-bottom:8px;}
-  .finding-body{font-size:14px;color:rgba(22,21,18,0.78);line-height:1.55;}
+  .finding-face-back .finding-title{font-size:18px;margin-bottom:9px;line-height:1.3;}
+  .finding-body{font-size:15px;color:rgba(22,21,18,0.8);line-height:1.5;}
+  /* "View Study" + arrow sit together as one compact unit in the bottom
+     right corner, not stretched across the card */
   .finding-view{
-    display:flex;align-items:center;justify-content:space-between;
-    font-size:13.5px;font-weight:700;color:var(--black);margin-top:12px;
+    display:flex;align-items:center;gap:6px;
+    align-self:flex-end;margin-top:12px;flex-shrink:0;
+    font-size:13.5px;font-weight:700;color:var(--black);white-space:nowrap;
   }
-  .finding-view .nav-chevron{transform:rotate(-90deg);color:var(--black);}
+  .finding-view .nav-chevron{transform:rotate(-90deg);color:var(--black);flex-shrink:0;}
 
   /* ---------- PRODUCTS GRID / MINI-CARD (reused across Topics, Methodology, Explore) ---------- */
   .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
@@ -513,7 +519,7 @@
     .chart-flex{grid-template-columns:1fr;}
     .collection-tab{font-size:16px;padding:20px 10px;}
     .collection-grid{grid-template-columns:1fr 1fr;}
-    .findings-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px;}
+    .findings-grid{grid-template-columns:1fr 1fr;grid-auto-rows:190px;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .research-hero{padding:72px 0 40px;}
     nav.links{gap:14px;}
@@ -569,7 +575,7 @@
     .collection-grid{grid-template-columns:1fr;padding:18px 2px 4px;}
     /* touch has no hover, so cards flip on tap instead (handled in JS);
        give the back face more room since it's a single column now */
-    .findings-grid{grid-template-columns:1fr;grid-auto-rows:190px;}
+    .findings-grid{grid-template-columns:1fr;grid-auto-rows:220px;}
     .finding-face{padding:20px;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
@@ -901,7 +907,7 @@
     <div class="findings-grid">
       <a class="finding-card finding-tier1" href="#research" data-key="1">
         <div class="finding-card-inner">
-          <div class="finding-face finding-face-front"><div class="finding-tier">Tier 1</div><div class="finding-title">The model remembers itself.</div></div>
+          <div class="finding-face finding-face-front"><div class="finding-title">The model remembers itself.</div></div>
           <div class="finding-face finding-face-back">
             <div>
               <div class="finding-title">The model remembers itself.</div>
@@ -985,7 +991,7 @@
       </a>
       <a class="finding-card finding-tier1" href="#research" data-key="8">
         <div class="finding-card-inner">
-          <div class="finding-face finding-face-front"><div class="finding-tier">Tier 1</div><div class="finding-title">Big brands aren't guaranteed winners.</div></div>
+          <div class="finding-face finding-face-front"><div class="finding-title">Big brands aren't guaranteed winners.</div></div>
           <div class="finding-face finding-face-back">
             <div>
               <div class="finding-title">Big brands aren't guaranteed winners.</div>
@@ -1069,7 +1075,7 @@
       </a>
       <a class="finding-card finding-tier1" href="#research" data-key="15">
         <div class="finding-card-inner">
-          <div class="finding-face finding-face-front"><div class="finding-tier">Tier 1</div><div class="finding-title">Every recommendation has a pattern.</div></div>
+          <div class="finding-face finding-face-front"><div class="finding-title">Every recommendation has a pattern.</div></div>
           <div class="finding-face finding-face-back">
             <div>
               <div class="finding-title">Every recommendation has a pattern.</div>
