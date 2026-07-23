@@ -562,13 +562,13 @@
   .se-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
   .se-ring{fill:none;stroke:var(--card-line);stroke-width:1;}
   .se-core-circle{fill:var(--card);stroke:var(--card-line);stroke-width:1;}
-  .se-spoke{fill:none;stroke:var(--card-line);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:110;stroke-dashoffset:110;transition:stroke-dashoffset .5s cubic-bezier(.16,.8,.4,1) calc(var(--i,0) * 70ms), stroke .3s ease, stroke-width .3s ease;}
+  .se-spoke{fill:none;stroke:var(--card-line);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:92;stroke-dashoffset:92;transition:stroke-dashoffset .5s cubic-bezier(.16,.8,.4,1) calc(var(--i,0) * 70ms), stroke .3s ease, stroke-width .3s ease;}
   .score-engine-visual.in-view .se-spoke{stroke-dashoffset:0;}
   .se-spoke.is-active{stroke:var(--orange);stroke-width:2.5;}
   .se-dot{fill:var(--black);transform:scale(0);transform-box:fill-box;transform-origin:50% 50%;transition:transform .35s cubic-bezier(.16,.8,.4,1) calc(900ms + var(--i,0) * 45ms), fill .3s ease;}
   .score-engine-visual.in-view .se-dot{transform:scale(1);}
   .se-dot.is-active{fill:var(--orange);transform:scale(1.35);}
-  .se-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:165px;text-align:center;pointer-events:none;}
+  .se-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:190px;text-align:center;pointer-events:none;}
   .se-core-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);line-height:1.4;}
   .se-core-num-wrap{position:relative;height:54px;margin:4px 0 2px;}
   .se-core-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:46px;font-weight:800;letter-spacing:-0.02em;color:var(--black);opacity:0;}
@@ -1325,15 +1325,15 @@
       <div class="score-engine-visual" id="seVisual">
         <svg class="se-svg" viewBox="-70 -70 660 660" aria-hidden="true">
           <circle class="se-ring" cx="260" cy="260" r="188"/>
-          <line class="se-spoke" data-key="visuals" style="--i:0" x1="260" y1="182" x2="260" y2="72"/>
-          <line class="se-spoke" data-key="structured" style="--i:1" x1="315.15" y1="204.85" x2="392.94" y2="127.06"/>
-          <line class="se-spoke" data-key="technical" style="--i:2" x1="338" y1="260" x2="448" y2="260"/>
-          <line class="se-spoke" data-key="trust" style="--i:3" x1="315.15" y1="315.15" x2="392.94" y2="392.94"/>
-          <line class="se-spoke" data-key="commerce" style="--i:4" x1="260" y1="338" x2="260" y2="448"/>
-          <line class="se-spoke" data-key="intent" style="--i:5" x1="204.85" y1="315.15" x2="127.06" y2="392.94"/>
-          <line class="se-spoke" data-key="confidence" style="--i:6" x1="182" y1="260" x2="72" y2="260"/>
-          <line class="se-spoke" data-key="authority" style="--i:7" x1="204.85" y1="204.85" x2="127.06" y2="127.06"/>
-          <circle class="se-core-circle" cx="260" cy="260" r="72"/>
+          <line class="se-spoke" data-key="visuals" style="--i:0" x1="260" y1="164" x2="260" y2="72"/>
+          <line class="se-spoke" data-key="structured" style="--i:1" x1="327.88" y1="192.12" x2="392.94" y2="127.06"/>
+          <line class="se-spoke" data-key="technical" style="--i:2" x1="356" y1="260" x2="448" y2="260"/>
+          <line class="se-spoke" data-key="trust" style="--i:3" x1="327.88" y1="327.88" x2="392.94" y2="392.94"/>
+          <line class="se-spoke" data-key="commerce" style="--i:4" x1="260" y1="356" x2="260" y2="448"/>
+          <line class="se-spoke" data-key="intent" style="--i:5" x1="192.12" y1="327.88" x2="127.06" y2="392.94"/>
+          <line class="se-spoke" data-key="confidence" style="--i:6" x1="164" y1="260" x2="72" y2="260"/>
+          <line class="se-spoke" data-key="authority" style="--i:7" x1="192.12" y1="192.12" x2="127.06" y2="127.06"/>
+          <circle class="se-core-circle" cx="260" cy="260" r="90"/>
           <circle class="se-dot" data-key="visuals" style="--i:0" cx="260" cy="72" r="5"/>
           <circle class="se-dot" data-key="structured" style="--i:1" cx="392.94" cy="127.06" r="5"/>
           <circle class="se-dot" data-key="technical" style="--i:2" cx="448" cy="260" r="5"/>
@@ -1819,7 +1819,7 @@
         // force a reflow, then animate it back out at the same slow
         // "premium" speed used for the other hover-replays on this site
         spoke.style.transition = 'none';
-        spoke.style.strokeDashoffset = '110';
+        spoke.style.strokeDashoffset = '92';
         spoke.getBoundingClientRect();
         spoke.style.transition = 'stroke-dashoffset 1.9s cubic-bezier(.16,.8,.4,1), stroke .3s ease, stroke-width .3s ease';
         spoke.style.strokeDashoffset = '0';
