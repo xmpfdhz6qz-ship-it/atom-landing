@@ -397,7 +397,11 @@
      grid isn't monotonous; cards reveal individually as they scroll into
      view (not all at once); hovering flips a card at the same speed as
      the hover-replay on the charts (1.9s), revealing a short body line,
-     a right-pointing arrow (same chevron as the navbar) and "View Study". ---------- */
+     a right-pointing arrow (same chevron as the navbar) and "View Study".
+     Cards alternate flip direction (left/right) via a --flip-dir custom
+     property, and the 3 "Tier 1" cards get a stronger front-face title,
+     a medium-orange back face, while every other card gets a pale-orange
+     back — both use black text, not white, per the latest feedback. ---------- */
   .findings-grid{
     display:grid;grid-template-columns:repeat(4,1fr);
     grid-auto-rows:150px;grid-auto-flow:dense;gap:16px;margin-top:28px;
@@ -408,24 +412,23 @@
     .findings-grid .finding-card:nth-child(8){grid-column:span 2;}
     .findings-grid .finding-card:nth-child(11){grid-row:span 2;}
     .findings-grid .finding-card:nth-child(15){grid-column:span 2;}
-    .findings-grid .finding-card:nth-child(1) .finding-title,
-    .findings-grid .finding-card:nth-child(8) .finding-title,
-    .findings-grid .finding-card:nth-child(15) .finding-title{font-size:19px;}
   }
   .finding-card{
+    --flip-dir:180deg;
     display:block;text-decoration:none;perspective:1400px;
     opacity:0;transform:translateY(18px);
     transition:opacity .6s ease, transform .6s ease;
   }
+  .finding-card:nth-child(even){--flip-dir:-180deg;}
   .finding-card.is-visible{opacity:1;transform:translateY(0);}
   .finding-card-inner{
     position:relative;width:100%;height:100%;
     transform-style:preserve-3d;
     transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
   }
-  .finding-card.is-flipped .finding-card-inner{transform:rotateY(180deg);}
+  .finding-card.is-flipped .finding-card-inner{transform:rotateY(var(--flip-dir));}
   @media (hover:hover) and (pointer:fine){
-    .finding-card:hover .finding-card-inner{transform:rotateY(180deg);}
+    .finding-card:hover .finding-card-inner{transform:rotateY(var(--flip-dir));}
   }
   .finding-face{
     position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
@@ -434,18 +437,21 @@
   }
   .finding-face-front{background:var(--card);}
   .finding-face-back{
-    background:var(--black);color:var(--white);
+    background:rgba(254,106,3,0.14);color:var(--black);
     transform:rotateY(180deg);
     justify-content:space-between;
   }
+  .finding-tier1 .finding-face-back{background:rgba(254,106,3,0.55);}
+  .finding-tier{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:10px;}
   .finding-title{font-family:var(--serif);font-weight:800;font-size:16px;line-height:1.32;letter-spacing:-0.01em;color:inherit;}
-  .finding-face-back .finding-title{font-size:15px;margin-bottom:8px;}
-  .finding-body{font-size:12.5px;color:rgba(253,252,250,0.72);line-height:1.55;}
+  .finding-tier1 .finding-face-front .finding-title{font-size:23px;font-weight:900;line-height:1.22;}
+  .finding-face-back .finding-title{font-size:17px;margin-bottom:8px;}
+  .finding-body{font-size:14px;color:rgba(22,21,18,0.78);line-height:1.55;}
   .finding-view{
     display:flex;align-items:center;justify-content:space-between;
-    font-size:12.5px;font-weight:700;color:var(--white);margin-top:12px;
+    font-size:13.5px;font-weight:700;color:var(--black);margin-top:12px;
   }
-  .finding-view .nav-chevron{transform:rotate(-90deg);color:var(--white);}
+  .finding-view .nav-chevron{transform:rotate(-90deg);color:var(--black);}
 
   /* ---------- PRODUCTS GRID / MINI-CARD (reused across Topics, Methodology, Explore) ---------- */
   .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
@@ -893,9 +899,9 @@
     <div class="kicker">Key Findings</div>
     <h2 class="section-title">What the data actually shows</h2>
     <div class="findings-grid">
-      <a class="finding-card" href="#research" data-key="1">
+      <a class="finding-card finding-tier1" href="#research" data-key="1">
         <div class="finding-card-inner">
-          <div class="finding-face finding-face-front"><div class="finding-title">The model remembers itself.</div></div>
+          <div class="finding-face finding-face-front"><div class="finding-tier">Tier 1</div><div class="finding-title">The model remembers itself.</div></div>
           <div class="finding-face finding-face-back">
             <div>
               <div class="finding-title">The model remembers itself.</div>
@@ -977,9 +983,9 @@
           </div>
         </div>
       </a>
-      <a class="finding-card" href="#research" data-key="8">
+      <a class="finding-card finding-tier1" href="#research" data-key="8">
         <div class="finding-card-inner">
-          <div class="finding-face finding-face-front"><div class="finding-title">Big brands aren't guaranteed winners.</div></div>
+          <div class="finding-face finding-face-front"><div class="finding-tier">Tier 1</div><div class="finding-title">Big brands aren't guaranteed winners.</div></div>
           <div class="finding-face finding-face-back">
             <div>
               <div class="finding-title">Big brands aren't guaranteed winners.</div>
@@ -1061,9 +1067,9 @@
           </div>
         </div>
       </a>
-      <a class="finding-card" href="#research" data-key="15">
+      <a class="finding-card finding-tier1" href="#research" data-key="15">
         <div class="finding-card-inner">
-          <div class="finding-face finding-face-front"><div class="finding-title">Every recommendation has a pattern.</div></div>
+          <div class="finding-face finding-face-front"><div class="finding-tier">Tier 1</div><div class="finding-title">Every recommendation has a pattern.</div></div>
           <div class="finding-face finding-face-back">
             <div>
               <div class="finding-title">Every recommendation has a pattern.</div>
