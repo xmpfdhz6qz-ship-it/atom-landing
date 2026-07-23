@@ -491,6 +491,68 @@
   .mini-card-link{margin-top:auto;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;}
   .mini-card-link:hover{color:var(--orange);}
 
+  /* ---------- RESEARCH TOPICS — resting state is just 8 small solid
+     orange squares (same square language as the finding-card swatches).
+     The card itself is always there, full size, but clip-path keeps it
+     clipped down to exactly the swatch's footprint, so nothing but the
+     square is visible. Hovering animates the clip rectangle open,
+     literally unfurling the card out of the square (with a 7px lift and
+     the shadow growing as more of the box's edge comes into view);
+     moving the mouse away reverses the same transition and the card
+     retracts back into the square. Touch devices get the same reveal
+     via tap (.is-open), gated the usual way to avoid iOS ghost-hover.
+     Swatches sit at 4 different spots along the TOP edge only (varied
+     per tile via nth-child, cycling every 4 cards) so the grid feels
+     irregular/organic — but they never drop into the bottom of the
+     card where the title/body text lives, so the enlarged swatch never
+     covers the text on hover. The resting clip-path for each variant is
+     hand-matched to that variant's swatch position/size. ---------- */
+  .topics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px;}
+  .topic-tile{
+    position:relative;border-radius:var(--radius);
+    padding:22px;min-height:172px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    background:var(--card);
+    box-shadow:0 22px 40px -20px rgba(22,21,18,0.3);
+    outline:none;
+    clip-path:inset(20px calc(100% - 36px) calc(100% - 34px) 22px round 3px);
+    transition:clip-path .45s cubic-bezier(.16,.8,.4,1), transform .45s cubic-bezier(.16,.8,.4,1);
+  }
+  .topic-swatch{
+    position:absolute;top:20px;left:22px;right:auto;z-index:2;
+    width:14px;height:14px;border-radius:3px;background:var(--orange);
+    transition:transform .45s cubic-bezier(.16,.8,.4,1);
+    pointer-events:none;
+  }
+  .topic-tile:nth-child(4n+2){clip-path:inset(24px calc(100% - 70px) calc(100% - 38px) 56px round 3px);}
+  .topic-tile:nth-child(4n+2) .topic-swatch{top:24px;left:56px;}
+  .topic-tile:nth-child(4n+3){clip-path:inset(18px 24px calc(100% - 32px) calc(100% - 38px) round 3px);}
+  .topic-tile:nth-child(4n+3) .topic-swatch{top:18px;left:auto;right:24px;}
+  .topic-tile:nth-child(4n+4){clip-path:inset(26px calc(100% - 52px) calc(100% - 40px) 38px round 3px);}
+  .topic-tile:nth-child(4n+4) .topic-swatch{top:26px;left:38px;}
+  .topic-title{
+    position:relative;z-index:1;
+    font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:-0.01em;
+    color:var(--black);margin-bottom:8px;
+  }
+  .topic-body{
+    position:relative;z-index:1;
+    font-size:13.5px;color:var(--gray-700);line-height:1.6;margin-bottom:12px;
+  }
+  .topic-status{
+    position:relative;z-index:1;
+    display:inline-block;align-self:flex-start;
+    font-size:11px;font-weight:700;color:var(--orange);
+    background:rgba(254,106,3,0.08);border-radius:999px;padding:4px 11px;
+    text-transform:uppercase;letter-spacing:0.05em;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .topic-tile:hover{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
+    .topic-tile:hover .topic-swatch{transform:scale(1.25);}
+  }
+  .topic-tile.is-open{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
+  .topic-tile.is-open .topic-swatch{transform:scale(1.25);}
+
   /* ---------- FINAL CTA ---------- */
   .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);padding:48px 56px;}
   .final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
@@ -539,6 +601,7 @@
     .collection-tab{font-size:16px;padding:20px 10px;}
     .collection-grid{grid-template-columns:1fr 1fr;}
     .findings-grid{grid-template-columns:1fr 1fr;grid-auto-rows:190px;}
+    .topics-grid{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .research-hero{padding:72px 0 40px;}
     nav.links{gap:14px;}
@@ -596,6 +659,7 @@
        give the back face more room since it's a single column now */
     .findings-grid{grid-template-columns:1fr;grid-auto-rows:220px;}
     .finding-face{padding:20px;}
+    .topics-grid{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
@@ -1112,15 +1176,57 @@
 <section>
   <div class="container">
     <div class="kicker">Research Topics</div>
-    <h2 class="section-title">What we are studying</h2>
+    <h2 class="section-title">What we are <em>studying</em></h2>
     <p class="section-body" style="margin-bottom:24px;">These are the areas where we are actively collecting data and publishing findings.</p>
-    <div class="products-grid">
-      <div class="mini-card"><div class="mini-card-title">AI Visibility</div><div class="mini-card-body">How AI shopping agents crawl, parse, and evaluate e-commerce stores. Which signals matter most for getting included in AI-generated recommendations.</div><span class="mini-card-status">Active research</span></div>
-      <div class="mini-card"><div class="mini-card-title">Recommendation Readiness</div><div class="mini-card-body">What separates stores that get recommended by ChatGPT, Alexa for Shopping, and Perplexity from those that get skipped entirely.</div><span class="mini-card-status">Active research</span></div>
-      <div class="mini-card"><div class="mini-card-title">Machine-Readable Trust</div><div class="mini-card-body">How reviews, return policies, SSL, and brand signals are interpreted by AI systems, and which formats AI agents can extract without JavaScript.</div><span class="mini-card-status">Active research</span></div>
-      <div class="mini-card"><div class="mini-card-title">Agentic Commerce</div><div class="mini-card-body">Shopify Agentic Dashboard adoption, llms.txt quality, agents.md checkout flows, and how AI agent infrastructure evolves.</div><span class="mini-card-status">Active research</span></div>
-      <div class="mini-card"><div class="mini-card-title">E-commerce Benchmarks</div><div class="mini-card-body">Industry benchmarks by niche including fashion, beauty, health, food, and home goods.</div><span class="mini-card-status soon">Coming soon</span></div>
-      <div class="mini-card"><div class="mini-card-title">Commerce Accuracy</div><div class="mini-card-body">How pricing visibility, stock availability, variant structure, and product data quality affect AI confidence.</div><span class="mini-card-status soon">Coming soon</span></div>
+    <div class="topics-grid">
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">AI Visibility</div>
+        <div class="topic-body">Why do some stores never appear in AI-generated recommendations?</div>
+        <span class="topic-status">Active research</span>
+      </div>
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">Recommendation Intelligence</div>
+        <div class="topic-body">What determines which brands AI chooses to recommend, and which it ignores?</div>
+        <span class="topic-status">Active research</span>
+      </div>
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">Machine-Readable Trust</div>
+        <div class="topic-body">Which trust signals can AI actually read, verify and use during decision-making?</div>
+        <span class="topic-status">Active research</span>
+      </div>
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">Agentic Commerce</div>
+        <div class="topic-body">How AI shopping agents discover, evaluate and purchase products across the web.</div>
+        <span class="topic-status">Active research</span>
+      </div>
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">AI Commerce Benchmarks</div>
+        <div class="topic-body">Measuring how industries compare in AI readiness across categories and markets.</div>
+        <span class="topic-status">Active research</span>
+      </div>
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">Commerce Accuracy</div>
+        <div class="topic-body">How product data quality affects AI understanding, confidence and recommendations.</div>
+        <span class="topic-status">Active research</span>
+      </div>
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">AI Decision Science</div>
+        <div class="topic-body">Understanding how AI models rank, compare and choose between competing brands.</div>
+        <span class="topic-status">Active research</span>
+      </div>
+      <div class="topic-tile" tabindex="0">
+        <span class="topic-swatch"></span>
+        <div class="topic-title">Recommendation Stability</div>
+        <div class="topic-body">Measuring how AI recommendations change over time, across models and retrieval systems.</div>
+        <span class="topic-status">Active research</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1482,6 +1588,31 @@
       cards.forEach(card => io.observe(card));
     } else {
       cards.forEach(card => card.classList.add('is-visible'));
+    }
+  })();
+
+  // Research Topics — resting state is just the 8 small orange squares.
+  // Desktop reveals the card on hover (CSS only). Touch has no hover, so
+  // tapping a tile opens it (is-open) and closes any other open tile;
+  // tapping outside the grid closes whatever is open.
+  (function(){
+    const tiles = Array.from(document.querySelectorAll('.topic-tile'));
+    if (!tiles.length) return;
+
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      tiles.forEach(tile => {
+        tile.addEventListener('click', () => {
+          const willOpen = !tile.classList.contains('is-open');
+          tiles.forEach(other => other.classList.remove('is-open'));
+          if (willOpen) tile.classList.add('is-open');
+        });
+      });
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.topic-tile')) {
+          tiles.forEach(tile => tile.classList.remove('is-open'));
+        }
+      });
     }
   })();
 
