@@ -272,16 +272,20 @@
   .chart-caption strong{color:var(--black);}
 
   /* ---------- REPORT TABLE ---------- */
-  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;}
-  .report-table{width:100%;min-width:560px;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;}
-  .report-table thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-500);font-weight:700;text-align:left;padding:13px 14px;border-bottom:1px solid var(--card-line);white-space:nowrap;}
-  .report-table thead th.num{text-align:right;}
-  .report-table td{padding:13px 14px;border-bottom:1px solid var(--card-line);font-size:13.5px;line-height:1.5;color:var(--gray-700);vertical-align:middle;}
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;max-width:640px;margin-left:auto;margin-right:auto;}
+  .report-table{width:100%;min-width:480px;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;table-layout:fixed;}
+  .report-table th,.report-table td{width:14.2857%;}
+  .report-table thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);font-weight:800;text-align:left;padding:12px 10px;border-bottom:2px solid rgba(254,106,3,0.28);}
+  .report-table td{padding:10px 10px;border-bottom:1px solid var(--card-line);font-size:13.5px;line-height:1.4;color:var(--gray-700);vertical-align:middle;text-align:left;}
+  .report-table tbody tr:nth-child(even){background:rgba(22,21,18,0.035);}
   .report-table tr:last-child td{border-bottom:none;}
   .report-table td.brand{color:var(--black);font-weight:700;}
-  .report-table td.num{text-align:right;white-space:nowrap;}
   .report-table td.r-neg{color:var(--red);font-weight:800;}
   .report-table td.r-flat{color:var(--gray-700);font-weight:800;}
+  @media (hover:hover) and (pointer:fine){
+    .report-table tbody tr{transition:background .15s ease;}
+    .report-table tbody tr:hover{background:rgba(254,106,3,0.07);}
+  }
 
   /* ---------- FACTOR / WEIGHT BARS (reused pattern for the marketplace-
      share chart — same shape as the methodology weight list elsewhere) ---------- */
@@ -636,7 +640,7 @@
         </tbody>
       </table>
     </div>
-    <p class="corr-axis-note" style="text-align:left;margin-top:14px;">On-index is the share of recommendations that map to a single-brand store we measure. Marketplace is the share that went to retailers and marketplaces, which we separate out and exclude from the brand-level correlation. r is the Pearson correlation between Recommendation Frequency™ and AI Commerce Score™ across single-brand stores.</p>
+    <p class="chart-caption">On-index is the share of recommendations that map to a single-brand store we measure. Marketplace is the share that went to retailers and marketplaces, which we separate out and exclude from the brand-level correlation. r is the Pearson correlation between Recommendation Frequency™ and AI Commerce Score™ across single-brand stores.</p>
   </div>
 </section>
 
