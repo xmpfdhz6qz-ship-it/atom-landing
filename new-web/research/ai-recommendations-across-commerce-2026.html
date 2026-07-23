@@ -221,7 +221,7 @@
   .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
 
   /* ---------- CHART CARD (reused shell for the correlation chart) ---------- */
-  .chart-card{background:var(--card);border-radius:var(--radius);padding:28px;margin-top:8px;}
+  .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;}
   .chart-card-title{font-size:12px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:18px;}
   /* the SVG bar chart itself is untouched (same geometry, same numbers) —
      only these presentation classes are re-themed so its tick/axis/label
@@ -236,19 +236,19 @@
      chart on the main research page. ---------- */
   .corr-chart{position:relative;display:flex;align-items:stretch;gap:6px;height:352px;padding:0 4px;margin-top:4px;}
   .corr-band{position:absolute;left:4px;right:4px;top:calc(50% - 20px);height:40px;background:rgba(29,158,117,0.08);border-radius:3px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;pointer-events:none;}
-  .corr-band-label{font-size:10.5px;color:var(--green);font-weight:700;}
+  .corr-band-label{font-size:13px;color:var(--green);font-weight:700;}
   .corr-zero{position:absolute;left:4px;right:4px;top:50%;height:1px;background:rgba(22,21,18,0.28);pointer-events:none;}
-  .corr-zero-label{position:absolute;left:0;top:-8px;font-size:10px;color:var(--gray-500);font-weight:700;background:var(--card);padding-right:6px;}
+  .corr-zero-label{position:absolute;left:0;top:-9px;font-size:12px;color:var(--gray-500);font-weight:700;background:var(--card);padding-right:6px;}
   .corr-bar{flex:1;display:flex;flex-direction:column;min-width:0;position:relative;cursor:default;}
   .corr-bar-upper{height:150px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;}
   .corr-bar-lower{height:150px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;}
-  .corr-bar-value{font-family:var(--serif);font-size:12.5px;font-weight:800;color:var(--black);margin:0 0 6px;transition:color .2s ease;}
-  .corr-bar-lower .corr-bar-value{margin:6px 0 0;}
+  .corr-bar-value{font-family:var(--serif);font-size:16px;font-weight:800;color:var(--black);margin:0 0 8px;transition:color .2s ease;}
+  .corr-bar-lower .corr-bar-value{margin:8px 0 0;}
   .corr-bar-fill{width:64%;max-width:56px;border-radius:3px;height:0;background:var(--orange);transition:height 1.1s cubic-bezier(.16,.8,.4,1);}
   .corr-bar.flag .corr-bar-fill{background:var(--red);}
   .corr-bar.is-visible .corr-bar-fill{height:var(--h);}
-  .corr-bar-label{margin-top:14px;text-align:center;font-size:12.5px;font-weight:700;color:var(--gray-700);line-height:1.3;}
-  .corr-bar-label span{display:block;font-size:10px;color:var(--gray-500);font-weight:500;margin-top:2px;}
+  .corr-bar-label{margin-top:14px;text-align:center;font-size:15px;font-weight:700;color:var(--gray-700);line-height:1.3;}
+  .corr-bar-label span{display:block;font-size:12px;color:var(--gray-500);font-weight:500;margin-top:3px;}
   .corr-tip{
     position:absolute;top:0;left:50%;transform:translate(-50%,-100%) translateY(2px);
     background:var(--black);color:var(--white);font-size:11px;line-height:1.5;
@@ -260,13 +260,15 @@
     .corr-bar:hover .corr-bar-value{color:var(--orange);}
     .corr-bar.flag:hover .corr-bar-value{color:var(--red);}
   }
-  .corr-axis-note{margin-top:14px;font-size:11px;color:var(--gray-500);text-align:center;}
+  .corr-axis-note{margin-top:16px;font-size:13px;color:var(--gray-500);text-align:center;}
 
   /* ---------- CALLOUT ---------- */
   .callout{background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.22);border-left:3px solid var(--green);border-radius:var(--radius);padding:16px 20px;margin-top:20px;font-size:14px;color:var(--gray-700);line-height:1.7;}
   .callout strong{color:var(--black);}
   .callout.warn{background:rgba(217,60,60,0.07);border-color:rgba(217,60,60,0.2);border-left-color:var(--red);}
   .callout.warn strong{color:var(--red);}
+  .chart-caption{max-width:640px;margin:22px auto 0;font-size:14px;color:var(--gray-700);line-height:1.7;text-align:center;}
+  .chart-caption strong{color:var(--black);}
 
   /* ---------- REPORT TABLE ---------- */
   .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;}
@@ -373,16 +375,17 @@
     .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
     .hero-stat:not(:first-child)::before{display:none;}
     .hero-stat-num{font-size:28px;}
-    .chart-card{padding:18px;}
+    .chart-card{padding:18px;max-width:none;margin-top:32px;}
     .corr-chart{gap:2px;padding:0 2px;}
     .corr-bar-upper,.corr-bar-lower{height:120px;}
-    .corr-bar-value{font-size:10px;margin-bottom:4px;}
+    .corr-bar-value{font-size:12px;margin-bottom:4px;}
     .corr-bar-lower .corr-bar-value{margin:4px 0 0;}
-    .corr-bar-label{font-size:10.5px;margin-top:10px;}
-    .corr-bar-label span{font-size:9px;}
-    .corr-band-label{font-size:8.5px;}
-    .corr-zero-label{font-size:9px;}
+    .corr-bar-label{font-size:12px;margin-top:10px;}
+    .corr-bar-label span{font-size:10.5px;}
+    .corr-band-label{font-size:10.5px;}
+    .corr-zero-label{font-size:10.5px;}
     .corr-tip{display:none;}
+    .chart-caption{max-width:none;}
     .weight-name{flex-basis:104px;font-size:12.5px;}
     .products-grid{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
@@ -562,7 +565,7 @@
       </div>
       <div class="corr-axis-note">Correlation r: Recommendation Frequency™ vs AI Commerce Score™</div>
     </div>
-    <div class="callout">Five categories. More than 20,000 recommendations. <strong>Not once</strong> is recommendation frequency meaningfully and positively related to store readiness. Three categories sit at zero (beauty, supplements, coffee), one is zero again (home &amp; living), and the only category to break from zero, pets, breaks in the <strong>wrong</strong> direction: there, the most recommended brands tend to have slightly worse stores. The conclusion is no longer a single finding. It is a replicated result.</div>
+    <div class="chart-caption">Five categories. More than 20,000 recommendations. <strong>Not once</strong> is recommendation frequency meaningfully and positively related to store readiness. Three categories sit at zero (beauty, supplements, coffee), one is zero again (home &amp; living), and the only category to break from zero, pets, breaks in the <strong>wrong</strong> direction: there, the most recommended brands tend to have slightly worse stores. The conclusion is no longer a single finding. It is a replicated result.</div>
   </div>
 </section>
 
