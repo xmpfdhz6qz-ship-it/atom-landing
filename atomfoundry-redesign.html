@@ -91,11 +91,13 @@
   .nav-item:hover .nav-chevron,.nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
 
   /* ---------- MOBILE NAV TOGGLE (hidden on desktop) ---------- */
-  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:flex-end;gap:5px;width:30px;height:26px;background:none;border:none;padding:0;cursor:pointer;}
-  .nav-toggle span{display:block;width:100%;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease, width .2s ease;}
-  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);width:100%;}
+  /* button itself is a full 44px touch target; the visible bars inside
+     are smaller and centered so it doesn't look oversized */
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
-  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);width:100%;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
   /* ---------- NAV DROPDOWNS ---------- */
   .dropdown{
@@ -312,7 +314,7 @@
   .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
   .footer-col a:hover{color:var(--orange);}
   .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
-  .social-row{display:flex;gap:16px;margin-top:8px;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
   .social-row a{color:var(--gray-500);transition:color .25s ease;}
   .social-row a:hover{color:var(--orange);}
 
@@ -781,10 +783,11 @@
   })();
 
   // Mobile hamburger nav: the toggle shows/hides the full link list (which
-  // is display:none by default below 680px). Each dropdown's chevron is a
-  // real click target on mobile — hover doesn't exist on touch, so tapping
-  // the chevron expands that item's dropdown (accordion-style, closing any
-  // other open one) without following the link underneath it.
+  // is display:none by default below 680px). Every top-level item has a
+  // dropdown, so on mobile the ENTIRE row (not just the small chevron —
+  // that hit target was too easy to miss) toggles that item's submenu
+  // open/closed (accordion-style) instead of following the link straight
+  // through; the real destinations are the links inside the dropdown.
   (function(){
     const nav = document.querySelector('header.nav');
     const toggle = document.getElementById('navToggle');
@@ -803,10 +806,10 @@
     });
 
     links.querySelectorAll('.nav-item').forEach(item => {
-      const chevron = item.querySelector('.nav-chevron');
+      const trigger = item.querySelector('.nav-trigger');
       const dropdown = item.querySelector('.dropdown');
-      if (!chevron || !dropdown) return;
-      chevron.addEventListener('click', (e) => {
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
         if (window.innerWidth > 680) return; // desktop still uses hover
         e.preventDefault();
         e.stopPropagation();
