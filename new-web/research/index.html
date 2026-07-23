@@ -451,7 +451,14 @@
   @media (hover:hover) and (pointer:fine){
     .finding-card:hover .finding-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
   }
+  /* small orange swatch, same square language as the score-panel chip
+     legend, tucked into the bottom-right corner of the front face to
+     give the resting card a little life before it's flipped */
   .finding-face-front{background:var(--card);}
+  .finding-face-front::after{
+    content:"";position:absolute;right:20px;bottom:18px;
+    width:10px;height:10px;border-radius:2px;background:var(--orange);
+  }
   .finding-face-back{
     background:rgba(254,106,3,0.14);color:var(--black);
     transform:rotateY(180deg);
@@ -1091,7 +1098,7 @@
           <div class="finding-face finding-face-back">
             <div>
               <div class="finding-title">Every recommendation has a pattern.</div>
-              <div class="finding-body">AI recommendations are not random — they follow measurable, repeatable behavior across large datasets.</div>
+              <div class="finding-body">AI recommendations are not random. They follow measurable, repeatable behavior across large datasets.</div>
             </div>
             <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
           </div>
