@@ -332,48 +332,58 @@
   }
   .pyramid-watermark{margin-top:18px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);text-align:left;font-family:ui-monospace,Menlo,monospace;}
 
-  /* ---------- RESEARCH COLLECTIONS — large elegant panels, nothing open
-     by default, one open at a time. Clicking a panel expands it directly
-     underneath into a grid of report cards using the exact same card
-     language as the rest of the site (.mini-card system) — no new page,
-     no modal, just the panel opening in place. ---------- */
-  .collections{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
-  .collection{background:var(--white);border:1px solid var(--card-line);border-radius:var(--radius);overflow:hidden;scroll-margin-top:20px;}
-  .collection-head{
-    width:100%;background:none;border:none;cursor:pointer;
-    padding:24px 26px;display:flex;align-items:center;gap:18px;
-    text-align:left;font-family:inherit;color:inherit;
+  /* ---------- RESEARCH COLLECTIONS — four plain-text, transparent tabs
+     spanning the full width of the page. Hovering a tab (desktop) opens
+     it; moving to another tab closes the previous one and opens that one
+     instead. On touch, a tap does the same job. Only one panel is ever
+     open, and it expands directly beneath the whole tab row into a grid
+     of report cards using the exact same card language as the rest of
+     the site (.mini-card system). ---------- */
+  .collections{margin-top:28px;}
+  .collection-tabs{
+    display:flex;width:100%;
+    border:1px solid var(--card-line);border-radius:var(--radius);
+    overflow:hidden;
   }
-  .collection-icon{font-size:24px;line-height:1;flex-shrink:0;}
-  .collection-info{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;}
-  .collection-name{font-family:var(--serif);font-size:19px;font-weight:800;color:var(--black);letter-spacing:-0.01em;transition:color .2s ease;}
-  .collection-sub{font-size:13.5px;color:var(--gray-700);}
-  .collection-right{display:flex;align-items:center;gap:16px;flex-shrink:0;}
-  .collection-count{font-size:12.5px;font-weight:700;color:var(--gray-700);}
-  .collection-toggle{
-    width:28px;height:28px;border-radius:50%;background:var(--black);color:var(--white);
-    display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
-    transition:transform .28s cubic-bezier(.16,.8,.4,1), background .2s ease;
+  .collection-tab{
+    flex:1;background:transparent;border:none;cursor:pointer;
+    padding:24px 16px;font-family:var(--serif);font-size:19px;font-weight:800;
+    color:var(--black);letter-spacing:-0.01em;text-align:center;
+    border-right:1px solid var(--card-line);
+    border-bottom:2px solid transparent;
+    transition:color .2s ease, border-color .2s ease;
   }
-  .collection.is-open .collection-toggle{transform:rotate(45deg);background:var(--orange);}
+  .collection-tab:last-child{border-right:none;}
+  .collection-tab .nav-chevron{margin-left:8px;}
+  .collection-tab.is-active{color:var(--orange);border-bottom-color:var(--orange);}
+  .collection-tab.is-active .nav-chevron{transform:rotate(180deg);}
   @media (hover:hover) and (pointer:fine){
-    .collection-head:hover .collection-name{color:var(--orange);}
+    .collection-tab:hover{color:var(--orange);}
+    .collection-tab:hover .nav-chevron{transform:rotate(180deg);}
   }
-  .collection-body{max-height:0;overflow:hidden;transition:max-height .28s cubic-bezier(.16,.8,.4,1);}
+  .collection-panels{position:relative;}
+  /* same speed and easing as the AI Commerce Bar™ hover-replay, since
+     opening a panel is the same kind of hover-triggered reveal */
+  .collection-panel{max-height:0;overflow:hidden;transition:max-height 1.9s cubic-bezier(.16,.8,.4,1);}
   .collection-grid{
     display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
-    padding:4px 26px 26px;
-    opacity:0;transform:translateY(8px);
-    transition:opacity .28s ease, transform .28s ease;
+    padding:24px 0 4px;
   }
-  .collection.is-open .collection-grid{opacity:1;transform:translateY(0);}
 
+  /* cards reveal one at a time, top to bottom, instead of all fading in
+     together — each card starts slightly above its resting position and
+     slides DOWN into place, so the row of cards reads as unrolling out
+     from the active tab above it. Each card's .is-visible class is added
+     with a stagger in JS, same 90ms-per-item cadence as the niche chart
+     bars, so cards nearer the tabs settle in first. */
   .report-card{
     border-radius:var(--radius);padding:24px 22px;background:var(--card);
     display:flex;flex-direction:column;min-height:180px;
-    transition:transform .3s ease, box-shadow .3s ease;
     text-decoration:none;
+    opacity:0;transform:translateY(-18px);
+    transition:opacity .5s ease, transform .5s ease, box-shadow .3s ease;
   }
+  .report-card.is-visible{opacity:1;transform:translateY(0);}
   .report-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   .report-card .mini-card-title{font-size:16px;margin-bottom:8px;}
   .report-card .mini-card-body{font-size:13px;margin-bottom:6px;}
@@ -461,6 +471,7 @@
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
     .chart-flex{grid-template-columns:1fr;}
+    .collection-tab{font-size:16px;padding:20px 10px;}
     .collection-grid{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .research-hero{padding:72px 0 40px;}
@@ -506,13 +517,15 @@
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     .products-grid{grid-template-columns:1fr;}
     .products-grid.cols-2{grid-template-columns:1fr;}
-    .collection-head{padding:18px 18px;gap:12px;}
-    .collection-icon{font-size:20px;}
-    .collection-name{font-size:16px;}
-    .collection-sub{font-size:12.5px;}
-    .collection-right{gap:10px;}
-    .collection-count{display:none;}
-    .collection-grid{grid-template-columns:1fr;padding:4px 18px 20px;}
+    /* tabs stack full-width on a phone — a 4-up row has no room for text
+       like "Mechanism Studies", so this becomes a vertical tab list
+       instead, same transparent-window treatment, dividers on the
+       bottom edge instead of the right edge */
+    .collection-tabs{flex-direction:column;}
+    .collection-tab{border-right:none;border-bottom:1px solid var(--card-line);padding:16px;font-size:17px;text-align:left;display:flex;align-items:center;justify-content:space-between;}
+    .collection-tab:last-child{border-bottom:none;}
+    .collection-tab.is-active{border-bottom-color:var(--card-line);background:rgba(254,106,3,0.06);}
+    .collection-grid{grid-template-columns:1fr;padding:18px 2px 4px;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
@@ -695,23 +708,19 @@
 <section class="alt" id="research">
   <div class="container">
     <div class="kicker">Research Library</div>
-    <h2 class="section-title">15 reports, <em>fully measured</em></h2>
-    <p class="section-body">Every report is built from captured AI responses and real store scans. Explore the collection below.</p>
+    <h2 class="section-title">Understanding AI commerce through <em>measurement</em>.</h2>
+    <p class="section-body">Explore public research built from real AI responses, large-scale store analysis and reproducible methodology.</p>
 
     <div class="collections">
-      <div class="collection" id="cat-flagship" data-key="flagship">
-        <button class="collection-head" type="button" aria-expanded="false">
-          <span class="collection-icon">⭐</span>
-          <span class="collection-info">
-            <span class="collection-name">Flagship</span>
-            <span class="collection-sub">The complete cross-category report.</span>
-          </span>
-          <span class="collection-right">
-            <span class="collection-count">1 report</span>
-            <span class="collection-toggle">+</span>
-          </span>
-        </button>
-        <div class="collection-body">
+      <div class="collection-tabs">
+        <button class="collection-tab" type="button" data-key="flagship" aria-expanded="false">Flagship<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="collection-tab" type="button" data-key="mechanism" aria-expanded="false">Mechanism Studies<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="collection-tab" type="button" data-key="category" aria-expanded="false">Category Reports<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="collection-tab" type="button" data-key="founderlab" aria-expanded="false">Founder Lab<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </div>
+
+      <div class="collection-panels">
+        <div class="collection-panel" id="cat-flagship" data-key="flagship">
           <div class="collection-grid">
             <a class="report-card" href="/research/ai-recommendations-across-commerce-2026">
               <div class="mini-card-eyebrow">Flagship</div>
@@ -721,21 +730,8 @@
             </a>
           </div>
         </div>
-      </div>
 
-      <div class="collection" id="cat-mechanism" data-key="mechanism">
-        <button class="collection-head" type="button" aria-expanded="false">
-          <span class="collection-icon">🔬</span>
-          <span class="collection-info">
-            <span class="collection-name">Mechanism Studies</span>
-            <span class="collection-sub">How AI recommendation actually works.</span>
-          </span>
-          <span class="collection-right">
-            <span class="collection-count">7 reports</span>
-            <span class="collection-toggle">+</span>
-          </span>
-        </button>
-        <div class="collection-body">
+        <div class="collection-panel" id="cat-mechanism" data-key="mechanism">
           <div class="collection-grid">
             <a class="report-card" href="/research/web-search-changes-ai-recommendations">
               <div class="mini-card-eyebrow">Mechanism</div>
@@ -788,21 +784,8 @@
             </a>
           </div>
         </div>
-      </div>
 
-      <div class="collection" id="cat-category" data-key="category">
-        <button class="collection-head" type="button" aria-expanded="false">
-          <span class="collection-icon">📊</span>
-          <span class="collection-info">
-            <span class="collection-name">Category Reports</span>
-            <span class="collection-sub">The same methodology across industries.</span>
-          </span>
-          <span class="collection-right">
-            <span class="collection-count">5 reports</span>
-            <span class="collection-toggle">+</span>
-          </span>
-        </button>
-        <div class="collection-body">
+        <div class="collection-panel" id="cat-category" data-key="category">
           <div class="collection-grid">
             <a class="report-card" href="/research/state-of-ai-recommendations-beauty">
               <div class="mini-card-eyebrow">Category</div>
@@ -841,21 +824,8 @@
             </a>
           </div>
         </div>
-      </div>
 
-      <div class="collection" id="cat-founderlab" data-key="founderlab">
-        <button class="collection-head" type="button" aria-expanded="false">
-          <span class="collection-icon">🧪</span>
-          <span class="collection-info">
-            <span class="collection-name">Founder Lab</span>
-            <span class="collection-sub">Experiments built in public.</span>
-          </span>
-          <span class="collection-right">
-            <span class="collection-count">2 reports</span>
-            <span class="collection-toggle">+</span>
-          </span>
-        </button>
-        <div class="collection-body">
+        <div class="collection-panel" id="cat-founderlab" data-key="founderlab">
           <div class="collection-grid">
             <a class="report-card" href="/research/founder-lab-day-zero">
               <div class="mini-card-eyebrow">Founder Lab</div>
@@ -1138,57 +1108,92 @@
     window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
   })();
 
-  // Research Library collections — one open at a time, expanding directly
-  // beneath the clicked panel into a grid of report cards. No page change,
-  // no modal: the panel just opens in place.
+  // Research Library — four transparent tabs spanning the full width.
+  // Desktop: hovering a tab opens it; moving to the next tab closes the
+  // previous one. Touch: a tap does the same job (hover listeners only
+  // bind on real hover-capable pointers, so touch never needs a double
+  // tap). Only one panel is ever open, and it expands directly beneath
+  // the tab row into a grid of report cards.
   (function(){
-    const collections = Array.from(document.querySelectorAll('.collection'));
-    if (!collections.length) return;
+    const wrap = document.querySelector('.collections');
+    const tabs = Array.from(document.querySelectorAll('.collection-tab'));
+    const panels = Array.from(document.querySelectorAll('.collection-panel'));
+    if (!wrap || !tabs.length || !panels.length) return;
 
-    function closeCollection(col){
-      const body = col.querySelector('.collection-body');
-      const head = col.querySelector('.collection-head');
-      col.classList.remove('is-open');
-      if (head) head.setAttribute('aria-expanded', 'false');
-      if (body) body.style.maxHeight = '0px';
+    function panelFor(key){ return panels.find(p => p.dataset.key === key); }
+
+    // Reveal a panel's cards one at a time, top to bottom, instead of
+    // all at once — same 90ms-per-item cadence as the niche chart bars.
+    function hideCards(panel){
+      panel.querySelectorAll('.report-card').forEach(card => card.classList.remove('is-visible'));
     }
-    function openCollection(col){
-      const body = col.querySelector('.collection-body');
-      const head = col.querySelector('.collection-head');
-      const grid = col.querySelector('.collection-grid');
-      col.classList.add('is-open');
-      if (head) head.setAttribute('aria-expanded', 'true');
-      if (body && grid) body.style.maxHeight = (grid.scrollHeight + 40) + 'px';
+    function revealCards(panel){
+      const cards = Array.from(panel.querySelectorAll('.report-card'));
+      cards.forEach(card => card.classList.remove('is-visible'));
+      cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('is-visible'), i * 90);
+      });
     }
 
-    collections.forEach(col => {
-      const head = col.querySelector('.collection-head');
-      if (!head) return;
-      head.addEventListener('click', () => {
-        const isOpen = col.classList.contains('is-open');
-        collections.forEach(other => { if (other !== col) closeCollection(other); });
-        if (isOpen) closeCollection(col); else openCollection(col);
+    function activate(key){
+      const panel = panelFor(key);
+      if (!panel) return;
+      tabs.forEach(t => {
+        const active = t.dataset.key === key;
+        t.classList.toggle('is-active', active);
+        t.setAttribute('aria-expanded', active ? 'true' : 'false');
+      });
+      panels.forEach(p => {
+        if (p === panel) {
+          p.classList.add('is-open');
+          const grid = p.querySelector('.collection-grid');
+          p.style.maxHeight = ((grid ? grid.scrollHeight : p.scrollHeight) + 40) + 'px';
+          revealCards(p);
+        } else {
+          p.classList.remove('is-open');
+          p.style.maxHeight = '0px';
+          hideCards(p);
+        }
+      });
+    }
+    function deactivateAll(){
+      tabs.forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-expanded', 'false'); });
+      panels.forEach(p => { p.classList.remove('is-open'); p.style.maxHeight = '0px'; hideCards(p); });
+    }
+
+    // Tap/click always works, on every device.
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const isActive = tab.classList.contains('is-active');
+        if (isActive) deactivateAll(); else activate(tab.dataset.key);
       });
     });
+
+    // Hover only opens on pointers that actually support it, so touch
+    // devices rely purely on the tap handler above.
+    if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      tabs.forEach(tab => {
+        tab.addEventListener('mouseenter', () => activate(tab.dataset.key));
+      });
+      wrap.addEventListener('mouseleave', () => deactivateAll());
+    }
 
     // If an open panel's content reflows (e.g. rotating a tablet changes
     // the grid from 3 to 2 columns), keep its measured height correct.
     window.addEventListener('resize', () => {
-      const open = collections.find(c => c.classList.contains('is-open'));
-      if (open) openCollection(open);
+      const activeTab = tabs.find(t => t.classList.contains('is-active'));
+      if (activeTab) activate(activeTab.dataset.key);
     });
 
-    // Deep links (nav dropdown, footer) point at a collection's id —
-    // open that collection and scroll to it instead of landing on a
-    // collapsed panel.
+    // Deep links (nav dropdown, footer) point at a panel's id — open
+    // that panel and scroll to the tab row instead of landing on a
+    // collapsed section.
     function openFromHash(){
       const id = location.hash.slice(1);
-      if (!id) return;
-      const col = document.getElementById(id);
-      if (!col || !col.classList.contains('collection')) return;
-      collections.forEach(other => { if (other !== col) closeCollection(other); });
-      openCollection(col);
-      setTimeout(() => col.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+      const panel = document.getElementById(id);
+      if (!panel || !panel.classList.contains('collection-panel')) return;
+      activate(panel.dataset.key);
+      setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
     }
     openFromHash();
     window.addEventListener('hashchange', openFromHash);
