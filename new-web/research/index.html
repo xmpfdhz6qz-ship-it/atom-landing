@@ -266,6 +266,43 @@
   .chart-legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
   .chart-note{font-size:12px;color:var(--gray-500);margin-top:10px;font-style:italic;}
 
+  /* ---------- NICHE BAR CHART (AI Commerce Bar™) — identical component to
+     the landing page's hero chart: flat, card-language bars, no gradients,
+     same sharp 4px radius / hairline / black+orange system. ---------- */
+  .niche-chart-section{margin-bottom:24px;}
+  .niche-chart-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:14px;margin-bottom:22px;}
+  .niche-chart-label{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
+  .niche-chart{
+    display:flex;align-items:flex-end;gap:0;height:230px;
+    background:var(--card);border-radius:var(--radius);
+    border-bottom:2px solid var(--black);
+    padding:24px 20px 0;
+    position:relative;
+    box-sizing:border-box;
+  }
+  .niche-chart-watermark{margin-top:9px;padding-left:28px;font-size:11px;font-weight:500;color:var(--gray-500);letter-spacing:0.02em;}
+  .niche-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative;cursor:pointer;padding:0 8px;border-right:1px solid var(--card-line);}
+  .niche-bar:last-child{border-right:none;}
+  .niche-bar-value{font-size:15px;font-weight:800;color:var(--black);margin-bottom:10px;transition:color .2s ease, transform .25s ease;}
+  .niche-bar-fill{
+    position:relative;width:100%;max-width:80px;
+    height:0%;border-radius:var(--radius) var(--radius) 0 0;
+    transition:height 1.1s cubic-bezier(.16,.8,.4,1), background .2s ease;
+    transform-origin:bottom center;
+    background:var(--bar-color);
+  }
+  .niche-bar.is-visible .niche-bar-fill{height:var(--h);}
+  .niche-bar:hover .niche-bar-value{transform:translateY(-3px);color:var(--orange);}
+  .niche-bar-label{font-size:14px;color:var(--gray-700);margin-top:14px;text-align:center;font-weight:700;line-height:1.25;padding:0 2px 16px;transition:color .2s ease;}
+  .niche-bar:hover .niche-bar-label{color:var(--black);}
+  .niche-tip{
+    position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(6px);
+    background:var(--black);border-radius:4px;padding:9px 12px;width:170px;
+    font-size:11px;color:var(--white);line-height:1.5;opacity:0;
+    transition:all .2s ease;pointer-events:none;z-index:50;text-align:left;
+  }
+  .niche-bar:hover .niche-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+
   /* ---------- AI CONFIDENCE PYRAMID™ — Atom Foundry's own visualization
      for the score-distribution data, in place of a generic donut chart.
      Four stacked bars, each width scaled to its live share of stores
@@ -279,12 +316,12 @@
   .pyramid-tier-pct{font-family:var(--serif);font-size:13px;font-weight:800;color:var(--black);margin-right:9px;}
   .pyramid-tier-name{font-size:11.5px;font-weight:700;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.05em;}
   .pyramid-bar-track{width:100%;}
-  .pyramid-bar{height:30px;width:0%;border-radius:4px;transition:width 1.15s cubic-bezier(.16,.8,.4,1);}
+  .pyramid-bar{height:30px;width:0%;border-radius:4px;transition:width 1.1s cubic-bezier(.16,.8,.4,1);}
   @media (hover:hover) and (pointer:fine){
     .pyramid-tier:hover .pyramid-tier-num,
     .pyramid-tier:hover .pyramid-tier-pct{color:var(--orange);}
   }
-  .pyramid-watermark{margin-top:18px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);text-align:right;font-family:ui-monospace,Menlo,monospace;}
+  .pyramid-watermark{margin-top:18px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);text-align:left;font-family:ui-monospace,Menlo,monospace;}
 
   /* ---------- REPORT CHIPS + ACCORDION ---------- */
   .research-chips{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 24px;}
@@ -420,6 +457,12 @@
     .pyramid{gap:14px;}
     .pyramid-bar{height:24px;}
     .pyramid-tier-num{font-size:18px;}
+    .niche-chart-head{gap:8px;flex-direction:column;align-items:flex-start;}
+    .niche-chart{height:150px;padding:16px 16px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .niche-bar{flex:0 0 60px;padding:0 6px;}
+    .niche-chart-watermark{padding-left:19px;}
+    .niche-bar-value{font-size:11px;}
+    .niche-bar-label{font-size:10px;padding-bottom:10px;}
     .products-grid{grid-template-columns:1fr;}
     .products-grid.cols-2{grid-template-columns:1fr;}
     .report-row{flex-wrap:wrap;padding:14px 18px;}
@@ -566,10 +609,23 @@
         </div>
       </div>
     </div>
-    <div class="chart-card">
-      <div class="chart-card-title">Average AI score by niche — July 2026</div>
-      <div class="chart-canvas-wrap" style="height:260px;"><canvas id="nicheBarChart"></canvas></div>
-      <div class="chart-note">The dashed line marks 50, the minimum threshold for Low Recommendation Confidence.</div>
+    <div class="niche-chart-section">
+      <div class="niche-chart-head">
+        <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
+      </div>
+      <div class="niche-chart" id="nicheChart">
+        <div class="niche-bar" data-key="Fashion" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">Fashion</div></div>
+        <div class="niche-bar" data-key="Beauty" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Beauty<br>Risk: 17% · Best: 93/100</div><div class="niche-bar-label">Beauty</div></div>
+        <div class="niche-bar" data-key="Health and Wellness" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Health and Wellness<br>Risk: 19% · Best: 94/100</div><div class="niche-bar-label">Health</div></div>
+        <div class="niche-bar" data-key="Food and Drink" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Food and Drink<br>Risk: 20% · Best: 87/100</div><div class="niche-bar-label">Food</div></div>
+        <div class="niche-bar" data-key="Home and Living" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Home and Living<br>Risk: 15% · Best: 92/100</div><div class="niche-bar-label">Home</div></div>
+        <div class="niche-bar" data-key="Sports and Outdoor" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Sports and Outdoor<br>Risk: 17% · Best: 89/100</div><div class="niche-bar-label">Sports</div></div>
+        <div class="niche-bar" data-key="Pets" style="--h:45%;"><div class="niche-bar-value">54</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Pets<br>Risk: 24% · Best: 84/100</div><div class="niche-bar-label">Pets</div></div>
+        <div class="niche-bar" data-key="Tech and Gadgets" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Tech and Gadgets<br>Risk: 18% · Best: 93/100</div><div class="niche-bar-label">Tech</div></div>
+        <div class="niche-bar" data-key="Kids and Baby" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Kids and Baby<br>Risk: 19% · Best: 83/100</div><div class="niche-bar-label">Kids</div></div>
+        <div class="niche-bar" data-key="Jewelry" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Jewelry<br>Risk: 13% · Best: 85/100</div><div class="niche-bar-label">Jewelry</div></div>
+      </div>
+      <div class="niche-chart-watermark">AI Commerce Bar™</div>
     </div>
   </div>
 </section>
@@ -990,7 +1046,7 @@
         bar.style.transition = 'none';
         bar.style.width = '0%';
         requestAnimationFrame(() => {
-          bar.style.transition = 'width 1.15s cubic-bezier(.16,.8,.4,1)';
+          bar.style.transition = 'width 1.9s cubic-bezier(.16,.8,.4,1)';
           requestAnimationFrame(() => { bar.style.width = target + '%'; });
         });
       });
@@ -1027,24 +1083,80 @@
     };
   })();
 
-  // Niche bar chart — colored by score tier, same rule as the landing page chart.
-  function scoreColor(v){ return v >= 85 ? '#1D9E75' : v >= 70 ? '#fe6a03' : v >= 50 ? '#e0a233' : '#d93c3c'; }
-  const nicheBarChart = new Chart(document.getElementById('nicheBarChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Home & Living', 'Fashion', 'Tech & Gadgets', 'Sports & Outdoor', 'Beauty', 'Health & Wellness', 'Food & Drink', 'Kids & Baby', 'Pets', 'Jewelry'],
-      datasets: [{ label: 'Avg AI score', data: [48, 45, 42, 41, 40, 39, 36, 32, 30, 26],
-        backgroundColor: ctx => scoreColor(ctx.raw), borderRadius: 4, barPercentage: 0.65 }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      scales: {
-        x: { grid: { display: false }, ticks: { color: '#4a463c', font: { size: 11 } }, border: { display: false } },
-        y: { min: 0, max: 100, grid: { color: 'rgba(22,21,18,0.08)' }, ticks: { color: '#938f81', font: { size: 11 } }, border: { color: 'rgba(22,21,18,0.12)' } }
-      },
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + ' / 100' } } }
+  // Niche bar chart (AI Commerce Bar™) — identical component and behavior
+  // to the landing page's hero chart: staggered rise-from-zero reveal on
+  // scroll, hover-replay, and bars colored by their own score tier.
+  (function(){
+    const chart = document.getElementById('nicheChart');
+    if (!chart) return;
+    const bars = Array.from(chart.querySelectorAll('.niche-bar'));
+    let played = false;
+
+    function scoreColor(score){
+      if (score < 50) return 'var(--red)';
+      if (score < 70) return 'var(--orange)';
+      if (score < 85) return 'var(--amber)';
+      return 'var(--green)';
     }
-  });
+    function recolor(){
+      bars.forEach(bar => {
+        const valueEl = bar.querySelector('.niche-bar-value');
+        const fill = bar.querySelector('.niche-bar-fill');
+        if (!valueEl || !fill) return;
+        const score = parseInt(valueEl.textContent, 10);
+        if (!isNaN(score)) fill.style.setProperty('--bar-color', scoreColor(score));
+      });
+    }
+    recolor();
+
+    // On hover, replay the rise-from-zero animation instead of just
+    // sitting there — same trick and same 1.9s speed as the landing page.
+    bars.forEach(bar => {
+      const fill = bar.querySelector('.niche-bar-fill');
+      if (!fill) return;
+      bar.addEventListener('mouseenter', () => {
+        const target = bar.style.getPropertyValue('--h');
+        fill.style.transition = 'none';
+        fill.style.height = '0%';
+        requestAnimationFrame(() => {
+          fill.style.transition = 'height 1.9s cubic-bezier(.16,.8,.4,1)';
+          requestAnimationFrame(() => { fill.style.height = target; });
+        });
+      });
+    });
+
+    function playChart(){
+      if (played) return;
+      played = true;
+      bars.forEach((bar, i) => {
+        setTimeout(() => bar.classList.add('is-visible'), i * 90);
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) playChart(); });
+      }, { threshold: 0.3 });
+      io.observe(chart);
+    } else {
+      window.addEventListener('load', () => setTimeout(playChart, 400));
+    }
+
+    // Called once live niche data arrives — updates matching bars in
+    // place (by category name) without reordering, so the chart stays
+    // pixel-identical to the landing page's layout.
+    window.updateNicheBars = function(dataMap){
+      bars.forEach(bar => {
+        const key = bar.dataset.key;
+        if (!(key in dataMap)) return;
+        const score = Math.round(dataMap[key]);
+        const valueEl = bar.querySelector('.niche-bar-value');
+        if (valueEl) valueEl.textContent = score;
+        bar.style.setProperty('--h', Math.max(Math.min(score, 100), 4) + '%');
+      });
+      recolor();
+      if (played) bars.forEach(bar => bar.classList.add('is-visible'));
+    };
+  })();
 
   // Live data from the Atom Foundry API — same backend the rest of the site uses.
   Promise.all([
@@ -1076,14 +1188,14 @@
     }
     const niches = Array.isArray(nd) ? nd : (nd && nd.data ? nd.data : []);
     const LABELS = { fashion:'Fashion', beauty:'Beauty', health:'Health and Wellness', food:'Food and Drink', home:'Home and Living', sports:'Sports and Outdoor', pets:'Pets', tech:'Tech and Gadgets', kids:'Kids and Baby', jewelry:'Jewelry' };
-    const nicheAvgs = niches
-      .filter(n => Number(n.store_count) >= 5)
-      .map(n => [LABELS[n.niche_key] || n.niche_key, Number(n.avg_score)])
-      .sort((a, b) => b[1] - a[1]);
-    if (nicheAvgs.length >= 3) {
-      nicheBarChart.data.labels = nicheAvgs.map(x => x[0]);
-      nicheBarChart.data.datasets[0].data = nicheAvgs.map(x => x[1]);
-      nicheBarChart.update();
+    const dataMap = {};
+    niches.forEach(n => {
+      if (Number(n.store_count) >= 5 && LABELS[n.niche_key]) {
+        dataMap[LABELS[n.niche_key]] = Number(n.avg_score);
+      }
+    });
+    if (Object.keys(dataMap).length >= 3 && window.updateNicheBars) {
+      window.updateNicheBars(dataMap);
     }
   }).catch(() => {});
 </script>
