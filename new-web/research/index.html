@@ -393,25 +393,59 @@
   .report-card .mini-card-link{display:inline-flex;align-items:center;transition:color .2s ease, transform .2s ease;}
   .report-card:hover .mini-card-link{color:var(--orange);transform:translateX(2px);}
 
-  /* ---------- FOUNDER COMMENTARY ---------- */
-  .founder-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
-  .founder-avatar{width:48px;height:48px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--black);flex-shrink:0;}
-  .founder-name{font-size:15px;font-weight:800;color:var(--black);margin-bottom:2px;}
-  .founder-title{font-size:12px;color:var(--gray-700);}
-  .founder-observations{display:flex;flex-direction:column;gap:12px;}
-  .observation{background:var(--card);border-left:3px solid var(--orange);border-radius:var(--radius);padding:18px 22px;}
-  .observation-num{font-size:10px;color:var(--orange);font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
-  .observation-text{font-size:15px;color:var(--gray-700);line-height:1.75;}
-  .observation-text strong{color:var(--black);}
-
-  /* ---------- FINDINGS FEED ---------- */
-  .findings-feed{background:var(--card);border-radius:var(--radius);overflow:hidden;}
-  .feed-row{display:flex;align-items:flex-start;gap:16px;padding:18px 24px;border-bottom:1px solid var(--card-line);}
-  .feed-row:last-child{border-bottom:none;}
-  .feed-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:8px;}
-  .feed-text{font-size:15px;color:var(--gray-700);line-height:1.75;margin-bottom:5px;}
-  .feed-text strong{color:var(--black);}
-  .feed-source{font-size:12px;color:var(--gray-500);}
+  /* ---------- KEY FINDINGS — bento grid of flip cards. Sizes vary so the
+     grid isn't monotonous; cards reveal individually as they scroll into
+     view (not all at once); hovering flips a card at the same speed as
+     the hover-replay on the charts (1.9s), revealing a short body line,
+     a right-pointing arrow (same chevron as the navbar) and "View Study". ---------- */
+  .findings-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    grid-auto-rows:150px;grid-auto-flow:dense;gap:16px;margin-top:28px;
+  }
+  @media (min-width:901px){
+    .findings-grid .finding-card:nth-child(1){grid-column:span 2;grid-row:span 2;}
+    .findings-grid .finding-card:nth-child(5){grid-row:span 2;}
+    .findings-grid .finding-card:nth-child(8){grid-column:span 2;}
+    .findings-grid .finding-card:nth-child(11){grid-row:span 2;}
+    .findings-grid .finding-card:nth-child(15){grid-column:span 2;}
+    .findings-grid .finding-card:nth-child(1) .finding-title,
+    .findings-grid .finding-card:nth-child(8) .finding-title,
+    .findings-grid .finding-card:nth-child(15) .finding-title{font-size:19px;}
+  }
+  .finding-card{
+    display:block;text-decoration:none;perspective:1400px;
+    opacity:0;transform:translateY(18px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .finding-card.is-visible{opacity:1;transform:translateY(0);}
+  .finding-card-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .finding-card.is-flipped .finding-card-inner{transform:rotateY(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .finding-card:hover .finding-card-inner{transform:rotateY(180deg);}
+  }
+  .finding-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:20px 22px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .finding-face-front{background:var(--card);}
+  .finding-face-back{
+    background:var(--black);color:var(--white);
+    transform:rotateY(180deg);
+    justify-content:space-between;
+  }
+  .finding-title{font-family:var(--serif);font-weight:800;font-size:16px;line-height:1.32;letter-spacing:-0.01em;color:inherit;}
+  .finding-face-back .finding-title{font-size:15px;margin-bottom:8px;}
+  .finding-body{font-size:12.5px;color:rgba(253,252,250,0.72);line-height:1.55;}
+  .finding-view{
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:12.5px;font-weight:700;color:var(--white);margin-top:12px;
+  }
+  .finding-view .nav-chevron{transform:rotate(-90deg);color:var(--white);}
 
   /* ---------- PRODUCTS GRID / MINI-CARD (reused across Topics, Methodology, Explore) ---------- */
   .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
@@ -473,6 +507,7 @@
     .chart-flex{grid-template-columns:1fr;}
     .collection-tab{font-size:16px;padding:20px 10px;}
     .collection-grid{grid-template-columns:1fr 1fr;}
+    .findings-grid{grid-template-columns:1fr 1fr;grid-auto-rows:160px;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .research-hero{padding:72px 0 40px;}
     nav.links{gap:14px;}
@@ -526,6 +561,10 @@
     .collection-tab:last-child{border-bottom:none;}
     .collection-tab.is-active{border-bottom-color:var(--card-line);background:rgba(254,106,3,0.06);}
     .collection-grid{grid-template-columns:1fr;padding:18px 2px 4px;}
+    /* touch has no hover, so cards flip on tap instead (handled in JS);
+       give the back face more room since it's a single column now */
+    .findings-grid{grid-template-columns:1fr;grid-auto-rows:190px;}
+    .finding-face{padding:20px;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
@@ -848,36 +887,192 @@
   </div>
 </section>
 
-<!-- FOUNDER COMMENTARY -->
-<section>
-  <div class="container">
-    <div class="kicker">From the founder</div>
-    <div class="founder-header">
-      <div class="founder-avatar">D</div>
-      <div><div class="founder-name">Daniel, Founder of Atom Foundry</div><div class="founder-title">Scanning DTC stores daily since January 2026</div></div>
-    </div>
-    <div class="founder-observations">
-      <div class="observation"><div class="observation-num">Observation 01</div><div class="observation-text">The most surprising thing I keep seeing is that <strong>big brands score worse than small niche stores.</strong> A well-known fashion brand with millions in revenue can score 12/100. A small skincare startup with 500 Instagram followers scores 68. Brand recognition has zero correlation with AI readiness.</div></div>
-      <div class="observation"><div class="observation-num">Observation 02</div><div class="observation-text"><strong>Most founders have no idea this is happening.</strong> When I reach out after scanning a store, the response is almost always the same: "We didn't know AI couldn't read our products." The invisibility is silent. There is no error message. The store just gets skipped.</div></div>
-      <div class="observation"><div class="observation-num">Observation 03</div><div class="observation-text">The stores that score highest are not the ones with the best design or the most traffic. They are the ones where <strong>someone once added proper schema markup, wrote real product descriptions, and made the return policy readable without JavaScript.</strong></div></div>
-      <div class="observation"><div class="observation-num">Observation 04</div><div class="observation-text"><strong>Trust is the hardest signal to fix fast.</strong> Missing schema markup can be patched in an afternoon. Low trust scores take longer because trust requires reviews, real policies, contact information, and SSL all working together in a way that AI can parse without rendering JavaScript.</div></div>
-      <div class="observation"><div class="observation-num">Observation 05</div><div class="observation-text">I genuinely believe that <strong>the stores optimizing for AI in 2026 will have a compounding advantage through 2027 and beyond.</strong> AI agents learn which stores to trust. Early movers build recommendation history. The longer you wait, the harder it gets to catch up.</div></div>
-    </div>
-  </div>
-</section>
-
 <!-- KEY FINDINGS -->
 <section class="alt">
   <div class="container">
     <div class="kicker">Key Findings</div>
     <h2 class="section-title">What the data actually shows</h2>
-    <div class="findings-feed" style="margin-top:20px;">
-      <div class="feed-row"><div class="feed-dot"></div><div><div class="feed-text" id="finding1"><strong>Loading live data...</strong></div><div class="feed-source" id="finding1src"></div></div></div>
-      <div class="feed-row"><div class="feed-dot"></div><div><div class="feed-text"><strong>Not one store out of the first 500 reached Highly Recommendable status</strong> (85 or above). The bar for full AI recommendation confidence is high, and no store in our first 500 dataset cleared it.</div><div class="feed-source">500 Stores Report · May 2026</div></div></div>
-      <div class="feed-row"><div class="feed-dot"></div><div><div class="feed-text"><strong>Schema markup averages 6.1 out of 20 across the first 500 stores.</strong> Most stores have no structured JSON-LD data that AI can reliably parse.</div><div class="feed-source">500 Stores Report · May 2026</div></div></div>
-      <div class="feed-row"><div class="feed-dot"></div><div><div class="feed-text"><strong>Major retailers scored as low as 4 out of 100.</strong> Brand recognition and organic traffic do not translate to AI recommendation readiness.</div><div class="feed-source">500 Stores Report · May 2026</div></div></div>
-      <div class="feed-row"><div class="feed-dot"></div><div><div class="feed-text"><strong>Fashion stores average 41 out of 100 and 52% are AI Invisible Risk.</strong> Despite high brand recognition, fashion is one of the weakest verticals for AI recommendation readiness.</div><div class="feed-source">500 Stores Report · Fashion Niche · 160 stores</div></div></div>
-      <div class="feed-row"><div class="feed-dot"></div><div><div class="feed-text"><strong>Shopify launched its Agentic Dashboard in May 2026</strong>, generating llms.txt, llms-full.txt, and agents.md for every store. Content quality is now the only remaining differentiator.</div><div class="feed-source">Shopify Agentic Analysis · May 2026</div></div></div>
+    <div class="findings-grid">
+      <a class="finding-card" href="#research" data-key="1">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">The model remembers itself.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">The model remembers itself.</div>
+              <div class="finding-body">Previous recommendations predict future recommendations better than store quality, brand fame or web presence.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="2">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Web Search rewrites recommendations.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Web Search rewrites recommendations.</div>
+              <div class="finding-body">Enabling web search changed 77% of recommended brands, even with the same prompts and model.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="3">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Store quality doesn't predict recommendations.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Store quality doesn't predict recommendations.</div>
+              <div class="finding-body">High-quality stores are not automatically recommended by AI shopping systems.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="4">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">AI Invisible Risk is real.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">AI Invisible Risk is real.</div>
+              <div class="finding-body">Many stores remain effectively invisible to AI recommendations despite being fully operational.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="5">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Recommendation rankings stay stable.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Recommendation rankings stay stable.</div>
+              <div class="finding-body">Recommendation rankings showed virtually no measurable drift across a 15-day period.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="6">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Recognition isn't recommendation.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Recognition isn't recommendation.</div>
+              <div class="finding-body">AI can recognize and understand a brand without ever recommending it.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="7">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Memory beats web presence.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Memory beats web presence.</div>
+              <div class="finding-body">The model's own history explains recommendations better than external brand signals.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="8">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Big brands aren't guaranteed winners.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Big brands aren't guaranteed winners.</div>
+              <div class="finding-body">Well-known brands often outperform in visibility, but not necessarily in AI readiness.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="9">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Visibility isn't enough.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Visibility isn't enough.</div>
+              <div class="finding-body">Being discoverable by AI doesn't guarantee being selected as a recommendation.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="10">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Trust is cumulative.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Trust is cumulative.</div>
+              <div class="finding-body">Recommendation confidence emerges from many small trust signals rather than a single optimization.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="11">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Intent changes the outcome.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Intent changes the outcome.</div>
+              <div class="finding-body">The same brand can perform very differently depending on what the shopper is asking.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="12">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Industries behave differently.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Industries behave differently.</div>
+              <div class="finding-body">Each ecommerce category follows its own recommendation dynamics under the same methodology.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="13">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">AI commerce is measurable.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">AI commerce is measurable.</div>
+              <div class="finding-body">Recommendation behavior can be studied through controlled experiments and repeatable measurements.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="14">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Monitoring isn't always necessary.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Monitoring isn't always necessary.</div>
+              <div class="finding-body">Stable recommendation rankings suggest that continuous daily monitoring often adds little value.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
+      <a class="finding-card" href="#research" data-key="15">
+        <div class="finding-card-inner">
+          <div class="finding-face finding-face-front"><div class="finding-title">Every recommendation has a pattern.</div></div>
+          <div class="finding-face finding-face-back">
+            <div>
+              <div class="finding-title">Every recommendation has a pattern.</div>
+              <div class="finding-body">AI recommendations are not random — they follow measurable, repeatable behavior across large datasets.</div>
+            </div>
+            <div class="finding-view">View Study<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -1219,6 +1414,44 @@
     }
     openFromHash();
     window.addEventListener('hashchange', openFromHash);
+  })();
+
+  // Key Findings — flip cards. Desktop flips on hover (handled in CSS at
+  // the same 1.9s speed as the chart hover-replay). Touch has no hover,
+  // so a tap flips the card first; tapping the already-flipped card
+  // follows the link through — same "first tap reveals, second tap
+  // follows" pattern already used by the mobile nav dropdown. Cards also
+  // reveal individually as they scroll into view, not all at once.
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.finding-card'));
+    if (!cards.length) return;
+
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (!card.classList.contains('is-flipped')) {
+            e.preventDefault();
+            cards.forEach(other => { if (other !== card) other.classList.remove('is-flipped'); });
+            card.classList.add('is-flipped');
+          }
+        });
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      cards.forEach(card => io.observe(card));
+    } else {
+      cards.forEach(card => card.classList.add('is-visible'));
+    }
   })();
 
   // Count a number up once its element scrolls into view — same helper
