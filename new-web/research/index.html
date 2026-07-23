@@ -243,11 +243,14 @@
   .research-hero{padding:88px 0 48px;background:var(--cream);}
   .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:640px;margin-top:16px;}
 
-  /* ---------- STATS GRID ---------- */
-  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--card-line);border:1px solid var(--card-line);border-radius:var(--radius);overflow:hidden;margin:36px 0 0;}
-  .stat-cell{background:var(--card);padding:24px 16px;text-align:center;}
-  .stat-num{font-family:var(--serif);font-size:clamp(24px,3vw,32px);font-weight:800;color:var(--orange);line-height:1;margin-bottom:6px;}
-  .stat-label{font-size:11.5px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;}
+  /* ---------- HERO STAT ROW (same language as the landing page's
+     niche-chart-stores / niche-overall: one row, big orange counted-up
+     number, label right after it, middot dividers between items) ---------- */
+  .hero-stat-row{display:flex;flex-wrap:wrap;align-items:baseline;row-gap:14px;margin-top:36px;}
+  .hero-stat{display:flex;align-items:baseline;gap:9px;white-space:nowrap;}
+  .hero-stat:not(:first-child)::before{content:"·";margin-right:22px;color:var(--gray-300);font-weight:700;font-size:17px;}
+  .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:40px;letter-spacing:-0.02em;line-height:1;}
+  .hero-stat span{font-family:var(--serif);font-size:15px;color:var(--black);font-weight:700;letter-spacing:-0.01em;}
 
   /* ---------- CHART CARDS ---------- */
   .chart-card{background:var(--card);border-radius:var(--radius);padding:28px;margin-bottom:24px;}
@@ -370,7 +373,6 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
-    .stat-grid{grid-template-columns:1fr 1fr;}
     .chart-flex{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .research-hero{padding:72px 0 40px;}
@@ -392,7 +394,9 @@
     .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
     section{padding:44px 20px;}
     .research-hero{padding:56px 0 32px;}
-    .stat-grid{grid-template-columns:1fr 1fr;}
+    .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
+    .hero-stat:not(:first-child)::before{display:none;}
+    .hero-stat-num{font-size:30px;}
     .products-grid{grid-template-columns:1fr;}
     .products-grid.cols-2{grid-template-columns:1fr;}
     .report-row{flex-wrap:wrap;padding:14px 18px;}
@@ -496,11 +500,11 @@
     <div class="kicker">Research</div>
     <h1 class="page-title">What we found after scanning <em>thousands of real stores</em></h1>
     <p class="research-hero-sub">We run automated scans on Shopify and DTC stores to understand how AI shopping agents actually read, evaluate, and recommend them. The data is live, continuously updated, and ours alone.</p>
-    <div class="stat-grid">
-      <div class="stat-cell"><div class="stat-num" id="statStores">—</div><div class="stat-label">Stores analyzed</div></div>
-      <div class="stat-cell"><div class="stat-num" id="statAvg">—</div><div class="stat-label">Avg AI score</div></div>
-      <div class="stat-cell"><div class="stat-num" id="statRisk">—</div><div class="stat-label">AI Invisible Risk</div></div>
-      <div class="stat-cell"><div class="stat-num" id="statHighPct">—</div><div class="stat-label">Highly Recommendable</div></div>
+    <div class="hero-stat-row">
+      <div class="hero-stat"><b class="hero-stat-num" id="statStores" data-target="66087">0</b><span>Stores analyzed</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statAvg" data-target="56">0</b><span>/100 Average AI Commerce Score</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statRisk" data-target="22">0</b><span>% AI Invisible Risk</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statHighPct" data-target="0">0</b><span>% Highly Recommendable Stores</span></div>
     </div>
   </div>
 </section>
@@ -871,6 +875,42 @@
     });
   });
 
+  // Count a number up once its element scrolls into view — same helper
+  // used for the hero stat row on the landing page.
+  function observeCountUp(el, duration){
+    if (!el) return;
+    let played = false;
+    function play(){
+      if (played) return;
+      played = true;
+      el.dataset.played = '1';
+      const target = Number(el.dataset.target) || 0;
+      countUp(el, target, duration || 1400);
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) play(); });
+      }, { threshold: 0.3 });
+      io.observe(el);
+    } else {
+      window.addEventListener('load', () => setTimeout(play, 400));
+    }
+  }
+  observeCountUp(document.getElementById('statStores'), 1400);
+  observeCountUp(document.getElementById('statAvg'), 1200);
+  observeCountUp(document.getElementById('statRisk'), 1200);
+  observeCountUp(document.getElementById('statHighPct'), 1200);
+
+  // Update a hero stat's target once live data arrives. If it already
+  // finished counting up, just snap the number to the real value;
+  // otherwise the animation will use the corrected target when it plays.
+  function setStatTarget(id, value){
+    const el = document.getElementById(id);
+    if (!el || !Number.isFinite(value)) return;
+    el.dataset.target = value;
+    if (el.dataset.played === '1') el.textContent = Math.round(value).toLocaleString('en-US');
+  }
+
   // Donut chart — score distribution (default data, overwritten by live fetch below).
   const donutChart = new Chart(document.getElementById('donutChart'), {
     type: 'doughnut',
@@ -912,10 +952,10 @@
       const avg = Number(s.avg_score), invisible = Number(s.invis_pct), partial = Number(s.partial_pct), highPct = Number(s.high_pct);
       const highCount = Number(s.high_count);
       const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-      setText('statStores', f(count));
-      setText('statAvg', avg + '/100');
-      setText('statRisk', Number.isFinite(invisible) ? invisible + '%' : '—');
-      setText('statHighPct', Number.isFinite(highPct) ? highPct + '%' : '—');
+      setStatTarget('statStores', count);
+      setStatTarget('statAvg', avg);
+      setStatTarget('statRisk', invisible);
+      setStatTarget('statHighPct', highPct);
       setText('liveInvisible', Number.isFinite(invisible) ? invisible + '%' : '—');
       setText('livePartial', Number.isFinite(partial) ? partial + '%' : '—');
       setText('statHighly', f(highCount) + ' stores');
