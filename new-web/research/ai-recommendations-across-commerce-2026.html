@@ -227,9 +227,40 @@
      only these presentation classes are re-themed so its tick/axis/label
      text is legible on the light card background instead of the original
      dark one */
-  .sc-tick{fill:var(--gray-500);font-size:11px;font-family:inherit;}
-  .sc-axis{fill:var(--gray-700);font-size:12px;font-weight:600;font-family:inherit;}
-  .sc-label{fill:var(--black);font-size:11px;font-family:inherit;}
+  /* ---------- CORRELATION CHART — a diverging bar chart that grows out
+     of a zero line, built as plain HTML/CSS instead of a static SVG so
+     it can breathe: bars grow in on scroll (staggered, same easing as
+     the rest of the site), and hovering one replays its growth and
+     surfaces a tooltip with the full "category: r, n" reading — the
+     same hover-replay + tooltip language as the AI Commerce Bar™
+     chart on the main research page. ---------- */
+  .corr-chart{position:relative;display:flex;align-items:stretch;gap:6px;height:352px;padding:0 4px;margin-top:4px;}
+  .corr-band{position:absolute;left:4px;right:4px;top:calc(50% - 20px);height:40px;background:rgba(29,158,117,0.08);border-radius:3px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;pointer-events:none;}
+  .corr-band-label{font-size:10.5px;color:var(--green);font-weight:700;}
+  .corr-zero{position:absolute;left:4px;right:4px;top:50%;height:1px;background:rgba(22,21,18,0.28);pointer-events:none;}
+  .corr-zero-label{position:absolute;left:0;top:-8px;font-size:10px;color:var(--gray-500);font-weight:700;background:var(--card);padding-right:6px;}
+  .corr-bar{flex:1;display:flex;flex-direction:column;min-width:0;position:relative;cursor:default;}
+  .corr-bar-upper{height:150px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;}
+  .corr-bar-lower{height:150px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;}
+  .corr-bar-value{font-family:var(--serif);font-size:12.5px;font-weight:800;color:var(--black);margin:0 0 6px;transition:color .2s ease;}
+  .corr-bar-lower .corr-bar-value{margin:6px 0 0;}
+  .corr-bar-fill{width:64%;max-width:56px;border-radius:3px;height:0;background:var(--orange);transition:height 1.1s cubic-bezier(.16,.8,.4,1);}
+  .corr-bar.flag .corr-bar-fill{background:var(--red);}
+  .corr-bar.is-visible .corr-bar-fill{height:var(--h);}
+  .corr-bar-label{margin-top:14px;text-align:center;font-size:12.5px;font-weight:700;color:var(--gray-700);line-height:1.3;}
+  .corr-bar-label span{display:block;font-size:10px;color:var(--gray-500);font-weight:500;margin-top:2px;}
+  .corr-tip{
+    position:absolute;top:0;left:50%;transform:translate(-50%,-100%) translateY(2px);
+    background:var(--black);color:var(--white);font-size:11px;line-height:1.5;
+    padding:8px 11px;border-radius:4px;width:172px;text-align:left;
+    opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;z-index:20;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .corr-bar:hover .corr-tip{opacity:1;transform:translate(-50%,-100%) translateY(-6px);}
+    .corr-bar:hover .corr-bar-value{color:var(--orange);}
+    .corr-bar.flag:hover .corr-bar-value{color:var(--red);}
+  }
+  .corr-axis-note{margin-top:14px;font-size:11px;color:var(--gray-500);text-align:center;}
 
   /* ---------- CALLOUT ---------- */
   .callout{background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.22);border-left:3px solid var(--green);border-radius:var(--radius);padding:16px 20px;margin-top:20px;font-size:14px;color:var(--gray-700);line-height:1.7;}
@@ -343,6 +374,15 @@
     .hero-stat:not(:first-child)::before{display:none;}
     .hero-stat-num{font-size:28px;}
     .chart-card{padding:18px;}
+    .corr-chart{gap:2px;padding:0 2px;}
+    .corr-bar-upper,.corr-bar-lower{height:120px;}
+    .corr-bar-value{font-size:10px;margin-bottom:4px;}
+    .corr-bar-lower .corr-bar-value{margin:4px 0 0;}
+    .corr-bar-label{font-size:10.5px;margin-top:10px;}
+    .corr-bar-label span{font-size:9px;}
+    .corr-band-label{font-size:8.5px;}
+    .corr-zero-label{font-size:9px;}
+    .corr-tip{display:none;}
     .weight-name{flex-basis:104px;font-size:12.5px;}
     .products-grid{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
@@ -471,9 +511,56 @@
     <p class="section-body">For every category we measured two things per brand: how often AI recommended it (Recommendation Frequency™) and how AI-ready its store actually is (AI Commerce Score™, our 0 to 100 measure of how readable, trustworthy, and machine-legible a store is). Then we correlated them. If readiness drove recommendation, these bars would climb. They do not.</p>
     <div class="chart-card">
       <div class="chart-card-title">Correlation: Recommendation Frequency™ vs AI Commerce Score™, by category</div>
-      <svg viewBox="0 0 720 430" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart of correlation between recommendation frequency and AI Commerce Score across five categories. All five hover near zero, with pets slightly negative. None shows a positive relationship.">
-  <rect x="80" y="136.0" width="600" height="128.0" fill="#1D9E75" fill-opacity="0.05"/><text x="684" y="132.0" text-anchor="end" class="sc-tick" fill="#3a6b58">no meaningful correlation</text><line x1="80" y1="360.0" x2="680" y2="360.0" stroke="#1a1a1a" stroke-width="1" stroke-opacity="0.12"/><text x="72" y="364.0" text-anchor="end" class="sc-tick">-0.50</text><line x1="80" y1="280.0" x2="680" y2="280.0" stroke="#1a1a1a" stroke-width="1" stroke-opacity="0.12"/><text x="72" y="284.0" text-anchor="end" class="sc-tick">-0.25</text><line x1="80" y1="200.0" x2="680" y2="200.0" stroke="#161512" stroke-width="1.5" stroke-opacity="0.35"/><text x="72" y="204.0" text-anchor="end" class="sc-tick">+0.00</text><line x1="80" y1="120.0" x2="680" y2="120.0" stroke="#1a1a1a" stroke-width="1" stroke-opacity="0.12"/><text x="72" y="124.0" text-anchor="end" class="sc-tick">+0.25</text><line x1="80" y1="40.0" x2="680" y2="40.0" stroke="#1a1a1a" stroke-width="1" stroke-opacity="0.12"/><text x="72" y="44.0" text-anchor="end" class="sc-tick">+0.50</text><rect x="104.0" y="145.6" width="72" height="54.4" rx="3" fill="#f97316" fill-opacity="0.88"><title>Beauty: r=+0.170 (n=18)</title></rect><text x="140.0" y="137.6" text-anchor="middle" class="sc-label" style="font-weight:700;">r=+0.170</text><text x="140.0" y="392" text-anchor="middle" class="sc-tick" style="font-size:12px;">Beauty</text><text x="140.0" y="406" text-anchor="middle" class="sc-tick" style="font-size:10px;">n=18</text><rect x="224.0" y="200.0" width="72" height="4.8" rx="3" fill="#f97316" fill-opacity="0.88"><title>Supplements: r=-0.015 (n=39)</title></rect><text x="260.0" y="220.8" text-anchor="middle" class="sc-label" style="font-weight:700;">r=-0.015</text><text x="260.0" y="392" text-anchor="middle" class="sc-tick" style="font-size:12px;">Supplements</text><text x="260.0" y="406" text-anchor="middle" class="sc-tick" style="font-size:10px;">n=39</text><rect x="344.0" y="193.9" width="72" height="6.1" rx="3" fill="#f97316" fill-opacity="0.88"><title>Coffee: r=+0.019 (n=18)</title></rect><text x="380.0" y="185.9" text-anchor="middle" class="sc-label" style="font-weight:700;">r=+0.019</text><text x="380.0" y="392" text-anchor="middle" class="sc-tick" style="font-size:12px;">Coffee</text><text x="380.0" y="406" text-anchor="middle" class="sc-tick" style="font-size:10px;">n=18</text><rect x="464.0" y="200.0" width="72" height="117.1" rx="3" fill="#E24B4A" fill-opacity="0.88"><title>Pets: r=-0.366 (n=39)</title></rect><text x="500.0" y="333.1" text-anchor="middle" class="sc-label" style="font-weight:700;">r=-0.366</text><text x="500.0" y="392" text-anchor="middle" class="sc-tick" style="font-size:12px;">Pets</text><text x="500.0" y="406" text-anchor="middle" class="sc-tick" style="font-size:10px;">n=39</text><rect x="584.0" y="165.4" width="72" height="34.6" rx="3" fill="#f97316" fill-opacity="0.88"><title>Home & Living: r=+0.108 (n=71)</title></rect><text x="620.0" y="157.4" text-anchor="middle" class="sc-label" style="font-weight:700;">r=+0.108</text><text x="620.0" y="392" text-anchor="middle" class="sc-tick" style="font-size:12px;">Home</text><text x="620.0" y="406" text-anchor="middle" class="sc-tick" style="font-size:10px;">n=71</text><text x="40" y="201" text-anchor="middle" class="sc-axis" transform="rotate(-90 40 201)">Correlation r: Recommendation Frequency™ vs AI Commerce Score™</text>
-      </svg>
+      <div class="corr-chart" id="corrChart">
+        <div class="corr-band"><span class="corr-band-label">no meaningful correlation</span></div>
+        <div class="corr-zero"><span class="corr-zero-label">+0.00</span></div>
+        <div class="corr-bar" data-tip="Beauty: r=+0.170 (n=18)">
+          <div class="corr-bar-upper">
+            <span class="corr-bar-value">r=+0.170</span>
+            <div class="corr-bar-fill" style="--h:47.6px;"></div>
+          </div>
+          <div class="corr-bar-lower"></div>
+          <div class="corr-bar-label">Beauty<span>n=18</span></div>
+          <div class="corr-tip">Beauty: r=+0.170 (n=18)</div>
+        </div>
+        <div class="corr-bar" data-tip="Supplements: r=-0.015 (n=39)">
+          <div class="corr-bar-upper"></div>
+          <div class="corr-bar-lower">
+            <div class="corr-bar-fill" style="--h:4.2px;"></div>
+            <span class="corr-bar-value">r=-0.015</span>
+          </div>
+          <div class="corr-bar-label">Supplements<span>n=39</span></div>
+          <div class="corr-tip">Supplements: r=-0.015 (n=39)</div>
+        </div>
+        <div class="corr-bar" data-tip="Coffee: r=+0.019 (n=18)">
+          <div class="corr-bar-upper">
+            <span class="corr-bar-value">r=+0.019</span>
+            <div class="corr-bar-fill" style="--h:5.3px;"></div>
+          </div>
+          <div class="corr-bar-lower"></div>
+          <div class="corr-bar-label">Coffee<span>n=18</span></div>
+          <div class="corr-tip">Coffee: r=+0.019 (n=18)</div>
+        </div>
+        <div class="corr-bar flag" data-tip="Pets: r=-0.366 (n=39)">
+          <div class="corr-bar-upper"></div>
+          <div class="corr-bar-lower">
+            <div class="corr-bar-fill" style="--h:102.5px;"></div>
+            <span class="corr-bar-value">r=-0.366</span>
+          </div>
+          <div class="corr-bar-label">Pets<span>n=39</span></div>
+          <div class="corr-tip">Pets: r=-0.366 (n=39)</div>
+        </div>
+        <div class="corr-bar" data-tip="Home & Living: r=+0.108 (n=71)">
+          <div class="corr-bar-upper">
+            <span class="corr-bar-value">r=+0.108</span>
+            <div class="corr-bar-fill" style="--h:30.2px;"></div>
+          </div>
+          <div class="corr-bar-lower"></div>
+          <div class="corr-bar-label">Home<span>n=71</span></div>
+          <div class="corr-tip">Home &amp; Living: r=+0.108 (n=71)</div>
+        </div>
+      </div>
+      <div class="corr-axis-note">Correlation r: Recommendation Frequency™ vs AI Commerce Score™</div>
     </div>
     <div class="callout">Five categories. More than 20,000 recommendations. <strong>Not once</strong> is recommendation frequency meaningfully and positively related to store readiness. Three categories sit at zero (beauty, supplements, coffee), one is zero again (home &amp; living), and the only category to break from zero, pets, breaks in the <strong>wrong</strong> direction: there, the most recommended brands tend to have slightly worse stores. The conclusion is no longer a single finding. It is a replicated result.</div>
   </div>
@@ -777,6 +864,52 @@
   observeCountUp(document.getElementById('statBrands'), 1300);
   observeCountUp(document.getElementById('statCats'), 900);
   observeCountUp(document.getElementById('statIntents'), 1000);
+
+  // Correlation chart — bars grow out of the zero line once scrolled
+  // into view, staggered so it reads as the chart drawing itself in
+  // rather than snapping on all at once. Hovering a bar (desktop only)
+  // replays its growth at the slower "premium" hover-replay speed used
+  // across the site and reveals a tooltip with the full reading.
+  (function(){
+    const chart = document.getElementById('corrChart');
+    if (!chart) return;
+    const bars = Array.from(chart.querySelectorAll('.corr-bar'));
+    if (!bars.length) return;
+
+    bars.forEach((bar, i) => { bar.style.setProperty('--i', i); });
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const bar = entry.target;
+            const idx = bars.indexOf(bar);
+            setTimeout(() => bar.classList.add('is-visible'), idx * 90);
+            io.unobserve(bar);
+          }
+        });
+      }, { threshold: 0.3 });
+      bars.forEach(bar => io.observe(bar));
+    } else {
+      bars.forEach(bar => bar.classList.add('is-visible'));
+    }
+
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (canHover) {
+      bars.forEach(bar => {
+        bar.addEventListener('mouseenter', () => {
+          const fill = bar.querySelector('.corr-bar-fill');
+          if (!fill) return;
+          const target = fill.style.getPropertyValue('--h');
+          fill.style.transition = 'none';
+          fill.style.height = '0px';
+          fill.getBoundingClientRect();
+          fill.style.transition = 'height 1.9s cubic-bezier(.16,.8,.4,1)';
+          fill.style.height = target;
+        });
+      });
+    }
+  })();
 
   // Marketplace-share bars fill in once scrolled into view — same
   // reveal pattern as the methodology weight list elsewhere on the site.
