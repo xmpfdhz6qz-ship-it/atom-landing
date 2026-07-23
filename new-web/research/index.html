@@ -332,36 +332,56 @@
   }
   .pyramid-watermark{margin-top:18px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);text-align:left;font-family:ui-monospace,Menlo,monospace;}
 
-  /* ---------- REPORT CHIPS + ACCORDION ---------- */
-  .research-chips{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 24px;}
-  .research-chip{font-size:12.5px;color:var(--gray-700);font-weight:700;border:1px solid var(--card-line);border-radius:999px;padding:8px 15px;background:var(--white);transition:all .2s ease;display:inline-flex;align-items:center;gap:7px;}
-  .research-chip:hover{color:var(--orange);border-color:var(--orange);}
-  .research-chip .chip-count{font-size:10px;color:var(--gray-700);background:var(--card);border-radius:999px;padding:1px 7px;}
-  .research-category{background:var(--card);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;scroll-margin-top:20px;}
-  .research-category summary{list-style:none;cursor:pointer;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-  .research-category summary::-webkit-details-marker{display:none;}
-  .rc-title-group{display:flex;align-items:center;gap:12px;}
-  .rc-icon{font-size:18px;line-height:1;}
-  .rc-name{font-size:15.5px;font-weight:800;color:var(--black);letter-spacing:-0.01em;}
-  .rc-sub{font-size:12px;color:var(--gray-700);margin-top:2px;}
-  .rc-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-  .rc-count{font-size:11px;color:var(--gray-700);background:var(--cream);border-radius:999px;padding:3px 10px;font-weight:700;}
-  .rc-toggle{width:22px;height:22px;border-radius:50%;background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:transform .2s ease;}
-  .research-category[open] .rc-toggle{transform:rotate(45deg);}
-  .rc-list{border-top:1px solid var(--card-line);background:var(--cream);}
-  .report-row{display:flex;align-items:center;gap:14px;padding:15px 22px;border-bottom:1px solid var(--card-line);transition:background .15s ease;}
-  .report-row:last-child{border-bottom:none;}
-  .report-row:hover{background:rgba(254,106,3,0.06);}
-  .report-row-main{flex:1;min-width:0;}
-  .report-row-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
-  .report-row-title{font-size:14.5px;font-weight:700;color:var(--black);line-height:1.35;}
-  .report-row-tag{font-size:9px;text-transform:uppercase;letter-spacing:0.06em;font-weight:800;padding:2px 7px;border-radius:5px;flex-shrink:0;}
-  .report-row-tag.corrected{color:var(--red);background:rgba(217,60,60,0.1);}
-  .report-row-tag.live{color:var(--amber);background:rgba(224,162,51,0.14);}
-  .report-row-desc{font-size:12.5px;color:var(--gray-700);line-height:1.55;}
-  .report-row-stat{font-size:13.5px;font-weight:800;color:var(--orange);white-space:nowrap;flex-shrink:0;}
-  .report-row-arrow{color:var(--gray-500);flex-shrink:0;transition:transform .15s, color .15s;font-size:16px;}
-  .report-row:hover .report-row-arrow{color:var(--orange);transform:translateX(3px);}
+  /* ---------- RESEARCH COLLECTIONS — large elegant panels, nothing open
+     by default, one open at a time. Clicking a panel expands it directly
+     underneath into a grid of report cards using the exact same card
+     language as the rest of the site (.mini-card system) — no new page,
+     no modal, just the panel opening in place. ---------- */
+  .collections{display:flex;flex-direction:column;gap:12px;margin-top:28px;}
+  .collection{background:var(--white);border:1px solid var(--card-line);border-radius:var(--radius);overflow:hidden;scroll-margin-top:20px;}
+  .collection-head{
+    width:100%;background:none;border:none;cursor:pointer;
+    padding:24px 26px;display:flex;align-items:center;gap:18px;
+    text-align:left;font-family:inherit;color:inherit;
+  }
+  .collection-icon{font-size:24px;line-height:1;flex-shrink:0;}
+  .collection-info{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;}
+  .collection-name{font-family:var(--serif);font-size:19px;font-weight:800;color:var(--black);letter-spacing:-0.01em;transition:color .2s ease;}
+  .collection-sub{font-size:13.5px;color:var(--gray-700);}
+  .collection-right{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+  .collection-count{font-size:12.5px;font-weight:700;color:var(--gray-700);}
+  .collection-toggle{
+    width:28px;height:28px;border-radius:50%;background:var(--black);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
+    transition:transform .28s cubic-bezier(.16,.8,.4,1), background .2s ease;
+  }
+  .collection.is-open .collection-toggle{transform:rotate(45deg);background:var(--orange);}
+  @media (hover:hover) and (pointer:fine){
+    .collection-head:hover .collection-name{color:var(--orange);}
+  }
+  .collection-body{max-height:0;overflow:hidden;transition:max-height .28s cubic-bezier(.16,.8,.4,1);}
+  .collection-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+    padding:4px 26px 26px;
+    opacity:0;transform:translateY(8px);
+    transition:opacity .28s ease, transform .28s ease;
+  }
+  .collection.is-open .collection-grid{opacity:1;transform:translateY(0);}
+
+  .report-card{
+    border-radius:var(--radius);padding:24px 22px;background:var(--card);
+    display:flex;flex-direction:column;min-height:180px;
+    transition:transform .3s ease, box-shadow .3s ease;
+    text-decoration:none;
+  }
+  .report-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .report-card .mini-card-title{font-size:16px;margin-bottom:8px;}
+  .report-card .mini-card-body{font-size:13px;margin-bottom:6px;}
+  .report-card-stat{font-size:13px;font-weight:800;color:var(--black);margin-bottom:4px;}
+  .report-card-stat + .mini-card-link,
+  .report-card .mini-card-body + .mini-card-link{margin-top:auto;}
+  .report-card .mini-card-link{display:inline-flex;align-items:center;transition:color .2s ease, transform .2s ease;}
+  .report-card:hover .mini-card-link{color:var(--orange);transform:translateX(2px);}
 
   /* ---------- FOUNDER COMMENTARY ---------- */
   .founder-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
@@ -388,6 +408,7 @@
   .products-grid.cols-2{grid-template-columns:repeat(2,1fr);}
   .mini-card{border-radius:var(--radius);padding:28px 24px;background:var(--card);display:flex;flex-direction:column;min-height:170px;transition:transform .3s ease, box-shadow .3s ease;}
   .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
   .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
   .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;flex:1;margin-bottom:12px;}
   .mini-card-status{display:inline-block;margin-top:auto;font-size:11px;font-weight:700;color:var(--orange);background:rgba(254,106,3,0.08);border-radius:999px;padding:4px 11px;text-transform:uppercase;letter-spacing:0.05em;align-self:flex-start;}
@@ -440,6 +461,7 @@
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
     .chart-flex{grid-template-columns:1fr;}
+    .collection-grid{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .research-hero{padding:72px 0 40px;}
     nav.links{gap:14px;}
@@ -484,9 +506,13 @@
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     .products-grid{grid-template-columns:1fr;}
     .products-grid.cols-2{grid-template-columns:1fr;}
-    .report-row{flex-wrap:wrap;padding:14px 18px;}
-    .report-row-stat{order:3;width:100%;margin-top:2px;}
-    .report-row-arrow{display:none;}
+    .collection-head{padding:18px 18px;gap:12px;}
+    .collection-icon{font-size:20px;}
+    .collection-name{font-size:16px;}
+    .collection-sub{font-size:12.5px;}
+    .collection-right{gap:10px;}
+    .collection-count{display:none;}
+    .collection-grid{grid-template-columns:1fr;padding:4px 18px 20px;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
@@ -515,10 +541,10 @@
         <a href="/research" class="nav-trigger active">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         <div class="dropdown">
           <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
-          <a href="/research#flagship" class="dd-item"><span class="dd-title">Flagship</span></a>
-          <a href="/research#mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
-          <a href="/research#category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
-          <a href="/research#founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+          <a href="/research#cat-flagship" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research#cat-mechanism" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research#cat-category" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/research#cat-founderlab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
         </div>
       </div>
 
@@ -665,72 +691,190 @@
   </div>
 </section>
 
-<!-- PUBLISHED REPORTS -->
+<!-- RESEARCH LIBRARY -->
 <section class="alt" id="research">
   <div class="container">
-    <div class="kicker">Published Reports</div>
+    <div class="kicker">Research Library</div>
     <h2 class="section-title">15 reports, <em>fully measured</em></h2>
-    <p class="section-body">Every report below is built entirely from real captured data. No projections, no estimates, every number traceable to a scan or a recorded AI response. Click a category to expand it, click a report to read it.</p>
-    <div class="research-chips">
-      <a href="#cat-flagship" class="research-chip">★ Flagship <span class="chip-count">1</span></a>
-      <a href="#cat-mechanism" class="research-chip">Mechanism Studies <span class="chip-count">7</span></a>
-      <a href="#cat-category" class="research-chip">Category Reports <span class="chip-count">5</span></a>
-      <a href="#cat-founderlab" class="research-chip">Founder Lab <span class="chip-count">2</span></a>
+    <p class="section-body">Every report is built from captured AI responses and real store scans. Explore the collection below.</p>
+
+    <div class="collections">
+      <div class="collection" id="cat-flagship" data-key="flagship">
+        <button class="collection-head" type="button" aria-expanded="false">
+          <span class="collection-icon">⭐</span>
+          <span class="collection-info">
+            <span class="collection-name">Flagship</span>
+            <span class="collection-sub">The complete cross-category report.</span>
+          </span>
+          <span class="collection-right">
+            <span class="collection-count">1 report</span>
+            <span class="collection-toggle">+</span>
+          </span>
+        </button>
+        <div class="collection-body">
+          <div class="collection-grid">
+            <a class="report-card" href="/research/ai-recommendations-across-commerce-2026">
+              <div class="mini-card-eyebrow">Flagship</div>
+              <div class="mini-card-title">The State of AI Recommendations Across Commerce 2026</div>
+              <div class="mini-card-body">20,000 recommendations, 1,490 brands, five categories. The result that started this whole series.</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="collection" id="cat-mechanism" data-key="mechanism">
+        <button class="collection-head" type="button" aria-expanded="false">
+          <span class="collection-icon">🔬</span>
+          <span class="collection-info">
+            <span class="collection-name">Mechanism Studies</span>
+            <span class="collection-sub">How AI recommendation actually works.</span>
+          </span>
+          <span class="collection-right">
+            <span class="collection-count">7 reports</span>
+            <span class="collection-toggle">+</span>
+          </span>
+        </button>
+        <div class="collection-body">
+          <div class="collection-grid">
+            <a class="report-card" href="/research/web-search-changes-ai-recommendations">
+              <div class="mini-card-eyebrow">Mechanism</div>
+              <div class="mini-card-title">Web Search Rewrites 77% of AI Product Recommendations</div>
+              <div class="mini-card-body">Turning on browsing changes 77% of recommended brands, same model, same prompts.</div>
+              <div class="report-card-stat">77% of brands changed</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+            <a class="report-card" href="/research/the-fame-study">
+              <div class="mini-card-eyebrow">Mechanism — Corrected</div>
+              <div class="mini-card-title">The Fame Study, Corrected</div>
+              <div class="mini-card-body">Public fame explains 1.2% of recommendation, re-measured on 872 brands, sitting on the noise floor.</div>
+              <div class="report-card-stat">1.2% explained</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+            <a class="report-card" href="/research/ai-knows-your-website">
+              <div class="mini-card-eyebrow">Mechanism</div>
+              <div class="mini-card-title">AI Knows Your Website. It Still Won't Recommend You.</div>
+              <div class="mini-card-body">The model names the correct domain 75.9% of the time. Knowing where you are is not the same as reading your store.</div>
+              <div class="report-card-stat">75.9% domain accuracy</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+            <a class="report-card" href="/research/ai-confabulates-its-reasons">
+              <div class="mini-card-eyebrow">Mechanism</div>
+              <div class="mini-card-title">29,633 Reasons. 26,812 Unique. The Model Confabulates.</div>
+              <div class="mini-card-body">The model writes a fresh justification for every pick. Asking it why does not work.</div>
+              <div class="report-card-stat">90% unique reasons</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+            <a class="report-card" href="/research/search-changes-the-vocabulary">
+              <div class="mini-card-eyebrow">Mechanism</div>
+              <div class="mini-card-title">Search Changes the Vocabulary, Not Just the Brands</div>
+              <div class="mini-card-body">With search on, the model names ingredients and specifications. With it off, impressions.</div>
+              <div class="report-card-stat">21x more specific</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+            <a class="report-card" href="/research/candidacy-vs-selection">
+              <div class="mini-card-eyebrow">Mechanism</div>
+              <div class="mini-card-title">Candidacy vs Selection</div>
+              <div class="mini-card-body">Full population, 60,924 stores. Intent gets you into the recommended set. It wins you nothing once you're there.</div>
+              <div class="report-card-stat">R² 1.2%</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+            <a class="report-card" href="/research/the-model-predicts-itself">
+              <div class="mini-card-eyebrow">Mechanism</div>
+              <div class="mini-card-title">Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.</div>
+              <div class="mini-card-body">June's position predicts July's position, the strongest signal in this entire series, and it does not drift for 15 days.</div>
+              <div class="report-card-stat">61.4% self-predictive</div>
+              <span class="mini-card-link">Read report →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="collection" id="cat-category" data-key="category">
+        <button class="collection-head" type="button" aria-expanded="false">
+          <span class="collection-icon">📊</span>
+          <span class="collection-info">
+            <span class="collection-name">Category Reports</span>
+            <span class="collection-sub">The same methodology across industries.</span>
+          </span>
+          <span class="collection-right">
+            <span class="collection-count">5 reports</span>
+            <span class="collection-toggle">+</span>
+          </span>
+        </button>
+        <div class="collection-body">
+          <div class="collection-grid">
+            <a class="report-card" href="/research/state-of-ai-recommendations-beauty">
+              <div class="mini-card-eyebrow">Category</div>
+              <div class="mini-card-title">Beauty</div>
+              <div class="report-card-stat">238 brands</div>
+              <div class="report-card-stat">4,000 recommendations</div>
+              <span class="mini-card-link">Read →</span>
+            </a>
+            <a class="report-card" href="/research/state-of-ai-recommendations-supplements">
+              <div class="mini-card-eyebrow">Category</div>
+              <div class="mini-card-title">Supplements</div>
+              <div class="report-card-stat">371 brands</div>
+              <div class="report-card-stat">4,000 recommendations</div>
+              <span class="mini-card-link">Read →</span>
+            </a>
+            <a class="report-card" href="/research/state-of-ai-recommendations-coffee">
+              <div class="mini-card-eyebrow">Category</div>
+              <div class="mini-card-title">Coffee</div>
+              <div class="report-card-stat">228 brands</div>
+              <div class="report-card-stat">4,000 recommendations</div>
+              <span class="mini-card-link">Read →</span>
+            </a>
+            <a class="report-card" href="/research/state-of-ai-recommendations-pets">
+              <div class="mini-card-eyebrow">Category</div>
+              <div class="mini-card-title">Pets</div>
+              <div class="report-card-stat">405 brands</div>
+              <div class="report-card-stat">4,000 recommendations</div>
+              <span class="mini-card-link">Read →</span>
+            </a>
+            <a class="report-card" href="/research/state-of-ai-recommendations-home-living">
+              <div class="mini-card-eyebrow">Category</div>
+              <div class="mini-card-title">Home &amp; Living</div>
+              <div class="report-card-stat">271 brands</div>
+              <div class="report-card-stat">4,000 recommendations</div>
+              <span class="mini-card-link">Read →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="collection" id="cat-founderlab" data-key="founderlab">
+        <button class="collection-head" type="button" aria-expanded="false">
+          <span class="collection-icon">🧪</span>
+          <span class="collection-info">
+            <span class="collection-name">Founder Lab</span>
+            <span class="collection-sub">Experiments built in public.</span>
+          </span>
+          <span class="collection-right">
+            <span class="collection-count">2 reports</span>
+            <span class="collection-toggle">+</span>
+          </span>
+        </button>
+        <div class="collection-body">
+          <div class="collection-grid">
+            <a class="report-card" href="/research/founder-lab-day-zero">
+              <div class="mini-card-eyebrow">Founder Lab</div>
+              <div class="mini-card-title">Founder Lab, Day Zero</div>
+              <div class="mini-card-body">Our own store's baseline, before we changed a single word.</div>
+              <div class="report-card-stat">78/100 baseline score</div>
+              <span class="mini-card-link">Read →</span>
+            </a>
+            <a class="report-card" href="/research/founder-lab-log">
+              <div class="mini-card-eyebrow">Founder Lab</div>
+              <div class="mini-card-title">Founder Lab Log</div>
+              <div class="mini-card-body">Every change we make and every rescan, logged as it happens.</div>
+              <div class="report-card-stat">3 entries so far</div>
+              <span class="mini-card-link">Read →</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <details class="research-category" id="cat-flagship" open>
-      <summary>
-        <div class="rc-title-group"><span class="rc-icon">★</span><div><div class="rc-name">Flagship</div><div class="rc-sub">The full cross-category synthesis</div></div></div>
-        <div class="rc-right"><span class="rc-count">1 report</span><span class="rc-toggle">+</span></div>
-      </summary>
-      <div class="rc-list">
-        <a class="report-row" href="/research/ai-recommendations-across-commerce-2026">
-          <div class="report-row-main"><div class="report-row-top"><span class="report-row-title">The State of AI Recommendations Across Commerce 2026</span></div><div class="report-row-desc">20,000 recommendations, 1,490 brands, five categories. The result that started this whole series.</div></div>
-          <span class="report-row-arrow">→</span>
-        </a>
-      </div>
-    </details>
-
-    <details class="research-category" id="cat-mechanism">
-      <summary>
-        <div class="rc-title-group"><span class="rc-icon">🔍</span><div><div class="rc-name">Mechanism Studies</div><div class="rc-sub">Why recommendation works the way it does</div></div></div>
-        <div class="rc-right"><span class="rc-count">7 reports</span><span class="rc-toggle">+</span></div>
-      </summary>
-      <div class="rc-list">
-        <a class="report-row" href="/research/web-search-changes-ai-recommendations"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Web Search Rewrites 77% of AI Product Recommendations</span></div><div class="report-row-desc">Turning on browsing changes 77% of recommended brands, same model, same prompts.</div></div><span class="report-row-stat">77%</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/the-fame-study"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">The Fame Study, Corrected</span><span class="report-row-tag corrected">Corrected</span></div><div class="report-row-desc">Public fame explains 1.2% of recommendation, re-measured on 872 brands, sitting on the noise floor.</div></div><span class="report-row-stat">1.2%</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/ai-knows-your-website"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">AI Knows Your Website. It Still Won't Recommend You.</span></div><div class="report-row-desc">The model names the correct domain 75.9% of the time. Knowing where you are is not the same as reading your store.</div></div><span class="report-row-stat">75.9%</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/ai-confabulates-its-reasons"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">29,633 Reasons. 26,812 Unique. The Model Confabulates.</span></div><div class="report-row-desc">The model writes a fresh justification for every pick. Asking it why does not work.</div></div><span class="report-row-stat">90%</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/search-changes-the-vocabulary"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Search Changes the Vocabulary, Not Just the Brands</span></div><div class="report-row-desc">With search on, the model names ingredients and specifications. With it off, impressions.</div></div><span class="report-row-stat">21x</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/candidacy-vs-selection"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Candidacy vs Selection</span></div><div class="report-row-desc">Full population, 60,924 stores. Intent gets you into the recommended set. It wins you nothing once you're there.</div></div><span class="report-row-stat">R² 1.2%</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/the-model-predicts-itself"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.</span></div><div class="report-row-desc">June's position predicts July's position at 61.4%, the strongest signal in this entire series, and it does not drift for 15 days.</div></div><span class="report-row-stat">61.4%</span><span class="report-row-arrow">→</span></a>
-      </div>
-    </details>
-
-    <details class="research-category" id="cat-category">
-      <summary>
-        <div class="rc-title-group"><span class="rc-icon">📊</span><div><div class="rc-name">Category Reports</div><div class="rc-sub">The same test, repeated across five niches</div></div></div>
-        <div class="rc-right"><span class="rc-count">5 reports</span><span class="rc-toggle">+</span></div>
-      </summary>
-      <div class="rc-list">
-        <a class="report-row" href="/research/state-of-ai-recommendations-beauty"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Beauty</span></div><div class="report-row-desc">4,000 recommendations, 238 brands. Clinique and SkinCeuticals win big with stores scoring 14 out of 100.</div></div><span class="report-row-stat">r = 0.17</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/state-of-ai-recommendations-supplements"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Supplements</span></div><div class="report-row-desc">4,000 recommendations, 371 brands. NOW Foods wins on a 14-out-of-100 store.</div></div><span class="report-row-stat">r = -0.015</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/state-of-ai-recommendations-coffee"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Coffee</span></div><div class="report-row-desc">4,000 recommendations, 228 brands. Peet's wins 96% of the time on a 56-point store.</div></div><span class="report-row-stat">r = 0.019</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/state-of-ai-recommendations-pets"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Pets</span></div><div class="report-row-desc">4,000 recommendations, 405 brands. The sharpest result: the relationship runs faintly negative.</div></div><span class="report-row-stat">r = -0.366</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/state-of-ai-recommendations-home-living"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Home &amp; Living</span></div><div class="report-row-desc">4,000 recommendations, 271 brands. IKEA and West Elm dominate on 60-point stores.</div></div><span class="report-row-stat">r = 0.108</span><span class="report-row-arrow">→</span></a>
-      </div>
-    </details>
-
-    <details class="research-category" id="cat-founderlab">
-      <summary>
-        <div class="rc-title-group"><span class="rc-icon">🧪</span><div><div class="rc-name">Founder Lab</div><div class="rc-sub">Our own laboratory, tested in public</div></div></div>
-        <div class="rc-right"><span class="rc-count">2 pages</span><span class="rc-toggle">+</span></div>
-      </summary>
-      <div class="rc-list">
-        <a class="report-row" href="/research/founder-lab-day-zero"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Founder Lab, Day Zero</span><span class="report-row-tag live">Live</span></div><div class="report-row-desc">Our own store's baseline: score, crawlability, and zero AI bot visits, before we changed a single word.</div></div><span class="report-row-stat">78/100</span><span class="report-row-arrow">→</span></a>
-        <a class="report-row" href="/research/founder-lab-log"><div class="report-row-main"><div class="report-row-top"><span class="report-row-title">Founder Lab Log</span><span class="report-row-tag live">Live</span></div><div class="report-row-desc">Every change we make and every rescan, logged in the order it actually happened.</div></div><span class="report-row-stat">3 entries</span><span class="report-row-arrow">→</span></a>
-      </div>
-    </details>
   </div>
 </section>
 
@@ -994,14 +1138,61 @@
     window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
   })();
 
-  // Category chip navigation: open the target accordion and scroll to it.
-  document.querySelectorAll('.research-chip').forEach(chip => {
-    chip.addEventListener('click', function(){
-      const id = this.getAttribute('href').slice(1);
-      const target = document.getElementById(id);
-      if (target) target.open = true;
+  // Research Library collections — one open at a time, expanding directly
+  // beneath the clicked panel into a grid of report cards. No page change,
+  // no modal: the panel just opens in place.
+  (function(){
+    const collections = Array.from(document.querySelectorAll('.collection'));
+    if (!collections.length) return;
+
+    function closeCollection(col){
+      const body = col.querySelector('.collection-body');
+      const head = col.querySelector('.collection-head');
+      col.classList.remove('is-open');
+      if (head) head.setAttribute('aria-expanded', 'false');
+      if (body) body.style.maxHeight = '0px';
+    }
+    function openCollection(col){
+      const body = col.querySelector('.collection-body');
+      const head = col.querySelector('.collection-head');
+      const grid = col.querySelector('.collection-grid');
+      col.classList.add('is-open');
+      if (head) head.setAttribute('aria-expanded', 'true');
+      if (body && grid) body.style.maxHeight = (grid.scrollHeight + 40) + 'px';
+    }
+
+    collections.forEach(col => {
+      const head = col.querySelector('.collection-head');
+      if (!head) return;
+      head.addEventListener('click', () => {
+        const isOpen = col.classList.contains('is-open');
+        collections.forEach(other => { if (other !== col) closeCollection(other); });
+        if (isOpen) closeCollection(col); else openCollection(col);
+      });
     });
-  });
+
+    // If an open panel's content reflows (e.g. rotating a tablet changes
+    // the grid from 3 to 2 columns), keep its measured height correct.
+    window.addEventListener('resize', () => {
+      const open = collections.find(c => c.classList.contains('is-open'));
+      if (open) openCollection(open);
+    });
+
+    // Deep links (nav dropdown, footer) point at a collection's id —
+    // open that collection and scroll to it instead of landing on a
+    // collapsed panel.
+    function openFromHash(){
+      const id = location.hash.slice(1);
+      if (!id) return;
+      const col = document.getElementById(id);
+      if (!col || !col.classList.contains('collection')) return;
+      collections.forEach(other => { if (other !== col) closeCollection(other); });
+      openCollection(col);
+      setTimeout(() => col.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+    }
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+  })();
 
   // Count a number up once its element scrolls into view — same helper
   // used for the hero stat row on the landing page.
