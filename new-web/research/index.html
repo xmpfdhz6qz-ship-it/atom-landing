@@ -492,21 +492,20 @@
   .mini-card-link:hover{color:var(--orange);}
 
   /* ---------- RESEARCH TOPICS — resting state is just 8 small solid
-     orange squares (same square language as the finding-card swatches).
-     The card itself is always there, full size, but clip-path keeps it
-     clipped down to exactly the swatch's footprint, so nothing but the
-     square is visible. Hovering animates the clip rectangle open,
-     literally unfurling the card out of the square (with a 7px lift and
-     the shadow growing as more of the box's edge comes into view);
-     moving the mouse away reverses the same transition and the card
-     retracts back into the square. Touch devices get the same reveal
-     via tap (.is-open), gated the usual way to avoid iOS ghost-hover.
-     Swatches sit at 4 different spots along the TOP edge only (varied
-     per tile via nth-child, cycling every 4 cards) so the grid feels
-     irregular/organic — but they never drop into the bottom of the
-     card where the title/body text lives, so the enlarged swatch never
-     covers the text on hover. The resting clip-path for each variant is
-     hand-matched to that variant's swatch position/size. ---------- */
+     orange squares, all sitting in the same spot (centered along the top
+     edge) so they line up symmetrically across the grid. The card itself
+     is always there, full size, but clip-path keeps it clipped down to
+     exactly the swatch's footprint, so nothing but the square is
+     visible. Hovering animates the clip rectangle open, literally
+     unfurling the card out of the square (with a 7px lift and the
+     shadow growing as more of the box's edge comes into view); moving
+     the mouse away reverses the same transition and the card retracts
+     back into the square. The swatch stays pinned to the top edge in
+     both states and the title/body/status are always bottom-anchored
+     (flex justify-content:flex-end), so there's a fixed gap between them
+     — the enlarged swatch never overlaps the text on hover, at any
+     breakpoint. Touch devices get the same reveal via tap (.is-open),
+     gated the usual way to avoid iOS ghost-hover. ---------- */
   .topics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px;}
   .topic-tile{
     position:relative;border-radius:var(--radius);
@@ -515,21 +514,16 @@
     background:var(--card);
     box-shadow:0 22px 40px -20px rgba(22,21,18,0.3);
     outline:none;
-    clip-path:inset(20px calc(100% - 36px) calc(100% - 34px) 22px round 3px);
+    clip-path:inset(20px calc(50% - 7px) calc(100% - 34px) calc(50% - 7px) round 3px);
     transition:clip-path .45s cubic-bezier(.16,.8,.4,1), transform .45s cubic-bezier(.16,.8,.4,1);
   }
   .topic-swatch{
-    position:absolute;top:20px;left:22px;right:auto;z-index:2;
+    position:absolute;top:20px;left:50%;z-index:2;
     width:14px;height:14px;border-radius:3px;background:var(--orange);
+    transform:translateX(-50%);
     transition:transform .45s cubic-bezier(.16,.8,.4,1);
     pointer-events:none;
   }
-  .topic-tile:nth-child(4n+2){clip-path:inset(24px calc(100% - 70px) calc(100% - 38px) 56px round 3px);}
-  .topic-tile:nth-child(4n+2) .topic-swatch{top:24px;left:56px;}
-  .topic-tile:nth-child(4n+3){clip-path:inset(18px 24px calc(100% - 32px) calc(100% - 38px) round 3px);}
-  .topic-tile:nth-child(4n+3) .topic-swatch{top:18px;left:auto;right:24px;}
-  .topic-tile:nth-child(4n+4){clip-path:inset(26px calc(100% - 52px) calc(100% - 40px) 38px round 3px);}
-  .topic-tile:nth-child(4n+4) .topic-swatch{top:26px;left:38px;}
   .topic-title{
     position:relative;z-index:1;
     font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:-0.01em;
@@ -548,10 +542,10 @@
   }
   @media (hover:hover) and (pointer:fine){
     .topic-tile:hover{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
-    .topic-tile:hover .topic-swatch{transform:scale(1.25);}
+    .topic-tile:hover .topic-swatch{transform:translateX(-50%) scale(1.25);}
   }
   .topic-tile.is-open{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
-  .topic-tile.is-open .topic-swatch{transform:scale(1.25);}
+  .topic-tile.is-open .topic-swatch{transform:translateX(-50%) scale(1.25);}
 
   /* ---------- FINAL CTA ---------- */
   .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);padding:48px 56px;}
