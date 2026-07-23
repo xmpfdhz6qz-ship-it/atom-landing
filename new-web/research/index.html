@@ -1122,17 +1122,39 @@
 
     function panelFor(key){ return panels.find(p => p.dataset.key === key); }
 
-    // Reveal a panel's cards one at a time, top to bottom, instead of
-    // all at once — same 90ms-per-item cadence as the niche chart bars.
+    // Reveal a panel's cards one at a time, truly in sequence: a card
+    // only starts sliding down once the previous one has finished, so
+    // each card visibly "hands off" to the next rather than everything
+    // rippling in together.
     function hideCards(panel){
-      panel.querySelectorAll('.report-card').forEach(card => card.classList.remove('is-visible'));
+      panel.querySelectorAll('.report-card').forEach(card => {
+        card.classList.remove('is-visible');
+        if (card._revealTimer) { clearTimeout(card._revealTimer); card._revealTimer = null; }
+      });
     }
     function revealCards(panel){
       const cards = Array.from(panel.querySelectorAll('.report-card'));
       cards.forEach(card => card.classList.remove('is-visible'));
-      cards.forEach((card, i) => {
-        setTimeout(() => card.classList.add('is-visible'), i * 90);
-      });
+
+      function revealNext(i){
+        if (i >= cards.length) return;
+        const card = cards[i];
+        card.classList.add('is-visible');
+        let done = false;
+        function advance(){
+          if (done) return;
+          done = true;
+          card.removeEventListener('transitionend', onEnd);
+          revealNext(i + 1);
+        }
+        function onEnd(e){
+          if (e.target === card && e.propertyName === 'transform') advance();
+        }
+        card.addEventListener('transitionend', onEnd);
+        // fallback in case transitionend doesn't fire (e.g. tab backgrounded)
+        card._revealTimer = setTimeout(advance, 550);
+      }
+      revealNext(0);
     }
 
     function activate(key){
