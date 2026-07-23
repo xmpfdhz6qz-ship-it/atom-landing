@@ -266,6 +266,26 @@
   .chart-legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
   .chart-note{font-size:12px;color:var(--gray-500);margin-top:10px;font-style:italic;}
 
+  /* ---------- AI CONFIDENCE PYRAMID™ — Atom Foundry's own visualization
+     for the score-distribution data, in place of a generic donut chart.
+     Four stacked bars, each width scaled to its live share of stores
+     (rarest tier narrowest, most common tier full width), so the shape
+     itself tells the story: it's hard to climb this pyramid. ---------- */
+  .pyramid-col{display:flex;flex-direction:column;}
+  .pyramid{display:flex;flex-direction:column;gap:18px;}
+  .pyramid-tier{display:flex;flex-direction:column;gap:7px;cursor:default;}
+  .pyramid-tier-info{display:flex;align-items:baseline;gap:1px;}
+  .pyramid-tier-num{font-family:var(--serif);font-size:21px;font-weight:800;color:var(--black);line-height:1;letter-spacing:-0.01em;}
+  .pyramid-tier-pct{font-family:var(--serif);font-size:13px;font-weight:800;color:var(--black);margin-right:9px;}
+  .pyramid-tier-name{font-size:11.5px;font-weight:700;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.05em;}
+  .pyramid-bar-track{width:100%;}
+  .pyramid-bar{height:30px;width:0%;border-radius:4px;transition:width 1.15s cubic-bezier(.16,.8,.4,1);}
+  @media (hover:hover) and (pointer:fine){
+    .pyramid-tier:hover .pyramid-tier-num,
+    .pyramid-tier:hover .pyramid-tier-pct{color:var(--orange);}
+  }
+  .pyramid-watermark{margin-top:18px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);text-align:right;font-family:ui-monospace,Menlo,monospace;}
+
   /* ---------- REPORT CHIPS + ACCORDION ---------- */
   .research-chips{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 24px;}
   .research-chip{font-size:12.5px;color:var(--gray-700);font-weight:700;border:1px solid var(--card-line);border-radius:999px;padding:8px 15px;background:var(--white);transition:all .2s ease;display:inline-flex;align-items:center;gap:7px;}
@@ -397,6 +417,9 @@
     .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
     .hero-stat:not(:first-child)::before{display:none;}
     .hero-stat-num{font-size:30px;}
+    .pyramid{gap:14px;}
+    .pyramid-bar{height:24px;}
+    .pyramid-tier-num{font-size:18px;}
     .products-grid{grid-template-columns:1fr;}
     .products-grid.cols-2{grid-template-columns:1fr;}
     .report-row{flex-wrap:wrap;padding:14px 18px;}
@@ -515,18 +538,32 @@
     <div class="chart-card">
       <div class="chart-card-title" id="distChartTitle">Score distribution across scanned stores — July 2026</div>
       <div class="chart-flex">
-        <div class="chart-canvas-wrap"><canvas id="donutChart"></canvas></div>
+        <div class="pyramid-col">
+          <div class="pyramid" id="confidencePyramid">
+            <div class="pyramid-tier" data-key="high">
+              <div class="pyramid-tier-info"><span class="pyramid-tier-num" data-target="7">0</span><span class="pyramid-tier-pct">%</span><span class="pyramid-tier-name">Highly Recommendable</span></div>
+              <div class="pyramid-bar-track"><div class="pyramid-bar" style="background:var(--green);"></div></div>
+            </div>
+            <div class="pyramid-tier" data-key="moderate">
+              <div class="pyramid-tier-info"><span class="pyramid-tier-num" data-target="7">0</span><span class="pyramid-tier-pct">%</span><span class="pyramid-tier-name">Moderate Confidence</span></div>
+              <div class="pyramid-bar-track"><div class="pyramid-bar" style="background:var(--amber);"></div></div>
+            </div>
+            <div class="pyramid-tier" data-key="low">
+              <div class="pyramid-tier-info"><span class="pyramid-tier-num" data-target="24">0</span><span class="pyramid-tier-pct">%</span><span class="pyramid-tier-name">Low Confidence</span></div>
+              <div class="pyramid-bar-track"><div class="pyramid-bar" style="background:var(--orange);"></div></div>
+            </div>
+            <div class="pyramid-tier" data-key="invisible">
+              <div class="pyramid-tier-info"><span class="pyramid-tier-num" data-target="62">0</span><span class="pyramid-tier-pct">%</span><span class="pyramid-tier-name">AI Invisible Risk</span></div>
+              <div class="pyramid-bar-track"><div class="pyramid-bar" style="background:var(--red);"></div></div>
+            </div>
+          </div>
+          <div class="pyramid-watermark">AI Confidence Pyramid™</div>
+        </div>
         <div class="mini-stats-col">
           <div class="mini-stat-box"><div class="mini-stat-num" style="color:var(--red);" id="liveInvisible">—</div><div class="mini-stat-label">AI Invisible Risk — score below 50</div></div>
           <div class="mini-stat-box"><div class="mini-stat-num" style="color:var(--amber);" id="livePartial">—</div><div class="mini-stat-label">Low or moderate confidence — score 50 to 84</div></div>
           <div class="mini-stat-box"><div class="mini-stat-num" style="color:var(--green);" id="statHighly">—</div><div class="mini-stat-label">Reached Highly Recommendable (85+)</div></div>
         </div>
-      </div>
-      <div class="chart-legend">
-        <span><i style="background:var(--red);"></i>AI Invisible Risk (0–49)</span>
-        <span><i style="background:var(--orange);"></i>Low confidence (50–69)</span>
-        <span><i style="background:var(--amber);"></i>Moderate (70–84)</span>
-        <span><i style="background:var(--green);"></i>Highly Recommendable (85+)</span>
       </div>
     </div>
     <div class="chart-card">
@@ -911,15 +948,84 @@
     if (el.dataset.played === '1') el.textContent = Math.round(value).toLocaleString('en-US');
   }
 
-  // Donut chart — score distribution (default data, overwritten by live fetch below).
-  const donutChart = new Chart(document.getElementById('donutChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['AI Invisible Risk (0-49)', 'Low confidence (50-69)', 'Moderate (70-84)', 'Highly Recommendable (85+)'],
-      datasets: [{ data: [62, 24, 7, 7], backgroundColor: ['#d93c3c', '#e0a233', '#fe6a03', '#1D9E75'], borderColor: '#e3dacc', borderWidth: 3, hoverOffset: 6 }]
-    },
-    options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + '%' } } } }
-  });
+  // AI Confidence Pyramid™ — Atom Foundry's own visualization for the
+  // 4-tier score distribution, replacing a generic donut chart. Each bar's
+  // width is scaled relative to the largest tier (so the shape itself
+  // shows how few stores climb to the top), and it animates in once
+  // scrolled into view, matching the AI Commerce Bar™'s rise-from-zero feel.
+  (function(){
+    const pyramid = document.getElementById('confidencePyramid');
+    if (!pyramid) return;
+    const tiers = Array.from(pyramid.querySelectorAll('.pyramid-tier'));
+    let played = false;
+
+    function widths(){
+      const values = tiers.map(t => Number(t.querySelector('.pyramid-tier-num').dataset.target) || 0);
+      const max = Math.max(...values, 1);
+      tiers.forEach((tier, i) => {
+        tier.dataset.width = Math.max((values[i] / max) * 100, 10).toFixed(1);
+      });
+    }
+
+    function setBars(){
+      tiers.forEach(tier => {
+        const bar = tier.querySelector('.pyramid-bar');
+        requestAnimationFrame(() => { bar.style.width = (tier.dataset.width || 10) + '%'; });
+      });
+    }
+
+    function setNumbers(){
+      tiers.forEach(tier => {
+        const numEl = tier.querySelector('.pyramid-tier-num');
+        countUp(numEl, Number(numEl.dataset.target) || 0, 1100);
+      });
+    }
+
+    // Replay a single tier's bar from zero on hover, same trick as the
+    // niche bar chart on the landing page.
+    tiers.forEach(tier => {
+      tier.addEventListener('mouseenter', () => {
+        const bar = tier.querySelector('.pyramid-bar');
+        const target = tier.dataset.width || 10;
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+        requestAnimationFrame(() => {
+          bar.style.transition = 'width 1.15s cubic-bezier(.16,.8,.4,1)';
+          requestAnimationFrame(() => { bar.style.width = target + '%'; });
+        });
+      });
+    });
+
+    function play(){
+      if (played) return;
+      played = true;
+      widths();
+      setBars();
+      setNumbers();
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) play(); });
+      }, { threshold: 0.3 });
+      io.observe(pyramid);
+    } else {
+      window.addEventListener('load', () => setTimeout(play, 400));
+    }
+
+    // Called once live data arrives — updates each tier's target and,
+    // if the pyramid already played, snaps bars/numbers to the real values.
+    window.setPyramidData = function(invisible, low, moderate, high){
+      const map = { invisible, low, moderate, high };
+      tiers.forEach(tier => {
+        const val = map[tier.dataset.key];
+        if (!Number.isFinite(val)) return;
+        const numEl = tier.querySelector('.pyramid-tier-num');
+        numEl.dataset.target = val;
+        if (played) numEl.textContent = Math.round(val);
+      });
+      if (played) { widths(); setBars(); }
+    };
+  })();
 
   // Niche bar chart — colored by score tier, same rule as the landing page chart.
   function scoreColor(v){ return v >= 85 ? '#1D9E75' : v >= 70 ? '#fe6a03' : v >= 50 ? '#e0a233' : '#d93c3c'; }
@@ -964,9 +1070,8 @@
       if (finding1) finding1.innerHTML = '<strong>' + invisible + '% of scored stores score below 50 out of 100</strong> and are classified as AI Invisible Risk. When buyers ask ChatGPT or Alexa for Shopping for product recommendations, these stores are systematically excluded from the answer.';
       setText('finding1src', 'Live data across ' + f(scoredCount) + ' scored stores');
       const buckets = [Number(s.invis_pct), Number(s.low_pct), Number(s.mod_pct), Number(s.high_pct)];
-      if (buckets.every(v => Number.isFinite(v))) {
-        donutChart.data.datasets[0].data = buckets;
-        donutChart.update();
+      if (buckets.every(v => Number.isFinite(v)) && window.setPyramidData) {
+        window.setPyramidData(buckets[0], buckets[1], buckets[2], buckets[3]);
       }
     }
     const niches = Array.isArray(nd) ? nd : (nd && nd.data ? nd.data : []);
