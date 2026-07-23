@@ -571,7 +571,7 @@
       <span class="chip-sep">·</span>
       <span class="chip"><i style="background:var(--green);"></i>85–100 Highly Recommendable</span>
       <span class="chip-sep">·</span>
-      <span class="chip">Live data · updated Jul 22, 2026</span>
+      <span class="chip" id="liveDataChip">Live data · updated Jul 22, 2026</span>
     </div>
   </div>
 </div>
@@ -701,7 +701,7 @@
   <p class="lab-closing"><span class="lab-closing-inner">We're still learning. Every new experiment is published. Every validated finding becomes a product. Every product helps merchants understand AI recommendations.</span></p>
 
   <div class="lab-cta-row">
-    <a href="https://atomfoundry.dev/research" class="cta-square cta-square-secondary">Explore Research →</a>
+    <a href="/research" class="cta-square cta-square-secondary">Explore Research →</a>
     <a href="https://atomfoundry.dev/founder-lab" class="cta-square cta-square-secondary">Founder Lab →</a>
     <a href="#score" class="cta-square cta-square-primary">Get Your Score →</a>
   </div>
@@ -807,6 +807,16 @@
     }
     requestAnimationFrame(step);
   }
+
+  // "Live data · updated <date>" chip always shows today's date, so it
+  // never needs a manual edit — it just reflects whenever the page is loaded.
+  (function(){
+    const chip = document.getElementById('liveDataChip');
+    if (!chip) return;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const d = new Date();
+    chip.textContent = 'Live data · updated ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  })();
 
   // Navbar always stays visible (sticky) but goes compact once the page
   // is scrolled down: the wordmark collapses from "ATOM FOUNDRY" to "AF"
