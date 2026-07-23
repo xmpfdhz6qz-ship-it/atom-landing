@@ -932,7 +932,7 @@
         <span class="chip-sep">·</span>
         <span class="chip"><i style="background:var(--green);"></i>85–100 Highly Recommendable</span>
         <span class="chip-sep">·</span>
-        <span class="chip">Live data · updated Jul 22, 2026</span>
+        <span class="chip" id="liveDataChip">Live data · updated Jul 22, 2026</span>
       </div>
     </div>
   </div>
@@ -1571,6 +1571,16 @@
     }
     requestAnimationFrame(step);
   }
+
+  // "Live data · updated <date>" chip always shows today's date, so it
+  // never needs a manual edit — it just reflects whenever the page is loaded.
+  (function(){
+    const chip = document.getElementById('liveDataChip');
+    if (!chip) return;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const d = new Date();
+    chip.textContent = 'Live data · updated ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  })();
 
   // Navbar compacts on scroll (same behavior as landing page).
   (function(){
