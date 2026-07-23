@@ -366,7 +366,15 @@
     .scan-box{flex-direction:column;border-radius:4px;}
     .scan-box button{width:100%;}
     .score-panel{margin-top:20px;padding-top:14px;}
-    .niche-chart-head{gap:8px;}
+    /* the "·" separators (chip-sep, and the ::before dots on the stat
+       lines) are meant to sit BETWEEN items on one line — once the row
+       wraps to one item per line on a phone, a leftover separator at the
+       start of a line drags its own margin along and knocks that line out
+       of alignment with everything else. Just drop them on mobile so
+       every line sits flush with the same left edge. */
+    .chip-sep{display:none;}
+    .niche-chart-stores::before,.niche-overall::before{display:none;}
+    .niche-chart-head{gap:8px;flex-direction:column;align-items:flex-start;}
     .niche-overall b{font-size:34px;}
     .niche-chart-stores b{font-size:28px;}
     /* 10 categories don't fit a phone screen without colliding — give each
