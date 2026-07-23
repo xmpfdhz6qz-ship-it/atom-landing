@@ -234,9 +234,10 @@
      surfaces a tooltip with the full "category: r, n" reading — the
      same hover-replay + tooltip language as the AI Commerce Bar™
      chart on the main research page. ---------- */
+  .corr-legend{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--green);font-weight:700;margin-bottom:16px;}
+  .corr-legend-swatch{display:inline-block;width:14px;height:14px;border-radius:3px;background:rgba(29,158,117,0.35);flex-shrink:0;}
   .corr-chart{position:relative;display:flex;align-items:stretch;gap:6px;height:352px;padding:0 4px;margin-top:4px;}
   .corr-band{position:absolute;left:4px;right:4px;top:calc(50% - 20px);height:40px;background:rgba(29,158,117,0.08);border-radius:3px;pointer-events:none;}
-  .corr-band-label{position:absolute;right:14px;top:calc(50% - 38px);font-size:13px;color:var(--green);font-weight:700;background:var(--card);padding:2px 8px;border-radius:3px;pointer-events:none;}
   .corr-zero{position:absolute;left:4px;right:4px;top:50%;height:1px;background:rgba(22,21,18,0.28);pointer-events:none;}
   .corr-zero-label{position:absolute;left:0;top:-9px;font-size:12px;color:var(--gray-500);font-weight:700;background:var(--card);padding-right:6px;}
   .corr-bar{flex:1;display:flex;flex-direction:column;min-width:0;position:relative;cursor:default;}
@@ -382,7 +383,7 @@
     .corr-bar-lower .corr-bar-value{margin:4px 0 0;}
     .corr-bar-label{font-size:12px;margin-top:10px;}
     .corr-bar-label span{font-size:10.5px;}
-    .corr-band-label{font-size:10.5px;}
+    .corr-legend{font-size:11.5px;margin-bottom:12px;}
     .corr-zero-label{font-size:10.5px;}
     .corr-tip{display:none;}
     .chart-caption{max-width:none;}
@@ -514,8 +515,9 @@
     <p class="section-body">For every category we measured two things per brand: how often AI recommended it (Recommendation Frequency™) and how AI-ready its store actually is (AI Commerce Score™, our 0 to 100 measure of how readable, trustworthy, and machine-legible a store is). Then we correlated them. If readiness drove recommendation, these bars would climb. They do not.</p>
     <div class="chart-card">
       <div class="chart-card-title">Correlation: Recommendation Frequency™ vs AI Commerce Score™, by category</div>
+      <div class="corr-legend"><span class="corr-legend-swatch"></span>Shaded band = no meaningful correlation</div>
       <div class="corr-chart" id="corrChart">
-        <div class="corr-band"><span class="corr-band-label">no meaningful correlation</span></div>
+        <div class="corr-band"></div>
         <div class="corr-zero"><span class="corr-zero-label">+0.00</span></div>
         <div class="corr-bar" data-tip="Beauty: r=+0.170 (n=18)">
           <div class="corr-bar-upper">
