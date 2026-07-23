@@ -420,6 +420,7 @@
   .finding-card{
     --flip-dir:180deg;
     display:block;text-decoration:none;perspective:1400px;
+    border-radius:var(--radius);
     opacity:0;transform:translateY(18px);
     transition:opacity .6s ease, transform .6s ease;
   }
@@ -434,10 +435,21 @@
   @media (hover:hover) and (pointer:fine){
     .finding-card:hover .finding-card-inner{transform:rotateY(var(--flip-dir));}
   }
+  /* the shadow lives on the rotating faces themselves, not the static
+     wrapper, so it turns with the card — it foreshortens toward the
+     edge as the card goes side-on, same as a real card catching light
+     while it flips, and settles back in on whichever face lands facing
+     up */
   .finding-face{
     position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
     border-radius:var(--radius);padding:20px 22px;overflow:hidden;
     display:flex;flex-direction:column;justify-content:center;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .finding-card.is-flipped .finding-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .finding-card:hover .finding-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
   }
   .finding-face-front{background:var(--card);}
   .finding-face-back{
