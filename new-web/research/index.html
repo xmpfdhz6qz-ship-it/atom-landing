@@ -683,6 +683,14 @@
   .lab-note-label{font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-500);}
   .lab-note p{font-size:13px;color:var(--gray-700);margin-top:10px;line-height:1.65;max-width:720px;}
   .lab-note a{color:var(--black);text-decoration:underline;}
+  /* standalone full-width version, sitting in its own section right
+     above the footer — no leftover top border/spacing (the section
+     background already separates it) and the paragraphs are allowed to
+     run the full width of the container instead of the narrow 720px
+     column used when this note was nested under other content */
+  .lab-note-section{padding-top:44px;padding-bottom:44px;}
+  .lab-note.lab-note-full{border-top:none;margin-top:0;padding:0;}
+  .lab-note-full p{max-width:none;}
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
@@ -1415,12 +1423,6 @@
       <p class="methodology-note">The AI Commerce Score uses a weighted methodology based on eight evaluation layers. Together they determine how confidently AI shopping agents can understand, trust and recommend a store.</p>
       <a href="/methodology" class="mini-card-link">Explore Full Methodology →</a>
     </div>
-
-    <div class="lab-note">
-      <span class="lab-note-label">Research infrastructure · Founder Lab</span>
-      <p>Atom Foundry operates its own live Shopify store, <a href="https://founder.atomfoundry.dev" rel="nofollow">Founder Lab</a>, as a permanent controlled experiment. Most measurement of AI commerce is observational: you watch stores you don't control and infer what matters. Founder Lab lets us do the opposite. We own every variable, so we can change one thing at a time, a product description, a schema field, a trust signal, and watch, in real time, how AI systems respond.</p>
-      <p>What we measure there goes beyond a single score. We track how each change moves the store's AI Commerce Score™, but also which AI agents crawl the store and when, which pages they read, whether they retrieve it in live shopping answers, and how its recommendation profile shifts over time. Read the live results in the <a href="/research/founder-lab-log">Founder Lab Log</a>.</p>
-    </div>
   </div>
 </section>
 
@@ -1451,6 +1453,17 @@
         <button>Get My Free AI Score</button>
       </div>
       <div class="scan-note">Free <span>·</span> No signup <span>·</span> Results in 10 seconds</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER LAB NOTE — sits full-width, directly above the footer -->
+<section class="alt lab-note-section">
+  <div class="container">
+    <div class="lab-note lab-note-full">
+      <span class="lab-note-label">Research infrastructure · Founder Lab</span>
+      <p>Atom Foundry operates its own live Shopify store, <a href="https://founder.atomfoundry.dev" rel="nofollow">Founder Lab</a>, as a permanent controlled experiment. Most measurement of AI commerce is observational: you watch stores you don't control and infer what matters. Founder Lab lets us do the opposite. We own every variable, so we can change one thing at a time, a product description, a schema field, a trust signal, and watch, in real time, how AI systems respond.</p>
+      <p>What we measure there goes beyond a single score. We track how each change moves the store's AI Commerce Score™, but also which AI agents crawl the store and when, which pages they read, whether they retrieve it in live shopping answers, and how its recommendation profile shifts over time. Read the live results in the <a href="/research/founder-lab-log">Founder Lab Log</a>.</p>
     </div>
   </div>
 </section>
