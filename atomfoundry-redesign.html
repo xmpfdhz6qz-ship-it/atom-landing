@@ -326,6 +326,29 @@
   .social-row a{color:var(--gray-500);transition:color .25s ease;}
   .social-row a:hover{color:var(--orange);}
 
+  /* ---------- COOKIE CONSENT (small, bottom-right, non-blocking) ---------- */
+  .cookie-banner{
+    position:fixed;right:20px;bottom:20px;z-index:2000;
+    width:100%;max-width:320px;
+    background:var(--cream);border:1px solid var(--card-line);border-radius:var(--radius);
+    box-shadow:0 24px 48px -18px rgba(22,21,18,0.28);
+    padding:20px;
+    opacity:0;visibility:hidden;transform:translateY(16px);
+    transition:opacity .35s ease, transform .35s ease, visibility .35s;
+  }
+  .cookie-banner.is-visible{opacity:1;visibility:visible;transform:translateY(0);}
+  .cookie-banner-title{font-family:var(--serif);font-size:15px;font-weight:800;color:var(--black);margin-bottom:8px;}
+  .cookie-banner-text{font-size:12.5px;color:var(--gray-700);line-height:1.55;margin-bottom:16px;}
+  .cookie-banner-actions{display:flex;align-items:center;gap:16px;}
+  .cookie-banner-accept{
+    flex:1;text-align:center;background:var(--black);color:var(--white);
+    font-size:13px;font-weight:700;padding:11px 14px;border:none;border-radius:var(--radius);
+    cursor:pointer;transition:background .2s ease,color .2s ease;
+  }
+  .cookie-banner-accept:hover{background:var(--orange);color:var(--black);}
+  .cookie-banner-decline{background:none;border:none;font-size:12.5px;font-weight:700;color:var(--gray-700);cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color .2s ease;}
+  .cookie-banner-decline:hover{color:var(--black);}
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
@@ -401,6 +424,7 @@
     .research-stats{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
+    .cookie-banner{right:12px;bottom:12px;left:12px;max-width:none;}
   }
 </style>
 </head>
@@ -946,7 +970,39 @@
   }
   observeCountUp(document.querySelector('.products-reveal-num'), 1400);
   observeCountUp(document.querySelector('.research-findings-num'), 1400);
+
+  // Cookie consent — small, bottom-right, non-blocking. Shows once per
+  // browser (remembered in localStorage) after a short delay so it doesn't
+  // slam into view the instant the page loads. Accept/Decline don't wire
+  // up to real tracking yet — that comes later — this just records the
+  // choice and dismisses the banner.
+  (function(){
+    const banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+    const KEY = 'af_cookie_consent';
+    let stored;
+    try { stored = localStorage.getItem(KEY); } catch (e) { stored = null; }
+    if (stored) return;
+
+    setTimeout(() => banner.classList.add('is-visible'), 900);
+
+    function dismiss(choice){
+      banner.classList.remove('is-visible');
+      try { localStorage.setItem(KEY, choice); } catch (e) {}
+    }
+    document.getElementById('cookieAccept').addEventListener('click', () => dismiss('accepted'));
+    document.getElementById('cookieDecline').addEventListener('click', () => dismiss('declined'));
+  })();
 </script>
+
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-title">Cookies</div>
+  <p class="cookie-banner-text">We use cookies to run this site and understand how visitors — human and AI — find and evaluate it. See our <a href="#" style="color:var(--black);text-decoration:underline;">cookie policy</a>.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-banner-accept" id="cookieAccept">Accept</button>
+    <button class="cookie-banner-decline" id="cookieDecline">Decline</button>
+  </div>
+</div>
 
 </body>
 </html>
