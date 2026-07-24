@@ -398,28 +398,60 @@
   }
 
 
-  .category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:24px 0 4px;}
-  .report-card{
-    border-radius:var(--radius);padding:24px 22px;background:var(--card);
-    display:flex;flex-direction:column;min-height:180px;
-    text-decoration:none;
+  /* category-flip-card: five equal-size portrait rectangles. Front face
+     is just the eyebrow + category name; back face is the stat blurb and
+     a corner arrow, same flip mechanism (and same nav-chevron icon) used
+     for the Key Findings cards on the research page. */
+  .category-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;padding:24px 0 4px;}
+  .category-flip-card{
+    --flip-dir:180deg;
+    display:block;text-decoration:none;perspective:1400px;
+    border-radius:var(--radius);height:300px;
     opacity:0;transform:translateY(-18px);
-    transition:opacity .5s ease, transform .5s ease, box-shadow .3s ease;
+    transition:opacity .5s ease, transform .5s ease;
   }
-  .report-card.is-visible{opacity:1;transform:translateY(0);}
-  .report-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
-  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
-  .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
-  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;margin-bottom:8px;}
-  .report-card-stat{font-size:13px;font-weight:800;color:var(--black);margin-bottom:4px;margin-top:auto;}
-  .mini-card-link{margin-top:8px;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease, transform .2s ease;}
-  .report-card:hover .mini-card-link{color:var(--orange);transform:translateX(2px);}
-  .mini-lb-table{width:100%;border-collapse:collapse;}
-  .mini-lb-table thead th{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-500);font-weight:700;text-align:left;padding:8px 8px;border-bottom:2px solid var(--gray-300);}
-  .mini-lb-table thead th.num{text-align:right;}
-  .mini-lb-table td{padding:9px 8px;border-bottom:1px solid var(--card-line);font-size:13px;color:var(--gray-700);}
+  .category-flip-card.is-visible{opacity:1;transform:translateY(0);}
+  .category-flip-card:nth-child(even){--flip-dir:-180deg;}
+  .category-flip-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .category-flip-card.is-flipped .category-flip-inner{transform:rotateY(var(--flip-dir));}
+  @media (hover:hover) and (pointer:fine){
+    .category-flip-card:hover .category-flip-inner{transform:rotateY(var(--flip-dir));}
+  }
+  .category-flip-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:24px 22px;overflow:hidden;
+    display:flex;flex-direction:column;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .category-flip-card.is-flipped .category-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .category-flip-card:hover .category-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  }
+  .category-flip-face-front{background:var(--card);}
+  .category-flip-face-front::after{content:"";position:absolute;right:20px;bottom:18px;width:10px;height:10px;border-radius:2px;background:var(--orange);}
+  .category-flip-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:12px;}
+  .category-flip-name{font-family:var(--serif);font-size:23px;font-weight:800;letter-spacing:-0.01em;color:var(--black);line-height:1.25;}
+  .category-flip-face-back{background:rgba(254,106,3,0.14);transform:rotateY(180deg);justify-content:space-between;}
+  .category-flip-body{font-size:14px;color:rgba(22,21,18,0.85);line-height:1.6;}
+  .category-flip-arrow{align-self:flex-end;width:16px;height:10px;color:var(--black);transform:rotate(-90deg);flex-shrink:0;}
+  .category-flip-arrow svg{display:block;width:100%;height:100%;}
+
+  /* synthesis table: wider, equal-width columns, left-aligned, colored
+     with the site's own palette instead of plain gray. */
+  .mini-lb-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;border-radius:var(--radius);overflow:hidden;}
+  .mini-lb-table thead th{width:25%;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--black);font-weight:800;text-align:left;padding:12px 14px;background:var(--card);border-bottom:2px solid var(--gray-300);}
+  .mini-lb-table td{padding:11px 14px;text-align:left;font-size:13.5px;color:var(--gray-700);border-bottom:1px solid var(--card-line);}
+  .mini-lb-table tbody tr:nth-child(even){background:var(--off-white);}
+  .mini-lb-table tbody tr:last-child td{border-bottom:none;}
   .mini-lb-table .mini-lb-brand{color:var(--black);font-weight:700;}
-  .mini-lb-table .mini-lb-num{text-align:right;}
+  .mini-lb-rel-none{color:var(--gray-500);font-weight:600;}
+  .mini-lb-rel-weak{color:var(--red);font-weight:700;}
+
   .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:780px;transition:transform .3s ease, box-shadow .3s ease;}
   @media (hover:hover) and (pointer:fine){
     .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
@@ -430,6 +462,8 @@
   }
   @media (max-width:680px){
     .category-grid{grid-template-columns:1fr;padding:18px 2px 4px;}
+    .category-flip-card{height:230px;}
+    .mini-lb-table thead th, .mini-lb-table td{padding:9px 8px;font-size:12.5px;}
   }
 
 </style>
@@ -544,40 +578,65 @@
     <h2 class="section-title">Same method, <em>five markets</em></h2>
     <p class="section-body" style="margin-bottom:24px;">Each report holds the model, the prompt structure, and the scoring method constant, and changes only the category. The leaderboard and the frequency-vs-score chart look a little different every time. The relationship between them never does.</p>
     <div class="category-grid" id="categoryGrid">
-      <a class="report-card" href="/research/state-of-ai-recommendations-beauty">
-        <div class="mini-card-eyebrow">Category</div>
-        <div class="mini-card-title">Beauty</div>
-        <div class="mini-card-body">4,000 recommendations, 238 brands. Frequency vs readiness r = +0.17.</div>
-        <div class="report-card-stat">238 brands</div>
-        <span class="mini-card-link">Read report →</span>
+      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-beauty">
+        <div class="category-flip-inner">
+          <div class="category-flip-face category-flip-face-front">
+            <div class="category-flip-kicker">Category</div>
+            <div class="category-flip-name">Beauty</div>
+          </div>
+          <div class="category-flip-face category-flip-face-back">
+            <p class="category-flip-body">4,000 recommendations, 238 brands. Frequency vs readiness r = +0.17.</p>
+            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
       </a>
-      <a class="report-card" href="/research/state-of-ai-recommendations-supplements">
-        <div class="mini-card-eyebrow">Category</div>
-        <div class="mini-card-title">Supplements</div>
-        <div class="mini-card-body">4,000 recommendations, 371 brands. Frequency vs readiness r = &minus;0.015.</div>
-        <div class="report-card-stat">371 brands</div>
-        <span class="mini-card-link">Read report →</span>
+      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-supplements">
+        <div class="category-flip-inner">
+          <div class="category-flip-face category-flip-face-front">
+            <div class="category-flip-kicker">Category</div>
+            <div class="category-flip-name">Supplements</div>
+          </div>
+          <div class="category-flip-face category-flip-face-back">
+            <p class="category-flip-body">4,000 recommendations, 371 brands. Frequency vs readiness r = &minus;0.015.</p>
+            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
       </a>
-      <a class="report-card" href="/research/state-of-ai-recommendations-coffee">
-        <div class="mini-card-eyebrow">Category</div>
-        <div class="mini-card-title">Coffee</div>
-        <div class="mini-card-body">4,000 recommendations, 228 brands. Frequency vs readiness r = +0.019.</div>
-        <div class="report-card-stat">228 brands</div>
-        <span class="mini-card-link">Read report →</span>
+      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-coffee">
+        <div class="category-flip-inner">
+          <div class="category-flip-face category-flip-face-front">
+            <div class="category-flip-kicker">Category</div>
+            <div class="category-flip-name">Coffee</div>
+          </div>
+          <div class="category-flip-face category-flip-face-back">
+            <p class="category-flip-body">4,000 recommendations, 228 brands. Frequency vs readiness r = +0.019.</p>
+            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
       </a>
-      <a class="report-card" href="/research/state-of-ai-recommendations-pets">
-        <div class="mini-card-eyebrow">Category</div>
-        <div class="mini-card-title">Pets</div>
-        <div class="mini-card-body">4,000 recommendations, 405 brands. Frequency vs readiness r = &minus;0.366.</div>
-        <div class="report-card-stat">405 brands</div>
-        <span class="mini-card-link">Read report →</span>
+      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-pets">
+        <div class="category-flip-inner">
+          <div class="category-flip-face category-flip-face-front">
+            <div class="category-flip-kicker">Category</div>
+            <div class="category-flip-name">Pets</div>
+          </div>
+          <div class="category-flip-face category-flip-face-back">
+            <p class="category-flip-body">4,000 recommendations, 405 brands. Frequency vs readiness r = &minus;0.366.</p>
+            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
       </a>
-      <a class="report-card" href="/research/state-of-ai-recommendations-home-living">
-        <div class="mini-card-eyebrow">Category</div>
-        <div class="mini-card-title">Home & Living</div>
-        <div class="mini-card-body">4,000 recommendations, 271 brands. Frequency vs readiness r = +0.108.</div>
-        <div class="report-card-stat">271 brands</div>
-        <span class="mini-card-link">Read report →</span>
+      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-home-living">
+        <div class="category-flip-inner">
+          <div class="category-flip-face category-flip-face-front">
+            <div class="category-flip-kicker">Category</div>
+            <div class="category-flip-name">Home & Living</div>
+          </div>
+          <div class="category-flip-face category-flip-face-back">
+            <p class="category-flip-body">4,000 recommendations, 271 brands. Frequency vs readiness r = +0.108.</p>
+            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </div>
       </a>
     </div>
   </div>
@@ -589,10 +648,10 @@
     <div class="kicker">Five niches, one pattern</div>
     <h2 class="section-title">Five categories, and the answer never changed</h2>
     <p class="section-body">Across beauty, supplements, coffee, pets, and now home and living, we have captured more than 20,000 recommendations and measured the same thing every time: the relationship between how often AI recommends a brand and how AI-ready its store is.</p>
-    <div class="chart-card" style="max-width:680px;">
+    <div class="chart-card" style="max-width:820px;">
       <table class="mini-lb-table">
-        <thead><tr><th>Category</th><th class="num">Recommendations</th><th class="num">Freq vs Score (r)</th><th>Relationship</th></tr></thead>
-        <tbody><tr><td class="mini-lb-brand">Beauty</td><td class="mini-lb-num">4,000</td><td class="mini-lb-num">0.17</td><td>None</td></tr><tr><td class="mini-lb-brand">Supplements</td><td class="mini-lb-num">4,000</td><td class="mini-lb-num">-0.015</td><td>None</td></tr><tr><td class="mini-lb-brand">Coffee</td><td class="mini-lb-num">4,000</td><td class="mini-lb-num">0.019</td><td>None</td></tr><tr><td class="mini-lb-brand">Pets</td><td class="mini-lb-num">4,000</td><td class="mini-lb-num">-0.366</td><td>Weak negative</td></tr><tr><td class="mini-lb-brand">Home &amp; Living</td><td class="mini-lb-num">4,000</td><td class="mini-lb-num">0.108</td><td>None</td></tr></tbody>
+        <thead><tr><th>Category</th><th>Recommendations</th><th>Freq vs Score (r)</th><th>Relationship</th></tr></thead>
+        <tbody><tr><td class="mini-lb-brand">Beauty</td><td>4,000</td><td>0.17</td><td><span class="mini-lb-rel-none">None</span></td></tr><tr><td class="mini-lb-brand">Supplements</td><td>4,000</td><td>-0.015</td><td><span class="mini-lb-rel-none">None</span></td></tr><tr><td class="mini-lb-brand">Coffee</td><td>4,000</td><td>0.019</td><td><span class="mini-lb-rel-none">None</span></td></tr><tr><td class="mini-lb-brand">Pets</td><td>4,000</td><td>-0.366</td><td><span class="mini-lb-rel-weak">Weak negative</span></td></tr><tr><td class="mini-lb-brand">Home &amp; Living</td><td>4,000</td><td>0.108</td><td><span class="mini-lb-rel-none">None</span></td></tr></tbody>
       </table>
     </div>
     <div class="bias-card">Five categories, more than 20,000 recommendations, and <strong>not once</strong> is recommendation frequency meaningfully and positively related to store readiness. Three times the link is zero, once it is faintly negative, and here it is zero again. The conclusion is no longer a single finding, it is a replicated result: <strong>AI recommends from fame, not from store quality.</strong></div>
@@ -825,6 +884,27 @@
       io.observe(grid);
     } else {
       cards.forEach(card => card.classList.add('is-visible'));
+    }
+  })();
+
+  // Category flip cards are real links, so on hover-capable devices the
+  // flip is purely a CSS hover effect and a click just follows the href.
+  // On touch, there is no hover: the first tap flips the card to reveal
+  // the stat, and a second tap follows the link, same pattern as the Key
+  // Findings cards on the research page.
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.category-flip-card'));
+    if (!cards.length) return;
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (!card.classList.contains('is-flipped')) {
+            e.preventDefault();
+            card.classList.add('is-flipped');
+          }
+        });
+      });
     }
   })();
 </script>
