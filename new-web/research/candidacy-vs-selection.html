@@ -217,7 +217,7 @@
   .byline-note a{color:var(--orange);font-weight:700;}
 
   /* ---------- HERO STAT ROW — identical typography to the rest of the site ---------- */
-  .hero-stat-row{display:flex;flex-wrap:wrap;align-items:baseline;row-gap:14px;margin-top:52px;}
+  .hero-stat-row{display:flex;flex-wrap:nowrap;align-items:baseline;row-gap:14px;margin-top:52px;gap:0;}
   .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
   .hero-stat:not(:first-child)::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
   .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
@@ -225,6 +225,7 @@
 
   /* ---------- CHART CARD (shared shell reused for every chart on this page) ---------- */
   .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;transition:transform .3s ease, box-shadow .3s ease;}
+  .chart-card.chart-card-wide{max-width:940px;padding:36px 44px;}
   @media (hover:hover) and (pointer:fine){
     .chart-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   }
@@ -295,54 +296,6 @@
   .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
   .ai-sitemap a:hover{color:var(--orange);}
 
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width:900px){
-    .products-grid{grid-template-columns:1fr 1fr;}
-    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
-    .research-hero{padding:72px 0 40px;}
-    .research-hero-sub{max-width:100%;}
-    nav.links{gap:14px;}
-    .nav-trigger{font-size:12px;}
-    .flip-grid{grid-template-columns:1fr 1fr;}
-  }
-  @media (max-width:680px){
-    .nav-inner{flex-wrap:wrap;gap:0;padding:14px 20px;}
-    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
-    .logo-word{font-size:24px;}
-    .logo-word .tail{max-width:160px;}
-    .nav-toggle{display:flex;}
-    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
-    header.nav.nav-mobile-open nav.links{display:flex;}
-    .nav-trigger{font-size:13px;width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid var(--card-line);}
-    .nav-item{flex-direction:column;align-items:stretch;}
-    .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
-    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
-    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
-    section{padding:44px 20px;}
-    .research-hero{padding:56px 0 32px;}
-    .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
-    .hero-stat:not(:first-child)::before{display:none;}
-    .hero-stat-num{font-size:26px;}
-    .hero-stat-num.smaller{font-size:20px;}
-    .chart-card{padding:18px;max-width:none;margin-top:32px;}
-    .chart-caption{max-width:none;}
-    .bias-card{padding:16px 18px;}
-    .products-grid{grid-template-columns:1fr;}
-    .final-cta{padding:40px 24px;}
-    .final-cta .scan-box{max-width:none;}
-    .scan-box{flex-direction:column;border-radius:4px;}
-    .scan-box button{width:100%;}
-    .footer-grid{grid-template-columns:1fr;gap:32px;}
-    .footer-meta{flex-direction:column;align-items:flex-start;}
-    .method-grid{grid-template-columns:1fr;}
-    .grouped-plot{gap:10px;height:170px;padding-top:30px;}
-    .grouped-bars{gap:4px;}
-    .grouped-bar-wrap{width:22px;}
-    .grouped-val{font-size:9.5px;}
-    .grouped-label{font-size:10px;}
-    .flip-grid{grid-template-columns:1fr;}
-  }
-
   /* ---------- STUDY PAGE ADD-ONS (this article only) ---------- */
   .section-body{max-width:860px;}
   .lede{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:860px;margin-bottom:4px;font-weight:600;}
@@ -355,15 +308,15 @@
      than the vocabulary study's chart; this page has more categories
      but a plainer story, so it stays tight and readable. */
   .grouped-chart{margin-top:8px;}
-  .grouped-plot{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:18px;height:200px;padding-top:38px;border-bottom:1px solid var(--card-line);flex-wrap:nowrap;overflow-x:auto;}
+  .grouped-plot{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:40px;height:250px;padding-top:36px;border-bottom:1px solid var(--card-line);flex-wrap:nowrap;overflow-x:auto;}
   .grouped-group{display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;flex:0 0 auto;}
-  .grouped-bars{display:flex;align-items:flex-end;gap:6px;height:100%;}
-  .grouped-bar-wrap{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;width:26px;}
-  .grouped-val{font-family:var(--serif);font-weight:800;font-size:11px;color:var(--black);margin-bottom:6px;opacity:0;transition:opacity .3s ease;white-space:nowrap;}
+  .grouped-bars{display:flex;align-items:flex-end;gap:8px;height:100%;}
+  .grouped-bar-wrap{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;width:40px;}
+  .grouped-val{font-family:var(--serif);font-weight:800;font-size:13px;color:var(--black);margin-bottom:6px;opacity:0;transition:opacity .3s ease;white-space:nowrap;}
   .grouped-chart.in-view .grouped-val{opacity:1;}
   .grouped-bar{width:100%;border-radius:4px 4px 2px 2px;height:0;transition:height 1.1s cubic-bezier(.16,.8,.4,1);}
   .grouped-chart.in-view .grouped-bar{height:var(--h);}
-  .grouped-label{margin-top:10px;font-size:11.5px;font-weight:700;color:var(--gray-700);text-align:center;}
+  .grouped-label{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--gray-700);text-align:center;}
   .grouped-legend{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:18px;font-size:13px;color:var(--gray-700);}
   .grouped-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle;}
 
@@ -402,6 +355,9 @@
   .stat-flip-face-back{background:rgba(254,106,3,0.14);transform:rotateY(180deg);text-align:left;align-items:flex-start;justify-content:center;}
   .stat-flip-num{font-family:var(--serif);font-weight:800;font-size:26px;letter-spacing:-0.02em;line-height:1.15;}
   .stat-flip-face-back p{font-size:13.5px;color:rgba(22,21,18,0.8);line-height:1.55;}
+  .stat-flip-stack{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .stat-flip-stack-num{font-family:var(--serif);font-weight:800;font-size:26px;letter-spacing:-0.02em;line-height:1.15;}
+  .stat-flip-stack-mid{font-size:12.5px;font-weight:700;color:var(--gray-500);letter-spacing:0.02em;}
 
   /* method-box: re-themed version of the same component used on the
      original page, restyled to the site's own card system. */
@@ -414,6 +370,60 @@
   .method-item span{color:var(--black);font-weight:700;}
   .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
   .limits strong{color:var(--black);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .products-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .research-hero{padding:72px 0 40px;}
+    .research-hero-sub{max-width:100%;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .flip-grid{grid-template-columns:1fr 1fr;}
+    .hero-stat-row{gap:0;}
+    .hero-stat{gap:5px;font-size:13px;}
+    .hero-stat:not(:first-child)::before{margin-right:8px;}
+    .hero-stat-num{font-size:28px;}
+    .hero-stat-num.smaller{font-size:19px;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-wrap:wrap;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-trigger{font-size:13px;width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid var(--card-line);}
+    .nav-item{flex-direction:column;align-items:stretch;}
+    .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    section{padding:44px 20px;}
+    .research-hero{padding:56px 0 32px;}
+    .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
+    .hero-stat:not(:first-child)::before{display:none;}
+    .hero-stat-num{font-size:26px;}
+    .hero-stat-num.smaller{font-size:20px;}
+    .chart-card{padding:18px;max-width:none;margin-top:32px;}
+    .chart-caption{max-width:none;}
+    .bias-card{padding:16px 18px;}
+    .products-grid{grid-template-columns:1fr;}
+    .final-cta{padding:40px 24px;}
+    .final-cta .scan-box{max-width:none;}
+    .scan-box{flex-direction:column;border-radius:4px;}
+    .scan-box button{width:100%;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+    .method-grid{grid-template-columns:1fr;}
+    .grouped-plot{gap:10px;height:170px;padding-top:30px;}
+    .grouped-bars{gap:4px;}
+    .grouped-bar-wrap{width:22px;}
+    .grouped-val{font-size:9.5px;}
+    .grouped-label{font-size:10px;}
+    .flip-grid{grid-template-columns:1fr;}
+    .chart-card.chart-card-wide{padding:18px;max-width:none;}
+  }
 </style>
 </head>
 <body>
@@ -558,7 +568,7 @@
     <div class="kicker">The result</div>
     <h2 class="section-title">Recommended stores are not better. They are <em>marginally worse</em></h2>
     <p class="section-body">Across the full population, recommended stores scored <strong>55.4</strong> on average against <strong>56.0</strong> for stores that were never recommended. That is a real number now, not a restricted-sample artifact. The 0.7% correlation this series already reported was measured among recommended brands only. This test removes that restriction entirely, across 60,924 stores, and the gap still does not appear. If anything it points the wrong way.</p>
-    <div class="chart-card">
+    <div class="chart-card chart-card-wide">
       <div class="chart-card-title">Score components, recommended vs never recommended</div>
       <div class="grouped-chart" id="scoreChart">
         <div class="grouped-plot">
@@ -632,7 +642,11 @@
       <div class="stat-flip-card">
         <div class="stat-flip-card-inner">
           <div class="stat-flip-face stat-flip-face-front">
-            <div class="stat-flip-num">9 of 9</div>
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">9</span>
+              <span class="stat-flip-stack-mid">of</span>
+              <span class="stat-flip-stack-num">9</span>
+            </div>
           </div>
           <div class="stat-flip-face stat-flip-face-back">
             <p>Niches show the gap, range +0.78 to +1.59 points. Not a category artifact.</p>
@@ -642,7 +656,11 @@
       <div class="stat-flip-card">
         <div class="stat-flip-card-inner">
           <div class="stat-flip-face stat-flip-face-front">
-            <div class="stat-flip-num">0.20 to 0.29</div>
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">0.20</span>
+              <span class="stat-flip-stack-mid">to</span>
+              <span class="stat-flip-stack-num">0.29</span>
+            </div>
           </div>
           <div class="stat-flip-face stat-flip-face-back">
             <p>Intent's correlation with the store's other score factors. A free-floating brand-recognition signal would not correlate with anything.</p>
@@ -652,7 +670,11 @@
       <div class="stat-flip-card">
         <div class="stat-flip-card-inner">
           <div class="stat-flip-face stat-flip-face-front">
-            <div class="stat-flip-num">1.40 vs 1.53</div>
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">1.40</span>
+              <span class="stat-flip-stack-mid">vs</span>
+              <span class="stat-flip-stack-num">1.53</span>
+            </div>
           </div>
           <div class="stat-flip-face stat-flip-face-back">
             <p>Gap size in brand-owned stores versus independent ones, nearly identical. Not a brand-selection artifact.</p>
