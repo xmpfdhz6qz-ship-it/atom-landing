@@ -506,23 +506,53 @@
      — the enlarged swatch never overlaps the text on hover, at any
      breakpoint. Touch devices get the same reveal via tap (.is-open),
      gated the usual way to avoid iOS ghost-hover. ---------- */
-  .topics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px;}
+  .topics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:84px;}
+  /* the tile itself is now just a plain positioning box with no clip-path
+     of its own — the unfurl-from-a-square effect lives on .topic-face
+     instead, so the swatch (a direct child of .topic-tile) sits outside
+     that clipping and its pulse rings are free to grow past the 14px
+     square without getting cut off by the same clip that shapes the card. */
   .topic-tile{
-    position:relative;border-radius:var(--radius);
+    position:relative;min-height:172px;outline:none;
+  }
+  .topic-face{
+    position:absolute;inset:0;border-radius:var(--radius);
     padding:22px;min-height:172px;
     display:flex;flex-direction:column;justify-content:flex-end;
     background:var(--card);
     box-shadow:0 22px 40px -20px rgba(22,21,18,0.3);
-    outline:none;
     clip-path:inset(20px calc(50% - 7px) calc(100% - 34px) calc(50% - 7px) round 3px);
     transition:clip-path .45s cubic-bezier(.16,.8,.4,1), transform .45s cubic-bezier(.16,.8,.4,1);
   }
   .topic-swatch{
     position:absolute;top:20px;left:50%;z-index:2;
-    width:14px;height:14px;border-radius:3px;background:var(--orange);
+    width:14px;height:14px;border-radius:3px;
+    background:linear-gradient(150deg,#ff9450,var(--orange) 55%,#e35a00);
+    box-shadow:0 2px 4px rgba(22,21,18,0.35), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1.5px 1.5px rgba(22,21,18,0.35);
     transform:translateX(-50%);
-    transition:transform .45s cubic-bezier(.16,.8,.4,1);
+    transition:transform .45s cubic-bezier(.16,.8,.4,1), opacity .3s ease;
     pointer-events:none;
+  }
+  /* "this is live" pulse: two rings of the same square grow outward from
+     the swatch and fade, staggered a beat apart so a new one is always
+     kicking off as the last one fades — reads as a heartbeat/radar ping
+     rather than a single blinking dot. */
+  .topic-swatch::before,
+  .topic-swatch::after{
+    content:"";
+    position:absolute;inset:0;
+    border-radius:3px;
+    background:var(--orange);
+    animation:topicPulse 2.6s cubic-bezier(.16,.8,.4,1) infinite;
+    pointer-events:none;
+  }
+  .topic-swatch::after{animation-delay:1.3s;}
+  @keyframes topicPulse{
+    0%{transform:scale(1);opacity:0.5;}
+    100%{transform:scale(2.6);opacity:0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .topic-swatch::before,.topic-swatch::after{animation:none;display:none;}
   }
   .topic-title{
     position:relative;z-index:1;
@@ -541,11 +571,14 @@
     text-transform:uppercase;letter-spacing:0.05em;
   }
   @media (hover:hover) and (pointer:fine){
-    .topic-tile:hover{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
-    .topic-tile:hover .topic-swatch{transform:translateX(-50%) scale(1.25);}
+    .topic-tile:hover .topic-face{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
+    /* the swatch (and its pulse rings, since they're its own pseudo-elements)
+       fades out once the card unfurls — the little "live" square is a
+       resting-state cue, not something that belongs on top of the open card. */
+    .topic-tile:hover .topic-swatch{opacity:0;}
   }
-  .topic-tile.is-open{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
-  .topic-tile.is-open .topic-swatch{transform:translateX(-50%) scale(1.25);}
+  .topic-tile.is-open .topic-face{clip-path:inset(0 0 0 0 round 4px);transform:translateY(-7px);}
+  .topic-tile.is-open .topic-swatch{opacity:0;}
 
   /* ---------- SCORE ENGINE — radial chart for the Methodology section.
      8 spokes run from a center core circle out to a small dot per factor;
@@ -831,14 +864,19 @@
         <div class="dropdown">
           <a href="/#score" class="dd-item"><span class="dd-title">AI Commerce Score™</span></a>
           <a href="/#pricing" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
           <a href="/#pricing" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
         </div>
       </div>
 
       <div class="nav-item">
         <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         <div class="dropdown dropdown-right">
-          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Every Job. Every Day.</span></a>
+          <a href="/founders-reality-check#every-job" class="dd-item"><span class="dd-title">Every Job. Every Day.</span></a>
+          <a href="/founders-reality-check#boring-work" class="dd-item"><span class="dd-title">Nobody Sees the Boring Work.</span></a>
+          <a href="/founders-reality-check#loneliest-meeting" class="dd-item"><span class="dd-title">The Loneliest Meeting You'll Ever Have.</span></a>
+          <a href="/founders-reality-check#consistency" class="dd-item"><span class="dd-title">Nobody Claps for Consistency.</span></a>
         </div>
       </div>
 
@@ -1281,51 +1319,67 @@
     <div class="topics-grid">
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">AI Visibility</div>
-        <div class="topic-body">Why do some stores never appear in AI-generated recommendations?</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">AI Visibility</div>
+          <div class="topic-body">Why do some stores never appear in AI-generated recommendations?</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">Recommendation Intelligence</div>
-        <div class="topic-body">What determines which brands AI chooses to recommend, and which it ignores?</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">Recommendation Intelligence</div>
+          <div class="topic-body">What determines which brands AI chooses to recommend, and which it ignores?</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">Machine-Readable Trust</div>
-        <div class="topic-body">Which trust signals can AI actually read, verify and use during decision-making?</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">Machine-Readable Trust</div>
+          <div class="topic-body">Which trust signals can AI actually read, verify and use during decision-making?</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">Agentic Commerce</div>
-        <div class="topic-body">How AI shopping agents discover, evaluate and purchase products across the web.</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">Agentic Commerce</div>
+          <div class="topic-body">How AI shopping agents discover, evaluate and purchase products across the web.</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">AI Commerce Benchmarks</div>
-        <div class="topic-body">Measuring how industries compare in AI readiness across categories and markets.</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">AI Commerce Benchmarks</div>
+          <div class="topic-body">Measuring how industries compare in AI readiness across categories and markets.</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">Commerce Accuracy</div>
-        <div class="topic-body">How product data quality affects AI understanding, confidence and recommendations.</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">Commerce Accuracy</div>
+          <div class="topic-body">How product data quality affects AI understanding, confidence and recommendations.</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">AI Decision Science</div>
-        <div class="topic-body">Understanding how AI models rank, compare and choose between competing brands.</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">AI Decision Science</div>
+          <div class="topic-body">Understanding how AI models rank, compare and choose between competing brands.</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
       <div class="topic-tile" tabindex="0">
         <span class="topic-swatch"></span>
-        <div class="topic-title">Recommendation Stability</div>
-        <div class="topic-body">Measuring how AI recommendations change over time, across models and retrieval systems.</div>
-        <span class="topic-status">Active research</span>
+        <div class="topic-face">
+          <div class="topic-title">Recommendation Stability</div>
+          <div class="topic-body">Measuring how AI recommendations change over time, across models and retrieval systems.</div>
+          <span class="topic-status">Active research</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1512,9 +1566,9 @@
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Company</div>
-        <a href="#">About</a>
+        <a href="/about">About</a>
         <a href="#">Contact</a>
-        <a href="#">Privacy</a>
+        <a href="/privacy-policy">Privacy</a>
         <a href="#">Terms</a>
         <a href="/founders-reality-check">Founder's Reality Check</a>
       </div>
@@ -1525,7 +1579,7 @@
         <a href="/methodology">Methodology</a>
         <a href="/vocabulary">Vocabulary</a>
         <a href="/vocabulary/learn">Learn</a>
-        <a href="#">AI Commerce Intelligence</a>
+        <a href="/research">AI Commerce Intelligence</a>
         <a href="/benchmarks">Benchmarks</a>
       </div>
     </div>
