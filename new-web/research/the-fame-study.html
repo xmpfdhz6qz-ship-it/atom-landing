@@ -224,11 +224,17 @@
   .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
 
   /* ---------- CHART CARD (shared shell reused for every chart on this page) ---------- */
-  .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;}
+  .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .chart-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
   .chart-card-title{font-size:12px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:18px;}
 
   /* ---------- CALLOUT / PLAIN CARD ---------- */
-  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:680px;}
+  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:680px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
   .bias-card strong{color:var(--black);}
   .chart-caption{max-width:640px;margin:22px auto 0;font-size:15px;color:var(--gray-700);line-height:1.7;text-align:center;}
   .chart-caption strong{color:var(--black);}
@@ -357,7 +363,10 @@
   .section-body{max-width:860px;}
   .lede{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:860px;margin-bottom:4px;font-weight:600;}
   .sub-head{font-family:var(--serif);font-weight:800;font-size:18px;color:var(--black);margin:28px 0 10px;letter-spacing:-0.01em;}
-  .correction-card{background:var(--card);border-radius:var(--radius);padding:22px 26px;font-size:16px;color:var(--gray-700);line-height:1.75;}
+  .correction-card{background:var(--card);border-radius:var(--radius);padding:22px 26px;font-size:16px;color:var(--gray-700);line-height:1.75;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .correction-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
   .correction-card strong{color:var(--black);}
   .correction-card-label{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-500);margin-bottom:10px;}
   .correction-card p+p{margin-top:12px;}
@@ -397,16 +406,48 @@
   .compare-delta{position:absolute;top:2px;left:50%;transform:translateX(-50%);font-family:var(--serif);font-weight:800;font-size:12px;color:var(--white);background:var(--black);border-radius:20px;padding:5px 14px;white-space:nowrap;opacity:0;transition:opacity .4s ease .9s, transform .4s ease .9s;}
   .col-chart.in-view .compare-delta{opacity:1;}
 
-  /* trio-grid: three plain stat cards for "the conclusion" section. */
+  /* trio-grid: three flip cards for "the conclusion" section — same
+     flip-on-hover language as the Key Findings cards on the research
+     page. Front face shows just the number, back face shows the finding. */
   .trio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
-  .trio-card{background:var(--card);border-radius:var(--radius);padding:24px 22px;}
-  .trio-num{font-family:var(--serif);font-weight:800;font-size:34px;letter-spacing:-0.02em;line-height:1;margin-bottom:10px;}
-  .trio-card p{font-size:14px;color:var(--gray-700);line-height:1.6;}
-  .trio-card p strong{color:var(--black);}
+  .trio-card{
+    --flip-dir:180deg;
+    perspective:1400px;border-radius:var(--radius);height:210px;
+  }
+  .trio-card:nth-child(even){--flip-dir:-180deg;}
+  .trio-card-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .trio-card.is-flipped .trio-card-inner{transform:rotateY(var(--flip-dir));}
+  @media (hover:hover) and (pointer:fine){
+    .trio-card:hover .trio-card-inner{transform:rotateY(var(--flip-dir));}
+  }
+  .trio-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:24px 22px;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:center;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .trio-card.is-flipped .trio-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .trio-card:hover .trio-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  }
+  .trio-face-front{background:var(--card);align-items:center;}
+  .trio-face-front::after{content:"";position:absolute;right:20px;bottom:18px;width:10px;height:10px;border-radius:2px;background:var(--orange);}
+  .trio-face-back{background:rgba(254,106,3,0.14);transform:rotateY(180deg);}
+  .trio-num{font-family:var(--serif);font-weight:800;font-size:40px;letter-spacing:-0.02em;line-height:1;}
+  .trio-face-back p{font-size:14px;color:rgba(22,21,18,0.8);line-height:1.6;}
+  .trio-face-back p strong{color:var(--black);}
 
   /* method-box: re-themed version of the same component used on the
      original page, restyled to the site's own card system. */
-  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;}
+  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
   .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-bottom:18px;}
   .method-item{font-size:13.5px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--card-line);}
   .method-item span{color:var(--black);font-weight:700;}
@@ -673,19 +714,37 @@
     <h2 class="section-title">Three measurements, and <em>no</em> answer</h2>
     <div class="trio-grid">
       <div class="trio-card">
-        <div class="trio-num" style="color:var(--red);" id="trioQuality" data-target="0.7">0%</div>
-        <p><strong>Store quality does not matter.</strong> A cleaner, more machine-readable store does essentially nothing for how often AI recommends you. This held, and got stronger.</p>
+        <div class="trio-card-inner">
+          <div class="trio-face trio-face-front">
+            <div class="trio-num" style="color:var(--red);" id="trioQuality" data-target="0.7">0%</div>
+          </div>
+          <div class="trio-face trio-face-back">
+            <p><strong>Store quality does not matter.</strong> A cleaner, more machine-readable store does essentially nothing for how often AI recommends you. This held, and got stronger.</p>
+          </div>
+        </div>
       </div>
       <div class="trio-card">
-        <div class="trio-num" style="color:var(--red);" id="trioFame" data-target="1.2">0%</div>
-        <p><strong>Neither does our fame measure.</strong> Sits exactly on the noise line. We reported 24.9% from a sample a bug selected. That claim is withdrawn.</p>
+        <div class="trio-card-inner">
+          <div class="trio-face trio-face-front">
+            <div class="trio-num" style="color:var(--red);" id="trioFame" data-target="1.2">0%</div>
+          </div>
+          <div class="trio-face trio-face-back">
+            <p><strong>Neither does our fame measure.</strong> Sits exactly on the noise line. We reported 24.9% from a sample a bug selected. That claim is withdrawn.</p>
+          </div>
+        </div>
       </div>
       <div class="trio-card">
-        <div class="trio-num" style="color:var(--green);" id="trioStable" data-low="78" data-high="91">0%</div>
-        <p><strong>And it is still stable.</strong> The same brands win again and again. We just no longer have any idea what they win on.</p>
+        <div class="trio-card-inner">
+          <div class="trio-face trio-face-front">
+            <div class="trio-num" style="color:var(--green);" id="trioStable" data-low="78" data-high="91">0%</div>
+          </div>
+          <div class="trio-face trio-face-back">
+            <p><strong>And it is still stable.</strong> The same brands win again and again. We just no longer have any idea what they win on.</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="bias-card">
+    <div class="bias-card" style="max-width:none;">
       <strong>What this means for a brand:</strong> if you are not already inside the winning set, you are not invisible by accident or by bad luck on a given day. You are invisible consistently, and after correcting our own work, we have to state plainly that we cannot tell you why. Not store quality. Not any public fame signal we can measure. Anyone selling you a route into AI recommendations is selling something they have not measured. The only thing that can be measured today is where you actually stand.
     </div>
   </div>
@@ -957,6 +1016,22 @@
   observeColChart(document.getElementById('r2Chart'));
   observeColChart(document.getElementById('storeScoreChart'));
   observeColChart(document.getElementById('wikiChart'));
+
+  // "The conclusion" trio — flip cards, same hover-flip language as the
+  // Key Findings cards on the research page. Desktop flips on hover
+  // (CSS only). Touch has no hover, so a tap flips the card and a
+  // second tap flips it back (there's no link to follow through to,
+  // unlike the research page's cards).
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.trio-card'));
+    if (!cards.length) return;
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      cards.forEach(card => {
+        card.addEventListener('click', () => { card.classList.toggle('is-flipped'); });
+      });
+    }
+  })();
 
   // Count-up for every stat number on this page: a plain integer (872),
   // two one-decimal percentages (1.2%, 0.7%), and a low-high range
