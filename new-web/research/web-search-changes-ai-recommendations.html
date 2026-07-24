@@ -276,7 +276,7 @@
   .chart-caption strong{color:var(--black);}
 
   /* ---------- REPORT TABLE ---------- */
-  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px;max-width:640px;margin-left:auto;margin-right:auto;}
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:40px;max-width:640px;margin-left:auto;margin-right:auto;}
   .report-table{width:100%;min-width:480px;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;table-layout:fixed;}
   .report-table th,.report-table td{width:14.2857%;}
   .report-table thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);font-weight:800;text-align:left;padding:12px 10px;border-bottom:2px solid rgba(254,106,3,0.28);}
@@ -414,14 +414,24 @@
   }
 
   /* ---------- STUDY PAGE ADD-ONS (this article only) ---------- */
-  .lede{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:680px;margin-bottom:4px;font-weight:600;}
+  /* this page reads long-form top to bottom, so the standard 680px text
+     column made it feel like everything sat pinned to the left edge of
+     a much wider container. Widen the column for this article only
+     (same rule the shared class uses elsewhere, just a wider ceiling)
+     so paragraphs fill more of the page without going edge to edge. */
+  .section-body{max-width:860px;}
+  .lede{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:860px;margin-bottom:4px;font-weight:600;}
   .sub-head{font-family:var(--serif);font-weight:800;font-size:18px;color:var(--black);margin:28px 0 10px;letter-spacing:-0.01em;}
-  .art-list{margin:14px 0 6px;padding-left:0;list-style:none;max-width:680px;}
+  .art-list{margin:14px 0 6px;padding-left:0;list-style:none;max-width:860px;}
   .art-list li{font-size:16px;color:var(--gray-700);line-height:1.75;padding:8px 0 8px 22px;position:relative;}
   .art-list li::before{content:"";position:absolute;left:2px;top:19px;width:6px;height:6px;border-radius:1px;background:var(--orange);}
   .art-list li strong{color:var(--black);}
-  .callout.note{background:rgba(224,162,51,0.08);border-color:rgba(224,162,51,0.25);border-left-color:var(--amber);}
-  .callout.note strong{color:var(--amber);}
+  /* a plain card for the correction notice — same --card background as
+     every other box on the site, no accent border, just a bit larger
+     type since it's a standalone notice rather than an inline aside. */
+  .correction-card{background:var(--card);border-radius:var(--radius);padding:22px 26px;font-size:16px;color:var(--gray-700);line-height:1.75;}
+  .correction-card strong{color:var(--black);}
+  .correction-card-label{font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-500);margin-bottom:10px;}
 
   /* split-bar: a single stacked bar with two segments, used wherever a
      study boils down to one before/after or on/off comparison — its own
@@ -549,8 +559,8 @@
 <!-- CORRECTION -->
 <section>
   <div class="container">
-    <div class="callout note" style="max-width:680px;">
-      <div style="font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;">Correction · 15 July 2026</div>
+    <div class="correction-card">
+      <div class="correction-card-label">Correction · 15 July 2026</div>
       An earlier version of this piece claimed that changing the model moved only about 6% of recommendations. That number was derived rather than measured, and it was wrong. Measured directly, swapping gpt-4o-mini for gpt-4o with search off in both cases changes 66.9% of the recommended brands. The 77% search effect is unaffected and stands. See <strong>The control</strong> below for the full correction.
     </div>
   </div>
@@ -573,7 +583,7 @@
     <h2 class="section-title">One model, one toggle</h2>
     <p class="lede">The design is deliberately boring. Change one thing, hold everything else still.</p>
     <ul class="art-list">
-      <li><strong>50 buying prompts</strong> across 10 ecommerce categories: pets, beauty, supplements, coffee, fashion, fitness, food, home, wellness, electronics.</li>
+      <li><strong>50 buying prompts</strong> across 10 e-commerce categories: pets, beauty, supplements, coffee, fashion, fitness, food, home, wellness, electronics.</li>
       <li><strong>10 runs per prompt, per condition</strong>, to average out run-to-run randomness.</li>
       <li><strong>One model: gpt-4o.</strong> The only variable we changed was whether web search was enabled.</li>
       <li><strong>The measurement:</strong> for each condition we collected the set of recommended brands, then counted how many appeared in both.</li>
@@ -602,7 +612,7 @@
       </div>
     </div>
     <p class="chart-caption">Same model, gpt-4o. Same 50 buying prompts. 10 runs per prompt, per condition. The only variable is whether browsing was on or off.</p>
-    <p class="section-body" style="margin-top:20px;">That interval comes from a cluster bootstrap resampling the 50 intents rather than the individual brand-intent pairs, because brands cluster inside intents and the pairs are not independent. A naive binomial would have given a tighter interval, 75 to 79%. The wider one is the honest one.</p>
+    <p class="section-body" style="margin-top:40px;">That interval comes from a cluster bootstrap resampling the 50 intents rather than the individual brand-intent pairs, because brands cluster inside intents and the pairs are not independent. A naive binomial would have given a tighter interval, 75 to 79%. The wider one is the honest one.</p>
     <p class="section-body" style="margin-top:14px;">With search off, the model recommends from memory. It names the brands it saw most often during training, which skews heavily toward the famous ones. With search on, it throws most of those out and recommends whatever its retrieval surfaces in the moment. These are not small adjustments to a stable list. They are two largely different lists.</p>
   </div>
 </section>
@@ -678,7 +688,7 @@
       </table>
     </div>
     <p class="chart-caption">10,000 label-shuffled resamples per comparison. p is the share of shuffles that matched or exceeded the observed change rate.</p>
-    <p class="section-body" style="margin-top:20px;">Search and model survive. <strong>Drift does not.</strong> We re-ran an identical condition three days later and the result sits exactly on top of the null. Over three days, with the same model in the same mode, the hierarchy does not move. It only looked like it moved because the model is noisy.</p>
+    <p class="section-body" style="margin-top:40px;">Search and model survive. <strong>Drift does not.</strong> We re-ran an identical condition three days later and the result sits exactly on top of the null. Over three days, with the same model in the same mode, the hierarchy does not move. It only looked like it moved because the model is noisy.</p>
     <p class="section-body" style="margin-top:14px;">Notice the null is different every time. Pooling a small model with a large one gives a noisy null (54.5%). Pooling browsing-off with browsing-on gives a lower one (39.1%), because browsing is more repeatable. This is exactly why subtracting a single number from everything was never going to work.</p>
     <div class="sub-head">What this means if you sell anything online</div>
     <p class="section-body"><strong>Measure a brand's recommendation position with a single query and roughly half of what you see is a coin flip.</strong> Not a trend. Not an improvement. Not something you caused.</p>
@@ -700,7 +710,7 @@
       </div>
       <p class="noise-note">Bar width is zoomed to the 44 to 50 percent range so the flattening is visible; the percentages themselves are the real measured noise floor at each sample size.</p>
     </div>
-    <p class="section-body" style="margin-top:20px;">It falls for the first three, then <strong>stops dead at 46.1% and does not move again.</strong> Doubling the sampling from five runs to ten changes nothing. Not a tenth of a point.</p>
+    <p class="section-body" style="margin-top:40px;">It falls for the first three, then <strong>stops dead at 46.1% and does not move again.</strong> Doubling the sampling from five runs to ten changes nothing. Not a tenth of a point.</p>
     <p class="section-body" style="margin-top:14px;">So the noise is not a budget problem. You cannot buy determinism back by running more. <strong>The randomness is a property of the model itself.</strong> There is a stable core of brands and a tail long enough that every query pulls different edges of it, no matter how many times you ask.</p>
   </div>
 </section>
@@ -727,7 +737,7 @@
       </div>
     </div>
     <p class="chart-caption">Share of recommendations that changed when web search was turned on, by category. Bar width is relative to the highest category, Pets at 88%.</p>
-    <p class="section-body" style="margin-top:20px;">Pets, interestingly, has been the most extreme category in every study we've run. It was the sharpest in our earlier quality-versus-recommendation work too. Something about that market makes AI recommendations unusually unstable. We don't fully understand it yet.</p>
+    <p class="section-body" style="margin-top:40px;">Pets, interestingly, has been the most extreme category in every study we've run. It was the sharpest in our earlier quality-versus-recommendation work too. Something about that market makes AI recommendations unusually unstable. We don't fully understand it yet.</p>
   </div>
 </section>
 
