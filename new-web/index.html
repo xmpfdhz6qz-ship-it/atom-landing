@@ -290,6 +290,15 @@
 
   /* ---------- PRODUCTS GRID ---------- */
   .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:var(--maxw);margin:0 auto;}
+  /* the pricing grid specifically gets a bento treatment instead of 5
+     identical boxes: the free score card and each paid feature card run
+     twice as wide as the plainer utility cards next to them, so the row
+     reads as a deliberate mix of sizes rather than a monotonous shelf.
+     Scoped to #pricing only, so the other .products-grid usages on the
+     page (research findings, "built in public") are untouched. */
+  #pricing .mini-card:nth-child(1){grid-column:span 2;}
+  #pricing .mini-card:nth-child(4){grid-column:span 2;}
+  #pricing .mini-card:nth-child(5){grid-column:span 2;}
   .mini-card{border-radius:var(--radius);padding:36px 28px;background:var(--card);display:flex;flex-direction:column;min-height:220px;transition:transform .3s ease, box-shadow .3s ease;}
   .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   .mini-card-title{font-family:var(--serif);font-size:18px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:10px;}
@@ -481,6 +490,7 @@
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     section{padding:52px 20px;}
     .products-grid{grid-template-columns:1fr;}
+    #pricing .mini-card{grid-column:span 1 !important;}
     .research-grid .mini-card-banner{grid-column:1;}
     .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
     .sig-name{width:130px;font-size:12px;}
@@ -664,13 +674,19 @@
     <div class="mini-card" id="product-monitoring">
       <div class="mini-card-title">AI Monitoring</div>
       <div class="mini-card-tag">Track changes over time.</div>
-      <div class="mini-card-price soon">Coming soon</div>
+      <a href="#pricing" class="mini-card-cta">Learn more →</a>
     </div>
 
     <div class="mini-card" id="product-recommendation">
       <div class="mini-card-title">Recommendation Intelligence</div>
       <div class="mini-card-tag">Understand AI decisions.</div>
       <div class="mini-card-price paid">$1299</div>
+      <a href="#pricing" class="mini-card-cta">Learn more →</a>
+    </div>
+
+    <div class="mini-card" id="product-snapshot">
+      <div class="mini-card-title">AI Agent Snapshot</div>
+      <div class="mini-card-tag">See what an AI agent sees right now.</div>
       <a href="#pricing" class="mini-card-cta">Learn more →</a>
     </div>
   </div>
