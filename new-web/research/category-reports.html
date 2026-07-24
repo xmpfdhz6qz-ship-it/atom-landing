@@ -441,16 +441,22 @@
   .category-flip-arrow{align-self:flex-end;width:16px;height:10px;color:var(--black);transform:rotate(-90deg);flex-shrink:0;}
   .category-flip-arrow svg{display:block;width:100%;height:100%;}
 
-  /* synthesis table: wider, equal-width columns, left-aligned, colored
-     with the site's own palette instead of plain gray. */
-  .mini-lb-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;border-radius:var(--radius);overflow:hidden;}
-  .mini-lb-table thead th{width:25%;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--black);font-weight:800;text-align:left;padding:12px 14px;background:var(--card);border-bottom:2px solid var(--gray-300);}
-  .mini-lb-table td{padding:11px 14px;text-align:left;font-size:13.5px;color:var(--gray-700);border-bottom:1px solid var(--card-line);}
-  .mini-lb-table tbody tr:nth-child(even){background:var(--off-white);}
+  /* synthesis table: warm card-tan background throughout, orange
+     uppercase headers with an orange underline, bold black category
+     names, bold r-value colored red only when the relationship is
+     notable (matches the reference design). */
+  .mini-lb-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;border-radius:var(--radius);overflow:hidden;background:var(--card);}
+  .mini-lb-table thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--orange);font-weight:800;text-align:left;padding:12px 14px;background:var(--card);border-bottom:2px solid var(--orange);}
+  .mini-lb-table thead th:nth-child(1){width:20%;}
+  .mini-lb-table thead th:nth-child(2),.mini-lb-table thead th:nth-child(3){width:11%;}
+  .mini-lb-table thead th:nth-child(4),.mini-lb-table thead th:nth-child(5){width:13%;}
+  .mini-lb-table thead th:nth-child(6){width:10%;}
+  .mini-lb-table thead th:nth-child(7){width:22%;}
+  .mini-lb-table td{padding:12px 14px;text-align:left;font-size:13.5px;color:var(--gray-700);border-bottom:1px solid rgba(254,106,3,0.18);background:var(--card);}
   .mini-lb-table tbody tr:last-child td{border-bottom:none;}
   .mini-lb-table .mini-lb-brand{color:var(--black);font-weight:700;}
-  .mini-lb-rel-none{color:var(--gray-500);font-weight:600;}
-  .mini-lb-rel-weak{color:var(--red);font-weight:700;}
+  .mini-lb-table .mini-lb-r-val{font-weight:800;color:var(--black);}
+  .mini-lb-table .mini-lb-r-val.is-notable{color:var(--red);}
 
   .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:780px;transition:transform .3s ease, box-shadow .3s ease;}
   @media (hover:hover) and (pointer:fine){
@@ -648,10 +654,10 @@
     <div class="kicker">Five niches, one pattern</div>
     <h2 class="section-title">Five categories, and the answer never changed</h2>
     <p class="section-body">Across beauty, supplements, coffee, pets, and now home and living, we have captured more than 20,000 recommendations and measured the same thing every time: the relationship between how often AI recommends a brand and how AI-ready its store is.</p>
-    <div class="chart-card" style="max-width:820px;">
+    <div class="chart-card" style="max-width:940px;">
       <table class="mini-lb-table">
-        <thead><tr><th>Category</th><th>Recommendations</th><th>Freq vs Score (r)</th><th>Relationship</th></tr></thead>
-        <tbody><tr><td class="mini-lb-brand">Beauty</td><td>4,000</td><td>0.17</td><td><span class="mini-lb-rel-none">None</span></td></tr><tr><td class="mini-lb-brand">Supplements</td><td>4,000</td><td>-0.015</td><td><span class="mini-lb-rel-none">None</span></td></tr><tr><td class="mini-lb-brand">Coffee</td><td>4,000</td><td>0.019</td><td><span class="mini-lb-rel-none">None</span></td></tr><tr><td class="mini-lb-brand">Pets</td><td>4,000</td><td>-0.366</td><td><span class="mini-lb-rel-weak">Weak negative</span></td></tr><tr><td class="mini-lb-brand">Home &amp; Living</td><td>4,000</td><td>0.108</td><td><span class="mini-lb-rel-none">None</span></td></tr></tbody>
+        <thead><tr><th>Category</th><th>Recs</th><th>Brands</th><th>On-Index</th><th>Marketplace</th><th>r-value</th><th>Relationship</th></tr></thead>
+        <tbody><tr><td class="mini-lb-brand">Beauty</td><td>4,000</td><td>238</td><td>57.6%</td><td>0.4%</td><td class="mini-lb-r-val">+0.17</td><td>None</td></tr><tr><td class="mini-lb-brand">Supplements</td><td>4,000</td><td>371</td><td>33.5%</td><td>4.9%</td><td class="mini-lb-r-val">&minus;0.015</td><td>None</td></tr><tr><td class="mini-lb-brand">Coffee</td><td>4,000</td><td>228</td><td>49.8%</td><td>1.8%</td><td class="mini-lb-r-val">+0.019</td><td>None</td></tr><tr><td class="mini-lb-brand">Pets</td><td>4,000</td><td>405</td><td>19.8%</td><td>7.1%</td><td class="mini-lb-r-val is-notable">&minus;0.366</td><td>Weak negative</td></tr><tr><td class="mini-lb-brand">Home &amp; Living</td><td>4,000</td><td>271</td><td>~60%</td><td>~21%</td><td class="mini-lb-r-val">+0.108</td><td>None</td></tr></tbody>
       </table>
     </div>
     <div class="bias-card">Five categories, more than 20,000 recommendations, and <strong>not once</strong> is recommendation frequency meaningfully and positively related to store readiness. Three times the link is zero, once it is faintly negative, and here it is zero again. The conclusion is no longer a single finding, it is a replicated result: <strong>AI recommends from fame, not from store quality.</strong></div>
