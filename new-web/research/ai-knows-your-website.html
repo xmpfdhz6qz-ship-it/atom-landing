@@ -6,6 +6,7 @@
 <title>AI Knows Your Website 76% of the Time. It Still Won't Recommend You. | Atom Foundry</title>
 <meta name="description" content="We asked one AI model the official website of 360 brands, 10 times each. It answered correctly 75.9% of the time. That kills the simplest explanation for why store quality doesn't predict recommendation: the model isn't guessing blind. It knows where you are, and recommends someone else anyway.">
 <meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
 <link rel="canonical" href="https://atomfoundry.dev/research/ai-knows-your-website">
 <meta property="og:title" content="AI Knows Your Website 76% of the Time. It Still Won't Recommend You.">
 <meta property="og:description" content="360 brands, 10 runs each: the model names the correct domain 75.9% of the time. Knowing a domain is not the same as reading a store. The link lives in memory, not retrieval.">
@@ -115,6 +116,19 @@
     font-size:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
+  /* Cross-document view transition: on browsers that support navigating
+     same-origin pages with the View Transitions API (Chromium 126+), the
+     incoming page rolls down over the outgoing one like a blind being
+     pulled down, instead of the default cross-fade. Unsupported browsers
+     just navigate normally — this is a pure progressive enhancement. */
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
   html{scroll-behavior:smooth;}
   body{
     font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
@@ -421,7 +435,7 @@
           <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
           <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
           <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
-          <a href="/research#cat-founderlab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
         </div>
       </div>
 
@@ -688,7 +702,7 @@
         <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
         <a href="/research/mechanism-studies">Mechanism Studies</a>
         <a href="/research/category-reports">Category Reports</a>
-        <a href="/research#cat-founderlab">Founder Lab</a>
+        <a href="/founder-lab">Founder Lab</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Framework</div>
@@ -718,7 +732,7 @@
       <div class="footer-col">
         <div class="footer-col-label">Knowledge Base</div>
         <a href="/vocabulary">Research Library</a>
-        <a href="/research#cat-founderlab">Founder Lab</a>
+        <a href="/founder-lab">Founder Lab</a>
         <a href="/methodology">Methodology</a>
         <a href="/vocabulary">Vocabulary</a>
         <a href="/vocabulary/learn">Learn</a>
