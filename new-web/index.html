@@ -293,15 +293,6 @@
 
   /* ---------- PRODUCTS GRID ---------- */
   .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:var(--maxw);margin:0 auto;}
-  /* the pricing grid specifically gets a bento treatment instead of 5
-     identical boxes: the free score card and each paid feature card run
-     twice as wide as the plainer utility cards next to them, so the row
-     reads as a deliberate mix of sizes rather than a monotonous shelf.
-     Scoped to #pricing only, so the other .products-grid usages on the
-     page (research findings, "built in public") are untouched. */
-  #pricing .mini-card:nth-child(1){grid-column:span 2;}
-  #pricing .mini-card:nth-child(4){grid-column:span 2;}
-  #pricing .mini-card:nth-child(5){grid-column:span 2;}
   .mini-card{border-radius:var(--radius);padding:36px 28px;background:var(--card);display:flex;flex-direction:column;min-height:220px;transition:transform .3s ease, box-shadow .3s ease;}
   .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   .mini-card-title{font-family:var(--serif);font-size:18px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:10px;}
@@ -319,6 +310,51 @@
     transition:background .2s ease, color .2s ease;
   }
   .mini-card-cta:hover{background:var(--orange);color:var(--black);}
+
+  /* ---------- PRODUCT FLIP CARDS (From Research to Products) ----------
+     Five tall portrait rectangles, one row, same flip mechanism (and the
+     same navbar chevron icon) as the Category Reports cards on
+     /research/category-reports. Front shows only the product name,
+     centered; back shows a short description, a CTA line, and the
+     chevron, each back tinted per product. */
+  #pricing.products-grid{grid-template-columns:repeat(5,1fr);}
+  .product-flip-card{
+    --flip-dir:180deg;
+    display:block;text-decoration:none;perspective:1400px;
+    border-radius:var(--radius);height:320px;
+  }
+  .product-flip-card:nth-child(even){--flip-dir:-180deg;}
+  .product-flip-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .product-flip-card.is-flipped .product-flip-inner{transform:rotateY(var(--flip-dir));}
+  @media (hover:hover) and (pointer:fine){
+    .product-flip-card:hover .product-flip-inner{transform:rotateY(var(--flip-dir));}
+  }
+  .product-flip-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:26px 24px;overflow:hidden;
+    display:flex;flex-direction:column;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .product-flip-card.is-flipped .product-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .product-flip-card:hover .product-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  }
+  .product-flip-face-front{background:var(--card);align-items:center;justify-content:center;text-align:center;}
+  .product-flip-name{font-family:var(--serif);font-size:21px;font-weight:800;letter-spacing:-0.01em;color:var(--black);line-height:1.3;}
+  .product-flip-face-back{transform:rotateY(180deg);justify-content:space-between;}
+  .product-flip-body{font-size:14.5px;line-height:1.6;}
+  .product-flip-cta{display:flex;align-items:center;font-size:13.5px;font-weight:800;}
+  .product-flip-back-orange{background:var(--orange);color:var(--white);}
+  .product-flip-back-orange .product-flip-body{color:rgba(255,255,255,0.9);}
+  .product-flip-back-orange-light{background:rgba(254,106,3,0.14);color:var(--black);}
+  .product-flip-back-orange-light .product-flip-body{color:rgba(22,21,18,0.85);}
+  .product-flip-back-teal{background:#2bb991;color:var(--white);}
+  .product-flip-back-teal .product-flip-body{color:rgba(255,255,255,0.9);}
 
   /* Research Findings: same card language, but broken into an asymmetric
      "bento" layout instead of a uniform 4-up row — one big card, two
@@ -430,6 +466,7 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
+    #pricing.products-grid{grid-template-columns:1fr 1fr;}
     .research-grid .mini-card{grid-column:auto;grid-row:auto;min-height:220px;}
     .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
     .research-grid .mini-card-banner{grid-column:1 / span 2;flex-direction:column;align-items:stretch;gap:0;margin-top:20px;}
@@ -493,7 +530,8 @@
     .niche-bar-label{font-size:10px;padding-bottom:10px;}
     section{padding:52px 20px;}
     .products-grid{grid-template-columns:1fr;}
-    #pricing .mini-card{grid-column:span 1 !important;}
+    #pricing.products-grid{grid-template-columns:1fr;}
+    .product-flip-card{height:220px;}
     .research-grid .mini-card-banner{grid-column:1;}
     .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
     .sig-name{width:130px;font-size:12px;}
@@ -660,38 +698,65 @@
     <p class="products-sub">Every experiment we run becomes something useful. Some findings become free tools. Others become detailed reports or long-term monitoring.</p>
   </div>
   <div class="products-grid" id="pricing">
-    <div class="mini-card" id="product-score">
-      <div class="mini-card-title">AI Commerce Score™</div>
-      <div class="mini-card-tag">Measure your AI readiness.</div>
-      <div class="mini-card-price free">Free</div>
-      <a href="#score" class="mini-card-cta">Get Score<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    </div>
+    <a class="product-flip-card" id="product-score" href="#score">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Commerce Score™</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange">
+          <p class="product-flip-body">Free AI assessment for every store.</p>
+          <span class="product-flip-cta">Get Started<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
 
-    <div class="mini-card" id="product-report">
-      <div class="mini-card-title">AI Readiness Report</div>
-      <div class="mini-card-tag">Complete store analysis.</div>
-      <div class="mini-card-price paid">$399</div>
-      <a href="#pricing" class="mini-card-cta">Learn more<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    </div>
+    <a class="product-flip-card" id="product-report" href="#pricing">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Readiness Report</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange-light">
+          <p class="product-flip-body">A comprehensive analysis tailored to your store.</p>
+          <span class="product-flip-cta">Customize Report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
 
-    <div class="mini-card" id="product-monitoring">
-      <div class="mini-card-title">AI Monitoring</div>
-      <div class="mini-card-tag">Track changes over time.</div>
-      <a href="#pricing" class="mini-card-cta">Learn more<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    </div>
+    <a class="product-flip-card" id="product-monitoring" href="#pricing">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Monitoring</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange-light">
+          <p class="product-flip-body">Continuous measurement of your AI visibility.</p>
+          <span class="product-flip-cta">Learn More<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
 
-    <div class="mini-card" id="product-recommendation">
-      <div class="mini-card-title">Recommendation Intelligence</div>
-      <div class="mini-card-tag">Understand AI decisions.</div>
-      <div class="mini-card-price paid">$1299</div>
-      <a href="#pricing" class="mini-card-cta">Learn more<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    </div>
+    <a class="product-flip-card" id="product-recommendation" href="#pricing">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">Recommendation Intelligence</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange">
+          <p class="product-flip-body">Understand why AI recommends your competitors.</p>
+          <span class="product-flip-cta">Explore Analysis<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
 
-    <div class="mini-card" id="product-snapshot">
-      <div class="mini-card-title">AI Agent Snapshot</div>
-      <div class="mini-card-tag">See what an AI agent sees right now.</div>
-      <a href="#pricing" class="mini-card-cta">Learn more<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-    </div>
+    <a class="product-flip-card" id="product-snapshot" href="#pricing">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Agent Snapshot</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-teal">
+          <p class="product-flip-body">See what leading AI shopping agents understand about your store today.</p>
+          <span class="product-flip-cta">View Details<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
   </div>
   <p class="products-reveal"><span class="products-reveal-inner">Every product is built and validated using our research across <b class="products-reveal-num" data-target="66087">0</b> e-commerce stores.</span></p>
 </section>
@@ -1106,6 +1171,27 @@
     }
     document.getElementById('cookieAccept').addEventListener('click', () => dismiss('accepted'));
     document.getElementById('cookieDecline').addEventListener('click', () => dismiss('declined'));
+  })();
+
+  // Product flip cards are real links, so on hover-capable devices the
+  // flip is purely a CSS hover effect and a click just follows the href.
+  // On touch, there is no hover: the first tap flips the card to reveal
+  // the description, and a second tap follows the link — same pattern as
+  // the Category Reports cards on /research/category-reports.
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.product-flip-card'));
+    if (!cards.length) return;
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (!card.classList.contains('is-flipped')) {
+            e.preventDefault();
+            card.classList.add('is-flipped');
+          }
+        });
+      });
+    }
   })();
 </script>
 
