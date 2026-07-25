@@ -6,6 +6,7 @@
 <title>Search Does Not Just Change Who AI Recommends. It Changes the Words It Uses. | Atom Foundry</title>
 <meta name="description" content="Same 50 prompts, same categories, only search toggled on or off. The brands the model recommends already change 77% of the time. Now the vocabulary too: with search on, the model names ingredients and specifications. With it off, impressions.">
 <meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
 <link rel="canonical" href="https://atomfoundry.dev/research/search-changes-the-vocabulary">
 <meta property="og:title" content="Search Does Not Just Change Who AI Recommends. It Changes the Words It Uses.">
 <meta property="og:description" content="With search on, the model names ingredients and specifications, monohydrate up 21x, provides up 20x, whey up 17x. With search off, it falls back on impressions. Retrieval pulls facts. Memory pulls a feeling.">
@@ -115,6 +116,19 @@
     font-size:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
+  /* Cross-document view transition: on browsers that support navigating
+     same-origin pages with the View Transitions API (Chromium 126+), the
+     incoming page rolls down over the outgoing one like a blind being
+     pulled down, instead of the default cross-fade. Unsupported browsers
+     just navigate normally — this is a pure progressive enhancement. */
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
   html{scroll-behavior:smooth;}
   body{
     font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
@@ -408,7 +422,7 @@
           <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
           <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
           <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
-          <a href="/research#cat-founderlab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
         </div>
       </div>
 
@@ -670,7 +684,7 @@
         <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
         <a href="/research/mechanism-studies">Mechanism Studies</a>
         <a href="/research/category-reports">Category Reports</a>
-        <a href="/research#cat-founderlab">Founder Lab</a>
+        <a href="/founder-lab">Founder Lab</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Framework</div>
@@ -700,7 +714,7 @@
       <div class="footer-col">
         <div class="footer-col-label">Knowledge Base</div>
         <a href="/vocabulary">Research Library</a>
-        <a href="/research#cat-founderlab">Founder Lab</a>
+        <a href="/founder-lab">Founder Lab</a>
         <a href="/methodology">Methodology</a>
         <a href="/vocabulary">Vocabulary</a>
         <a href="/vocabulary/learn">Learn</a>
