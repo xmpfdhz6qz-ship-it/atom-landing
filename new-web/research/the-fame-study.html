@@ -6,6 +6,7 @@
 <title>The Fame Study: Corrected. Neither Fame nor Store Quality Explains AI Recommendations | Atom Foundry</title>
 <meta name="description" content="Corrected July 2026. We originally reported that public fame explains 24.9% of AI recommendation frequency. Re-measured on 872 brands instead of 87, it explains 1.2% and sits at the noise floor. Store quality explains 0.7%. Neither predicts recommendation. The stability finding stands.">
 <meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
 <link rel="canonical" href="https://atomfoundry.dev/research/the-fame-study">
 <meta property="og:title" content="The Fame Study, Corrected: Neither Fame nor Store Quality Explains AI Recommendations">
 <meta property="og:description" content="Our original 24.9% fame figure was measured on 87 brands selected by a broken join. Re-measured on 872: fame explains 1.2%, at the noise floor. Store quality 0.7%. We were wrong, and the corrected finding is harder.">
@@ -116,6 +117,19 @@
     font-size:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
+  /* Cross-document view transition: on browsers that support navigating
+     same-origin pages with the View Transitions API (Chromium 126+), the
+     incoming page rolls down over the outgoing one like a blind being
+     pulled down, instead of the default cross-fade. Unsupported browsers
+     just navigate normally — this is a pure progressive enhancement. */
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
   html{scroll-behavior:smooth;}
   body{
     font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
@@ -482,7 +496,7 @@
           <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
           <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
           <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
-          <a href="/research#cat-founderlab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
         </div>
       </div>
 
@@ -844,7 +858,7 @@
         <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
         <a href="/research/mechanism-studies">Mechanism Studies</a>
         <a href="/research/category-reports">Category Reports</a>
-        <a href="/research#cat-founderlab">Founder Lab</a>
+        <a href="/founder-lab">Founder Lab</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Framework</div>
@@ -874,7 +888,7 @@
       <div class="footer-col">
         <div class="footer-col-label">Knowledge Base</div>
         <a href="/vocabulary">Research Library</a>
-        <a href="/research#cat-founderlab">Founder Lab</a>
+        <a href="/founder-lab">Founder Lab</a>
         <a href="/methodology">Methodology</a>
         <a href="/vocabulary">Vocabulary</a>
         <a href="/vocabulary/learn">Learn</a>
