@@ -292,14 +292,15 @@
 
   .fl-ext-links{display:flex;justify-content:space-between;width:100%;max-width:640px;margin-top:-90px;}
   /* the outer link is what the magnetic hover moves (translate); the
-     inner span is what pulses (scale) — kept on separate elements so
-     the two transforms never fight over the same property */
-  .fl-ext-link{display:inline-block;text-align:center;}
+     inner "pulseAll" wrapper is what pulses (scale) — kept on separate
+     elements so the two transforms never fight over the same property.
+     padding-top holds the whole text block away from where the line lands. */
+  .fl-ext-link{display:inline-block;text-align:center;padding-top:34px;}
+  .fl-ext-link-pulseAll{display:inline-block;animation:fl-heartbeat-plain 2.2s ease-in-out infinite;}
   .fl-ext-link-pulse{
     display:inline-block;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:22px;
     letter-spacing:-0.01em;color:var(--black);
-    animation:fl-heartbeat-plain 1.15s ease-in-out infinite;
   }
   @keyframes fl-heartbeat-plain{
     0%{transform:scale(1);}
@@ -339,7 +340,7 @@
     .fl-story-center{animation:none !important;opacity:1;transform:translate(-50%,-50%) scale(1);}
     .fl-cursor{animation:none !important;}
     .fl-scroll-cue.is-bouncing{animation:none !important;}
-    .fl-ext-link-pulse{animation:none !important;}
+    .fl-ext-link-pulseAll{animation:none !important;}
   }
 
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
@@ -540,17 +541,21 @@
 
     <div class="fl-ext-links">
       <a class="fl-ext-node fl-ext-link" id="flExt6" href="/research/founder-lab-day-zero">
-        <span class="fl-ext-link-pulse">Founder Lab, Day Zero</span>
-        <span class="fl-ext-link-sub">
-          <span class="fl-ext-link-desc">The baseline before we changed anything.</span>
-          <span class="fl-ext-link-cta">Read<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        <span class="fl-ext-link-pulseAll">
+          <span class="fl-ext-link-pulse">Founder Lab, Day Zero</span>
+          <span class="fl-ext-link-sub">
+            <span class="fl-ext-link-desc">The baseline before we changed anything.</span>
+            <span class="fl-ext-link-cta">Read<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+          </span>
         </span>
       </a>
       <a class="fl-ext-node fl-ext-link" id="flExt7" href="/research/founder-lab-log">
-        <span class="fl-ext-link-pulse">Founder Lab Log</span>
-        <span class="fl-ext-link-sub">
-          <span class="fl-ext-link-desc">Every experiment. Every iteration.</span>
-          <span class="fl-ext-link-cta">Explore<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        <span class="fl-ext-link-pulseAll">
+          <span class="fl-ext-link-pulse">Founder Lab Log</span>
+          <span class="fl-ext-link-sub">
+            <span class="fl-ext-link-desc">Every experiment. Every iteration.</span>
+            <span class="fl-ext-link-cta">Explore<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+          </span>
         </span>
       </a>
     </div>
@@ -765,9 +770,9 @@
     const CHAPTERS = [
       { angle: -55,  dist: 0.60, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
       { angle: 35,   dist: 0.60, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
-      { angle: 165,  dist: 0.62, text: "I needed answers. The only way to get them...\n...was to build." },
+      { angle: 165,  dist: 0.62, gap: 150, text: "I needed answers. The only way to get them...\n...was to build." },
       { angle: -135, dist: 0.75, text: "Then it went live. Not to prove an idea. To start learning." },
-      { angle: -10,  dist: 0.58, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
+      { angle: -10,  dist: 0.58, gap: 150, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
       { angle: 100,  dist: 0.60, text: "Founder Lab is still an experiment. And we're still building." }
     ];
 
@@ -853,8 +858,8 @@
     // the text never sits on top of the line itself, then flips to the
     // left when there isn't room on the right, so it never runs off the
     // edge of the stage
-    function positionCaption(el, ex, ey, cosA, sinA){
-      const capGap = 90, pad = 14, textW = 220;
+    function positionCaption(el, ex, ey, cosA, sinA, gap){
+      const capGap = gap || 90, pad = 14, textW = 220;
       const tx = ex + cosA * capGap;
       let ty = ey + sinA * capGap;
       ty = Math.max(48, Math.min(stage.clientHeight - 48, ty));
@@ -905,7 +910,7 @@
         const cap = document.createElement('div');
         cap.className = 'fl-story-text';
         stage.appendChild(cap);
-        positionCaption(cap, ex, ey, cosA, sinA);
+        positionCaption(cap, ex, ey, cosA, sinA, ch.gap);
         setTimeout(() => {
           typeText(cap, ch.text, () => {
             center.classList.remove('is-paused');
