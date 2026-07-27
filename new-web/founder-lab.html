@@ -290,11 +290,11 @@
   .fl-ext-item h4{font-size:17px;font-weight:800;color:var(--black);margin-bottom:10px;}
   .fl-ext-item p{font-size:14.5px;line-height:1.65;color:var(--gray-700);}
 
-  .fl-ext-links{display:flex;justify-content:space-between;width:100%;max-width:640px;}
+  .fl-ext-links{display:flex;justify-content:space-between;width:100%;max-width:640px;margin-top:-90px;}
   /* the outer link is what the magnetic hover moves (translate); the
      inner span is what pulses (scale) — kept on separate elements so
      the two transforms never fight over the same property */
-  .fl-ext-link{display:inline-block;}
+  .fl-ext-link{display:inline-block;text-align:center;}
   .fl-ext-link-pulse{
     display:inline-block;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:22px;
@@ -310,11 +310,26 @@
     100%{transform:scale(1);}
   }
 
+  /* second-stage sub-reveal: a short description plus a "Read"/"Explore"
+     CTA that fades in beneath each pulsing link title once it lands */
+  .fl-ext-link-sub{
+    display:block;margin-top:14px;opacity:0;transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .fl-ext-link-sub.is-visible{opacity:1;transform:translateY(0);}
+  .fl-ext-link-desc{display:block;font-size:13.5px;color:var(--gray-700);line-height:1.5;margin-bottom:8px;}
+  .fl-ext-link-cta{
+    display:inline-flex;align-items:center;font-size:13px;font-weight:700;
+    color:var(--black);text-decoration:underline;text-decoration-color:var(--gray-300);
+    text-underline-offset:3px;
+  }
+  .fl-ext-link-cta .nav-chevron{color:var(--black);}
+
   @media (max-width:640px){
     .fl-ext-inner{gap:130px;padding:48px 20px 100px;}
     .fl-ext-panel{padding:28px;}
     .fl-ext-item{max-width:280px;}
-    .fl-ext-links{flex-direction:column;align-items:center;gap:60px;}
+    .fl-ext-links{flex-direction:column;align-items:center;gap:60px;margin-top:-50px;}
   }
 
   /* anyone who has asked their system to reduce motion still gets every
@@ -518,14 +533,26 @@
       <h3>Why It Matters</h3>
       <p>Founder Lab gives us something most research cannot.</p>
       <p class="fl-ext-emphasis">Control.</p>
-      <p>Because we own the store, every product, every page, every description, and every change, we know exactly what changed—and when.</p>
+      <p>Because we own the store, every product, every page, every description, and every change, we know exactly what changed and when.</p>
       <p>That allows us to study cause and effect instead of making assumptions.</p>
       <p>It's where new ideas are tested.<br>It's where research becomes evidence.<br>It's where Atom Foundry learns before it teaches.</p>
     </div>
 
     <div class="fl-ext-links">
-      <a class="fl-ext-node fl-ext-link" id="flExt6" href="/research/founder-lab-day-zero"><span class="fl-ext-link-pulse">Founder Lab, Day Zero</span></a>
-      <a class="fl-ext-node fl-ext-link" id="flExt7" href="/research/founder-lab-log"><span class="fl-ext-link-pulse">Founder Lab Log</span></a>
+      <a class="fl-ext-node fl-ext-link" id="flExt6" href="/research/founder-lab-day-zero">
+        <span class="fl-ext-link-pulse">Founder Lab, Day Zero</span>
+        <span class="fl-ext-link-sub">
+          <span class="fl-ext-link-desc">The baseline before we changed anything.</span>
+          <span class="fl-ext-link-cta">Read<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </span>
+      </a>
+      <a class="fl-ext-node fl-ext-link" id="flExt7" href="/research/founder-lab-log">
+        <span class="fl-ext-link-pulse">Founder Lab Log</span>
+        <span class="fl-ext-link-sub">
+          <span class="fl-ext-link-desc">Every experiment. Every iteration.</span>
+          <span class="fl-ext-link-cta">Explore<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </span>
+      </a>
     </div>
 
   </div>
@@ -738,9 +765,9 @@
     const CHAPTERS = [
       { angle: -55,  dist: 0.60, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
       { angle: 35,   dist: 0.60, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
-      { angle: 165,  dist: 0.90, text: "I needed answers. The only way to get them...\n...was to build." },
+      { angle: 165,  dist: 0.62, text: "I needed answers. The only way to get them...\n...was to build." },
       { angle: -135, dist: 0.75, text: "Then it went live. Not to prove an idea. To start learning." },
-      { angle: -10,  dist: 0.80, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
+      { angle: -10,  dist: 0.58, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
       { angle: 100,  dist: 0.60, text: "Founder Lab is still an experiment. And we're still building." }
     ];
 
@@ -1113,6 +1140,20 @@
       setTimeout(cb, delayAfter);
     }
 
+    // the short description + Read/Explore CTA that lands just under each
+    // pulsing link title, once that title has finished arriving
+    function revealSub(el, delay){
+      const sub = el.querySelector('.fl-ext-link-sub');
+      if (!sub) return;
+      setTimeout(() => {
+        if (flHasGsap && !flReducedMotion) {
+          gsap.fromTo(sub, { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .6, ease: 'power2.out' });
+        } else {
+          sub.classList.add('is-visible');
+        }
+      }, delay);
+    }
+
     let started = false;
     function playExtended(){
       if (started) return;
@@ -1135,10 +1176,10 @@
         const r6 = rectOf(nodes[6]);
         const r7 = rectOf(nodes[7]);
         drawLine(prevRect.centerX, prevRect.bottom, r6.centerX, r6.top, () => {
-          revealNode(nodes[6], 0, () => {});
+          revealNode(nodes[6], 0, () => revealSub(nodes[6], 400));
         });
         drawLine(prevRect.centerX, prevRect.bottom, r7.centerX, r7.top, () => {
-          revealNode(nodes[7], 0, () => {});
+          revealNode(nodes[7], 0, () => revealSub(nodes[7], 400));
         });
       }
 
