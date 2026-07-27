@@ -226,28 +226,27 @@
   .fl-dot-path.is-pulsing{animation:fl-heartbeat-dot 1.15s ease-in-out infinite;}
   .fl-dot-hit{fill:transparent;}
 
-  .fl-story-center-wrap{
-    position:absolute;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    z-index:5;
-    pointer-events:none;
-  }
-  .fl-story-center-wrap .fl-story-center{pointer-events:auto;}
   .fl-story-center{
+    position:absolute;left:42%;top:50%;
+    transform:translate(-50%,-50%) scale(1);
     background:none;border:none;cursor:pointer;padding:26px 40px;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;
     letter-spacing:-0.01em;line-height:1;white-space:nowrap;color:var(--black);
     animation:fl-heartbeat-center 1.15s ease-in-out infinite;
-    transition:opacity .35s ease;
+    transition:opacity 1.4s ease;
+    z-index:5;
   }
-  .fl-story-center.is-hidden{opacity:0;pointer-events:none;}
+  /* a chapter is running: the wordmark stops pulsing but stays fully visible */
+  .fl-story-center.is-paused{animation:none;}
+  /* only after the very last chapter of the first pass does it actually fade */
+  .fl-story-center.is-hidden{opacity:0;}
   @keyframes fl-heartbeat-center{
-    0%{transform:scale(1);}
-    14%{transform:scale(1.045);}
-    28%{transform:scale(1);}
-    42%{transform:scale(1.065);}
-    70%{transform:scale(1);}
-    100%{transform:scale(1);}
+    0%{transform:translate(-50%,-50%) scale(1);}
+    14%{transform:translate(-50%,-50%) scale(1.045);}
+    28%{transform:translate(-50%,-50%) scale(1);}
+    42%{transform:translate(-50%,-50%) scale(1.065);}
+    70%{transform:translate(-50%,-50%) scale(1);}
+    100%{transform:translate(-50%,-50%) scale(1);}
   }
   @keyframes fl-heartbeat-dot{
     0%{transform:scale(1);}
@@ -260,7 +259,7 @@
 
   .fl-story-photo{
     position:absolute;top:0;left:0;
-    width:260px;height:260px;
+    width:200px;height:200px;
     transform:translate(-50%,-50%) scale(0.12);
     clip-path:polygon(10% 3%, 76% 0%, 100% 32%, 93% 88%, 55% 100%, 5% 91%, 0% 52%);
     background:var(--off-white) center/cover no-repeat;
@@ -272,45 +271,43 @@
   .fl-story-photo.is-visible{opacity:1;transform:translate(-50%,-50%) scale(1);}
   .fl-story-photo-label{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
     color:var(--gray-500);
   }
 
+  /* small caption that appears beside wherever the photo lands */
   .fl-story-text{
-    position:absolute;left:50%;bottom:9%;transform:translateX(-50%);
-    width:100%;max-width:600px;padding:0 20px;text-align:center;
-    font-family:var(--serif);font-size:clamp(17px,2.2vw,24px);font-weight:700;
-    color:var(--black);line-height:1.55;white-space:pre-line;
-    opacity:0;transition:opacity .3s ease;
+    position:absolute;top:0;left:0;
+    width:170px;
+    font-family:var(--serif);font-size:13px;font-weight:600;
+    color:var(--black);line-height:1.5;white-space:pre-line;
+    opacity:0;transition:opacity .4s ease;
     z-index:5;
   }
   .fl-story-text.is-visible{opacity:1;}
-  .fl-cursor{display:inline-block;width:2px;height:1em;vertical-align:-0.15em;background:var(--black);margin-left:2px;animation:fl-blink .9s steps(1) infinite;}
+  .fl-cursor{display:inline-block;width:1px;height:1em;vertical-align:-0.1em;background:var(--black);margin-left:2px;animation:fl-blink .9s steps(1) infinite;}
   @keyframes fl-blink{50%{opacity:0;}}
 
   .fl-story-final{
-    font-family:var(--serif);font-size:clamp(28px,5vw,52px);font-weight:800;
-    letter-spacing:0.04em;color:var(--black);
-    opacity:0;transition:opacity 1.2s ease;
+    position:absolute;left:42%;top:calc(50% + 46px);
+    transform:translate(-50%,0);
+    font-family:var(--serif);font-size:clamp(20px,3vw,30px);font-weight:800;
+    letter-spacing:0.04em;color:var(--black);white-space:nowrap;
+    opacity:0;transition:opacity 1.4s ease;
+    z-index:5;
   }
   .fl-story-final.is-visible{opacity:1;}
 
-  /* the erase: a soft wipe plus a dream-like blur and fade, applied to the
-     whole chapter group (line, dot, photo, text) at once. */
+  /* the erase: a slow, dream-like fade and blur, as if each piece is
+     soaking back into the white page. applied one piece at a time, in
+     sequence (text, then photo, then dot, then line), never all at once. */
   .fl-chapter-erase{
-    -webkit-mask-image:linear-gradient(100deg, #000 40%, transparent 60%);
-    mask-image:linear-gradient(100deg, #000 40%, transparent 60%);
-    -webkit-mask-size:280% 280%;mask-size:280% 280%;
-    animation:fl-erase-fade 1.5s ease forwards, fl-erase-wipe 1.5s ease forwards;
+    animation:fl-erase-fade .65s ease forwards;
   }
   @keyframes fl-erase-fade{
     0%{opacity:1;filter:blur(0);}
-    65%{opacity:1;}
+    60%{opacity:.5;filter:blur(2px);}
     100%{opacity:0;filter:blur(5px);}
-  }
-  @keyframes fl-erase-wipe{
-    from{-webkit-mask-position:-90% 0%;mask-position:-90% 0%;}
-    to{-webkit-mask-position:190% 0%;mask-position:190% 0%;}
   }
 
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
@@ -460,10 +457,8 @@
 <section class="fl-story">
   <div class="fl-story-stage" id="flStage">
     <svg class="fl-story-svg" id="flSvg" aria-hidden="true"></svg>
-    <div class="fl-story-center-wrap">
-      <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
-      <div class="fl-story-final" id="flFinal">KEEP BUILDING</div>
-    </div>
+    <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
+    <div class="fl-story-final" id="flFinal">KEEP BUILDING</div>
     <div class="fl-story-photo" id="flPhoto"><span class="fl-story-photo-label" id="flPhotoLabel"></span></div>
     <div class="fl-story-text" id="flText"></div>
   </div>
@@ -648,19 +643,25 @@
     const PHOTOS = ['', '', '', '', '', ''];
 
     const CHAPTERS = [
-      { angle: -55,  dist: 0.30, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
-      { angle: 35,   dist: 0.32, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
-      { angle: 150,  dist: 0.30, text: "I needed answers. The only way to get them...\n...was to build." },
-      { angle: -150, dist: 0.30, text: "Then it went live. Not to prove an idea. To start learning." },
-      { angle: -20,  dist: 0.34, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
-      { angle: 100,  dist: 0.30, text: "Founder Lab is still an experiment. And we're still building." }
+      { angle: -55,  dist: 0.26, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
+      { angle: 35,   dist: 0.28, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
+      { angle: 150,  dist: 0.26, text: "I needed answers. The only way to get them...\n...was to build." },
+      { angle: -150, dist: 0.26, text: "Then it went live. Not to prove an idea. To start learning." },
+      { angle: -20,  dist: 0.30, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
+      { angle: 100,  dist: 0.26, text: "Founder Lab is still an experiment. And we're still building." }
     ];
+
+    // the wordmark's resting spot: roughly under the Methodology nav item,
+    // vertically centered in the visible stage. every line starts here.
+    const ANCHOR_X_PCT = 0.42;
+    const ANCHOR_Y_PCT = 0.50;
 
     const NS = 'http://www.w3.org/2000/svg';
     // a small, deliberately imperfect blob, as if drawn with a marker
     const BLOB_D = 'M0,-15 C7,-16 14,-9 15,-1 C16,7 10,15 1,15 C-8,16 -15,8 -14,-1 C-14,-10 -7,-15 0,-15 Z';
 
     let nextIndex = 0;
+    let busy = false; // true while a chapter (manual or auto) is actively playing
 
     function setSvgSize(){
       svg.setAttribute('viewBox', '0 0 ' + stage.clientWidth + ' ' + stage.clientHeight);
@@ -702,9 +703,11 @@
 
     function playChapter(i, auto, onChapterDone){
       const ch = CHAPTERS[i];
-      center.classList.add('is-hidden');
+      // the wordmark stays fully visible, it just stops pulsing while a
+      // chapter is running
+      center.classList.add('is-paused');
 
-      const cx = stage.clientWidth / 2, cy = stage.clientHeight / 2;
+      const cx = stage.clientWidth * ANCHOR_X_PCT, cy = stage.clientHeight * ANCHOR_Y_PCT;
       const dist = Math.min(stage.clientWidth, stage.clientHeight) * ch.dist;
       const rad = ch.angle * Math.PI / 180;
       const ex = cx + Math.cos(rad) * dist;
@@ -713,12 +716,20 @@
       const lx = ex - Math.cos(rad) * gap;
       const ly = ey - Math.sin(rad) * gap;
 
+      // the line must never be drawn over the FOUNDER LAB letters, so it
+      // starts just outside an imaginary oval around the wordmark rather
+      // than at its dead center
+      const TEXT_RX = 165, TEXT_RY = 60;
+      const cosA = Math.cos(rad), sinA = Math.sin(rad);
+      const edgeT = 1 / Math.sqrt((cosA * cosA) / (TEXT_RX * TEXT_RX) + (sinA * sinA) / (TEXT_RY * TEXT_RY));
+      const sx = cx + cosA * edgeT, sy = cy + sinA * edgeT;
+
       const g = document.createElementNS(NS, 'g');
       g.setAttribute('class', 'fl-chapter-group');
 
       const line = document.createElementNS(NS, 'path');
       line.setAttribute('class', 'fl-line-path');
-      line.setAttribute('d', handDrawnPath(cx, cy, lx, ly));
+      line.setAttribute('d', handDrawnPath(sx, sy, lx, ly));
       g.appendChild(line);
 
       const hit = document.createElementNS(NS, 'circle');
@@ -777,6 +788,21 @@
         }
         requestAnimationFrame(() => photoEl.classList.add('is-visible'));
 
+        // the caption sits just beside the photo: to its right when there
+        // is room, otherwise it flips to the left so it never runs off
+        // the edge of the stage
+        const photoR = 100, gap = 18, textW = 170;
+        const putRight = ex + photoR + gap + textW < stage.clientWidth - 12;
+        if (putRight) {
+          textEl.style.left = (ex + photoR + gap) + 'px';
+          textEl.style.textAlign = 'left';
+        } else {
+          textEl.style.left = (ex - photoR - gap - textW) + 'px';
+          textEl.style.textAlign = 'right';
+        }
+        textEl.style.top = ey + 'px';
+        textEl.style.transform = 'translateY(-50%)';
+
         setTimeout(() => {
           typeText(ch.text, () => {
             setTimeout(eraseNow, 2000);
@@ -785,18 +811,29 @@
       }
 
       function eraseNow(){
-        g.classList.add('fl-chapter-erase');
-        photoEl.classList.add('fl-chapter-erase');
+        // everything fades away one piece at a time, in order: the
+        // caption first, then the photo, then the dot, then finally the
+        // line itself
+        const STEP = 650;
         textEl.classList.add('fl-chapter-erase');
         setTimeout(() => {
-          g.remove();
-          photoEl.classList.remove('is-visible', 'fl-chapter-erase');
-          photoEl.style.backgroundImage = 'none';
-          photoLabel.textContent = '';
-          textEl.classList.remove('is-visible', 'fl-chapter-erase');
-          textEl.textContent = '';
-          onChapterDone();
-        }, 1500);
+          photoEl.classList.add('fl-chapter-erase');
+          setTimeout(() => {
+            dot.classList.add('fl-chapter-erase');
+            setTimeout(() => {
+              line.classList.add('fl-chapter-erase');
+              setTimeout(() => {
+                g.remove();
+                photoEl.classList.remove('is-visible', 'fl-chapter-erase');
+                photoEl.style.backgroundImage = 'none';
+                photoLabel.textContent = '';
+                textEl.classList.remove('is-visible', 'fl-chapter-erase');
+                textEl.textContent = '';
+                onChapterDone();
+              }, STEP);
+            }, STEP);
+          }, STEP);
+        }, STEP);
       }
     }
 
@@ -805,29 +842,43 @@
         setTimeout(() => finalEl.classList.add('is-visible'), 2000);
         return;
       }
-      playChapter(i, true, () => runAutoReplay(i + 1));
+      playChapter(i, true, () => {
+        busy = false;
+        center.classList.remove('is-paused');
+        setTimeout(() => runAutoReplay(i + 1), 900);
+      });
     }
 
     function onChapterFinished(i){
       const isLast = i === CHAPTERS.length - 1;
       if (isLast) {
-        // the wordmark does not come back this time, just a blank page
-        // for a beat before the whole story quietly replays itself
-        setTimeout(() => runAutoReplay(0), 2000);
+        // this first time through, the wordmark itself slowly fades away
+        // too, leaving a blank page for a beat before the whole story
+        // quietly plays back on its own
+        center.classList.add('is-hidden');
+        setTimeout(() => {
+          busy = false;
+          runAutoReplay(0);
+        }, 2000);
       } else {
-        center.classList.remove('is-hidden');
+        busy = false;
+        center.classList.remove('is-paused');
       }
     }
 
     center.addEventListener('click', () => {
-      if (center.classList.contains('is-hidden')) return;
+      // once the sixth manual chapter has been used, the story finishes
+      // and replays on its own; the wordmark is no longer clickable
+      if (busy || nextIndex >= CHAPTERS.length) return;
+      busy = true;
       const i = nextIndex;
       nextIndex++;
       try {
         playChapter(i, false, () => onChapterFinished(i));
       } catch (err) {
         console.error('Founder Lab story error:', err);
-        center.classList.remove('is-hidden');
+        busy = false;
+        center.classList.remove('is-paused');
       }
     });
   })();
