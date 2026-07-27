@@ -253,6 +253,62 @@
   .fl-cursor{display:inline-block;width:1px;height:1em;vertical-align:-0.1em;background:var(--black);margin-left:2px;animation:fl-blink .9s steps(1) infinite;}
   @keyframes fl-blink{50%{opacity:0;}}
 
+  /* the scroll cue: a short hand-drawn line ending in the site's own
+     chevron, drawn in once the story is finished, then a gentle bounce
+     to say "there's more below" */
+  .fl-scroll-chevron{fill:none;stroke:var(--black);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .3s ease;}
+  .fl-scroll-chevron.is-visible{opacity:1;}
+  .fl-scroll-cue.is-bouncing{animation:fl-scroll-bounce 1.8s ease-in-out infinite;}
+  @keyframes fl-scroll-bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
+
+  /* ---------- FOUNDER LAB CONTENT (why it exists, what happens inside,
+     why it matters, and the two research link-cards) ---------- */
+  .fl-content{background:var(--white);padding:96px 24px;}
+  .fl-content-inner{max-width:var(--maxw);margin:0 auto;}
+  .fl-section{max-width:760px;margin:0 0 88px;}
+  .fl-section:last-child{margin-bottom:0;}
+  .fl-section h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;letter-spacing:-0.01em;color:var(--black);margin-bottom:24px;}
+  .fl-section p{font-size:16px;line-height:1.7;color:var(--gray-700);margin-bottom:16px;}
+  .fl-section p:last-child{margin-bottom:0;}
+  .fl-section p.fl-emphasis{font-size:22px;font-weight:800;color:var(--black);margin-bottom:16px;}
+
+  .fl-grid-4{max-width:none;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:8px;}
+  .fl-grid-card{border:1px solid var(--gray-300);border-radius:var(--radius);padding:24px 20px;}
+  .fl-grid-emoji{font-size:26px;margin-bottom:16px;}
+  .fl-grid-card h3{font-size:15px;font-weight:800;color:var(--black);margin-bottom:10px;}
+  .fl-grid-card p{font-size:13.5px;line-height:1.6;color:var(--gray-700);margin:0;}
+
+  .fl-link-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:none;}
+  .fl-link-card{
+    display:flex;flex-direction:column;
+    border:1px solid var(--gray-300);border-radius:var(--radius);
+    padding:28px;transition:border-color .2s ease;
+  }
+  .fl-link-card:hover{border-color:var(--black);}
+  .fl-link-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:10px;}
+  .fl-link-title{font-size:19px;font-weight:800;color:var(--black);margin-bottom:10px;}
+  .fl-link-desc{font-size:14px;line-height:1.6;color:var(--gray-700);margin-bottom:18px;}
+  .fl-link-badge{
+    display:inline-block;align-self:flex-start;
+    font-size:12px;font-weight:700;color:var(--black);
+    background:var(--off-white);border:1px solid var(--gray-300);
+    border-radius:100px;padding:6px 14px;margin-bottom:20px;
+  }
+  .fl-link-cta{
+    display:flex;align-items:center;gap:6px;margin-top:auto;
+    font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--black);
+  }
+
+  @media (max-width:900px){
+    .fl-grid-4{grid-template-columns:1fr 1fr;}
+    .fl-link-cards{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .fl-grid-4{grid-template-columns:1fr;}
+    .fl-content{padding:64px 20px;}
+    .fl-section{margin-bottom:64px;}
+  }
+
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
      recolored to the Founder Lab palette: white background, black and
      gray only, no orange). ---------- */
@@ -401,6 +457,76 @@
   <div class="fl-story-stage" id="flStage">
     <svg class="fl-story-svg" id="flSvg" aria-hidden="true"></svg>
     <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
+  </div>
+</section>
+
+<section class="fl-content">
+  <div class="fl-content-inner">
+
+    <div class="fl-section">
+      <h2>Why Founder Lab Exists</h2>
+      <p>Founder Lab is more than a Shopify store.</p>
+      <p>It's a permanent research laboratory built by Atom Foundry to understand how AI discovers, interprets, and learns from commerce.</p>
+      <p>Most AI commerce research is observational. Researchers watch stores they don't control and try to infer what influences AI recommendations.</p>
+      <p>We chose a different approach.</p>
+      <p>By owning every variable, we can change one thing at a time, measure the outcome, and validate what actually influences AI behavior before publishing our findings.</p>
+      <p>Every experiment performed in Founder Lab becomes part of a larger research system that helps us understand how commerce is evolving in the AI era.</p>
+    </div>
+
+    <div class="fl-section" style="max-width:none;">
+      <h2>What Happens Inside Founder Lab</h2>
+      <div class="fl-grid-4">
+        <div class="fl-grid-card">
+          <div class="fl-grid-emoji">🧪</div>
+          <h3>Controlled Experiments</h3>
+          <p>Every hypothesis starts here. We modify one variable at a time to understand its real impact on AI systems.</p>
+        </div>
+        <div class="fl-grid-card">
+          <div class="fl-grid-emoji">📊</div>
+          <h3>Measure the Results</h3>
+          <p>Every experiment is measured using our research framework, helping us understand how changes influence AI understanding, trust, and recommendations.</p>
+        </div>
+        <div class="fl-grid-card">
+          <div class="fl-grid-emoji">🔍</div>
+          <h3>Analyze the Outcome</h3>
+          <p>We compare results, identify patterns, eliminate assumptions, and separate correlation from causation.</p>
+        </div>
+        <div class="fl-grid-card">
+          <div class="fl-grid-emoji">🚀</div>
+          <h3>Improve and Repeat</h3>
+          <p>Insights become new experiments. Every iteration makes our research more accurate and our understanding of AI commerce deeper.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fl-section">
+      <h2>Why It Matters</h2>
+      <p>Founder Lab gives us something most research cannot.</p>
+      <p class="fl-emphasis">Control.</p>
+      <p>Because we own the store, every product, every page, every description, and every change, we know exactly what changed—and when.</p>
+      <p>That allows us to study cause and effect instead of making assumptions.</p>
+      <p>It's where new ideas are tested.<br>It's where research becomes evidence.<br>It's where Atom Foundry learns before it teaches.</p>
+    </div>
+
+    <div class="fl-section" style="max-width:none;">
+      <div class="fl-link-cards">
+        <a class="fl-link-card" href="/research/founder-lab-day-zero">
+          <span class="fl-link-eyebrow">Founder Lab</span>
+          <span class="fl-link-title">Founder Lab, Day Zero</span>
+          <span class="fl-link-desc">Our own store's baseline, before we changed a single word.</span>
+          <span class="fl-link-badge">78/100 baseline score</span>
+          <span class="fl-link-cta">Read<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </a>
+        <a class="fl-link-card" href="/research/founder-lab-log">
+          <span class="fl-link-eyebrow">Founder Lab</span>
+          <span class="fl-link-title">Founder Lab Log</span>
+          <span class="fl-link-desc">Every change we make and every rescan, logged as it happens.</span>
+          <span class="fl-link-badge">3 entries so far</span>
+          <span class="fl-link-cta">Read<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -730,6 +856,47 @@
       }
     }
 
+    // once the whole story is on screen, a short hand-drawn arrow points
+    // down to the rest of the page, drawn in the same style as the lines
+    let scrollCueShown = false;
+    function showScrollCue(){
+      if (scrollCueShown) return;
+      scrollCueShown = true;
+
+      const cx = stage.clientWidth / 2;
+      const yTop = stage.clientHeight * 0.66;
+      const yBot = Math.min(stage.clientHeight - 34, yTop + 90);
+
+      const g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'fl-scroll-cue');
+
+      const line = document.createElementNS(NS, 'path');
+      line.setAttribute('class', 'fl-line-path');
+      line.setAttribute('d', handDrawnPath(cx, yTop, cx, yBot));
+      g.appendChild(line);
+
+      const chevron = document.createElementNS(NS, 'path');
+      chevron.setAttribute('class', 'fl-scroll-chevron');
+      chevron.setAttribute('d', 'M' + (cx - 7) + ',' + (yBot - 3) + ' L' + cx + ',' + (yBot + 5) + ' L' + (cx + 7) + ',' + (yBot - 3));
+      g.appendChild(chevron);
+
+      svg.appendChild(g);
+
+      const len = line.getTotalLength();
+      line.style.setProperty('--len', len);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        line.classList.add('is-drawing');
+      }));
+
+      function onDrawn(e){
+        if (e.target !== line || e.propertyName !== 'stroke-dashoffset') return;
+        line.removeEventListener('transitionend', onDrawn);
+        chevron.classList.add('is-visible');
+        g.classList.add('is-bouncing');
+      }
+      line.addEventListener('transitionend', onDrawn);
+    }
+
     center.addEventListener('click', () => {
       // once the sixth chapter has been used, the story finishes on its
       // own and the wordmark is no longer clickable
@@ -737,9 +904,13 @@
       busy = true;
       const i = nextIndex;
       nextIndex++;
+      const isLast = i === CHAPTERS.length - 1;
       try {
         playChapter(i, () => {
           busy = false;
+          if (isLast) {
+            setTimeout(showScrollCue, 900);
+          }
         });
       } catch (err) {
         console.error('Founder Lab story error:', err);
