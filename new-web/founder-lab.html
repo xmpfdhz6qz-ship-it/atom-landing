@@ -573,13 +573,17 @@
     const center = document.getElementById('flCenter');
     if (!stage || !svg || !center) return;
 
+    // dist is a fraction (0-1) of how far each line can safely reach in
+    // its own direction before hitting the stage's edge, not a fraction
+    // of the page's height, so a mostly-sideways line (3 and 5 below) can
+    // use the page's full width instead of being capped by its height.
     const CHAPTERS = [
-      { angle: -55,  dist: 0.40, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
-      { angle: 35,   dist: 0.42, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
-      { angle: 165,  dist: 0.48, text: "I needed answers. The only way to get them...\n...was to build." },
-      { angle: -135, dist: 0.50, text: "Then it went live. Not to prove an idea. To start learning." },
-      { angle: -10,  dist: 0.50, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
-      { angle: 100,  dist: 0.40, text: "Founder Lab is still an experiment. And we're still building." }
+      { angle: -55,  dist: 0.60, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
+      { angle: 35,   dist: 0.60, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
+      { angle: 165,  dist: 0.90, text: "I needed answers. The only way to get them...\n...was to build." },
+      { angle: -135, dist: 0.75, text: "Then it went live. Not to prove an idea. To start learning." },
+      { angle: -10,  dist: 0.80, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
+      { angle: 100,  dist: 0.60, text: "Founder Lab is still an experiment. And we're still building." }
     ];
 
     // the wordmark sits dead center of the stage and pulses without
@@ -639,9 +643,19 @@
     function chapterGeometry(i){
       const ch = CHAPTERS[i];
       const cx = stage.clientWidth * ANCHOR_X_PCT, cy = stage.clientHeight * ANCHOR_Y_PCT;
-      const dist = Math.min(stage.clientWidth, stage.clientHeight) * ch.dist;
       const rad = ch.angle * Math.PI / 180;
       const cosA = Math.cos(rad), sinA = Math.sin(rad);
+
+      // how far this line could travel, in its own direction, before it
+      // would cross the stage's safe edge margin (a simple ray-vs-box
+      // reach, using whichever axis it hits first)
+      const marginX = 36, marginY = 56;
+      const hw = stage.clientWidth / 2 - marginX;
+      const hh = stage.clientHeight / 2 - marginY;
+      const reachX = Math.abs(cosA) > 1e-6 ? hw / Math.abs(cosA) : Infinity;
+      const reachY = Math.abs(sinA) > 1e-6 ? hh / Math.abs(sinA) : Infinity;
+      const dist = Math.min(reachX, reachY) * ch.dist;
+
       const ex = cx + cosA * dist;
       const ey = cy + sinA * dist;
       const edgeT = 1 / Math.sqrt((cosA * cosA) / (TEXT_RX * TEXT_RX) + (sinA * sinA) / (TEXT_RY * TEXT_RY));
