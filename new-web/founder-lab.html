@@ -204,6 +204,8 @@
   .fl-story{background:var(--white);}
   .fl-story-stage{
     position:relative;
+    max-width:var(--maxw);
+    margin:0 auto;
     height:calc(100vh - 90px);
     min-height:520px;
     overflow:hidden;
@@ -224,23 +226,28 @@
   .fl-dot-path.is-pulsing{animation:fl-heartbeat-dot 1.15s ease-in-out infinite;}
   .fl-dot-hit{fill:transparent;}
 
+  .fl-story-center-wrap{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    z-index:5;
+    pointer-events:none;
+  }
+  .fl-story-center-wrap .fl-story-center{pointer-events:auto;}
   .fl-story-center{
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     background:none;border:none;cursor:pointer;padding:26px 40px;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;
     letter-spacing:-0.01em;line-height:1;white-space:nowrap;color:var(--black);
     animation:fl-heartbeat-center 1.15s ease-in-out infinite;
     transition:opacity .35s ease;
-    z-index:5;
   }
   .fl-story-center.is-hidden{opacity:0;pointer-events:none;}
   @keyframes fl-heartbeat-center{
-    0%{transform:translate(-50%,-50%) scale(1);}
-    14%{transform:translate(-50%,-50%) scale(1.045);}
-    28%{transform:translate(-50%,-50%) scale(1);}
-    42%{transform:translate(-50%,-50%) scale(1.065);}
-    70%{transform:translate(-50%,-50%) scale(1);}
-    100%{transform:translate(-50%,-50%) scale(1);}
+    0%{transform:scale(1);}
+    14%{transform:scale(1.045);}
+    28%{transform:scale(1);}
+    42%{transform:scale(1.065);}
+    70%{transform:scale(1);}
+    100%{transform:scale(1);}
   }
   @keyframes fl-heartbeat-dot{
     0%{transform:scale(1);}
@@ -282,11 +289,9 @@
   @keyframes fl-blink{50%{opacity:0;}}
 
   .fl-story-final{
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     font-family:var(--serif);font-size:clamp(28px,5vw,52px);font-weight:800;
     letter-spacing:0.04em;color:var(--black);
     opacity:0;transition:opacity 1.2s ease;
-    z-index:6;
   }
   .fl-story-final.is-visible{opacity:1;}
 
@@ -455,10 +460,12 @@
 <section class="fl-story">
   <div class="fl-story-stage" id="flStage">
     <svg class="fl-story-svg" id="flSvg" aria-hidden="true"></svg>
-    <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
+    <div class="fl-story-center-wrap">
+      <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
+      <div class="fl-story-final" id="flFinal">KEEP BUILDING</div>
+    </div>
     <div class="fl-story-photo" id="flPhoto"><span class="fl-story-photo-label" id="flPhotoLabel"></span></div>
     <div class="fl-story-text" id="flText"></div>
-    <div class="fl-story-final" id="flFinal">KEEP BUILDING</div>
   </div>
 </section>
 
