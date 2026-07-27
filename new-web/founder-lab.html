@@ -226,9 +226,9 @@
 
   .fl-story-center{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    background:none;border:none;cursor:pointer;padding:6px 10px;
-    font-family:var(--serif);font-size:clamp(26px,5vw,50px);font-weight:800;
-    letter-spacing:0.02em;color:var(--black);
+    background:none;border:none;cursor:pointer;padding:26px 40px;
+    font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;
+    letter-spacing:-0.01em;line-height:1;white-space:nowrap;color:var(--black);
     animation:fl-heartbeat-center 1.15s ease-in-out infinite;
     transition:opacity .35s ease;
     z-index:5;
@@ -643,7 +643,7 @@
     const CHAPTERS = [
       { angle: -55,  dist: 0.30, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
       { angle: 35,   dist: 0.32, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
-      { angle: 150,  dist: 0.30, text: "I needed answers. The only way to get them...\\n...was to build." },
+      { angle: 150,  dist: 0.30, text: "I needed answers. The only way to get them...\n...was to build." },
       { angle: -150, dist: 0.30, text: "Then it went live. Not to prove an idea. To start learning." },
       { angle: -20,  dist: 0.34, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
       { angle: 100,  dist: 0.30, text: "Founder Lab is still an experiment. And we're still building." }
@@ -816,7 +816,12 @@
       if (center.classList.contains('is-hidden')) return;
       const i = nextIndex;
       nextIndex++;
-      playChapter(i, false, () => onChapterFinished(i));
+      try {
+        playChapter(i, false, () => onChapterFinished(i));
+      } catch (err) {
+        console.error('Founder Lab story error:', err);
+        center.classList.remove('is-hidden');
+      }
     });
   })();
 </script>
