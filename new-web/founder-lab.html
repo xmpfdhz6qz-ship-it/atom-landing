@@ -227,6 +227,9 @@
     animation:fl-heartbeat-center 1.15s ease-in-out infinite;
     z-index:5;
   }
+  /* the pulse hands itself off to the line and text while a chapter is
+     being drawn, and picks back up once the text has fully arrived */
+  .fl-story-center.is-paused{animation:none;}
   @keyframes fl-heartbeat-center{
     0%{transform:translate(-50%,-50%) scale(1);}
     14%{transform:translate(-50%,-50%) scale(1.045);}
@@ -236,12 +239,12 @@
     100%{transform:translate(-50%,-50%) scale(1);}
   }
 
-  /* small caption that appears beside wherever each line ends */
+  /* caption that appears beside wherever each line ends */
   .fl-story-text{
     position:absolute;top:0;left:0;
-    width:170px;
-    font-family:var(--serif);font-size:13px;font-weight:600;
-    color:var(--black);line-height:1.5;white-space:pre-line;
+    width:220px;
+    font-family:var(--serif);font-size:16px;font-weight:600;
+    color:var(--black);line-height:1.55;white-space:pre-line;
     opacity:0;transition:opacity .4s ease;
     z-index:5;
   }
@@ -258,18 +261,6 @@
     z-index:5;
   }
   .fl-story-final.is-visible{opacity:1;}
-
-  /* the erase: a slow, dream-like fade and blur, as if each piece is
-     soaking back into the white page. applied one piece at a time, in
-     sequence (text, then photo, then dot, then line), never all at once. */
-  .fl-chapter-erase{
-    animation:fl-erase-fade .65s ease forwards;
-  }
-  @keyframes fl-erase-fade{
-    0%{opacity:1;filter:blur(0);}
-    60%{opacity:.5;filter:blur(2px);}
-    100%{opacity:0;filter:blur(5px);}
-  }
 
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
      recolored to the Founder Lab palette: white background, black and
@@ -420,7 +411,6 @@
     <svg class="fl-story-svg" id="flSvg" aria-hidden="true"></svg>
     <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
     <div class="fl-story-final" id="flFinal">KEEP BUILDING</div>
-    <div class="fl-story-text" id="flText"></div>
   </div>
 </section>
 
@@ -580,27 +570,28 @@
   })();
 
   // The Founder Lab story: the wordmark pulses at the center of the page,
-  // always. Click it and a hand-drawn line draws out in a new direction
-  // each time, and a short line of text types itself in beside where the
-  // line ends. Two seconds after the text finishes, the text fades first,
-  // then the line, and the wordmark is ready for the next chapter. After
-  // the sixth and final chapter the whole story plays back once on its
-  // own, and finally "KEEP BUILDING" appears for good.
+  // always, except while a line is actively being drawn and its caption
+  // typed in, as if the pulse itself had moved into the line and text.
+  // Click it and a hand-drawn line draws out in a new direction each
+  // time, with a short line of text typing itself in beside where the
+  // line ends. Once the text is fully typed the wordmark pulses again,
+  // and every chapter drawn so far stays on screen for good, so by the
+  // sixth click the whole story is visible together. Shortly after the
+  // sixth chapter's text lands, "KEEP BUILDING" appears for good.
   (function(){
     const stage = document.getElementById('flStage');
     const svg = document.getElementById('flSvg');
     const center = document.getElementById('flCenter');
-    const textEl = document.getElementById('flText');
     const finalEl = document.getElementById('flFinal');
     if (!stage || !svg || !center) return;
 
     const CHAPTERS = [
-      { angle: -55,  dist: 0.26, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
-      { angle: 35,   dist: 0.28, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
-      { angle: 150,  dist: 0.26, text: "I needed answers. The only way to get them...\n...was to build." },
-      { angle: -150, dist: 0.26, text: "Then it went live. Not to prove an idea. To start learning." },
-      { angle: -20,  dist: 0.30, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
-      { angle: 100,  dist: 0.26, text: "Founder Lab is still an experiment. And we're still building." }
+      { angle: -55,  dist: 0.40, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
+      { angle: 35,   dist: 0.42, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
+      { angle: 150,  dist: 0.40, text: "I needed answers. The only way to get them...\n...was to build." },
+      { angle: -150, dist: 0.40, text: "Then it went live. Not to prove an idea. To start learning." },
+      { angle: -20,  dist: 0.44, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
+      { angle: 100,  dist: 0.40, text: "Founder Lab is still an experiment. And we're still building." }
     ];
 
     // the wordmark sits dead center of the stage and pulses without
@@ -611,7 +602,7 @@
     const NS = 'http://www.w3.org/2000/svg';
 
     let nextIndex = 0;
-    let busy = false; // true while a chapter (manual or auto) is actively playing
+    let busy = false; // true while a chapter is actively playing
 
     function setSvgSize(){
       svg.setAttribute('viewBox', '0 0 ' + stage.clientWidth + ' ' + stage.clientHeight);
@@ -631,12 +622,12 @@
       return 'M' + x1 + ',' + y1 + ' C' + c1x + ',' + c1y + ' ' + c2x + ',' + c2y + ' ' + x2 + ',' + y2;
     }
 
-    function typeText(str, done){
-      textEl.textContent = '';
-      textEl.classList.add('is-visible');
+    function typeText(el, str, done){
+      el.textContent = '';
+      el.classList.add('is-visible');
       const cursor = document.createElement('span');
       cursor.className = 'fl-cursor';
-      textEl.appendChild(cursor);
+      el.appendChild(cursor);
       const chars = str.split('');
       let idx = 0;
       (function step(){
@@ -651,23 +642,47 @@
       })();
     }
 
-    function playChapter(i, auto, onChapterDone){
-      const ch = CHAPTERS[i];
-      // the wordmark keeps pulsing the whole time, it never stops
+    // the wordmark's own footprint: a line must start just outside this
+    // imaginary oval, never drawn over the letters themselves
+    const TEXT_RX = 165, TEXT_RY = 60;
 
+    function chapterGeometry(i){
+      const ch = CHAPTERS[i];
       const cx = stage.clientWidth * ANCHOR_X_PCT, cy = stage.clientHeight * ANCHOR_Y_PCT;
       const dist = Math.min(stage.clientWidth, stage.clientHeight) * ch.dist;
       const rad = ch.angle * Math.PI / 180;
       const ex = cx + Math.cos(rad) * dist;
       const ey = cy + Math.sin(rad) * dist;
-
-      // the line must never be drawn over the FOUNDER LAB letters, so it
-      // starts just outside an imaginary oval around the wordmark rather
-      // than at its dead center
-      const TEXT_RX = 165, TEXT_RY = 60;
       const cosA = Math.cos(rad), sinA = Math.sin(rad);
       const edgeT = 1 / Math.sqrt((cosA * cosA) / (TEXT_RX * TEXT_RX) + (sinA * sinA) / (TEXT_RY * TEXT_RY));
       const sx = cx + cosA * edgeT, sy = cy + sinA * edgeT;
+      return { ch, sx, sy, ex, ey };
+    }
+
+    // positions a caption element just beside a line's end point, flipping
+    // to the left when there isn't room on the right, so it never runs
+    // off the edge of the stage
+    function positionCaption(el, ex, ey){
+      const pad = 18, textW = 220;
+      const putRight = ex + pad + textW < stage.clientWidth - 12;
+      if (putRight) {
+        el.style.left = (ex + pad) + 'px';
+        el.style.textAlign = 'left';
+      } else {
+        el.style.left = (ex - pad - textW) + 'px';
+        el.style.textAlign = 'right';
+      }
+      el.style.top = ey + 'px';
+      el.style.transform = 'translateY(-50%)';
+    }
+
+    // draws one chapter's line, permanently, then types its own caption
+    // in beside it. the wordmark's pulse is paused for the whole of this
+    // (as if it moved into the line and text) and resumes once the
+    // caption is fully typed.
+    function playChapter(i, onDone){
+      const { ch, sx, sy, ex, ey } = chapterGeometry(i);
+      center.classList.add('is-paused');
 
       const g = document.createElementNS(NS, 'g');
       g.setAttribute('class', 'fl-chapter-group');
@@ -693,78 +708,38 @@
       line.addEventListener('transitionend', onLineDrawn);
 
       function revealText(){
-        // the caption sits just beside where the line ends: to its right
-        // when there is room, otherwise it flips to the left so it never
-        // runs off the edge of the stage
-        const pad = 18, textW = 170;
-        const putRight = ex + pad + textW < stage.clientWidth - 12;
-        if (putRight) {
-          textEl.style.left = (ex + pad) + 'px';
-          textEl.style.textAlign = 'left';
-        } else {
-          textEl.style.left = (ex - pad - textW) + 'px';
-          textEl.style.textAlign = 'right';
-        }
-        textEl.style.top = ey + 'px';
-        textEl.style.transform = 'translateY(-50%)';
-
+        const cap = document.createElement('div');
+        cap.className = 'fl-story-text';
+        stage.appendChild(cap);
+        positionCaption(cap, ex, ey);
         setTimeout(() => {
-          typeText(ch.text, () => {
-            setTimeout(eraseNow, 2000);
+          typeText(cap, ch.text, () => {
+            center.classList.remove('is-paused');
+            onDone();
           });
         }, 300);
-      }
-
-      function eraseNow(){
-        // the caption fades away first, then the line follows a beat
-        // later, instead of both vanishing at once
-        const STEP = 650;
-        textEl.classList.add('fl-chapter-erase');
-        setTimeout(() => {
-          line.classList.add('fl-chapter-erase');
-          setTimeout(() => {
-            g.remove();
-            textEl.classList.remove('is-visible', 'fl-chapter-erase');
-            textEl.textContent = '';
-            onChapterDone();
-          }, STEP);
-        }, STEP);
-      }
-    }
-
-    function runAutoReplay(i){
-      if (i >= CHAPTERS.length) {
-        setTimeout(() => finalEl.classList.add('is-visible'), 2000);
-        return;
-      }
-      playChapter(i, true, () => {
-        busy = false;
-        setTimeout(() => runAutoReplay(i + 1), 900);
-      });
-    }
-
-    function onChapterFinished(i){
-      const isLast = i === CHAPTERS.length - 1;
-      busy = false;
-      if (isLast) {
-        // a short beat before the whole story quietly plays back on its
-        // own; the wordmark keeps pulsing throughout
-        setTimeout(() => runAutoReplay(0), 1200);
       }
     }
 
     center.addEventListener('click', () => {
-      // once the sixth manual chapter has been used, the story finishes
-      // and replays on its own
+      // once the sixth chapter has been used, the story finishes on its
+      // own and the wordmark is no longer clickable
       if (busy || nextIndex >= CHAPTERS.length) return;
       busy = true;
       const i = nextIndex;
       nextIndex++;
+      const isLast = i === CHAPTERS.length - 1;
       try {
-        playChapter(i, false, () => onChapterFinished(i));
+        playChapter(i, () => {
+          busy = false;
+          if (isLast) {
+            setTimeout(() => finalEl.classList.add('is-visible'), 1200);
+          }
+        });
       } catch (err) {
         console.error('Founder Lab story error:', err);
         busy = false;
+        center.classList.remove('is-paused');
       }
     });
   })();
