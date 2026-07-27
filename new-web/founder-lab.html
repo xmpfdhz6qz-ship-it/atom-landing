@@ -221,7 +221,7 @@
   .fl-story-center{
     position:absolute;left:50%;top:50%;
     transform:translate(-50%,-50%) scale(1);
-    background:none;border:none;padding:26px 40px;
+    background:none;border:none;cursor:pointer;padding:26px 40px;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;
     letter-spacing:-0.01em;line-height:1;white-space:nowrap;color:var(--black);
     animation:fl-heartbeat-center 1.15s ease-in-out infinite;
@@ -287,7 +287,7 @@
      inner "pulseAll" wrapper is what pulses (scale) — kept on separate
      elements so the two transforms never fight over the same property.
      padding-top holds the whole text block away from where the line lands. */
-  .fl-ext-link{display:inline-block;text-align:center;padding-top:34px;}
+  .fl-ext-link{display:inline-block;text-align:center;padding-top:64px;}
   .fl-ext-link-pulseAll{display:inline-block;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
   .fl-ext-link:hover .fl-ext-link-pulseAll{transform:scale(1.25);}
   .fl-ext-link-pulse{
@@ -325,9 +325,9 @@
 
   /* closing invitation: a real look at the live store, then a single
      clear way to go visit it */
-  .fl-shop-cta{background:var(--white);padding:0 24px 120px;}
+  .fl-shop-cta{background:var(--gray-100);width:100%;padding:100px 24px 120px;}
   .fl-shop-cta-inner{
-    max-width:1100px;margin:0 auto;
+    max-width:1400px;margin:0 auto;
     display:flex;flex-direction:column;align-items:center;gap:32px;
     opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease;
   }
@@ -502,7 +502,7 @@
 <section class="fl-story">
   <div class="fl-story-stage" id="flStage">
     <svg class="fl-story-svg" id="flSvg" aria-hidden="true"></svg>
-    <div class="fl-story-center" id="flCenter">FOUNDER LAB</div>
+    <button type="button" class="fl-story-center" id="flCenter" aria-label="Click to begin the Founder Lab story">FOUNDER LAB</button>
   </div>
 </section>
 
@@ -939,10 +939,10 @@
       }
     }
 
-    // advances exactly one chapter, driven purely by scroll (there is no
-    // click interaction left on this element at all). queuedAdvances lets
-    // a fast scroll jump queue up requests instead of dropping them:
-    // whatever comes in while busy just waits its turn.
+    // advances exactly one chapter. queuedAdvances lets several requests
+    // arrive faster than the draw+type animation can play them out
+    // (which is exactly what happens below) without dropping any: each
+    // just waits its turn.
     let queuedAdvances = 0;
     function advanceStory(){
       if (nextIndex >= CHAPTERS.length) return;
@@ -965,38 +965,18 @@
       }
     }
 
-    // the wordmark pins in place while the page scrolls through it, and
-    // each slice of that scroll distance advances one chapter.
-    if (flHasGsap && typeof ScrollTrigger !== 'undefined' && !flReducedMotion) {
-      let lastScrollIndex = -1;
-      const SCROLL_PER_CHAPTER = 650; // px of scroll "spent" per chapter; tune live if it feels rushed or slow
-      // pin just below the sticky navbar, not under it, and re-check on
-      // resize since the navbar's own height changes between its normal
-      // and "compact" (scrolled) states
-      const navEl = document.querySelector('header.nav');
-      const navOffset = navEl ? navEl.offsetHeight : 90;
-      ScrollTrigger.create({
-        trigger: stage,
-        start: 'top top+=' + navOffset,
-        end: '+=' + (CHAPTERS.length * SCROLL_PER_CHAPTER),
-        pin: true,
-        anticipatePin: 1,
-        onUpdate: (self) => {
-          const idx = Math.min(CHAPTERS.length - 1, Math.floor(self.progress * CHAPTERS.length));
-          while (idx > lastScrollIndex) {
-            lastScrollIndex++;
-            advanceStory();
-          }
-        }
-      });
-    } else {
-      // no click left to fall back on: under reduced-motion (a pinned,
-      // locked viewport is itself a motion effect people turn off) or if
-      // GSAP/ScrollTrigger failed to load, just play the whole story once
-      // automatically so this content is never gated behind an
-      // interaction that no longer exists.
+    // the page loads showing nothing but the pulsing wordmark, center
+    // stage, on its own. one click on it plays the whole story through,
+    // chapter after chapter, with no further clicking required, and once
+    // started it stays fully unfolded (scrolling away and back leaves it
+    // exactly as it was — a page refresh is the only way back to just
+    // the pulsing wordmark waiting for that first click).
+    let storyStarted = false;
+    center.addEventListener('click', () => {
+      if (storyStarted) return;
+      storyStarted = true;
       for (let i = 0; i < CHAPTERS.length; i++) advanceStory();
-    }
+    });
   })();
 
   // The Founder Lab extended sequence: continues the same hand-drawn
