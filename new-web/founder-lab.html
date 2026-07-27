@@ -245,22 +245,13 @@
     width:220px;
     font-family:var(--serif);font-size:16px;font-weight:600;
     color:var(--black);line-height:1.55;white-space:pre-line;
+    background:var(--white);padding:3px 6px;margin:-3px -6px;
     opacity:0;transition:opacity .4s ease;
     z-index:5;
   }
   .fl-story-text.is-visible{opacity:1;}
   .fl-cursor{display:inline-block;width:1px;height:1em;vertical-align:-0.1em;background:var(--black);margin-left:2px;animation:fl-blink .9s steps(1) infinite;}
   @keyframes fl-blink{50%{opacity:0;}}
-
-  .fl-story-final{
-    position:absolute;left:50%;top:50%;
-    transform:translate(-50%,-50%);
-    font-family:var(--serif);font-size:clamp(20px,3vw,30px);font-weight:800;
-    letter-spacing:0.04em;color:var(--black);white-space:nowrap;
-    opacity:0;transition:opacity 1.4s ease;
-    z-index:5;
-  }
-  .fl-story-final.is-visible{opacity:1;}
 
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
      recolored to the Founder Lab palette: white background, black and
@@ -410,7 +401,6 @@
   <div class="fl-story-stage" id="flStage">
     <svg class="fl-story-svg" id="flSvg" aria-hidden="true"></svg>
     <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
-    <div class="fl-story-final" id="flFinal">KEEP BUILDING</div>
   </div>
 </section>
 
@@ -576,13 +566,11 @@
   // time, with a short line of text typing itself in beside where the
   // line ends. Once the text is fully typed the wordmark pulses again,
   // and every chapter drawn so far stays on screen for good, so by the
-  // sixth click the whole story is visible together. Shortly after the
-  // sixth chapter's text lands, "KEEP BUILDING" appears for good.
+  // sixth click the whole story is visible together.
   (function(){
     const stage = document.getElementById('flStage');
     const svg = document.getElementById('flSvg');
     const center = document.getElementById('flCenter');
-    const finalEl = document.getElementById('flFinal');
     if (!stage || !svg || !center) return;
 
     const CHAPTERS = [
@@ -611,12 +599,14 @@
     window.addEventListener('resize', setSvgSize);
 
     // a straight line would look plotted, not drawn, so each line gets a
-    // slight perpendicular bow through its two bezier control points
+    // slight perpendicular bow through its two bezier control points. the
+    // bow is capped in absolute pixels so longer lines don't swing wider
+    // and drift into a caption sitting past their tip.
     function handDrawnPath(x1, y1, x2, y2){
       const dx = x2 - x1, dy = y2 - y1;
       const len = Math.sqrt(dx * dx + dy * dy) || 1;
       const nx = -dy / len, ny = dx / len;
-      const j1 = len * 0.07, j2 = -len * 0.05;
+      const j1 = Math.min(len * 0.07, 16), j2 = -Math.min(len * 0.05, 12);
       const c1x = x1 + dx * 0.32 + nx * j1, c1y = y1 + dy * 0.32 + ny * j1;
       const c2x = x1 + dx * 0.68 + nx * j2, c2y = y1 + dy * 0.68 + ny * j2;
       return 'M' + x1 + ',' + y1 + ' C' + c1x + ',' + c1y + ' ' + c2x + ',' + c2y + ' ' + x2 + ',' + y2;
@@ -665,7 +655,7 @@
     // left when there isn't room on the right, so it never runs off the
     // edge of the stage
     function positionCaption(el, ex, ey, cosA, sinA){
-      const capGap = 50, pad = 14, textW = 220;
+      const capGap = 90, pad = 14, textW = 220;
       const tx = ex + cosA * capGap;
       let ty = ey + sinA * capGap;
       ty = Math.max(48, Math.min(stage.clientHeight - 48, ty));
@@ -685,20 +675,6 @@
     // in beside it. the wordmark's pulse is paused for the whole of this
     // (as if it moved into the line and text) and resumes once the
     // caption is fully typed.
-    // "keep building" settles between the second and fifth chapters'
-    // captions, rather than sitting under the wordmark where lines cross
-    function positionFinal(){
-      const cx = stage.clientWidth * ANCHOR_X_PCT, cy = stage.clientHeight * ANCHOR_Y_PCT;
-      const bisect = (CHAPTERS[1].angle + CHAPTERS[4].angle) / 2;
-      const rad = bisect * Math.PI / 180;
-      const dist = Math.min(stage.clientWidth, stage.clientHeight) * 0.30;
-      finalEl.style.left = (cx + Math.cos(rad) * dist) + 'px';
-      finalEl.style.top = (cy + Math.sin(rad) * dist) + 'px';
-      finalEl.style.transform = 'translate(-50%,-50%)';
-    }
-    positionFinal();
-    window.addEventListener('resize', positionFinal);
-
     function playChapter(i, onDone){
       const { ch, sx, sy, ex, ey, cosA, sinA } = chapterGeometry(i);
       center.classList.add('is-paused');
@@ -747,13 +723,9 @@
       busy = true;
       const i = nextIndex;
       nextIndex++;
-      const isLast = i === CHAPTERS.length - 1;
       try {
         playChapter(i, () => {
           busy = false;
-          if (isLast) {
-            setTimeout(() => finalEl.classList.add('is-visible'), 1200);
-          }
         });
       } catch (err) {
         console.error('Founder Lab story error:', err);
