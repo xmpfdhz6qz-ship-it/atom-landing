@@ -221,7 +221,7 @@
   .fl-story-center{
     position:absolute;left:50%;top:50%;
     transform:translate(-50%,-50%) scale(1);
-    background:none;border:none;cursor:pointer;padding:26px 40px;
+    background:none;border:none;padding:26px 40px;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;
     letter-spacing:-0.01em;line-height:1;white-space:nowrap;color:var(--black);
     animation:fl-heartbeat-center 1.15s ease-in-out infinite;
@@ -256,14 +256,6 @@
   .fl-cursor{display:inline-block;width:1px;height:1em;vertical-align:-0.1em;background:var(--black);margin-left:2px;animation:fl-blink .9s steps(1) infinite;}
   @keyframes fl-blink{50%{opacity:0;}}
 
-  /* the scroll cue: a short hand-drawn line ending in the site's own
-     chevron, drawn in once the story is finished, then a gentle bounce
-     to say "there's more below" */
-  .fl-scroll-chevron{fill:none;stroke:var(--black);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .3s ease;}
-  .fl-scroll-chevron.is-visible{opacity:1;}
-  .fl-scroll-cue.is-bouncing{animation:fl-scroll-bounce 1.8s ease-in-out infinite;}
-  @keyframes fl-scroll-bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
-
   /* ---------- FOUNDER LAB EXTENDED (a 7th click on the wordmark keeps
      the same hand-drawn-line story going down the page: two gray panels
      of prose, four plain zigzagging points in between, then the line
@@ -296,20 +288,15 @@
      elements so the two transforms never fight over the same property.
      padding-top holds the whole text block away from where the line lands. */
   .fl-ext-link{display:inline-block;text-align:center;padding-top:34px;}
-  .fl-ext-link-pulseAll{display:inline-block;animation:fl-heartbeat-plain 2.2s ease-in-out infinite;}
+  .fl-ext-link-pulseAll{display:inline-block;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+  .fl-ext-link:hover .fl-ext-link-pulseAll{transform:scale(1.25);}
   .fl-ext-link-pulse{
     display:inline-block;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:22px;
     letter-spacing:-0.01em;color:var(--black);
+    transition:color .5s ease;
   }
-  @keyframes fl-heartbeat-plain{
-    0%{transform:scale(1);}
-    14%{transform:scale(1.045);}
-    28%{transform:scale(1);}
-    42%{transform:scale(1.065);}
-    70%{transform:scale(1);}
-    100%{transform:scale(1);}
-  }
+  .fl-ext-link:hover .fl-ext-link-pulse{color:var(--orange);}
 
   /* second-stage sub-reveal: a short description plus a "Read"/"Explore"
      CTA that fades in beneath each pulsing link title once it lands */
@@ -318,13 +305,16 @@
     transition:opacity .6s ease, transform .6s ease;
   }
   .fl-ext-link-sub.is-visible{opacity:1;transform:translateY(0);}
-  .fl-ext-link-desc{display:block;font-size:13.5px;color:var(--gray-700);line-height:1.5;margin-bottom:8px;}
+  .fl-ext-link-desc{display:block;font-size:13.5px;color:var(--gray-700);line-height:1.5;margin-bottom:8px;transition:color .5s ease;}
+  .fl-ext-link:hover .fl-ext-link-desc{color:var(--orange);}
   .fl-ext-link-cta{
     display:inline-flex;align-items:center;font-size:13px;font-weight:700;
     color:var(--black);text-decoration:underline;text-decoration-color:var(--gray-300);
-    text-underline-offset:3px;
+    text-underline-offset:3px;transition:color .5s ease;
   }
-  .fl-ext-link-cta .nav-chevron{color:var(--black);}
+  .fl-ext-link:hover .fl-ext-link-cta{color:var(--orange);text-decoration-color:var(--orange);}
+  .fl-ext-link-cta .nav-chevron{color:var(--black);transition:color .5s ease;}
+  .fl-ext-link:hover .fl-ext-link-cta .nav-chevron{color:var(--orange);}
 
   @media (max-width:640px){
     .fl-ext-inner{gap:130px;padding:48px 20px 100px;}
@@ -333,14 +323,36 @@
     .fl-ext-links{flex-direction:column;align-items:center;gap:60px;margin-top:-50px;}
   }
 
+  /* closing invitation: a real look at the live store, then a single
+     clear way to go visit it */
+  .fl-shop-cta{background:var(--white);padding:0 24px 120px;}
+  .fl-shop-cta-inner{
+    max-width:1100px;margin:0 auto;
+    display:flex;flex-direction:column;align-items:center;gap:32px;
+    opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease;
+  }
+  .fl-shop-cta-inner.is-visible{opacity:1;transform:translateY(0);}
+  .fl-shop-cta-img{width:100%;height:auto;display:block;border-radius:var(--radius);border:1px solid var(--gray-300);}
+  .fl-shop-cta-link{
+    display:inline-flex;align-items:center;
+    font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:19px;
+    letter-spacing:-0.01em;color:var(--black);
+    padding:15px 32px;border:1.5px solid var(--black);border-radius:999px;
+    transition:background .25s ease,color .25s ease;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .fl-shop-cta-link:hover{background:var(--black);color:var(--white);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .fl-shop-cta-inner{opacity:1;transform:none;transition:none;}
+  }
+
   /* anyone who has asked their system to reduce motion still gets every
      bit of content, just without the continuous, looping animations:
-     the wordmark, cursor blink and scroll cue simply hold still */
+     the wordmark and cursor blink simply hold still */
   @media (prefers-reduced-motion: reduce){
     .fl-story-center{animation:none !important;opacity:1;transform:translate(-50%,-50%) scale(1);}
     .fl-cursor{animation:none !important;}
-    .fl-scroll-cue.is-bouncing{animation:none !important;}
-    .fl-ext-link-pulseAll{animation:none !important;}
   }
 
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
@@ -490,7 +502,7 @@
 <section class="fl-story">
   <div class="fl-story-stage" id="flStage">
     <svg class="fl-story-svg" id="flSvg" aria-hidden="true"></svg>
-    <button type="button" class="fl-story-center" id="flCenter" aria-label="Begin the Founder Lab story">FOUNDER LAB</button>
+    <div class="fl-story-center" id="flCenter">FOUNDER LAB</div>
   </div>
 </section>
 
@@ -560,6 +572,13 @@
       </a>
     </div>
 
+  </div>
+</section>
+
+<section class="fl-shop-cta">
+  <div class="fl-shop-cta-inner" id="flShopCta">
+    <img class="fl-shop-cta-img" src="./founder-lab-shop-preview.jpg" alt="The Founder Lab storefront, live at founder.atomfoundry.dev" loading="lazy" width="1800" height="1031">
+    <a class="fl-shop-cta-link" href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener">Visit our Lab Shop</a>
   </div>
 </section>
 
@@ -920,83 +939,9 @@
       }
     }
 
-    // once the whole story is on screen, a short hand-drawn arrow points
-    // down to the rest of the page, drawn in the same style as the lines
-    let scrollCueShown = false;
-    function showScrollCue(){
-      if (scrollCueShown) return;
-      scrollCueShown = true;
-
-      const cx = stage.clientWidth / 2;
-      const yTop = stage.clientHeight * 0.66;
-      const yBot = Math.min(stage.clientHeight - 34, yTop + 90);
-
-      const g = document.createElementNS(NS, 'g');
-      g.setAttribute('class', 'fl-scroll-cue');
-
-      const line = document.createElementNS(NS, 'path');
-      line.setAttribute('class', 'fl-line-path');
-      line.setAttribute('d', handDrawnPath(cx, yTop, cx, yBot));
-      g.appendChild(line);
-
-      const chevron = document.createElementNS(NS, 'path');
-      chevron.setAttribute('class', 'fl-scroll-chevron');
-      chevron.setAttribute('d', 'M' + (cx - 7) + ',' + (yBot - 3) + ' L' + cx + ',' + (yBot + 5) + ' L' + (cx + 7) + ',' + (yBot - 3));
-      g.appendChild(chevron);
-
-      svg.appendChild(g);
-
-      const len = line.getTotalLength();
-      line.style.setProperty('--len', len);
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        line.classList.add('is-drawing');
-      }));
-
-      function onDrawn(e){
-        if (e.target !== line || e.propertyName !== 'stroke-dashoffset') return;
-        line.removeEventListener('transitionend', onDrawn);
-        chevron.classList.add('is-visible');
-        g.classList.add('is-bouncing');
-      }
-      line.addEventListener('transitionend', onDrawn);
-    }
-
-    // a 7th click on the wordmark, once all six chapters are done, draws
-    // one last line straight down to the bottom of this stage, then
-    // hands off to the extended sequence continuing down the page
-    let extendedTriggered = false;
-    function playContinuation(){
-      busy = true;
-      center.classList.add('is-paused');
-      const cx = stage.clientWidth * ANCHOR_X_PCT;
-      const yStart = stage.clientHeight * ANCHOR_Y_PCT + TEXT_RY;
-      const yEnd = stage.clientHeight - 16;
-      const g = document.createElementNS(NS, 'g');
-      g.setAttribute('class', 'fl-chapter-group');
-      const line = document.createElementNS(NS, 'path');
-      line.setAttribute('class', 'fl-line-path');
-      line.setAttribute('d', handDrawnPath(cx, yStart, cx, yEnd));
-      g.appendChild(line);
-      svg.appendChild(g);
-      const len = line.getTotalLength();
-      line.style.setProperty('--len', len);
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        line.classList.add('is-drawing');
-      }));
-      function onDrawn(e){
-        if (e.target !== line || e.propertyName !== 'stroke-dashoffset') return;
-        line.removeEventListener('transitionend', onDrawn);
-        center.classList.remove('is-paused');
-        busy = false;
-        if (typeof window.flPlayExtended === 'function') window.flPlayExtended();
-      }
-      line.addEventListener('transitionend', onDrawn);
-    }
-
-    // advances exactly one chapter, shared by both the click handler and
-    // the scroll-driven trigger below, so the two can never disagree
-    // about what "next" means. queuedAdvances lets a fast scroll (or a
-    // rapid double-click) queue up requests instead of dropping them:
+    // advances exactly one chapter, driven purely by scroll (there is no
+    // click interaction left on this element at all). queuedAdvances lets
+    // a fast scroll jump queue up requests instead of dropping them:
     // whatever comes in while busy just waits its turn.
     let queuedAdvances = 0;
     function advanceStory(){
@@ -1005,13 +950,9 @@
       busy = true;
       const i = nextIndex;
       nextIndex++;
-      const isLast = i === CHAPTERS.length - 1;
       try {
         playChapter(i, () => {
           busy = false;
-          if (isLast) {
-            setTimeout(showScrollCue, 900);
-          }
           if (queuedAdvances > 0) {
             queuedAdvances--;
             advanceStory();
@@ -1024,28 +965,8 @@
       }
     }
 
-    center.addEventListener('click', () => {
-      if (nextIndex >= CHAPTERS.length) {
-        if (extendedTriggered || busy) return;
-        extendedTriggered = true;
-        try {
-          playContinuation();
-        } catch (err) {
-          console.error('Founder Lab continuation error:', err);
-          busy = false;
-          center.classList.remove('is-paused');
-        }
-        return;
-      }
-      advanceStory();
-    });
-
-    // scroll-driven version of the same story: the wordmark pins in
-    // place while the page scrolls through it, and each slice of that
-    // scroll distance advances one chapter, exactly like a click would.
-    // skipped under reduced-motion, where clicking remains the only way
-    // to move the story forward (a locked/pinned viewport during scroll
-    // is itself a motion effect some people specifically turn off).
+    // the wordmark pins in place while the page scrolls through it, and
+    // each slice of that scroll distance advances one chapter.
     if (flHasGsap && typeof ScrollTrigger !== 'undefined' && !flReducedMotion) {
       let lastScrollIndex = -1;
       const SCROLL_PER_CHAPTER = 650; // px of scroll "spent" per chapter; tune live if it feels rushed or slow
@@ -1068,6 +989,13 @@
           }
         }
       });
+    } else {
+      // no click left to fall back on: under reduced-motion (a pinned,
+      // locked viewport is itself a motion effect people turn off) or if
+      // GSAP/ScrollTrigger failed to load, just play the whole story once
+      // automatically so this content is never gated behind an
+      // interaction that no longer exists.
+      for (let i = 0; i < CHAPTERS.length; i++) advanceStory();
     }
   })();
 
@@ -1193,10 +1121,9 @@
 
     window.flPlayExtended = playExtended;
 
-    // accessibility fallback: this content is real research context, not
-    // just decoration, so it must not stay permanently hidden for anyone
-    // who scrolls past without ever clicking the wordmark seven times.
-    // whichever trigger fires first wins, the other is a no-op.
+    // this content is real research context, not just decoration, so it
+    // plays automatically once scrolled into view (GSAP ScrollTrigger
+    // where available, a plain scroll listener otherwise).
     if (flHasGsap && typeof ScrollTrigger !== 'undefined') {
       ScrollTrigger.create({
         trigger: inner,
@@ -1229,6 +1156,19 @@
           gsap.to(link, { x: 0, y: 0, duration: .4, ease: 'elastic.out(1, 0.4)' });
         });
       });
+    }
+  })();
+
+  // closing shop-preview section: a simple fade/rise into view, same
+  // reveal treatment as the rest of the page, no hand-drawn line needed
+  (function(){
+    const cta = document.getElementById('flShopCta');
+    if (!cta) return;
+    function reveal(){ cta.classList.add('is-visible'); }
+    if (flHasGsap && typeof ScrollTrigger !== 'undefined' && !flReducedMotion) {
+      ScrollTrigger.create({ trigger: cta, start: 'top 85%', once: true, onEnter: reveal });
+    } else {
+      reveal();
     }
   })();
 </script>
