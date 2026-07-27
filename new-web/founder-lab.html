@@ -228,7 +228,10 @@
     z-index:5;
   }
   /* the pulse hands itself off to the line and text while a chapter is
-     being drawn, and picks back up once the text has fully arrived */
+     being drawn, and picks back up once the text has fully arrived.
+     (the one-time page-load entrance is a plain GSAP opacity fade, kept
+     off this element's transform entirely so it can never fight with
+     the heartbeat above, no matter how many times pause/resume toggle.) */
   .fl-story-center.is-paused{animation:none;}
   @keyframes fl-heartbeat-center{
     0%{transform:translate(-50%,-50%) scale(1);}
@@ -261,52 +264,67 @@
   .fl-scroll-cue.is-bouncing{animation:fl-scroll-bounce 1.8s ease-in-out infinite;}
   @keyframes fl-scroll-bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
 
-  /* ---------- FOUNDER LAB CONTENT (why it exists, what happens inside,
-     why it matters, and the two research link-cards) ---------- */
-  .fl-content{background:var(--white);padding:96px 24px;}
-  .fl-content-inner{max-width:var(--maxw);margin:0 auto;}
-  .fl-section{max-width:760px;margin:0 0 88px;}
-  .fl-section:last-child{margin-bottom:0;}
-  .fl-section h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;letter-spacing:-0.01em;color:var(--black);margin-bottom:24px;}
-  .fl-section p{font-size:16px;line-height:1.7;color:var(--gray-700);margin-bottom:16px;}
-  .fl-section p:last-child{margin-bottom:0;}
-  .fl-section p.fl-emphasis{font-size:22px;font-weight:800;color:var(--black);margin-bottom:16px;}
+  /* ---------- FOUNDER LAB EXTENDED (a 7th click on the wordmark keeps
+     the same hand-drawn-line story going down the page: two gray panels
+     of prose, four plain zigzagging points in between, then the line
+     splits in two, each ending in a pulsing link). ---------- */
+  .fl-extended{background:var(--white);}
+  .fl-ext-inner{
+    position:relative;max-width:900px;margin:0 auto;
+    padding:60px 24px 140px;
+    display:flex;flex-direction:column;align-items:center;gap:170px;
+  }
+  .fl-ext-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .fl-ext-node{opacity:0;transform:translateY(10px);transition:opacity 1s ease, transform 1s ease;}
+  .fl-ext-node.is-visible{opacity:1;transform:translateY(0);}
 
-  .fl-grid-4{max-width:none;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:8px;}
-  .fl-grid-card{border:1px solid var(--gray-300);border-radius:var(--radius);padding:24px 20px;}
-  .fl-grid-emoji{font-size:26px;margin-bottom:16px;}
-  .fl-grid-card h3{font-size:15px;font-weight:800;color:var(--black);margin-bottom:10px;}
-  .fl-grid-card p{font-size:13.5px;line-height:1.6;color:var(--gray-700);margin:0;}
+  .fl-ext-panel{background:var(--gray-100);border-radius:var(--radius);padding:44px;max-width:700px;width:100%;}
+  .fl-ext-panel h3{font-size:clamp(22px,3vw,28px);font-weight:800;color:var(--black);margin-bottom:22px;}
+  .fl-ext-panel p{font-size:15.5px;line-height:1.75;color:var(--gray-700);margin-bottom:14px;}
+  .fl-ext-panel p:last-child{margin-bottom:0;}
+  .fl-ext-panel p.fl-ext-emphasis{font-size:21px;font-weight:800;color:var(--black);}
 
-  .fl-link-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:none;}
-  .fl-link-card{
-    display:flex;flex-direction:column;
-    border:1px solid var(--gray-300);border-radius:var(--radius);
-    padding:28px;transition:border-color .2s ease;
+  .fl-ext-item{max-width:400px;width:100%;}
+  .fl-ext-item.fl-ext-left{align-self:flex-start;}
+  .fl-ext-item.fl-ext-right{align-self:flex-end;text-align:right;}
+  .fl-ext-item h4{font-size:17px;font-weight:800;color:var(--black);margin-bottom:10px;}
+  .fl-ext-item p{font-size:14.5px;line-height:1.65;color:var(--gray-700);}
+
+  .fl-ext-links{display:flex;justify-content:space-between;width:100%;max-width:640px;}
+  /* the outer link is what the magnetic hover moves (translate); the
+     inner span is what pulses (scale) — kept on separate elements so
+     the two transforms never fight over the same property */
+  .fl-ext-link{display:inline-block;}
+  .fl-ext-link-pulse{
+    display:inline-block;
+    font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:22px;
+    letter-spacing:-0.01em;color:var(--black);
+    animation:fl-heartbeat-plain 1.15s ease-in-out infinite;
   }
-  .fl-link-card:hover{border-color:var(--black);}
-  .fl-link-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:10px;}
-  .fl-link-title{font-size:19px;font-weight:800;color:var(--black);margin-bottom:10px;}
-  .fl-link-desc{font-size:14px;line-height:1.6;color:var(--gray-700);margin-bottom:18px;}
-  .fl-link-badge{
-    display:inline-block;align-self:flex-start;
-    font-size:12px;font-weight:700;color:var(--black);
-    background:var(--off-white);border:1px solid var(--gray-300);
-    border-radius:100px;padding:6px 14px;margin-bottom:20px;
-  }
-  .fl-link-cta{
-    display:flex;align-items:center;gap:6px;margin-top:auto;
-    font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--black);
+  @keyframes fl-heartbeat-plain{
+    0%{transform:scale(1);}
+    14%{transform:scale(1.045);}
+    28%{transform:scale(1);}
+    42%{transform:scale(1.065);}
+    70%{transform:scale(1);}
+    100%{transform:scale(1);}
   }
 
-  @media (max-width:900px){
-    .fl-grid-4{grid-template-columns:1fr 1fr;}
-    .fl-link-cards{grid-template-columns:1fr;}
+  @media (max-width:640px){
+    .fl-ext-inner{gap:130px;padding:48px 20px 100px;}
+    .fl-ext-panel{padding:28px;}
+    .fl-ext-item{max-width:280px;}
+    .fl-ext-links{flex-direction:column;align-items:center;gap:60px;}
   }
-  @media (max-width:560px){
-    .fl-grid-4{grid-template-columns:1fr;}
-    .fl-content{padding:64px 20px;}
-    .fl-section{margin-bottom:64px;}
+
+  /* anyone who has asked their system to reduce motion still gets every
+     bit of content, just without the continuous, looping animations:
+     the wordmark, cursor blink and scroll cue simply hold still */
+  @media (prefers-reduced-motion: reduce){
+    .fl-story-center{animation:none !important;opacity:1;transform:translate(-50%,-50%) scale(1);}
+    .fl-cursor{animation:none !important;}
+    .fl-scroll-cue.is-bouncing{animation:none !important;}
+    .fl-ext-link-pulse{animation:none !important;}
   }
 
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
@@ -460,11 +478,14 @@
   </div>
 </section>
 
-<section class="fl-content">
-  <div class="fl-content-inner">
+<!-- FOUNDER LAB EXTENDED: a 7th click on the wordmark above continues the
+     same hand-drawn story down into this section. -->
+<section class="fl-extended">
+  <div class="fl-ext-inner" id="flExtInner">
+    <svg class="fl-ext-svg" id="flExtSvg" aria-hidden="true"></svg>
 
-    <div class="fl-section">
-      <h2>Why Founder Lab Exists</h2>
+    <div class="fl-ext-node fl-ext-panel" id="flExt0">
+      <h3>Why Founder Lab Exists</h3>
       <p>Founder Lab is more than a Shopify store.</p>
       <p>It's a permanent research laboratory built by Atom Foundry to understand how AI discovers, interprets, and learns from commerce.</p>
       <p>Most AI commerce research is observational. Researchers watch stores they don't control and try to infer what influences AI recommendations.</p>
@@ -473,58 +494,38 @@
       <p>Every experiment performed in Founder Lab becomes part of a larger research system that helps us understand how commerce is evolving in the AI era.</p>
     </div>
 
-    <div class="fl-section" style="max-width:none;">
-      <h2>What Happens Inside Founder Lab</h2>
-      <div class="fl-grid-4">
-        <div class="fl-grid-card">
-          <div class="fl-grid-emoji">🧪</div>
-          <h3>Controlled Experiments</h3>
-          <p>Every hypothesis starts here. We modify one variable at a time to understand its real impact on AI systems.</p>
-        </div>
-        <div class="fl-grid-card">
-          <div class="fl-grid-emoji">📊</div>
-          <h3>Measure the Results</h3>
-          <p>Every experiment is measured using our research framework, helping us understand how changes influence AI understanding, trust, and recommendations.</p>
-        </div>
-        <div class="fl-grid-card">
-          <div class="fl-grid-emoji">🔍</div>
-          <h3>Analyze the Outcome</h3>
-          <p>We compare results, identify patterns, eliminate assumptions, and separate correlation from causation.</p>
-        </div>
-        <div class="fl-grid-card">
-          <div class="fl-grid-emoji">🚀</div>
-          <h3>Improve and Repeat</h3>
-          <p>Insights become new experiments. Every iteration makes our research more accurate and our understanding of AI commerce deeper.</p>
-        </div>
-      </div>
+    <div class="fl-ext-node fl-ext-item fl-ext-left" id="flExt1">
+      <h4>Controlled Experiments</h4>
+      <p>Every hypothesis starts here. We modify one variable at a time to understand its real impact on AI systems.</p>
     </div>
 
-    <div class="fl-section">
-      <h2>Why It Matters</h2>
+    <div class="fl-ext-node fl-ext-item fl-ext-right" id="flExt2">
+      <h4>Measure the Results</h4>
+      <p>Every experiment is measured using our research framework, helping us understand how changes influence AI understanding, trust, and recommendations.</p>
+    </div>
+
+    <div class="fl-ext-node fl-ext-item fl-ext-left" id="flExt3">
+      <h4>Analyze the Outcome</h4>
+      <p>We compare results, identify patterns, eliminate assumptions, and separate correlation from causation.</p>
+    </div>
+
+    <div class="fl-ext-node fl-ext-item fl-ext-right" id="flExt4">
+      <h4>Improve and Repeat</h4>
+      <p>Insights become new experiments. Every iteration makes our research more accurate and our understanding of AI commerce deeper.</p>
+    </div>
+
+    <div class="fl-ext-node fl-ext-panel" id="flExt5">
+      <h3>Why It Matters</h3>
       <p>Founder Lab gives us something most research cannot.</p>
-      <p class="fl-emphasis">Control.</p>
+      <p class="fl-ext-emphasis">Control.</p>
       <p>Because we own the store, every product, every page, every description, and every change, we know exactly what changed—and when.</p>
       <p>That allows us to study cause and effect instead of making assumptions.</p>
       <p>It's where new ideas are tested.<br>It's where research becomes evidence.<br>It's where Atom Foundry learns before it teaches.</p>
     </div>
 
-    <div class="fl-section" style="max-width:none;">
-      <div class="fl-link-cards">
-        <a class="fl-link-card" href="/research/founder-lab-day-zero">
-          <span class="fl-link-eyebrow">Founder Lab</span>
-          <span class="fl-link-title">Founder Lab, Day Zero</span>
-          <span class="fl-link-desc">Our own store's baseline, before we changed a single word.</span>
-          <span class="fl-link-badge">78/100 baseline score</span>
-          <span class="fl-link-cta">Read<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-        </a>
-        <a class="fl-link-card" href="/research/founder-lab-log">
-          <span class="fl-link-eyebrow">Founder Lab</span>
-          <span class="fl-link-title">Founder Lab Log</span>
-          <span class="fl-link-desc">Every change we make and every rescan, logged as it happens.</span>
-          <span class="fl-link-badge">3 entries so far</span>
-          <span class="fl-link-cta">Read<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-        </a>
-      </div>
+    <div class="fl-ext-links">
+      <a class="fl-ext-node fl-ext-link" id="flExt6" href="/research/founder-lab-day-zero"><span class="fl-ext-link-pulse">Founder Lab, Day Zero</span></a>
+      <a class="fl-ext-node fl-ext-link" id="flExt7" href="/research/founder-lab-log"><span class="fl-ext-link-pulse">Founder Lab Log</span></a>
     </div>
 
   </div>
@@ -620,7 +621,38 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+  const flReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const flHasGsap = typeof gsap !== 'undefined';
+  if (flHasGsap && typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+
+  // A single choreographed entrance for the navbar on load: the brand
+  // settles in first, then the nav items follow with a light stagger.
+  // Skipped entirely under reduced-motion, where everything is simply
+  // shown as-is (GSAP `.from()` tweens would otherwise leave it stuck
+  // invisible if the library or motion were unavailable).
+  (function(){
+    if (!flHasGsap || flReducedMotion) return;
+    const brand = document.querySelector('.nav-brand');
+    const items = document.querySelectorAll('#navLinks > .nav-item');
+    if (!brand) return;
+    gsap.timeline({ defaults: { ease: 'power3.out' } })
+      .from(brand, { y: -14, opacity: 0, duration: .6 })
+      .from(items, { y: -10, opacity: 0, duration: .5, stagger: .06 }, '-=0.35');
+  })();
+
+  // the wordmark's one-time arrival: opacity only, never transform, so
+  // it can never collide with its own infinite heartbeat pulse (which
+  // is already running underneath, just invisible until this finishes)
+  (function(){
+    if (!flHasGsap || flReducedMotion) return;
+    const center = document.getElementById('flCenter');
+    if (!center) return;
+    gsap.from(center, { opacity: 0, duration: .8, ease: 'power2.out', delay: .2 });
+  })();
+
   // Navbar always stays visible (sticky) but goes compact once the page
   // is scrolled down: the wordmark collapses from "FOUNDER LAB" to "FL"
   // and the padding tightens. Scrolling back near the top restores it.
@@ -897,10 +929,47 @@
       line.addEventListener('transitionend', onDrawn);
     }
 
-    center.addEventListener('click', () => {
-      // once the sixth chapter has been used, the story finishes on its
-      // own and the wordmark is no longer clickable
-      if (busy || nextIndex >= CHAPTERS.length) return;
+    // a 7th click on the wordmark, once all six chapters are done, draws
+    // one last line straight down to the bottom of this stage, then
+    // hands off to the extended sequence continuing down the page
+    let extendedTriggered = false;
+    function playContinuation(){
+      busy = true;
+      center.classList.add('is-paused');
+      const cx = stage.clientWidth * ANCHOR_X_PCT;
+      const yStart = stage.clientHeight * ANCHOR_Y_PCT + TEXT_RY;
+      const yEnd = stage.clientHeight - 16;
+      const g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'fl-chapter-group');
+      const line = document.createElementNS(NS, 'path');
+      line.setAttribute('class', 'fl-line-path');
+      line.setAttribute('d', handDrawnPath(cx, yStart, cx, yEnd));
+      g.appendChild(line);
+      svg.appendChild(g);
+      const len = line.getTotalLength();
+      line.style.setProperty('--len', len);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        line.classList.add('is-drawing');
+      }));
+      function onDrawn(e){
+        if (e.target !== line || e.propertyName !== 'stroke-dashoffset') return;
+        line.removeEventListener('transitionend', onDrawn);
+        center.classList.remove('is-paused');
+        busy = false;
+        if (typeof window.flPlayExtended === 'function') window.flPlayExtended();
+      }
+      line.addEventListener('transitionend', onDrawn);
+    }
+
+    // advances exactly one chapter, shared by both the click handler and
+    // the scroll-driven trigger below, so the two can never disagree
+    // about what "next" means. queuedAdvances lets a fast scroll (or a
+    // rapid double-click) queue up requests instead of dropping them:
+    // whatever comes in while busy just waits its turn.
+    let queuedAdvances = 0;
+    function advanceStory(){
+      if (nextIndex >= CHAPTERS.length) return;
+      if (busy) { queuedAdvances++; return; }
       busy = true;
       const i = nextIndex;
       nextIndex++;
@@ -911,13 +980,210 @@
           if (isLast) {
             setTimeout(showScrollCue, 900);
           }
+          if (queuedAdvances > 0) {
+            queuedAdvances--;
+            advanceStory();
+          }
         });
       } catch (err) {
         console.error('Founder Lab story error:', err);
         busy = false;
         center.classList.remove('is-paused');
       }
+    }
+
+    center.addEventListener('click', () => {
+      if (nextIndex >= CHAPTERS.length) {
+        if (extendedTriggered || busy) return;
+        extendedTriggered = true;
+        try {
+          playContinuation();
+        } catch (err) {
+          console.error('Founder Lab continuation error:', err);
+          busy = false;
+          center.classList.remove('is-paused');
+        }
+        return;
+      }
+      advanceStory();
     });
+
+    // scroll-driven version of the same story: the wordmark pins in
+    // place while the page scrolls through it, and each slice of that
+    // scroll distance advances one chapter, exactly like a click would.
+    // skipped under reduced-motion, where clicking remains the only way
+    // to move the story forward (a locked/pinned viewport during scroll
+    // is itself a motion effect some people specifically turn off).
+    if (flHasGsap && typeof ScrollTrigger !== 'undefined' && !flReducedMotion) {
+      let lastScrollIndex = -1;
+      const SCROLL_PER_CHAPTER = 650; // px of scroll "spent" per chapter; tune live if it feels rushed or slow
+      // pin just below the sticky navbar, not under it, and re-check on
+      // resize since the navbar's own height changes between its normal
+      // and "compact" (scrolled) states
+      const navEl = document.querySelector('header.nav');
+      const navOffset = navEl ? navEl.offsetHeight : 90;
+      ScrollTrigger.create({
+        trigger: stage,
+        start: 'top top+=' + navOffset,
+        end: '+=' + (CHAPTERS.length * SCROLL_PER_CHAPTER),
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const idx = Math.min(CHAPTERS.length - 1, Math.floor(self.progress * CHAPTERS.length));
+          while (idx > lastScrollIndex) {
+            lastScrollIndex++;
+            advanceStory();
+          }
+        }
+      });
+    }
+  })();
+
+  // The Founder Lab extended sequence: continues the same hand-drawn
+  // line story down the page, connecting real page content instead of
+  // floating captions. Every node already sits in normal document flow
+  // (just invisible), so positions are measured, not guessed, meaning
+  // this adapts to whatever height the real text wraps to at any width.
+  (function(){
+    const inner = document.getElementById('flExtInner');
+    const svg = document.getElementById('flExtSvg');
+    if (!inner || !svg) return;
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const nodes = Array.from(inner.querySelectorAll('.fl-ext-node'));
+    if (nodes.length < 8) return;
+
+    function setSvgSize(){
+      svg.setAttribute('viewBox', '0 0 ' + inner.clientWidth + ' ' + inner.clientHeight);
+    }
+    setSvgSize();
+    window.addEventListener('resize', setSvgSize);
+
+    // same gentle hand-drawn bow as the story above, kept local so this
+    // section has no dependency on the other script block
+    function handDrawnPath(x1, y1, x2, y2){
+      const dx = x2 - x1, dy = y2 - y1;
+      const len = Math.sqrt(dx * dx + dy * dy) || 1;
+      const nx = -dy / len, ny = dx / len;
+      const j1 = Math.min(len * 0.07, 16), j2 = -Math.min(len * 0.05, 12);
+      const c1x = x1 + dx * 0.32 + nx * j1, c1y = y1 + dy * 0.32 + ny * j1;
+      const c2x = x1 + dx * 0.68 + nx * j2, c2y = y1 + dy * 0.68 + ny * j2;
+      return 'M' + x1 + ',' + y1 + ' C' + c1x + ',' + c1y + ' ' + c2x + ',' + c2y + ' ' + x2 + ',' + y2;
+    }
+
+    function rectOf(el){
+      const r = el.getBoundingClientRect();
+      const c = inner.getBoundingClientRect();
+      return {
+        top: r.top - c.top, bottom: r.bottom - c.top,
+        left: r.left - c.left, right: r.right - c.left,
+        centerX: r.left - c.left + r.width / 2
+      };
+    }
+
+    function drawLine(x1, y1, x2, y2, onDone){
+      const line = document.createElementNS(NS, 'path');
+      line.setAttribute('class', 'fl-line-path');
+      line.setAttribute('d', handDrawnPath(x1, y1, x2, y2));
+      svg.appendChild(line);
+      const len = line.getTotalLength();
+      line.style.setProperty('--len', len);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        line.classList.add('is-drawing');
+      }));
+      function onTransEnd(e){
+        if (e.target !== line || e.propertyName !== 'stroke-dashoffset') return;
+        line.removeEventListener('transitionend', onTransEnd);
+        onDone();
+      }
+      line.addEventListener('transitionend', onTransEnd);
+    }
+
+    // a springier, more premium arrival than a flat fade when GSAP is
+    // available; falls back to the plain CSS fade otherwise
+    function revealNode(el, delayAfter, cb){
+      if (flHasGsap && !flReducedMotion) {
+        gsap.fromTo(el,
+          { y: 26, opacity: 0, scale: .95 },
+          { y: 0, opacity: 1, scale: 1, duration: .7, ease: 'back.out(1.6)' }
+        );
+      } else {
+        el.classList.add('is-visible');
+      }
+      setTimeout(cb, delayAfter);
+    }
+
+    let started = false;
+    function playExtended(){
+      if (started) return;
+      started = true;
+      setSvgSize();
+
+      function step(i){
+        if (i <= 5) {
+          const prevRect = i === 0
+            ? { centerX: inner.clientWidth / 2, bottom: 0 }
+            : rectOf(nodes[i - 1]);
+          const curRect = rectOf(nodes[i]);
+          drawLine(prevRect.centerX, prevRect.bottom, curRect.centerX, curRect.top, () => {
+            revealNode(nodes[i], 900, () => step(i + 1));
+          });
+          return;
+        }
+        // the line splits in two here: one branch to each pulsing link
+        const prevRect = rectOf(nodes[5]);
+        const r6 = rectOf(nodes[6]);
+        const r7 = rectOf(nodes[7]);
+        drawLine(prevRect.centerX, prevRect.bottom, r6.centerX, r6.top, () => {
+          revealNode(nodes[6], 0, () => {});
+        });
+        drawLine(prevRect.centerX, prevRect.bottom, r7.centerX, r7.top, () => {
+          revealNode(nodes[7], 0, () => {});
+        });
+      }
+
+      step(0);
+    }
+
+    window.flPlayExtended = playExtended;
+
+    // accessibility fallback: this content is real research context, not
+    // just decoration, so it must not stay permanently hidden for anyone
+    // who scrolls past without ever clicking the wordmark seven times.
+    // whichever trigger fires first wins, the other is a no-op.
+    if (flHasGsap && typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.create({
+        trigger: inner,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => playExtended()
+      });
+    } else {
+      // no GSAP available at all: don't let the content stay invisible
+      window.addEventListener('scroll', function fallbackCheck(){
+        const r = inner.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.85) {
+          window.removeEventListener('scroll', fallbackCheck);
+          playExtended();
+        }
+      }, { passive: true });
+    }
+
+    // a small magnetic pull toward the cursor on the two closing links,
+    // desktop pointer devices only, and only when motion is welcome
+    if (flHasGsap && !flReducedMotion && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      nodes.slice(6, 8).forEach(link => {
+        link.addEventListener('mousemove', (e) => {
+          const r = link.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          gsap.to(link, { x: x * 0.25, y: y * 0.25, duration: .3, ease: 'power2.out' });
+        });
+        link.addEventListener('mouseleave', () => {
+          gsap.to(link, { x: 0, y: 0, duration: .4, ease: 'elastic.out(1, 0.4)' });
+        });
+      });
+    }
   })();
 </script>
 </body>
