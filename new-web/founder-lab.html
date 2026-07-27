@@ -253,8 +253,8 @@
   @keyframes fl-blink{50%{opacity:0;}}
 
   .fl-story-final{
-    position:absolute;left:50%;top:calc(50% + 46px);
-    transform:translate(-50%,0);
+    position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
     font-family:var(--serif);font-size:clamp(20px,3vw,30px);font-weight:800;
     letter-spacing:0.04em;color:var(--black);white-space:nowrap;
     opacity:0;transition:opacity 1.4s ease;
@@ -588,9 +588,9 @@
     const CHAPTERS = [
       { angle: -55,  dist: 0.40, text: "Founder Lab didn't start with a logo. It started with a sleepless night. This was that night." },
       { angle: 35,   dist: 0.42, text: "I wrote it down. Because ideas disappear. Unless you capture them." },
-      { angle: 150,  dist: 0.40, text: "I needed answers. The only way to get them...\n...was to build." },
-      { angle: -150, dist: 0.40, text: "Then it went live. Not to prove an idea. To start learning." },
-      { angle: -20,  dist: 0.44, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
+      { angle: 165,  dist: 0.48, text: "I needed answers. The only way to get them...\n...was to build." },
+      { angle: -135, dist: 0.50, text: "Then it went live. Not to prove an idea. To start learning." },
+      { angle: -10,  dist: 0.50, text: "Every click became a lesson. Every order became data. Every day changed what we knew." },
       { angle: 100,  dist: 0.40, text: "Founder Lab is still an experiment. And we're still building." }
     ];
 
@@ -651,28 +651,33 @@
       const cx = stage.clientWidth * ANCHOR_X_PCT, cy = stage.clientHeight * ANCHOR_Y_PCT;
       const dist = Math.min(stage.clientWidth, stage.clientHeight) * ch.dist;
       const rad = ch.angle * Math.PI / 180;
-      const ex = cx + Math.cos(rad) * dist;
-      const ey = cy + Math.sin(rad) * dist;
       const cosA = Math.cos(rad), sinA = Math.sin(rad);
+      const ex = cx + cosA * dist;
+      const ey = cy + sinA * dist;
       const edgeT = 1 / Math.sqrt((cosA * cosA) / (TEXT_RX * TEXT_RX) + (sinA * sinA) / (TEXT_RY * TEXT_RY));
       const sx = cx + cosA * edgeT, sy = cy + sinA * edgeT;
-      return { ch, sx, sy, ex, ey };
+      return { ch, sx, sy, ex, ey, cosA, sinA };
     }
 
-    // positions a caption element just beside a line's end point, flipping
-    // to the left when there isn't room on the right, so it never runs
-    // off the edge of the stage
-    function positionCaption(el, ex, ey){
-      const pad = 18, textW = 220;
-      const putRight = ex + pad + textW < stage.clientWidth - 12;
+    // positions a caption element just past a line's end point, continuing
+    // a little further out along the same direction the line travels so
+    // the text never sits on top of the line itself, then flips to the
+    // left when there isn't room on the right, so it never runs off the
+    // edge of the stage
+    function positionCaption(el, ex, ey, cosA, sinA){
+      const capGap = 50, pad = 14, textW = 220;
+      const tx = ex + cosA * capGap;
+      let ty = ey + sinA * capGap;
+      ty = Math.max(48, Math.min(stage.clientHeight - 48, ty));
+      const putRight = tx + pad + textW < stage.clientWidth - 12;
       if (putRight) {
-        el.style.left = (ex + pad) + 'px';
+        el.style.left = (tx + pad) + 'px';
         el.style.textAlign = 'left';
       } else {
-        el.style.left = (ex - pad - textW) + 'px';
+        el.style.left = (tx - pad - textW) + 'px';
         el.style.textAlign = 'right';
       }
-      el.style.top = ey + 'px';
+      el.style.top = ty + 'px';
       el.style.transform = 'translateY(-50%)';
     }
 
@@ -680,8 +685,22 @@
     // in beside it. the wordmark's pulse is paused for the whole of this
     // (as if it moved into the line and text) and resumes once the
     // caption is fully typed.
+    // "keep building" settles between the second and fifth chapters'
+    // captions, rather than sitting under the wordmark where lines cross
+    function positionFinal(){
+      const cx = stage.clientWidth * ANCHOR_X_PCT, cy = stage.clientHeight * ANCHOR_Y_PCT;
+      const bisect = (CHAPTERS[1].angle + CHAPTERS[4].angle) / 2;
+      const rad = bisect * Math.PI / 180;
+      const dist = Math.min(stage.clientWidth, stage.clientHeight) * 0.30;
+      finalEl.style.left = (cx + Math.cos(rad) * dist) + 'px';
+      finalEl.style.top = (cy + Math.sin(rad) * dist) + 'px';
+      finalEl.style.transform = 'translate(-50%,-50%)';
+    }
+    positionFinal();
+    window.addEventListener('resize', positionFinal);
+
     function playChapter(i, onDone){
-      const { ch, sx, sy, ex, ey } = chapterGeometry(i);
+      const { ch, sx, sy, ex, ey, cosA, sinA } = chapterGeometry(i);
       center.classList.add('is-paused');
 
       const g = document.createElementNS(NS, 'g');
@@ -711,7 +730,7 @@
         const cap = document.createElement('div');
         cap.className = 'fl-story-text';
         stage.appendChild(cap);
-        positionCaption(cap, ex, ey);
+        positionCaption(cap, ex, ey, cosA, sinA);
         setTimeout(() => {
           typeText(cap, ch.text, () => {
             center.classList.remove('is-paused');
