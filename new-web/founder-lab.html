@@ -360,11 +360,17 @@
   .fl-shop-cta{background:var(--gray-100);width:100%;padding:100px 24px 120px;}
   .fl-shop-cta-inner{
     max-width:1400px;margin:0 auto;
-    display:flex;flex-direction:column;align-items:center;gap:32px;
+    display:flex;flex-direction:column;align-items:center;gap:120px;
     opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease;
   }
   .fl-shop-cta-inner.is-visible{opacity:1;transform:translateY(0);}
-  .fl-shop-cta-img{width:100%;height:auto;display:block;border-radius:var(--radius);border:1px solid var(--gray-300);}
+  .fl-shop-cta-img{
+    width:100%;height:auto;display:block;border-radius:var(--radius);border:1px solid var(--gray-300);
+    transition:transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .5s ease;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .fl-shop-cta-img:hover{transform:scale(1.02);box-shadow:0 30px 70px rgba(22,21,18,0.2);}
+  }
   .fl-shop-cta-link{
     display:inline-flex;align-items:center;
     font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:19px;
@@ -1074,6 +1080,8 @@
     const nodes = Array.from(inner.querySelectorAll('.fl-ext-node'));
     if (nodes.length < 8) return;
 
+    const isMobile = window.matchMedia('(max-width:640px)').matches;
+
     function setSvgSize(){
       svg.setAttribute('viewBox', '0 0 ' + inner.clientWidth + ' ' + inner.clientHeight);
     }
@@ -1165,7 +1173,15 @@
           });
           return;
         }
-        // the line splits in two here: one branch to each pulsing link
+        // the line splits in two here: one branch to each pulsing link.
+        // on narrow screens the two cards stack directly under the last
+        // panel with no room for a fork to draw cleanly, so they just
+        // reveal on their own there, with no connecting line at all.
+        if (isMobile) {
+          revealNode(nodes[6], 0, () => revealSub(nodes[6], 400));
+          revealNode(nodes[7], 0, () => revealSub(nodes[7], 400));
+          return;
+        }
         const prevRect = rectOf(nodes[5]);
         const r6 = rectOf(nodes[6]);
         const r7 = rectOf(nodes[7]);
