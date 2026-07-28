@@ -716,12 +716,12 @@
      each field one at a time, once the AI view has actually opened */
   .ai-check{
     margin-left:auto;padding-left:10px;flex-shrink:0;
-    color:#1ecb56;font-weight:800;
+    color:#1ecb56;font-weight:900;font-size:19px;line-height:1;
     opacity:0;transform:scale(.4);display:inline-block;
   }
   body.ai-active .ai-view-row .ai-check{
     animation:ai-check-in .3s cubic-bezier(.34,1.56,.64,1) both;
-    animation-delay:calc(var(--i,0) * 0.045s + 0.3s);
+    animation-delay:calc(var(--i,0) * 0.5s + 0.3s);
   }
   @keyframes ai-check-in{
     0%{opacity:0;transform:scale(.4);}
@@ -1654,7 +1654,10 @@ content type: text/html; charset=utf8</div>
 
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const T_APPEAR = reduceMotion ? 600 : 3500;
-    const T_HOLD = reduceMotion ? 1200 : 5000;
+    // The checkmarks now tick in one every 0.5s (see --i in CSS) across 69
+    // rows, finishing at ~34.6s; T_HOLD is set just after that so "Back to
+    // Human View" only reappears once every field has actually been checked.
+    const T_HOLD = reduceMotion ? 1200 : 36000;
     let inAiView = false;
 
     function openPortal(label){
@@ -1682,10 +1685,10 @@ content type: text/html; charset=utf8</div>
     // dissolve at the same moment, so the hole closing and the page falling
     // apart / reassembling read as one continuous action.
     // The green checkmarks (see .ai-check in CSS) finish popping in row by
-    // row at roughly (68 * 0.045s + 0.3s + 0.3s) ~= 3.7s after ai-active is
-    // set; once they're all done, flip the status line to "complete".
+    // row, one every 0.5s, at roughly (68 * 0.5s + 0.3s + 0.3s) ~= 34.6s
+    // after ai-active is set; once they're all done, flip the status line.
     const statusEl = document.getElementById('aiStatusText');
-    const T_STATUS_DONE = reduceMotion ? 200 : 3800;
+    const T_STATUS_DONE = reduceMotion ? 200 : 34800;
     let statusTimer = null;
 
     function enterAiView(){
