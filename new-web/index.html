@@ -670,9 +670,9 @@
     100%{opacity:0;transform:translate(var(--dx,10px),var(--dy,18px)) scale(.3);}
   }
   @media (max-width:680px){
-    .ai-portal{top:50%;right:-6vw;width:min(96vw,640px);height:min(96vw,640px);}
+    .ai-portal{top:50%;right:-3vw;width:min(70vw,360px);height:min(70vw,360px);}
     .ai-portal-btn{font-size:11.5px;right:16%;}
-    .ai-portal-flash{width:min(130vw,560px);height:min(130vw,560px);}
+    .ai-portal-flash{width:min(60vw,260px);height:min(60vw,260px);}
   }
   @media (prefers-reduced-motion: reduce){
     .ai-portal.is-open .ai-portal-glow{animation:none;}
@@ -1655,9 +1655,8 @@ content type: text/html; charset=utf8</div>
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const T_APPEAR = reduceMotion ? 600 : 3500;
     // The checkmarks now tick in one every 0.5s (see --i in CSS) across 69
-    // rows, finishing at ~34.6s; T_HOLD is set just after that so "Back to
-    // Human View" only reappears once every field has actually been checked.
-    const T_HOLD = reduceMotion ? 1200 : 36000;
+    // rows, and keep ticking in the background even after this reopens.
+    const T_HOLD = reduceMotion ? 1200 : 4000;
     let inAiView = false;
 
     function openPortal(label){
