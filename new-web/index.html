@@ -571,75 +571,85 @@
     .cookie-banner{right:12px;bottom:12px;left:12px;max-width:none;}
   }
 
-  /* ---------- AI VIEW PORTAL: a small hole opens in the page a few
-     seconds after load, right where the cream background sits, offering
-     a way to see this exact page the way an AI shopping agent actually
-     reads it (structured data, not the visual design). The same portal,
-     re-triggered later in the same spot, is also the way back. ---------- */
+  /* ---------- AI VIEW PORTAL: a few seconds after load, the page starts
+     to crack like glass right at the screen edge, a web of fractures
+     spreading in from the point of impact, with light and "See as AI"
+     emerging from it. Reused in reverse (cracks healing) as the way back. */
   .ai-portal{
-    position:fixed;top:34%;right:7%;z-index:900;
-    width:10px;height:10px;
-    display:flex;align-items:center;justify-content:center;
+    position:fixed;top:32%;right:-2.5vw;z-index:900;
+    width:min(72vw,820px);height:min(72vw,820px);
+    transform:translateY(-50%);
     pointer-events:none;
   }
-  .ai-portal-hole{
-    position:relative;width:0;height:0;
-    border-radius:44% 56% 61% 39% / 49% 44% 56% 51%;
+  .ai-portal-svg{
+    position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+    opacity:0;transition:opacity .3s ease;
+  }
+  .ai-portal.is-open .ai-portal-svg{opacity:1;filter:drop-shadow(0 0 3px rgba(255,255,255,.85));}
+  .ai-portal-svg .crack{
+    fill:none;stroke:var(--white);stroke-width:1.4px;
+    stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:220;stroke-dashoffset:220;
+    transition:stroke-dashoffset 1.1s cubic-bezier(.16,.8,.24,1) var(--d,0s);
+    vector-effect:non-scaling-stroke;
+  }
+  .ai-portal.is-open .ai-portal-svg .crack{stroke-dashoffset:0;}
+  .ai-portal-svg .shard{fill:var(--white);opacity:0;transition:opacity 1s ease var(--d,0s);}
+  .ai-portal.is-open .ai-portal-svg .shard{opacity:.55;}
+
+  .ai-portal-glow{
+    position:absolute;top:50%;right:10%;transform:translate(50%,-50%);
+    width:0;height:0;border-radius:50%;
     background:var(--white);
     box-shadow:0 0 0 0 rgba(255,255,255,0);
-    display:flex;align-items:center;justify-content:center;
-    transition:width 1s cubic-bezier(.16,.8,.24,1), height 1s cubic-bezier(.16,.8,.24,1),
-               box-shadow 1s ease, border-radius 1.8s ease-in-out;
+    transition:width 1.3s cubic-bezier(.16,.8,.24,1), height 1.3s cubic-bezier(.16,.8,.24,1), box-shadow 1.3s ease;
   }
-  .ai-portal.is-open .ai-portal-hole{
-    width:78px;height:78px;
-    box-shadow:0 0 44px 20px rgba(255,255,255,0.85), 0 0 86px 38px rgba(255,255,255,0.32);
-    animation:ai-hole-wobble 6s ease-in-out infinite;
+  .ai-portal.is-open .ai-portal-glow{
+    width:96px;height:96px;
+    box-shadow:0 0 60px 26px rgba(255,255,255,0.9), 0 0 130px 60px rgba(255,255,255,0.35);
+    animation:ai-glow-pulse 4s ease-in-out infinite;
   }
-  .ai-portal.is-expanded .ai-portal-hole{width:176px;height:60px;border-radius:30px;}
-  @keyframes ai-hole-wobble{
-    0%,100%{border-radius:44% 56% 61% 39% / 49% 44% 56% 51%;}
-    50%{border-radius:58% 42% 39% 61% / 44% 58% 42% 56%;}
+  @keyframes ai-glow-pulse{
+    0%,100%{box-shadow:0 0 60px 26px rgba(255,255,255,0.9), 0 0 130px 60px rgba(255,255,255,0.35);}
+    50%{box-shadow:0 0 70px 32px rgba(255,255,255,0.95), 0 0 150px 70px rgba(255,255,255,0.42);}
   }
+
   .ai-portal-btn{
-    opacity:0;transform:scale(.7);
-    transition:opacity .5s ease .3s, transform .5s cubic-bezier(.34,1.56,.64,1) .3s;
+    position:absolute;top:50%;right:14%;transform:translateY(-50%) translateX(16px);
+    opacity:0;
+    transition:opacity .5s ease .8s, transform .5s cubic-bezier(.34,1.56,.64,1) .8s;
     border:none;background:none;cursor:pointer;pointer-events:none;
-    font-family:"Nunito",sans-serif;font-weight:800;font-size:12.5px;
+    font-family:"Nunito",sans-serif;font-weight:800;font-size:13px;
     letter-spacing:0.06em;text-transform:uppercase;color:var(--black);
-    white-space:nowrap;
+    white-space:nowrap;text-shadow:0 0 14px rgba(255,255,255,.8);
   }
-  .ai-portal.is-expanded .ai-portal-btn{opacity:1;transform:scale(1);pointer-events:auto;}
+  .ai-portal.is-expanded .ai-portal-btn{opacity:1;transform:translateY(-50%) translateX(0);pointer-events:auto;}
   .ai-portal.is-open{pointer-events:auto;}
 
-  /* the little cream-colored pixels that crumble away as the hole opens,
-     and gather back together in reverse when the portal reopens to send
-     the visitor back */
-  .ai-portal-specks{position:absolute;inset:-40px;pointer-events:none;}
+  /* small pale flecks knocked loose from the point of impact */
+  .ai-portal-specks{position:absolute;top:50%;right:10%;transform:translate(50%,-50%);width:1px;height:1px;pointer-events:none;}
   .ai-portal-specks span{
-    position:absolute;top:50%;left:50%;width:5px;height:5px;
-    background:var(--cream);opacity:0;border-radius:1px;
+    position:absolute;top:0;left:0;width:4px;height:4px;
+    background:var(--white);opacity:0;border-radius:1px;
   }
-  .ai-portal.is-open .ai-portal-specks span{animation:ai-speck-fall 1s ease-out both;}
-  .ai-portal.is-closing .ai-portal-specks span{animation:ai-speck-fall 1s ease-in both reverse;}
+  .ai-portal.is-open .ai-portal-specks span{animation:ai-speck-fall 1.1s ease-out both;}
+  .ai-portal.is-closing .ai-portal-specks span{animation:ai-speck-fall 1.1s ease-in both reverse;}
   @keyframes ai-speck-fall{
-    0%{opacity:.9;transform:translate(0,0) scale(1);}
+    0%{opacity:.95;transform:translate(0,0) scale(1);}
     100%{opacity:0;transform:translate(var(--dx,10px),var(--dy,18px)) scale(.3);}
   }
   @media (max-width:680px){
-    .ai-portal{top:26%;right:5%;}
-    .ai-portal.is-expanded .ai-portal-hole{width:150px;height:54px;}
-    .ai-portal-btn{font-size:11px;}
+    .ai-portal{top:24%;right:-4vw;width:min(88vw,520px);height:min(88vw,520px);}
+    .ai-portal-btn{font-size:11.5px;right:16%;}
   }
   @media (prefers-reduced-motion: reduce){
-    .ai-portal.is-open .ai-portal-hole{animation:none;}
-    .ai-portal-hole,.ai-portal-btn{transition-duration:.2s;}
+    .ai-portal.is-open .ai-portal-glow{animation:none;}
+    .ai-portal-glow,.ai-portal-btn,.ai-portal-svg,.ai-portal-svg .crack,.ai-portal-svg .shard{transition-duration:.2s;transition-delay:0s;}
     .ai-portal-specks span{display:none;}
   }
 
-  /* ---------- AI VIEW: the whole page dissolves into this structured,
-     text-only view — the same facts a crawler or shopping agent actually
-     extracts, with none of the visual design attached to them. ---------- */
+  /* ---------- AI VIEW: raw extracted data, the way a crawler or shopping
+     agent actually reads this page. White, monospace, no visual design. */
   body > *:not(.ai-portal):not(.ai-view){
     transition:opacity 1.7s ease, filter 1.7s ease;
   }
@@ -648,70 +658,29 @@
   }
   .ai-view{
     position:fixed;inset:0;z-index:800;
-    background:var(--white);
+    background:var(--white);color:var(--black);
+    font-family:ui-monospace,Menlo,Consolas,monospace;
     opacity:0;pointer-events:none;
     transition:opacity 1.7s ease;
   }
   body.ai-active .ai-view{opacity:1;pointer-events:auto;}
   .ai-view-inner{
     height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;
-    padding:110px 24px 100px;
+    padding:100px 24px 100px;
   }
-  .ai-view-wrap{max-width:760px;margin:0 auto;}
-  .ai-view-kicker{
-    font-family:ui-monospace,Menlo,monospace;font-size:12px;
-    letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);
-    margin-bottom:10px;
-  }
-  .ai-view-title{
-    font-family:var(--serif);font-size:clamp(24px,3.4vw,36px);font-weight:800;
-    letter-spacing:-0.02em;line-height:1.2;margin-bottom:14px;
-  }
-  .ai-view-sub{font-size:15.5px;color:var(--gray-700);line-height:1.7;max-width:600px;margin-bottom:40px;}
-  .ai-view-card{
-    background:var(--cream);border-radius:var(--radius);
-    padding:26px 28px;margin-bottom:20px;
-  }
-  .ai-view-card h3{
-    font-family:ui-monospace,Menlo,monospace;font-size:11px;
-    letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-500);
-    margin-bottom:16px;
-  }
-  .ai-view-field{margin-bottom:14px;}
-  .ai-view-field:last-child{margin-bottom:0;}
-  .ai-view-field-label{
-    font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--gray-500);
-    text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;
-  }
-  .ai-view-field-value{font-size:14.5px;color:var(--black);line-height:1.6;}
-  .ai-view-entity{
-    border-top:1px solid var(--card-line);padding-top:14px;margin-top:14px;
-  }
-  .ai-view-entity:first-child{border-top:none;padding-top:0;margin-top:0;}
-  .ai-view-entity-type{
-    display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;
-    font-weight:700;color:var(--white);background:var(--black);
-    padding:2px 8px;border-radius:3px;margin-bottom:8px;
-  }
-  .ai-view-outline{list-style:none;}
-  .ai-view-outline li{
-    font-size:14.5px;line-height:2;color:var(--black);
-    padding-left:calc(var(--lvl,0) * 22px);
-  }
-  .ai-view-outline .tag{
-    font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--orange);
-    margin-right:8px;
-  }
-  .ai-view-stats{display:flex;flex-wrap:wrap;gap:24px 36px;}
-  .ai-view-stat b{
-    display:block;font-family:var(--serif);font-size:26px;font-weight:800;
-    color:var(--orange);letter-spacing:-0.01em;
-  }
-  .ai-view-stat span{font-size:13px;color:var(--gray-700);}
-  .ai-view-note{font-size:13px;color:var(--gray-500);line-height:1.6;margin-top:36px;}
+  .ai-view-wrap{max-width:720px;margin:0 auto;font-size:13.5px;line-height:1.85;}
+  .ai-view-line{color:var(--gray-500);margin-bottom:26px;white-space:pre-line;}
+  .ai-view-block{border-top:1px solid var(--card-line);padding-top:18px;margin-top:18px;}
+  .ai-view-block:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  .ai-view-tag{color:var(--orange);margin-bottom:10px;}
+  .ai-view-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:4px;}
+  .ai-view-row .k{color:var(--gray-500);min-width:150px;flex-shrink:0;}
+  .ai-view-row .v{color:var(--black);word-break:break-word;}
+  .ai-view-note{font-size:12px;color:var(--gray-500);margin-top:34px;line-height:1.7;}
   @media (max-width:680px){
-    .ai-view-inner{padding:96px 20px 90px;}
-    .ai-view-card{padding:20px;}
+    .ai-view-inner{padding:88px 18px 90px;}
+    .ai-view-row .k{min-width:120px;}
+    .ai-view-wrap{font-size:12.5px;}
   }
 </style>
 </head>
@@ -1371,22 +1340,35 @@
   </div>
 </div>
 
-<!-- AI VIEW PORTAL: a small hole that opens in the page on its own, and
-     is also the way back. Reused for both directions of the transition. -->
+<!-- AI VIEW PORTAL: the page cracks like glass right at the screen edge,
+     and the same crack pattern is reused, healing, as the way back. -->
 <div class="ai-portal" id="aiPortal" aria-hidden="true">
-  <div class="ai-portal-hole">
-    <div class="ai-portal-specks" aria-hidden="true">
-      <span style="--dx:-14px;--dy:-20px;animation-delay:.02s;"></span>
-      <span style="--dx:16px;--dy:-16px;animation-delay:.09s;"></span>
-      <span style="--dx:-20px;--dy:10px;animation-delay:.04s;"></span>
-      <span style="--dx:18px;--dy:14px;animation-delay:.14s;"></span>
-      <span style="--dx:-8px;--dy:22px;animation-delay:.18s;"></span>
-      <span style="--dx:10px;--dy:-24px;animation-delay:.11s;"></span>
-      <span style="--dx:-22px;--dy:-6px;animation-delay:.22s;"></span>
-      <span style="--dx:22px;--dy:2px;animation-delay:.06s;"></span>
-    </div>
-    <button type="button" class="ai-portal-btn" id="aiPortalBtn">See as AI</button>
+  <svg class="ai-portal-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path class="crack" style="--d:.02s" d="M90,50 L64,47 L34,52 L6,49"/>
+    <path class="crack" style="--d:.06s" d="M64,47 L58,29"/>
+    <path class="crack" style="--d:.09s" d="M60,49 L52,68 L46,74"/>
+    <path class="crack" style="--d:.04s" d="M90,50 L72,26 L48,16 L24,21"/>
+    <path class="crack" style="--d:.07s" d="M90,50 L70,74 L44,84 L20,79"/>
+    <path class="crack" style="--d:.1s" d="M90,50 L84,22 L76,6"/>
+    <path class="crack" style="--d:.12s" d="M90,50 L84,78 L77,95"/>
+    <path class="crack" style="--d:.03s" d="M90,50 L100,28"/>
+    <path class="crack" style="--d:.05s" d="M90,50 L100,72"/>
+    <path class="shard" style="--d:.3s" d="M90,50 L96,44 L92,47 L94,53 Z"/>
+    <path class="shard" style="--d:.35s" d="M90,50 L95,58 L88,60 L86,54 Z"/>
+    <path class="shard" style="--d:.4s" d="M90,50 L82,42 L86,49 Z"/>
+  </svg>
+  <div class="ai-portal-glow" aria-hidden="true"></div>
+  <div class="ai-portal-specks" aria-hidden="true">
+    <span style="--dx:-14px;--dy:-20px;animation-delay:.32s;"></span>
+    <span style="--dx:16px;--dy:-16px;animation-delay:.39s;"></span>
+    <span style="--dx:-20px;--dy:10px;animation-delay:.34s;"></span>
+    <span style="--dx:18px;--dy:14px;animation-delay:.44s;"></span>
+    <span style="--dx:-8px;--dy:22px;animation-delay:.48s;"></span>
+    <span style="--dx:10px;--dy:-24px;animation-delay:.41s;"></span>
+    <span style="--dx:-22px;--dy:-6px;animation-delay:.52s;"></span>
+    <span style="--dx:22px;--dy:2px;animation-delay:.36s;"></span>
   </div>
+  <button type="button" class="ai-portal-btn" id="aiPortalBtn">See as AI</button>
 </div>
 
 <!-- AI VIEW: the same page, read the way a crawler or shopping agent
@@ -1394,54 +1376,59 @@
 <div class="ai-view" id="aiView" aria-hidden="true">
   <div class="ai-view-inner">
     <div class="ai-view-wrap">
-      <div class="ai-view-kicker">// this is what an ai agent sees</div>
-      <h2 class="ai-view-title">Atom Foundry — The AI Commerce Graph</h2>
-      <p class="ai-view-sub">Understand why AI recommends one brand over another. Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents discover, evaluate, trust, and recommend e-commerce stores — then turns those findings into practical tools.</p>
+      <div class="ai-view-line">GET / HTTP/1.1 &rarr; 200 OK
+content type: text/html; charset=utf8</div>
 
-      <div class="ai-view-card">
-        <h3>Structured data · schema.org</h3>
-        <div class="ai-view-entity">
-          <span class="ai-view-entity-type">Organization</span>
-          <div class="ai-view-field"><div class="ai-view-field-label">name</div><div class="ai-view-field-value">Atom Foundry</div></div>
-          <div class="ai-view-field"><div class="ai-view-field-label">owns</div><div class="ai-view-field-value">Founder Lab (OnlineStore)</div></div>
-        </div>
-        <div class="ai-view-entity">
-          <span class="ai-view-entity-type">OnlineStore</span>
-          <div class="ai-view-field"><div class="ai-view-field-label">name</div><div class="ai-view-field-value">Founder Lab</div></div>
-          <div class="ai-view-field"><div class="ai-view-field-label">description</div><div class="ai-view-field-value">A live Shopify store, built in public as the test subject for Atom Foundry's own research.</div></div>
-        </div>
-        <div class="ai-view-entity">
-          <span class="ai-view-entity-type">WebSite</span>
-          <div class="ai-view-field"><div class="ai-view-field-label">part of</div><div class="ai-view-field-value">Atom Foundry</div></div>
-        </div>
-        <div class="ai-view-entity">
-          <span class="ai-view-entity-type">WebPage</span>
-          <div class="ai-view-field"><div class="ai-view-field-label">inLanguage</div><div class="ai-view-field-value">en</div></div>
-        </div>
+      <div class="ai-view-block">
+        <div class="ai-view-tag">&lt;title&gt;</div>
+        <div class="v">Atom Foundry: The AI Commerce Graph</div>
       </div>
 
-      <div class="ai-view-card">
-        <h3>Content outline</h3>
-        <ul class="ai-view-outline">
-          <li style="--lvl:0;"><span class="tag">H1</span>Understand why AI recommends one brand over another.</li>
-          <li style="--lvl:1;"><span class="tag">H2</span>From Research to Products</li>
-          <li style="--lvl:1;"><span class="tag">H2</span>Research that challenged AI commerce assumptions</li>
-          <li style="--lvl:1;"><span class="tag">H2</span>Built in public.</li>
-          <li style="--lvl:1;"><span class="tag">H2</span>AI Commerce Score™</li>
-        </ul>
+      <div class="ai-view-block">
+        <div class="ai-view-tag">&lt;meta name="description"&gt;</div>
+        <div class="v">Understand why AI recommends one brand over another. Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents discover, evaluate, trust, and recommend ecommerce stores, then turns those findings into practical tools.</div>
       </div>
 
-      <div class="ai-view-card">
-        <h3>Key signals</h3>
-        <div class="ai-view-stats">
-          <div class="ai-view-stat"><b>66,087</b><span>Stores analyzed</span></div>
-          <div class="ai-view-stat"><b>57/100</b><span>Avg. AI Commerce Score</span></div>
-          <div class="ai-view-stat"><b>8</b><span>Scoring factors</span></div>
-          <div class="ai-view-stat"><b>4</b><span>Risk / confidence tiers</span></div>
-        </div>
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/Organization</div>
+        <div class="ai-view-row"><span class="k">name</span><span class="v">Atom Foundry</span></div>
+        <div class="ai-view-row"><span class="k">owns</span><span class="v">Founder Lab (OnlineStore)</span></div>
       </div>
 
-      <p class="ai-view-note">No images on this page — it is entirely text and structured data, which is also exactly what an AI reads. Scroll normally; nothing here is off-limits.</p>
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/OnlineStore</div>
+        <div class="ai-view-row"><span class="k">name</span><span class="v">Founder Lab</span></div>
+        <div class="ai-view-row"><span class="k">description</span><span class="v">A live Shopify store, built in public as the test subject for Atom Foundry's own research.</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/WebSite</div>
+        <div class="ai-view-row"><span class="k">part of</span><span class="v">Atom Foundry</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/WebPage</div>
+        <div class="ai-view-row"><span class="k">inLanguage</span><span class="v">en</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">content outline</div>
+        <div class="ai-view-row"><span class="k">h1</span><span class="v">Understand why AI recommends one brand over another.</span></div>
+        <div class="ai-view-row"><span class="k">h2</span><span class="v">From Research to Products</span></div>
+        <div class="ai-view-row"><span class="k">h2</span><span class="v">Research that challenged AI commerce assumptions</span></div>
+        <div class="ai-view-row"><span class="k">h2</span><span class="v">Built in public.</span></div>
+        <div class="ai-view-row"><span class="k">h2</span><span class="v">AI Commerce Score&trade;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">key signals</div>
+        <div class="ai-view-row"><span class="k">stores_analyzed</span><span class="v">66087</span></div>
+        <div class="ai-view-row"><span class="k">avg_commerce_score</span><span class="v">57 / 100</span></div>
+        <div class="ai-view-row"><span class="k">scoring_factors</span><span class="v">8</span></div>
+        <div class="ai-view-row"><span class="k">risk_confidence_tiers</span><span class="v">4</span></div>
+      </div>
+
+      <div class="ai-view-note">No images on this page. It is entirely text and structured data, which is also exactly what an AI reads. Scroll normally, nothing here is off limits.</div>
     </div>
   </div>
 </div>
