@@ -577,7 +577,7 @@
      emerging from it. Reused in reverse (cracks healing) as the way back. */
   .ai-portal{
     position:fixed;top:50%;right:-2.5vw;z-index:900;
-    width:min(72vw,820px);height:min(72vw,820px);
+    width:min(84vw,980px);height:min(84vw,980px);
     transform:translateY(-50%);
     pointer-events:none;
   }
@@ -585,14 +585,24 @@
     position:absolute;inset:0;width:100%;height:100%;overflow:visible;
     opacity:0;transition:opacity .3s ease;
   }
-  .ai-portal.is-open .ai-portal-svg{opacity:1;filter:drop-shadow(0 0 3px rgba(255,255,255,.85));}
+  .ai-portal.is-open .ai-portal-svg{opacity:1;filter:drop-shadow(0 0 4px rgba(255,255,255,.9));}
+  /* the initial jolt: something hits the glass from inside and a bright
+     flash bursts out before the fracture lines start spreading */
+  .ai-portal-flash{
+    position:absolute;top:50%;right:10%;transform:translate(50%,-50%);
+    width:0;height:0;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,.7) 40%, rgba(255,255,255,0) 72%);
+    opacity:0;pointer-events:none;
+    transition:width .5s cubic-bezier(.11,.85,.2,1), height .5s cubic-bezier(.11,.85,.2,1), opacity .55s ease-out;
+  }
+  .ai-portal.is-open .ai-portal-flash{width:340px;height:340px;opacity:1;transition:width .5s cubic-bezier(.11,.85,.2,1), height .5s cubic-bezier(.11,.85,.2,1), opacity .55s ease-out .1s;}
   .ai-portal-svg .impact-ring{
-    fill:none;stroke:var(--white);stroke-width:2px;
-    r:3;opacity:.9;
-    transition:r .4s cubic-bezier(.16,.8,.24,1), opacity .4s ease-out;
+    fill:none;stroke:var(--white);stroke-width:2.6px;
+    r:4;opacity:1;
+    transition:r .5s cubic-bezier(.11,.85,.2,1), opacity .5s ease-out;
     vector-effect:non-scaling-stroke;
   }
-  .ai-portal.is-open .ai-portal-svg .impact-ring{r:44;opacity:0;}
+  .ai-portal.is-open .ai-portal-svg .impact-ring{r:64;opacity:0;}
   .ai-portal-svg .crack{
     fill:none;stroke:var(--white);stroke-width:1.4px;
     stroke-linecap:round;stroke-linejoin:round;
@@ -612,8 +622,8 @@
     transition:width 1.7s cubic-bezier(.16,.8,.24,1), height 1.7s cubic-bezier(.16,.8,.24,1), box-shadow 1.7s ease;
   }
   .ai-portal.is-open .ai-portal-glow{
-    width:96px;height:96px;
-    box-shadow:0 0 60px 26px rgba(255,255,255,0.9), 0 0 130px 60px rgba(255,255,255,0.35);
+    width:120px;height:120px;
+    box-shadow:0 0 70px 30px rgba(255,255,255,0.92), 0 0 150px 70px rgba(255,255,255,0.38);
     animation:ai-glow-pulse 4s ease-in-out infinite;
   }
   @keyframes ai-glow-pulse{
@@ -631,7 +641,9 @@
     white-space:nowrap;text-shadow:0 0 14px rgba(255,255,255,.8);
   }
   .ai-portal.is-expanded .ai-portal-btn{opacity:1;transform:translateY(-50%) translateX(0);pointer-events:auto;}
-  .ai-portal.is-open{pointer-events:auto;}
+  /* Only the button itself becomes clickable (above) — the portal container
+     stays pointer-events:none at all times so its large bounding box never
+     blocks scrolling or clicks on the AI view underneath it. */
 
   /* small pale flecks knocked loose from the point of impact */
   .ai-portal-specks{position:absolute;top:50%;right:10%;transform:translate(50%,-50%);width:1px;height:1px;pointer-events:none;}
@@ -646,12 +658,13 @@
     100%{opacity:0;transform:translate(var(--dx,10px),var(--dy,18px)) scale(.3);}
   }
   @media (max-width:680px){
-    .ai-portal{top:50%;right:-4vw;width:min(88vw,520px);height:min(88vw,520px);}
+    .ai-portal{top:50%;right:-6vw;width:min(96vw,640px);height:min(96vw,640px);}
     .ai-portal-btn{font-size:11.5px;right:16%;}
+    .ai-portal.is-open .ai-portal-flash{width:220px;height:220px;}
   }
   @media (prefers-reduced-motion: reduce){
     .ai-portal.is-open .ai-portal-glow{animation:none;}
-    .ai-portal-glow,.ai-portal-btn,.ai-portal-svg,.ai-portal-svg .crack,.ai-portal-svg .shard,.ai-portal-svg .impact-ring{transition-duration:.2s;transition-delay:0s;}
+    .ai-portal-glow,.ai-portal-btn,.ai-portal-svg,.ai-portal-svg .crack,.ai-portal-svg .shard,.ai-portal-svg .impact-ring,.ai-portal-flash{transition-duration:.2s;transition-delay:0s;}
     .ai-portal-specks span{display:none;}
   }
 
@@ -676,14 +689,14 @@
     padding:100px 24px 100px;
   }
   .ai-view-wrap{max-width:720px;margin:0 auto;font-size:13.5px;line-height:1.85;}
-  .ai-view-line{color:var(--gray-500);margin-bottom:26px;white-space:pre-line;}
+  .ai-view-line{color:var(--black);opacity:.6;margin-bottom:26px;white-space:pre-line;}
   .ai-view-block{border-top:1px solid var(--card-line);padding-top:18px;margin-top:18px;}
   .ai-view-block:first-of-type{border-top:none;padding-top:0;margin-top:0;}
-  .ai-view-tag{color:var(--orange);margin-bottom:10px;}
+  .ai-view-tag{color:var(--black);font-weight:700;margin-bottom:10px;}
   .ai-view-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:4px;}
-  .ai-view-row .k{color:var(--gray-500);min-width:150px;flex-shrink:0;}
+  .ai-view-row .k{color:var(--black);opacity:.55;min-width:150px;flex-shrink:0;}
   .ai-view-row .v{color:var(--black);word-break:break-word;}
-  .ai-view-note{font-size:12px;color:var(--gray-500);margin-top:34px;line-height:1.7;}
+  .ai-view-note{font-size:12px;color:var(--black);opacity:.55;margin-top:34px;line-height:1.7;}
   @media (max-width:680px){
     .ai-view-inner{padding:88px 18px 90px;}
     .ai-view-row .k{min-width:120px;}
@@ -1350,6 +1363,7 @@
 <!-- AI VIEW PORTAL: the page cracks like glass right at the screen edge,
      and the same crack pattern is reused, healing, as the way back. -->
 <div class="ai-portal" id="aiPortal" aria-hidden="true">
+  <div class="ai-portal-flash" aria-hidden="true"></div>
   <svg class="ai-portal-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
     <circle class="impact-ring" cx="90" cy="50"/>
     <!-- quick inner stub cracks fire first, right at the point of impact -->
