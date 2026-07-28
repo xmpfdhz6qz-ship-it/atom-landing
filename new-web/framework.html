@@ -237,86 +237,91 @@
   .section-body p:last-child{margin-bottom:0;}
   .section-body strong{color:var(--black);}
 
-  /* ---------- FRAMEWORK HERO — left-aligned text (masthead-style, matches
-     the landing page), paired with a right-of-center column of 7 landscape
-     panels. The panel column reveals itself in a scripted sequence on
-     load rather than on scroll, since it sits inside the hero. ---------- */
-  .fw-hero{padding:88px 24px 64px;background:var(--cream);}
+  /* ---------- FRAMEWORK HERO — single left-aligned column (masthead-style,
+     matches the landing page): kicker, H1, sub-line, then the "seven
+     layers" caption on one line, then a bento grid of 7 panels running
+     the full width of the page (same edges as the navbar), with the core
+     layer given the most visual weight instead of a uniform row. ---------- */
+  .fw-hero{padding:88px 32px 64px;background:var(--cream);}
   .fw-hero-inner{max-width:var(--maxw);margin:0 auto;}
-  .fw-hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:start;}
-  .fw-hero-text{max-width:520px;}
+  .fw-hero-text{max-width:680px;margin-bottom:44px;}
   .fw-hero .page-title{max-width:none;margin:0 0 18px;}
-  .fw-hero-sub{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:520px;}
+  .fw-hero-sub{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:560px;}
 
-  /* right column: sits at the start of the hero grid's right half (not
-     pinned to its right edge), so it reads as "right side, but toward
-     the middle" instead of hugging the browser edge */
-  .fw-panels-col{margin-right:64px;max-width:460px;width:100%;padding-top:8px;}
-
-  /* two-line caption above the panel stack: "The seven layers of" on its
-     own line, "AI Commerce Intelligence™" on the line below. Both start
-     black, flash to orange together, then the top line settles back to
-     black while the bottom line stays orange for good. */
+  /* single-line caption: "The seven layers of AI Commerce Intelligence™".
+     Starts black, flashes to orange together, then settles with only
+     "AI Commerce Intelligence™" staying orange. */
   .fw-panels-heading{
-    margin-bottom:22px;opacity:0;transform:translateY(8px);
+    margin-bottom:26px;opacity:0;transform:translateY(8px);
     transition:opacity .5s ease, transform .5s ease;
   }
   .fw-panels-heading.is-in{opacity:1;transform:translateY(0);}
   .fw-ph-plain,.fw-ph-highlight{
-    display:block;font-family:var(--serif);font-size:27px;font-weight:800;
-    letter-spacing:-0.01em;line-height:1.28;color:var(--black);
-    transition:color .5s ease;
+    font-family:var(--serif);font-size:22px;font-weight:800;
+    letter-spacing:-0.01em;color:var(--black);transition:color .5s ease;
   }
+  .fw-ph-highlight{margin-left:6px;}
   .fw-panels-heading.is-orange .fw-ph-plain,
   .fw-panels-heading.is-orange .fw-ph-highlight{color:var(--orange);}
   .fw-panels-heading.is-settled .fw-ph-plain{color:var(--black);}
   .fw-panels-heading.is-settled .fw-ph-highlight{color:var(--orange);}
 
-  /* seven landscape panels, stacked, connected by a small tick mark
-     between each pair as they cascade in one at a time */
-  .fw-panels{display:flex;flex-direction:column;position:relative;}
+  /* bento grid: 4 columns × 3 rows, packed edge-to-edge with no leftover
+     gaps — 03 goes wide, 04 (the core layer) goes big (2×2), 05 goes
+     wide again, 06/07 fill the last row alongside it. */
+  .fw-panels{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:168px;gap:16px;}
   .fw-panel{
     perspective:1400px;
-    opacity:0;transform:translateX(24px);
-    transition:opacity .6s cubic-bezier(.16,.8,.4,1), transform .6s cubic-bezier(.16,.8,.4,1);
+    opacity:0;transform:scale(.93);
+    transition:opacity .55s cubic-bezier(.16,.8,.4,1), transform .55s cubic-bezier(.16,.8,.4,1);
   }
-  .fw-panel.is-in{opacity:1;transform:translateX(0);}
-  .fw-panel-tick{align-self:center;width:2px;height:16px;margin:5px 0;background:var(--orange);opacity:0;transition:opacity .3s ease;}
-  .fw-panel-tick.is-in{opacity:1;}
+  .fw-panel.is-in{opacity:1;transform:scale(1);}
+  @media (min-width:901px){
+    .fw-panels .fw-panel:nth-child(3){grid-column:span 2;}
+    .fw-panels .fw-panel:nth-child(4){grid-column:span 2;grid-row:span 2;}
+    .fw-panels .fw-panel:nth-child(5){grid-column:span 2;}
+  }
 
-  .fw-panel-flip{position:relative;height:212px;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.16,.8,.4,1);}
+  .fw-panel-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.16,.8,.4,1);}
   .fw-panel.is-flipped .fw-panel-flip{transform:rotateX(180deg);}
   @media (hover:hover) and (pointer:fine){
     .fw-panel:hover .fw-panel-flip{transform:rotateX(180deg);}
   }
   .fw-panel-face{
     position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-    border-radius:var(--radius);padding:22px 26px;overflow:hidden;
-    display:flex;flex-direction:column;justify-content:center;
+    border-radius:var(--radius);padding:20px 22px;overflow:hidden;
+    display:flex;flex-direction:column;
   }
-  .fw-panel-front{background:var(--card);}
-  .fw-panel.is-core .fw-panel-front{background:rgba(254,106,3,0.14);}
-  .fw-panel-num{font-family:var(--serif);font-size:13px;font-weight:800;color:var(--orange);margin-right:10px;}
-  .fw-panel-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;color:var(--black);}
+  /* front face: number + title, centered in the middle of the box */
+  .fw-panel-front{background:var(--card);align-items:center;justify-content:center;text-align:center;gap:8px;}
+  .fw-panel.is-core .fw-panel-front{background:rgba(254,106,3,0.16);}
+  .fw-panel-num{display:block;font-family:var(--serif);font-size:15px;font-weight:800;color:var(--orange);}
+  .fw-panel-title{display:block;font-family:var(--serif);font-size:19px;font-weight:800;letter-spacing:-0.01em;line-height:1.25;color:var(--black);}
+  .fw-panel.is-core .fw-panel-num{font-size:17px;}
+  .fw-panel.is-core .fw-panel-title{font-size:27px;}
 
   /* back face: flipped 180° on its own axis so it reads right-way-up once
      the card has rotated; solid orange, per "cely zoranzovy, nasi
      oranzovou" */
-  .fw-panel-back{background:var(--orange);transform:rotateX(180deg);justify-content:flex-start;}
-  .fw-panel-back-head{margin-bottom:14px;}
-  .fw-panel-back .fw-panel-num{color:rgba(22,21,18,0.55);}
-  .fw-panel-q{font-size:18px;font-weight:800;color:var(--black);margin-bottom:8px;line-height:1.3;}
-  .fw-panel-body{font-size:15px;color:rgba(22,21,18,0.82);line-height:1.6;}
+  .fw-panel-back{background:var(--orange);transform:rotateX(180deg);justify-content:center;overflow-y:auto;}
+  .fw-panel-back-head{margin-bottom:8px;}
+  .fw-panel-back .fw-panel-num{display:inline;color:rgba(22,21,18,0.55);margin-right:6px;}
+  .fw-panel-back .fw-panel-title{display:inline;font-size:14px;}
+  .fw-panel-q{font-size:13.5px;font-weight:800;color:var(--black);margin-bottom:6px;line-height:1.3;}
+  .fw-panel-body{font-size:11px;color:rgba(22,21,18,0.82);line-height:1.5;}
+  .fw-panel.is-core .fw-panel-q{font-size:18px;}
+  .fw-panel.is-core .fw-panel-body{font-size:14px;line-height:1.6;}
 
-  @media (max-width:1050px){
-    .fw-hero-grid{grid-template-columns:1fr;gap:40px;}
-    .fw-panels-col{margin:0;max-width:none;}
+  @media (max-width:900px){
+    .fw-panels{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px;}
+  }
+  @media (max-width:560px){
+    .fw-panels{grid-template-columns:1fr;}
   }
   @media (max-width:680px){
-    .fw-ph-plain,.fw-ph-highlight{font-size:22px;}
-    .fw-panel-flip{height:260px;}
-    .fw-panel-q{font-size:16px;}
-    .fw-panel-body{font-size:14px;}
+    .fw-ph-plain,.fw-ph-highlight{font-size:18px;}
+    .fw-ph-plain{display:block;}
+    .fw-ph-highlight{margin-left:0;}
   }
 
   /* ---------- LAYER TEASER GRID ---------- */
@@ -507,76 +512,88 @@
 <!-- HERO -->
 <section class="fw-hero">
   <div class="fw-hero-inner">
-    <div class="fw-hero-grid">
-      <div class="fw-hero-text">
-        <div class="kicker">The Atom Foundry Framework</div>
-        <h1 class="page-title">The AI Commerce<br><em>Intelligence Framework&trade;</em></h1>
-        <p class="fw-hero-sub">The framework for understanding how AI systems discover, evaluate, recommend, and route customers to businesses.</p>
+    <div class="fw-hero-text">
+      <div class="kicker">The Atom Foundry Framework</div>
+      <h1 class="page-title">The AI Commerce<br><em>Intelligence Framework&trade;</em></h1>
+      <p class="fw-hero-sub">The framework for understanding how AI systems discover, evaluate, recommend, and route customers to businesses.</p>
+    </div>
+
+    <h2 class="fw-panels-heading" id="fwPanelsHeading"><span class="fw-ph-plain">The seven layers of</span><span class="fw-ph-highlight">AI Commerce Intelligence&trade;</span></h2>
+
+    <div class="fw-panels" id="fwPanels">
+      <div class="fw-panel">
+        <div class="fw-panel-flip">
+          <div class="fw-panel-face fw-panel-front">
+            <span class="fw-panel-num">01</span><span class="fw-panel-title">AI Readability&trade;</span>
+          </div>
+          <div class="fw-panel-face fw-panel-back">
+            <div class="fw-panel-back-head"><span class="fw-panel-num">01</span><span class="fw-panel-title">AI Readability&trade;</span></div>
+            <div class="fw-panel-q">Can AI read your business?</div>
+            <div class="fw-panel-body">AI systems cannot understand what they cannot read. This layer measures how accessible and machine-readable your business is. It is the foundation: without readability, there is no understanding.</div>
+          </div>
+        </div>
       </div>
 
-      <div class="fw-panels-col">
-        <h2 class="fw-panels-heading" id="fwPanelsHeading"><span class="fw-ph-plain">The seven layers of</span><span class="fw-ph-highlight">AI Commerce Intelligence&trade;</span></h2>
-
-        <div class="fw-panels" id="fwPanels">
-          <div class="fw-panel">
-            <div class="fw-panel-flip">
-              <div class="fw-panel-face fw-panel-front">
-                <span class="fw-panel-num">01</span><span class="fw-panel-title">AI Readability&trade;</span>
-              </div>
-              <div class="fw-panel-face fw-panel-back">
-                <div class="fw-panel-back-head"><span class="fw-panel-num">01</span><span class="fw-panel-title">AI Readability&trade;</span></div>
-                <div class="fw-panel-q">Can AI read your business?</div>
-                <div class="fw-panel-body">AI systems cannot understand what they cannot read. This layer measures how accessible and machine-readable your business is. It is the foundation: without readability, there is no understanding.</div>
-              </div>
-            </div>
+      <div class="fw-panel">
+        <div class="fw-panel-flip">
+          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">02</span><span class="fw-panel-title">AI Understanding&trade;</span></div>
+          <div class="fw-panel-face fw-panel-back">
+            <div class="fw-panel-back-head"><span class="fw-panel-num">02</span><span class="fw-panel-title">AI Understanding&trade;</span></div>
+            <div class="fw-panel-q">Can AI understand what you sell?</div>
+            <div class="fw-panel-body">Being readable does not mean being understood. A system can see your product page and still misread what you sell, who it is for, or when it should be recommended. This layer measures whether AI correctly interprets your business.</div>
           </div>
-          <div class="fw-panel-tick"></div>
+        </div>
+      </div>
 
-          <div class="fw-panel">
-            <div class="fw-panel-flip">
-              <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">02</span><span class="fw-panel-title">AI Understanding&trade;</span></div>
-              <div class="fw-panel-face fw-panel-back"><div class="fw-panel-back-head"><span class="fw-panel-num">02</span><span class="fw-panel-title">AI Understanding&trade;</span></div></div>
-            </div>
+      <div class="fw-panel">
+        <div class="fw-panel-flip">
+          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">03</span><span class="fw-panel-title">AI Trust&trade;</span></div>
+          <div class="fw-panel-face fw-panel-back">
+            <div class="fw-panel-back-head"><span class="fw-panel-num">03</span><span class="fw-panel-title">AI Trust&trade;</span></div>
+            <div class="fw-panel-q">Can AI trust your business?</div>
+            <div class="fw-panel-body">Trust has always mattered. The difference now is that machines evaluate it alongside humans. Reviews, mentions, authority, and consistency all shape whether a business appears credible, and trust directly influences recommendation.</div>
           </div>
-          <div class="fw-panel-tick"></div>
+        </div>
+      </div>
 
-          <div class="fw-panel">
-            <div class="fw-panel-flip">
-              <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">03</span><span class="fw-panel-title">AI Trust&trade;</span></div>
-              <div class="fw-panel-face fw-panel-back"><div class="fw-panel-back-head"><span class="fw-panel-num">03</span><span class="fw-panel-title">AI Trust&trade;</span></div></div>
-            </div>
+      <div class="fw-panel is-core">
+        <div class="fw-panel-flip">
+          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">04</span><span class="fw-panel-title">Recommendation Intelligence&trade;</span></div>
+          <div class="fw-panel-face fw-panel-back">
+            <div class="fw-panel-back-head"><span class="fw-panel-num">04</span><span class="fw-panel-title">Recommendation Intelligence&trade;</span></div>
+            <div class="fw-panel-q">Will AI recommend you?</div>
+            <div class="fw-panel-body">This is where commerce changes. Recommendation is the moment a system decides one option is better than another for a specific intent. A business recommended consistently gains a powerful advantage, not because it gets more traffic, but because it becomes the answer.</div>
           </div>
-          <div class="fw-panel-tick"></div>
+        </div>
+      </div>
 
-          <div class="fw-panel is-core">
-            <div class="fw-panel-flip">
-              <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">04</span><span class="fw-panel-title">Recommendation Intelligence&trade;</span></div>
-              <div class="fw-panel-face fw-panel-back"><div class="fw-panel-back-head"><span class="fw-panel-num">04</span><span class="fw-panel-title">Recommendation Intelligence&trade;</span></div></div>
-            </div>
+      <div class="fw-panel">
+        <div class="fw-panel-flip">
+          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">05</span><span class="fw-panel-title">Decision Confidence&trade;</span></div>
+          <div class="fw-panel-face fw-panel-back">
+            <div class="fw-panel-back-head"><span class="fw-panel-num">05</span><span class="fw-panel-title">Decision Confidence&trade;</span></div>
+            <div class="fw-panel-q">Will customers feel confident enough to buy?</div>
+            <div class="fw-panel-body">Recommendation alone is not enough. The customer still has to decide. When confidence is low, hesitation appears, and hesitation kills conversions. Most conversion problems are really confidence problems: people are not saying no, they just are not sure enough to say yes.</div>
           </div>
-          <div class="fw-panel-tick"></div>
+        </div>
+      </div>
 
-          <div class="fw-panel">
-            <div class="fw-panel-flip">
-              <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">05</span><span class="fw-panel-title">Decision Confidence&trade;</span></div>
-              <div class="fw-panel-face fw-panel-back"><div class="fw-panel-back-head"><span class="fw-panel-num">05</span><span class="fw-panel-title">Decision Confidence&trade;</span></div></div>
-            </div>
+      <div class="fw-panel">
+        <div class="fw-panel-flip">
+          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">06</span><span class="fw-panel-title">Purchase</span></div>
+          <div class="fw-panel-face fw-panel-back">
+            <div class="fw-panel-back-head"><span class="fw-panel-num">06</span><span class="fw-panel-title">Purchase</span></div>
+            <div class="fw-panel-body">The transaction. The point where readability, understanding, trust, recommendation, and confidence turn into a real buying action.</div>
           </div>
-          <div class="fw-panel-tick"></div>
+        </div>
+      </div>
 
-          <div class="fw-panel">
-            <div class="fw-panel-flip">
-              <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">06</span><span class="fw-panel-title">Purchase</span></div>
-              <div class="fw-panel-face fw-panel-back"><div class="fw-panel-back-head"><span class="fw-panel-num">06</span><span class="fw-panel-title">Purchase</span></div></div>
-            </div>
-          </div>
-          <div class="fw-panel-tick"></div>
-
-          <div class="fw-panel">
-            <div class="fw-panel-flip">
-              <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">07</span><span class="fw-panel-title">Revenue</span></div>
-              <div class="fw-panel-face fw-panel-back"><div class="fw-panel-back-head"><span class="fw-panel-num">07</span><span class="fw-panel-title">Revenue</span></div></div>
-            </div>
+      <div class="fw-panel">
+        <div class="fw-panel-flip">
+          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">07</span><span class="fw-panel-title">Revenue</span></div>
+          <div class="fw-panel-face fw-panel-back">
+            <div class="fw-panel-back-head"><span class="fw-panel-num">07</span><span class="fw-panel-title">Revenue</span></div>
+            <div class="fw-panel-body">The outcome. Sustainable revenue is the result of being chosen, again and again, by both humans and the AI systems guiding them.</div>
           </div>
         </div>
       </div>
@@ -859,37 +876,26 @@
 
   // Framework hero reveal sequence: the "The seven layers of / AI Commerce
   // Intelligence™" caption cycles black → orange → settles (only the
-  // "AI Commerce Intelligence™" line staying orange), then all 7 panels
-  // cascade in one at a time — each panel fades in, then a small tick
-  // mark appears at its bottom edge, then the next panel appears.
-  // Hovering (desktop) or tapping (touch) any panel flips it top-to-
-  // bottom to reveal its back face. Only panel 01 has real back-face
-  // copy for now; 02–07 are wired the same way, waiting on final text.
+  // "AI Commerce Intelligence™" half staying orange), then the 7 bento
+  // tiles pop in one at a time, core layer (04) included. Hovering
+  // (desktop) or tapping (touch) any panel flips it top-to-bottom to
+  // reveal its back face.
   (function(){
     const heading = document.getElementById('fwPanelsHeading');
     const panelsWrap = document.getElementById('fwPanels');
     if (!heading || !panelsWrap) return;
     const panels = Array.from(panelsWrap.querySelectorAll('.fw-panel'));
-    const ticks = Array.from(panelsWrap.querySelectorAll('.fw-panel-tick'));
     if (!panels.length) return;
 
     function revealPanel(i){
       if (i >= panels.length) return;
       panels[i].classList.add('is-in');
-      setTimeout(() => {
-        if (ticks[i]) {
-          ticks[i].classList.add('is-in');
-          setTimeout(() => revealPanel(i + 1), 300);
-        } else {
-          revealPanel(i + 1);
-        }
-      }, 600);
+      setTimeout(() => revealPanel(i + 1), 160);
     }
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       heading.classList.add('is-in', 'is-settled');
       panels.forEach(p => p.classList.add('is-in'));
-      ticks.forEach(t => t.classList.add('is-in'));
     } else {
       setTimeout(() => {
         heading.classList.add('is-in');
