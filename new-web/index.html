@@ -1720,6 +1720,14 @@ content type: text/html; charset=utf8</div>
     });
 
     setTimeout(() => openPortal('See as AI'), T_APPEAR);
+
+    // If nobody clicks "See as AI", don't let it sit there forever —
+    // retract it quietly after a few seconds so it stops distracting from
+    // the rest of the page. Harmless if the visitor already clicked (or
+    // already left again) by then, since retracting an already-closed
+    // portal is a no-op.
+    const T_AUTOHIDE = reduceMotion ? 1500 : 6000;
+    setTimeout(() => { if (!inAiView) retractPortal(); }, T_APPEAR + T_AUTOHIDE);
   })();
 </script>
 
