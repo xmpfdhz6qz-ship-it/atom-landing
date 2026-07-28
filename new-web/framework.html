@@ -238,90 +238,99 @@
   .section-body strong{color:var(--black);}
 
   /* ---------- FRAMEWORK HERO — single left-aligned column (masthead-style,
-     matches the landing page): kicker, H1, sub-line, then the "seven
-     layers" caption on one line, then a bento grid of 7 panels running
-     the full width of the page (same edges as the navbar), with the core
-     layer given the most visual weight instead of a uniform row. ---------- */
+     matches the landing page): kicker, H1, sub-line, then a connected
+     vertical flow — a header pill, an arrow, then the 7 layers as full-
+     width bordered rows, each joined to the next by a straight arrow, so
+     the sequence reads clearly as one framework instead of a scattered
+     grid. Full-width rows also give each row's flip-back far more room,
+     so the description text is actually legible. ---------- */
   .fw-hero{padding:88px 32px 64px;background:var(--cream);}
   .fw-hero-inner{max-width:var(--maxw);margin:0 auto;}
   .fw-hero-text{max-width:680px;margin-bottom:44px;}
   .fw-hero .page-title{max-width:none;margin:0 0 18px;}
   .fw-hero-sub{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:560px;}
 
-  /* single-line caption: "The seven layers of AI Commerce Intelligence™".
-     Starts black, flashes to orange together, then settles with only
-     "AI Commerce Intelligence™" staying orange. */
-  .fw-panels-heading{
-    margin-bottom:26px;opacity:0;transform:translateY(8px);
-    transition:opacity .5s ease, transform .5s ease;
-  }
-  .fw-panels-heading.is-in{opacity:1;transform:translateY(0);}
-  .fw-ph-plain,.fw-ph-highlight{
-    font-family:var(--serif);font-size:22px;font-weight:800;
-    letter-spacing:-0.01em;color:var(--black);transition:color .5s ease;
-  }
-  .fw-ph-highlight{margin-left:6px;}
-  .fw-panels-heading.is-orange .fw-ph-plain,
-  .fw-panels-heading.is-orange .fw-ph-highlight{color:var(--orange);}
-  .fw-panels-heading.is-settled .fw-ph-plain{color:var(--black);}
-  .fw-panels-heading.is-settled .fw-ph-highlight{color:var(--orange);}
+  .fw-flow{max-width:760px;}
 
-  /* bento grid: 4 columns × 3 rows, packed edge-to-edge with no leftover
-     gaps — 03 goes wide, 04 (the core layer) goes big (2×2), 05 goes
-     wide again, 06/07 fill the last row alongside it. */
-  .fw-panels{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:168px;gap:16px;}
-  .fw-panel{
-    perspective:1400px;
-    opacity:0;transform:scale(.93);
-    transition:opacity .55s cubic-bezier(.16,.8,.4,1), transform .55s cubic-bezier(.16,.8,.4,1);
+  /* header pill: "AI Commerce Intelligence™", starts black, flashes to
+     orange, then settles into the glowing orange treatment for good */
+  .fw-flow-head{
+    border:1.5px solid var(--card-line);border-radius:var(--radius);
+    padding:22px 28px;text-align:center;
+    font-family:var(--serif);font-size:24px;font-weight:800;letter-spacing:-0.01em;
+    color:var(--black);
+    opacity:0;transform:translateY(8px);
+    transition:opacity .5s ease, transform .5s ease, color .5s ease, border-color .5s ease, box-shadow .5s ease;
   }
-  .fw-panel.is-in{opacity:1;transform:scale(1);}
-  @media (min-width:901px){
-    .fw-panels .fw-panel:nth-child(3){grid-column:span 2;}
-    .fw-panels .fw-panel:nth-child(4){grid-column:span 2;grid-row:span 2;}
-    .fw-panels .fw-panel:nth-child(5){grid-column:span 2;}
+  .fw-flow-head.is-in{opacity:1;transform:translateY(0);}
+  .fw-flow-head.is-orange,
+  .fw-flow-head.is-settled{
+    color:var(--orange);border-color:var(--orange);
+    box-shadow:0 0 0 1px rgba(254,106,3,0.15), 0 0 26px rgba(254,106,3,0.35);
   }
 
-  .fw-panel-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.16,.8,.4,1);}
-  .fw-panel.is-flipped .fw-panel-flip{transform:rotateX(180deg);}
+  /* straight connecting arrow between every step, including header → 01 */
+  .fw-flow-arrow{display:flex;justify-content:center;height:26px;margin:6px 0;opacity:0;transition:opacity .2s ease;}
+  .fw-flow-arrow.is-in{opacity:1;}
+  .fw-flow-arrow svg{display:block;width:16px;height:26px;overflow:visible;}
+  .fw-flow-arrow path{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .35s cubic-bezier(.16,.8,.4,1);}
+  .fw-flow-arrow.is-in path{stroke-dashoffset:0;}
+
+  .fw-flow-row{
+    perspective:1400px;height:150px;
+    opacity:0;transform:translateY(10px);
+    transition:opacity .5s cubic-bezier(.16,.8,.4,1), transform .5s cubic-bezier(.16,.8,.4,1);
+  }
+  .fw-flow-row.is-in{opacity:1;transform:translateY(0);}
+
+  .fw-flow-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.16,.8,.4,1);}
+  .fw-flow-row.is-flipped .fw-flow-flip{transform:rotateX(180deg);}
   @media (hover:hover) and (pointer:fine){
-    .fw-panel:hover .fw-panel-flip{transform:rotateX(180deg);}
+    .fw-flow-row:hover .fw-flow-flip{transform:rotateX(180deg);}
   }
-  .fw-panel-face{
+  .fw-flow-face{
     position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-    border-radius:var(--radius);padding:20px 22px;overflow:hidden;
-    display:flex;flex-direction:column;
+    border-radius:var(--radius);border:1.5px solid var(--card-line);
+    padding:0 30px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;
+    background:var(--white);
   }
-  /* front face: number + title, centered in the middle of the box */
-  .fw-panel-front{background:var(--card);align-items:center;justify-content:center;text-align:center;gap:8px;}
-  .fw-panel.is-core .fw-panel-front{background:rgba(254,106,3,0.16);}
-  .fw-panel-num{display:block;font-family:var(--serif);font-size:15px;font-weight:800;color:var(--orange);}
-  .fw-panel-title{display:block;font-family:var(--serif);font-size:19px;font-weight:800;letter-spacing:-0.01em;line-height:1.25;color:var(--black);}
-  .fw-panel.is-core .fw-panel-num{font-size:17px;}
-  .fw-panel.is-core .fw-panel-title{font-size:27px;}
+  .fw-flow-front{flex-direction:row;align-items:center;gap:20px;}
+  .fw-flow-num{
+    flex-shrink:0;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--orange);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:800;font-size:14px;color:var(--orange);
+  }
+  .fw-flow-icon{
+    flex-shrink:0;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--orange);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .fw-flow-icon svg{width:22px;height:22px;fill:none;stroke:var(--orange);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .fw-flow-title{font-family:var(--serif);font-size:21px;font-weight:800;letter-spacing:-0.01em;color:var(--black);}
 
-  /* back face: flipped 180° on its own axis so it reads right-way-up once
-     the card has rotated; solid orange, per "cely zoranzovy, nasi
-     oranzovou" */
-  .fw-panel-back{background:var(--orange);transform:rotateX(180deg);justify-content:center;overflow-y:auto;}
-  .fw-panel-back-head{margin-bottom:8px;}
-  .fw-panel-back .fw-panel-num{display:inline;color:rgba(22,21,18,0.55);margin-right:6px;}
-  .fw-panel-back .fw-panel-title{display:inline;font-size:14px;}
-  .fw-panel-q{font-size:13.5px;font-weight:800;color:var(--black);margin-bottom:6px;line-height:1.3;}
-  .fw-panel-body{font-size:11px;color:rgba(22,21,18,0.82);line-height:1.5;}
-  .fw-panel.is-core .fw-panel-q{font-size:18px;}
-  .fw-panel.is-core .fw-panel-body{font-size:14px;line-height:1.6;}
+  /* core layer (04): solid, glowing orange row instead of a plain
+     bordered one, per "cely zoranzovy, nasi oranzovou" */
+  .fw-flow-row.is-core .fw-flow-front{
+    background:var(--orange);border-color:var(--orange);
+    box-shadow:0 0 0 1px rgba(254,106,3,0.2), 0 0 30px rgba(254,106,3,0.4);
+  }
+  .fw-flow-row.is-core .fw-flow-num,
+  .fw-flow-row.is-core .fw-flow-icon{border-color:rgba(255,255,255,0.7);}
+  .fw-flow-row.is-core .fw-flow-num{color:#fff;}
+  .fw-flow-row.is-core .fw-flow-icon svg{stroke:#fff;}
+  .fw-flow-row.is-core .fw-flow-title{color:#fff;font-size:23px;}
 
-  @media (max-width:900px){
-    .fw-panels{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px;}
-  }
-  @media (max-width:560px){
-    .fw-panels{grid-template-columns:1fr;}
-  }
+  /* back face: solid orange, black text, plenty of room now that rows
+     run the full width of the page */
+  .fw-flow-back{background:var(--orange);border-color:var(--orange);transform:rotateX(180deg);}
+  .fw-flow-back-head{font-size:13px;font-weight:700;color:rgba(22,21,18,0.6);margin-bottom:8px;}
+  .fw-flow-q{font-size:17px;font-weight:800;color:var(--black);margin-bottom:6px;line-height:1.3;}
+  .fw-flow-body{font-size:15px;color:rgba(22,21,18,0.82);line-height:1.6;}
+
   @media (max-width:680px){
-    .fw-ph-plain,.fw-ph-highlight{font-size:18px;}
-    .fw-ph-plain{display:block;}
-    .fw-ph-highlight{margin-left:0;}
+    .fw-flow-row{height:auto;min-height:220px;}
+    .fw-flow-front{flex-direction:column;text-align:center;padding:20px;}
+    .fw-flow-title{font-size:18px;}
+    .fw-flow-back{padding:20px;}
   }
 
   /* ---------- LAYER TEASER GRID ---------- */
@@ -518,82 +527,115 @@
       <p class="fw-hero-sub">The framework for understanding how AI systems discover, evaluate, recommend, and route customers to businesses.</p>
     </div>
 
-    <h2 class="fw-panels-heading" id="fwPanelsHeading"><span class="fw-ph-plain">The seven layers of</span><span class="fw-ph-highlight">AI Commerce Intelligence&trade;</span></h2>
+    <div class="fw-flow" id="fwFlow">
+      <div class="fw-flow-head" id="fwFlowHead">AI Commerce Intelligence&trade;</div>
+      <div class="fw-flow-arrow"><svg viewBox="0 0 16 26" aria-hidden="true"><path d="M8,2 V18 M3,13 L8,20 L13,13"/></svg></div>
 
-    <div class="fw-panels" id="fwPanels">
-      <div class="fw-panel">
-        <div class="fw-panel-flip">
-          <div class="fw-panel-face fw-panel-front">
-            <span class="fw-panel-num">01</span><span class="fw-panel-title">AI Readability&trade;</span>
+      <div class="fw-flow-row">
+        <div class="fw-flow-flip">
+          <div class="fw-flow-face fw-flow-front">
+            <span class="fw-flow-num">01</span>
+            <span class="fw-flow-icon"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 12h5M9.5 15.5h5"/></svg></span>
+            <span class="fw-flow-title">AI Readability&trade;</span>
           </div>
-          <div class="fw-panel-face fw-panel-back">
-            <div class="fw-panel-back-head"><span class="fw-panel-num">01</span><span class="fw-panel-title">AI Readability&trade;</span></div>
-            <div class="fw-panel-q">Can AI read your business?</div>
-            <div class="fw-panel-body">AI systems cannot understand what they cannot read. This layer measures how accessible and machine-readable your business is. It is the foundation: without readability, there is no understanding.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="fw-panel">
-        <div class="fw-panel-flip">
-          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">02</span><span class="fw-panel-title">AI Understanding&trade;</span></div>
-          <div class="fw-panel-face fw-panel-back">
-            <div class="fw-panel-back-head"><span class="fw-panel-num">02</span><span class="fw-panel-title">AI Understanding&trade;</span></div>
-            <div class="fw-panel-q">Can AI understand what you sell?</div>
-            <div class="fw-panel-body">Being readable does not mean being understood. A system can see your product page and still misread what you sell, who it is for, or when it should be recommended. This layer measures whether AI correctly interprets your business.</div>
+          <div class="fw-flow-face fw-flow-back">
+            <div class="fw-flow-back-head">01 &middot; AI Readability&trade;</div>
+            <div class="fw-flow-q">Can AI read your business?</div>
+            <div class="fw-flow-body">AI systems cannot understand what they cannot read. This layer measures how accessible and machine-readable your business is. It is the foundation: without readability, there is no understanding.</div>
           </div>
         </div>
       </div>
+      <div class="fw-flow-arrow"><svg viewBox="0 0 16 26" aria-hidden="true"><path d="M8,2 V18 M3,13 L8,20 L13,13"/></svg></div>
 
-      <div class="fw-panel">
-        <div class="fw-panel-flip">
-          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">03</span><span class="fw-panel-title">AI Trust&trade;</span></div>
-          <div class="fw-panel-face fw-panel-back">
-            <div class="fw-panel-back-head"><span class="fw-panel-num">03</span><span class="fw-panel-title">AI Trust&trade;</span></div>
-            <div class="fw-panel-q">Can AI trust your business?</div>
-            <div class="fw-panel-body">Trust has always mattered. The difference now is that machines evaluate it alongside humans. Reviews, mentions, authority, and consistency all shape whether a business appears credible, and trust directly influences recommendation.</div>
+      <div class="fw-flow-row">
+        <div class="fw-flow-flip">
+          <div class="fw-flow-face fw-flow-front">
+            <span class="fw-flow-num">02</span>
+            <span class="fw-flow-icon"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0-3 11.2c.5.3.8.9.8 1.5V17h4.4v-1.3c0-.6.3-1.2.8-1.5A6 6 0 0 0 12 3z"/><path d="M10 20h4M10.6 22h2.8"/></svg></span>
+            <span class="fw-flow-title">AI Understanding&trade;</span>
+          </div>
+          <div class="fw-flow-face fw-flow-back">
+            <div class="fw-flow-back-head">02 &middot; AI Understanding&trade;</div>
+            <div class="fw-flow-q">Can AI understand what you sell?</div>
+            <div class="fw-flow-body">Being readable does not mean being understood. A system can see your product page and still misread what you sell, who it is for, or when it should be recommended. This layer measures whether AI correctly interprets your business.</div>
           </div>
         </div>
       </div>
+      <div class="fw-flow-arrow"><svg viewBox="0 0 16 26" aria-hidden="true"><path d="M8,2 V18 M3,13 L8,20 L13,13"/></svg></div>
 
-      <div class="fw-panel is-core">
-        <div class="fw-panel-flip">
-          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">04</span><span class="fw-panel-title">Recommendation Intelligence&trade;</span></div>
-          <div class="fw-panel-face fw-panel-back">
-            <div class="fw-panel-back-head"><span class="fw-panel-num">04</span><span class="fw-panel-title">Recommendation Intelligence&trade;</span></div>
-            <div class="fw-panel-q">Will AI recommend you?</div>
-            <div class="fw-panel-body">This is where commerce changes. Recommendation is the moment a system decides one option is better than another for a specific intent. A business recommended consistently gains a powerful advantage, not because it gets more traffic, but because it becomes the answer.</div>
+      <div class="fw-flow-row">
+        <div class="fw-flow-flip">
+          <div class="fw-flow-face fw-flow-front">
+            <span class="fw-flow-num">03</span>
+            <span class="fw-flow-icon"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <span class="fw-flow-title">AI Trust&trade;</span>
+          </div>
+          <div class="fw-flow-face fw-flow-back">
+            <div class="fw-flow-back-head">03 &middot; AI Trust&trade;</div>
+            <div class="fw-flow-q">Can AI trust your business?</div>
+            <div class="fw-flow-body">Trust has always mattered. The difference now is that machines evaluate it alongside humans. Reviews, mentions, authority, and consistency all shape whether a business appears credible, and trust directly influences recommendation.</div>
           </div>
         </div>
       </div>
+      <div class="fw-flow-arrow"><svg viewBox="0 0 16 26" aria-hidden="true"><path d="M8,2 V18 M3,13 L8,20 L13,13"/></svg></div>
 
-      <div class="fw-panel">
-        <div class="fw-panel-flip">
-          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">05</span><span class="fw-panel-title">Decision Confidence&trade;</span></div>
-          <div class="fw-panel-face fw-panel-back">
-            <div class="fw-panel-back-head"><span class="fw-panel-num">05</span><span class="fw-panel-title">Decision Confidence&trade;</span></div>
-            <div class="fw-panel-q">Will customers feel confident enough to buy?</div>
-            <div class="fw-panel-body">Recommendation alone is not enough. The customer still has to decide. When confidence is low, hesitation appears, and hesitation kills conversions. Most conversion problems are really confidence problems: people are not saying no, they just are not sure enough to say yes.</div>
+      <div class="fw-flow-row is-core">
+        <div class="fw-flow-flip">
+          <div class="fw-flow-face fw-flow-front">
+            <span class="fw-flow-num">04</span>
+            <span class="fw-flow-icon"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.4 5 5.6.6-4.1 3.8 1.1 5.5L12 15.8l-4.9 2.6 1-5.5-4-3.8 5.5-.6z"/></svg></span>
+            <span class="fw-flow-title">Recommendation Intelligence&trade;</span>
+          </div>
+          <div class="fw-flow-face fw-flow-back">
+            <div class="fw-flow-back-head">04 &middot; Recommendation Intelligence&trade;</div>
+            <div class="fw-flow-q">Will AI recommend you?</div>
+            <div class="fw-flow-body">This is where commerce changes. Recommendation is the moment a system decides one option is better than another for a specific intent. A business recommended consistently gains a powerful advantage, not because it gets more traffic, but because it becomes the answer.</div>
           </div>
         </div>
       </div>
+      <div class="fw-flow-arrow"><svg viewBox="0 0 16 26" aria-hidden="true"><path d="M8,2 V18 M3,13 L8,20 L13,13"/></svg></div>
 
-      <div class="fw-panel">
-        <div class="fw-panel-flip">
-          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">06</span><span class="fw-panel-title">Purchase</span></div>
-          <div class="fw-panel-face fw-panel-back">
-            <div class="fw-panel-back-head"><span class="fw-panel-num">06</span><span class="fw-panel-title">Purchase</span></div>
-            <div class="fw-panel-body">The transaction. The point where readability, understanding, trust, recommendation, and confidence turn into a real buying action.</div>
+      <div class="fw-flow-row">
+        <div class="fw-flow-flip">
+          <div class="fw-flow-face fw-flow-front">
+            <span class="fw-flow-num">05</span>
+            <span class="fw-flow-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.3"/><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/></svg></span>
+            <span class="fw-flow-title">Decision Confidence&trade;</span>
+          </div>
+          <div class="fw-flow-face fw-flow-back">
+            <div class="fw-flow-back-head">05 &middot; Decision Confidence&trade;</div>
+            <div class="fw-flow-q">Will customers feel confident enough to buy?</div>
+            <div class="fw-flow-body">Recommendation alone is not enough. The customer still has to decide. When confidence is low, hesitation appears, and hesitation kills conversions. Most conversion problems are really confidence problems: people are not saying no, they just are not sure enough to say yes.</div>
           </div>
         </div>
       </div>
+      <div class="fw-flow-arrow"><svg viewBox="0 0 16 26" aria-hidden="true"><path d="M8,2 V18 M3,13 L8,20 L13,13"/></svg></div>
 
-      <div class="fw-panel">
-        <div class="fw-panel-flip">
-          <div class="fw-panel-face fw-panel-front"><span class="fw-panel-num">07</span><span class="fw-panel-title">Revenue</span></div>
-          <div class="fw-panel-face fw-panel-back">
-            <div class="fw-panel-back-head"><span class="fw-panel-num">07</span><span class="fw-panel-title">Revenue</span></div>
-            <div class="fw-panel-body">The outcome. Sustainable revenue is the result of being chosen, again and again, by both humans and the AI systems guiding them.</div>
+      <div class="fw-flow-row">
+        <div class="fw-flow-flip">
+          <div class="fw-flow-face fw-flow-front">
+            <span class="fw-flow-num">06</span>
+            <span class="fw-flow-icon"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6.2"/><circle cx="9.5" cy="20.3" r="1.2"/><circle cx="17" cy="20.3" r="1.2"/></svg></span>
+            <span class="fw-flow-title">Purchase</span>
+          </div>
+          <div class="fw-flow-face fw-flow-back">
+            <div class="fw-flow-back-head">06 &middot; Purchase</div>
+            <div class="fw-flow-body">The transaction. The point where readability, understanding, trust, recommendation, and confidence turn into a real buying action.</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-flow-arrow"><svg viewBox="0 0 16 26" aria-hidden="true"><path d="M8,2 V18 M3,13 L8,20 L13,13"/></svg></div>
+
+      <div class="fw-flow-row">
+        <div class="fw-flow-flip">
+          <div class="fw-flow-face fw-flow-front">
+            <span class="fw-flow-num">07</span>
+            <span class="fw-flow-icon"><svg viewBox="0 0 24 24"><path d="M4 20V14M11 20V9M18 20V5"/></svg></span>
+            <span class="fw-flow-title">Revenue</span>
+          </div>
+          <div class="fw-flow-face fw-flow-back">
+            <div class="fw-flow-back-head">07 &middot; Revenue</div>
+            <div class="fw-flow-body">The outcome. Sustainable revenue is the result of being chosen, again and again, by both humans and the AI systems guiding them.</div>
           </div>
         </div>
       </div>
@@ -874,49 +916,49 @@
     window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
   })();
 
-  // Framework hero reveal sequence: the "The seven layers of / AI Commerce
-  // Intelligence™" caption cycles black → orange → settles (only the
-  // "AI Commerce Intelligence™" half staying orange), then the 7 bento
-  // tiles pop in one at a time, core layer (04) included. Hovering
-  // (desktop) or tapping (touch) any panel flips it top-to-bottom to
-  // reveal its back face.
+  // Framework hero reveal sequence: the "AI Commerce Intelligence™" header
+  // pill cycles black → orange → settles into its glowing orange state,
+  // then an arrow draws down into row 01, which fades in, then an arrow
+  // draws into row 02, and so on down the stack — one connected chain,
+  // core layer (04) included. Hovering (desktop) or tapping (touch) any
+  // row flips it top-to-bottom to reveal its back face.
   (function(){
-    const heading = document.getElementById('fwPanelsHeading');
-    const panelsWrap = document.getElementById('fwPanels');
-    if (!heading || !panelsWrap) return;
-    const panels = Array.from(panelsWrap.querySelectorAll('.fw-panel'));
-    if (!panels.length) return;
+    const head = document.getElementById('fwFlowHead');
+    const flow = document.getElementById('fwFlow');
+    if (!head || !flow) return;
+    const steps = Array.from(flow.querySelectorAll('.fw-flow-arrow, .fw-flow-row'));
+    const rows = Array.from(flow.querySelectorAll('.fw-flow-row'));
 
-    function revealPanel(i){
-      if (i >= panels.length) return;
-      panels[i].classList.add('is-in');
-      setTimeout(() => revealPanel(i + 1), 160);
+    function revealStep(i){
+      if (i >= steps.length) return;
+      steps[i].classList.add('is-in');
+      setTimeout(() => revealStep(i + 1), steps[i].classList.contains('fw-flow-arrow') ? 250 : 350);
     }
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      heading.classList.add('is-in', 'is-settled');
-      panels.forEach(p => p.classList.add('is-in'));
+      head.classList.add('is-in', 'is-settled');
+      steps.forEach(s => s.classList.add('is-in'));
     } else {
       setTimeout(() => {
-        heading.classList.add('is-in');
+        head.classList.add('is-in');
         setTimeout(() => {
-          heading.classList.add('is-orange');
+          head.classList.add('is-orange');
           setTimeout(() => {
-            heading.classList.remove('is-orange');
-            heading.classList.add('is-settled');
-            setTimeout(() => revealPanel(0), 550);
-          }, 550);
-        }, 550);
-      }, 2000);
+            head.classList.remove('is-orange');
+            head.classList.add('is-settled');
+            setTimeout(() => revealStep(0), 500);
+          }, 500);
+        }, 500);
+      }, 1200);
     }
 
-    // Touch has no hover, so tapping a panel flips it instead — same
+    // Touch has no hover, so tapping a row flips it instead — same
     // ghost-hover guard used for the flip cards elsewhere on the site.
-    panels.forEach(panel => {
-      panel.addEventListener('click', () => {
+    rows.forEach(row => {
+      row.addEventListener('click', () => {
         if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-        panels.forEach(other => { if (other !== panel) other.classList.remove('is-flipped'); });
-        panel.classList.toggle('is-flipped');
+        rows.forEach(other => { if (other !== row) other.classList.remove('is-flipped'); });
+        row.classList.toggle('is-flipped');
       });
     });
   })();
