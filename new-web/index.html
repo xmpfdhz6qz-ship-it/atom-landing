@@ -570,6 +570,149 @@
     .footer-meta{flex-direction:column;align-items:flex-start;}
     .cookie-banner{right:12px;bottom:12px;left:12px;max-width:none;}
   }
+
+  /* ---------- AI VIEW PORTAL: a small hole opens in the page a few
+     seconds after load, right where the cream background sits, offering
+     a way to see this exact page the way an AI shopping agent actually
+     reads it (structured data, not the visual design). The same portal,
+     re-triggered later in the same spot, is also the way back. ---------- */
+  .ai-portal{
+    position:fixed;top:34%;right:7%;z-index:900;
+    width:10px;height:10px;
+    display:flex;align-items:center;justify-content:center;
+    pointer-events:none;
+  }
+  .ai-portal-hole{
+    position:relative;width:0;height:0;
+    border-radius:44% 56% 61% 39% / 49% 44% 56% 51%;
+    background:var(--white);
+    box-shadow:0 0 0 0 rgba(255,255,255,0);
+    display:flex;align-items:center;justify-content:center;
+    transition:width 1s cubic-bezier(.16,.8,.24,1), height 1s cubic-bezier(.16,.8,.24,1),
+               box-shadow 1s ease, border-radius 1.8s ease-in-out;
+  }
+  .ai-portal.is-open .ai-portal-hole{
+    width:78px;height:78px;
+    box-shadow:0 0 44px 20px rgba(255,255,255,0.85), 0 0 86px 38px rgba(255,255,255,0.32);
+    animation:ai-hole-wobble 6s ease-in-out infinite;
+  }
+  .ai-portal.is-expanded .ai-portal-hole{width:176px;height:60px;border-radius:30px;}
+  @keyframes ai-hole-wobble{
+    0%,100%{border-radius:44% 56% 61% 39% / 49% 44% 56% 51%;}
+    50%{border-radius:58% 42% 39% 61% / 44% 58% 42% 56%;}
+  }
+  .ai-portal-btn{
+    opacity:0;transform:scale(.7);
+    transition:opacity .5s ease .3s, transform .5s cubic-bezier(.34,1.56,.64,1) .3s;
+    border:none;background:none;cursor:pointer;pointer-events:none;
+    font-family:"Nunito",sans-serif;font-weight:800;font-size:12.5px;
+    letter-spacing:0.06em;text-transform:uppercase;color:var(--black);
+    white-space:nowrap;
+  }
+  .ai-portal.is-expanded .ai-portal-btn{opacity:1;transform:scale(1);pointer-events:auto;}
+  .ai-portal.is-open{pointer-events:auto;}
+
+  /* the little cream-colored pixels that crumble away as the hole opens,
+     and gather back together in reverse when the portal reopens to send
+     the visitor back */
+  .ai-portal-specks{position:absolute;inset:-40px;pointer-events:none;}
+  .ai-portal-specks span{
+    position:absolute;top:50%;left:50%;width:5px;height:5px;
+    background:var(--cream);opacity:0;border-radius:1px;
+  }
+  .ai-portal.is-open .ai-portal-specks span{animation:ai-speck-fall 1s ease-out both;}
+  .ai-portal.is-closing .ai-portal-specks span{animation:ai-speck-fall 1s ease-in both reverse;}
+  @keyframes ai-speck-fall{
+    0%{opacity:.9;transform:translate(0,0) scale(1);}
+    100%{opacity:0;transform:translate(var(--dx,10px),var(--dy,18px)) scale(.3);}
+  }
+  @media (max-width:680px){
+    .ai-portal{top:26%;right:5%;}
+    .ai-portal.is-expanded .ai-portal-hole{width:150px;height:54px;}
+    .ai-portal-btn{font-size:11px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ai-portal.is-open .ai-portal-hole{animation:none;}
+    .ai-portal-hole,.ai-portal-btn{transition-duration:.2s;}
+    .ai-portal-specks span{display:none;}
+  }
+
+  /* ---------- AI VIEW: the whole page dissolves into this structured,
+     text-only view — the same facts a crawler or shopping agent actually
+     extracts, with none of the visual design attached to them. ---------- */
+  body > *:not(.ai-portal):not(.ai-view){
+    transition:opacity 1.7s ease, filter 1.7s ease;
+  }
+  body.ai-active > *:not(.ai-portal):not(.ai-view){
+    opacity:0;filter:blur(6px);pointer-events:none;
+  }
+  .ai-view{
+    position:fixed;inset:0;z-index:800;
+    background:var(--white);
+    opacity:0;pointer-events:none;
+    transition:opacity 1.7s ease;
+  }
+  body.ai-active .ai-view{opacity:1;pointer-events:auto;}
+  .ai-view-inner{
+    height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    padding:110px 24px 100px;
+  }
+  .ai-view-wrap{max-width:760px;margin:0 auto;}
+  .ai-view-kicker{
+    font-family:ui-monospace,Menlo,monospace;font-size:12px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);
+    margin-bottom:10px;
+  }
+  .ai-view-title{
+    font-family:var(--serif);font-size:clamp(24px,3.4vw,36px);font-weight:800;
+    letter-spacing:-0.02em;line-height:1.2;margin-bottom:14px;
+  }
+  .ai-view-sub{font-size:15.5px;color:var(--gray-700);line-height:1.7;max-width:600px;margin-bottom:40px;}
+  .ai-view-card{
+    background:var(--cream);border-radius:var(--radius);
+    padding:26px 28px;margin-bottom:20px;
+  }
+  .ai-view-card h3{
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-500);
+    margin-bottom:16px;
+  }
+  .ai-view-field{margin-bottom:14px;}
+  .ai-view-field:last-child{margin-bottom:0;}
+  .ai-view-field-label{
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--gray-500);
+    text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;
+  }
+  .ai-view-field-value{font-size:14.5px;color:var(--black);line-height:1.6;}
+  .ai-view-entity{
+    border-top:1px solid var(--card-line);padding-top:14px;margin-top:14px;
+  }
+  .ai-view-entity:first-child{border-top:none;padding-top:0;margin-top:0;}
+  .ai-view-entity-type{
+    display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;
+    font-weight:700;color:var(--white);background:var(--black);
+    padding:2px 8px;border-radius:3px;margin-bottom:8px;
+  }
+  .ai-view-outline{list-style:none;}
+  .ai-view-outline li{
+    font-size:14.5px;line-height:2;color:var(--black);
+    padding-left:calc(var(--lvl,0) * 22px);
+  }
+  .ai-view-outline .tag{
+    font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--orange);
+    margin-right:8px;
+  }
+  .ai-view-stats{display:flex;flex-wrap:wrap;gap:24px 36px;}
+  .ai-view-stat b{
+    display:block;font-family:var(--serif);font-size:26px;font-weight:800;
+    color:var(--orange);letter-spacing:-0.01em;
+  }
+  .ai-view-stat span{font-size:13px;color:var(--gray-700);}
+  .ai-view-note{font-size:13px;color:var(--gray-500);line-height:1.6;margin-top:36px;}
+  @media (max-width:680px){
+    .ai-view-inner{padding:96px 20px 90px;}
+    .ai-view-card{padding:20px;}
+  }
 </style>
 </head>
 <body>
@@ -1227,6 +1370,140 @@
     <button class="cookie-banner-decline" id="cookieDecline">Decline</button>
   </div>
 </div>
+
+<!-- AI VIEW PORTAL: a small hole that opens in the page on its own, and
+     is also the way back. Reused for both directions of the transition. -->
+<div class="ai-portal" id="aiPortal" aria-hidden="true">
+  <div class="ai-portal-hole">
+    <div class="ai-portal-specks" aria-hidden="true">
+      <span style="--dx:-14px;--dy:-20px;animation-delay:.02s;"></span>
+      <span style="--dx:16px;--dy:-16px;animation-delay:.09s;"></span>
+      <span style="--dx:-20px;--dy:10px;animation-delay:.04s;"></span>
+      <span style="--dx:18px;--dy:14px;animation-delay:.14s;"></span>
+      <span style="--dx:-8px;--dy:22px;animation-delay:.18s;"></span>
+      <span style="--dx:10px;--dy:-24px;animation-delay:.11s;"></span>
+      <span style="--dx:-22px;--dy:-6px;animation-delay:.22s;"></span>
+      <span style="--dx:22px;--dy:2px;animation-delay:.06s;"></span>
+    </div>
+    <button type="button" class="ai-portal-btn" id="aiPortalBtn">See as AI</button>
+  </div>
+</div>
+
+<!-- AI VIEW: the same page, read the way a crawler or shopping agent
+     actually reads it — structured data, not the visual design. -->
+<div class="ai-view" id="aiView" aria-hidden="true">
+  <div class="ai-view-inner">
+    <div class="ai-view-wrap">
+      <div class="ai-view-kicker">// this is what an ai agent sees</div>
+      <h2 class="ai-view-title">Atom Foundry — The AI Commerce Graph</h2>
+      <p class="ai-view-sub">Understand why AI recommends one brand over another. Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents discover, evaluate, trust, and recommend e-commerce stores — then turns those findings into practical tools.</p>
+
+      <div class="ai-view-card">
+        <h3>Structured data · schema.org</h3>
+        <div class="ai-view-entity">
+          <span class="ai-view-entity-type">Organization</span>
+          <div class="ai-view-field"><div class="ai-view-field-label">name</div><div class="ai-view-field-value">Atom Foundry</div></div>
+          <div class="ai-view-field"><div class="ai-view-field-label">owns</div><div class="ai-view-field-value">Founder Lab (OnlineStore)</div></div>
+        </div>
+        <div class="ai-view-entity">
+          <span class="ai-view-entity-type">OnlineStore</span>
+          <div class="ai-view-field"><div class="ai-view-field-label">name</div><div class="ai-view-field-value">Founder Lab</div></div>
+          <div class="ai-view-field"><div class="ai-view-field-label">description</div><div class="ai-view-field-value">A live Shopify store, built in public as the test subject for Atom Foundry's own research.</div></div>
+        </div>
+        <div class="ai-view-entity">
+          <span class="ai-view-entity-type">WebSite</span>
+          <div class="ai-view-field"><div class="ai-view-field-label">part of</div><div class="ai-view-field-value">Atom Foundry</div></div>
+        </div>
+        <div class="ai-view-entity">
+          <span class="ai-view-entity-type">WebPage</span>
+          <div class="ai-view-field"><div class="ai-view-field-label">inLanguage</div><div class="ai-view-field-value">en</div></div>
+        </div>
+      </div>
+
+      <div class="ai-view-card">
+        <h3>Content outline</h3>
+        <ul class="ai-view-outline">
+          <li style="--lvl:0;"><span class="tag">H1</span>Understand why AI recommends one brand over another.</li>
+          <li style="--lvl:1;"><span class="tag">H2</span>From Research to Products</li>
+          <li style="--lvl:1;"><span class="tag">H2</span>Research that challenged AI commerce assumptions</li>
+          <li style="--lvl:1;"><span class="tag">H2</span>Built in public.</li>
+          <li style="--lvl:1;"><span class="tag">H2</span>AI Commerce Score™</li>
+        </ul>
+      </div>
+
+      <div class="ai-view-card">
+        <h3>Key signals</h3>
+        <div class="ai-view-stats">
+          <div class="ai-view-stat"><b>66,087</b><span>Stores analyzed</span></div>
+          <div class="ai-view-stat"><b>57/100</b><span>Avg. AI Commerce Score</span></div>
+          <div class="ai-view-stat"><b>8</b><span>Scoring factors</span></div>
+          <div class="ai-view-stat"><b>4</b><span>Risk / confidence tiers</span></div>
+        </div>
+      </div>
+
+      <p class="ai-view-note">No images on this page — it is entirely text and structured data, which is also exactly what an AI reads. Scroll normally; nothing here is off-limits.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // AI VIEW state machine: a portal opens on its own a few seconds after
+  // load, offering "See as AI". Clicking it dissolves the whole page and
+  // reveals the structured-data view above. After a few seconds, the same
+  // portal reopens in the same spot with "Back to Human View".
+  (function(){
+    const portal = document.getElementById('aiPortal');
+    const btn = document.getElementById('aiPortalBtn');
+    const view = document.getElementById('aiView');
+    if (!portal || !btn || !view) return;
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const T_APPEAR = reduceMotion ? 600 : 3500;
+    const T_HOLD = reduceMotion ? 1200 : 5000;
+    let inAiView = false;
+
+    function openPortal(label){
+      portal.classList.remove('is-closing');
+      portal.classList.add('is-open');
+      btn.textContent = label;
+      portal.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => portal.classList.add('is-expanded'));
+    }
+
+    function retractPortal(){
+      portal.classList.add('is-closing');
+      portal.classList.remove('is-expanded');
+      setTimeout(() => {
+        portal.classList.remove('is-open', 'is-closing');
+        portal.setAttribute('aria-hidden', 'true');
+      }, reduceMotion ? 200 : 1000);
+    }
+
+    // Clicking either label retracts the portal and toggles the whole-page
+    // dissolve at the same moment, so the hole closing and the page falling
+    // apart / reassembling read as one continuous action.
+    function enterAiView(){
+      inAiView = true;
+      retractPortal();
+      document.body.classList.add('ai-active');
+      view.setAttribute('aria-hidden', 'false');
+      setTimeout(() => { if (inAiView) openPortal('Back to Human View'); }, T_HOLD);
+    }
+
+    function exitAiView(){
+      inAiView = false;
+      retractPortal();
+      document.body.classList.remove('ai-active');
+      view.setAttribute('aria-hidden', 'true');
+    }
+
+    btn.addEventListener('click', () => {
+      if (!inAiView) enterAiView(); else exitAiView();
+    });
+
+    setTimeout(() => openPortal('See as AI'), T_APPEAR);
+  })();
+</script>
 
 </body>
 </html>
