@@ -256,6 +256,38 @@
   .fl-cursor{display:inline-block;width:1px;height:1em;vertical-align:-0.1em;background:var(--black);margin-left:2px;animation:fl-blink .9s steps(1) infinite;}
   @keyframes fl-blink{50%{opacity:0;}}
 
+  /* on narrow screens the radiating "spider" layout has nowhere near
+     enough room to spread lines out in eight different directions
+     without everything overlapping, so it's replaced entirely by a
+     simple vertical stack: wordmark on top, then each chapter's short
+     connector and caption, one below the other, in normal document
+     flow (no absolute positioning, no SVG geometry needed at all) */
+  @media (max-width:640px){
+    .fl-story-stage{
+      height:auto;min-height:auto;overflow:visible;
+      display:flex;flex-direction:column;align-items:center;
+      padding:56px 20px 64px;
+    }
+    .fl-story-svg{display:none;}
+    .fl-story-center{
+      position:static;transform:none;padding:0 0 8px;
+      animation:fl-heartbeat-plain 1.15s ease-in-out infinite;
+    }
+    .fl-story-mobile-connector{
+      width:2px;height:0;background:var(--black);
+      transition:height .6s cubic-bezier(.65,0,.35,1);
+    }
+    .fl-story-mobile-connector.is-drawing{height:40px;}
+    .fl-story-mobile-caption{
+      width:100%;max-width:320px;
+      font-family:var(--serif);font-size:16px;font-weight:600;
+      color:var(--black);line-height:1.55;white-space:pre-line;
+      text-align:center;padding:20px 0 0;
+      opacity:0;transition:opacity .4s ease;
+    }
+    .fl-story-mobile-caption.is-visible{opacity:1;}
+  }
+
   /* ---------- FOUNDER LAB EXTENDED (a 7th click on the wordmark keeps
      the same hand-drawn-line story going down the page: two gray panels
      of prose, four plain zigzagging points in between, then the line
@@ -353,6 +385,9 @@
   @media (prefers-reduced-motion: reduce){
     .fl-story-center{animation:none !important;opacity:1;transform:translate(-50%,-50%) scale(1);}
     .fl-cursor{animation:none !important;}
+  }
+  @media (max-width:640px) and (prefers-reduced-motion: reduce){
+    .fl-story-center{transform:none;}
   }
 
   /* ---------- FOOTER (same structure as the Atom Foundry landing page,
@@ -802,6 +837,12 @@
 
     const NS = 'http://www.w3.org/2000/svg';
 
+    // below this width the radiating layout has no room to work with, so
+    // chapters render as a simple vertical stack instead (checked once:
+    // the story's geometry is fixed for the length of a single visit,
+    // same as everything else in this file that reads stage dimensions)
+    const isMobile = window.matchMedia('(max-width:640px)').matches;
+
     let nextIndex = 0;
     let busy = false; // true while a chapter is actively playing
 
@@ -882,16 +923,55 @@
       const tx = ex + cosA * capGap;
       let ty = ey + sinA * capGap;
       ty = Math.max(48, Math.min(stage.clientHeight - 48, ty));
-      const putRight = tx + pad + textW < stage.clientWidth - 12;
-      if (putRight) {
-        el.style.left = (tx + pad) + 'px';
-        el.style.textAlign = 'left';
-      } else {
-        el.style.left = (tx - pad - textW) + 'px';
-        el.style.textAlign = 'right';
+
+      // bias the left/right flip by the line's own direction first, so a
+      // caption always continues away from the wordmark in the direction
+      // its line travels and never backtracks over that same line; only
+      // near-vertical lines (where direction alone doesn't say much) fall
+      // back to a plain "is there room on the right" check
+      let putRight = cosA >= 0;
+      if (Math.abs(cosA) < 0.25) {
+        putRight = tx + pad + textW < stage.clientWidth - 12;
       }
+
+      let left = putRight ? (tx + pad) : (tx - pad - textW);
+      left = Math.max(12, Math.min(stage.clientWidth - 12 - textW, left));
+
+      el.style.left = left + 'px';
+      el.style.textAlign = putRight ? 'left' : 'right';
       el.style.top = ty + 'px';
       el.style.transform = 'translateY(-50%)';
+    }
+
+    // mobile version of the same chapter: no angle, no SVG line, just a
+    // short vertical connector and a caption appended below whatever
+    // came before it, in normal document flow
+    function playChapterMobile(i, onDone){
+      const ch = CHAPTERS[i];
+      center.classList.add('is-paused');
+
+      const connector = document.createElement('div');
+      connector.className = 'fl-story-mobile-connector';
+      stage.appendChild(connector);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        connector.classList.add('is-drawing');
+      }));
+
+      function onConnDrawn(e){
+        if (e.target !== connector || e.propertyName !== 'height') return;
+        connector.removeEventListener('transitionend', onConnDrawn);
+        const cap = document.createElement('div');
+        cap.className = 'fl-story-mobile-caption';
+        stage.appendChild(cap);
+        cap.classList.add('is-visible');
+        setTimeout(() => {
+          typeText(cap, ch.text, () => {
+            center.classList.remove('is-paused');
+            onDone();
+          });
+        }, 250);
+      }
+      connector.addEventListener('transitionend', onConnDrawn);
     }
 
     // draws one chapter's line, permanently, then types its own caption
@@ -899,6 +979,7 @@
     // (as if it moved into the line and text) and resumes once the
     // caption is fully typed.
     function playChapter(i, onDone){
+      if (isMobile) { playChapterMobile(i, onDone); return; }
       const { ch, sx, sy, ex, ey, cosA, sinA } = chapterGeometry(i);
       center.classList.add('is-paused');
 
