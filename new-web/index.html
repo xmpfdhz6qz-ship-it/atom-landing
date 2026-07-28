@@ -591,18 +591,18 @@
   .ai-portal-flash{
     position:absolute;top:50%;right:10%;transform:translate(50%,-50%);
     width:0;height:0;border-radius:50%;
-    background:radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,.7) 40%, rgba(255,255,255,0) 72%);
+    background:radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,.9) 32%, rgba(255,255,255,.55) 55%, rgba(255,255,255,0) 76%);
     opacity:0;pointer-events:none;
-    transition:width .5s cubic-bezier(.11,.85,.2,1), height .5s cubic-bezier(.11,.85,.2,1), opacity .55s ease-out;
+    transition:width .22s cubic-bezier(0,.9,.15,1), height .22s cubic-bezier(0,.9,.15,1), opacity .7s ease-out;
   }
-  .ai-portal.is-open .ai-portal-flash{width:340px;height:340px;opacity:1;transition:width .5s cubic-bezier(.11,.85,.2,1), height .5s cubic-bezier(.11,.85,.2,1), opacity .55s ease-out .1s;}
+  .ai-portal.is-open .ai-portal-flash{width:700px;height:700px;opacity:1;transition:width .22s cubic-bezier(0,.9,.15,1), height .22s cubic-bezier(0,.9,.15,1), opacity .7s ease-out .05s;}
   .ai-portal-svg .impact-ring{
-    fill:none;stroke:var(--white);stroke-width:2.6px;
+    fill:none;stroke:var(--white);stroke-width:3px;
     r:4;opacity:1;
-    transition:r .5s cubic-bezier(.11,.85,.2,1), opacity .5s ease-out;
+    transition:r .3s cubic-bezier(0,.9,.15,1), opacity .4s ease-out;
     vector-effect:non-scaling-stroke;
   }
-  .ai-portal.is-open .ai-portal-svg .impact-ring{r:64;opacity:0;}
+  .ai-portal.is-open .ai-portal-svg .impact-ring{r:92;opacity:0;}
   .ai-portal-svg .crack{
     fill:none;stroke:var(--white);stroke-width:1.4px;
     stroke-linecap:round;stroke-linejoin:round;
@@ -611,8 +611,6 @@
     vector-effect:non-scaling-stroke;
   }
   .ai-portal.is-open .ai-portal-svg .crack{stroke-dashoffset:0;}
-  .ai-portal-svg .shard{fill:var(--white);opacity:0;transition:opacity .5s ease var(--d,0s);}
-  .ai-portal.is-open .ai-portal-svg .shard{opacity:.55;}
 
   .ai-portal-glow{
     position:absolute;top:50%;right:10%;transform:translate(50%,-50%);
@@ -660,11 +658,11 @@
   @media (max-width:680px){
     .ai-portal{top:50%;right:-6vw;width:min(96vw,640px);height:min(96vw,640px);}
     .ai-portal-btn{font-size:11.5px;right:16%;}
-    .ai-portal.is-open .ai-portal-flash{width:220px;height:220px;}
+    .ai-portal.is-open .ai-portal-flash{width:440px;height:440px;}
   }
   @media (prefers-reduced-motion: reduce){
     .ai-portal.is-open .ai-portal-glow{animation:none;}
-    .ai-portal-glow,.ai-portal-btn,.ai-portal-svg,.ai-portal-svg .crack,.ai-portal-svg .shard,.ai-portal-svg .impact-ring,.ai-portal-flash{transition-duration:.2s;transition-delay:0s;}
+    .ai-portal-glow,.ai-portal-btn,.ai-portal-svg,.ai-portal-svg .crack,.ai-portal-svg .impact-ring,.ai-portal-flash{transition-duration:.2s;transition-delay:0s;}
     .ai-portal-specks span{display:none;}
   }
 
@@ -678,7 +676,7 @@
   }
   .ai-view{
     position:fixed;inset:0;z-index:800;
-    background:var(--white);color:var(--black);
+    background:#fff;color:#000;
     font-family:ui-monospace,Menlo,Consolas,monospace;
     opacity:0;pointer-events:none;
     transition:opacity 1.7s ease;
@@ -689,14 +687,14 @@
     padding:100px 24px 100px;
   }
   .ai-view-wrap{max-width:720px;margin:0 auto;font-size:13.5px;line-height:1.85;}
-  .ai-view-line{color:var(--black);opacity:.6;margin-bottom:26px;white-space:pre-line;}
-  .ai-view-block{border-top:1px solid var(--card-line);padding-top:18px;margin-top:18px;}
+  .ai-view-line{color:#000;opacity:.6;margin-bottom:26px;white-space:pre-line;}
+  .ai-view-block{border-top:1px solid #e2e2e2;padding-top:18px;margin-top:18px;}
   .ai-view-block:first-of-type{border-top:none;padding-top:0;margin-top:0;}
-  .ai-view-tag{color:var(--black);font-weight:700;margin-bottom:10px;}
+  .ai-view-tag{color:#000;font-weight:700;margin-bottom:10px;}
   .ai-view-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:4px;}
-  .ai-view-row .k{color:var(--black);opacity:.55;min-width:150px;flex-shrink:0;}
-  .ai-view-row .v{color:var(--black);word-break:break-word;}
-  .ai-view-note{font-size:12px;color:var(--black);opacity:.55;margin-top:34px;line-height:1.7;}
+  .ai-view-row .k{color:#000;opacity:.55;min-width:150px;flex-shrink:0;}
+  .ai-view-row .v{color:#000;word-break:break-word;}
+  .ai-view-note{font-size:12px;color:#000;opacity:.55;margin-top:34px;line-height:1.7;}
   @media (max-width:680px){
     .ai-view-inner{padding:88px 18px 90px;}
     .ai-view-row .k{min-width:120px;}
@@ -1366,27 +1364,30 @@
   <div class="ai-portal-flash" aria-hidden="true"></div>
   <svg class="ai-portal-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
     <circle class="impact-ring" cx="90" cy="50"/>
-    <!-- quick inner stub cracks fire first, right at the point of impact -->
-    <path class="crack" style="--d:.05s;--dur:.35s" d="M90,50 L82,42 L86,49"/>
-    <path class="crack" style="--d:.08s;--dur:.35s" d="M90,50 L96,44 L92,47 L94,53"/>
-    <!-- the main fracture that reaches farthest, toward the middle of the
-         screen, drawn in two stages so it visibly keeps extending outward -->
-    <path class="crack" style="--d:.15s;--dur:.5s" d="M90,50 L64,47"/>
-    <path class="crack" style="--d:.65s;--dur:.95s" d="M64,47 L34,52 L6,49"/>
-    <path class="crack" style="--d:.72s;--dur:.6s" d="M64,47 L58,29"/>
-    <path class="crack" style="--d:.15s;--dur:.5s" d="M90,50 L60,49"/>
-    <path class="crack" style="--d:.78s;--dur:.6s" d="M60,49 L52,68 L46,74"/>
-    <!-- the rest of the web, staggered so the whole thing reads as a
-         gradually spreading fracture rather than one instant break -->
-    <path class="crack" style="--d:.12s" d="M90,50 L100,28"/>
-    <path class="crack" style="--d:.18s" d="M90,50 L100,72"/>
-    <path class="crack" style="--d:.22s" d="M90,50 L72,26 L48,16 L24,21"/>
-    <path class="crack" style="--d:.3s" d="M90,50 L70,74 L44,84 L20,79"/>
-    <path class="crack" style="--d:.38s" d="M90,50 L84,22 L76,6"/>
-    <path class="crack" style="--d:.46s" d="M90,50 L84,78 L77,95"/>
-    <path class="shard" style="--d:1.5s" d="M90,50 L96,44 L92,47 L94,53 Z"/>
-    <path class="shard" style="--d:1.65s" d="M64,47 L68,40 L61,42 Z"/>
-    <path class="shard" style="--d:1.55s" d="M60,49 L56,58 L64,55 Z"/>
+    <!-- sharp, near-instant stub cracks right at the point of impact -->
+    <path class="crack" style="--d:.02s;--dur:.28s" d="M90,50 L96,45 L91,41 L98,37"/>
+    <path class="crack" style="--d:.03s;--dur:.28s" d="M90,50 L83,58 L89,64 L81,68"/>
+    <path class="crack" style="--d:.05s;--dur:.3s" d="M90,50 L100,32"/>
+    <path class="crack" style="--d:.06s;--dur:.3s" d="M90,50 L100,80"/>
+    <!-- the two long, dramatic fractures: one runs left through the chart
+         toward the "one brand over another" headline, the other runs
+         steeply up toward the About navbar. Both extend in stages so
+         they visibly keep travelling rather than snapping in at once. -->
+    <path class="crack" style="--d:.1s;--dur:.4s" d="M90,50 L58,52"/>
+    <path class="crack" style="--d:.5s;--dur:.5s" d="M58,52 L24,56"/>
+    <path class="crack" style="--d:1s;--dur:.6s" d="M24,56 L-15,50"/>
+    <path class="crack" style="--d:.55s;--dur:.5s" d="M58,52 L52,34 L40,20"/>
+    <path class="crack" style="--d:1.02s;--dur:.5s" d="M24,56 L10,66 L-6,74"/>
+    <path class="crack" style="--d:.12s;--dur:.35s" d="M90,50 L82,20"/>
+    <path class="crack" style="--d:.47s;--dur:.45s" d="M82,20 L70,-4"/>
+    <path class="crack" style="--d:.92s;--dur:.5s" d="M70,-4 L55,-30"/>
+    <path class="crack" style="--d:.5s;--dur:.3s" d="M82,20 L92,8"/>
+    <path class="crack" style="--d:.95s;--dur:.3s" d="M70,-4 L84,-10"/>
+    <!-- the rest of the irregular, chaotic web -->
+    <path class="crack" style="--d:.18s;--dur:.9s" d="M90,50 L74,66 L50,78 L18,84"/>
+    <path class="crack" style="--d:1.05s;--dur:.4s" d="M74,66 L64,80 L48,90"/>
+    <path class="crack" style="--d:.34s" d="M90,50 L84,74 L79,92"/>
+    <path class="crack" style="--d:.26s" d="M90,50 L94,66 L88,84"/>
   </svg>
   <div class="ai-portal-glow" aria-hidden="true"></div>
   <div class="ai-portal-specks" aria-hidden="true">
