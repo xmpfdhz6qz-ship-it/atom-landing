@@ -1187,16 +1187,18 @@
         .attr('text-anchor', 'middle')
         .text(d => d.text);
 
+      // Move every region country and its label to the end of the SVG once,
+      // up front, so they always paint above the non-covered countries.
+      // (Re-parenting nodes on every mouseenter used to do this instead, but
+      // shuffling the DOM mid-interaction could shift the hit-test target
+      // out from under the cursor between mousedown and mouseup, so clicks
+      // sometimes silently failed to register.)
+      svg.selectAll('[data-region]').each(function(){ this.parentNode.appendChild(this); });
+
       svg.selectAll('.world-country.is-region')
         .on('mouseenter', function(){
           const region = this.getAttribute('data-region');
-          if (!region) return;
-          const matches = svg.selectAll('[data-region="' + region + '"]');
-          matches.classed('is-hover', true);
-          // Bring every matching path (all of Europe's members, for a shared
-          // region) to the front of paint order so the scale-up on hover
-          // does not get clipped under its still-unscaled neighbors.
-          matches.each(function(){ this.parentNode.appendChild(this); });
+          if (region) svg.selectAll('[data-region="' + region + '"]').classed('is-hover', true);
         })
         .on('mouseleave', function(){
           const region = this.getAttribute('data-region');
