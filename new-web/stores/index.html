@@ -1116,15 +1116,22 @@
       el.addEventListener('click', () => selectRegion(el.dataset.region));
     });
 
+    // Hovering a niche tab is enough to switch it, no click needed; whatever
+    // was last hovered (or focused, for keyboard use) stays selected once the
+    // pointer moves on.
+    function selectNiche(btn){
+      tagButtons.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      state.niche = btn.dataset.niche;
+      updateCategoryPanel(state.niche);
+      if (state.query) loadStores(true);
+      else if (clearBtn) clearBtn.classList.toggle('is-visible', state.niche !== 'all');
+    }
     tagButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tagButtons.forEach(b => b.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        state.niche = btn.dataset.niche;
-        updateCategoryPanel(state.niche);
-        if (state.query) loadStores(true);
-        else if (clearBtn) clearBtn.classList.toggle('is-visible', state.niche !== 'all');
-      });
+      btn.addEventListener('mouseenter', () => selectNiche(btn));
+      btn.addEventListener('focus', () => selectNiche(btn));
+      // Touch devices have no hover, so a tap still works there too.
+      btn.addEventListener('click', () => selectNiche(btn));
     });
 
     let searchTimer;
