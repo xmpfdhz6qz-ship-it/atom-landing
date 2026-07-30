@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">AI Commerce Score Report: Atom Foundry</title>
-<meta name="description" id="pageDesc" content="See how well AI shopping agents can read, understand, trust, and recommend this store, measured across the AI Commerce Framework.">
+<meta name="description" id="pageDesc" content="Watch how an AI shopping agent reads, understands, and decides whether to recommend this store, measured across the AI Commerce Framework.">
 <meta name="robots" content="index, follow">
 <meta name="view-transition" content="same-origin">
 <link rel="canonical" href="https://atomfoundry.dev/store" id="canonicalLink">
 <meta property="og:title" id="ogTitle" content="AI Commerce Score Report: Atom Foundry">
-<meta property="og:description" id="ogDesc" content="See how well AI shopping agents can read, understand, trust, and recommend this store.">
+<meta property="og:description" id="ogDesc" content="Watch how an AI shopping agent reads, understands, and decides whether to recommend this store.">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -136,37 +136,106 @@
   .store-notfound p{color:var(--gray-700);font-size:15px;line-height:1.7;margin-bottom:28px;}
 
   /* ---------- SHARED SECTION RHYTHM: thin dividers, generous whitespace,
-     an editorial reading column rather than a grid of dashboard cards. ---------- */
-  .store-block{padding:8px 24px 56px;border-top:1px solid var(--card-line);}
-  .store-block-inner{max-width:720px;margin:0 auto;padding-top:48px;}
-  .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:20px;}
+     an editorial reading column, no boxed dashboard cards, no popups. ---------- */
+  .store-block{padding:8px 24px 64px;border-top:1px solid var(--card-line);}
+  .store-block-inner{max-width:720px;margin:0 auto;padding-top:52px;}
+  .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:22px;}
   .icon-pill{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
   .icon-pill.is-pass{background:rgba(29,158,117,0.15);color:var(--green);}
   .icon-pill.is-fail{background:rgba(217,60,60,0.12);color:var(--red);}
+  .why-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--card-line);font-size:17px;font-weight:600;}
+  .why-row:last-child{border-bottom:none;}
 
-  /* ---------- BREADCRUMB + HERO ---------- */
-  .store-hero{padding:140px 24px 56px;}
+  /* ---------- HERO: no score up front. A short simulated read of the four
+     stages, staged in over about three seconds. ---------- */
+  .store-hero{padding:140px 24px 60px;}
   .store-hero-inner{max-width:720px;margin:0 auto;}
   .store-breadcrumb{font-size:12px;color:var(--gray-500);margin-bottom:24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
   .store-breadcrumb a{color:var(--gray-500);transition:color .2s ease;}
   .store-breadcrumb a:hover{color:var(--orange);}
-  .store-top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+  .store-top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
   .store-domain-label{font-size:14px;font-weight:700;color:var(--gray-700);}
   .store-visit-link{font-size:13px;font-weight:800;color:var(--orange);white-space:nowrap;}
-  .store-name{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);font-weight:800;letter-spacing:-0.02em;margin-bottom:36px;line-height:1.2;}
-  .store-score-row{display:flex;align-items:flex-end;gap:8px;}
-  .store-score-num{font-family:var(--serif);font-weight:800;font-size:clamp(64px,11vw,120px);line-height:0.88;letter-spacing:-0.03em;}
-  .store-score-max{font-size:19px;color:var(--gray-500);font-weight:700;padding-bottom:12px;}
-  .store-score-caption{font-size:15px;color:var(--gray-700);font-weight:700;margin:8px 0 28px;}
-  .simple-journey{display:flex;flex-wrap:wrap;gap:10px;}
-  .simple-stage{display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:100px;background:var(--card);font-size:14px;font-weight:800;}
+  .store-h1{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-0.02em;margin-bottom:40px;line-height:1.2;}
+  .store-h1 em{color:var(--orange);}
+  .sim-row{display:flex;align-items:center;gap:16px;padding:10px 0;opacity:0;transform:translateY(6px);transition:opacity .4s ease, transform .4s ease;}
+  .sim-row.is-visible{opacity:1;transform:translateY(0);}
+  .sim-label{font-size:15px;font-weight:700;color:var(--gray-700);min-width:150px;flex-shrink:0;}
+  .sim-bar-wrap{flex:1;height:9px;background:var(--card);border-radius:100px;overflow:hidden;}
+  .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width .8s cubic-bezier(.34,1.1,.64,1);}
+  .sim-result{font-size:13px;font-weight:800;min-width:78px;text-align:right;opacity:0;transition:opacity .3s ease;flex-shrink:0;}
+  .sim-result.is-visible{opacity:1;}
+  .sim-result.is-pass{color:var(--green);}
+  .sim-result.is-fail{color:var(--red);}
 
-  /* ---------- WHY: plain sentences instead of eight progress bars ---------- */
-  .why-row{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--card-line);font-size:18px;font-weight:600;line-height:1.4;}
-  .why-row:last-child{border-bottom:none;}
+  /* ---------- RECOMMENDATION DECISION: one card, one verdict ---------- */
+  .decision-card{max-width:480px;margin:0 auto;text-align:center;padding:48px 32px;background:var(--card);border-radius:14px;}
+  .decision-icon{font-size:38px;display:block;margin-bottom:18px;line-height:1;}
+  .decision-icon.is-pass{color:var(--green);}
+  .decision-icon.is-fail{color:var(--red);}
+  .decision-verdict{font-family:var(--serif);font-size:clamp(19px,2.4vw,24px);font-weight:800;letter-spacing:-0.01em;line-height:1.35;margin-bottom:22px;}
+  .decision-reason-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:6px;}
+  .decision-reason{font-size:16px;font-weight:800;color:var(--black);}
 
-  /* ---------- DETAIL: collapsed by default, the eight factor bars live here as
-     a technical footnote, not the headline. ---------- */
+  /* ---------- WHY: dissection list, then a reasoning bubble instead of
+     eight progress bars ---------- */
+  .examined-arrow{text-align:center;font-size:20px;color:var(--gray-500);padding:14px 0;}
+  .examined-decision{text-align:center;font-family:var(--serif);font-weight:800;font-size:21px;letter-spacing:0.02em;padding:8px 0 8px;}
+  .examined-decision.is-pass{color:var(--green);}
+  .examined-decision.is-fail{color:var(--red);}
+  .reasoning-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin:36px 0 14px;}
+  .reasoning-bubble{background:var(--card);border-radius:14px;padding:26px 28px;font-size:16.5px;line-height:1.85;color:var(--black);}
+  .reasoning-bubble p{margin-bottom:4px;}
+  .reasoning-bubble p:last-child{margin-bottom:0;}
+  .reasoning-note{font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
+
+  /* ---------- RECOMMENDATION JOURNEY: the signature interactive piece ---------- */
+  .journey-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+  .journey-store-node{font-weight:800;font-size:15px;color:var(--gray-700);padding-right:2px;}
+  .journey-arrow{color:var(--gray-500);font-size:14px;}
+  .journey-node{display:flex;align-items:center;gap:9px;padding:12px 20px;border-radius:100px;background:var(--card);font-size:15px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--black);transition:background .2s ease, color .2s ease, transform .2s ease;}
+  .journey-node:hover{transform:translateY(-2px);}
+  .journey-node.is-open{background:var(--black);color:var(--white);}
+  .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
+  .journey-node.is-open .icon-pill.is-fail{background:rgba(217,60,60,0.32);}
+  .journey-detail{background:var(--card);border-radius:10px;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.65,0,.35,1), opacity .3s ease, padding .4s ease;}
+  .journey-detail.is-open{max-height:420px;opacity:1;padding:26px 28px;}
+  .journey-detail-inner{display:none;}
+  .journey-detail.is-open .journey-detail-inner.is-active{display:block;}
+  .journey-detail-title{font-weight:800;color:var(--black);margin-bottom:14px;font-size:16px;}
+  .journey-detail-list-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-700);margin-bottom:10px;}
+  .journey-detail-items{display:flex;flex-wrap:wrap;gap:8px;}
+  .journey-detail-item{font-size:13.5px;font-weight:700;padding:6px 13px;border-radius:100px;background:rgba(22,21,18,0.07);color:var(--gray-700);}
+
+  /* ---------- CONFIDENCE METER ---------- */
+  .confidence-head{font-size:16px;font-weight:700;color:var(--gray-700);margin-bottom:16px;}
+  .confidence-num{font-family:var(--serif);font-weight:800;font-size:clamp(40px,5.6vw,56px);letter-spacing:-0.02em;margin-bottom:18px;}
+  .confidence-bar-wrap{height:14px;background:var(--card);border-radius:100px;overflow:hidden;max-width:420px;}
+  .confidence-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.2s cubic-bezier(.34,1.1,.64,1);}
+
+  /* ---------- TOP 3 BLOCKERS: negative signal, not a High/Medium tag ---------- */
+  .blocker-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--card-line);}
+  .blocker-row:last-child{border-bottom:none;}
+  .blocker-name{font-size:18px;font-weight:700;}
+  .blocker-impact{font-family:var(--serif);font-weight:800;font-size:19px;color:var(--red);flex-shrink:0;}
+
+  /* ---------- WHAT WOULD CHANGE THE DECISION ---------- */
+  .whatif-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--card-line);}
+  .whatif-row:last-child{border-bottom:none;}
+  .whatif-name{font-size:16px;font-weight:700;}
+  .whatif-scores{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:800;font-size:19px;flex-shrink:0;}
+  .whatif-scores .from{color:var(--gray-500);}
+  .whatif-scores .arrow{color:var(--gray-500);font-size:14px;}
+  .whatif-scores .to{color:var(--green);}
+
+  /* ---------- SIMILAR RECOMMENDED STORES ---------- */
+  .similar-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--card-line);}
+  .similar-row:last-child{border-bottom:none;}
+  .similar-name{font-size:17px;font-weight:700;transition:color .2s ease;}
+  .similar-name:hover{color:var(--orange);}
+  .similar-score{font-family:var(--serif);font-weight:800;font-size:19px;color:var(--green);}
+
+  /* ---------- TECHNICAL FACTOR BREAKDOWN: collapsed by default ---------- */
   .store-detail-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;color:var(--black);}
   .store-detail-toggle-label{font-size:16px;font-weight:800;}
   .store-detail-toggle-icon{font-size:22px;color:var(--gray-500);transition:transform .3s cubic-bezier(.65,0,.35,1);line-height:1;}
@@ -183,51 +252,20 @@
   .factor-fill{height:100%;border-radius:100px;transition:width 1s ease;}
   .factor-score{font-size:13px;font-weight:800;min-width:52px;text-align:right;flex-shrink:0;}
 
-  /* ---------- BIGGEST BLOCKERS ---------- */
-  .blocker-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--card-line);}
-  .blocker-row:last-child{border-bottom:none;}
-  .blocker-name{font-size:18px;font-weight:700;}
-  .blocker-impact{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:5px 12px;border-radius:100px;white-space:nowrap;}
-  .blocker-impact.is-high{color:var(--red);background:rgba(217,60,60,0.09);}
-  .blocker-impact.is-medium{color:var(--amber);background:rgba(224,162,51,0.15);}
-
-  /* ---------- QUICK WINS ---------- */
-  .store-quickwins-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:8px;}
-  .quickwin-row{display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid var(--card-line);}
-  .quickwin-row:last-child{border-bottom:none;}
-  .quickwin-points{font-family:var(--serif);font-weight:800;font-size:24px;color:var(--green);min-width:50px;flex-shrink:0;}
-  .quickwin-name{font-size:16px;font-weight:700;}
-
-  /* ---------- COMPARISON ---------- */
-  .comparison-row{display:flex;gap:36px;flex-wrap:wrap;}
-  .comparison-item{flex:1;min-width:130px;}
-  .comparison-num{font-family:var(--serif);font-weight:800;font-size:clamp(34px,5vw,52px);letter-spacing:-0.02em;line-height:1;color:var(--black);}
-  .comparison-item.is-yours .comparison-num{color:var(--orange);}
-  .comparison-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-top:10px;}
-  .comparison-note{font-size:12px;color:var(--gray-500);margin-top:24px;line-height:1.6;}
-
-  /* ---------- RECOMMENDATION JOURNEY: the interactive signature piece ---------- */
-  .journey-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
-  .journey-store-node{font-weight:800;font-size:15px;color:var(--gray-700);padding-right:2px;}
-  .journey-arrow{color:var(--gray-500);font-size:14px;}
-  .journey-node{display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:100px;background:var(--card);font-size:14px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--black);transition:background .2s ease, color .2s ease, transform .2s ease;}
-  .journey-node:hover{transform:translateY(-2px);}
-  .journey-node.is-open{background:var(--black);color:var(--white);}
-  .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
-  .journey-node.is-open .icon-pill.is-fail{background:rgba(217,60,60,0.32);}
-  .journey-detail{background:var(--card);border-radius:10px;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.65,0,.35,1), opacity .3s ease, padding .4s ease;}
-  .journey-detail.is-open{max-height:420px;opacity:1;padding:26px 28px;}
-  .journey-detail-inner{display:none;}
-  .journey-detail.is-open .journey-detail-inner.is-active{display:block;}
-  .journey-detail-title{font-weight:800;color:var(--black);margin-bottom:10px;font-size:16px;}
-  .journey-signal-row{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:7px 0;border-bottom:1px solid rgba(22,21,18,0.08);color:var(--gray-700);}
-  .journey-signal-row:last-child{border-bottom:none;}
-  .journey-signal-row b{color:var(--black);}
-
   /* ---------- LEARN ---------- */
   .learn-grid{display:flex;flex-wrap:wrap;gap:14px 30px;}
   .learn-link{font-size:17px;font-weight:700;color:var(--black);padding-bottom:5px;border-bottom:2px solid transparent;transition:border-color .2s ease, color .2s ease;}
   .learn-link:hover{color:var(--orange);border-color:var(--orange);}
+
+  /* ---------- REPLAY: inline re-simulation, no popup ---------- */
+  .replay-btn{display:inline-flex;align-items:center;gap:10px;background:var(--black);color:var(--white);border:none;border-radius:100px;padding:16px 32px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:background .2s ease, transform .2s ease;}
+  .replay-btn:hover{background:var(--orange);transform:translateY(-2px);}
+  .replay-steps{margin-top:30px;max-width:460px;}
+  .replay-step{display:flex;align-items:center;gap:10px;padding:8px 0;opacity:0;transform:translateY(6px);transition:opacity .35s ease, transform .35s ease;font-size:14.5px;color:var(--gray-700);font-weight:600;}
+  .replay-step.is-visible{opacity:1;transform:translateY(0);}
+  .replay-step.is-final{font-weight:800;color:var(--black);font-size:16px;margin-top:6px;}
+  .replay-step.is-final.is-pass{color:var(--green);}
+  .replay-step.is-final.is-fail{color:var(--red);}
 
   /* ---------- FINAL CTA: the only call to action on the page, at the very end ---------- */
   .store-cta-final{padding:64px 24px 112px;text-align:center;border-top:1px solid var(--card-line);}
@@ -276,11 +314,12 @@
     .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
     .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
     .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
-    .store-hero{padding:96px 20px 40px;}
-    .store-block{padding:8px 20px 44px;}
-    .store-block-inner{padding-top:36px;}
-    .why-row,.blocker-row,.quickwin-row{font-size:15px;}
-    .comparison-row{gap:24px;}
+    .store-hero{padding:96px 20px 44px;}
+    .store-block{padding:8px 20px 48px;}
+    .store-block-inner{padding-top:40px;}
+    .why-row,.blocker-row,.quickwin-row,.whatif-row,.similar-row{font-size:15px;}
+    .sim-label{min-width:120px;font-size:13px;}
+    .decision-card{padding:36px 24px;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
   }
@@ -377,9 +416,7 @@
 
 <div id="mainContent" style="display:none;">
 
-  <!-- HERO: no explanatory paragraph, just the number, the plain-language
-       caption, and a two-second Read / Understand / Trust / Recommend
-       checklist. Detail lives further down, behind a click. -->
+  <!-- HERO: no score up front, just a live simulated read of the four stages. -->
   <section class="store-hero">
     <div class="store-hero-inner">
       <nav class="store-breadcrumb" aria-label="Breadcrumb">
@@ -389,82 +426,39 @@
         <div class="store-domain-label" id="storeDomainLabel"></div>
         <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
       </div>
-      <h1 class="store-name" id="storeName"></h1>
-      <div class="store-score-row">
-        <div class="store-score-num" id="heroScoreNum">--</div>
-        <div class="store-score-max">/100</div>
-      </div>
-      <div class="store-score-caption">How AI sees this store</div>
-      <div class="simple-journey" id="simpleJourney"></div>
+      <h1 class="store-h1">How AI sees <em id="storeNameEm"></em></h1>
+      <div id="simRows"></div>
     </div>
   </section>
 
-  <!-- WHY: four plain sentences, not eight progress bars. -->
+  <!-- RECOMMENDATION DECISION: one card, one verdict, not a number. -->
   <section class="store-block">
     <div class="store-block-inner">
-      <div class="store-label">Why</div>
-      <div id="whyList"></div>
-    </div>
-  </section>
-
-  <!-- DETAIL: collapsed by default. The eight factor bars are the technical
-       footnote, not the headline. -->
-  <section class="store-block store-detail" id="storeDetail">
-    <div class="store-block-inner">
-      <button type="button" class="store-detail-toggle" id="detailToggle" aria-expanded="false">
-        <span class="store-detail-toggle-label">Detail</span>
-        <span class="store-detail-toggle-icon">+</span>
-      </button>
-      <div class="store-detail-body" id="detailBody">
-        <div class="store-detail-body-inner">
-          <div class="store-detail-desc">The eight factors behind the score above, measured by the AI Commerce Score methodology v3.1.</div>
-          <div id="factorRows"></div>
-        </div>
+      <div class="store-label">Recommendation decision</div>
+      <div class="decision-card">
+        <span class="decision-icon" id="decisionIcon"></span>
+        <div class="decision-verdict" id="decisionVerdict"></div>
+        <div class="decision-reason-label">Reason</div>
+        <div class="decision-reason" id="decisionReason"></div>
       </div>
     </div>
   </section>
 
-  <!-- BIGGEST BLOCKERS: a short, ranked list, not forty checklist items. -->
+  <!-- WHY AI MADE THAT DECISION: a dissection, then a plain-language summary. -->
   <section class="store-block">
     <div class="store-block-inner">
-      <div class="store-label">Biggest blockers</div>
-      <div id="blockersList"></div>
+      <div class="store-label">Why AI made that decision</div>
+      <div id="examinedList"></div>
+      <div class="examined-arrow">&darr;</div>
+      <div class="examined-decision" id="examinedDecision"></div>
+
+      <div class="reasoning-label">Recommendation summary</div>
+      <div class="reasoning-bubble" id="reasoningBubble"></div>
+      <div class="reasoning-note">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
     </div>
   </section>
 
-  <!-- QUICK WINS -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <div class="store-label">Quick wins</div>
-      <div class="store-quickwins-head">Estimated impact</div>
-      <div id="quickWinsList"></div>
-    </div>
-  </section>
-
-  <!-- COMPARISON: a number means nothing without context. -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <div class="store-label">How this compares</div>
-      <div class="comparison-row">
-        <div class="comparison-item is-yours">
-          <div class="comparison-num" id="cmpYours">--</div>
-          <div class="comparison-label">Your store</div>
-        </div>
-        <div class="comparison-item">
-          <div class="comparison-num" id="cmpAvg">--</div>
-          <div class="comparison-label">Average</div>
-        </div>
-        <div class="comparison-item">
-          <div class="comparison-num" id="cmpTop">--</div>
-          <div class="comparison-label">Top 10 percent</div>
-        </div>
-      </div>
-      <div class="comparison-note" id="comparisonNote"></div>
-    </div>
-  </section>
-
-  <!-- RECOMMENDATION JOURNEY: the signature interactive piece. Click a stage
-       to expand why it passed or failed. -->
+  <!-- RECOMMENDATION JOURNEY: click a stage to see what is missing or confirmed. -->
   <section class="store-block">
     <div class="store-block-inner">
       <div class="store-label">Recommendation journey</div>
@@ -472,6 +466,56 @@
         <span class="journey-store-node">Store</span>
       </div>
       <div class="journey-detail" id="journeyDetail"></div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATION CONFIDENCE METER: a probability, not a score. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Recommendation confidence</div>
+      <div class="confidence-head">Would AI recommend this store?</div>
+      <div class="confidence-num" id="confidenceNum">--%</div>
+      <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
+    </div>
+  </section>
+
+  <!-- TOP 3 BLOCKERS: the biggest negative signals, not forty checklist items. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Top 3 blockers</div>
+      <div id="blockersList"></div>
+    </div>
+  </section>
+
+  <!-- WHAT WOULD CHANGE THE DECISION: a hypothetical, so the future is visible. -->
+  <section class="store-block" id="whatifSection">
+    <div class="store-block-inner">
+      <div class="store-label">What would change the decision</div>
+      <div id="whatifList"></div>
+    </div>
+  </section>
+
+  <!-- SIMILAR RECOMMENDED STORES -->
+  <section class="store-block" id="similarSection">
+    <div class="store-block-inner">
+      <div class="store-label">Stores AI recommends instead</div>
+      <div id="similarList"></div>
+    </div>
+  </section>
+
+  <!-- TECHNICAL FACTOR BREAKDOWN: collapsed by default, the footnote. -->
+  <section class="store-block store-detail" id="storeDetail">
+    <div class="store-block-inner">
+      <button type="button" class="store-detail-toggle" id="detailToggle" aria-expanded="false">
+        <span class="store-detail-toggle-label">Technical factor breakdown</span>
+        <span class="store-detail-toggle-icon">+</span>
+      </button>
+      <div class="store-detail-body" id="detailBody">
+        <div class="store-detail-body-inner">
+          <div class="store-detail-desc">The eight factors behind the decision above, measured by the AI Commerce Score methodology v3.1.</div>
+          <div id="factorRows"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -485,6 +529,14 @@
         <a href="/vocabulary" class="learn-link">Vocabulary</a>
         <a href="/research" class="learn-link">Research</a>
       </div>
+    </div>
+  </section>
+
+  <!-- REPLAY: watch the whole decision happen again, inline, no popup. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <button type="button" class="replay-btn" id="replayBtn">&#9658; Watch AI evaluate this store</button>
+      <div class="replay-steps" id="replaySteps"></div>
     </div>
   </section>
 
@@ -657,11 +709,10 @@
     window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
   })();
 
-  // Store detail: fetch one store's full record and render the whole page
-  // from it. The score-to-stage mapping below (Read / Understand / Trust /
-  // Recommend) is a deliberate simplification of the eight underlying
-  // factors into a two-second story; the full eight-factor breakdown still
-  // lives in the collapsed Detail section for anyone who wants it.
+  // Store detail, told as a decision rather than a report. Everything below
+  // is computed from one real record returned by /get-store?domain=; nothing
+  // is a real AI transcript, it is a rule-based summary of the signals the
+  // methodology actually measures.
   (function(){
     const BASE = "https://n8n-production-1d7c.up.railway.app/webhook";
 
@@ -676,71 +727,57 @@
       { key:'brand_score',   name:'External Authority Signals',         max: 5 }
     ];
 
-    // Four-stage funnel, reused in the hero checklist, the Why sentences,
-    // and the interactive journey below, so the story stays consistent
-    // wherever it appears on the page.
+    // Four-stage funnel, reused in the hero simulation, the dissection, and
+    // the interactive journey below. Sixty percent of a stage's max is the
+    // pass line; this is a deliberate simplification of the eight factors
+    // into one readable story, not a new scoring model.
     const STAGES = [
-      {
-        key:'read', label:'Read',
-        parts:['schema_score','content_score'], max:30,
-        passText:'AI can read and parse this store.',
-        failText:'AI struggles to read this store’s structure.',
-        signals: d => [
-          { label:'Structured data', pass: truthy(d.has_structured_data) },
-          { label:'Schema markup', pass: truthy(d.has_schema_markup) },
-          { label:'Open Graph tags', pass: truthy(d.has_og_tags) }
-        ]
-      },
-      {
-        key:'understand', label:'Understand',
-        parts:['visual_score','intent_score'], max:25,
-        passText:'AI understands the products.',
-        failText:'AI cannot clearly understand the products.',
-        signals: d => [
-          { label:'Pricing visible', pass: truthy(d.pricing_visible) },
-          { label:'Blog or content', pass: truthy(d.has_blog) },
-          { label:'FAQ page', pass: truthy(d.has_faq) }
-        ]
-      },
-      {
-        key:'trust', label:'Trust',
-        parts:['trust_score'], max:15,
-        passText:'AI can verify trust signals.',
-        failText:'AI cannot verify trust.',
-        signals: d => [
-          { label:'Reviews present', pass: truthy(d.has_reviews) },
-          { label:'Trust badges', pass: truthy(d.has_trust_badges) },
-          { label:'Return policy', pass: truthy(d.has_return_policy) }
-        ]
-      },
-      {
-        key:'recommend', label:'Recommend',
-        parts:['rec_score','brand_score','price_score'], max:30,
-        passText:'AI has strong recommendation signals.',
-        failText:'AI finds limited recommendation signals.',
-        signals: d => [
-          { label:'Shipping info', pass: truthy(d.has_shipping_info) },
-          { label:'Email capture', pass: truthy(d.has_email_capture) },
-          { label:'SSL / HTTPS', pass: truthy(d.has_ssl) }
-        ]
-      }
+      { key:'read', label:'Read', simLabel:'Reading', parts:['schema_score','content_score'], max:30,
+        passText:'AI can read and parse this store.', failText:'AI struggles to read this store\'s structure.',
+        reason:'Weak technical readability.' },
+      { key:'understand', label:'Understand', simLabel:'Understanding', parts:['visual_score','intent_score'], max:25,
+        passText:'AI understands the products.', failText:'AI cannot clearly understand the products.',
+        reason:'Unclear product understanding.' },
+      { key:'trust', label:'Trust', simLabel:'Trust', parts:['trust_score'], max:15,
+        passText:'AI can verify trust signals.', failText:'AI cannot verify trust.',
+        reason:'Low trust confidence.' },
+      { key:'recommend', label:'Recommend', simLabel:'Recommendation', parts:['rec_score','brand_score','price_score'], max:30,
+        passText:'AI has strong recommendation signals.', failText:'AI finds limited recommendation signals.',
+        reason:'Weak recommendation signals.' }
     ];
 
-    // Candidate opportunities. Only the ones that actually apply to this
-    // store are shown, ranked into Biggest Blockers (by impact) and Quick
-    // Wins (by estimated point gain) so the page surfaces a handful of
-    // things that matter rather than a long checklist.
-    const OPPORTUNITIES = [
-      { key:'reviews',   name:'Missing reviews',       fixName:'Add reviews',            impact:'high',   points:8, when: d => !truthy(d.has_reviews) },
-      { key:'pricing',   name:'Pricing not visible',   fixName:'Make pricing visible',    impact:'high',   points:4, when: d => !truthy(d.pricing_visible) },
-      { key:'intent',    name:'Generic positioning',    fixName:'Clarify positioning',     impact:'high',   points:5, when: d => Number(d.intent_score ?? 0) < 6 },
-      { key:'schema',    name:'Weak schema',            fixName:'Improve schema',          impact:'medium', points:6, when: d => Number(d.schema_score ?? 0) < 9 },
-      { key:'trustbadge',name:'No trust badges',        fixName:'Add trust badges',        impact:'medium', points:4, when: d => !truthy(d.has_trust_badges) },
-      { key:'return',    name:'No return policy',       fixName:'Add a return policy',     impact:'medium', points:3, when: d => !truthy(d.has_return_policy) },
-      { key:'brand',     name:'Weak brand authority',   fixName:'Build brand authority',   impact:'medium', points:3, when: d => Number(d.brand_score ?? 0) < 3 },
-      { key:'faq',       name:'No FAQ page',            fixName:'Add an FAQ',              impact:'low',    points:2, when: d => !truthy(d.has_faq) }
+    // The six concrete things AI is shown examining in the Why dissection.
+    const EXAMINED = [
+      { key:'products',  label:'Products',  check: d => Number(d.content_score ?? 0) >= 9 },
+      { key:'prices',    label:'Prices',     check: d => truthy(d.pricing_visible) },
+      { key:'images',    label:'Images',     check: d => Number(d.visual_score ?? 0) >= 9 },
+      { key:'reviews',   label:'Reviews',    check: d => truthy(d.has_reviews) },
+      { key:'authority', label:'Authority',  check: d => Number(d.brand_score ?? 0) >= 3 },
+      { key:'intent',    label:'Intent',     check: d => Number(d.intent_score ?? 0) >= 6 }
     ];
-    const IMPACT_WEIGHT = { high:3, medium:2, low:1 };
+
+    // Candidate opportunities. Only the ones that apply to this store are
+    // shown, ranked into Top 3 Blockers and What Would Change The Decision,
+    // and grouped by stage for the Missing / Confirmed lists in the journey.
+    const OPPORTUNITIES = [
+      { key:'reviews',    name:'Missing reviews',     fixName:'Add reviews',          itemLabel:'Reviews',        stage:'trust',      points:8, when: d => !truthy(d.has_reviews) },
+      { key:'pricing',    name:'Pricing not visible', fixName:'Make pricing visible', itemLabel:'Pricing',        stage:'understand', points:4, when: d => !truthy(d.pricing_visible) },
+      { key:'intent',     name:'Generic positioning', fixName:'Clarify positioning',  itemLabel:'Positioning',    stage:'recommend',  points:5, when: d => Number(d.intent_score ?? 0) < 6 },
+      { key:'schema',     name:'Weak schema',         fixName:'Improve schema',       itemLabel:'Schema',         stage:'read',       points:6, when: d => Number(d.schema_score ?? 0) < 9 },
+      { key:'trustbadge', name:'No trust badges',     fixName:'Add trust badges',     itemLabel:'Trust Badges',   stage:'trust',       points:4, when: d => !truthy(d.has_trust_badges) },
+      { key:'return',     name:'No return policy',    fixName:'Add a return policy',  itemLabel:'Return Policy', stage:'trust',       points:3, when: d => !truthy(d.has_return_policy) },
+      { key:'brand',      name:'Weak brand authority',fixName:'Build brand authority',itemLabel:'Brand Authority',stage:'recommend',  points:3, when: d => Number(d.brand_score ?? 0) < 3 },
+      { key:'faq',        name:'No FAQ page',         fixName:'Add an FAQ',           itemLabel:'FAQ',            stage:'understand',  points:2, when: d => !truthy(d.has_faq) }
+    ];
+
+    const REPLAY_STEPS = [
+      'Opening homepage...',
+      'Reading products...',
+      'Reading pricing...',
+      'Checking trust...',
+      'Checking schema...',
+      'Searching authority...'
+    ];
 
     const els = {
       loading: document.getElementById('loadingState'),
@@ -751,21 +788,28 @@
       bcDomain: document.getElementById('bcDomain'),
       domainLabel: document.getElementById('storeDomainLabel'),
       visitLink: document.getElementById('visitStoreLink'),
-      storeName: document.getElementById('storeName'),
-      heroScoreNum: document.getElementById('heroScoreNum'),
-      simpleJourney: document.getElementById('simpleJourney'),
-      whyList: document.getElementById('whyList'),
+      storeNameEm: document.getElementById('storeNameEm'),
+      simRows: document.getElementById('simRows'),
+      decisionIcon: document.getElementById('decisionIcon'),
+      decisionVerdict: document.getElementById('decisionVerdict'),
+      decisionReason: document.getElementById('decisionReason'),
+      examinedList: document.getElementById('examinedList'),
+      examinedDecision: document.getElementById('examinedDecision'),
+      reasoningBubble: document.getElementById('reasoningBubble'),
+      journeyRow: document.getElementById('journeyRow'),
+      journeyDetail: document.getElementById('journeyDetail'),
+      confidenceNum: document.getElementById('confidenceNum'),
+      confidenceBar: document.getElementById('confidenceBar'),
+      blockersList: document.getElementById('blockersList'),
+      whatifSection: document.getElementById('whatifSection'),
+      whatifList: document.getElementById('whatifList'),
+      similarSection: document.getElementById('similarSection'),
+      similarList: document.getElementById('similarList'),
       storeDetail: document.getElementById('storeDetail'),
       detailToggle: document.getElementById('detailToggle'),
       factorRows: document.getElementById('factorRows'),
-      blockersList: document.getElementById('blockersList'),
-      quickWinsList: document.getElementById('quickWinsList'),
-      cmpYours: document.getElementById('cmpYours'),
-      cmpAvg: document.getElementById('cmpAvg'),
-      cmpTop: document.getElementById('cmpTop'),
-      comparisonNote: document.getElementById('comparisonNote'),
-      journeyRow: document.getElementById('journeyRow'),
-      journeyDetail: document.getElementById('journeyDetail'),
+      replayBtn: document.getElementById('replayBtn'),
+      replaySteps: document.getElementById('replaySteps'),
       pageTitle: document.getElementById('pageTitle'),
       pageDesc: document.getElementById('pageDesc'),
       ogTitle: document.getElementById('ogTitle'),
@@ -774,7 +818,6 @@
     };
 
     function truthy(v){ return v === true || v === 'true' || v === 1 || v === '1'; }
-    function scoreClass(pct){ return pct >= 0.7 ? 'is-green' : pct >= 0.4 ? 'is-amber' : 'is-red'; }
     function scoreColor(pct){ return pct >= 0.7 ? 'var(--green)' : pct >= 0.4 ? 'var(--amber)' : 'var(--red)'; }
 
     function getDomain(){
@@ -804,76 +847,96 @@
       return OPPORTUNITIES.filter(o => o.when(data));
     }
 
+    function weakestStage(stages){
+      return stages.reduce((worst, s) => (s.pct < worst.pct ? s : worst), stages[0]);
+    }
+
     function countUp(el, target, duration){
       const start = performance.now();
       const from = Number(String(el.textContent).replace(/[^0-9.-]/g, '')) || 0;
       function step(now){
         const p = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(from + (target - from) * eased).toLocaleString('en-US');
+        el.textContent = Math.round(from + (target - from) * eased);
         if (p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
     }
 
-    function renderSimpleJourney(stages){
-      els.simpleJourney.innerHTML = stages.map(s =>
-        '<div class="simple-stage"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</div>'
+    // HERO: a staged, roughly three-second simulation of the four stages
+    // being read, not a spinner.
+    function runHeroSimulation(stages){
+      els.simRows.innerHTML = stages.map(s =>
+        '<div class="sim-row" data-row="' + s.key + '"><span class="sim-label">' + s.simLabel + '...</span>' +
+        '<span class="sim-bar-wrap"><span class="sim-bar-fill" data-target="' + Math.round(s.pct * 100) + '" style="background:' + scoreColor(s.pct) + ';"></span></span>' +
+        '<span class="sim-result ' + (s.key === 'recommend' ? (s.pass ? 'is-pass' : 'is-fail') : '') + '">' + (s.key === 'recommend' ? (s.pass ? '&#10003; Passed' : '&#10007; Failed') : '') + '</span></div>'
       ).join('');
-    }
-
-    function renderWhy(stages){
-      els.whyList.innerHTML = stages.map(s =>
-        '<div class="why-row"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span><span>' + (s.pass ? s.passText : s.failText) + '</span></div>'
-      ).join('');
-    }
-
-    function renderFactorRows(data){
-      els.factorRows.innerHTML = FACTORS.map(f => {
-        const score = Math.min(Number(data[f.key] ?? 0), f.max);
-        const pct = f.max > 0 ? score / f.max : 0;
-        return '<div class="factor-row"><div class="factor-left"><div class="factor-name">' + f.name + '</div><div class="factor-bar"><div class="factor-fill" style="width:0%;background:' + scoreColor(pct) + ';" data-target="' + Math.round(pct * 100) + '"></div></div></div><div class="factor-score" style="color:' + scoreColor(pct) + ';">' + score + '/' + f.max + '</div></div>';
-      }).join('');
-      requestAnimationFrame(() => {
+      const rowEls = Array.from(els.simRows.querySelectorAll('.sim-row'));
+      rowEls.forEach((row, i) => {
         setTimeout(() => {
-          els.factorRows.querySelectorAll('.factor-fill').forEach(el => { el.style.width = el.getAttribute('data-target') + '%'; });
-        }, 60);
+          row.classList.add('is-visible');
+          const fill = row.querySelector('.sim-bar-fill');
+          requestAnimationFrame(() => { fill.style.width = fill.getAttribute('data-target') + '%'; });
+          const result = row.querySelector('.sim-result');
+          if (result && result.textContent.trim()) setTimeout(() => result.classList.add('is-visible'), 550);
+        }, i * 650);
       });
     }
 
-    function renderBlockers(opps){
-      const top = opps.slice().sort((a, b) => (IMPACT_WEIGHT[b.impact] - IMPACT_WEIGHT[a.impact]) || (b.points - a.points)).slice(0, 3);
-      if (!top.length) {
-        els.blockersList.innerHTML = '<div class="why-row">No major blockers detected. This store covers the fundamentals.</div>';
-        return;
-      }
-      els.blockersList.innerHTML = top.map(o =>
-        '<div class="blocker-row"><span class="blocker-name">' + o.name + '</span><span class="blocker-impact is-' + o.impact + '">' + o.impact + ' impact</span></div>'
-      ).join('');
+    function renderDecision(stages, storeName){
+      const recommended = stages.every(s => s.pass);
+      const worst = weakestStage(stages);
+      els.decisionIcon.textContent = recommended ? '✓' : '✗';
+      els.decisionIcon.className = 'decision-icon ' + (recommended ? 'is-pass' : 'is-fail');
+      els.decisionVerdict.textContent = 'This store would probably ' + (recommended ? '' : 'not ') + 'be recommended.';
+      els.decisionReason.textContent = recommended ? 'Strong signals across read, understand, trust, and recommend.' : worst.reason;
+      return recommended;
     }
 
-    function renderQuickWins(opps){
-      const top = opps.slice().sort((a, b) => b.points - a.points).slice(0, 3);
-      if (!top.length) {
-        els.quickWinsList.innerHTML = '<div class="why-row">No quick wins left to surface right now.</div>';
-        return;
-      }
-      els.quickWinsList.innerHTML = top.map(o =>
-        '<div class="quickwin-row"><span class="quickwin-points">+' + o.points + '</span><span class="quickwin-name">' + o.fixName + '</span></div>'
-      ).join('');
+    function renderExamined(data, recommended){
+      els.examinedList.innerHTML = EXAMINED.map(sig => {
+        const pass = sig.check(data);
+        return '<div class="why-row"><span class="icon-pill ' + (pass ? 'is-pass' : 'is-fail') + '">' + (pass ? '&#10003;' : '&#10007;') + '</span><span>' + sig.label + '</span></div>';
+      }).join('');
+      els.examinedDecision.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
+      els.examinedDecision.className = 'examined-decision ' + (recommended ? 'is-pass' : 'is-fail');
     }
 
-    function renderJourney(stages, storeName){
+    function renderReasoning(stages, examinedPasses, recommended){
+      const passedNames = EXAMINED.filter(e => examinedPasses[e.key]).map(e => e.label.toLowerCase());
+      const line1 = passedNames.length
+        ? 'I found ' + passedNames.join(', ') + '.'
+        : 'I had trouble identifying what this store sells.';
+      const understandStage = stages.find(s => s.key === 'understand');
+      const line2 = understandStage.pass ? 'I understand what the store sells.' : 'I do not fully understand what the store sells.';
+      let html = '<p>' + line1 + '</p><p>' + line2 + '</p>';
+      if (!recommended) {
+        const worst = weakestStage(stages);
+        html += '<p>However...</p><p>' + worst.failText + '</p><p>Another merchant appears safer.</p>';
+      } else {
+        html += '<p>This store compares well on trust and clarity.</p>';
+      }
+      els.reasoningBubble.innerHTML = html;
+    }
+
+    function renderJourney(stages, storeName, opps){
       const nodes = stages.map(s =>
         '<span class="journey-arrow">&rarr;</span><button type="button" class="journey-node" data-stage="' + s.key + '"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</button>'
       ).join('');
       els.journeyRow.innerHTML = '<span class="journey-store-node">' + storeName + '</span>' + nodes;
 
       els.journeyDetail.innerHTML = stages.map(s => {
-        const signals = s.signals ? s.signals(window.__storeData || {}) : [];
+        const stageOpps = opps.filter(o => o.stage === s.key);
+        const listLabel = s.pass ? 'Confirmed' : 'Missing';
+        const items = s.pass
+          ? (stageOpps.length ? [] : ['Nothing missing'])
+          : stageOpps.map(o => o.itemLabel);
+        const itemsHtml = items.length
+          ? '<div class="journey-detail-items">' + items.map(i => '<span class="journey-detail-item">' + i + '</span>').join('') + '</div>'
+          : '';
         return '<div class="journey-detail-inner" data-stage-detail="' + s.key + '">' +
           '<div class="journey-detail-title">' + (s.pass ? s.passText : s.failText) + '</div>' +
-          signals.map(sig => '<div class="journey-signal-row"><span>' + sig.label + '</span><b>' + (sig.pass ? 'Yes' : 'No') + '</b></div>').join('') +
+          (itemsHtml ? '<div class="journey-detail-list-label">' + listLabel + '</div>' + itemsHtml : '') +
           '</div>';
       }).join('');
 
@@ -898,50 +961,90 @@
       });
     }
 
-    function renderComparison(score){
-      countUp(els.cmpYours, score, 900);
-      loadAverage();
-      loadTopDecile();
+    function renderConfidence(stages){
+      const product = stages.reduce((acc, s) => acc * Math.max(0.02, Math.min(1, s.pct)), 1);
+      const confidence = Math.max(1, Math.min(99, Math.round(product * 100)));
+      countUp(els.confidenceNum, confidence, 1200);
+      requestAnimationFrame(() => { els.confidenceBar.style.width = confidence + '%'; els.confidenceBar.style.background = scoreColor(confidence / 100); });
+      setTimeout(() => { els.confidenceNum.textContent = confidence + '%'; }, 1250);
     }
 
-    async function loadAverage(){
+    function renderBlockers(opps){
+      const top = opps.slice().sort((a, b) => b.points - a.points).slice(0, 3);
+      if (!top.length) {
+        els.blockersList.innerHTML = '<div class="why-row">No major blockers detected. This store covers the fundamentals.</div>';
+        return;
+      }
+      els.blockersList.innerHTML = top.map(o =>
+        '<div class="blocker-row"><span class="blocker-name">' + o.name + '</span><span class="blocker-impact">&minus;' + o.points + '</span></div>'
+      ).join('');
+    }
+
+    function renderWhatIf(score, opps){
+      const top = opps.slice().sort((a, b) => b.points - a.points).slice(0, 2);
+      if (!top.length) {
+        els.whatifSection.style.display = 'none';
+        return;
+      }
+      const rows = [];
+      const s1 = Math.min(100, score + top[0].points);
+      rows.push({ name: 'If you ' + top[0].fixName.toLowerCase(), to: s1 });
+      if (top[1]) {
+        const s2 = Math.min(100, score + top[1].points);
+        rows.push({ name: 'If you ' + top[1].fixName.toLowerCase(), to: s2 });
+        const sBoth = Math.min(100, score + top[0].points + top[1].points);
+        rows.push({ name: 'If you improved both', to: sBoth });
+      }
+      els.whatifList.innerHTML = rows.map(r =>
+        '<div class="whatif-row"><span class="whatif-name">' + r.name + '</span><span class="whatif-scores"><span class="from">' + score + '</span><span class="arrow">&rarr;</span><span class="to">' + r.to + '</span></span></div>'
+      ).join('');
+    }
+
+    async function loadSimilarStores(data, score){
       try {
-        const res = await fetch(BASE + '/site-stats', { headers: { 'Accept': 'application/json' } });
+        const niche = data.niche ? String(data.niche).toLowerCase().trim() : '';
+        const params = new URLSearchParams({ limit: '100', offset: '0', sort: 'newest' });
+        if (niche) params.set('niche', niche);
+        const res = await fetch(BASE + '/stores-list?' + params.toString(), { headers: { 'Accept': 'application/json' } });
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        const stats = Array.isArray(data) ? data[0] : (data && data.data ? data.data[0] : data);
-        if (stats && stats.avg_score != null) countUp(els.cmpAvg, Math.round(Number(stats.avg_score)), 900);
+        const json = await res.json();
+        const raw = json.stores || (Array.isArray(json) ? json : []);
+        const currentDomain = String(data.domain || '').toLowerCase();
+        const rows = raw
+          .map(r => ({ domain: String(r.domain || r.store_domain || '').replace(/^www\./, '').toLowerCase(), score: Number(r.total_score ?? r.score ?? 0) }))
+          .filter(r => r.domain && r.domain !== currentDomain && r.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+        if (!rows.length) { els.similarSection.style.display = 'none'; return; }
+        els.similarList.innerHTML = rows.map(r =>
+          '<div class="similar-row"><a class="similar-name" href="/store/' + r.domain + '">' + storeNameFromDomain(r.domain) + '</a><span class="similar-score">' + r.score + '</span></div>'
+        ).join('');
       } catch (e) {
-        // Live endpoint unreachable: leave the average blank rather than
-        // showing a made-up number.
+        els.similarSection.style.display = 'none';
       }
     }
 
-    // No dedicated percentile endpoint exists, so the top decile is
-    // estimated from a real sample of recently scanned stores rather than
-    // invented outright.
-    async function loadTopDecile(){
-      try {
-        const res = await fetch(BASE + '/stores-list?limit=100&offset=0&sort=newest', { headers: { 'Accept': 'application/json' } });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        const raw = data.stores || (Array.isArray(data) ? data : []);
-        const scores = raw.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0).sort((a, b) => a - b);
-        if (!scores.length) return;
-        const idx = Math.min(scores.length - 1, Math.floor(scores.length * 0.9));
-        countUp(els.cmpTop, scores[idx], 900);
-        els.comparisonNote.textContent = 'Average and top decile are measured live from recently scanned stores in the Atom Foundry index.';
-      } catch (e) {
-        // Live endpoint unreachable: leave the figure blank.
-      }
+    function renderFactorRows(data){
+      els.factorRows.innerHTML = FACTORS.map(f => {
+        const score = Math.min(Number(data[f.key] ?? 0), f.max);
+        const pct = f.max > 0 ? score / f.max : 0;
+        return '<div class="factor-row"><div class="factor-left"><div class="factor-name">' + f.name + '</div><div class="factor-bar"><div class="factor-fill" style="width:0%;background:' + scoreColor(pct) + ';" data-target="' + Math.round(pct * 100) + '"></div></div></div><div class="factor-score" style="color:' + scoreColor(pct) + ';">' + score + '/' + f.max + '</div></div>';
+      }).join('');
+    }
+
+    function runReplay(recommended){
+      els.replaySteps.innerHTML = REPLAY_STEPS.map(s => '<div class="replay-step">' + s + '</div>').join('') +
+        '<div class="replay-step is-final ' + (recommended ? 'is-pass' : 'is-fail') + '">Final decision: ' + (recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED') + '</div>';
+      const stepEls = Array.from(els.replaySteps.querySelectorAll('.replay-step'));
+      stepEls.forEach((s, i) => setTimeout(() => s.classList.add('is-visible'), i * 550));
     }
 
     function updateSeo(domain, storeName, score){
       const canonical = 'https://atomfoundry.dev/store/' + domain;
-      document.title = els.pageTitle.textContent = storeName + ' AI Commerce Score: ' + score + '/100. Atom Foundry';
-      els.pageDesc.content = storeName + ' (' + domain + ') scored ' + score + ' out of 100 on the AI Commerce Score. See if ChatGPT, Alexa for Shopping, and Google AI Mode can recommend it.';
-      els.ogTitle.content = storeName + ' AI Commerce Score: ' + score + '/100';
-      els.ogDesc.content = storeName + ' scored ' + score + ' out of 100. See the full AI Commerce Score breakdown.';
+      document.title = els.pageTitle.textContent = 'How AI sees ' + storeName + ': Atom Foundry';
+      els.pageDesc.content = 'Watch how an AI shopping agent reads, understands, and decides whether to recommend ' + storeName + ' (' + domain + ').';
+      els.ogTitle.content = 'How AI sees ' + storeName;
+      els.ogDesc.content = 'Watch how an AI shopping agent reads, understands, and decides whether to recommend ' + storeName + '.';
       els.canonicalLink.href = canonical;
 
       const prev = document.getElementById('storeLd');
@@ -953,7 +1056,7 @@
             "@type": "WebPage",
             "@id": canonical + "#webpage",
             "url": canonical,
-            "name": storeName + " AI Commerce Score",
+            "name": "How AI sees " + storeName,
             "about": { "@id": canonical + "#store" },
             "isPartOf": { "@id": "https://atomfoundry.dev/#website" }
           },
@@ -989,34 +1092,46 @@
     }
 
     function render(data){
-      window.__storeData = data;
       const domain = data.domain || getDomain();
       const storeName = storeNameFromDomain(domain);
       const score = Math.round(Number(data.total_score ?? 0));
 
       els.bcDomain.textContent = domain;
       els.domainLabel.textContent = domain;
-      // The outbound visit link is kept as-is on purpose: there is a known
-      // issue here the site owner flagged and wants to investigate
-      // separately, so this construction should not be changed without
-      // that follow-up.
+      // The outbound visit link is kept exactly as it was on the previous
+      // page on purpose. There is a known issue here the site owner flagged
+      // to investigate separately, so do not change this construction
+      // without that follow-up.
       els.visitLink.href = 'https://' + domain;
-      els.storeName.textContent = storeName;
-      els.heroScoreNum.textContent = score;
+      els.storeNameEm.textContent = storeName;
 
       const stages = computeStages(data);
-      renderSimpleJourney(stages);
-      renderWhy(stages);
-      renderFactorRows(data);
+      const examinedPasses = {};
+      EXAMINED.forEach(e => { examinedPasses[e.key] = e.check(data); });
       const opps = computeOpportunities(data);
+
+      runHeroSimulation(stages);
+      const recommended = renderDecision(stages, storeName);
+      renderExamined(data, recommended);
+      renderReasoning(stages, examinedPasses, recommended);
+      renderJourney(stages, storeName, opps);
+      renderConfidence(stages);
       renderBlockers(opps);
-      renderQuickWins(opps);
-      renderComparison(score);
-      renderJourney(stages, storeName);
+      renderWhatIf(score, opps);
+      loadSimilarStores(data, score);
+      renderFactorRows(data);
       updateSeo(domain, storeName, score);
+
+      if (els.replayBtn) els.replayBtn.addEventListener('click', () => runReplay(recommended));
 
       els.loading.style.display = 'none';
       els.main.style.display = 'block';
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          els.factorRows.querySelectorAll('.factor-fill').forEach(el => { el.style.width = el.getAttribute('data-target') + '%'; });
+        }, 60);
+      });
     }
 
     if (els.detailToggle) {
@@ -1043,7 +1158,7 @@
       } catch (e) {
         els.loading.style.display = 'none';
         els.notFound.style.display = 'block';
-        els.notFoundMsg.textContent = 'We have not scanned ' + domain + ' yet. Run a free scan to generate this store’s AI Commerce Score report.';
+        els.notFoundMsg.textContent = 'We have not scanned ' + domain + ' yet. Run a free scan to generate this store\'s AI Commerce Score report.';
         els.notFoundLink.href = '/#score';
       }
     }
