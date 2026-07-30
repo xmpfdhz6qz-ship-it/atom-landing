@@ -137,8 +137,8 @@
 
   /* ---------- SHARED SECTION RHYTHM: thin dividers, generous whitespace,
      an editorial reading column, no boxed dashboard cards, no popups. ---------- */
-  .store-block{padding:8px 24px 64px;border-top:1px solid var(--card-line);}
-  .store-block-inner{max-width:720px;margin:0 auto;padding-top:52px;}
+  .store-block{padding:8px 24px 44px;border-top:1px solid var(--card-line);}
+  .store-block-inner{max-width:720px;margin:0 auto;padding-top:36px;}
   .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:22px;}
   .icon-pill{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
   .icon-pill.is-pass{background:rgba(29,158,117,0.15);color:var(--green);}
@@ -148,7 +148,7 @@
 
   /* ---------- HERO: no score up front. A short simulated read of the four
      stages, staged in over about three seconds. ---------- */
-  .store-hero{padding:140px 24px 60px;}
+  .store-hero{padding:140px 24px 40px;}
   .store-hero-inner{max-width:720px;margin:0 auto;}
   .store-breadcrumb{font-size:12px;color:var(--gray-500);margin-bottom:24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
   .store-breadcrumb a{color:var(--gray-500);transition:color .2s ease;}
@@ -156,8 +156,15 @@
   .store-top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
   .store-domain-label{font-size:14px;font-weight:700;color:var(--gray-700);}
   .store-visit-link{font-size:13px;font-weight:800;color:var(--orange);white-space:nowrap;}
-  .store-h1{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-0.02em;margin-bottom:40px;line-height:1.2;}
+  .store-h1{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-0.02em;margin-bottom:22px;line-height:1.2;}
   .store-h1 em{color:var(--orange);}
+  /* Small, unobtrusive: the score still needs to be findable without
+     scrolling, it just should not be the headline any more. */
+  .hero-meta-row{display:flex;gap:32px;flex-wrap:wrap;margin-bottom:28px;}
+  .hero-meta-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:4px;}
+  .hero-meta-value{font-family:var(--serif);font-weight:800;font-size:19px;}
+  .hero-meta-value.is-pass{color:var(--green);}
+  .hero-meta-value.is-fail{color:var(--red);}
   .sim-row{display:flex;align-items:center;gap:16px;padding:10px 0;opacity:0;transform:translateY(6px);transition:opacity .4s ease, transform .4s ease;}
   .sim-row.is-visible{opacity:1;transform:translateY(0);}
   .sim-label{font-size:15px;font-weight:700;color:var(--gray-700);min-width:150px;flex-shrink:0;}
@@ -229,11 +236,19 @@
   .whatif-scores .to{color:var(--green);}
 
   /* ---------- SIMILAR RECOMMENDED STORES ---------- */
-  .similar-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--card-line);}
-  .similar-row:last-child{border-bottom:none;}
+  .similar-item{padding:16px 0;border-bottom:1px solid var(--card-line);}
+  .similar-item:last-child{border-bottom:none;}
+  .similar-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px;}
   .similar-name{font-size:17px;font-weight:700;transition:color .2s ease;}
   .similar-name:hover{color:var(--orange);}
   .similar-score{font-family:var(--serif);font-weight:800;font-size:19px;color:var(--green);}
+  .similar-why-btn{font-size:12.5px;font-weight:700;color:var(--gray-500);background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:3px;padding:0;}
+  .similar-why-btn:hover{color:var(--orange);}
+  .similar-detail{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease, opacity .3s ease, padding .35s ease;}
+  .similar-detail.is-open{max-height:160px;opacity:1;padding-top:14px;}
+  .similar-signal-list{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;}
+  .similar-signal-chip{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
+  .similar-compare-link{font-size:13px;font-weight:800;color:var(--orange);}
 
   /* ---------- TECHNICAL FACTOR BREAKDOWN: collapsed by default ---------- */
   .store-detail-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;color:var(--black);}
@@ -267,8 +282,11 @@
   .replay-step.is-final.is-pass{color:var(--green);}
   .replay-step.is-final.is-fail{color:var(--red);}
 
-  /* ---------- FINAL CTA: the only call to action on the page, at the very end ---------- */
-  .store-cta-final{padding:64px 24px 112px;text-align:center;border-top:1px solid var(--card-line);}
+  /* ---------- FINAL CTA: the only call to action on the page, at the very end.
+     The report is a simulation of a decision, so the close should offer the
+     same thing, not a generic scan button. ---------- */
+  .store-cta-final{padding:48px 24px 80px;text-align:center;border-top:1px solid var(--card-line);}
+  .store-cta-lead{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
   .store-cta-btn{display:inline-block;padding:20px 48px;border-radius:100px;background:var(--black);color:var(--white);font-weight:800;font-size:16px;transition:background .2s ease, transform .2s ease;}
   .store-cta-btn:hover{background:var(--orange);transform:translateY(-2px);}
   .store-cta-sub{font-size:13px;color:var(--gray-500);margin-top:18px;}
@@ -314,10 +332,10 @@
     .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
     .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
     .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
-    .store-hero{padding:96px 20px 44px;}
-    .store-block{padding:8px 20px 48px;}
-    .store-block-inner{padding-top:40px;}
-    .why-row,.blocker-row,.quickwin-row,.whatif-row,.similar-row{font-size:15px;}
+    .store-hero{padding:96px 20px 28px;}
+    .store-block{padding:8px 20px 32px;}
+    .store-block-inner{padding-top:28px;}
+    .why-row,.blocker-row,.quickwin-row,.whatif-row{font-size:15px;}
     .sim-label{min-width:120px;font-size:13px;}
     .decision-card{padding:36px 24px;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
@@ -427,7 +445,27 @@
         <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
       </div>
       <h1 class="store-h1">How AI sees <em id="storeNameEm"></em></h1>
+      <div class="hero-meta-row" id="heroMetaRow">
+        <div>
+          <div class="hero-meta-label">Recommendation</div>
+          <div class="hero-meta-value" id="heroMetaRec">--</div>
+        </div>
+        <div>
+          <div class="hero-meta-label">AI Commerce Score</div>
+          <div class="hero-meta-value" id="heroMetaScore">--</div>
+        </div>
+      </div>
       <div id="simRows"></div>
+    </div>
+  </section>
+
+  <!-- WATCH AI EVALUATE THIS STORE: the biggest feature on the page, so it
+       runs right under the hero, inline, no popup. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Watch it happen</div>
+      <button type="button" class="replay-btn" id="replayBtn">&#9658; Watch AI evaluate this store</button>
+      <div class="replay-steps" id="replaySteps"></div>
     </div>
   </section>
 
@@ -472,7 +510,7 @@
   <!-- RECOMMENDATION CONFIDENCE METER: a probability, not a score. -->
   <section class="store-block">
     <div class="store-block-inner">
-      <div class="store-label">Recommendation confidence</div>
+      <div class="store-label">Recommendation probability</div>
       <div class="confidence-head">Would AI recommend this store?</div>
       <div class="confidence-num" id="confidenceNum">--%</div>
       <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
@@ -532,17 +570,12 @@
     </div>
   </section>
 
-  <!-- REPLAY: watch the whole decision happen again, inline, no popup. -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <button type="button" class="replay-btn" id="replayBtn">&#9658; Watch AI evaluate this store</button>
-      <div class="replay-steps" id="replaySteps"></div>
-    </div>
-  </section>
-
-  <!-- CTA: the only call to action on the page, at the very end. -->
+  <!-- CTA: the only call to action on the page, at the very end. This is a
+       simulation of a decision, not an audit, so the close offers the same
+       thing rather than a generic scan button. -->
   <section class="store-cta-final">
-    <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">Scan my store</a>
+    <div class="store-cta-lead">Curious how AI sees your store?</div>
+    <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">&#9658; Start your AI Evaluation</a>
     <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
   </section>
 
@@ -789,6 +822,8 @@
       domainLabel: document.getElementById('storeDomainLabel'),
       visitLink: document.getElementById('visitStoreLink'),
       storeNameEm: document.getElementById('storeNameEm'),
+      heroMetaRec: document.getElementById('heroMetaRec'),
+      heroMetaScore: document.getElementById('heroMetaScore'),
       simRows: document.getElementById('simRows'),
       decisionIcon: document.getElementById('decisionIcon'),
       decisionVerdict: document.getElementById('decisionVerdict'),
@@ -923,7 +958,13 @@
       const nodes = stages.map(s =>
         '<span class="journey-arrow">&rarr;</span><button type="button" class="journey-node" data-stage="' + s.key + '"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</button>'
       ).join('');
-      els.journeyRow.innerHTML = '<span class="journey-store-node">' + storeName + '</span>' + nodes;
+      // Homepage and Products are the plain lead-in steps AI takes before any
+      // of the four scored stages begin, so the journey reads as the whole
+      // visit rather than starting mid-story.
+      els.journeyRow.innerHTML =
+        '<span class="journey-store-node">Homepage</span>' +
+        '<span class="journey-arrow">&rarr;</span><span class="journey-store-node">Products</span>' +
+        nodes;
 
       els.journeyDetail.innerHTML = stages.map(s => {
         const stageOpps = opps.filter(o => o.stage === s.key);
@@ -1016,9 +1057,47 @@
           .sort((a, b) => b.score - a.score)
           .slice(0, 3);
         if (!rows.length) { els.similarSection.style.display = 'none'; return; }
-        els.similarList.innerHTML = rows.map(r =>
-          '<div class="similar-row"><a class="similar-name" href="/store/' + r.domain + '">' + storeNameFromDomain(r.domain) + '</a><span class="similar-score">' + r.score + '</span></div>'
+        els.similarList.innerHTML = rows.map((r, i) =>
+          '<div class="similar-item">' +
+            '<div class="similar-head">' +
+              '<a class="similar-name" href="/store/' + r.domain + '">' + storeNameFromDomain(r.domain) + '</a>' +
+              '<span class="similar-score">' + r.score + '</span>' +
+            '</div>' +
+            '<button type="button" class="similar-why-btn" data-idx="' + i + '" data-domain="' + r.domain + '">Why?</button>' +
+            '<div class="similar-detail" id="similarDetail' + i + '"></div>' +
+          '</div>'
         ).join('');
+
+        // Reviews / Trust / Brand are fetched live per competitor (its own
+        // /get-store record), not fabricated, so this can only claim what it
+        // actually knows.
+        els.similarList.querySelectorAll('.similar-why-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const idx = btn.dataset.idx;
+            const detail = document.getElementById('similarDetail' + idx);
+            const willOpen = !detail.classList.contains('is-open');
+            detail.classList.toggle('is-open', willOpen);
+            if (willOpen && !detail.dataset.loaded) {
+              detail.dataset.loaded = '1';
+              detail.textContent = 'Loading...';
+              try {
+                const res2 = await fetch(BASE + '/get-store?domain=' + encodeURIComponent(btn.dataset.domain), { headers: { 'Accept': 'application/json' } });
+                const json2 = await res2.json();
+                const d2 = Array.isArray(json2) ? json2[0] : (json2 && json2.data ? json2.data[0] : json2);
+                const checks = [
+                  { label:'Reviews', pass: truthy(d2.has_reviews) },
+                  { label:'Trust', pass: Number(d2.trust_score ?? 0) >= 9 },
+                  { label:'Brand', pass: Number(d2.brand_score ?? 0) >= 3 }
+                ];
+                detail.innerHTML = '<div class="similar-signal-list">' +
+                  checks.map(c => '<span class="similar-signal-chip"><span class="icon-pill ' + (c.pass ? 'is-pass' : 'is-fail') + '">' + (c.pass ? '&#10003;' : '&#10007;') + '</span>' + c.label + '</span>').join('') +
+                  '</div><a class="similar-compare-link" href="/store/' + btn.dataset.domain + '">Compare &rarr;</a>';
+              } catch (e) {
+                detail.innerHTML = 'Could not load this comparison.';
+              }
+            }
+          });
+        });
       } catch (e) {
         els.similarSection.style.display = 'none';
       }
@@ -1112,6 +1191,14 @@
 
       runHeroSimulation(stages);
       const recommended = renderDecision(stages, storeName);
+      // Small and unobtrusive, but present: media, agencies, and store
+      // owners will still want the number, it just should not be the
+      // headline any more.
+      if (els.heroMetaRec) {
+        els.heroMetaRec.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
+        els.heroMetaRec.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
+      }
+      if (els.heroMetaScore) els.heroMetaScore.textContent = score;
       renderExamined(data, recommended);
       renderReasoning(stages, examinedPasses, recommended);
       renderJourney(stages, storeName, opps);
