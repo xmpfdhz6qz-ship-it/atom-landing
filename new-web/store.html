@@ -169,11 +169,10 @@
   .sim-row.is-visible{opacity:1;transform:translateY(0);}
   .sim-label{font-size:15px;font-weight:700;color:var(--gray-700);min-width:150px;flex-shrink:0;}
   .sim-bar-wrap{flex:1;height:9px;background:var(--card);border-radius:100px;overflow:hidden;}
-  .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width .8s cubic-bezier(.34,1.1,.64,1);}
-  .sim-result{font-size:13px;font-weight:800;min-width:78px;text-align:right;opacity:0;transition:opacity .3s ease;flex-shrink:0;}
-  .sim-result.is-visible{opacity:1;}
-  .sim-result.is-pass{color:var(--green);}
-  .sim-result.is-fail{color:var(--red);}
+  .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.5s cubic-bezier(.4,0,.2,1);}
+  /* Revealed only once every row above has finished filling. */
+  .hero-verdict-reveal{margin-top:8px;opacity:0;max-height:0;overflow:hidden;transition:opacity .5s ease, max-height .5s ease;}
+  .hero-verdict-reveal.is-visible{opacity:1;max-height:100px;}
 
   /* ---------- RECOMMENDATION DECISION: one card, one verdict ---------- */
   .decision-card{max-width:480px;margin:0 auto;text-align:center;padding:48px 32px;background:var(--card);border-radius:14px;}
@@ -196,11 +195,24 @@
   .reasoning-bubble p:last-child{margin-bottom:0;}
   .reasoning-note{font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
 
-  /* ---------- RECOMMENDATION JOURNEY: the signature interactive piece ---------- */
-  .journey-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
-  .journey-store-node{font-weight:800;font-size:15px;color:var(--gray-700);padding-right:2px;}
-  .journey-arrow{color:var(--gray-500);font-size:14px;}
-  .journey-node{display:flex;align-items:center;gap:9px;padding:12px 20px;border-radius:100px;background:var(--card);font-size:15px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--black);transition:background .2s ease, color .2s ease, transform .2s ease;}
+  /* ---------- RECOMMENDATION JOURNEY: the signature interactive piece.
+     One continuous line, square boxes, and each box slides in in turn. ---------- */
+  .journey-row{display:flex;align-items:center;flex-wrap:nowrap;gap:8px;margin-bottom:24px;overflow-x:auto;padding-bottom:4px;}
+  .journey-store-node{
+    display:flex;align-items:center;flex-shrink:0;font-weight:800;font-size:14px;color:var(--gray-700);
+    padding:12px 18px;border-radius:var(--radius);background:var(--off-white);
+    opacity:0;transform:translateX(-8px);transition:opacity .4s ease, transform .4s ease;
+  }
+  .journey-store-node.is-visible{opacity:1;transform:translateX(0);}
+  .journey-arrow{color:var(--gray-500);font-size:14px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
+  .journey-arrow.is-visible{opacity:1;}
+  .journey-node{
+    display:flex;align-items:center;gap:9px;flex-shrink:0;padding:12px 20px;border-radius:var(--radius);
+    background:var(--card);font-size:15px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--black);
+    opacity:0;transform:translateX(-8px);
+    transition:background .2s ease, color .2s ease, transform .2s ease, opacity .4s ease;
+  }
+  .journey-node.is-visible{opacity:1;transform:translateX(0);}
   .journey-node:hover{transform:translateY(-2px);}
   .journey-node.is-open{background:var(--black);color:var(--white);}
   .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
@@ -281,15 +293,28 @@
   .replay-step.is-final{font-weight:800;color:var(--black);font-size:16px;margin-top:6px;}
   .replay-step.is-final.is-pass{color:var(--green);}
   .replay-step.is-final.is-fail{color:var(--red);}
+  /* A small pulsing dot while a step is the one currently being processed,
+     so replaying visibly looks like work happening, not just text fading in. */
+  .replay-step-dot{width:7px;height:7px;border-radius:50%;background:var(--gray-500);flex-shrink:0;transition:background .2s ease;}
+  .replay-step.is-active .replay-step-dot{background:var(--orange);animation:replay-pulse .7s ease infinite;}
+  .replay-step.is-final.is-pass .replay-step-dot{background:var(--green);animation:none;}
+  .replay-step.is-final.is-fail .replay-step-dot{background:var(--red);animation:none;}
+  @keyframes replay-pulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
 
-  /* ---------- FINAL CTA: the only call to action on the page, at the very end.
-     The report is a simulation of a decision, so the close should offer the
-     same thing, not a generic scan button. ---------- */
-  .store-cta-final{padding:48px 24px 80px;text-align:center;border-top:1px solid var(--card-line);}
+  /* ---------- FINAL CTA: the only call to action on the page, at the very end,
+     styled like the landing page's own score card. The report is a
+     simulation of a decision, so the close should offer the same thing,
+     not a generic scan button. ---------- */
+  .store-cta-final{padding:16px 24px 64px;}
+  .store-cta-box{max-width:820px;margin:0 auto;text-align:center;background:var(--card);border-radius:var(--radius);padding:48px 40px;}
   .store-cta-lead{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
   .store-cta-btn{display:inline-block;padding:20px 48px;border-radius:100px;background:var(--black);color:var(--white);font-weight:800;font-size:16px;transition:background .2s ease, transform .2s ease;}
   .store-cta-btn:hover{background:var(--orange);transform:translateY(-2px);}
   .store-cta-sub{font-size:13px;color:var(--gray-500);margin-top:18px;}
+
+  /* ---------- SOURCE ROW: the domain and outbound link, moved to the very
+     end of the page rather than the hero. ---------- */
+  .store-source-row{max-width:720px;margin:0 auto;padding:32px 24px 64px;}
 
   /* ---------- STANDARD SITE FOOTER (verbatim boilerplate, same as every other page) ---------- */
   footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
@@ -434,28 +459,23 @@
 
 <div id="mainContent" style="display:none;">
 
-  <!-- HERO: no score up front, just a live simulated read of the four stages. -->
+  <!-- HERO: no score-as-headline, just a live simulated read of the four
+       stages. The score stays present, small, in the meta row; the domain
+       and outbound link move to the very end of the page. -->
   <section class="store-hero">
     <div class="store-hero-inner">
-      <nav class="store-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a><span>/</span><a href="/stores">Stores</a><span>/</span><span id="bcDomain"></span>
-      </nav>
-      <div class="store-top-row">
-        <div class="store-domain-label" id="storeDomainLabel"></div>
-        <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
-      </div>
       <h1 class="store-h1">How AI sees <em id="storeNameEm"></em></h1>
       <div class="hero-meta-row" id="heroMetaRow">
-        <div>
-          <div class="hero-meta-label">Recommendation</div>
-          <div class="hero-meta-value" id="heroMetaRec">--</div>
-        </div>
         <div>
           <div class="hero-meta-label">AI Commerce Score</div>
           <div class="hero-meta-value" id="heroMetaScore">--</div>
         </div>
       </div>
       <div id="simRows"></div>
+      <div class="hero-verdict-reveal" id="heroVerdictReveal">
+        <div class="hero-meta-label">Recommendation</div>
+        <div class="hero-meta-value" id="heroVerdictValue">--</div>
+      </div>
     </div>
   </section>
 
@@ -570,14 +590,29 @@
     </div>
   </section>
 
-  <!-- CTA: the only call to action on the page, at the very end. This is a
-       simulation of a decision, not an audit, so the close offers the same
-       thing rather than a generic scan button. -->
+  <!-- CTA: the only call to action on the page, at the very end. Styled like
+       the landing page's own score card, just with this page's copy. This is
+       a simulation of a decision, not an audit, so the close offers the
+       same thing rather than a generic scan button. -->
   <section class="store-cta-final">
-    <div class="store-cta-lead">Curious how AI sees your store?</div>
-    <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">&#9658; Start your AI Evaluation</a>
-    <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
+    <div class="store-cta-box">
+      <div class="store-cta-lead">Curious how AI sees your store?</div>
+      <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">&#9658; Start your AI Evaluation</a>
+      <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
+    </div>
   </section>
+
+  <!-- Source: the domain itself and the outbound link, kept modest at the
+       very end rather than as the hero's headline. -->
+  <div class="store-source-row">
+    <nav class="store-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/stores">Stores</a><span>/</span><span id="bcDomain"></span>
+    </nav>
+    <div class="store-top-row">
+      <div class="store-domain-label" id="storeDomainLabel"></div>
+      <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
+    </div>
+  </div>
 
 </div>
 
@@ -822,7 +857,8 @@
       domainLabel: document.getElementById('storeDomainLabel'),
       visitLink: document.getElementById('visitStoreLink'),
       storeNameEm: document.getElementById('storeNameEm'),
-      heroMetaRec: document.getElementById('heroMetaRec'),
+      heroVerdictReveal: document.getElementById('heroVerdictReveal'),
+      heroVerdictValue: document.getElementById('heroVerdictValue'),
       heroMetaScore: document.getElementById('heroMetaScore'),
       simRows: document.getElementById('simRows'),
       decisionIcon: document.getElementById('decisionIcon'),
@@ -898,24 +934,38 @@
       requestAnimationFrame(step);
     }
 
-    // HERO: a staged, roughly three-second simulation of the four stages
-    // being read, not a spinner.
-    function runHeroSimulation(stages){
-      els.simRows.innerHTML = stages.map(s =>
-        '<div class="sim-row" data-row="' + s.key + '"><span class="sim-label">' + s.simLabel + '...</span>' +
-        '<span class="sim-bar-wrap"><span class="sim-bar-fill" data-target="' + Math.round(s.pct * 100) + '" style="background:' + scoreColor(s.pct) + ';"></span></span>' +
-        '<span class="sim-result ' + (s.key === 'recommend' ? (s.pass ? 'is-pass' : 'is-fail') : '') + '">' + (s.key === 'recommend' ? (s.pass ? '&#10003; Passed' : '&#10007; Failed') : '') + '</span></div>'
-      ).join('');
-      const rowEls = Array.from(els.simRows.querySelectorAll('.sim-row'));
-      rowEls.forEach((row, i) => {
-        setTimeout(() => {
-          row.classList.add('is-visible');
-          const fill = row.querySelector('.sim-bar-fill');
-          requestAnimationFrame(() => { fill.style.width = fill.getAttribute('data-target') + '%'; });
-          const result = row.querySelector('.sim-result');
-          if (result && result.textContent.trim()) setTimeout(() => result.classList.add('is-visible'), 550);
-        }, i * 650);
-      });
+    // HERO: rows appear one at a time. Each row's bar takes 1.5s to fill
+    // before the next row is even shown, so the simulation reads as a real
+    // sequence (Reading, then Understanding, then Trust, then
+    // Recommendation) rather than four bars animating in parallel. The
+    // returned promise resolves only once every row has finished, so the
+    // caller can reveal the verdict after the simulation, not before it.
+    function wait(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+
+    async function runHeroSimulation(stages){
+      els.simRows.innerHTML = '';
+      for (const s of stages) {
+        const row = document.createElement('div');
+        row.className = 'sim-row';
+        row.dataset.row = s.key;
+        row.innerHTML = '<span class="sim-label">' + s.simLabel + '...</span>' +
+          '<span class="sim-bar-wrap"><span class="sim-bar-fill" data-target="' + Math.round(s.pct * 100) + '" style="background:' + scoreColor(s.pct) + ';"></span></span>';
+        els.simRows.appendChild(row);
+
+        await wait(20);
+        row.classList.add('is-visible');
+        const fill = row.querySelector('.sim-bar-fill');
+        await wait(20);
+        fill.style.width = fill.getAttribute('data-target') + '%';
+        await wait(1500);
+      }
+    }
+
+    function revealHeroVerdict(recommended){
+      if (!els.heroVerdictReveal || !els.heroVerdictValue) return;
+      els.heroVerdictValue.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
+      els.heroVerdictValue.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
+      els.heroVerdictReveal.classList.add('is-visible');
     }
 
     function renderDecision(stages, storeName){
@@ -965,6 +1015,11 @@
         '<span class="journey-store-node">Homepage</span>' +
         '<span class="journey-arrow">&rarr;</span><span class="journey-store-node">Products</span>' +
         nodes;
+
+      // Nodes and arrows slide/fade in left to right, one at a time, so the
+      // whole visit reads as something that is actively happening.
+      const journeyEls = Array.from(els.journeyRow.children);
+      journeyEls.forEach((el, i) => setTimeout(() => el.classList.add('is-visible'), i * 160));
 
       els.journeyDetail.innerHTML = stages.map(s => {
         const stageOpps = opps.filter(o => o.stage === s.key);
@@ -1112,10 +1167,19 @@
     }
 
     function runReplay(recommended){
-      els.replaySteps.innerHTML = REPLAY_STEPS.map(s => '<div class="replay-step">' + s + '</div>').join('') +
-        '<div class="replay-step is-final ' + (recommended ? 'is-pass' : 'is-fail') + '">Final decision: ' + (recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED') + '</div>';
+      const dot = '<span class="replay-step-dot"></span>';
+      els.replaySteps.innerHTML = REPLAY_STEPS.map(s => '<div class="replay-step">' + dot + s + '</div>').join('') +
+        '<div class="replay-step is-final ' + (recommended ? 'is-pass' : 'is-fail') + '">' + dot + 'Final decision: ' + (recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED') + '</div>';
       const stepEls = Array.from(els.replaySteps.querySelectorAll('.replay-step'));
-      stepEls.forEach((s, i) => setTimeout(() => s.classList.add('is-visible'), i * 550));
+      // Each step pulses as "active" while it is being worked on, then
+      // settles once the next step starts, so the replay visibly looks like
+      // it is processing rather than just fading lines of text in.
+      stepEls.forEach((s, i) => {
+        setTimeout(() => {
+          s.classList.add('is-visible', 'is-active');
+          setTimeout(() => s.classList.remove('is-active'), 480);
+        }, i * 550);
+      });
     }
 
     function updateSeo(domain, storeName, score){
@@ -1189,16 +1253,13 @@
       EXAMINED.forEach(e => { examinedPasses[e.key] = e.check(data); });
       const opps = computeOpportunities(data);
 
-      runHeroSimulation(stages);
-      const recommended = renderDecision(stages, storeName);
-      // Small and unobtrusive, but present: media, agencies, and store
-      // owners will still want the number, it just should not be the
-      // headline any more.
-      if (els.heroMetaRec) {
-        els.heroMetaRec.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
-        els.heroMetaRec.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
-      }
+      const recommended = stages.every(s => s.pass);
+      // The score stays small and unobtrusive in the hero (media, agencies,
+      // and store owners will still want the number), but the verdict only
+      // reveals itself once the simulation has actually finished running.
       if (els.heroMetaScore) els.heroMetaScore.textContent = score;
+      runHeroSimulation(stages).then(() => revealHeroVerdict(recommended));
+      renderDecision(stages, storeName);
       renderExamined(data, recommended);
       renderReasoning(stages, examinedPasses, recommended);
       renderJourney(stages, storeName, opps);
