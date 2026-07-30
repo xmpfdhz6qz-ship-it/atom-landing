@@ -176,8 +176,7 @@
   .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width .9s cubic-bezier(.4,0,.2,1);}
   /* Revealed only once every row above has finished filling. The reason
      line fades in a beat after the result itself. */
-  .hero-verdict-reveal{margin-top:8px;opacity:0;max-height:0;overflow:hidden;transition:opacity .5s ease, max-height .5s ease;}
-  .hero-verdict-reveal.is-visible{opacity:1;max-height:160px;}
+  #heroVerdictValue{font-size:clamp(36px,4.6vw,52px);margin-bottom:20px;}
   .hero-verdict-reason{margin-top:12px;font-size:16px;font-weight:700;color:var(--gray-700);opacity:0;transform:translateY(6px);transition:opacity .5s ease, transform .5s ease;max-width:640px;}
   .hero-verdict-reason.is-visible{opacity:1;transform:translateY(0);}
 
@@ -205,31 +204,21 @@
   .journey-store-node.is-visible{opacity:1;transform:translateX(0);}
   .journey-arrow{display:flex;align-items:center;color:var(--gray-500);font-size:13px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
   .journey-arrow.is-visible{opacity:1;}
-  /* Tabs read as distinctly different objects from the plain flow steps:
-     their own darker resting background and a real drop shadow, not just a
-     hover-only tint, so it is obvious before the pointer ever arrives. */
+  /* Nothing here clicks or unfolds: every stage's own pass/fail marker sits
+     plainly in the flow, and everything AI found is already laid out below,
+     fully open, all at once. */
   .journey-node{
     display:flex;align-items:center;gap:7px;flex-shrink:0;padding:10px 14px;
-    border-radius:var(--radius) var(--radius) 0 0;
-    background:var(--card);font-size:13.5px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--gray-700);
-    box-shadow:0 6px 14px -6px rgba(22,21,18,0.4);
+    border-radius:var(--radius);
+    background:var(--card);font-size:13.5px;font-weight:800;color:var(--gray-700);
     opacity:0;transform:translateX(-8px);
-    transition:background .2s ease, color .2s ease, transform .2s ease, opacity .4s ease, box-shadow .2s ease;
+    transition:opacity .4s ease, transform .4s ease;
   }
   .journey-node.is-visible{opacity:1;transform:translateX(0);}
-  .journey-node-caret{font-size:10px;color:var(--gray-500);transition:color .2s ease, transform .2s ease;}
-  .journey-node:hover, .journey-node.is-open{
-    background:var(--black);color:var(--white);
-    box-shadow:0 -10px 20px -8px rgba(22,21,18,0.4);
-  }
-  .journey-node:hover .journey-node-caret, .journey-node.is-open .journey-node-caret{color:var(--orange);transform:translateY(1px);}
-  .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
-  .journey-node.is-open .icon-pill.is-fail{background:rgba(217,60,60,0.32);}
-  .journey-detail{background:var(--card);border-radius:0 var(--radius) var(--radius) var(--radius);max-height:0;opacity:0;overflow:hidden;transition:max-height .35s cubic-bezier(.65,0,.35,1), opacity .25s ease, padding .35s ease;}
-  .journey-detail.is-open{max-height:420px;opacity:1;padding:26px 28px;}
-  .journey-detail-inner{display:none;}
-  .journey-detail.is-open .journey-detail-inner.is-active{display:block;}
-  .journey-detail-title{font-weight:800;color:var(--black);margin-bottom:14px;font-size:16px;}
+  .journey-detail-list{margin-top:26px;}
+  .journey-detail-block{padding:16px 0;border-bottom:1px solid var(--card-line);}
+  .journey-detail-block:last-child{border-bottom:none;}
+  .journey-detail-title{font-weight:800;color:var(--black);margin-bottom:12px;font-size:15px;}
   .journey-detail-list-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-700);margin-bottom:10px;}
   .journey-detail-items{display:flex;flex-wrap:wrap;gap:8px;}
   .journey-detail-item{font-size:13.5px;font-weight:700;padding:6px 13px;border-radius:100px;background:rgba(22,21,18,0.07);color:var(--gray-700);}
@@ -253,16 +242,10 @@
   }
   .notebook-tab:last-child{margin-bottom:0;}
   .notebook-tab-label{font-size:13.5px;font-weight:800;letter-spacing:0.01em;line-height:1.3;display:block;}
-  /* Hand-stacked, uneven resting depths, not a tidy grid, but each one
-     clearly separated from its neighbors above and below. */
-  .notebook-tab:nth-child(1){transform:translateX(0);z-index:8;}
-  .notebook-tab:nth-child(2){transform:translateX(-14px);z-index:7;}
-  .notebook-tab:nth-child(3){transform:translateX(-6px);z-index:6;}
-  .notebook-tab:nth-child(4){transform:translateX(-20px);z-index:5;}
-  .notebook-tab:nth-child(5){transform:translateX(-10px);z-index:4;}
-  .notebook-tab:nth-child(6){transform:translateX(-22px);z-index:3;}
-  .notebook-tab:nth-child(7){transform:translateX(-4px);z-index:2;}
-  .notebook-tab:nth-child(8){transform:translateX(-16px);z-index:1;}
+  /* Every tab rests flush on the same straight edge, a clean column rather
+     than a hand-staggered zigzag; only the active/hovered one pushes out
+     further to the right, so it is still obvious which page is open. */
+  .notebook-tab{z-index:1;}
   .notebook-tab:hover{background:var(--orange);color:var(--white);box-shadow:0 12px 26px -8px rgba(254,106,3,0.5);}
   .notebook-tab.is-active{
     background:var(--orange);color:var(--white);
@@ -278,21 +261,29 @@
   }
   /* The page tucks in just under the tabs' resting edge, so the whole
      assembly reads as one connected, bound object rather than two floating
-     pieces sitting side by side. */
+     pieces sitting side by side. A faint, permanent tilt (the perspective
+     is set on the parent .notebook) plus a deep multi-layer shadow give it
+     real thickness, like a binder sitting on a desk, not a flat card. The
+     extra left inset on the text pulls the content further into the page's
+     own space, away from the bound edge. */
   .notebook-page{
     flex:1;min-width:0;position:relative;margin-left:-18px;
     background:var(--card);border-radius:var(--radius);
-    padding:40px 44px;
-    box-shadow:0 26px 50px -22px rgba(22,21,18,0.4);
+    padding:40px 44px 40px 120px;
+    transform:rotateY(-1.3deg) rotateX(0.5deg);
+    transform-style:preserve-3d;
+    box-shadow:0 34px 64px -22px rgba(22,21,18,0.48), 0 2px 0 rgba(22,21,18,0.06) inset;
   }
-  /* Two faint pages peeking out from behind, so the whole thing reads as a
-     stack of notebooks rather than one flat card. */
+  /* Two faint pages peeking out from behind at slightly uneven angles, so
+     the whole thing reads as a thick stack of bound notebooks rather than
+     one flat card floating in place. */
   .notebook-page::before, .notebook-page::after{
-    content:'';position:absolute;left:10px;right:-10px;border-radius:var(--radius);
+    content:'';position:absolute;left:14px;right:-14px;border-radius:var(--radius);
     background:var(--off-white);z-index:-1;
+    box-shadow:0 20px 40px -20px rgba(22,21,18,0.35);
   }
-  .notebook-page::before{top:10px;bottom:-10px;opacity:0.8;}
-  .notebook-page::after{top:20px;bottom:-20px;opacity:0.5;}
+  .notebook-page::before{top:14px;bottom:-14px;opacity:0.85;transform:rotateZ(0.5deg);}
+  .notebook-page::after{top:30px;bottom:-30px;opacity:0.55;transform:rotateZ(-0.5deg);}
   .notebook-page-inner{display:none;}
   .notebook-page-inner.is-active{display:block;animation:notebook-page-flip .4s cubic-bezier(.25,.9,.4,1);}
   @keyframes notebook-page-flip{
@@ -328,11 +319,7 @@
   .similar-name{font-size:17px;font-weight:700;transition:color .2s ease;}
   .similar-name:hover{color:var(--orange);}
   .similar-score{font-family:var(--serif);font-weight:800;font-size:19px;color:var(--green);}
-  .similar-why-btn{font-size:12.5px;font-weight:700;color:var(--gray-500);background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:3px;padding:0;}
-  .similar-why-btn:hover{color:var(--orange);}
-  .similar-detail{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease, opacity .3s ease, padding .35s ease;}
-  .similar-detail.is-open{max-height:160px;opacity:1;padding-top:14px;}
-  .similar-signal-list{display:flex;flex-wrap:wrap;gap:14px;}
+  .similar-signal-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;}
   .similar-signal-chip{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
 
   /* ---------- TECHNICAL FACTOR BREAKDOWN: always open, no click needed ---------- */
@@ -411,6 +398,7 @@
     .notebook-tabs{flex-direction:row;flex-wrap:wrap;flex:0 0 auto;padding:0 0 14px;gap:6px;justify-content:flex-start;}
     .notebook-tab{margin-bottom:0;transform:none !important;border-radius:var(--radius);animation:none;}
     .notebook-tab.is-active{transform:none !important;}
+    .notebook-page{padding:28px 20px;transform:none;}
     .notebook-page::before, .notebook-page::after{display:none;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
@@ -529,6 +517,9 @@
           <button type="button" class="notebook-tab is-active" data-page="score">
             <span class="notebook-tab-label">AI Commerce Score</span>
           </button>
+          <button type="button" class="notebook-tab" data-page="result">
+            <span class="notebook-tab-label">Result</span>
+          </button>
           <button type="button" class="notebook-tab" data-page="summary">
             <span class="notebook-tab-label">Recommendation Summary</span>
           </button>
@@ -554,17 +545,18 @@
 
         <div class="notebook-page" id="notebookPage">
           <div class="notebook-page-inner is-active" data-page-content="score">
-            <div class="hero-meta-label">AI Commerce Score</div>
+            <div class="hero-meta-label">AI Commerce Score&#8482;</div>
             <div class="hero-meta-value" id="heroMetaScore">--</div>
             <!-- The whole four-row read happens automatically on load: this
                  IS "watch AI evaluate this store," so nothing else needs to
                  sit there statically before it, or duplicate it elsewhere. -->
             <div id="simRows"></div>
-            <div class="hero-verdict-reveal" id="heroVerdictReveal">
-              <div class="hero-meta-label">Result</div>
-              <div class="hero-meta-value" id="heroVerdictValue">--</div>
-              <div class="hero-verdict-reason" id="heroVerdictReason"></div>
-            </div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="result">
+            <div class="hero-meta-label">Result</div>
+            <div class="hero-meta-value" id="heroVerdictValue">--</div>
+            <div class="hero-verdict-reason" id="heroVerdictReason"></div>
           </div>
 
           <div class="notebook-page-inner" data-page-content="summary">
@@ -576,12 +568,12 @@
           </div>
 
           <div class="notebook-page-inner" data-page-content="journey">
-            <div class="notebook-page-title">Hover a stage below to see what AI found</div>
+            <div class="notebook-page-title">What AI found at each stage</div>
             <div class="journey-tabbook" id="journeyTabbook">
               <div class="journey-row" id="journeyRow">
                 <span class="journey-store-node">Store</span>
               </div>
-              <div class="journey-detail" id="journeyDetail"></div>
+              <div class="journey-detail-list" id="journeyDetail"></div>
             </div>
           </div>
 
@@ -867,7 +859,6 @@
       domainLabel: document.getElementById('storeDomainLabel'),
       visitLink: document.getElementById('visitStoreLink'),
       storeNameEm: document.getElementById('storeNameEm'),
-      heroVerdictReveal: document.getElementById('heroVerdictReveal'),
       heroVerdictValue: document.getElementById('heroVerdictValue'),
       heroVerdictReason: document.getElementById('heroVerdictReason'),
       heroMetaScore: document.getElementById('heroMetaScore'),
@@ -971,10 +962,9 @@
     }
 
     function revealHeroVerdict(recommended, reasonText){
-      if (!els.heroVerdictReveal || !els.heroVerdictValue) return;
+      if (!els.heroVerdictValue) return;
       els.heroVerdictValue.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
       els.heroVerdictValue.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
-      els.heroVerdictReveal.classList.add('is-visible');
       // The reason lands a beat after the result itself, not both at once.
       if (els.heroVerdictReason) {
         els.heroVerdictReason.textContent = reasonText;
@@ -1020,7 +1010,7 @@
 
     function renderJourney(stages, storeName, opps){
       const nodes = stages.map(s =>
-        '<span class="journey-arrow">&rarr;</span><button type="button" class="journey-node" data-stage="' + s.key + '"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '<span class="journey-node-caret">&#9662;</span></button>'
+        '<span class="journey-arrow">&rarr;</span><span class="journey-node"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</span>'
       ).join('');
       // Homepage and Products are the plain lead-in steps AI takes before any
       // of the four scored stages begin, so the journey reads as the whole
@@ -1035,6 +1025,8 @@
       const journeyEls = Array.from(els.journeyRow.children);
       journeyEls.forEach((el, i) => setTimeout(() => el.classList.add('is-visible'), i * 160));
 
+      // Every stage's findings sit fully open beneath the flow, all at once,
+      // nothing to click or hover to reveal.
       els.journeyDetail.innerHTML = stages.map(s => {
         const stageOpps = opps.filter(o => o.stage === s.key);
         const listLabel = s.pass ? 'Confirmed' : 'Missing';
@@ -1044,31 +1036,11 @@
         const itemsHtml = items.length
           ? '<div class="journey-detail-items">' + items.map(i => '<span class="journey-detail-item">' + i + '</span>').join('') + '</div>'
           : '';
-        return '<div class="journey-detail-inner" data-stage-detail="' + s.key + '">' +
+        return '<div class="journey-detail-block">' +
           '<div class="journey-detail-title">' + (s.pass ? s.passText : s.failText) + '</div>' +
           (itemsHtml ? '<div class="journey-detail-list-label">' + listLabel + '</div>' + itemsHtml : '') +
           '</div>';
       }).join('');
-
-      // Sub-tabs, nested inside the notebook's own Journey page: hovering a
-      // stage tab drops its page down beneath it, no click and no window.
-      // The whole tabbook closes once the pointer leaves the row and the
-      // panel together.
-      els.journeyRow.querySelectorAll('.journey-node').forEach(btn => {
-        btn.addEventListener('mouseenter', () => {
-          const stage = btn.dataset.stage;
-          els.journeyRow.querySelectorAll('.journey-node').forEach(b => b.classList.toggle('is-open', b === btn));
-          els.journeyDetail.querySelectorAll('.journey-detail-inner').forEach(d =>
-            d.classList.toggle('is-active', d.dataset.stageDetail === stage));
-          els.journeyDetail.classList.add('is-open');
-        });
-      });
-      if (els.journeyTabbook) {
-        els.journeyTabbook.addEventListener('mouseleave', () => {
-          els.journeyRow.querySelectorAll('.journey-node').forEach(b => b.classList.remove('is-open'));
-          els.journeyDetail.classList.remove('is-open');
-        });
-      }
     }
 
     // THE NOTEBOOK: hovering a tab in the stack brings it forward and swaps
@@ -1156,47 +1128,39 @@
           .sort((a, b) => b.score - a.score)
           .slice(0, 3);
         if (!rows.length) { setNotebookTabVisible('similar', false); return; }
-        els.similarList.innerHTML = rows.map((r, i) =>
-          '<div class="similar-item">' +
+
+        // Reviews / Trust / Brand are fetched live per competitor (its own
+        // /get-store record), not fabricated, and loaded up front for all
+        // three so the comparison sits fully open on the page, nothing to
+        // click or unfold.
+        const details = await Promise.all(rows.map(async r => {
+          try {
+            const res2 = await fetch(BASE + '/get-store?domain=' + encodeURIComponent(r.domain), { headers: { 'Accept': 'application/json' } });
+            const json2 = await res2.json();
+            const d2 = Array.isArray(json2) ? json2[0] : (json2 && json2.data ? json2.data[0] : json2);
+            return [
+              { label:'Reviews', pass: truthy(d2.has_reviews) },
+              { label:'Trust', pass: Number(d2.trust_score ?? 0) >= 9 },
+              { label:'Brand', pass: Number(d2.brand_score ?? 0) >= 3 }
+            ];
+          } catch (e) {
+            return null;
+          }
+        }));
+
+        els.similarList.innerHTML = rows.map((r, i) => {
+          const checks = details[i];
+          const chipsHtml = checks
+            ? '<div class="similar-signal-list">' + checks.map(c => '<span class="similar-signal-chip"><span class="icon-pill ' + (c.pass ? 'is-pass' : 'is-fail') + '">' + (c.pass ? '&#10003;' : '&#10007;') + '</span>' + c.label + '</span>').join('') + '</div>'
+            : '';
+          return '<div class="similar-item">' +
             '<div class="similar-head">' +
               '<a class="similar-name" href="/store/' + r.domain + '">' + storeNameFromDomain(r.domain) + '</a>' +
               '<span class="similar-score">' + r.score + '</span>' +
             '</div>' +
-            '<button type="button" class="similar-why-btn" data-idx="' + i + '" data-domain="' + r.domain + '">Why?</button>' +
-            '<div class="similar-detail" id="similarDetail' + i + '"></div>' +
-          '</div>'
-        ).join('');
-
-        // Reviews / Trust / Brand are fetched live per competitor (its own
-        // /get-store record), not fabricated, so this can only claim what it
-        // actually knows.
-        els.similarList.querySelectorAll('.similar-why-btn').forEach(btn => {
-          btn.addEventListener('click', async () => {
-            const idx = btn.dataset.idx;
-            const detail = document.getElementById('similarDetail' + idx);
-            const willOpen = !detail.classList.contains('is-open');
-            detail.classList.toggle('is-open', willOpen);
-            if (willOpen && !detail.dataset.loaded) {
-              detail.dataset.loaded = '1';
-              detail.textContent = 'Loading...';
-              try {
-                const res2 = await fetch(BASE + '/get-store?domain=' + encodeURIComponent(btn.dataset.domain), { headers: { 'Accept': 'application/json' } });
-                const json2 = await res2.json();
-                const d2 = Array.isArray(json2) ? json2[0] : (json2 && json2.data ? json2.data[0] : json2);
-                const checks = [
-                  { label:'Reviews', pass: truthy(d2.has_reviews) },
-                  { label:'Trust', pass: Number(d2.trust_score ?? 0) >= 9 },
-                  { label:'Brand', pass: Number(d2.brand_score ?? 0) >= 3 }
-                ];
-                detail.innerHTML = '<div class="similar-signal-list">' +
-                  checks.map(c => '<span class="similar-signal-chip"><span class="icon-pill ' + (c.pass ? 'is-pass' : 'is-fail') + '">' + (c.pass ? '&#10003;' : '&#10007;') + '</span>' + c.label + '</span>').join('') +
-                  '</div>';
-              } catch (e) {
-                detail.innerHTML = 'Could not load this comparison.';
-              }
-            }
-          });
-        });
+            chipsHtml +
+          '</div>';
+        }).join('');
       } catch (e) {
         setNotebookTabVisible('similar', false);
       }
