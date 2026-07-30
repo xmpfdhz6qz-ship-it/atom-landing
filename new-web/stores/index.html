@@ -258,7 +258,7 @@
      one a small raised card (only the site's two beige tones, no orange
      here). Clicking a tab pulls it forward and unfolds a shared panel to
      its right, like a folder flap opening. */
-  .category-tabs{display:flex;align-items:flex-start;gap:0;max-width:var(--maxw);margin:0 auto 40px;}
+  .category-tabs{display:flex;align-items:flex-start;gap:0;max-width:var(--maxw);margin:0 auto 40px;scroll-margin-top:110px;}
   .category-tab-list{display:flex;flex-direction:column;gap:8px;flex:0 0 270px;position:relative;z-index:2;}
   .category-tab{
     display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -289,9 +289,24 @@
   .category-tab-panel-name{font-family:var(--serif);font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-0.01em;color:var(--black);margin-bottom:8px;}
   .category-tab-panel-count{font-family:var(--serif);font-size:clamp(38px,5vw,56px);font-weight:800;color:var(--orange);letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;}
   .category-tab-panel-sub{font-size:12px;color:var(--gray-700);margin-top:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
-  .category-tab-panel-score{margin-top:20px;padding-top:20px;border-top:1px solid rgba(22,21,18,0.1);}
+  .category-tab-panel-score{margin-top:16px;padding-top:14px;border-top:1px solid rgba(22,21,18,0.1);}
   .category-tab-panel-score-num{font-family:var(--serif);font-size:clamp(26px,3.4vw,38px);font-weight:800;color:var(--orange);letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;}
   .category-tab-panel-score-label{font-size:11px;color:var(--gray-700);margin-top:6px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;}
+  .category-tab-panel-top{margin-top:16px;padding-top:14px;border-top:1px solid rgba(22,21,18,0.1);text-align:left;}
+  .category-tab-panel-top-label{font-size:11px;color:var(--gray-700);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;text-align:center;}
+  .category-tab-panel-top-list{display:flex;flex-direction:column;gap:0;max-width:260px;margin:0 auto;}
+  .category-panel-top-item{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:3px 0;text-decoration:none;color:inherit;
+  }
+  .category-panel-top-item:hover .category-panel-top-domain{color:var(--orange);}
+  .category-panel-top-domain{flex:1;min-width:0;font-size:13px;font-weight:700;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s ease;}
+  .category-panel-top-score{font-family:var(--serif);font-size:13px;font-weight:800;flex-shrink:0;}
+  .category-panel-top-score.is-green{color:var(--green);}
+  .category-panel-top-score.is-amber{color:var(--amber);}
+  .category-panel-top-score.is-orange{color:var(--orange);}
+  .category-panel-top-score.is-red{color:var(--red);}
+  .category-tab-panel-top-empty{font-size:12.5px;color:var(--gray-500);text-align:center;}
 
   .stores-status-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:13px;color:var(--gray-500);min-height:20px;}
   .stores-clear-btn{background:none;border:none;font-size:12.5px;font-weight:700;color:var(--orange);cursor:pointer;text-decoration:underline;text-underline-offset:3px;display:none;font-family:inherit;}
@@ -538,6 +553,10 @@
                 <div class="category-tab-panel-score-num" id="categoryPanelScoreNum">0</div>
                 <div class="category-tab-panel-score-label">Avg AI commerce score</div>
               </div>
+              <div class="category-tab-panel-top" id="categoryPanelTop" style="display:none;">
+                <div class="category-tab-panel-top-label">Top stores</div>
+                <div class="category-tab-panel-top-list" id="categoryPanelTopList"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -761,6 +780,7 @@
     let currentNicheCounts = {};
     const nicheStatsCache = {};
     const avgScoreCache = {};
+    const topStoresCache = {};
 
     const counterEl = document.getElementById('storesCounterNum');
     const results = document.getElementById('storesResults');
@@ -774,6 +794,8 @@
     const categoryPanelSub = document.getElementById('categoryPanelSub');
     const categoryPanelScore = document.getElementById('categoryPanelScore');
     const categoryPanelScoreNum = document.getElementById('categoryPanelScoreNum');
+    const categoryPanelTop = document.getElementById('categoryPanelTop');
+    const categoryPanelTopList = document.getElementById('categoryPanelTopList');
     const statusEl = document.getElementById('storesStatus');
     const clearBtn = document.getElementById('storesClearBtn');
     const gridEl = document.getElementById('storesGrid');
@@ -815,20 +837,40 @@
 
       if (niche === 'all' || !state.region) {
         if (categoryPanelScore) categoryPanelScore.style.display = 'none';
+        if (categoryPanelTop) categoryPanelTop.style.display = 'none';
         return;
       }
       if (categoryPanelScore) categoryPanelScore.style.display = '';
+      if (categoryPanelTop) categoryPanelTop.style.display = '';
       const cacheKey = state.region + ':' + niche;
       if (categoryPanelScoreNum) {
         categoryPanelScoreNum.textContent = avgScoreCache[cacheKey] != null ? avgScoreCache[cacheKey] : '...';
       }
+      renderTopStores(topStoresCache[cacheKey]);
       if (avgScoreCache[cacheKey] == null) loadNicheAvgScore(state.region, niche);
+    }
+
+    // Top scoring stores for the currently open niche+region combo. Built
+    // from the same live sample loadNicheAvgScore already fetches (re-sorted
+    // by score client side), so this is real data, not a fabricated list.
+    function renderTopStores(list){
+      if (!categoryPanelTopList) return;
+      if (list == null) { categoryPanelTopList.innerHTML = '<div class="category-tab-panel-top-empty">Loading...</div>'; return; }
+      if (!list.length) { categoryPanelTopList.innerHTML = '<div class="category-tab-panel-top-empty">No stores found yet.</div>'; return; }
+      categoryPanelTopList.innerHTML = list.map(s =>
+        '<a class="category-panel-top-item" href="/store/' + encodeURIComponent(s.domain) + '">' +
+          '<span class="category-panel-top-domain">' + s.domain + '</span>' +
+          '<span class="category-panel-top-score ' + scoreClass(s.score) + '">' + s.score + '</span>' +
+        '</a>'
+      ).join('');
     }
 
     // No dedicated aggregate endpoint exists for "average score of a niche
     // within a region", so this samples up to 100 stores for that combo and
     // averages their score client side. Cached per region and niche so it
-    // only runs once per combination the visitor actually opens.
+    // only runs once per combination the visitor actually opens. The same
+    // sample is re-sorted by score to surface the top 3 stores, too, so we
+    // are not making a second network request just for that.
     async function loadNicheAvgScore(region, niche){
       const cacheKey = region + ':' + niche;
       try {
@@ -841,11 +883,14 @@
         avgScoreCache[cacheKey] = rows.length
           ? (rows.reduce((sum, s) => sum + (Number(s.score) || 0), 0) / rows.length).toFixed(1)
           : 'N/A';
+        topStoresCache[cacheKey] = rows.slice().sort((a, b) => b.score - a.score).slice(0, 3);
       } catch (e) {
         avgScoreCache[cacheKey] = 'N/A';
+        topStoresCache[cacheKey] = [];
       }
       if (state.region === region && state.niche === niche && categoryPanelScoreNum) {
         categoryPanelScoreNum.textContent = avgScoreCache[cacheKey];
+        renderTopStores(topStoresCache[cacheKey]);
       }
     }
 
@@ -1036,7 +1081,17 @@
       if (count != null) countUp(resultsCount, count, 900);
       loadNicheStatsForRegion(region);
       clearQueryResults();
-      requestAnimationFrame(() => results.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+      // The results panel reveals via a max-height transition (.6s), so its
+      // real height is not settled on the very next frame; scrolling too
+      // early scrolls to a box that is still mid-animation and near zero
+      // height, which reads as "nothing happened." Waiting the transition
+      // out first, then scrolling straight to the category tab list
+      // (rather than just the top of the results block), gets the visitor
+      // to the "All / Fashion / Beauty / ..." list every time.
+      setTimeout(() => {
+        const scrollTarget = document.querySelector('.category-tabs') || results;
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 650);
     }
 
     function closeReveal(){
