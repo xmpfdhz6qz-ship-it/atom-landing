@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">AI Commerce Score Report: Atom Foundry</title>
+<meta name="description" id="pageDesc" content="See how well AI shopping agents can read, understand, trust, and recommend this store, measured across the AI Commerce Framework.">
+<meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
+<link rel="canonical" href="https://atomfoundry.dev/store" id="canonicalLink">
+<meta property="og:title" id="ogTitle" content="AI Commerce Score Report: Atom Foundry">
+<meta property="og:description" id="ogDesc" content="See how well AI shopping agents can read, understand, trust, and recommend this store.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json" id="baseLd">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  em{font-style:normal;}
+
+  /* ---------- NAV (verbatim boilerplate, same as every other page) ---------- */
+  header.nav{position:sticky;top:0;z-index:1000;background:rgba(240,238,230,0.88);backdrop-filter:saturate(160%) blur(16px);-webkit-backdrop-filter:saturate(160%) blur(16px);}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:22px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px;transition:padding .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{font-size:13px;font-weight:700;color:var(--black);text-transform:uppercase;letter-spacing:0.07em;position:relative;padding:4px 2px;white-space:nowrap;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;transition:color .2s ease, text-decoration-color .2s ease;}
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-chevron{display:inline-flex;width:10px;height:7px;margin-left:6px;vertical-align:middle;color:currentColor;transition:transform .2s ease;}
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .dropdown{position:absolute;top:100%;left:0;margin-top:6px;background:var(--cream);border:1px solid var(--card-line);border-radius:var(--radius);box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);padding:12px;width:max-content;max-width:300px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .18s ease, transform .18s ease, visibility .18s;z-index:1100;}
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+  /* ---------- LOADING / NOT FOUND ---------- */
+  .store-loading{padding:200px 24px;text-align:center;font-size:15px;color:var(--gray-500);}
+  .store-notfound{display:none;padding:180px 24px 120px;max-width:480px;margin:0 auto;text-align:center;}
+  .store-notfound h1{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:14px;}
+  .store-notfound p{color:var(--gray-700);font-size:15px;line-height:1.7;margin-bottom:28px;}
+
+  /* ---------- SHARED SECTION RHYTHM: thin dividers, generous whitespace,
+     an editorial reading column rather than a grid of dashboard cards. ---------- */
+  .store-block{padding:8px 24px 56px;border-top:1px solid var(--card-line);}
+  .store-block-inner{max-width:720px;margin:0 auto;padding-top:48px;}
+  .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:20px;}
+  .icon-pill{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+  .icon-pill.is-pass{background:rgba(29,158,117,0.15);color:var(--green);}
+  .icon-pill.is-fail{background:rgba(217,60,60,0.12);color:var(--red);}
+
+  /* ---------- BREADCRUMB + HERO ---------- */
+  .store-hero{padding:140px 24px 56px;}
+  .store-hero-inner{max-width:720px;margin:0 auto;}
+  .store-breadcrumb{font-size:12px;color:var(--gray-500);margin-bottom:24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .store-breadcrumb a{color:var(--gray-500);transition:color .2s ease;}
+  .store-breadcrumb a:hover{color:var(--orange);}
+  .store-top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+  .store-domain-label{font-size:14px;font-weight:700;color:var(--gray-700);}
+  .store-visit-link{font-size:13px;font-weight:800;color:var(--orange);white-space:nowrap;}
+  .store-name{font-family:var(--serif);font-size:clamp(24px,3.6vw,34px);font-weight:800;letter-spacing:-0.02em;margin-bottom:36px;line-height:1.2;}
+  .store-score-row{display:flex;align-items:flex-end;gap:8px;}
+  .store-score-num{font-family:var(--serif);font-weight:800;font-size:clamp(64px,11vw,120px);line-height:0.88;letter-spacing:-0.03em;}
+  .store-score-max{font-size:19px;color:var(--gray-500);font-weight:700;padding-bottom:12px;}
+  .store-score-caption{font-size:15px;color:var(--gray-700);font-weight:700;margin:8px 0 28px;}
+  .simple-journey{display:flex;flex-wrap:wrap;gap:10px;}
+  .simple-stage{display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:100px;background:var(--card);font-size:14px;font-weight:800;}
+
+  /* ---------- WHY: plain sentences instead of eight progress bars ---------- */
+  .why-row{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--card-line);font-size:18px;font-weight:600;line-height:1.4;}
+  .why-row:last-child{border-bottom:none;}
+
+  /* ---------- DETAIL: collapsed by default, the eight factor bars live here as
+     a technical footnote, not the headline. ---------- */
+  .store-detail-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;color:var(--black);}
+  .store-detail-toggle-label{font-size:16px;font-weight:800;}
+  .store-detail-toggle-icon{font-size:22px;color:var(--gray-500);transition:transform .3s cubic-bezier(.65,0,.35,1);line-height:1;}
+  .store-detail.is-open .store-detail-toggle-icon{transform:rotate(45deg);}
+  .store-detail-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.65,0,.35,1);}
+  .store-detail.is-open .store-detail-body{max-height:1200px;}
+  .store-detail-body-inner{padding-top:28px;}
+  .store-detail-desc{font-size:13.5px;color:var(--gray-700);margin-bottom:22px;line-height:1.6;}
+  .factor-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--card-line);}
+  .factor-row:last-child{border-bottom:none;}
+  .factor-left{flex:1;min-width:0;}
+  .factor-name{font-size:13px;color:var(--gray-700);margin-bottom:6px;font-weight:600;}
+  .factor-bar{height:5px;background:var(--card);border-radius:100px;overflow:hidden;}
+  .factor-fill{height:100%;border-radius:100px;transition:width 1s ease;}
+  .factor-score{font-size:13px;font-weight:800;min-width:52px;text-align:right;flex-shrink:0;}
+
+  /* ---------- BIGGEST BLOCKERS ---------- */
+  .blocker-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--card-line);}
+  .blocker-row:last-child{border-bottom:none;}
+  .blocker-name{font-size:18px;font-weight:700;}
+  .blocker-impact{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:5px 12px;border-radius:100px;white-space:nowrap;}
+  .blocker-impact.is-high{color:var(--red);background:rgba(217,60,60,0.09);}
+  .blocker-impact.is-medium{color:var(--amber);background:rgba(224,162,51,0.15);}
+
+  /* ---------- QUICK WINS ---------- */
+  .store-quickwins-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:8px;}
+  .quickwin-row{display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid var(--card-line);}
+  .quickwin-row:last-child{border-bottom:none;}
+  .quickwin-points{font-family:var(--serif);font-weight:800;font-size:24px;color:var(--green);min-width:50px;flex-shrink:0;}
+  .quickwin-name{font-size:16px;font-weight:700;}
+
+  /* ---------- COMPARISON ---------- */
+  .comparison-row{display:flex;gap:36px;flex-wrap:wrap;}
+  .comparison-item{flex:1;min-width:130px;}
+  .comparison-num{font-family:var(--serif);font-weight:800;font-size:clamp(34px,5vw,52px);letter-spacing:-0.02em;line-height:1;color:var(--black);}
+  .comparison-item.is-yours .comparison-num{color:var(--orange);}
+  .comparison-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-top:10px;}
+  .comparison-note{font-size:12px;color:var(--gray-500);margin-top:24px;line-height:1.6;}
+
+  /* ---------- RECOMMENDATION JOURNEY: the interactive signature piece ---------- */
+  .journey-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+  .journey-store-node{font-weight:800;font-size:15px;color:var(--gray-700);padding-right:2px;}
+  .journey-arrow{color:var(--gray-500);font-size:14px;}
+  .journey-node{display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:100px;background:var(--card);font-size:14px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--black);transition:background .2s ease, color .2s ease, transform .2s ease;}
+  .journey-node:hover{transform:translateY(-2px);}
+  .journey-node.is-open{background:var(--black);color:var(--white);}
+  .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
+  .journey-node.is-open .icon-pill.is-fail{background:rgba(217,60,60,0.32);}
+  .journey-detail{background:var(--card);border-radius:10px;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.65,0,.35,1), opacity .3s ease, padding .4s ease;}
+  .journey-detail.is-open{max-height:420px;opacity:1;padding:26px 28px;}
+  .journey-detail-inner{display:none;}
+  .journey-detail.is-open .journey-detail-inner.is-active{display:block;}
+  .journey-detail-title{font-weight:800;color:var(--black);margin-bottom:10px;font-size:16px;}
+  .journey-signal-row{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;padding:7px 0;border-bottom:1px solid rgba(22,21,18,0.08);color:var(--gray-700);}
+  .journey-signal-row:last-child{border-bottom:none;}
+  .journey-signal-row b{color:var(--black);}
+
+  /* ---------- LEARN ---------- */
+  .learn-grid{display:flex;flex-wrap:wrap;gap:14px 30px;}
+  .learn-link{font-size:17px;font-weight:700;color:var(--black);padding-bottom:5px;border-bottom:2px solid transparent;transition:border-color .2s ease, color .2s ease;}
+  .learn-link:hover{color:var(--orange);border-color:var(--orange);}
+
+  /* ---------- FINAL CTA: the only call to action on the page, at the very end ---------- */
+  .store-cta-final{padding:64px 24px 112px;text-align:center;border-top:1px solid var(--card-line);}
+  .store-cta-btn{display:inline-block;padding:20px 48px;border-radius:100px;background:var(--black);color:var(--white);font-weight:800;font-size:16px;transition:background .2s ease, transform .2s ease;}
+  .store-cta-btn:hover{background:var(--orange);transform:translateY(-2px);}
+  .store-cta-sub{font-size:13px;color:var(--gray-500);margin-top:18px;}
+
+  /* ---------- STANDARD SITE FOOTER (verbatim boilerplate, same as every other page) ---------- */
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:10px;max-width:280px;}
+  .footer-tagline-text{font-weight:700;color:var(--black);}
+  .social-row{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:16px;}
+  .social-row a{font-size:11.5px;color:var(--gray-500);border:1px solid var(--card-line);padding:5px 11px;border-radius:100px;transition:all .2s ease;}
+  .social-row a:hover{color:var(--orange);border-color:rgba(254,106,3,0.3);}
+  .social-row a.strong{color:var(--orange);border-color:rgba(254,106,3,0.3);}
+  .footer-col-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:14px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--gray-700);margin-bottom:10px;transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:28px 40px;padding:28px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{font-family:var(--serif);font-size:17px;color:var(--black);margin-right:6px;}
+  .footer-meta{font-size:12px;color:var(--gray-500);padding:16px 0;border-top:1px solid var(--gray-300);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
+    .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
+    .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    .store-hero{padding:96px 20px 40px;}
+    .store-block{padding:8px 20px 44px;}
+    .store-block-inner{padding-top:36px;}
+    .why-row,.blocker-row,.quickwin-row{font-size:15px;}
+    .comparison-row{gap:24px;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger active">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/#pricing" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/#score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<div id="loadingState" class="store-loading">Analyzing store...</div>
+
+<div id="notFoundState" class="store-notfound">
+  <h1>Store not found</h1>
+  <p id="notFoundMsg">We have not scanned this store yet.</p>
+  <a href="/#score" id="notFoundLink" class="store-cta-btn">Scan this store free</a>
+</div>
+
+<div id="mainContent" style="display:none;">
+
+  <!-- HERO: no explanatory paragraph, just the number, the plain-language
+       caption, and a two-second Read / Understand / Trust / Recommend
+       checklist. Detail lives further down, behind a click. -->
+  <section class="store-hero">
+    <div class="store-hero-inner">
+      <nav class="store-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span>/</span><a href="/stores">Stores</a><span>/</span><span id="bcDomain"></span>
+      </nav>
+      <div class="store-top-row">
+        <div class="store-domain-label" id="storeDomainLabel"></div>
+        <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
+      </div>
+      <h1 class="store-name" id="storeName"></h1>
+      <div class="store-score-row">
+        <div class="store-score-num" id="heroScoreNum">--</div>
+        <div class="store-score-max">/100</div>
+      </div>
+      <div class="store-score-caption">How AI sees this store</div>
+      <div class="simple-journey" id="simpleJourney"></div>
+    </div>
+  </section>
+
+  <!-- WHY: four plain sentences, not eight progress bars. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Why</div>
+      <div id="whyList"></div>
+    </div>
+  </section>
+
+  <!-- DETAIL: collapsed by default. The eight factor bars are the technical
+       footnote, not the headline. -->
+  <section class="store-block store-detail" id="storeDetail">
+    <div class="store-block-inner">
+      <button type="button" class="store-detail-toggle" id="detailToggle" aria-expanded="false">
+        <span class="store-detail-toggle-label">Detail</span>
+        <span class="store-detail-toggle-icon">+</span>
+      </button>
+      <div class="store-detail-body" id="detailBody">
+        <div class="store-detail-body-inner">
+          <div class="store-detail-desc">The eight factors behind the score above, measured by the AI Commerce Score methodology v3.1.</div>
+          <div id="factorRows"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIGGEST BLOCKERS: a short, ranked list, not forty checklist items. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Biggest blockers</div>
+      <div id="blockersList"></div>
+    </div>
+  </section>
+
+  <!-- QUICK WINS -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Quick wins</div>
+      <div class="store-quickwins-head">Estimated impact</div>
+      <div id="quickWinsList"></div>
+    </div>
+  </section>
+
+  <!-- COMPARISON: a number means nothing without context. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">How this compares</div>
+      <div class="comparison-row">
+        <div class="comparison-item is-yours">
+          <div class="comparison-num" id="cmpYours">--</div>
+          <div class="comparison-label">Your store</div>
+        </div>
+        <div class="comparison-item">
+          <div class="comparison-num" id="cmpAvg">--</div>
+          <div class="comparison-label">Average</div>
+        </div>
+        <div class="comparison-item">
+          <div class="comparison-num" id="cmpTop">--</div>
+          <div class="comparison-label">Top 10 percent</div>
+        </div>
+      </div>
+      <div class="comparison-note" id="comparisonNote"></div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATION JOURNEY: the signature interactive piece. Click a stage
+       to expand why it passed or failed. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Recommendation journey</div>
+      <div class="journey-row" id="journeyRow">
+        <span class="journey-store-node">Store</span>
+      </div>
+      <div class="journey-detail" id="journeyDetail"></div>
+    </div>
+  </section>
+
+  <!-- LEARN: knowledge, not more marketing. -->
+  <section class="store-block">
+    <div class="store-block-inner">
+      <div class="store-label">Learn</div>
+      <div class="learn-grid">
+        <a href="/methodology" class="learn-link">Methodology</a>
+        <a href="/framework" class="learn-link">Framework</a>
+        <a href="/vocabulary" class="learn-link">Vocabulary</a>
+        <a href="/research" class="learn-link">Research</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA: the only call to action on the page, at the very end. -->
+  <section class="store-cta-final">
+    <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">Scan my store</a>
+    <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
+  </section>
+
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/#pricing">AI Commerce Score&trade;</a>
+        <a href="/#pricing">AI Readiness Report</a>
+        <a href="/#pricing">AI Monitoring</a>
+        <a href="/#pricing">Recommendation Intelligence</a>
+        <a href="/#pricing">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Navbar compacts on scroll (same behavior as every other page).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) nav.classList.add('nav-compact');
+      else nav.classList.remove('nav-compact');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  // Mobile hamburger nav (same behavior as every other page).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
+  })();
+
+  // Store detail: fetch one store's full record and render the whole page
+  // from it. The score-to-stage mapping below (Read / Understand / Trust /
+  // Recommend) is a deliberate simplification of the eight underlying
+  // factors into a two-second story; the full eight-factor breakdown still
+  // lives in the collapsed Detail section for anyone who wants it.
+  (function(){
+    const BASE = "https://n8n-production-1d7c.up.railway.app/webhook";
+
+    const FACTORS = [
+      { key:'visual_score',  name:'Semantic Visuals & Image Clarity',  max:15 },
+      { key:'schema_score',  name:'AI Structured Signals',              max:15 },
+      { key:'content_score', name:'Core Technical & Interpretability',  max:15 },
+      { key:'trust_score',   name:'AI Trust & Transaction Confidence',  max:15 },
+      { key:'price_score',   name:'Commerce & Feed Accuracy',           max:15 },
+      { key:'intent_score',  name:'User Intent Match',                  max:10 },
+      { key:'rec_score',     name:'Recommendation Confidence',          max:10 },
+      { key:'brand_score',   name:'External Authority Signals',         max: 5 }
+    ];
+
+    // Four-stage funnel, reused in the hero checklist, the Why sentences,
+    // and the interactive journey below, so the story stays consistent
+    // wherever it appears on the page.
+    const STAGES = [
+      {
+        key:'read', label:'Read',
+        parts:['schema_score','content_score'], max:30,
+        passText:'AI can read and parse this store.',
+        failText:'AI struggles to read this store’s structure.',
+        signals: d => [
+          { label:'Structured data', pass: truthy(d.has_structured_data) },
+          { label:'Schema markup', pass: truthy(d.has_schema_markup) },
+          { label:'Open Graph tags', pass: truthy(d.has_og_tags) }
+        ]
+      },
+      {
+        key:'understand', label:'Understand',
+        parts:['visual_score','intent_score'], max:25,
+        passText:'AI understands the products.',
+        failText:'AI cannot clearly understand the products.',
+        signals: d => [
+          { label:'Pricing visible', pass: truthy(d.pricing_visible) },
+          { label:'Blog or content', pass: truthy(d.has_blog) },
+          { label:'FAQ page', pass: truthy(d.has_faq) }
+        ]
+      },
+      {
+        key:'trust', label:'Trust',
+        parts:['trust_score'], max:15,
+        passText:'AI can verify trust signals.',
+        failText:'AI cannot verify trust.',
+        signals: d => [
+          { label:'Reviews present', pass: truthy(d.has_reviews) },
+          { label:'Trust badges', pass: truthy(d.has_trust_badges) },
+          { label:'Return policy', pass: truthy(d.has_return_policy) }
+        ]
+      },
+      {
+        key:'recommend', label:'Recommend',
+        parts:['rec_score','brand_score','price_score'], max:30,
+        passText:'AI has strong recommendation signals.',
+        failText:'AI finds limited recommendation signals.',
+        signals: d => [
+          { label:'Shipping info', pass: truthy(d.has_shipping_info) },
+          { label:'Email capture', pass: truthy(d.has_email_capture) },
+          { label:'SSL / HTTPS', pass: truthy(d.has_ssl) }
+        ]
+      }
+    ];
+
+    // Candidate opportunities. Only the ones that actually apply to this
+    // store are shown, ranked into Biggest Blockers (by impact) and Quick
+    // Wins (by estimated point gain) so the page surfaces a handful of
+    // things that matter rather than a long checklist.
+    const OPPORTUNITIES = [
+      { key:'reviews',   name:'Missing reviews',       fixName:'Add reviews',            impact:'high',   points:8, when: d => !truthy(d.has_reviews) },
+      { key:'pricing',   name:'Pricing not visible',   fixName:'Make pricing visible',    impact:'high',   points:4, when: d => !truthy(d.pricing_visible) },
+      { key:'intent',    name:'Generic positioning',    fixName:'Clarify positioning',     impact:'high',   points:5, when: d => Number(d.intent_score ?? 0) < 6 },
+      { key:'schema',    name:'Weak schema',            fixName:'Improve schema',          impact:'medium', points:6, when: d => Number(d.schema_score ?? 0) < 9 },
+      { key:'trustbadge',name:'No trust badges',        fixName:'Add trust badges',        impact:'medium', points:4, when: d => !truthy(d.has_trust_badges) },
+      { key:'return',    name:'No return policy',       fixName:'Add a return policy',     impact:'medium', points:3, when: d => !truthy(d.has_return_policy) },
+      { key:'brand',     name:'Weak brand authority',   fixName:'Build brand authority',   impact:'medium', points:3, when: d => Number(d.brand_score ?? 0) < 3 },
+      { key:'faq',       name:'No FAQ page',            fixName:'Add an FAQ',              impact:'low',    points:2, when: d => !truthy(d.has_faq) }
+    ];
+    const IMPACT_WEIGHT = { high:3, medium:2, low:1 };
+
+    const els = {
+      loading: document.getElementById('loadingState'),
+      notFound: document.getElementById('notFoundState'),
+      notFoundMsg: document.getElementById('notFoundMsg'),
+      notFoundLink: document.getElementById('notFoundLink'),
+      main: document.getElementById('mainContent'),
+      bcDomain: document.getElementById('bcDomain'),
+      domainLabel: document.getElementById('storeDomainLabel'),
+      visitLink: document.getElementById('visitStoreLink'),
+      storeName: document.getElementById('storeName'),
+      heroScoreNum: document.getElementById('heroScoreNum'),
+      simpleJourney: document.getElementById('simpleJourney'),
+      whyList: document.getElementById('whyList'),
+      storeDetail: document.getElementById('storeDetail'),
+      detailToggle: document.getElementById('detailToggle'),
+      factorRows: document.getElementById('factorRows'),
+      blockersList: document.getElementById('blockersList'),
+      quickWinsList: document.getElementById('quickWinsList'),
+      cmpYours: document.getElementById('cmpYours'),
+      cmpAvg: document.getElementById('cmpAvg'),
+      cmpTop: document.getElementById('cmpTop'),
+      comparisonNote: document.getElementById('comparisonNote'),
+      journeyRow: document.getElementById('journeyRow'),
+      journeyDetail: document.getElementById('journeyDetail'),
+      pageTitle: document.getElementById('pageTitle'),
+      pageDesc: document.getElementById('pageDesc'),
+      ogTitle: document.getElementById('ogTitle'),
+      ogDesc: document.getElementById('ogDesc'),
+      canonicalLink: document.getElementById('canonicalLink')
+    };
+
+    function truthy(v){ return v === true || v === 'true' || v === 1 || v === '1'; }
+    function scoreClass(pct){ return pct >= 0.7 ? 'is-green' : pct >= 0.4 ? 'is-amber' : 'is-red'; }
+    function scoreColor(pct){ return pct >= 0.7 ? 'var(--green)' : pct >= 0.4 ? 'var(--amber)' : 'var(--red)'; }
+
+    function getDomain(){
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('domain')) return params.get('domain').toLowerCase().replace(/^www\./, '');
+      const parts = window.location.pathname.split('/');
+      const idx = parts.indexOf('store');
+      return idx >= 0 && parts[idx + 1] ? decodeURIComponent(parts[idx + 1]).toLowerCase().replace(/^www\./, '') : '';
+    }
+
+    function storeNameFromDomain(domain){
+      const base = domain.split('.')[0].replace(/[-_]/g, ' ');
+      return base.charAt(0).toUpperCase() + base.slice(1);
+    }
+
+    function stageValue(data, stage){
+      const raw = stage.parts.reduce((sum, key) => sum + Number(data[key] ?? 0), 0);
+      const pct = stage.max > 0 ? raw / stage.max : 0;
+      return { raw, pct, pass: pct >= 0.6 };
+    }
+
+    function computeStages(data){
+      return STAGES.map(stage => Object.assign({}, stage, stageValue(data, stage)));
+    }
+
+    function computeOpportunities(data){
+      return OPPORTUNITIES.filter(o => o.when(data));
+    }
+
+    function countUp(el, target, duration){
+      const start = performance.now();
+      const from = Number(String(el.textContent).replace(/[^0-9.-]/g, '')) || 0;
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(from + (target - from) * eased).toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function renderSimpleJourney(stages){
+      els.simpleJourney.innerHTML = stages.map(s =>
+        '<div class="simple-stage"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</div>'
+      ).join('');
+    }
+
+    function renderWhy(stages){
+      els.whyList.innerHTML = stages.map(s =>
+        '<div class="why-row"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span><span>' + (s.pass ? s.passText : s.failText) + '</span></div>'
+      ).join('');
+    }
+
+    function renderFactorRows(data){
+      els.factorRows.innerHTML = FACTORS.map(f => {
+        const score = Math.min(Number(data[f.key] ?? 0), f.max);
+        const pct = f.max > 0 ? score / f.max : 0;
+        return '<div class="factor-row"><div class="factor-left"><div class="factor-name">' + f.name + '</div><div class="factor-bar"><div class="factor-fill" style="width:0%;background:' + scoreColor(pct) + ';" data-target="' + Math.round(pct * 100) + '"></div></div></div><div class="factor-score" style="color:' + scoreColor(pct) + ';">' + score + '/' + f.max + '</div></div>';
+      }).join('');
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          els.factorRows.querySelectorAll('.factor-fill').forEach(el => { el.style.width = el.getAttribute('data-target') + '%'; });
+        }, 60);
+      });
+    }
+
+    function renderBlockers(opps){
+      const top = opps.slice().sort((a, b) => (IMPACT_WEIGHT[b.impact] - IMPACT_WEIGHT[a.impact]) || (b.points - a.points)).slice(0, 3);
+      if (!top.length) {
+        els.blockersList.innerHTML = '<div class="why-row">No major blockers detected. This store covers the fundamentals.</div>';
+        return;
+      }
+      els.blockersList.innerHTML = top.map(o =>
+        '<div class="blocker-row"><span class="blocker-name">' + o.name + '</span><span class="blocker-impact is-' + o.impact + '">' + o.impact + ' impact</span></div>'
+      ).join('');
+    }
+
+    function renderQuickWins(opps){
+      const top = opps.slice().sort((a, b) => b.points - a.points).slice(0, 3);
+      if (!top.length) {
+        els.quickWinsList.innerHTML = '<div class="why-row">No quick wins left to surface right now.</div>';
+        return;
+      }
+      els.quickWinsList.innerHTML = top.map(o =>
+        '<div class="quickwin-row"><span class="quickwin-points">+' + o.points + '</span><span class="quickwin-name">' + o.fixName + '</span></div>'
+      ).join('');
+    }
+
+    function renderJourney(stages, storeName){
+      const nodes = stages.map(s =>
+        '<span class="journey-arrow">&rarr;</span><button type="button" class="journey-node" data-stage="' + s.key + '"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</button>'
+      ).join('');
+      els.journeyRow.innerHTML = '<span class="journey-store-node">' + storeName + '</span>' + nodes;
+
+      els.journeyDetail.innerHTML = stages.map(s => {
+        const signals = s.signals ? s.signals(window.__storeData || {}) : [];
+        return '<div class="journey-detail-inner" data-stage-detail="' + s.key + '">' +
+          '<div class="journey-detail-title">' + (s.pass ? s.passText : s.failText) + '</div>' +
+          signals.map(sig => '<div class="journey-signal-row"><span>' + sig.label + '</span><b>' + (sig.pass ? 'Yes' : 'No') + '</b></div>').join('') +
+          '</div>';
+      }).join('');
+
+      let openStage = null;
+      els.journeyRow.querySelectorAll('.journey-node').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const stage = btn.dataset.stage;
+          const willOpen = openStage !== stage;
+          els.journeyRow.querySelectorAll('.journey-node').forEach(b => b.classList.remove('is-open'));
+          els.journeyDetail.querySelectorAll('.journey-detail-inner').forEach(d => d.classList.remove('is-active'));
+          if (willOpen) {
+            btn.classList.add('is-open');
+            const detail = els.journeyDetail.querySelector('[data-stage-detail="' + stage + '"]');
+            if (detail) detail.classList.add('is-active');
+            els.journeyDetail.classList.add('is-open');
+            openStage = stage;
+          } else {
+            els.journeyDetail.classList.remove('is-open');
+            openStage = null;
+          }
+        });
+      });
+    }
+
+    function renderComparison(score){
+      countUp(els.cmpYours, score, 900);
+      loadAverage();
+      loadTopDecile();
+    }
+
+    async function loadAverage(){
+      try {
+        const res = await fetch(BASE + '/site-stats', { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        const stats = Array.isArray(data) ? data[0] : (data && data.data ? data.data[0] : data);
+        if (stats && stats.avg_score != null) countUp(els.cmpAvg, Math.round(Number(stats.avg_score)), 900);
+      } catch (e) {
+        // Live endpoint unreachable: leave the average blank rather than
+        // showing a made-up number.
+      }
+    }
+
+    // No dedicated percentile endpoint exists, so the top decile is
+    // estimated from a real sample of recently scanned stores rather than
+    // invented outright.
+    async function loadTopDecile(){
+      try {
+        const res = await fetch(BASE + '/stores-list?limit=100&offset=0&sort=newest', { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        const raw = data.stores || (Array.isArray(data) ? data : []);
+        const scores = raw.map(r => Number(r.total_score ?? r.score ?? 0)).filter(s => s > 0).sort((a, b) => a - b);
+        if (!scores.length) return;
+        const idx = Math.min(scores.length - 1, Math.floor(scores.length * 0.9));
+        countUp(els.cmpTop, scores[idx], 900);
+        els.comparisonNote.textContent = 'Average and top decile are measured live from recently scanned stores in the Atom Foundry index.';
+      } catch (e) {
+        // Live endpoint unreachable: leave the figure blank.
+      }
+    }
+
+    function updateSeo(domain, storeName, score){
+      const canonical = 'https://atomfoundry.dev/store/' + domain;
+      document.title = els.pageTitle.textContent = storeName + ' AI Commerce Score: ' + score + '/100. Atom Foundry';
+      els.pageDesc.content = storeName + ' (' + domain + ') scored ' + score + ' out of 100 on the AI Commerce Score. See if ChatGPT, Alexa for Shopping, and Google AI Mode can recommend it.';
+      els.ogTitle.content = storeName + ' AI Commerce Score: ' + score + '/100';
+      els.ogDesc.content = storeName + ' scored ' + score + ' out of 100. See the full AI Commerce Score breakdown.';
+      els.canonicalLink.href = canonical;
+
+      const prev = document.getElementById('storeLd');
+      if (prev) prev.remove();
+      const ld = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": canonical + "#webpage",
+            "url": canonical,
+            "name": storeName + " AI Commerce Score",
+            "about": { "@id": canonical + "#store" },
+            "isPartOf": { "@id": "https://atomfoundry.dev/#website" }
+          },
+          {
+            "@type": "Organization",
+            "@id": canonical + "#store",
+            "name": storeName,
+            "url": "https://" + domain,
+            "additionalProperty": [{
+              "@type": "PropertyValue",
+              "name": "AI Commerce Score",
+              "value": score,
+              "maxValue": 100,
+              "description": "How ready this store is for AI shopping agents, measured by Atom Foundry."
+            }]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": canonical + "#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev/" },
+              { "@type": "ListItem", "position": 2, "name": "Stores", "item": "https://atomfoundry.dev/stores" },
+              { "@type": "ListItem", "position": 3, "name": domain, "item": canonical }
+            ]
+          }
+        ]
+      };
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'storeLd';
+      script.textContent = JSON.stringify(ld);
+      document.head.appendChild(script);
+    }
+
+    function render(data){
+      window.__storeData = data;
+      const domain = data.domain || getDomain();
+      const storeName = storeNameFromDomain(domain);
+      const score = Math.round(Number(data.total_score ?? 0));
+
+      els.bcDomain.textContent = domain;
+      els.domainLabel.textContent = domain;
+      // The outbound visit link is kept as-is on purpose: there is a known
+      // issue here the site owner flagged and wants to investigate
+      // separately, so this construction should not be changed without
+      // that follow-up.
+      els.visitLink.href = 'https://' + domain;
+      els.storeName.textContent = storeName;
+      els.heroScoreNum.textContent = score;
+
+      const stages = computeStages(data);
+      renderSimpleJourney(stages);
+      renderWhy(stages);
+      renderFactorRows(data);
+      const opps = computeOpportunities(data);
+      renderBlockers(opps);
+      renderQuickWins(opps);
+      renderComparison(score);
+      renderJourney(stages, storeName);
+      updateSeo(domain, storeName, score);
+
+      els.loading.style.display = 'none';
+      els.main.style.display = 'block';
+    }
+
+    if (els.detailToggle) {
+      els.detailToggle.addEventListener('click', () => {
+        const open = els.storeDetail.classList.toggle('is-open');
+        els.detailToggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    async function init(){
+      const domain = getDomain();
+      if (!domain) {
+        els.loading.style.display = 'none';
+        els.notFound.style.display = 'block';
+        return;
+      }
+      try {
+        const res = await fetch(BASE + '/get-store?domain=' + encodeURIComponent(domain), { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('not found');
+        const data = await res.json();
+        const record = Array.isArray(data) ? data[0] : (data && data.data ? data.data[0] : data);
+        if (!record || !record.domain) throw new Error('empty');
+        render(record);
+      } catch (e) {
+        els.loading.style.display = 'none';
+        els.notFound.style.display = 'block';
+        els.notFoundMsg.textContent = 'We have not scanned ' + domain + ' yet. Run a free scan to generate this store’s AI Commerce Score report.';
+        els.notFoundLink.href = '/#score';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+</script>
+</body>
+</html>
