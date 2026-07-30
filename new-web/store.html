@@ -284,12 +284,10 @@
   }
   .notebook-page::before{top:14px;bottom:-14px;opacity:0.85;transform:rotateZ(0.5deg);}
   .notebook-page::after{top:30px;bottom:-30px;opacity:0.55;transform:rotateZ(-0.5deg);}
+  /* Switching tabs shows the matching page straight away, already sat
+     there, nothing sliding or fading in. */
   .notebook-page-inner{display:none;}
-  .notebook-page-inner.is-active{display:block;animation:notebook-page-flip .4s cubic-bezier(.25,.9,.4,1);}
-  @keyframes notebook-page-flip{
-    from{opacity:0;transform:translateX(14px) rotateY(6deg);}
-    to{opacity:1;transform:translateX(0) rotateY(0deg);}
-  }
+  .notebook-page-inner.is-active{display:block;}
   .notebook-page-title{font-weight:800;color:var(--black);margin-bottom:18px;font-size:16px;}
 
   /* ---------- CONFIDENCE METER ---------- */
@@ -963,7 +961,7 @@
 
     function revealHeroVerdict(recommended, reasonText){
       if (!els.heroVerdictValue) return;
-      els.heroVerdictValue.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
+      els.heroVerdictValue.textContent = recommended ? 'WOULD RECOMMEND' : 'WOULD NOT RECOMMEND';
       els.heroVerdictValue.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
       // The reason lands a beat after the result itself, not both at once.
       if (els.heroVerdictReason) {
