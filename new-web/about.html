@@ -197,6 +197,7 @@
     .ab-line{opacity:1;}
     .ab-line.is-typing::after{animation:none;display:none;}
     .ab-fade{opacity:1;transform:none;transition:none;}
+    .ab-founder-link{opacity:1;}
   }
 
   /* ---------- FOUNDER PHOTO + QUOTE ---------- */
@@ -237,7 +238,11 @@
   /* ---------- ABOUT THE FOUNDER LINK: a stationary square window; only the
      text inside it pulses, the window itself never moves or scales. ---------- */
   .ab-founder-link-wrap{text-align:center;}
-  .ab-founder-link{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:var(--black);text-decoration:none;border:1.5px solid var(--black);border-radius:var(--radius);padding:15px 24px;transition:background .2s ease, color .2s ease;}
+  /* The box itself stays invisible until the moment its own line starts
+     typing, so the window and its text always appear together, never an
+     empty border sitting there first. */
+  .ab-founder-link{display:inline-flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:var(--black);text-decoration:none;border:1.5px solid var(--black);border-radius:var(--radius);padding:15px 24px;opacity:0;transition:opacity .3s ease, background .2s ease, color .2s ease;}
+  .ab-founder-link:has(.ab-line.is-in){opacity:1;}
   .ab-founder-link:hover{background:var(--black);color:var(--white);}
   .ab-founder-link:hover .nav-chevron{color:var(--white);}
   .ab-founder-link .nav-chevron{color:var(--black);width:13px;height:9px;transition:color .2s ease;}
@@ -322,7 +327,7 @@
     .footer-meta{flex-direction:column;align-items:flex-start;}
   }
 </style>
-<noscript><style>.ab-line,.ab-fade{opacity:1 !important;transform:none !important;}</style></noscript>
+<noscript><style>.ab-line,.ab-fade{opacity:1 !important;transform:none !important;}.ab-founder-link{opacity:1 !important;}</style></noscript>
 </head>
 <body>
 <header class="nav">
