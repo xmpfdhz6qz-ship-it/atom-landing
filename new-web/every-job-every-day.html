@@ -182,7 +182,7 @@
 
   /* ---------- FIXED BACKGROUND PHOTO (identical mechanic to the hub page:
      stays behind the whole page for the entire scroll, never disappears). ---------- */
-  .rc-fixed-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;overflow:hidden;}
+  .rc-fixed-bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;overflow:hidden;transform:translateZ(0);will-change:transform;}
   .rc-photo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%;}
   .rc-photo-overlay{position:absolute;inset:0;background:rgba(15,14,12,0.2);}
   .rc-white-wipe{position:absolute;left:0;right:0;bottom:0;height:0%;
@@ -204,8 +204,8 @@
      also the element the clicked bubble morphs into (view-transition-name
      set per entry further down, matched to the hub's bubble). ---------- */
   .fc-entry{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:240px 24px 120px;text-align:center;}
-  .fc-entry-inner{max-width:700px;width:100%;view-transition-name:frc-entry-1;}
-  .fc-glow{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.98), 0 2px 6px rgba(0,0,0,0.96), 0 6px 16px rgba(0,0,0,0.94), 0 12px 34px rgba(0,0,0,0.88), 0 24px 64px rgba(0,0,0,0.78), 0 44px 110px rgba(0,0,0,0.6);}
+  .fc-entry-inner{max-width:700px;width:100%;transform:translateZ(0);will-change:transform;view-transition-name:frc-entry-1;}
+  .fc-glow{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.98), 0 3px 10px rgba(0,0,0,0.95), 0 8px 22px rgba(0,0,0,0.9), 0 16px 40px rgba(0,0,0,0.75);}
   .fc-back{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.86);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:32px;transition:color .2s ease;}
   .fc-back:hover{color:var(--orange);}
   .fc-back .nav-chevron{transform:rotate(90deg);width:9px;height:6px;}
