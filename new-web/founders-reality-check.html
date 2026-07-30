@@ -272,6 +272,14 @@
   .rc-journey-col{display:flex;flex-direction:column;align-items:stretch;margin-top:480px;}
   .rc-entry-bubble{display:flex;flex-direction:column;align-items:center;justify-content:center;width:62%;max-width:300px;aspect-ratio:1/1;margin:0 auto;background:rgba(10,9,8,0.34);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border:1px solid rgba(255,255,255,0.16);border-radius:50%;padding:40px;text-align:center;box-shadow:0 32px 64px -30px rgba(0,0,0,0.45);transition:background .25s ease, transform .25s ease;overflow:hidden;}
   .rc-entry-bubble:hover{background:rgba(10,9,8,0.48);transform:translateY(-3px);}
+  /* Cross-document view transition: each bubble carries a unique name that
+     matches the same name on its entry page. On browsers that support it,
+     clicking a bubble morphs it, growing and fading, into the entry page
+     rather than a plain navigation, a pure progressive enhancement. */
+  a.rc-entry-bubble[href="/every-job-every-day"]{view-transition-name:frc-entry-1;}
+  a.rc-entry-bubble[href="/nobody-sees-the-boring-work"]{view-transition-name:frc-entry-2;}
+  a.rc-entry-bubble[href="/the-loneliest-meeting"]{view-transition-name:frc-entry-3;}
+  a.rc-entry-bubble[href="/nobody-claps-for-consistency"]{view-transition-name:frc-entry-4;}
   .rc-entry-bubble.zig-r{margin-left:auto;margin-right:14%;}
   .rc-entry-bubble.zig-l{margin-right:auto;margin-left:32%;}
   .rc-entry-bubble.zig-l-far{margin-right:auto;margin-left:24%;}
@@ -397,8 +405,6 @@
           <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
           <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
           <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
-          <a href="/research/founder-lab/day-zero" class="dd-item"><span class="dd-title">Founder Lab Day Zero</span></a>
-          <a href="/research/founder-lab/log" class="dd-item"><span class="dd-title">Founder Lab Log</span></a>
         </div>
       </div>
       <div class="nav-item">
