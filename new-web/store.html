@@ -337,8 +337,9 @@
   .store-cta-final{padding:44px 32px;}
   .store-cta-box{max-width:var(--maxw);margin:0 auto;text-align:center;background:var(--card);border-radius:var(--radius);padding:48px 40px;}
   .store-cta-lead{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
-  .store-cta-btn{display:inline-block;padding:20px 48px;border-radius:100px;background:var(--black);color:var(--white);font-weight:800;font-size:16px;transition:background .2s ease, transform .2s ease;}
-  .store-cta-btn:hover{background:var(--orange);transform:translateY(-2px);}
+  .store-cta-btn{display:inline-flex;align-items:center;gap:10px;padding:20px 48px;border-radius:var(--radius);background:var(--off-white);color:var(--black);font-weight:800;font-size:16px;transition:background .2s ease, color .2s ease, transform .2s ease;}
+  .store-cta-btn:hover{background:var(--orange);color:var(--white);transform:translateY(-2px);}
+  .store-cta-btn:hover .nav-chevron{color:var(--white);}
   .store-cta-sub{font-size:13px;color:var(--gray-500);margin-top:18px;}
 
   /* ---------- SOURCE ROW: the domain and outbound link, moved to the very
@@ -515,9 +516,6 @@
           <button type="button" class="notebook-tab is-active" data-page="score">
             <span class="notebook-tab-label">AI Commerce Score</span>
           </button>
-          <button type="button" class="notebook-tab" data-page="result">
-            <span class="notebook-tab-label">Result</span>
-          </button>
           <button type="button" class="notebook-tab" data-page="summary">
             <span class="notebook-tab-label">Recommendation Summary</span>
           </button>
@@ -530,14 +528,17 @@
           <button type="button" class="notebook-tab" data-page="blockers">
             <span class="notebook-tab-label">Top Blockers</span>
           </button>
+          <button type="button" class="notebook-tab" data-page="result">
+            <span class="notebook-tab-label">Result</span>
+          </button>
           <button type="button" class="notebook-tab" data-page="whatif">
             <span class="notebook-tab-label">How to Change the Decision</span>
           </button>
-          <button type="button" class="notebook-tab" data-page="similar" id="similarTab">
-            <span class="notebook-tab-label">Stores AI Recommends Instead</span>
-          </button>
           <button type="button" class="notebook-tab" data-page="technical">
             <span class="notebook-tab-label">Technical Breakdown</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="similar" id="similarTab">
+            <span class="notebook-tab-label">Stores AI Recommends Instead</span>
           </button>
         </div>
 
@@ -549,12 +550,6 @@
                  IS "watch AI evaluate this store," so nothing else needs to
                  sit there statically before it, or duplicate it elsewhere. -->
             <div id="simRows"></div>
-          </div>
-
-          <div class="notebook-page-inner" data-page-content="result">
-            <div class="hero-meta-label">Result</div>
-            <div class="hero-meta-value" id="heroVerdictValue">--</div>
-            <div class="hero-verdict-reason" id="heroVerdictReason"></div>
           </div>
 
           <div class="notebook-page-inner" data-page-content="summary">
@@ -585,17 +580,23 @@
             <div id="blockersList"></div>
           </div>
 
-          <div class="notebook-page-inner" data-page-content="whatif">
-            <div id="whatifList"></div>
+          <div class="notebook-page-inner" data-page-content="result">
+            <div class="hero-meta-label">Result</div>
+            <div class="hero-meta-value" id="heroVerdictValue">--</div>
+            <div class="hero-verdict-reason" id="heroVerdictReason"></div>
           </div>
 
-          <div class="notebook-page-inner" data-page-content="similar">
-            <div id="similarList"></div>
+          <div class="notebook-page-inner" data-page-content="whatif">
+            <div id="whatifList"></div>
           </div>
 
           <div class="notebook-page-inner" data-page-content="technical">
             <div class="notebook-page-title">The eight factors behind the decision above, measured by the AI Commerce Score methodology v3.1.</div>
             <div id="factorRows"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="similar">
+            <div id="similarList"></div>
           </div>
         </div>
       </div>
@@ -608,8 +609,8 @@
        rather than a generic scan button. -->
   <section class="store-cta-final section-reveal" id="ctaSection">
     <div class="store-cta-box">
-      <div class="store-cta-lead">How AI sees your store?</div>
-      <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">&#9658; Start your AI Evaluation</a>
+      <div class="store-cta-lead">Curious how AI sees your store?</div>
+      <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">Start your AI Evaluation<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
     </div>
   </section>
