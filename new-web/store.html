@@ -142,8 +142,11 @@
   /* Content sits centered in its own reading-width column; the section
      label stays pinned to the left edge of the wide container above it. */
   .store-content{max-width:640px;margin:0 auto;}
-  .store-content-wide{max-width:760px;margin:0 auto;}
   .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:22px;}
+  /* The whole page cascades in top to bottom, one section after another,
+     rather than sitting fully rendered on first paint. */
+  .section-reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .section-reveal.is-visible{opacity:1;transform:translateY(0);}
   .icon-pill{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
   .icon-pill.is-pass{background:rgba(29,158,117,0.15);color:var(--green);}
   .icon-pill.is-fail{background:rgba(217,60,60,0.12);color:var(--red);}
@@ -170,7 +173,7 @@
   .sim-row.is-visible{opacity:1;transform:translateY(0);}
   .sim-label{font-size:15px;font-weight:700;color:var(--gray-700);min-width:150px;flex-shrink:0;}
   .sim-bar-wrap{flex:1;height:9px;background:var(--card);border-radius:100px;overflow:hidden;}
-  .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.5s cubic-bezier(.4,0,.2,1);}
+  .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width .9s cubic-bezier(.4,0,.2,1);}
   /* Revealed only once every row above has finished filling. The reason
      line fades in a beat after the result itself. */
   .hero-verdict-reveal{margin-top:8px;opacity:0;max-height:0;overflow:hidden;transition:opacity .5s ease, max-height .5s ease;}
@@ -179,11 +182,8 @@
   .hero-verdict-reason.is-visible{opacity:1;transform:translateY(0);}
 
   /* ---------- WHY: a one-line dissection, then a reasoning bubble instead
-     of eight progress bars. Everything here reveals in sequence right after
-     the hero's result and reason land, rather than sitting static. ---------- */
-  .why-reveal{opacity:0;transform:translateY(8px);transition:opacity .5s ease, transform .5s ease;}
-  .why-reveal.is-visible{opacity:1;transform:translateY(0);}
-  .examined-row{display:flex;flex-wrap:wrap;align-items:center;gap:22px;padding:6px 0 4px;}
+     of eight progress bars. Lives on the notebook's Summary page. ---------- */
+  .examined-row{display:flex;flex-wrap:wrap;align-items:center;gap:22px;padding:6px 0 4px;margin-bottom:22px;}
   .examined-chip{display:inline-flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--black);}
   .reasoning-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin:28px 0 14px;}
   .reasoning-bubble{max-width:640px;background:var(--card);border-radius:14px;padding:26px 28px;font-size:16.5px;line-height:1.85;color:var(--black);}
@@ -191,36 +191,36 @@
   .reasoning-bubble p:last-child{margin-bottom:0;}
   .reasoning-note{max-width:640px;font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
 
-  /* ---------- RECOMMENDATION JOURNEY: a tabbed notebook. The four stage
-     tabs sit along the top like binder dividers, all at the same height as
-     the plain flow steps beside them; hovering one (no click, no window)
-     drops the matching page down directly beneath it. A caret and a
-     resting shadow mark the tabs as hoverable even before the pointer
-     arrives. ---------- */
-  .journey-hint{font-size:12.5px;color:var(--gray-500);margin-bottom:14px;}
+  /* ---------- RECOMMENDATION JOURNEY (nested inside the notebook's Journey
+     page): four stage tabs sit along the top like binder dividers, all at
+     the same height as the plain flow steps beside them; hovering one (no
+     click, no window) drops the matching page down directly beneath it. ---------- */
   .journey-tabbook{margin-bottom:0;}
-  .journey-row{display:flex;align-items:stretch;flex-wrap:nowrap;gap:6px;margin-bottom:0;overflow-x:auto;padding-bottom:0;}
+  .journey-row{display:flex;align-items:stretch;flex-wrap:nowrap;gap:4px;margin-bottom:0;overflow-x:auto;padding-bottom:0;}
   .journey-store-node{
-    display:flex;align-items:center;flex-shrink:0;font-weight:800;font-size:14px;color:var(--gray-700);
-    padding:12px 18px;border-radius:var(--radius);background:var(--off-white);
+    display:flex;align-items:center;flex-shrink:0;font-weight:800;font-size:13px;color:var(--gray-700);
+    padding:10px 13px;border-radius:var(--radius);background:var(--off-white);
     opacity:0;transform:translateX(-8px);transition:opacity .4s ease, transform .4s ease;
   }
   .journey-store-node.is-visible{opacity:1;transform:translateX(0);}
-  .journey-arrow{display:flex;align-items:center;color:var(--gray-500);font-size:14px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
+  .journey-arrow{display:flex;align-items:center;color:var(--gray-500);font-size:13px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
   .journey-arrow.is-visible{opacity:1;}
+  /* Tabs read as distinctly different objects from the plain flow steps:
+     their own darker resting background and a real drop shadow, not just a
+     hover-only tint, so it is obvious before the pointer ever arrives. */
   .journey-node{
-    display:flex;align-items:center;gap:9px;flex-shrink:0;padding:12px 20px;
+    display:flex;align-items:center;gap:7px;flex-shrink:0;padding:10px 14px;
     border-radius:var(--radius) var(--radius) 0 0;
-    background:var(--off-white);font-size:15px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--gray-700);
-    box-shadow:0 3px 8px -4px rgba(22,21,18,0.22);
+    background:var(--card);font-size:13.5px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--gray-700);
+    box-shadow:0 6px 14px -6px rgba(22,21,18,0.4);
     opacity:0;transform:translateX(-8px);
     transition:background .2s ease, color .2s ease, transform .2s ease, opacity .4s ease, box-shadow .2s ease;
   }
   .journey-node.is-visible{opacity:1;transform:translateX(0);}
   .journey-node-caret{font-size:10px;color:var(--gray-500);transition:color .2s ease, transform .2s ease;}
   .journey-node:hover, .journey-node.is-open{
-    background:var(--card);color:var(--black);
-    box-shadow:0 -8px 16px -10px rgba(22,21,18,0.28);
+    background:var(--black);color:var(--white);
+    box-shadow:0 -10px 20px -8px rgba(22,21,18,0.4);
   }
   .journey-node:hover .journey-node-caret, .journey-node.is-open .journey-node-caret{color:var(--orange);transform:translateY(1px);}
   .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
@@ -234,8 +234,68 @@
   .journey-detail-items{display:flex;flex-wrap:wrap;gap:8px;}
   .journey-detail-item{font-size:13.5px;font-weight:700;padding:6px 13px;border-radius:100px;background:rgba(22,21,18,0.07);color:var(--gray-700);}
 
+  /* ---------- THE NOTEBOOK: a stack of folder tabs at staggered depths,
+     each one named after its page. Hovering brings it forward (the active
+     tab sticks out furthest of all) and swaps its content into the page
+     pane beside it, inline, never a popup. A little idle motion on the
+     active tab keeps the whole thing feeling alive rather than static. ---------- */
+  .notebook{display:flex;align-items:stretch;gap:0;perspective:1400px;min-height:420px;}
+  .notebook-tabs{display:flex;flex-direction:column;flex:0 0 260px;padding:6px 34px 6px 0;justify-content:center;}
+  .notebook-tab{
+    position:relative;text-align:left;font-family:inherit;border:none;cursor:pointer;
+    padding:16px 22px;margin-bottom:-7px;
+    background:var(--off-white);color:var(--gray-700);
+    border-radius:var(--radius) 0 0 var(--radius);
+    box-shadow:0 6px 14px -8px rgba(22,21,18,0.35);
+    transform-origin:right center;
+    transform:translateX(0) rotateY(0deg);
+    transition:transform .4s cubic-bezier(.34,1.3,.64,1), box-shadow .3s ease, background .3s ease, color .3s ease, z-index 0s;
+  }
+  .notebook-tab-label{font-size:13.5px;font-weight:800;letter-spacing:0.01em;line-height:1.3;display:block;}
+  /* Hand-stacked, uneven resting depths, not a tidy grid. */
+  .notebook-tab:nth-child(1){transform:translateX(0);z-index:7;}
+  .notebook-tab:nth-child(2){transform:translateX(-11px);z-index:6;}
+  .notebook-tab:nth-child(3){transform:translateX(-5px);z-index:5;}
+  .notebook-tab:nth-child(4){transform:translateX(-16px);z-index:4;}
+  .notebook-tab:nth-child(5){transform:translateX(-8px);z-index:3;}
+  .notebook-tab:nth-child(6){transform:translateX(-18px);z-index:2;}
+  .notebook-tab:nth-child(7){transform:translateX(-3px);z-index:1;}
+  .notebook-tab:hover{background:var(--card);color:var(--black);box-shadow:0 10px 22px -8px rgba(22,21,18,0.4);}
+  .notebook-tab.is-active{
+    background:var(--black);color:var(--white);
+    box-shadow:0 16px 32px -10px rgba(22,21,18,0.55);
+    transform:translateX(20px) rotateY(-3deg) !important;
+    z-index:9;
+    animation:notebook-tab-breathe 3.2s ease-in-out infinite;
+  }
+  .notebook-tab.is-hidden{display:none;}
+  @keyframes notebook-tab-breathe{
+    0%,100%{ box-shadow:0 16px 32px -10px rgba(22,21,18,0.55); }
+    50%{ box-shadow:0 20px 38px -8px rgba(22,21,18,0.62); }
+  }
+  .notebook-page{
+    flex:1;min-width:0;position:relative;
+    background:var(--card);border-radius:var(--radius);
+    padding:40px 44px;
+    box-shadow:0 26px 50px -22px rgba(22,21,18,0.4);
+  }
+  /* Two faint pages peeking out from behind, so the whole thing reads as a
+     stack of notebooks rather than one flat card. */
+  .notebook-page::before, .notebook-page::after{
+    content:'';position:absolute;left:10px;right:-10px;border-radius:var(--radius);
+    background:var(--off-white);z-index:-1;
+  }
+  .notebook-page::before{top:10px;bottom:-10px;opacity:0.8;}
+  .notebook-page::after{top:20px;bottom:-20px;opacity:0.5;}
+  .notebook-page-inner{display:none;}
+  .notebook-page-inner.is-active{display:block;animation:notebook-page-flip .4s cubic-bezier(.25,.9,.4,1);}
+  @keyframes notebook-page-flip{
+    from{opacity:0;transform:translateX(14px) rotateY(6deg);}
+    to{opacity:1;transform:translateX(0) rotateY(0deg);}
+  }
+  .notebook-page-title{font-weight:800;color:var(--black);margin-bottom:18px;font-size:16px;}
+
   /* ---------- CONFIDENCE METER ---------- */
-  .confidence-head{font-size:16px;font-weight:700;color:var(--gray-700);margin-bottom:16px;}
   .confidence-num{font-family:var(--serif);font-weight:800;font-size:clamp(40px,5.6vw,56px);letter-spacing:-0.02em;margin-bottom:18px;}
   .confidence-bar-wrap{height:14px;background:var(--card);border-radius:100px;overflow:hidden;max-width:420px;}
   .confidence-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.2s cubic-bezier(.34,1.1,.64,1);}
@@ -269,14 +329,7 @@
   .similar-signal-list{display:flex;flex-wrap:wrap;gap:14px;}
   .similar-signal-chip{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
 
-  /* ---------- TECHNICAL FACTOR BREAKDOWN: collapsed by default ---------- */
-  .store-detail-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;color:var(--black);}
-  .store-detail-toggle-label{font-size:16px;font-weight:800;}
-  .store-detail-toggle-icon{font-size:22px;color:var(--gray-500);transition:transform .3s cubic-bezier(.65,0,.35,1);line-height:1;}
-  .store-detail.is-open .store-detail-toggle-icon{transform:rotate(45deg);}
-  .store-detail-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.65,0,.35,1);}
-  .store-detail.is-open .store-detail-body{max-height:1200px;}
-  .store-detail-body-inner{padding-top:28px;}
+  /* ---------- TECHNICAL FACTOR BREAKDOWN: always open, no click needed ---------- */
   .store-detail-desc{font-size:13.5px;color:var(--gray-700);margin-bottom:22px;line-height:1.6;}
   .factor-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--card-line);}
   .factor-row:last-child{border-bottom:none;}
@@ -348,6 +401,11 @@
     .store-block-inner{padding-top:28px;}
     .why-row,.blocker-row,.quickwin-row,.whatif-row{font-size:15px;}
     .sim-label{min-width:120px;font-size:13px;}
+    .notebook{flex-direction:column;perspective:none;}
+    .notebook-tabs{flex-direction:row;flex-wrap:wrap;flex:0 0 auto;padding:0 0 14px;gap:6px;justify-content:flex-start;}
+    .notebook-tab{margin-bottom:0;transform:none !important;border-radius:var(--radius);animation:none;}
+    .notebook-tab.is-active{transform:none !important;}
+    .notebook-page::before, .notebook-page::after{display:none;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
   }
@@ -459,100 +517,90 @@
       <!-- The whole four-row read happens automatically on load: this IS
            the "watch AI evaluate this store" moment, so there is no
            separate button or replay section duplicating it. -->
-      <div id="simRows"></div>
-      <div class="hero-verdict-reveal" id="heroVerdictReveal">
-        <div class="hero-meta-label">Result</div>
-        <div class="hero-meta-value" id="heroVerdictValue">--</div>
-        <div class="hero-verdict-reason" id="heroVerdictReason"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY AI MADE THAT DECISION: a one-line dissection, then a plain-language
-       summary. Reveals right after the hero's result and reason land. -->
-  <section class="store-block" id="whySection">
-    <div class="store-block-inner">
-      <div class="store-label">Why AI made that decision</div>
       <div class="store-content">
-        <div id="examinedList" class="examined-row why-reveal"></div>
-
-        <div class="reasoning-label why-reveal">Recommendation summary</div>
-        <div class="reasoning-bubble why-reveal" id="reasoningBubble"></div>
-        <div class="reasoning-note why-reveal">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RECOMMENDATION JOURNEY: a tabbed notebook. Hover a stage tab to see
-       what is missing or confirmed drop down beneath it, no click, no window. -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <div class="store-label">Recommendation journey</div>
-      <div class="store-content-wide">
-        <div class="journey-hint">Hover a stage below to see what AI found</div>
-        <div class="journey-tabbook" id="journeyTabbook">
-          <div class="journey-row" id="journeyRow">
-            <span class="journey-store-node">Store</span>
-          </div>
-          <div class="journey-detail" id="journeyDetail"></div>
+        <div id="simRows"></div>
+        <div class="hero-verdict-reveal" id="heroVerdictReveal">
+          <div class="hero-meta-label">Result</div>
+          <div class="hero-meta-value" id="heroVerdictValue">--</div>
+          <div class="hero-verdict-reason" id="heroVerdictReason"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- RECOMMENDATION CONFIDENCE METER: a probability, not a score. -->
-  <section class="store-block">
+  <!-- THE NOTEBOOK: every remaining section lives on one page of a single
+       tabbed binder now, instead of stacking as separate blocks. Tabs sit
+       in a staggered stack at different depths, like real folder dividers;
+       hovering one brings it forward and swaps in its page, right here on
+       the page itself, never a popup or overlay. -->
+  <section class="store-block section-reveal" id="notebookSection">
     <div class="store-block-inner">
-      <div class="store-label">Recommendation probability</div>
-      <div class="store-content">
-        <div class="confidence-head">Would AI recommend this store?</div>
-        <div class="confidence-num" id="confidenceNum">--%</div>
-        <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
-      </div>
-    </div>
-  </section>
+      <div class="notebook" id="notebook">
+        <div class="notebook-tabs" id="notebookTabs">
+          <button type="button" class="notebook-tab is-active" data-page="summary">
+            <span class="notebook-tab-label">Recommendation Summary</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="journey">
+            <span class="notebook-tab-label">Recommendation Journey</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="probability">
+            <span class="notebook-tab-label">Probability</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="blockers">
+            <span class="notebook-tab-label">Top Blockers</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="whatif">
+            <span class="notebook-tab-label">How to Change the Decision</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="similar" id="similarTab">
+            <span class="notebook-tab-label">Stores AI Recommends Instead</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="technical">
+            <span class="notebook-tab-label">Technical Breakdown</span>
+          </button>
+        </div>
 
-  <!-- TOP 3 BLOCKERS: the biggest negative signals, not forty checklist items. -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <div class="store-label">Top 3 blockers</div>
-      <div class="store-content">
-        <div id="blockersList"></div>
-      </div>
-    </div>
-  </section>
+        <div class="notebook-page" id="notebookPage">
+          <div class="notebook-page-inner is-active" data-page-content="summary">
+            <div class="notebook-page-title">Why AI made that decision</div>
+            <div id="examinedList" class="examined-row"></div>
+            <div class="reasoning-label">Recommendation summary</div>
+            <div class="reasoning-bubble" id="reasoningBubble"></div>
+            <div class="reasoning-note">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
+          </div>
 
-  <!-- WHAT WOULD CHANGE THE DECISION: a hypothetical, so the future is visible. -->
-  <section class="store-block" id="whatifSection">
-    <div class="store-block-inner">
-      <div class="store-label">What would change the decision</div>
-      <div class="store-content">
-        <div id="whatifList"></div>
-      </div>
-    </div>
-  </section>
+          <div class="notebook-page-inner" data-page-content="journey">
+            <div class="notebook-page-title">Hover a stage below to see what AI found</div>
+            <div class="journey-tabbook" id="journeyTabbook">
+              <div class="journey-row" id="journeyRow">
+                <span class="journey-store-node">Store</span>
+              </div>
+              <div class="journey-detail" id="journeyDetail"></div>
+            </div>
+          </div>
 
-  <!-- SIMILAR RECOMMENDED STORES -->
-  <section class="store-block" id="similarSection">
-    <div class="store-block-inner">
-      <div class="store-label">Stores AI recommends instead</div>
-      <div class="store-content">
-        <div id="similarList"></div>
-      </div>
-    </div>
-  </section>
+          <div class="notebook-page-inner" data-page-content="probability">
+            <div class="notebook-page-title">Would AI recommend this store?</div>
+            <div class="confidence-num" id="confidenceNum">--%</div>
+            <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
+          </div>
 
-  <!-- TECHNICAL FACTOR BREAKDOWN: collapsed by default, the footnote. -->
-  <section class="store-block store-detail" id="storeDetail">
-    <div class="store-block-inner">
-      <button type="button" class="store-detail-toggle" id="detailToggle" aria-expanded="false">
-        <span class="store-detail-toggle-label">Technical factor breakdown</span>
-        <span class="store-detail-toggle-icon">+</span>
-      </button>
-      <div class="store-detail-body" id="detailBody">
-        <div class="store-detail-body-inner store-content">
-          <div class="store-detail-desc">The eight factors behind the decision above, measured by the AI Commerce Score methodology v3.1.</div>
-          <div id="factorRows"></div>
+          <div class="notebook-page-inner" data-page-content="blockers">
+            <div id="blockersList"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="whatif">
+            <div id="whatifList"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="similar">
+            <div id="similarList"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="technical">
+            <div class="notebook-page-title">The eight factors behind the decision above, measured by the AI Commerce Score methodology v3.1.</div>
+            <div id="factorRows"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -562,7 +610,7 @@
        page's own score card and as wide as the navbar. This is a simulation
        of a decision, not an audit, so the close offers the same thing
        rather than a generic scan button. -->
-  <section class="store-cta-final">
+  <section class="store-cta-final section-reveal" id="ctaSection">
     <div class="store-cta-box">
       <div class="store-cta-lead">Curious how AI sees your store?</div>
       <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">&#9658; Start your AI Evaluation</a>
@@ -572,7 +620,7 @@
 
   <!-- Source: the domain itself and the outbound link, kept modest, no
        breadcrumb. -->
-  <div class="store-source-row">
+  <div class="store-source-row section-reveal" id="sourceSection">
     <div class="store-top-row">
       <div class="store-domain-label" id="storeDomainLabel"></div>
       <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
@@ -818,7 +866,11 @@
       heroVerdictReason: document.getElementById('heroVerdictReason'),
       heroMetaScore: document.getElementById('heroMetaScore'),
       simRows: document.getElementById('simRows'),
-      whySection: document.getElementById('whySection'),
+      notebookSection: document.getElementById('notebookSection'),
+      notebook: document.getElementById('notebook'),
+      notebookTabs: document.getElementById('notebookTabs'),
+      notebookPage: document.getElementById('notebookPage'),
+      similarTab: document.getElementById('similarTab'),
       examinedList: document.getElementById('examinedList'),
       reasoningBubble: document.getElementById('reasoningBubble'),
       journeyTabbook: document.getElementById('journeyTabbook'),
@@ -827,13 +879,11 @@
       confidenceNum: document.getElementById('confidenceNum'),
       confidenceBar: document.getElementById('confidenceBar'),
       blockersList: document.getElementById('blockersList'),
-      whatifSection: document.getElementById('whatifSection'),
       whatifList: document.getElementById('whatifList'),
-      similarSection: document.getElementById('similarSection'),
       similarList: document.getElementById('similarList'),
-      storeDetail: document.getElementById('storeDetail'),
-      detailToggle: document.getElementById('detailToggle'),
       factorRows: document.getElementById('factorRows'),
+      ctaSection: document.getElementById('ctaSection'),
+      sourceSection: document.getElementById('sourceSection'),
       pageTitle: document.getElementById('pageTitle'),
       pageDesc: document.getElementById('pageDesc'),
       ogTitle: document.getElementById('ogTitle'),
@@ -910,7 +960,7 @@
         const fill = row.querySelector('.sim-bar-fill');
         await wait(20);
         fill.style.width = fill.getAttribute('data-target') + '%';
-        await wait(1500);
+        await wait(900);
       }
     }
 
@@ -926,13 +976,16 @@
       }
     }
 
-    // Below the hero's result and reason, the dissection and reasoning
-    // summary reveal in their own short cascade rather than sitting static
-    // on load, so the whole thing reads as one continuous sequence.
-    function revealWhy(){
-      if (!els.whySection) return;
-      const reveals = Array.from(els.whySection.querySelectorAll('.why-reveal'));
-      reveals.forEach((el, i) => setTimeout(() => el.classList.add('is-visible'), i * 260));
+    // The rest of the page keeps cascading in, one section at a time, so
+    // the whole page (not just the hero) reads as a single top-to-bottom
+    // reveal rather than everything else sitting there fully rendered
+    // underneath the animating hero. Each section's own content populates
+    // (and its meters/bars animate) right as it is revealed, not before.
+    function revealRestOfPage(tasks){
+      tasks.filter(t => t.el).forEach((t, i) => setTimeout(() => {
+        t.el.classList.add('is-visible');
+        if (t.fn) t.fn();
+      }, i * 340));
     }
 
     function renderExamined(data){
@@ -991,9 +1044,10 @@
           '</div>';
       }).join('');
 
-      // Notebook tabs: hovering a stage tab drops its page down beneath it,
-      // no click and no window. The whole tabbook closes once the pointer
-      // leaves the row and the panel together.
+      // Sub-tabs, nested inside the notebook's own Journey page: hovering a
+      // stage tab drops its page down beneath it, no click and no window.
+      // The whole tabbook closes once the pointer leaves the row and the
+      // panel together.
       els.journeyRow.querySelectorAll('.journey-node').forEach(btn => {
         btn.addEventListener('mouseenter', () => {
           const stage = btn.dataset.stage;
@@ -1009,6 +1063,36 @@
           els.journeyDetail.classList.remove('is-open');
         });
       }
+    }
+
+    // THE NOTEBOOK: hovering a tab in the stack brings it forward and swaps
+    // its page into the shared pane, right there on the page, no popup.
+    // Whatever was last hovered stays open when the pointer leaves, so the
+    // notebook always shows something rather than collapsing to blank.
+    function switchNotebookPage(page){
+      if (!els.notebookTabs || !els.notebookPage) return;
+      els.notebookTabs.querySelectorAll('.notebook-tab').forEach(b => b.classList.toggle('is-active', b.dataset.page === page));
+      els.notebookPage.querySelectorAll('.notebook-page-inner').forEach(p => p.classList.toggle('is-active', p.dataset.pageContent === page));
+    }
+
+    // Some pages (What would change it, Similar stores) only exist if there
+    // is real data to show; if their tab has to hide and it was the open
+    // one, fall back to the first page rather than leaving the notebook on
+    // a tab that no longer exists.
+    function setNotebookTabVisible(page, visible){
+      if (!els.notebookTabs) return;
+      const tab = els.notebookTabs.querySelector('[data-page="' + page + '"]');
+      if (!tab) return;
+      tab.classList.toggle('is-hidden', !visible);
+      if (!visible && tab.classList.contains('is-active')) switchNotebookPage('summary');
+    }
+
+    function initNotebook(){
+      if (!els.notebookTabs) return;
+      els.notebookTabs.querySelectorAll('.notebook-tab').forEach(btn => {
+        btn.addEventListener('mouseenter', () => switchNotebookPage(btn.dataset.page));
+        btn.addEventListener('focus', () => switchNotebookPage(btn.dataset.page));
+      });
     }
 
     function renderConfidence(stages){
@@ -1033,7 +1117,7 @@
     function renderWhatIf(score, opps){
       const top = opps.slice().sort((a, b) => b.points - a.points).slice(0, 2);
       if (!top.length) {
-        els.whatifSection.style.display = 'none';
+        setNotebookTabVisible('whatif', false);
         return;
       }
       const rows = [];
@@ -1065,7 +1149,7 @@
           .filter(r => r.domain && r.domain !== currentDomain && r.score > 0)
           .sort((a, b) => b.score - a.score)
           .slice(0, 3);
-        if (!rows.length) { els.similarSection.style.display = 'none'; return; }
+        if (!rows.length) { setNotebookTabVisible('similar', false); return; }
         els.similarList.innerHTML = rows.map((r, i) =>
           '<div class="similar-item">' +
             '<div class="similar-head">' +
@@ -1108,7 +1192,7 @@
           });
         });
       } catch (e) {
-        els.similarSection.style.display = 'none';
+        setNotebookTabVisible('similar', false);
       }
     }
 
@@ -1203,33 +1287,38 @@
       if (els.heroMetaScore) els.heroMetaScore.textContent = score;
       renderExamined(data);
       renderReasoning(stages, examinedPasses, recommended);
+      updateSeo(domain, storeName, score);
+
+      // Every notebook page's content is populated up front (hovering a tab
+      // has to show real content immediately, not a loading flash), but the
+      // notebook section itself, plus the CTA and source row after it,
+      // still cascade into view in sequence once the hero simulation
+      // finishes, so the whole page reads as one top-to-bottom reveal.
+      const revealTasks = [
+        { el: els.notebookSection, fn: () => {
+          renderJourney(stages, storeName, opps);
+          renderConfidence(stages);
+          renderBlockers(opps);
+          renderWhatIf(score, opps);
+          loadSimilarStores(data, score);
+          renderFactorRows(data);
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              els.factorRows.querySelectorAll('.factor-fill').forEach(f => { f.style.width = f.getAttribute('data-target') + '%'; });
+            }, 60);
+          });
+        } },
+        { el: els.ctaSection, fn: null },
+        { el: els.sourceSection, fn: null }
+      ];
+
       runHeroSimulation(stages).then(() => {
         revealHeroVerdict(recommended, reasonText);
-        setTimeout(revealWhy, 1100);
+        setTimeout(() => revealRestOfPage(revealTasks), 900);
       });
-      renderJourney(stages, storeName, opps);
-      renderConfidence(stages);
-      renderBlockers(opps);
-      renderWhatIf(score, opps);
-      loadSimilarStores(data, score);
-      renderFactorRows(data);
-      updateSeo(domain, storeName, score);
 
       els.loading.style.display = 'none';
       els.main.style.display = 'block';
-
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          els.factorRows.querySelectorAll('.factor-fill').forEach(el => { el.style.width = el.getAttribute('data-target') + '%'; });
-        }, 60);
-      });
-    }
-
-    if (els.detailToggle) {
-      els.detailToggle.addEventListener('click', () => {
-        const open = els.storeDetail.classList.toggle('is-open');
-        els.detailToggle.setAttribute('aria-expanded', String(open));
-      });
     }
 
     async function init(){
@@ -1254,6 +1343,7 @@
       }
     }
 
+    initNotebook();
     document.addEventListener('DOMContentLoaded', init);
   })();
 </script>
