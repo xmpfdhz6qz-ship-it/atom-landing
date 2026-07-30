@@ -137,9 +137,13 @@
 
   /* ---------- SHARED SECTION RHYTHM: thin dividers, generous whitespace,
      an editorial reading column, no boxed dashboard cards, no popups. ---------- */
-  .store-block{padding:8px 32px 44px;border-top:1px solid var(--card-line);}
-  .store-block-inner{max-width:var(--maxw);margin:0 auto;padding-top:36px;}
-  .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:22px;}
+  .store-block{padding:0 32px;}
+  .store-block-inner{max-width:var(--maxw);margin:0 auto;padding:44px 0;}
+  /* Content sits centered in its own reading-width column; the section
+     label stays pinned to the left edge of the wide container above it. */
+  .store-content{max-width:640px;margin:0 auto;}
+  .store-content-wide{max-width:760px;margin:0 auto;}
+  .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:22px;}
   .icon-pill{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
   .icon-pill.is-pass{background:rgba(29,158,117,0.15);color:var(--green);}
   .icon-pill.is-fail{background:rgba(217,60,60,0.12);color:var(--red);}
@@ -148,7 +152,7 @@
 
   /* ---------- HERO: no score up front. A short simulated read of the four
      stages, staged in over about three seconds. ---------- */
-  .store-hero{padding:140px 32px 40px;}
+  .store-hero{padding:140px 32px 44px;}
   .store-hero-inner{max-width:var(--maxw);margin:0 auto;}
   .store-top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
   .store-domain-label{font-size:14px;font-weight:700;color:var(--gray-700);}
@@ -158,7 +162,7 @@
   /* Small, unobtrusive: the score still needs to be findable without
      scrolling, it just should not be the headline any more. */
   .hero-meta-row{display:flex;gap:32px;flex-wrap:wrap;margin-bottom:28px;}
-  .hero-meta-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:4px;}
+  .hero-meta-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:4px;}
   .hero-meta-value{font-family:var(--serif);font-weight:800;font-size:19px;}
   .hero-meta-value.is-pass{color:var(--green);}
   .hero-meta-value.is-fail{color:var(--red);}
@@ -188,30 +192,37 @@
   .reasoning-note{max-width:640px;font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
 
   /* ---------- RECOMMENDATION JOURNEY: a tabbed notebook. The four stage
-     tabs sit along the top like binder dividers; hovering one (no click,
-     no window) drops the matching page down directly beneath it. ---------- */
+     tabs sit along the top like binder dividers, all at the same height as
+     the plain flow steps beside them; hovering one (no click, no window)
+     drops the matching page down directly beneath it. A caret and a
+     resting shadow mark the tabs as hoverable even before the pointer
+     arrives. ---------- */
+  .journey-hint{font-size:12.5px;color:var(--gray-500);margin-bottom:14px;}
   .journey-tabbook{margin-bottom:0;}
-  .journey-row{display:flex;align-items:flex-end;flex-wrap:nowrap;gap:6px;margin-bottom:0;overflow-x:auto;padding-bottom:0;}
+  .journey-row{display:flex;align-items:stretch;flex-wrap:nowrap;gap:6px;margin-bottom:0;overflow-x:auto;padding-bottom:0;}
   .journey-store-node{
     display:flex;align-items:center;flex-shrink:0;font-weight:800;font-size:14px;color:var(--gray-700);
-    padding:12px 18px;border-radius:var(--radius);background:var(--off-white);margin-bottom:10px;
+    padding:12px 18px;border-radius:var(--radius);background:var(--off-white);
     opacity:0;transform:translateX(-8px);transition:opacity .4s ease, transform .4s ease;
   }
   .journey-store-node.is-visible{opacity:1;transform:translateX(0);}
-  .journey-arrow{color:var(--gray-500);font-size:14px;flex-shrink:0;opacity:0;transition:opacity .3s ease;margin-bottom:10px;}
+  .journey-arrow{display:flex;align-items:center;color:var(--gray-500);font-size:14px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
   .journey-arrow.is-visible{opacity:1;}
   .journey-node{
     display:flex;align-items:center;gap:9px;flex-shrink:0;padding:12px 20px;
     border-radius:var(--radius) var(--radius) 0 0;
-    background:var(--off-white);font-size:15px;font-weight:800;cursor:default;border:none;font-family:inherit;color:var(--gray-700);
+    background:var(--off-white);font-size:15px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--gray-700);
+    box-shadow:0 3px 8px -4px rgba(22,21,18,0.22);
     opacity:0;transform:translateX(-8px);
     transition:background .2s ease, color .2s ease, transform .2s ease, opacity .4s ease, box-shadow .2s ease;
   }
   .journey-node.is-visible{opacity:1;transform:translateX(0);}
+  .journey-node-caret{font-size:10px;color:var(--gray-500);transition:color .2s ease, transform .2s ease;}
   .journey-node:hover, .journey-node.is-open{
     background:var(--card);color:var(--black);
     box-shadow:0 -8px 16px -10px rgba(22,21,18,0.28);
   }
+  .journey-node:hover .journey-node-caret, .journey-node.is-open .journey-node-caret{color:var(--orange);transform:translateY(1px);}
   .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
   .journey-node.is-open .icon-pill.is-fail{background:rgba(217,60,60,0.32);}
   .journey-detail{background:var(--card);border-radius:0 var(--radius) var(--radius) var(--radius);max-height:0;opacity:0;overflow:hidden;transition:max-height .35s cubic-bezier(.65,0,.35,1), opacity .25s ease, padding .35s ease;}
@@ -230,13 +241,13 @@
   .confidence-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.2s cubic-bezier(.34,1.1,.64,1);}
 
   /* ---------- TOP 3 BLOCKERS: negative signal, not a High/Medium tag ---------- */
-  .blocker-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--card-line);}
+  .blocker-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--card-line);}
   .blocker-row:last-child{border-bottom:none;}
   .blocker-name{font-size:18px;font-weight:700;}
   .blocker-impact{font-family:var(--serif);font-weight:800;font-size:19px;color:var(--red);flex-shrink:0;}
 
   /* ---------- WHAT WOULD CHANGE THE DECISION ---------- */
-  .whatif-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--card-line);}
+  .whatif-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--card-line);}
   .whatif-row:last-child{border-bottom:none;}
   .whatif-name{font-size:16px;font-weight:700;}
   .whatif-scores{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:800;font-size:19px;flex-shrink:0;}
@@ -245,7 +256,7 @@
   .whatif-scores .to{color:var(--green);}
 
   /* ---------- SIMILAR RECOMMENDED STORES ---------- */
-  .similar-item{padding:16px 0;border-bottom:1px solid var(--card-line);}
+  .similar-item{padding:11px 0;border-bottom:1px solid var(--card-line);}
   .similar-item:last-child{border-bottom:none;}
   .similar-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px;}
   .similar-name{font-size:17px;font-weight:700;transition:color .2s ease;}
@@ -275,16 +286,11 @@
   .factor-fill{height:100%;border-radius:100px;transition:width 1s ease;}
   .factor-score{font-size:13px;font-weight:800;min-width:52px;text-align:right;flex-shrink:0;}
 
-  /* ---------- LEARN ---------- */
-  .learn-grid{display:flex;flex-wrap:wrap;gap:14px 30px;}
-  .learn-link{font-size:17px;font-weight:700;color:var(--black);padding-bottom:5px;border-bottom:2px solid transparent;transition:border-color .2s ease, color .2s ease;}
-  .learn-link:hover{color:var(--orange);border-color:var(--orange);}
-
   /* ---------- FINAL CTA: the only call to action on the page, at the very end,
      styled like the landing page's own score card. The report is a
      simulation of a decision, so the close should offer the same thing,
      not a generic scan button. ---------- */
-  .store-cta-final{padding:16px 32px 64px;}
+  .store-cta-final{padding:44px 32px;}
   .store-cta-box{max-width:var(--maxw);margin:0 auto;text-align:center;background:var(--card);border-radius:var(--radius);padding:48px 40px;}
   .store-cta-lead{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
   .store-cta-btn{display:inline-block;padding:20px 48px;border-radius:100px;background:var(--black);color:var(--white);font-weight:800;font-size:16px;transition:background .2s ease, transform .2s ease;}
@@ -293,7 +299,7 @@
 
   /* ---------- SOURCE ROW: the domain and outbound link, moved to the very
      end of the page rather than the hero. No breadcrumb any more. ---------- */
-  .store-source-row{max-width:var(--maxw);margin:0 auto;padding:32px 32px 64px;}
+  .store-source-row{max-width:var(--maxw);margin:0 auto;padding:44px 32px;}
 
   /* ---------- STANDARD SITE FOOTER (verbatim boilerplate, same as every other page) ---------- */
   footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
@@ -301,10 +307,11 @@
   .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
   .footer-brand-col p{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:10px;max-width:280px;}
   .footer-tagline-text{font-weight:700;color:var(--black);}
-  .social-row{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:16px;}
-  .social-row a{font-size:11.5px;color:var(--gray-500);border:1px solid var(--card-line);padding:5px 11px;border-radius:100px;transition:all .2s ease;}
-  .social-row a:hover{color:var(--orange);border-color:rgba(254,106,3,0.3);}
-  .social-row a.strong{color:var(--orange);border-color:rgba(254,106,3,0.3);}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
   .footer-col-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:14px;}
   .footer-col a{display:block;font-size:13.5px;color:var(--gray-700);margin-bottom:10px;transition:color .2s ease;}
   .footer-col a:hover{color:var(--orange);}
@@ -466,11 +473,13 @@
   <section class="store-block" id="whySection">
     <div class="store-block-inner">
       <div class="store-label">Why AI made that decision</div>
-      <div id="examinedList" class="examined-row why-reveal"></div>
+      <div class="store-content">
+        <div id="examinedList" class="examined-row why-reveal"></div>
 
-      <div class="reasoning-label why-reveal">Recommendation summary</div>
-      <div class="reasoning-bubble why-reveal" id="reasoningBubble"></div>
-      <div class="reasoning-note why-reveal">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
+        <div class="reasoning-label why-reveal">Recommendation summary</div>
+        <div class="reasoning-bubble why-reveal" id="reasoningBubble"></div>
+        <div class="reasoning-note why-reveal">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
+      </div>
     </div>
   </section>
 
@@ -479,11 +488,14 @@
   <section class="store-block">
     <div class="store-block-inner">
       <div class="store-label">Recommendation journey</div>
-      <div class="journey-tabbook" id="journeyTabbook">
-        <div class="journey-row" id="journeyRow">
-          <span class="journey-store-node">Store</span>
+      <div class="store-content-wide">
+        <div class="journey-hint">Hover a stage below to see what AI found</div>
+        <div class="journey-tabbook" id="journeyTabbook">
+          <div class="journey-row" id="journeyRow">
+            <span class="journey-store-node">Store</span>
+          </div>
+          <div class="journey-detail" id="journeyDetail"></div>
         </div>
-        <div class="journey-detail" id="journeyDetail"></div>
       </div>
     </div>
   </section>
@@ -492,9 +504,11 @@
   <section class="store-block">
     <div class="store-block-inner">
       <div class="store-label">Recommendation probability</div>
-      <div class="confidence-head">Would AI recommend this store?</div>
-      <div class="confidence-num" id="confidenceNum">--%</div>
-      <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
+      <div class="store-content">
+        <div class="confidence-head">Would AI recommend this store?</div>
+        <div class="confidence-num" id="confidenceNum">--%</div>
+        <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
+      </div>
     </div>
   </section>
 
@@ -502,7 +516,9 @@
   <section class="store-block">
     <div class="store-block-inner">
       <div class="store-label">Top 3 blockers</div>
-      <div id="blockersList"></div>
+      <div class="store-content">
+        <div id="blockersList"></div>
+      </div>
     </div>
   </section>
 
@@ -510,7 +526,9 @@
   <section class="store-block" id="whatifSection">
     <div class="store-block-inner">
       <div class="store-label">What would change the decision</div>
-      <div id="whatifList"></div>
+      <div class="store-content">
+        <div id="whatifList"></div>
+      </div>
     </div>
   </section>
 
@@ -518,7 +536,9 @@
   <section class="store-block" id="similarSection">
     <div class="store-block-inner">
       <div class="store-label">Stores AI recommends instead</div>
-      <div id="similarList"></div>
+      <div class="store-content">
+        <div id="similarList"></div>
+      </div>
     </div>
   </section>
 
@@ -530,7 +550,7 @@
         <span class="store-detail-toggle-icon">+</span>
       </button>
       <div class="store-detail-body" id="detailBody">
-        <div class="store-detail-body-inner">
+        <div class="store-detail-body-inner store-content">
           <div class="store-detail-desc">The eight factors behind the decision above, measured by the AI Commerce Score methodology v3.1.</div>
           <div id="factorRows"></div>
         </div>
@@ -558,19 +578,6 @@
       <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
     </div>
   </div>
-
-  <!-- LEARN: knowledge, not more marketing. The very last thing on the page. -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <div class="store-label">Learn</div>
-      <div class="learn-grid">
-        <a href="/methodology" class="learn-link">Methodology</a>
-        <a href="/framework" class="learn-link">Framework</a>
-        <a href="/vocabulary" class="learn-link">Vocabulary</a>
-        <a href="/research" class="learn-link">Research</a>
-      </div>
-    </div>
-  </section>
 
 </div>
 
@@ -954,7 +961,7 @@
 
     function renderJourney(stages, storeName, opps){
       const nodes = stages.map(s =>
-        '<span class="journey-arrow">&rarr;</span><button type="button" class="journey-node" data-stage="' + s.key + '"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</button>'
+        '<span class="journey-arrow">&rarr;</span><button type="button" class="journey-node" data-stage="' + s.key + '"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '<span class="journey-node-caret">&#9662;</span></button>'
       ).join('');
       // Homepage and Products are the plain lead-in steps AI takes before any
       // of the four scored stages begin, so the journey reads as the whole
