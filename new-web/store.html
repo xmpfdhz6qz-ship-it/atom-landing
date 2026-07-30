@@ -162,13 +162,13 @@
   .store-visit-link{font-size:13px;font-weight:800;color:var(--orange);white-space:nowrap;}
   .store-h1{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-0.02em;margin-bottom:22px;line-height:1.2;}
   .store-h1 em{color:var(--orange);}
-  /* Small, unobtrusive: the score still needs to be findable without
-     scrolling, it just should not be the headline any more. */
-  .hero-meta-row{display:flex;gap:32px;flex-wrap:wrap;margin-bottom:28px;}
   .hero-meta-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:4px;}
   .hero-meta-value{font-family:var(--serif);font-weight:800;font-size:19px;}
   .hero-meta-value.is-pass{color:var(--green);}
   .hero-meta-value.is-fail{color:var(--red);}
+  /* The score is the star of its own notebook page now, not a small
+     unobtrusive line, so it gets to be big here. */
+  #heroMetaScore{font-size:clamp(48px,6vw,68px);margin-bottom:28px;}
   .sim-row{display:flex;align-items:center;gap:16px;padding:10px 0;opacity:0;transform:translateY(6px);transition:opacity .4s ease, transform .4s ease;}
   .sim-row.is-visible{opacity:1;transform:translateY(0);}
   .sim-label{font-size:15px;font-weight:700;color:var(--gray-700);min-width:150px;flex-shrink:0;}
@@ -240,10 +240,10 @@
      pane beside it, inline, never a popup. A little idle motion on the
      active tab keeps the whole thing feeling alive rather than static. ---------- */
   .notebook{display:flex;align-items:stretch;gap:0;perspective:1400px;min-height:420px;}
-  .notebook-tabs{display:flex;flex-direction:column;flex:0 0 260px;padding:6px 34px 6px 0;justify-content:center;}
+  .notebook-tabs{display:flex;flex-direction:column;flex:0 0 260px;padding:6px 0;justify-content:center;}
   .notebook-tab{
     position:relative;text-align:left;font-family:inherit;border:none;cursor:pointer;
-    padding:16px 22px;margin-bottom:-7px;
+    padding:16px 22px;margin-bottom:14px;
     background:var(--off-white);color:var(--gray-700);
     border-radius:var(--radius) 0 0 var(--radius);
     box-shadow:0 6px 14px -8px rgba(22,21,18,0.35);
@@ -251,30 +251,36 @@
     transform:translateX(0) rotateY(0deg);
     transition:transform .4s cubic-bezier(.34,1.3,.64,1), box-shadow .3s ease, background .3s ease, color .3s ease, z-index 0s;
   }
+  .notebook-tab:last-child{margin-bottom:0;}
   .notebook-tab-label{font-size:13.5px;font-weight:800;letter-spacing:0.01em;line-height:1.3;display:block;}
-  /* Hand-stacked, uneven resting depths, not a tidy grid. */
-  .notebook-tab:nth-child(1){transform:translateX(0);z-index:7;}
-  .notebook-tab:nth-child(2){transform:translateX(-11px);z-index:6;}
-  .notebook-tab:nth-child(3){transform:translateX(-5px);z-index:5;}
-  .notebook-tab:nth-child(4){transform:translateX(-16px);z-index:4;}
-  .notebook-tab:nth-child(5){transform:translateX(-8px);z-index:3;}
-  .notebook-tab:nth-child(6){transform:translateX(-18px);z-index:2;}
-  .notebook-tab:nth-child(7){transform:translateX(-3px);z-index:1;}
-  .notebook-tab:hover{background:var(--card);color:var(--black);box-shadow:0 10px 22px -8px rgba(22,21,18,0.4);}
+  /* Hand-stacked, uneven resting depths, not a tidy grid, but each one
+     clearly separated from its neighbors above and below. */
+  .notebook-tab:nth-child(1){transform:translateX(0);z-index:8;}
+  .notebook-tab:nth-child(2){transform:translateX(-14px);z-index:7;}
+  .notebook-tab:nth-child(3){transform:translateX(-6px);z-index:6;}
+  .notebook-tab:nth-child(4){transform:translateX(-20px);z-index:5;}
+  .notebook-tab:nth-child(5){transform:translateX(-10px);z-index:4;}
+  .notebook-tab:nth-child(6){transform:translateX(-22px);z-index:3;}
+  .notebook-tab:nth-child(7){transform:translateX(-4px);z-index:2;}
+  .notebook-tab:nth-child(8){transform:translateX(-16px);z-index:1;}
+  .notebook-tab:hover{background:var(--orange);color:var(--white);box-shadow:0 12px 26px -8px rgba(254,106,3,0.5);}
   .notebook-tab.is-active{
-    background:var(--black);color:var(--white);
-    box-shadow:0 16px 32px -10px rgba(22,21,18,0.55);
-    transform:translateX(20px) rotateY(-3deg) !important;
+    background:var(--orange);color:var(--white);
+    box-shadow:0 18px 34px -10px rgba(254,106,3,0.55);
+    transform:translateX(30px) rotateY(-3deg) !important;
     z-index:9;
     animation:notebook-tab-breathe 3.2s ease-in-out infinite;
   }
   .notebook-tab.is-hidden{display:none;}
   @keyframes notebook-tab-breathe{
-    0%,100%{ box-shadow:0 16px 32px -10px rgba(22,21,18,0.55); }
-    50%{ box-shadow:0 20px 38px -8px rgba(22,21,18,0.62); }
+    0%,100%{ box-shadow:0 18px 34px -10px rgba(254,106,3,0.55); }
+    50%{ box-shadow:0 22px 40px -8px rgba(254,106,3,0.65); }
   }
+  /* The page tucks in just under the tabs' resting edge, so the whole
+     assembly reads as one connected, bound object rather than two floating
+     pieces sitting side by side. */
   .notebook-page{
-    flex:1;min-width:0;position:relative;
+    flex:1;min-width:0;position:relative;margin-left:-18px;
     background:var(--card);border-radius:var(--radius);
     padding:40px 44px;
     box-shadow:0 26px 50px -22px rgba(22,21,18,0.4);
@@ -502,42 +508,28 @@
 
 <div id="mainContent" style="display:none;">
 
-  <!-- HERO: no score-as-headline, just a live simulated read of the four
-       stages. The score stays present, small, in the meta row; the domain
-       and outbound link move to the very end of the page. -->
+  <!-- HERO: just the title now. The score, the live simulation, and the
+       result all moved into the notebook's own first page below. -->
   <section class="store-hero">
     <div class="store-hero-inner">
       <h1 class="store-h1">How AI sees <em id="storeNameEm"></em></h1>
-      <div class="hero-meta-row" id="heroMetaRow">
-        <div>
-          <div class="hero-meta-label">AI Commerce Score</div>
-          <div class="hero-meta-value" id="heroMetaScore">--</div>
-        </div>
-      </div>
-      <!-- The whole four-row read happens automatically on load: this IS
-           the "watch AI evaluate this store" moment, so there is no
-           separate button or replay section duplicating it. -->
-      <div class="store-content">
-        <div id="simRows"></div>
-        <div class="hero-verdict-reveal" id="heroVerdictReveal">
-          <div class="hero-meta-label">Result</div>
-          <div class="hero-meta-value" id="heroVerdictValue">--</div>
-          <div class="hero-verdict-reason" id="heroVerdictReason"></div>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- THE NOTEBOOK: every remaining section lives on one page of a single
-       tabbed binder now, instead of stacking as separate blocks. Tabs sit
-       in a staggered stack at different depths, like real folder dividers;
-       hovering one brings it forward and swaps in its page, right here on
-       the page itself, never a popup or overlay. -->
+  <!-- THE NOTEBOOK: every section lives on one page of a single tabbed
+       binder now, instead of stacking as separate blocks. Tabs sit in a
+       staggered stack at different depths, like real folder dividers, each
+       flush against the page itself so it reads as one bound object;
+       hovering one brings it forward (orange) and swaps in its page, right
+       here on the page, never a popup or overlay. -->
   <section class="store-block section-reveal" id="notebookSection">
     <div class="store-block-inner">
       <div class="notebook" id="notebook">
         <div class="notebook-tabs" id="notebookTabs">
-          <button type="button" class="notebook-tab is-active" data-page="summary">
+          <button type="button" class="notebook-tab is-active" data-page="score">
+            <span class="notebook-tab-label">AI Commerce Score</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="summary">
             <span class="notebook-tab-label">Recommendation Summary</span>
           </button>
           <button type="button" class="notebook-tab" data-page="journey">
@@ -561,7 +553,21 @@
         </div>
 
         <div class="notebook-page" id="notebookPage">
-          <div class="notebook-page-inner is-active" data-page-content="summary">
+          <div class="notebook-page-inner is-active" data-page-content="score">
+            <div class="hero-meta-label">AI Commerce Score</div>
+            <div class="hero-meta-value" id="heroMetaScore">--</div>
+            <!-- The whole four-row read happens automatically on load: this
+                 IS "watch AI evaluate this store," so nothing else needs to
+                 sit there statically before it, or duplicate it elsewhere. -->
+            <div id="simRows"></div>
+            <div class="hero-verdict-reveal" id="heroVerdictReveal">
+              <div class="hero-meta-label">Result</div>
+              <div class="hero-meta-value" id="heroVerdictValue">--</div>
+              <div class="hero-verdict-reason" id="heroVerdictReason"></div>
+            </div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="summary">
             <div class="notebook-page-title">Why AI made that decision</div>
             <div id="examinedList" class="examined-row"></div>
             <div class="reasoning-label">Recommendation summary</div>
@@ -1084,7 +1090,7 @@
       const tab = els.notebookTabs.querySelector('[data-page="' + page + '"]');
       if (!tab) return;
       tab.classList.toggle('is-hidden', !visible);
-      if (!visible && tab.classList.contains('is-active')) switchNotebookPage('summary');
+      if (!visible && tab.classList.contains('is-active')) switchNotebookPage('score');
     }
 
     function initNotebook(){
@@ -1278,24 +1284,19 @@
       const worst = weakestStage(stages);
       const reasonText = recommended ? 'Strong signals across read, understand, trust, and recommend.' : worst.reason;
 
-      // The score stays small and unobtrusive in the hero (media, agencies,
-      // and store owners will still want the number). The result, reason,
-      // and the Why dissection below it all reveal in one continuous
-      // sequence only once the simulation has actually finished running:
-      // this row-by-row read IS "watch AI evaluate this store," so nothing
-      // else needs to sit there statically before it, or duplicate it below.
-      if (els.heroMetaScore) els.heroMetaScore.textContent = score;
-      renderExamined(data);
-      renderReasoning(stages, examinedPasses, recommended);
       updateSeo(domain, storeName, score);
 
-      // Every notebook page's content is populated up front (hovering a tab
-      // has to show real content immediately, not a loading flash), but the
-      // notebook section itself, plus the CTA and source row after it,
-      // still cascade into view in sequence once the hero simulation
-      // finishes, so the whole page reads as one top-to-bottom reveal.
+      // Every notebook page's content is populated as its section reveals
+      // (hovering a tab still has to show real content immediately, not a
+      // loading flash, but nothing animates while hidden behind opacity:0).
+      // The AI Commerce Score page is the notebook's default page, so its
+      // live simulation is what plays the moment the notebook itself comes
+      // into view: this row-by-row read IS "watch AI evaluate this store."
       const revealTasks = [
         { el: els.notebookSection, fn: () => {
+          if (els.heroMetaScore) els.heroMetaScore.textContent = score;
+          renderExamined(data);
+          renderReasoning(stages, examinedPasses, recommended);
           renderJourney(stages, storeName, opps);
           renderConfidence(stages);
           renderBlockers(opps);
@@ -1307,15 +1308,13 @@
               els.factorRows.querySelectorAll('.factor-fill').forEach(f => { f.style.width = f.getAttribute('data-target') + '%'; });
             }, 60);
           });
+          runHeroSimulation(stages).then(() => revealHeroVerdict(recommended, reasonText));
         } },
         { el: els.ctaSection, fn: null },
         { el: els.sourceSection, fn: null }
       ];
 
-      runHeroSimulation(stages).then(() => {
-        revealHeroVerdict(recommended, reasonText);
-        setTimeout(() => revealRestOfPage(revealTasks), 900);
-      });
+      revealRestOfPage(revealTasks);
 
       els.loading.style.display = 'none';
       els.main.style.display = 'block';
