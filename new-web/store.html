@@ -81,7 +81,7 @@
   body{
     font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
     color:var(--black);
-    background:var(--white);
+    background:var(--cream);
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
@@ -137,8 +137,8 @@
 
   /* ---------- SHARED SECTION RHYTHM: thin dividers, generous whitespace,
      an editorial reading column, no boxed dashboard cards, no popups. ---------- */
-  .store-block{padding:8px 24px 44px;border-top:1px solid var(--card-line);}
-  .store-block-inner{max-width:720px;margin:0 auto;padding-top:36px;}
+  .store-block{padding:8px 32px 44px;border-top:1px solid var(--card-line);}
+  .store-block-inner{max-width:var(--maxw);margin:0 auto;padding-top:36px;}
   .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);margin-bottom:22px;}
   .icon-pill{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
   .icon-pill.is-pass{background:rgba(29,158,117,0.15);color:var(--green);}
@@ -148,11 +148,8 @@
 
   /* ---------- HERO: no score up front. A short simulated read of the four
      stages, staged in over about three seconds. ---------- */
-  .store-hero{padding:140px 24px 40px;}
-  .store-hero-inner{max-width:720px;margin:0 auto;}
-  .store-breadcrumb{font-size:12px;color:var(--gray-500);margin-bottom:24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-  .store-breadcrumb a{color:var(--gray-500);transition:color .2s ease;}
-  .store-breadcrumb a:hover{color:var(--orange);}
+  .store-hero{padding:140px 32px 40px;}
+  .store-hero-inner{max-width:var(--maxw);margin:0 auto;}
   .store-top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
   .store-domain-label{font-size:14px;font-weight:700;color:var(--gray-700);}
   .store-visit-link{font-size:13px;font-weight:800;color:var(--orange);white-space:nowrap;}
@@ -170,54 +167,54 @@
   .sim-label{font-size:15px;font-weight:700;color:var(--gray-700);min-width:150px;flex-shrink:0;}
   .sim-bar-wrap{flex:1;height:9px;background:var(--card);border-radius:100px;overflow:hidden;}
   .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.5s cubic-bezier(.4,0,.2,1);}
-  /* Revealed only once every row above has finished filling. */
+  /* Revealed only once every row above has finished filling. The reason
+     line fades in a beat after the result itself. */
   .hero-verdict-reveal{margin-top:8px;opacity:0;max-height:0;overflow:hidden;transition:opacity .5s ease, max-height .5s ease;}
-  .hero-verdict-reveal.is-visible{opacity:1;max-height:100px;}
+  .hero-verdict-reveal.is-visible{opacity:1;max-height:160px;}
+  .hero-verdict-reason{margin-top:12px;font-size:16px;font-weight:700;color:var(--gray-700);opacity:0;transform:translateY(6px);transition:opacity .5s ease, transform .5s ease;max-width:640px;}
+  .hero-verdict-reason.is-visible{opacity:1;transform:translateY(0);}
 
-  /* ---------- RECOMMENDATION DECISION: one card, one verdict ---------- */
-  .decision-card{max-width:480px;margin:0 auto;text-align:center;padding:48px 32px;background:var(--card);border-radius:14px;}
-  .decision-icon{font-size:38px;display:block;margin-bottom:18px;line-height:1;}
-  .decision-icon.is-pass{color:var(--green);}
-  .decision-icon.is-fail{color:var(--red);}
-  .decision-verdict{font-family:var(--serif);font-size:clamp(19px,2.4vw,24px);font-weight:800;letter-spacing:-0.01em;line-height:1.35;margin-bottom:22px;}
-  .decision-reason-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:6px;}
-  .decision-reason{font-size:16px;font-weight:800;color:var(--black);}
-
-  /* ---------- WHY: dissection list, then a reasoning bubble instead of
-     eight progress bars ---------- */
-  .examined-arrow{text-align:center;font-size:20px;color:var(--gray-500);padding:14px 0;}
-  .examined-decision{text-align:center;font-family:var(--serif);font-weight:800;font-size:21px;letter-spacing:0.02em;padding:8px 0 8px;}
-  .examined-decision.is-pass{color:var(--green);}
-  .examined-decision.is-fail{color:var(--red);}
-  .reasoning-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin:36px 0 14px;}
-  .reasoning-bubble{background:var(--card);border-radius:14px;padding:26px 28px;font-size:16.5px;line-height:1.85;color:var(--black);}
+  /* ---------- WHY: a one-line dissection, then a reasoning bubble instead
+     of eight progress bars. Everything here reveals in sequence right after
+     the hero's result and reason land, rather than sitting static. ---------- */
+  .why-reveal{opacity:0;transform:translateY(8px);transition:opacity .5s ease, transform .5s ease;}
+  .why-reveal.is-visible{opacity:1;transform:translateY(0);}
+  .examined-row{display:flex;flex-wrap:wrap;align-items:center;gap:22px;padding:6px 0 4px;}
+  .examined-chip{display:inline-flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--black);}
+  .reasoning-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin:28px 0 14px;}
+  .reasoning-bubble{max-width:640px;background:var(--card);border-radius:14px;padding:26px 28px;font-size:16.5px;line-height:1.85;color:var(--black);}
   .reasoning-bubble p{margin-bottom:4px;}
   .reasoning-bubble p:last-child{margin-bottom:0;}
-  .reasoning-note{font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
+  .reasoning-note{max-width:640px;font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
 
-  /* ---------- RECOMMENDATION JOURNEY: the signature interactive piece.
-     One continuous line, square boxes, and each box slides in in turn. ---------- */
-  .journey-row{display:flex;align-items:center;flex-wrap:nowrap;gap:8px;margin-bottom:24px;overflow-x:auto;padding-bottom:4px;}
+  /* ---------- RECOMMENDATION JOURNEY: a tabbed notebook. The four stage
+     tabs sit along the top like binder dividers; hovering one (no click,
+     no window) drops the matching page down directly beneath it. ---------- */
+  .journey-tabbook{margin-bottom:0;}
+  .journey-row{display:flex;align-items:flex-end;flex-wrap:nowrap;gap:6px;margin-bottom:0;overflow-x:auto;padding-bottom:0;}
   .journey-store-node{
     display:flex;align-items:center;flex-shrink:0;font-weight:800;font-size:14px;color:var(--gray-700);
-    padding:12px 18px;border-radius:var(--radius);background:var(--off-white);
+    padding:12px 18px;border-radius:var(--radius);background:var(--off-white);margin-bottom:10px;
     opacity:0;transform:translateX(-8px);transition:opacity .4s ease, transform .4s ease;
   }
   .journey-store-node.is-visible{opacity:1;transform:translateX(0);}
-  .journey-arrow{color:var(--gray-500);font-size:14px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
+  .journey-arrow{color:var(--gray-500);font-size:14px;flex-shrink:0;opacity:0;transition:opacity .3s ease;margin-bottom:10px;}
   .journey-arrow.is-visible{opacity:1;}
   .journey-node{
-    display:flex;align-items:center;gap:9px;flex-shrink:0;padding:12px 20px;border-radius:var(--radius);
-    background:var(--card);font-size:15px;font-weight:800;cursor:pointer;border:none;font-family:inherit;color:var(--black);
+    display:flex;align-items:center;gap:9px;flex-shrink:0;padding:12px 20px;
+    border-radius:var(--radius) var(--radius) 0 0;
+    background:var(--off-white);font-size:15px;font-weight:800;cursor:default;border:none;font-family:inherit;color:var(--gray-700);
     opacity:0;transform:translateX(-8px);
-    transition:background .2s ease, color .2s ease, transform .2s ease, opacity .4s ease;
+    transition:background .2s ease, color .2s ease, transform .2s ease, opacity .4s ease, box-shadow .2s ease;
   }
   .journey-node.is-visible{opacity:1;transform:translateX(0);}
-  .journey-node:hover{transform:translateY(-2px);}
-  .journey-node.is-open{background:var(--black);color:var(--white);}
+  .journey-node:hover, .journey-node.is-open{
+    background:var(--card);color:var(--black);
+    box-shadow:0 -8px 16px -10px rgba(22,21,18,0.28);
+  }
   .journey-node.is-open .icon-pill.is-pass{background:rgba(29,158,117,0.35);}
   .journey-node.is-open .icon-pill.is-fail{background:rgba(217,60,60,0.32);}
-  .journey-detail{background:var(--card);border-radius:10px;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.65,0,.35,1), opacity .3s ease, padding .4s ease;}
+  .journey-detail{background:var(--card);border-radius:0 var(--radius) var(--radius) var(--radius);max-height:0;opacity:0;overflow:hidden;transition:max-height .35s cubic-bezier(.65,0,.35,1), opacity .25s ease, padding .35s ease;}
   .journey-detail.is-open{max-height:420px;opacity:1;padding:26px 28px;}
   .journey-detail-inner{display:none;}
   .journey-detail.is-open .journey-detail-inner.is-active{display:block;}
@@ -258,9 +255,8 @@
   .similar-why-btn:hover{color:var(--orange);}
   .similar-detail{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease, opacity .3s ease, padding .35s ease;}
   .similar-detail.is-open{max-height:160px;opacity:1;padding-top:14px;}
-  .similar-signal-list{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;}
+  .similar-signal-list{display:flex;flex-wrap:wrap;gap:14px;}
   .similar-signal-chip{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
-  .similar-compare-link{font-size:13px;font-weight:800;color:var(--orange);}
 
   /* ---------- TECHNICAL FACTOR BREAKDOWN: collapsed by default ---------- */
   .store-detail-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;font-family:inherit;padding:0;color:var(--black);}
@@ -284,37 +280,20 @@
   .learn-link{font-size:17px;font-weight:700;color:var(--black);padding-bottom:5px;border-bottom:2px solid transparent;transition:border-color .2s ease, color .2s ease;}
   .learn-link:hover{color:var(--orange);border-color:var(--orange);}
 
-  /* ---------- REPLAY: inline re-simulation, no popup ---------- */
-  .replay-btn{display:inline-flex;align-items:center;gap:10px;background:var(--black);color:var(--white);border:none;border-radius:100px;padding:16px 32px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:background .2s ease, transform .2s ease;}
-  .replay-btn:hover{background:var(--orange);transform:translateY(-2px);}
-  .replay-steps{margin-top:30px;max-width:460px;}
-  .replay-step{display:flex;align-items:center;gap:10px;padding:8px 0;opacity:0;transform:translateY(6px);transition:opacity .35s ease, transform .35s ease;font-size:14.5px;color:var(--gray-700);font-weight:600;}
-  .replay-step.is-visible{opacity:1;transform:translateY(0);}
-  .replay-step.is-final{font-weight:800;color:var(--black);font-size:16px;margin-top:6px;}
-  .replay-step.is-final.is-pass{color:var(--green);}
-  .replay-step.is-final.is-fail{color:var(--red);}
-  /* A small pulsing dot while a step is the one currently being processed,
-     so replaying visibly looks like work happening, not just text fading in. */
-  .replay-step-dot{width:7px;height:7px;border-radius:50%;background:var(--gray-500);flex-shrink:0;transition:background .2s ease;}
-  .replay-step.is-active .replay-step-dot{background:var(--orange);animation:replay-pulse .7s ease infinite;}
-  .replay-step.is-final.is-pass .replay-step-dot{background:var(--green);animation:none;}
-  .replay-step.is-final.is-fail .replay-step-dot{background:var(--red);animation:none;}
-  @keyframes replay-pulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
-
   /* ---------- FINAL CTA: the only call to action on the page, at the very end,
      styled like the landing page's own score card. The report is a
      simulation of a decision, so the close should offer the same thing,
      not a generic scan button. ---------- */
-  .store-cta-final{padding:16px 24px 64px;}
-  .store-cta-box{max-width:820px;margin:0 auto;text-align:center;background:var(--card);border-radius:var(--radius);padding:48px 40px;}
+  .store-cta-final{padding:16px 32px 64px;}
+  .store-cta-box{max-width:var(--maxw);margin:0 auto;text-align:center;background:var(--card);border-radius:var(--radius);padding:48px 40px;}
   .store-cta-lead{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
   .store-cta-btn{display:inline-block;padding:20px 48px;border-radius:100px;background:var(--black);color:var(--white);font-weight:800;font-size:16px;transition:background .2s ease, transform .2s ease;}
   .store-cta-btn:hover{background:var(--orange);transform:translateY(-2px);}
   .store-cta-sub{font-size:13px;color:var(--gray-500);margin-top:18px;}
 
   /* ---------- SOURCE ROW: the domain and outbound link, moved to the very
-     end of the page rather than the hero. ---------- */
-  .store-source-row{max-width:720px;margin:0 auto;padding:32px 24px 64px;}
+     end of the page rather than the hero. No breadcrumb any more. ---------- */
+  .store-source-row{max-width:var(--maxw);margin:0 auto;padding:32px 32px 64px;}
 
   /* ---------- STANDARD SITE FOOTER (verbatim boilerplate, same as every other page) ---------- */
   footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
@@ -362,7 +341,6 @@
     .store-block-inner{padding-top:28px;}
     .why-row,.blocker-row,.quickwin-row,.whatif-row{font-size:15px;}
     .sim-label{min-width:120px;font-size:13px;}
-    .decision-card{padding:36px 24px;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
   }
@@ -471,59 +449,42 @@
           <div class="hero-meta-value" id="heroMetaScore">--</div>
         </div>
       </div>
+      <!-- The whole four-row read happens automatically on load: this IS
+           the "watch AI evaluate this store" moment, so there is no
+           separate button or replay section duplicating it. -->
       <div id="simRows"></div>
       <div class="hero-verdict-reveal" id="heroVerdictReveal">
-        <div class="hero-meta-label">Recommendation</div>
+        <div class="hero-meta-label">Result</div>
         <div class="hero-meta-value" id="heroVerdictValue">--</div>
+        <div class="hero-verdict-reason" id="heroVerdictReason"></div>
       </div>
     </div>
   </section>
 
-  <!-- WATCH AI EVALUATE THIS STORE: the biggest feature on the page, so it
-       runs right under the hero, inline, no popup. -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <div class="store-label">Watch it happen</div>
-      <button type="button" class="replay-btn" id="replayBtn">&#9658; Watch AI evaluate this store</button>
-      <div class="replay-steps" id="replaySteps"></div>
-    </div>
-  </section>
-
-  <!-- RECOMMENDATION DECISION: one card, one verdict, not a number. -->
-  <section class="store-block">
-    <div class="store-block-inner">
-      <div class="store-label">Recommendation decision</div>
-      <div class="decision-card">
-        <span class="decision-icon" id="decisionIcon"></span>
-        <div class="decision-verdict" id="decisionVerdict"></div>
-        <div class="decision-reason-label">Reason</div>
-        <div class="decision-reason" id="decisionReason"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY AI MADE THAT DECISION: a dissection, then a plain-language summary. -->
-  <section class="store-block">
+  <!-- WHY AI MADE THAT DECISION: a one-line dissection, then a plain-language
+       summary. Reveals right after the hero's result and reason land. -->
+  <section class="store-block" id="whySection">
     <div class="store-block-inner">
       <div class="store-label">Why AI made that decision</div>
-      <div id="examinedList"></div>
-      <div class="examined-arrow">&darr;</div>
-      <div class="examined-decision" id="examinedDecision"></div>
+      <div id="examinedList" class="examined-row why-reveal"></div>
 
-      <div class="reasoning-label">Recommendation summary</div>
-      <div class="reasoning-bubble" id="reasoningBubble"></div>
-      <div class="reasoning-note">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
+      <div class="reasoning-label why-reveal">Recommendation summary</div>
+      <div class="reasoning-bubble why-reveal" id="reasoningBubble"></div>
+      <div class="reasoning-note why-reveal">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
     </div>
   </section>
 
-  <!-- RECOMMENDATION JOURNEY: click a stage to see what is missing or confirmed. -->
+  <!-- RECOMMENDATION JOURNEY: a tabbed notebook. Hover a stage tab to see
+       what is missing or confirmed drop down beneath it, no click, no window. -->
   <section class="store-block">
     <div class="store-block-inner">
       <div class="store-label">Recommendation journey</div>
-      <div class="journey-row" id="journeyRow">
-        <span class="journey-store-node">Store</span>
+      <div class="journey-tabbook" id="journeyTabbook">
+        <div class="journey-row" id="journeyRow">
+          <span class="journey-store-node">Store</span>
+        </div>
+        <div class="journey-detail" id="journeyDetail"></div>
       </div>
-      <div class="journey-detail" id="journeyDetail"></div>
     </div>
   </section>
 
@@ -577,7 +538,28 @@
     </div>
   </section>
 
-  <!-- LEARN: knowledge, not more marketing. -->
+  <!-- CTA: the only call to action on the page, styled like the landing
+       page's own score card and as wide as the navbar. This is a simulation
+       of a decision, not an audit, so the close offers the same thing
+       rather than a generic scan button. -->
+  <section class="store-cta-final">
+    <div class="store-cta-box">
+      <div class="store-cta-lead">Curious how AI sees your store?</div>
+      <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">&#9658; Start your AI Evaluation</a>
+      <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
+    </div>
+  </section>
+
+  <!-- Source: the domain itself and the outbound link, kept modest, no
+       breadcrumb. -->
+  <div class="store-source-row">
+    <div class="store-top-row">
+      <div class="store-domain-label" id="storeDomainLabel"></div>
+      <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
+    </div>
+  </div>
+
+  <!-- LEARN: knowledge, not more marketing. The very last thing on the page. -->
   <section class="store-block">
     <div class="store-block-inner">
       <div class="store-label">Learn</div>
@@ -589,30 +571,6 @@
       </div>
     </div>
   </section>
-
-  <!-- CTA: the only call to action on the page, at the very end. Styled like
-       the landing page's own score card, just with this page's copy. This is
-       a simulation of a decision, not an audit, so the close offers the
-       same thing rather than a generic scan button. -->
-  <section class="store-cta-final">
-    <div class="store-cta-box">
-      <div class="store-cta-lead">Curious how AI sees your store?</div>
-      <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">&#9658; Start your AI Evaluation</a>
-      <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
-    </div>
-  </section>
-
-  <!-- Source: the domain itself and the outbound link, kept modest at the
-       very end rather than as the hero's headline. -->
-  <div class="store-source-row">
-    <nav class="store-breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/stores">Stores</a><span>/</span><span id="bcDomain"></span>
-    </nav>
-    <div class="store-top-row">
-      <div class="store-domain-label" id="storeDomainLabel"></div>
-      <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
-    </div>
-  </div>
 
 </div>
 
@@ -838,14 +796,6 @@
       { key:'faq',        name:'No FAQ page',         fixName:'Add an FAQ',           itemLabel:'FAQ',            stage:'understand',  points:2, when: d => !truthy(d.has_faq) }
     ];
 
-    const REPLAY_STEPS = [
-      'Opening homepage...',
-      'Reading products...',
-      'Reading pricing...',
-      'Checking trust...',
-      'Checking schema...',
-      'Searching authority...'
-    ];
 
     const els = {
       loading: document.getElementById('loadingState'),
@@ -853,20 +803,18 @@
       notFoundMsg: document.getElementById('notFoundMsg'),
       notFoundLink: document.getElementById('notFoundLink'),
       main: document.getElementById('mainContent'),
-      bcDomain: document.getElementById('bcDomain'),
       domainLabel: document.getElementById('storeDomainLabel'),
       visitLink: document.getElementById('visitStoreLink'),
       storeNameEm: document.getElementById('storeNameEm'),
       heroVerdictReveal: document.getElementById('heroVerdictReveal'),
       heroVerdictValue: document.getElementById('heroVerdictValue'),
+      heroVerdictReason: document.getElementById('heroVerdictReason'),
       heroMetaScore: document.getElementById('heroMetaScore'),
       simRows: document.getElementById('simRows'),
-      decisionIcon: document.getElementById('decisionIcon'),
-      decisionVerdict: document.getElementById('decisionVerdict'),
-      decisionReason: document.getElementById('decisionReason'),
+      whySection: document.getElementById('whySection'),
       examinedList: document.getElementById('examinedList'),
-      examinedDecision: document.getElementById('examinedDecision'),
       reasoningBubble: document.getElementById('reasoningBubble'),
+      journeyTabbook: document.getElementById('journeyTabbook'),
       journeyRow: document.getElementById('journeyRow'),
       journeyDetail: document.getElementById('journeyDetail'),
       confidenceNum: document.getElementById('confidenceNum'),
@@ -879,8 +827,6 @@
       storeDetail: document.getElementById('storeDetail'),
       detailToggle: document.getElementById('detailToggle'),
       factorRows: document.getElementById('factorRows'),
-      replayBtn: document.getElementById('replayBtn'),
-      replaySteps: document.getElementById('replaySteps'),
       pageTitle: document.getElementById('pageTitle'),
       pageDesc: document.getElementById('pageDesc'),
       ogTitle: document.getElementById('ogTitle'),
@@ -961,30 +907,32 @@
       }
     }
 
-    function revealHeroVerdict(recommended){
+    function revealHeroVerdict(recommended, reasonText){
       if (!els.heroVerdictReveal || !els.heroVerdictValue) return;
       els.heroVerdictValue.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
       els.heroVerdictValue.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
       els.heroVerdictReveal.classList.add('is-visible');
+      // The reason lands a beat after the result itself, not both at once.
+      if (els.heroVerdictReason) {
+        els.heroVerdictReason.textContent = reasonText;
+        setTimeout(() => els.heroVerdictReason.classList.add('is-visible'), 400);
+      }
     }
 
-    function renderDecision(stages, storeName){
-      const recommended = stages.every(s => s.pass);
-      const worst = weakestStage(stages);
-      els.decisionIcon.textContent = recommended ? '✓' : '✗';
-      els.decisionIcon.className = 'decision-icon ' + (recommended ? 'is-pass' : 'is-fail');
-      els.decisionVerdict.textContent = 'This store would probably ' + (recommended ? '' : 'not ') + 'be recommended.';
-      els.decisionReason.textContent = recommended ? 'Strong signals across read, understand, trust, and recommend.' : worst.reason;
-      return recommended;
+    // Below the hero's result and reason, the dissection and reasoning
+    // summary reveal in their own short cascade rather than sitting static
+    // on load, so the whole thing reads as one continuous sequence.
+    function revealWhy(){
+      if (!els.whySection) return;
+      const reveals = Array.from(els.whySection.querySelectorAll('.why-reveal'));
+      reveals.forEach((el, i) => setTimeout(() => el.classList.add('is-visible'), i * 260));
     }
 
-    function renderExamined(data, recommended){
+    function renderExamined(data){
       els.examinedList.innerHTML = EXAMINED.map(sig => {
         const pass = sig.check(data);
-        return '<div class="why-row"><span class="icon-pill ' + (pass ? 'is-pass' : 'is-fail') + '">' + (pass ? '&#10003;' : '&#10007;') + '</span><span>' + sig.label + '</span></div>';
+        return '<span class="examined-chip"><span class="icon-pill ' + (pass ? 'is-pass' : 'is-fail') + '">' + (pass ? '&#10003;' : '&#10007;') + '</span>' + sig.label + '</span>';
       }).join('');
-      els.examinedDecision.textContent = recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED';
-      els.examinedDecision.className = 'examined-decision ' + (recommended ? 'is-pass' : 'is-fail');
     }
 
     function renderReasoning(stages, examinedPasses, recommended){
@@ -1036,25 +984,24 @@
           '</div>';
       }).join('');
 
-      let openStage = null;
+      // Notebook tabs: hovering a stage tab drops its page down beneath it,
+      // no click and no window. The whole tabbook closes once the pointer
+      // leaves the row and the panel together.
       els.journeyRow.querySelectorAll('.journey-node').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('mouseenter', () => {
           const stage = btn.dataset.stage;
-          const willOpen = openStage !== stage;
-          els.journeyRow.querySelectorAll('.journey-node').forEach(b => b.classList.remove('is-open'));
-          els.journeyDetail.querySelectorAll('.journey-detail-inner').forEach(d => d.classList.remove('is-active'));
-          if (willOpen) {
-            btn.classList.add('is-open');
-            const detail = els.journeyDetail.querySelector('[data-stage-detail="' + stage + '"]');
-            if (detail) detail.classList.add('is-active');
-            els.journeyDetail.classList.add('is-open');
-            openStage = stage;
-          } else {
-            els.journeyDetail.classList.remove('is-open');
-            openStage = null;
-          }
+          els.journeyRow.querySelectorAll('.journey-node').forEach(b => b.classList.toggle('is-open', b === btn));
+          els.journeyDetail.querySelectorAll('.journey-detail-inner').forEach(d =>
+            d.classList.toggle('is-active', d.dataset.stageDetail === stage));
+          els.journeyDetail.classList.add('is-open');
         });
       });
+      if (els.journeyTabbook) {
+        els.journeyTabbook.addEventListener('mouseleave', () => {
+          els.journeyRow.querySelectorAll('.journey-node').forEach(b => b.classList.remove('is-open'));
+          els.journeyDetail.classList.remove('is-open');
+        });
+      }
     }
 
     function renderConfidence(stages){
@@ -1146,7 +1093,7 @@
                 ];
                 detail.innerHTML = '<div class="similar-signal-list">' +
                   checks.map(c => '<span class="similar-signal-chip"><span class="icon-pill ' + (c.pass ? 'is-pass' : 'is-fail') + '">' + (c.pass ? '&#10003;' : '&#10007;') + '</span>' + c.label + '</span>').join('') +
-                  '</div><a class="similar-compare-link" href="/store/' + btn.dataset.domain + '">Compare &rarr;</a>';
+                  '</div>';
               } catch (e) {
                 detail.innerHTML = 'Could not load this comparison.';
               }
@@ -1164,22 +1111,6 @@
         const pct = f.max > 0 ? score / f.max : 0;
         return '<div class="factor-row"><div class="factor-left"><div class="factor-name">' + f.name + '</div><div class="factor-bar"><div class="factor-fill" style="width:0%;background:' + scoreColor(pct) + ';" data-target="' + Math.round(pct * 100) + '"></div></div></div><div class="factor-score" style="color:' + scoreColor(pct) + ';">' + score + '/' + f.max + '</div></div>';
       }).join('');
-    }
-
-    function runReplay(recommended){
-      const dot = '<span class="replay-step-dot"></span>';
-      els.replaySteps.innerHTML = REPLAY_STEPS.map(s => '<div class="replay-step">' + dot + s + '</div>').join('') +
-        '<div class="replay-step is-final ' + (recommended ? 'is-pass' : 'is-fail') + '">' + dot + 'Final decision: ' + (recommended ? 'RECOMMENDED' : 'NOT RECOMMENDED') + '</div>';
-      const stepEls = Array.from(els.replaySteps.querySelectorAll('.replay-step'));
-      // Each step pulses as "active" while it is being worked on, then
-      // settles once the next step starts, so the replay visibly looks like
-      // it is processing rather than just fading lines of text in.
-      stepEls.forEach((s, i) => {
-        setTimeout(() => {
-          s.classList.add('is-visible', 'is-active');
-          setTimeout(() => s.classList.remove('is-active'), 480);
-        }, i * 550);
-      });
     }
 
     function updateSeo(domain, storeName, score){
@@ -1239,7 +1170,6 @@
       const storeName = storeNameFromDomain(domain);
       const score = Math.round(Number(data.total_score ?? 0));
 
-      els.bcDomain.textContent = domain;
       els.domainLabel.textContent = domain;
       // The outbound visit link is kept exactly as it was on the previous
       // page on purpose. There is a known issue here the site owner flagged
@@ -1254,14 +1184,22 @@
       const opps = computeOpportunities(data);
 
       const recommended = stages.every(s => s.pass);
+      const worst = weakestStage(stages);
+      const reasonText = recommended ? 'Strong signals across read, understand, trust, and recommend.' : worst.reason;
+
       // The score stays small and unobtrusive in the hero (media, agencies,
-      // and store owners will still want the number), but the verdict only
-      // reveals itself once the simulation has actually finished running.
+      // and store owners will still want the number). The result, reason,
+      // and the Why dissection below it all reveal in one continuous
+      // sequence only once the simulation has actually finished running:
+      // this row-by-row read IS "watch AI evaluate this store," so nothing
+      // else needs to sit there statically before it, or duplicate it below.
       if (els.heroMetaScore) els.heroMetaScore.textContent = score;
-      runHeroSimulation(stages).then(() => revealHeroVerdict(recommended));
-      renderDecision(stages, storeName);
-      renderExamined(data, recommended);
+      renderExamined(data);
       renderReasoning(stages, examinedPasses, recommended);
+      runHeroSimulation(stages).then(() => {
+        revealHeroVerdict(recommended, reasonText);
+        setTimeout(revealWhy, 1100);
+      });
       renderJourney(stages, storeName, opps);
       renderConfidence(stages);
       renderBlockers(opps);
@@ -1269,8 +1207,6 @@
       loadSimilarStores(data, score);
       renderFactorRows(data);
       updateSeo(domain, storeName, score);
-
-      if (els.replayBtn) els.replayBtn.addEventListener('click', () => runReplay(recommended));
 
       els.loading.style.display = 'none';
       els.main.style.display = 'block';
