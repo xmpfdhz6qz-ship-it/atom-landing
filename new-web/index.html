@@ -681,6 +681,36 @@
     .ai-check{transition:none;}
     body.ai-active .ai-view-row .ai-check{animation-duration:.01s;animation-delay:0s;opacity:1;transform:scale(1);}
   }
+
+  /* ---------- BRANDA: a rare, unscripted-feeling visitor. She walks in from
+     the right, stops roughly at the middle of the screen, freezes, speaks
+     one line, and leaves. No button, no close icon, nothing to interact
+     with, she is not part of the page's UI. ---------- */
+  .branda-stage{position:fixed;inset:0;z-index:9999;pointer-events:none;overflow:hidden;display:none;}
+  .branda-stage.is-active{display:block;}
+  .branda-track{position:absolute;top:54%;left:100%;transform:translateY(-50%);transition:left 2.3s cubic-bezier(.45,0,.4,1);}
+  .branda-track.is-stopped{left:calc(50% - 95px);}
+  .branda-track.is-gone{left:118%;}
+  .branda-bob{position:relative;height:300px;}
+  .branda-bob.is-walking{animation:brandaBob .48s ease-in-out infinite;}
+  .branda-bob.is-smile{animation:brandaSmilePulse .6s ease-in-out;}
+  @keyframes brandaBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+  @keyframes brandaSmilePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.035);}}
+  .branda-img{position:absolute;top:0;left:0;height:300px;width:auto;opacity:0;transition:opacity .2s ease;}
+  .branda-img.is-active{opacity:1;}
+  .branda-track.is-facing-right .branda-img.is-side{transform:scaleX(-1);}
+  .branda-bubble{position:absolute;bottom:100%;left:50%;transform:translateX(-50%) translateY(8px);margin-bottom:12px;background:var(--card);color:var(--black);padding:11px 18px;border-radius:var(--radius);font-family:var(--serif);font-weight:800;font-size:15px;white-space:nowrap;opacity:0;box-shadow:0 18px 34px -14px rgba(22,21,18,0.4);transition:opacity .4s ease, transform .4s ease;}
+  .branda-bubble::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--card);}
+  .branda-bubble.is-visible{opacity:1;transform:translateX(-50%) translateY(0);}
+  @media (max-width:680px){
+    .branda-bob{height:190px;}
+    .branda-img{height:190px;}
+    .branda-track.is-stopped{left:calc(50% - 60px);}
+    .branda-bubble{font-size:13px;padding:9px 14px;white-space:normal;max-width:220px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .branda-stage{display:none !important;}
+  }
 </style>
 </head>
 <body>
@@ -1564,6 +1594,85 @@ content type: text/html; charset=utf8</div>
     });
 
     setTimeout(showPortal, T_APPEAR);
+  })();
+</script>
+
+<!-- BRANDA: appears once, 30 seconds after the page opens, walks in from
+     the right, stops near the middle, freezes, turns to face the visitor,
+     says one line, then leaves. She is not a widget and has no controls. -->
+<div class="branda-stage" id="brandaStage" aria-hidden="true">
+  <div class="branda-track" id="brandaTrack">
+    <div class="branda-bob" id="brandaBob">
+      <div class="branda-bubble" id="brandaBubble"><span id="brandaBubbleText"></span></div>
+      <img src="branda-side.png" alt="" class="branda-img is-side" id="brandaImgSide">
+      <img src="branda-front.png" alt="" class="branda-img is-front" id="brandaImgFront">
+    </div>
+  </div>
+</div>
+<script>
+  (function(){
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    const stage = document.getElementById('brandaStage');
+    const track = document.getElementById('brandaTrack');
+    const bob = document.getElementById('brandaBob');
+    const imgSide = document.getElementById('brandaImgSide');
+    const imgFront = document.getElementById('brandaImgFront');
+    const bubble = document.getElementById('brandaBubble');
+    const bubbleText = document.getElementById('brandaBubbleText');
+    if (!stage || !track || !bob || !imgSide || !imgFront || !bubble) return;
+
+    function wait(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+
+    async function playBranda(){
+      stage.classList.add('is-active');
+      track.classList.remove('is-facing-right', 'is-gone');
+      bob.classList.add('is-walking');
+      imgFront.classList.remove('is-active');
+      imgSide.classList.add('is-active');
+
+      // walk in from the right edge to roughly the middle of the screen
+      await wait(30);
+      track.classList.add('is-stopped');
+      await wait(2350);
+
+      // arrives, stops, freezes for a beat
+      bob.classList.remove('is-walking');
+      await wait(250);
+
+      // turns to face the visitor
+      imgSide.classList.remove('is-active');
+      imgFront.classList.add('is-active');
+      await wait(750);
+
+      // speaks
+      bubbleText.textContent = "I shouldn't be here";
+      bubble.classList.add('is-visible');
+      await wait(2600);
+
+      // a small, shy smile
+      bob.classList.add('is-smile');
+      await wait(650);
+      bob.classList.remove('is-smile');
+      await wait(300);
+
+      // hides the line, turns back, and walks off the way she came
+      bubble.classList.remove('is-visible');
+      await wait(400);
+      imgFront.classList.remove('is-active');
+      imgSide.classList.add('is-active');
+      track.classList.add('is-facing-right');
+      bob.classList.add('is-walking');
+      await wait(150);
+      track.classList.remove('is-stopped');
+      track.classList.add('is-gone');
+      await wait(2400);
+
+      stage.classList.remove('is-active');
+    }
+
+    setTimeout(playBranda, 30000);
   })();
 </script>
 
