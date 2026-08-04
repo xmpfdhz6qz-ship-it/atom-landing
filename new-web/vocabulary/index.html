@@ -487,8 +487,8 @@
   header.nav.nav-compact ~ main .voc-progress-wrap{top:56px;}
   .voc-progress-inner{max-width:var(--maxw);margin:0 auto;padding:8px 32px;display:flex;align-items:center;gap:14px;}
   .voc-progress-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-500);white-space:nowrap;}
-  .voc-progress-track{flex:1;height:6px;border-radius:100px;background:var(--gray-300);overflow:hidden;}
-  .voc-progress-fill{height:100%;background:var(--orange);border-radius:100px;transition:width .5s cubic-bezier(.16,.8,.4,1);width:0%;}
+  .voc-progress-track{flex:1;height:6px;border-radius:100px;overflow:hidden;position:relative;background:linear-gradient(to right, var(--red) 0%, var(--red) 49%, var(--amber) 49%, var(--amber) 69%, var(--orange) 69%, var(--orange) 84%, var(--green) 84%, var(--green) 100%);}
+  .voc-progress-dim{position:absolute;top:0;right:0;height:100%;background:var(--gray-300);transition:width .5s cubic-bezier(.16,.8,.4,1);width:100%;}
   .voc-progress-pct{font-family:var(--serif);font-size:13px;font-weight:800;color:var(--black);width:38px;text-align:right;}
 
   /* ---------- HERO: journey opening, question-led ---------- */
@@ -627,13 +627,12 @@
   .voc-all-terms-head p{font-size:14px;color:var(--gray-700);margin-bottom:24px;}
   .voc-grid{display:flex;flex-direction:column;gap:10px;}
 
-  .voc-card{background:var(--card);border-radius:var(--radius);overflow:hidden;scroll-margin-top:150px;transition:box-shadow .2s ease, outline .2s ease;}
-  .voc-card[open]{box-shadow:0 20px 40px -20px rgba(22,21,18,0.3);}
+  .voc-card{background:var(--card);border-radius:var(--radius);overflow:hidden;scroll-margin-top:150px;box-shadow:0 10px 20px -14px rgba(22,21,18,0.22), 0 2px 5px rgba(22,21,18,0.06);transition:box-shadow .3s ease, outline .2s ease;}
+  .voc-card.is-open{box-shadow:0 22px 42px -18px rgba(22,21,18,0.32), 0 4px 10px rgba(22,21,18,0.1);}
   .voc-card.is-flagship{background:linear-gradient(180deg,var(--card),var(--card));outline:1px solid rgba(254,106,3,0.25);}
   .voc-card.is-stage-highlight{outline:2px solid var(--orange);}
-  .voc-card summary{list-style:none;cursor:pointer;}
-  .voc-card summary::-webkit-details-marker{display:none;}
-  .voc-card-summary{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 24px;}
+  .voc-card-summary{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 24px;width:100%;background:none;border:none;font-family:inherit;text-align:left;cursor:default;}
+  .voc-card-summary:focus-visible{outline:2px solid var(--orange);outline-offset:-2px;}
   .voc-card-summary-main{flex:1;min-width:0;}
   .voc-card-toprow{margin-bottom:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
   .voc-chip{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);background:rgba(254,106,3,0.1);border-radius:var(--radius);padding:3px 10px;}
@@ -643,7 +642,15 @@
   .voc-card-short{font-size:14px;color:var(--gray-700);line-height:1.55;}
   .voc-card-chevron{flex-shrink:0;display:inline-flex;width:13px;height:9px;margin-top:8px;color:var(--gray-500);transition:transform .25s ease;}
   .voc-card-chevron svg{display:block;width:100%;height:100%;}
-  .voc-card[open] .voc-card-chevron{transform:rotate(180deg);color:var(--orange);}
+  .voc-card.is-open .voc-card-chevron{transform:rotate(180deg);color:var(--orange);}
+  .voc-card-body-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.16,.8,.4,1);}
+  .voc-card.is-open .voc-card-body-wrap{grid-template-rows:1fr;}
+  @media (hover:hover) and (pointer:fine){
+    .voc-card:hover{box-shadow:0 22px 42px -18px rgba(22,21,18,0.32), 0 4px 10px rgba(22,21,18,0.1);}
+    .voc-card:hover .voc-card-chevron{transform:rotate(180deg);color:var(--orange);}
+    .voc-card:hover .voc-card-body-wrap, .voc-card-summary:focus-visible ~ .voc-card-body-wrap{grid-template-rows:1fr;}
+  }
+  .voc-card-body-inner{overflow:hidden;min-height:0;}
   .voc-card-body{padding:0 24px 26px;}
   .voc-card-block{margin-bottom:18px;padding-top:18px;border-top:1px solid rgba(22,21,18,0.1);}
   .voc-card-block:first-child{padding-top:0;border-top:none;}
@@ -805,8 +812,15 @@
   .voc-hint-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);padding:18px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;}
   .voc-hint-front{background:var(--orange);}
   .voc-hint-front-text{font-size:13.5px;font-weight:700;color:var(--white);line-height:1.4;}
-  .voc-hint-arrow{display:flex;align-items:center;justify-content:center;color:var(--white);}
-  .voc-hint-arrow-icon{width:16px;height:11px;}
+  .voc-hint-arrow{display:flex;align-items:center;justify-content:center;gap:3px;color:var(--white);}
+  .voc-hint-arrow-icon{display:flex;width:9px;height:6px;opacity:0.32;animation:voc-hint-arrow-flow 2.6s ease-in-out infinite;}
+  .voc-hint-arrow-icon svg{display:block;width:100%;height:100%;transform:rotate(-90deg);}
+  .voc-hint-arrow-icon:nth-child(1){animation-delay:0s;}
+  .voc-hint-arrow-icon:nth-child(2){animation-delay:.2s;}
+  .voc-hint-arrow-icon:nth-child(3){animation-delay:.4s;}
+  .voc-hint-arrow-icon:nth-child(4){animation-delay:.6s;}
+  .voc-hint-arrow-icon:nth-child(5){animation-delay:.8s;}
+  @keyframes voc-hint-arrow-flow{0%,100%{opacity:.28;transform:translateX(0);}45%{opacity:1;transform:translateX(3px);}}
   .voc-hint-back{background:var(--black);transform:rotateX(180deg);}
   .voc-hint-back-text{font-family:var(--serif);font-size:18px;font-weight:800;letter-spacing:-0.01em;color:var(--white);}
 
@@ -927,7 +941,7 @@
         <div class="dropdown"><a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a></div>
       </div>
       <div class="nav-item">
-        <a href="/vocabulary" class="nav-trigger active">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a href="/vocabulary" class="nav-trigger active">Terms &amp; Definitions<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
         <div class="dropdown">
           <a href="/vocabulary" class="dd-item"><span class="dd-title">AI Commerce Explorer</span></a>
           <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
@@ -958,7 +972,7 @@
 <div class="voc-progress-wrap">
   <div class="voc-progress-inner">
     <span class="voc-progress-label">Understanding AI Commerce</span>
-    <div class="voc-progress-track"><div class="voc-progress-fill" id="vocProgressFill"></div></div>
+    <div class="voc-progress-track"><div class="voc-progress-dim" id="vocProgressDim"></div></div>
     <span class="voc-progress-pct" id="vocProgressPct">0%</span>
   </div>
 </div>
@@ -1131,15 +1145,16 @@
         </div>
         <div class="voc-grid">
 
-      <details class="voc-card" data-cat="trust-authority" data-stage="merchant" id="persistent-merchant-identity">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="trust-authority" data-stage="merchant" id="persistent-merchant-identity">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">Persistent Merchant Identity<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How consistently AI systems understand your brand across platforms and over time. High PMI means every AI system knows the same accurate story about you.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1187,17 +1202,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Persistent Merchant Identity" data-copy-def="How consistently AI systems understand your brand across platforms and over time. High PMI means every AI system knows the same accurate story about you.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="trust-authority" data-stage="merchant" id="merchant-interpretability">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="trust-authority" data-stage="merchant" id="merchant-interpretability">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Understanding Layer</span></div>
             <h3 class="voc-card-name">Merchant Interpretability<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How well AI systems can understand a merchant's identity, category, products, and positioning from available signals.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1245,17 +1262,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Merchant Interpretability" data-copy-def="How well AI systems can understand a merchant's identity, category, products, and positioning from available signals.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card is-flagship" data-cat="visibility" data-stage="discovery" id="ai-invisible-risk">
-        <summary class="voc-card-summary">
+      <div class="voc-card is-flagship" data-cat="visibility" data-stage="discovery" id="ai-invisible-risk">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Risk Signal</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">AI Visibility Risk<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The score zone below 50. Stores here are systematically excluded from AI shopping recommendations.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1369,17 +1388,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Visibility Risk" data-copy-def="The score zone below 50. Stores here are systematically excluded from AI shopping recommendations.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="readability" data-stage="discovery" id="machine-readable-commerce">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="readability" data-stage="discovery" id="machine-readable-commerce">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">Machine-Readable Commerce<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">E-commerce infrastructure structured so AI systems can parse, verify, and act on product and store data without human assistance.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1427,17 +1448,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Machine-Readable Commerce" data-copy-def="E-commerce infrastructure structured so AI systems can parse, verify, and act on product and store data without human assistance.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="readability" data-stage="discovery" id="ai-extractability">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="readability" data-stage="discovery" id="ai-extractability">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Score Factor</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">AI Extractability<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How easily AI systems can pull structured answers from a store's content and pages.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1485,17 +1508,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Extractability" data-copy-def="How easily AI systems can pull structured answers from a store's content and pages.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="visibility" data-stage="discovery" id="prompt-visibility">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="visibility" data-stage="discovery" id="prompt-visibility">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Prompt Visibility<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">Whether and how often a brand appears when buyers query AI systems with purchase-intent prompts.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1543,17 +1568,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Prompt Visibility" data-copy-def="Whether and how often a brand appears when buyers query AI systems with purchase-intent prompts.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="visibility" data-stage="discovery" id="ai-visibility">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="visibility" data-stage="discovery" id="ai-visibility">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">AI Visibility<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">Whether and how clearly an e-commerce store can be discovered, interpreted, and surfaced by AI shopping systems.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1601,17 +1628,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Visibility" data-copy-def="Whether and how clearly an e-commerce store can be discovered, interpreted, and surfaced by AI shopping systems.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="visibility" data-stage="discovery" id="ai-discoverability">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="visibility" data-stage="discovery" id="ai-discoverability">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">AI Discoverability<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How easily and reliably AI systems can find, index, and surface a store in response to relevant buyer queries.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1659,17 +1688,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Discoverability" data-copy-def="How easily and reliably AI systems can find, index, and surface a store in response to relevant buyer queries.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="visibility" data-stage="discovery" id="ai-visibility-layer">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="visibility" data-stage="discovery" id="ai-visibility-layer">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">AI Visibility Layer<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The complete stack of signals, structures, and systems that determine how visible a merchant is within AI commerce ecosystems.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1717,17 +1748,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Visibility Layer" data-copy-def="The complete stack of signals, structures, and systems that determine how visible a merchant is within AI commerce ecosystems.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="readability" data-stage="discovery" id="ai-readability">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="readability" data-stage="discovery" id="ai-readability">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">AI Readability<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How cleanly and completely AI systems can extract structured content from a store without relying on JavaScript or visual rendering.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1775,17 +1808,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Readability" data-copy-def="How cleanly and completely AI systems can extract structured content from a store without relying on JavaScript or visual rendering.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="visibility" data-stage="discovery" id="recommendation-visibility">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="visibility" data-stage="discovery" id="recommendation-visibility">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Visibility<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">Whether a brand is visible to AI systems in the specific moment a buyer submits a purchase-intent query.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1833,17 +1868,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Visibility" data-copy-def="Whether a brand is visible to AI systems in the specific moment a buyer submits a purchase-intent query.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="visibility" data-stage="discovery" id="trusted-but-invisible">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="visibility" data-stage="discovery" id="trusted-but-invisible">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Risk Signal</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">Trusted But Invisible<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">A store with real authority and trust that AI cannot surface because its content is technically inaccessible.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1891,17 +1928,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Trusted But Invisible" data-copy-def="A store with real authority and trust that AI cannot surface because its content is technically inaccessible.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="readability" data-stage="understanding" id="semantic-commerce-layer">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="readability" data-stage="understanding" id="semantic-commerce-layer">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">AI Understanding Layer</span></div>
             <h3 class="voc-card-name">Semantic Commerce Layer<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The infrastructure of intent-aligned product language that bridges what a store sells and how buyers ask AI to find it.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -1949,17 +1988,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Semantic Commerce Layer" data-copy-def="The infrastructure of intent-aligned product language that bridges what a store sells and how buyers ask AI to find it.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card is-flagship" data-cat="readability" data-stage="understanding" id="semantic-clarity">
-        <summary class="voc-card-summary">
+      <div class="voc-card is-flagship" data-cat="readability" data-stage="understanding" id="semantic-clarity">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Score Factor</span><span class="voc-layer-tag">AI Understanding Layer</span></div>
             <h3 class="voc-card-name">Semantic Clarity<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How clearly AI can understand what a store sells, who it serves, and why it is different.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2072,17 +2113,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Semantic Clarity" data-copy-def="How clearly AI can understand what a store sells, who it serves, and why it is different.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="recommendation-intelligence" data-stage="understanding" id="intent-misalignment">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="recommendation-intelligence" data-stage="understanding" id="intent-misalignment">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Risk Signal</span><span class="voc-layer-tag">AI Understanding Layer</span></div>
             <h3 class="voc-card-name">Intent Misalignment<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">A brand with authority and good structure whose content does not match how buyers actually query AI in that category.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2130,17 +2173,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Intent Misalignment" data-copy-def="A brand with authority and good structure whose content does not match how buyers actually query AI in that category.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="infrastructure" data-stage="understanding" id="commerce-knowledge-graph">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="infrastructure" data-stage="understanding" id="commerce-knowledge-graph">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">AI Understanding Layer</span></div>
             <h3 class="voc-card-name">Commerce Knowledge Graph<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The semantic knowledge structure AI systems build around merchant entities, product categories, buyer intents, and commerce relationships.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2188,17 +2233,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Commerce Knowledge Graph" data-copy-def="The semantic knowledge structure AI systems build around merchant entities, product categories, buyer intents, and commerce relationships.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="infrastructure" data-stage="understanding" id="buyer-intent-graph">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="infrastructure" data-stage="understanding" id="buyer-intent-graph">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">AI Understanding Layer</span></div>
             <h3 class="voc-card-name">Buyer Intent Graph<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The structured map of the real purchase-intent prompts buyers bring to AI, connected to the brands that satisfy each one.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2246,17 +2293,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Buyer Intent Graph" data-copy-def="The structured map of the real purchase-intent prompts buyers bring to AI, connected to the brands that satisfy each one.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card is-flagship" data-cat="trust-authority" data-stage="trust" id="ai-trust-layer">
-        <summary class="voc-card-summary">
+      <div class="voc-card is-flagship" data-cat="trust-authority" data-stage="trust" id="ai-trust-layer">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">AI Trust Layer<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The complete set of signals AI checks before considering a brand for recommendation. Trust verification happens before any scoring or matching.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2370,17 +2419,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Trust Layer" data-copy-def="The complete set of signals AI checks before considering a brand for recommendation. Trust verification happens before any scoring or matching.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="trust-authority" data-stage="trust" id="hidden-authority">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="trust-authority" data-stage="trust" id="hidden-authority">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Risk Signal</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">Hidden Authority<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">A store with real authority but poor extractability. AI knows the brand but cannot pull answers to recommend it.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2428,17 +2479,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Hidden Authority" data-copy-def="A store with real authority but poor extractability. AI knows the brand but cannot pull answers to recommend it.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="trust-authority" data-stage="trust" id="ai-trust-graph">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="trust-authority" data-stage="trust" id="ai-trust-graph">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">AI Trust Graph<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The network of external mentions, citations, reviews, and third-party validation that AI uses to verify and trust a brand.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2486,17 +2539,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Trust Graph" data-copy-def="The network of external mentions, citations, reviews, and third-party validation that AI uses to verify and trust a brand.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="trust-authority" data-stage="trust" id="machine-trust-signals">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="trust-authority" data-stage="trust" id="machine-trust-signals">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">Machine Trust Signals<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The specific crawlable signals AI uses to verify merchant trustworthiness before recommending a store to a buyer.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2544,17 +2599,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Machine Trust Signals" data-copy-def="The specific crawlable signals AI uses to verify merchant trustworthiness before recommending a store to a buyer.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="trust-authority" data-stage="trust" id="recommendation-authority">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="trust-authority" data-stage="trust" id="recommendation-authority">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">Recommendation Authority<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The cumulative strength of signals supporting a merchant's eligibility, trust, and confidence for AI recommendation.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2602,17 +2659,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Authority" data-copy-def="The cumulative strength of signals supporting a merchant's eligibility, trust, and confidence for AI recommendation.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card is-flagship" data-cat="metrics" data-stage="eligibility" id="ai-commerce-score">
-        <summary class="voc-card-summary">
+      <div class="voc-card is-flagship" data-cat="metrics" data-stage="eligibility" id="ai-commerce-score">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Score</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">AI Commerce Score<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The single 0 to 100 number measuring how well AI shopping agents can understand, trust, and recommend a store.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-gauge" aria-hidden="true">
             <div class="voc-gauge-label">Average AI Commerce Score across 66,090 scanned stores</div>
@@ -2737,17 +2796,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Commerce Score" data-copy-def="The single 0 to 100 number measuring how well AI shopping agents can understand, trust, and recommend a store.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="trust-authority" data-stage="eligibility" id="ai-recommendation-eligibility">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="trust-authority" data-stage="eligibility" id="ai-recommendation-eligibility">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">AI Recommendation Eligibility<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">Whether a store has met the minimum threshold of signals required to be considered for AI shopping recommendations at all.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2795,17 +2856,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Recommendation Eligibility" data-copy-def="Whether a store has met the minimum threshold of signals required to be considered for AI shopping recommendations at all.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="metrics" data-stage="eligibility" id="recommendation-eligibility-score">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="metrics" data-stage="eligibility" id="recommendation-eligibility-score">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">AI Trust Layer</span></div>
             <h3 class="voc-card-name">Recommendation Eligibility Score<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">A scored measure of how close a store is to meeting the minimum threshold for AI recommendation eligibility.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2853,17 +2916,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Eligibility Score" data-copy-def="A scored measure of how close a store is to meeting the minimum threshold for AI recommendation eligibility.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card is-flagship" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-share">
-        <summary class="voc-card-summary">
+      <div class="voc-card is-flagship" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-share">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Share<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The percentage of high-intent buying prompts in which a brand appears in AI recommendations.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -2991,17 +3056,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Share" data-copy-def="The percentage of high-intent buying prompts in which a brand appears in AI recommendations.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="infrastructure" data-stage="recommendation" id="ai-commerce-graph">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="infrastructure" data-stage="recommendation" id="ai-commerce-graph">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">AI Commerce Graph<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The complete network of relationships between brands, products, trust signals, buyer intents, and AI recommendation systems. The infrastructure Atom Foundry maps.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3049,17 +3116,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Commerce Graph" data-copy-def="The complete network of relationships between brands, products, trust signals, buyer intents, and AI recommendation systems. The infrastructure Atom Foundry maps.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-routing">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-routing">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Routing<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How AI systems decide which brand receives which buyer query. Not whether you are in the graph, but how traffic flows through it to you.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3107,17 +3176,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Routing" data-copy-def="How AI systems decide which brand receives which buyer query. Not whether you are in the graph, but how traffic flows through it to you.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-confidence">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-confidence">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Score Factor</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Confidence<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How strongly AI will recommend a store, from a weak mention to a confident first pick.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3165,17 +3236,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Confidence" data-copy-def="How strongly AI will recommend a store, from a weak mention to a confident first pick.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-density">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-density">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Density<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How broadly a brand appears across adjacent buying intents, not just its primary category queries.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3223,17 +3296,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Density" data-copy-def="How broadly a brand appears across adjacent buying intents, not just its primary category queries.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-position">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="recommendation-position">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Position<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">Where in an AI response a brand appears: first recommendation, supporting mention, comparison mention, or weak citation.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3281,17 +3356,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Position" data-copy-def="Where in an AI response a brand appears: first recommendation, supporting mention, comparison mention, or weak citation.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="infrastructure" data-stage="recommendation" id="recommendation-graph">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="infrastructure" data-stage="recommendation" id="recommendation-graph">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Graph<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The relationship network connecting brands, products, trust signals, citations, and semantic relevance across AI systems.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3339,17 +3416,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Graph" data-copy-def="The relationship network connecting brands, products, trust signals, citations, and semantic relevance across AI systems.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="infrastructure" data-stage="recommendation" id="ai-commerce-infrastructure">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="infrastructure" data-stage="recommendation" id="ai-commerce-infrastructure">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">AI Readability Layer</span></div>
             <h3 class="voc-card-name">AI Commerce Infrastructure<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The machine-readable systems, trust layers, and semantic commerce architecture that enable AI-driven discovery and transactions at scale.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3397,17 +3476,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Commerce Infrastructure" data-copy-def="The machine-readable systems, trust layers, and semantic commerce architecture that enable AI-driven discovery and transactions at scale.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="protocols" data-stage="recommendation" id="commerce-protocol-layer">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="protocols" data-stage="recommendation" id="commerce-protocol-layer">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">Purchase Layer</span></div>
             <h3 class="voc-card-name">Commerce Protocol Layer<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The standardized machine-readable protocols and file formats that enable AI systems to interact with e-commerce stores programmatically.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3455,17 +3536,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Commerce Protocol Layer" data-copy-def="The standardized machine-readable protocols and file formats that enable AI systems to interact with e-commerce stores programmatically.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="metrics" data-stage="recommendation" id="recommendation-gap">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="metrics" data-stage="recommendation" id="recommendation-gap">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Gap<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The measurable difference between a brand's current Recommendation Share and the share held by the category leader.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3513,17 +3596,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Gap" data-copy-def="The measurable difference between a brand's current Recommendation Share and the share held by the category leader.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="metrics" data-stage="recommendation" id="ai-recommendation-rate">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="metrics" data-stage="recommendation" id="ai-recommendation-rate">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">AI Recommendation Rate<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The percentage of tested buyer prompts in which a merchant receives any form of recommendation from an AI system.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3571,17 +3656,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Recommendation Rate" data-copy-def="The percentage of tested buyer prompts in which a merchant receives any form of recommendation from an AI system.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="metrics" data-stage="recommendation" id="buyer-intent-coverage">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="metrics" data-stage="recommendation" id="buyer-intent-coverage">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Buyer Intent Coverage<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The share of a category's buyer intents for which a brand appears in AI recommendations at all.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3629,17 +3716,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Buyer Intent Coverage" data-copy-def="The share of a category's buyer intents for which a brand appears in AI recommendations at all.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="intent-authority">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="recommendation-intelligence" data-stage="recommendation" id="intent-authority">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Intent Authority<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">How strongly AI associates a brand with a specific buyer intent, beyond merely appearing for it.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3687,17 +3776,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Intent Authority" data-copy-def="How strongly AI associates a brand with a specific buyer intent, beyond merely appearing for it.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="metrics" data-stage="recommendation" id="recommendation-demand">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="metrics" data-stage="recommendation" id="recommendation-demand">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Key Metric</span><span class="voc-layer-tag">Revenue Layer</span></div>
             <h3 class="voc-card-name">Recommendation Demand<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The volume of real buyer intent flowing to a category or intent cluster through AI systems.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3745,17 +3836,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Demand" data-copy-def="The volume of real buyer intent flowing to a category or intent cluster through AI systems.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="protocols" data-stage="purchase" id="agent-readable-commerce">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="protocols" data-stage="purchase" id="agent-readable-commerce">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">Purchase Layer</span></div>
             <h3 class="voc-card-name">Agent-Readable Commerce<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">E-commerce infrastructure specifically structured for autonomous AI shopping agents that browse, compare, and complete purchases without human input.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3803,17 +3896,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Agent-Readable Commerce" data-copy-def="E-commerce infrastructure specifically structured for autonomous AI shopping agents that browse, compare, and complete purchases without human input.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="protocols" data-stage="purchase" id="agentic-commerce">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="protocols" data-stage="purchase" id="agentic-commerce">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">Purchase Layer</span></div>
             <h3 class="voc-card-name">Agentic Commerce<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The model where AI agents autonomously browse, compare, evaluate, and complete purchases on behalf of buyers without requiring human input at each step.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3861,17 +3956,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Agentic Commerce" data-copy-def="The model where AI agents autonomously browse, compare, evaluate, and complete purchases on behalf of buyers without requiring human input at each step.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="protocols" data-stage="purchase" id="agent-transaction-readiness">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="protocols" data-stage="purchase" id="agent-transaction-readiness">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">Purchase Layer</span></div>
             <h3 class="voc-card-name">Agent Transaction Readiness<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">Whether an AI agent can complete a purchase on a store end to end, not just read it.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3919,17 +4016,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Agent Transaction Readiness" data-copy-def="Whether an AI agent can complete a purchase on a store end to end, not just read it.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="protocols" data-stage="purchase" id="ai-actionability">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="protocols" data-stage="purchase" id="ai-actionability">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Core Concept</span><span class="voc-layer-tag">Purchase Layer</span></div>
             <h3 class="voc-card-name">AI Actionability<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">Whether the data on a store is structured precisely enough for an AI agent to act on it, not just read it.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -3977,17 +4076,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="AI Actionability" data-copy-def="Whether the data on a store is structured precisely enough for an AI agent to act on it, not just read it.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="metrics" data-stage="retention" id="recommendation-velocity">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="metrics" data-stage="retention" id="recommendation-velocity">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Monitoring Metric</span><span class="voc-layer-tag">Recommendation Intelligence Layer</span></div>
             <h3 class="voc-card-name">Recommendation Velocity<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The rate of change in a brand's AI Commerce Score and Recommendation Share over time.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -4035,17 +4136,19 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Velocity" data-copy-def="The rate of change in a brand's AI Commerce Score and Recommendation Share over time.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
 
-      <details class="voc-card" data-cat="recommendation-intelligence" data-stage="retention" id="recommendation-economy">
-        <summary class="voc-card-summary">
+      <div class="voc-card" data-cat="recommendation-intelligence" data-stage="retention" id="recommendation-economy">
+        <button type="button" class="voc-card-summary" aria-expanded="false">
           <div class="voc-card-summary-main">
             <div class="voc-card-toprow"><span class="voc-chip">Platform Term</span><span class="voc-layer-tag">Revenue Layer</span></div>
             <h3 class="voc-card-name">Recommendation Economy<span class="voc-tm">&trade;</span></h3>
             <p class="voc-card-short">The emerging commercial model where AI systems, not search engines, control which brands and products buyers discover and purchase.</p>
           </div>
           <span class="voc-card-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </summary>
+        </button>
+        <div class="voc-card-body-wrap"><div class="voc-card-body-inner">
         <div class="voc-card-body">
           <div class="voc-card-block">
             <div class="voc-card-block-label">What is it?</div>
@@ -4093,7 +4196,8 @@
             <button type="button" class="voc-copy-btn" data-copy-name="Recommendation Economy" data-copy-def="The emerging commercial model where AI systems, not search engines, control which brands and products buyers discover and purchase.">Copy definition</button>
           </div>
         </div>
-      </details>
+        </div></div>
+      </div>
         </div>
       </section>
     </div>
@@ -4103,7 +4207,7 @@
           <div class="voc-hint-card">
             <div class="voc-hint-face voc-hint-front">
               <span class="voc-hint-front-text">New here? Start with</span>
-              <span class="voc-hint-arrow"><svg class="voc-hint-arrow-icon" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M1 6H16M16 6L11 1M16 6L11 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="voc-hint-arrow"><span class="voc-hint-arrow-icon"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="voc-hint-arrow-icon"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="voc-hint-arrow-icon"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="voc-hint-arrow-icon"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="voc-hint-arrow-icon"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
             </div>
             <div class="voc-hint-face voc-hint-back">
               <span class="voc-hint-back-text">AI Commerce Score</span>
@@ -4276,10 +4380,12 @@
     window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
   })();
 
-  // AI Commerce Explorer: every one of the 45 terms is a real <details>
-  // element already in the page (grouped in one flowing list), so nothing
-  // here is required for AI crawlers or no-JS visitors to read every
-  // definition, its Depends on / Unlocks chain, or its Used in links. This
+  // AI Commerce Explorer: every one of the 45 terms is a plain .voc-card
+  // block already in the page (grouped in one flowing list), with its full
+  // body always present in the DOM (collapsed only via CSS, never
+  // display:none), so nothing here is required for AI crawlers or no-JS
+  // visitors to read every definition, its Depends on / Unlocks chain, or
+  // its Used in links. This
   // layer only adds: in-page navigation with no reloads, the interactive
   // map, the journey stepper filter, a progress bar, sidebar sync, search,
   // AI Thinking replay, the simulator, and the (pre-scripted, not live)
@@ -4291,23 +4397,32 @@
     const GRAPH_EDGES = [["discovery", "ai-visibility", "leads to"], ["ai-visibility", "ai-readability", "requires"], ["ai-readability", "persistent-merchant-identity", "enables"], ["persistent-merchant-identity", "semantic-clarity", "enables"], ["semantic-clarity", "ai-trust-layer", "builds"], ["ai-trust-layer", "ai-trust-graph", "validated by"], ["ai-trust-layer", "recommendation-confidence", "influences"], ["recommendation-confidence", "recommendation-share", "drives"], ["recommendation-share", "recommendation-position", "shapes"], ["recommendation-share", "ai-commerce-score", "measured by"], ["ai-commerce-score", "recommendation", "feeds"], ["recommendation", "purchase", "leads to"], ["purchase", "revenue", "leads to"]];
     const SANDBOX_DEFAULTS = {"merchant": 2, "products": 4, "reviews": 1, "schema": 2, "authority": 1, "intent": 3};
 
+    // openTerm is the single entry point every deliberate navigation action
+    // (graph node click, search result, related chip, next-concept CTA,
+    // #slug URL on load, touch tap) routes through. It runs the full
+    // cross-component sync: closes other open cards, marks progress,
+    // highlights the matching journey step and graph node, pulses related
+    // chips, and renders the AI Brain panel. Plain mouse hover on the card
+    // list is intentionally NOT wired to this: hovering only opens the box
+    // visually (pure CSS, see .voc-card-body-wrap), so casually scanning
+    // the list with a mouse never triggers a scroll jump or counts as
+    // "read" for the progress bar.
     function openTerm(slug, scroll){
       const el = document.getElementById(slug);
-      if (!el) return false;
-      el.open = true;
-      if (scroll) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!el || !el.classList.contains('voc-card')) return false;
+      openCard(el, { scroll: scroll });
       return true;
     }
 
-    // Any in-page link to #slug opens the target details (if it is one)
-    // and scrolls; plain section anchors (#ai-map, #all-terms, #journey-x)
-    // fall through to native smooth-scroll.
+    // Any in-page link to #slug opens the target card and scrolls; plain
+    // section anchors (#ai-map, #all-terms, #journey-x) fall through to
+    // native smooth-scroll.
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a[href^="#"]');
       if (!a) return;
       const id = a.getAttribute('href').slice(1);
       const el = document.getElementById(id);
-      if (el && el.tagName === 'DETAILS') {
+      if (el && el.classList.contains('voc-card')) {
         e.preventDefault();
         openTerm(id, true);
         history.replaceState(null, '', '#' + id);
@@ -4318,7 +4433,7 @@
     // this session, persisted in localStorage (this is a real deployed
     // site, not a sandboxed preview, so persisting across visits is
     // expected here). ----
-    const progressFill = document.getElementById('vocProgressFill');
+    const progressDim = document.getElementById('vocProgressDim');
     const progressPct = document.getElementById('vocProgressPct');
     const PROG_KEY = 'voc-explorer-progress-v1';
     let opened;
@@ -4326,7 +4441,10 @@
     catch (e) { opened = new Set(); }
     function renderProgress(){
       const pct = Math.min(100, Math.round((opened.size / TOTAL_TERMS) * 100));
-      if (progressFill) progressFill.style.width = pct + '%';
+      // The track shows the same red/amber/orange/green scale used for the
+      // AI Commerce Score; a dim overlay retreats from the right as more
+      // terms are opened, revealing the true colors underneath left to right.
+      if (progressDim) progressDim.style.width = (100 - pct) + '%';
       if (progressPct) progressPct.textContent = pct + '%';
     }
     function markOpened(slug){
@@ -4491,12 +4609,14 @@
     // pulse the cards for every related concept, and fill in the AI Brain
     // panel. This runs for all 45 terms, since it is built entirely from
     // data already present in each card's own markup. ----
-    document.querySelectorAll('.voc-card').forEach(card => {
-      card.addEventListener('toggle', () => {
-        if (!card.open) return;
-        document.querySelectorAll('.voc-card[open]').forEach(other => { if (other !== card) other.open = false; });
+    function openCard(card, opts){
+      opts = opts || {};
+      if (!card.classList.contains('is-open')) {
+        document.querySelectorAll('.voc-card.is-open').forEach(other => { if (other !== card) closeCard(other); });
+        card.classList.add('is-open');
+        const summary = card.querySelector('.voc-card-summary');
+        if (summary) summary.setAttribute('aria-expanded', 'true');
         markOpened(card.id);
-        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         const stage = card.getAttribute('data-stage');
         journeySteps.forEach(b => b.classList.toggle('is-active', b.getAttribute('data-stage') === stage));
@@ -4513,8 +4633,50 @@
         });
 
         renderAiBrain(card);
+      }
+      if (opts.scroll) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function closeCard(card){
+      card.classList.remove('is-open');
+      const summary = card.querySelector('.voc-card-summary');
+      if (summary) summary.setAttribute('aria-expanded', 'false');
+    }
+
+    // Hover-capable pointers (desktop mouse/trackpad) get pure-CSS hover
+    // expand/collapse on the card list (see .voc-card-body-wrap): no click
+    // needed, nothing to wire here. Touch and other no-hover devices have
+    // no hover at all, so tapping the summary is the only way to open a
+    // card there, and it runs the full rich behavior via openCard/openTerm.
+    const cardsHoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!cardsHoverCapable) {
+      document.querySelectorAll('.voc-card').forEach(card => {
+        const summary = card.querySelector('.voc-card-summary');
+        if (!summary) return;
+        summary.addEventListener('click', () => {
+          if (card.classList.contains('is-open')) closeCard(card);
+          else openCard(card, { scroll: true });
+        });
       });
-    });
+    } else {
+      // On hover, the card grows downward as it opens. Without help the
+      // start of the card (its title) can end up above the top of the
+      // viewport, or, for a card near the bottom of the list, the newly
+      // revealed text can run off the bottom with nothing to scroll to.
+      // So on every hover, ease-scroll the card's own top edge to the top
+      // of the viewport, in sync with the CSS expand, so the beginning of
+      // whatever card you're reading is always what's in view, including
+      // the very last card in the list.
+      let cardHoverTimer = null;
+      document.querySelectorAll('.voc-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          clearTimeout(cardHoverTimer);
+          cardHoverTimer = setTimeout(() => {
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 70);
+        });
+        card.addEventListener('mouseleave', () => { clearTimeout(cardHoverTimer); });
+      });
+    }
 
     // ---- Search (hero + sidebar share the same results dropdown logic) ----
     function runSearch(q, resultsEl){
