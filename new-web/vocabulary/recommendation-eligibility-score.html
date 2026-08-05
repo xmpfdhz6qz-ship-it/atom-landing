@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recommendation Eligibility Score: How Close Are You to the Threshold?</title>
+<meta name="description" content="The Recommendation Eligibility Score is a 0 to 5 measure of how close a store is to the minimum threshold for AI recommendation eligibility. Not a percentage, a gate counter.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/vocabulary/recommendation-eligibility-score">
+<meta property="og:title" content="Recommendation Eligibility Score: How Close Are You to the Threshold?">
+<meta property="og:description" content="Not your score improved. You entered the recommendation pool.">
+<meta property="og:url" content="https://atomfoundry.dev/vocabulary/recommendation-eligibility-score">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#webpage",
+      "url": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score",
+      "name": "Recommendation Eligibility Score: How Close Are You to the Threshold?",
+      "description": "The Recommendation Eligibility Score is a 0 to 5 measure of how close a store is to the minimum threshold for AI recommendation eligibility. It is not the AI Commerce Score, it measures the gate, not the quality.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": { "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#definedterm" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#faq" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#breadcrumb" }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#definedterm",
+      "name": "Recommendation Eligibility Score",
+      "description": "The Recommendation Eligibility Score quantifies how close a store is to the minimum threshold required to enter AI recommendation flows. It focuses specifically on gate-level requirements, not overall recommendation quality.",
+      "inDefinedTermSet": "https://atomfoundry.dev/vocabulary",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#faq",
+      "isPartOf": { "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#webpage" },
+      "mainEntity": [
+        { "@type": "Question", "name": "What is the Recommendation Eligibility Score?", "acceptedAnswer": { "@type": "Answer", "text": "It is a 0 to 5 measure of how close a store is to the minimum threshold required to enter AI recommendation flows. It is different from the AI Commerce Score, which measures overall recommendation quality once a store is already eligible." } },
+        { "@type": "Question", "name": "Why isn't a high AI Commerce Score enough?", "acceptedAnswer": { "@type": "Answer", "text": "A store can score well on content and positioning and still fail the gate. In the worked example on this page, a store scores 38 on the AI Commerce Score but only 2 out of 5 on the Recommendation Eligibility Score, because it blocks GPTBot, has no schema, and has no return policy in HTML. None of that shows up as a content problem, it shows up as an eligibility problem." } },
+        { "@type": "Question", "name": "What happens when the score reaches 5 out of 5?", "acceptedAnswer": { "@type": "Answer", "text": "The store enters the recommendation pool. That is a state change, not a percentage improvement. Below 5 out of 5, the store is outside the pool regardless of how good its content is. At 5 out of 5, ranking becomes possible for the first time." } },
+        { "@type": "Question", "name": "How do I raise my Recommendation Eligibility Score?", "acceptedAnswer": { "@type": "Answer", "text": "Fix the specific gates that are failing. In the worked example, enabling GPTBot access, publishing a return policy, and adding product schema each close one gate and move the score from 2 out of 5 toward 5 out of 5." } }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Vocabulary", "item": "https://atomfoundry.dev/vocabulary" },
+        { "@type": "ListItem", "position": 3, "name": "Recommendation Eligibility Score", "item": "https://atomfoundry.dev/vocabulary/recommendation-eligibility-score" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --white:#fdfcfa;
+  --off-white:#f1efe8;
+  --gray-100:#fbfaf7;
+  --gray-300:#e6e2d6;
+  --gray-500:#938f81;
+  --gray-700:#4a463c;
+  --black:#161512;
+  --cream:#f0eee6;
+  --orange:#fe6a03;
+  --green:#1D9E75;
+  --amber:#e0a233;
+  --red:#d93c3c;
+  --bar-gray:#847e6d;
+  --card:#e3dacc;
+  --card-line:rgba(22,21,18,0.09);
+  --radius:4px;
+  --maxw:1440px;
+  --serif:"Nunito","Inter",sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  color:var(--black);
+  background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+em{font-style:normal;}
+
+/* ---------- NAV ---------- */
+header.nav{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(240,238,230,0.88);
+  backdrop-filter:saturate(160%) blur(16px);
+  -webkit-backdrop-filter:saturate(160%) blur(16px);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+  transition:padding .6s cubic-bezier(.65,0,.35,1);
+}
+header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+.nav-brand{display:flex;align-items:center;}
+.logo{display:flex;align-items:center;transition:opacity .25s ease;}
+.logo:hover{opacity:0.8;}
+.logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+.logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+.logo-word .atom{color:var(--black);white-space:nowrap;}
+.logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+.logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+.nav-item{position:relative;display:flex;align-items:center;}
+.nav-trigger{
+  font-size:13px;font-weight:700;color:var(--black);
+  text-transform:uppercase;letter-spacing:0.07em;
+  position:relative;padding:4px 2px;white-space:nowrap;
+  text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+  transition:color .2s ease, text-decoration-color .2s ease;
+}
+.nav-trigger.strong{color:var(--orange);}
+.nav-chevron{
+  display:inline-flex;width:10px;height:7px;margin-left:6px;
+  vertical-align:middle;color:currentColor;
+  transition:transform .2s ease;
+}
+.nav-chevron svg{display:block;width:100%;height:100%;}
+.nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+@media (hover:hover) and (pointer:fine){
+  .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+  .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.dropdown{
+  position:absolute;top:100%;left:0;margin-top:6px;
+  background:var(--cream);
+  border:1px solid var(--card-line);
+  border-radius:var(--radius);
+  box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+  padding:12px;width:max-content;max-width:300px;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index:1100;
+}
+.dropdown.dropdown-right{left:auto;right:0;}
+.nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+a.dd-item:hover{background:rgba(22,21,18,0.06);}
+a.dd-item:hover .dd-title{color:var(--orange);}
+.dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+/* ---------- FINAL CTA (pixel copy of the real landing page #score block) ---------- */
+.scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+.scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+.scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+.scan-box input::placeholder{color:var(--gray-500);}
+.scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+.scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+.scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+.scan-note span{margin:0 8px;}
+.final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);max-width:var(--maxw);margin:0 auto;padding:48px 56px;}
+.final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
+.final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+.final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+.final-cta .scan-box{max-width:640px;margin:24px auto 0;padding:6px;}
+.final-cta .scan-box input{padding:12px 18px;font-size:15px;}
+.final-cta .scan-box button{padding:12px 22px;font-size:14px;}
+
+/* ---------- FOOTER ---------- */
+footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+.footer-inner{max-width:var(--maxw);margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+.footer-brand-col .logo-word{margin-bottom:14px;}
+.footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+.footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+.footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+.footer-stats-row b{color:var(--black);font-weight:700;}
+.footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+.footer-col{display:flex;flex-direction:column;gap:12px;}
+.footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+.footer-col a:hover{color:var(--orange);}
+.footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+.social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+.social-row a{color:var(--gray-500);transition:color .25s ease;}
+.social-row a:hover{color:var(--orange);}
+.social-row a.strong{font-weight:800;color:var(--black);}
+.social-row a.strong:hover{color:var(--orange);}
+.ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+.ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+.ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:var(--mono);}
+.ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+.ai-sitemap a:hover{color:var(--orange);}
+
+/* ---------- RESPONSIVE (nav + footer) ---------- */
+@media (max-width:900px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+  nav.links{gap:14px;}
+  .nav-trigger{font-size:12px;}
+}
+@media (max-width:680px){
+  .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+  header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+  .logo-word{font-size:24px;}
+  .logo-word .tail{max-width:160px;}
+  .nav-toggle{display:flex;}
+  nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+  header.nav.nav-mobile-open nav.links{display:flex;}
+  .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
+  .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
+  .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+  .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+  .scan-box{flex-direction:column;border-radius:4px;}
+  .scan-box button{width:100%;}
+  .final-cta{padding:36px 22px;}
+  .final-cta .scan-box{max-width:none;}
+  .footer-inner{padding:0 4px;}
+}
+
+/* ---------- HERO SHELL ---------- */
+.vp-hero{padding:64px 0 8px;}
+.hero-kicker{display:block;font-size:13px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
+h1{font-family:var(--serif);font-size:clamp(28px,4.6vw,44px);font-weight:800;line-height:1.16;color:var(--black);margin-bottom:14px;letter-spacing:-0.02em;max-width:780px;}
+h1 em{color:var(--orange);}
+.vp-hero-sub{font-size:15.5px;font-weight:500;color:var(--gray-700);line-height:1.6;max-width:640px;margin:0 0 8px;}
+.term-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;margin-bottom:8px;}
+.term-tag{font-size:11.5px;color:var(--gray-700);border:1px solid var(--card-line);border-radius:var(--radius);padding:5px 12px;}
+.term-tag strong{color:var(--orange);font-weight:700;}
+
+/* ---------- SECTION SHELL ---------- */
+.vp-section{padding:40px 0 92px;scroll-margin-top:120px;}
+.vp-section-tight{padding-top:24px;}
+.section-kicker{font-size:10.5px;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:14px;}
+h2{font-family:var(--serif);font-size:clamp(22px,2.8vw,28px);font-weight:800;color:var(--black);margin-bottom:16px;line-height:1.25;letter-spacing:-0.01em;}
+h2 em{color:var(--orange);}
+.body-text{font-size:14px;color:var(--gray-700);line-height:1.65;max-width:680px;margin-bottom:32px;}
+.body-text strong{color:var(--black);}
+.vp-note{font-size:12px;color:var(--gray-500);margin-top:18px;}
+
+/* ---------- DEFINITION ---------- */
+.def-card{padding:0;margin:36px 0 0;max-width:900px;}
+.def-label{font-size:10.5px;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:10px;}
+.def-text{font-size:18px;color:var(--black);line-height:1.6;font-weight:600;}
+.res-def-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:28px auto 0;max-width:680px;}
+.res-def-flip-wrap{perspective:1400px;}
+.res-def-flip{position:relative;height:230px;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.65,0,.35,1);cursor:pointer;}
+.res-def-flip.is-flipped{transform:rotateY(180deg);}
+@media (hover:hover) and (pointer:fine){.res-def-flip-wrap:hover .res-def-flip{transform:rotateY(180deg);}}
+.res-def-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.res-def-front{background:rgba(254,106,3,0.1);border:1px solid var(--card-line);}
+.res-def-front-label{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:17px;line-height:1.3;}
+.res-def-front-hint{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-top:12px;}
+.res-def-back{background:var(--card);transform:rotateY(180deg);border:1px solid var(--card-line);}
+.res-def-back-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:10px;}
+.res-def-back p{font-size:13px;color:var(--gray-700);line-height:1.6;}
+@media(max-width:680px){.res-def-grid{grid-template-columns:1fr;max-width:340px;}}
+
+/* ---------- SHARED ---------- */
+.vp-toggle-btn{border:none;background:var(--black);color:#fff;padding:11px 20px;border-radius:var(--radius);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .25s ease;margin-top:6px;}
+.vp-toggle-btn:hover{background:var(--orange);}
+.vp-acc{display:flex;flex-direction:column;gap:22px;max-width:820px;}
+.vp-acc-item{padding-top:18px;border-top:1px solid var(--card-line);}
+.vp-acc-item:first-child{padding-top:0;border-top:none;}
+.vp-acc-q{font-size:15px;font-weight:800;color:var(--black);margin-bottom:6px;}
+.vp-acc-body{font-size:14px;color:var(--gray-700);line-height:1.7;}
+.vp-links{background:var(--off-white);border-radius:var(--radius);padding:28px 30px;margin-top:32px;}
+.vp-links-label{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:18px;}
+.vp-links-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.vp-link-item{display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:64px;padding:16px 18px;background:var(--white);border-radius:var(--radius);box-shadow:0 10px 20px -12px rgba(22,21,18,0.16), 0 2px 5px rgba(22,21,18,0.05);transition:transform .25s ease, background .25s ease, box-shadow .25s ease;}
+.vp-link-item strong{font-size:13.5px;color:var(--orange);font-weight:800;transition:color .25s ease;}
+.vp-link-item span{font-size:12px;color:var(--gray-700);transition:color .25s ease;}
+@media (hover:hover) and (pointer:fine){
+  .vp-link-item:hover{background:var(--orange);transform:scale(1.2);box-shadow:0 20px 40px -14px rgba(22,21,18,0.32);position:relative;z-index:2;}
+  .vp-link-item:hover strong{color:var(--white);}
+  .vp-link-item:hover span{color:rgba(255,255,255,0.85);}
+}
+@media (max-width:820px){.vp-links-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:520px){.vp-links-grid{grid-template-columns:1fr;}}
+
+/* ---------- HERO: READY TO ENTER (flagship gate sequence) ---------- */
+.res-hero-panel{max-width:560px;margin:34px auto 0;background:var(--white);border:1px solid var(--card-line);border-radius:var(--radius);box-shadow:0 30px 60px -30px rgba(22,21,18,0.22);padding:36px 40px;text-align:center;}
+.res-hero-title{font-family:var(--serif);font-size:17px;font-weight:800;color:var(--black);margin-bottom:24px;}
+.res-hero-counter{font-family:var(--serif);font-size:42px;font-weight:800;color:var(--black);line-height:1;}
+.res-hero-counter .slash{color:var(--gray-500);font-weight:700;}
+.res-hero-counter-label{font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.06em;margin-top:6px;margin-bottom:26px;}
+.res-gate-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:26px;}
+.res-gate-chip{display:flex;flex-direction:column;align-items:center;gap:8px;width:82px;border:none;background:none;font:inherit;padding:0;cursor:pointer;}
+.res-gate-chip:disabled{cursor:default;}
+.res-gate-dot{font-size:22px;line-height:1;color:var(--green);transition:color .3s ease;}
+.res-gate-dot.is-fail{color:var(--red);}
+.res-gate-name{font-size:10.5px;font-weight:700;color:var(--black);text-transform:uppercase;letter-spacing:0.04em;}
+.res-hero-verdict{display:inline-block;font-family:var(--serif);font-size:19px;font-weight:800;padding:13px 26px;border-radius:var(--radius);background:rgba(217,60,60,0.1);color:var(--red);transition:background .3s ease,color .3s ease;}
+.res-hero-verdict.is-eligible{background:rgba(29,158,117,0.12);color:var(--green);}
+.res-hero-hint{margin-top:16px;font-size:12px;color:var(--gray-500);}
+.res-hero-hint button{border:none;background:none;color:var(--orange);font-weight:700;cursor:pointer;font-size:12px;text-decoration:underline;padding:0;margin-left:6px;}
+
+/* ---------- THE METRO MAP (flagship, 5-star favorite) ---------- */
+.res-metro{max-width:820px;margin:34px auto 0;padding:24px 10px 0;}
+.res-metro-line{position:relative;display:flex;justify-content:space-between;align-items:flex-start;}
+.res-metro-track{position:absolute;top:11px;left:0;right:0;height:3px;background:var(--gray-300);z-index:0;}
+.res-metro-station{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;flex:1;cursor:pointer;background:none;border:none;font:inherit;padding:0;}
+.res-metro-station:disabled{cursor:default;}
+.res-metro-dot{font-size:22px;line-height:22px;color:var(--green);transition:color .3s ease;}
+.res-metro-dot.is-endpoint{color:var(--black);}
+.res-metro-station.is-broken .res-metro-dot{color:var(--red);}
+.res-metro-label{font-size:11px;font-weight:700;color:var(--black);text-align:center;}
+.res-metro-verdict{margin-top:28px;text-align:center;font-family:var(--serif);font-size:17px;font-weight:800;color:var(--green);transition:color .3s ease;}
+.res-metro-verdict.is-broken{color:var(--red);}
+.res-metro-hint{text-align:center;margin-top:8px;font-size:12px;color:var(--gray-500);}
+@media(max-width:640px){.res-metro-label{font-size:9.5px;}}
+
+/* ---------- BEFORE AI RECOMMENDS (dramatic sparse flow) ---------- */
+.res-drama{max-width:520px;margin:20px auto;text-align:center;padding:56px 20px;}
+.res-drama-line{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--gray-500);margin-bottom:2px;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease;}
+.res-drama-line.is-in{opacity:1;transform:translateY(0);}
+.res-drama-line.big{font-size:21px;color:var(--black);margin-top:4px;}
+.res-drama-line.yes{color:var(--green);font-size:18px;}
+.res-drama-line.no{color:var(--red);font-size:18px;}
+.res-drama-arrow{font-size:16px;color:var(--gray-300);margin:10px 0;opacity:0;transition:opacity .4s ease;}
+.res-drama-arrow.is-in{opacity:1;}
+.res-drama-end{font-family:var(--serif);font-size:38px;font-weight:800;color:var(--red);letter-spacing:0.08em;margin-top:26px;opacity:0;transform:scale(.9);transition:opacity .5s ease,transform .5s ease;}
+.res-drama-end.is-in{opacity:1;transform:scale(1);}
+
+/* ---------- AIRPLANE SECURITY (compact aside) ---------- */
+.res-air{max-width:640px;margin:34px auto 0;display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;}
+.res-air-step{padding:12px 16px;border-radius:var(--radius);background:var(--off-white);font-size:12.5px;font-weight:700;color:var(--black);}
+.res-air-step.is-fail{background:rgba(217,60,60,0.1);color:var(--red);}
+.res-air-arrow{padding:0 8px;color:var(--gray-500);}
+.res-air-note{text-align:center;margin-top:18px;font-size:13px;color:var(--gray-700);max-width:480px;margin-left:auto;margin-right:auto;line-height:1.6;}
+.res-air-note strong{color:var(--black);}
+
+/* ---------- DISTANCE TO ELIGIBILITY / RECOMMENDATION POOL (flagship WOW) ---------- */
+.res-wow{max-width:640px;margin:34px auto 0;background:var(--off-white);border:1px solid var(--card-line);border-radius:var(--radius);padding:34px 36px;text-align:center;}
+.res-wow-lead{font-family:var(--serif);font-size:20px;font-weight:800;color:var(--black);margin-bottom:4px;}
+.res-wow-lead strong{color:var(--orange);}
+.res-wow-sub{font-size:12px;color:var(--gray-500);margin-bottom:26px;}
+.res-wow-checklist{display:flex;flex-direction:column;gap:10px;max-width:360px;margin:0 auto 28px;text-align:left;}
+.res-wow-check-item{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--white);border:1px solid var(--card-line);border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:700;color:var(--black);transition:color .25s ease;}
+.res-wow-check-mark{width:18px;height:18px;border:2px solid var(--gray-300);border-radius:var(--radius);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;font-weight:800;transition:background .25s ease,border-color .25s ease;}
+.res-wow-check-item.is-done .res-wow-check-mark{background:var(--green);border-color:var(--green);color:var(--white);}
+.res-wow-check-item.is-done{color:var(--gray-500);text-decoration:line-through;}
+.res-wow-pool{margin-bottom:24px;}
+.res-wow-pool-label{font-size:11px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;}
+.res-wow-pool-grid{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;max-width:400px;margin:0 auto;}
+.res-wow-pool-cell{width:22px;height:22px;border-radius:var(--radius);background:var(--gray-300);transition:background .4s ease;}
+.res-wow-pool-cell.is-filled{background:var(--orange);}
+.res-wow-state{font-family:var(--serif);font-size:26px;font-weight:800;color:var(--red);transition:color .3s ease;margin-bottom:8px;}
+.res-wow-state.is-eligible{color:var(--green);}
+.res-wow-final{font-family:var(--serif);font-size:14.5px;font-weight:800;color:var(--gray-500);letter-spacing:0.05em;opacity:0;transition:opacity .5s ease;text-transform:uppercase;}
+.res-wow-final.is-in{opacity:1;color:var(--orange);}
+@media(max-width:520px){.res-wow{padding:28px 22px;}}
+
+/* ---------- THE ELIGIBILITY WALL (compact closing visual) ---------- */
+.res-wall{max-width:560px;margin:34px auto 0;text-align:center;}
+.res-wall-row{display:flex;justify-content:center;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+.res-wall-label{font-family:var(--serif);font-weight:800;font-size:14px;color:var(--black);}
+.res-wall-bricks{display:flex;gap:4px;}
+.res-wall-brick{width:30px;height:16px;background:var(--red);border-radius:var(--radius);}
+.res-wall-brick.is-removed{background:var(--gray-300);opacity:.5;}
+.res-wall-note{font-size:12.5px;color:var(--gray-700);max-width:440px;margin:0 auto;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#pricing" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/#score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="vp-hero">
+  <div class="hero-kicker">Key Metric &middot; AI Trust Layer</div>
+  <h1>Recommendation Eligibility <em>Score.</em></h1>
+  <p class="vp-hero-sub">A scored measure of how close a store is to meeting the minimum threshold for AI recommendation eligibility. Not a percentage. A gate counter.</p>
+  <div class="term-tags"><span class="term-tag"><strong>Category</strong>&nbsp;Key Metric</span><span class="term-tag"><strong>Scale</strong>&nbsp;0 to 5 gates</span><span class="term-tag"><strong>Related</strong>&nbsp;AI Recommendation Eligibility</span></div>
+  <div class="res-hero-panel" id="resHeroPanel">
+    <div class="res-hero-title">Ready to enter AI recommendations?</div>
+    <div class="res-hero-counter" id="resHeroCounter">2<span class="slash">&nbsp;/&nbsp;5</span></div>
+    <div class="res-hero-counter-label">Gates Open</div>
+    <div class="res-gate-row">
+      <button type="button" class="res-gate-chip" id="resGateChip0"  onclick="resGateOpen(0)"><span class="res-gate-dot is-fail" id="resGateDot0">&#9679;</span><span class="res-gate-name">Readable</span></button>
+      <button type="button" class="res-gate-chip" id="resGateChip1"  onclick="resGateOpen(1)"><span class="res-gate-dot is-fail" id="resGateDot1">&#9679;</span><span class="res-gate-name">Verified</span></button>
+      <button type="button" class="res-gate-chip" id="resGateChip2"  onclick="resGateOpen(2)"><span class="res-gate-dot is-fail" id="resGateDot2">&#9679;</span><span class="res-gate-name">Structured</span></button>
+      <button type="button" class="res-gate-chip" id="resGateChip3" disabled onclick="resGateOpen(3)"><span class="res-gate-dot " id="resGateDot3">&#9679;</span><span class="res-gate-name">Trust</span></button>
+      <button type="button" class="res-gate-chip" id="resGateChip4" disabled onclick="resGateOpen(4)"><span class="res-gate-dot " id="resGateDot4">&#9679;</span><span class="res-gate-name">Relevant</span></button>
+    </div>
+    <div class="res-hero-verdict" id="resHeroVerdict">Not Eligible</div>
+    <div class="res-hero-hint">Click a red gate to open it.<button type="button" onclick="resGateReset()">Reset</button></div>
+  </div>
+</div>
+
+<div class="vp-section vp-section-tight">
+  <div class="def-card">
+    <div class="def-label">Definition</div>
+    <div class="def-text">The Recommendation Eligibility Score quantifies how close a store is to the minimum threshold required to enter AI recommendation flows. Unlike the AI Commerce Score, which measures overall recommendation quality, the Recommendation Eligibility Score focuses specifically on gate-level requirements. A store below the eligibility threshold gets zero recommendations regardless of its score on other dimensions. The Recommendation Eligibility Score shows exactly how far away eligibility is and what is blocking it.</div>
+  </div>
+  <div class="res-def-grid">
+    <div class="res-def-flip-wrap" tabindex="0" onkeydown="resFlipKey(event,this.querySelector('.res-def-flip'))">
+      <div class="res-def-flip" onclick="this.classList.toggle('is-flipped')">
+        <div class="res-def-face res-def-front">
+          <div class="res-def-front-label">Why AI Cares</div>
+          <div class="res-def-front-hint">Hover or tap</div>
+        </div>
+        <div class="res-def-face res-def-back">
+          <div class="res-def-back-label">Why AI Cares</div>
+          <p>For stores below the eligibility threshold, optimizing content or positioning is wasted effort. The first priority is always eligibility. The Recommendation Eligibility Score makes that priority measurable and actionable.</p>
+        </div>
+      </div>
+    </div>
+    <div class="res-def-flip-wrap" tabindex="0" onkeydown="resFlipKey(event,this.querySelector('.res-def-flip'))">
+      <div class="res-def-flip" onclick="this.classList.toggle('is-flipped')">
+        <div class="res-def-face res-def-front">
+          <div class="res-def-front-label">Example</div>
+          <div class="res-def-front-hint">Hover or tap</div>
+        </div>
+        <div class="res-def-face res-def-back">
+          <div class="res-def-back-label">Example</div>
+          <p>A store scores 38 on AI Commerce Score overall, but its Recommendation Eligibility Score is 2 out of 5 because it blocks GPTBot, has no schema, and has no return policy in HTML. Fixing all three moves the eligibility score to 5 and unlocks the recommendation pool.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">The Metro Map</div>
+  <h2>One broken station. <em>Every trip ends there.</em></h2>
+  <p class="body-text">Eligibility is a line, not a destination. Click any station to break it and watch what happens to the rest of the line, all the way to Ranking.</p>
+  <div class="res-metro">
+    <div class="res-metro-line">
+      <div class="res-metro-track"></div>
+      <button type="button" class="res-metro-station" id="resMetroStation0" disabled ><span class="res-metro-dot is-endpoint" id="resMetroDot0">&#9679;</span><span class="res-metro-label">Start</span></button>
+      <button type="button" class="res-metro-station" id="resMetroStation1"  onclick="resMetroToggle(1)"><span class="res-metro-dot " id="resMetroDot1">&#9679;</span><span class="res-metro-label">Readable</span></button>
+      <button type="button" class="res-metro-station" id="resMetroStation2"  onclick="resMetroToggle(2)"><span class="res-metro-dot " id="resMetroDot2">&#9679;</span><span class="res-metro-label">Trust</span></button>
+      <button type="button" class="res-metro-station" id="resMetroStation3"  onclick="resMetroToggle(3)"><span class="res-metro-dot " id="resMetroDot3">&#9679;</span><span class="res-metro-label">Structured</span></button>
+      <button type="button" class="res-metro-station" id="resMetroStation4"  onclick="resMetroToggle(4)"><span class="res-metro-dot " id="resMetroDot4">&#9679;</span><span class="res-metro-label">Intent</span></button>
+      <button type="button" class="res-metro-station" id="resMetroStation5"  onclick="resMetroToggle(5)"><span class="res-metro-dot " id="resMetroDot5">&#9679;</span><span class="res-metro-label">Eligible</span></button>
+      <button type="button" class="res-metro-station" id="resMetroStation6" disabled ><span class="res-metro-dot is-endpoint" id="resMetroDot6">&#9679;</span><span class="res-metro-label">Ranking</span></button>
+    </div>
+    <div class="res-metro-verdict" id="resMetroVerdict">All stations clear. Ranking reached.</div>
+    <div class="res-metro-hint">Click a middle station to break or fix it.</div>
+  </div>
+</div>
+
+<div class="vp-section">
+  <div class="res-drama" id="resDrama">
+    <div class="res-drama-line" id="resDramaL0">Buyer asks</div>
+    <div class="res-drama-arrow" id="resDramaA0">&darr;</div>
+    <div class="res-drama-line" id="resDramaL1">AI opens your store</div>
+    <div class="res-drama-arrow" id="resDramaA1">&darr;</div>
+    <div class="res-drama-line big" id="resDramaL2">Can I read it?</div>
+    <div class="res-drama-line yes" id="resDramaL3">YES</div>
+    <div class="res-drama-arrow" id="resDramaA2">&darr;</div>
+    <div class="res-drama-line big" id="resDramaL4">Can I verify it?</div>
+    <div class="res-drama-line no" id="resDramaL5">NO</div>
+    <div class="res-drama-end" id="resDramaEnd">END</div>
+  </div>
+</div>
+
+<div class="vp-section vp-section-tight">
+  <div class="section-kicker">Same Idea, One More Way</div>
+  <h2>It does not matter which <em>seat you have.</em></h2>
+  <div class="res-air">
+    <div class="res-air-step ">Ticket</div>
+    <div class="res-air-arrow"><svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M6 4L14 10L6 16" stroke="var(--gray-500)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="res-air-step ">Passport</div>
+    <div class="res-air-arrow"><svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M6 4L14 10L6 16" stroke="var(--gray-500)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="res-air-step is-fail">Security</div>
+    <div class="res-air-arrow"><svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M6 4L14 10L6 16" stroke="var(--gray-500)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="res-air-step ">Boarding</div>
+    <div class="res-air-arrow"><svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M6 4L14 10L6 16" stroke="var(--gray-500)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="res-air-step ">Flight</div>
+  </div>
+  <div class="res-air-note">If you do not clear security, the flight does not board you, no matter how good your seat is. Eligibility gates work the same way regardless of how strong your other signals are.</div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">Distance To Eligibility</div>
+  <h2>You are <em>3 fixes away.</em></h2>
+  <div class="res-wow" id="resWow">
+    <div class="res-wow-lead">Recommendation Pool</div>
+    <div class="res-wow-sub" id="resWowSub">2 / 5 gates open</div>
+    <div class="res-wow-checklist">
+      <div class="res-wow-check-item" id="resWowItem0" onclick="resWowToggle(0)"><span class="res-wow-check-mark" id="resWowMark0">&#10003;</span><span>Enable GPTBot access</span></div>
+      <div class="res-wow-check-item" id="resWowItem1" onclick="resWowToggle(1)"><span class="res-wow-check-mark" id="resWowMark1">&#10003;</span><span>Publish a return policy</span></div>
+      <div class="res-wow-check-item" id="resWowItem2" onclick="resWowToggle(2)"><span class="res-wow-check-mark" id="resWowMark2">&#10003;</span><span>Add product schema</span></div>
+    </div>
+    <div class="res-wow-pool">
+      <div class="res-wow-pool-label" id="resWowPoolLabel">Outside</div>
+      <div class="res-wow-pool-grid" id="resWowPoolGrid"></div>
+    </div>
+    <div class="res-wow-state" id="resWowState">Not Eligible</div>
+    <div class="res-wow-final" id="resWowFinal">You have entered the recommendation pool</div>
+  </div>
+</div>
+
+<div class="vp-section vp-section-tight">
+  <div class="section-kicker">The Eligibility Wall</div>
+  <h2>Every fix removes <em>one brick.</em></h2>
+  <div class="res-wall">
+    <div class="res-wall-row">
+      <div class="res-wall-label">You</div>
+      <div class="res-wall-bricks">
+        <div class="res-wall-brick is-removed"></div>
+        <div class="res-wall-brick is-removed"></div>
+        <div class="res-wall-brick "></div>
+        <div class="res-wall-brick "></div>
+        <div class="res-wall-brick "></div>
+      </div>
+      <div class="res-wall-label">AI Recommendations</div>
+    </div>
+    <div class="res-wall-note">3 of 5 gates are still standing between this store and the recommendation pool. Each fix removes one brick, not a percentage of the wall.</div>
+  </div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">FAQ</div>
+  <h2>Questions about the <em>Recommendation Eligibility Score</em></h2>
+  <div class="vp-acc">
+    <div class="vp-acc-item"><div class="vp-acc-q">What is the Recommendation Eligibility Score?</div><div class="vp-acc-body">It is a 0 to 5 measure of how close a store is to the minimum threshold required to enter AI recommendation flows. It is different from the AI Commerce Score, which measures overall recommendation quality once a store is already eligible.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">Why isn't a high AI Commerce Score enough?</div><div class="vp-acc-body">A store can score well on content and positioning and still fail the gate. In the worked example on this page, a store scores 38 on the AI Commerce Score but only 2 out of 5 on the Recommendation Eligibility Score, because it blocks GPTBot, has no schema, and has no return policy in HTML. None of that shows up as a content problem, it shows up as an eligibility problem.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">What happens when the score reaches 5 out of 5?</div><div class="vp-acc-body">The store enters the recommendation pool. That is a state change, not a percentage improvement. Below 5 out of 5, the store is outside the pool regardless of how good its content is. At 5 out of 5, ranking becomes possible for the first time.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">How do I raise my Recommendation Eligibility Score?</div><div class="vp-acc-body">Fix the specific gates that are failing. In the worked example, enabling GPTBot access, publishing a return policy, and adding product schema each close one gate and move the score from 2 out of 5 toward 5 out of 5.</div></div>
+  </div>
+</div>
+
+<div class="vp-section" style="padding-top:24px;">
+  <div class="final-cta">
+    <h2>How many gates are <em>open right now?</em></h2>
+    <div class="final-cta-tag">Get your Recommendation Eligibility Score.</div>
+    <p>Get a free AI Commerce Score and see your gate-by-gate eligibility breakdown, not just an overall number.</p>
+    <div class="scan-box">
+      <input type="text" placeholder="Paste your store URL">
+      <button>Get My Free AI Commerce Score</button>
+    </div>
+    <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> No credit card <span>&middot;</span> Results in 30 seconds</div>
+  </div>
+</div>
+
+<div class="vp-section" style="padding-top:0;border-top:none;">
+  <div class="vp-links">
+    <div class="vp-links-label">Related terms</div>
+    <div class="vp-links-grid">
+      <a href="/vocabulary/ai-recommendation-eligibility" class="vp-link-item"><strong>AI Recommendation Eligibility</strong><span>The gate this score measures</span></a>
+<a href="/vocabulary/ai-commerce-score" class="vp-link-item"><strong>AI Commerce Score</strong><span>Overall quality, once you are eligible</span></a>
+<a href="/vocabulary/ai-trust-layer" class="vp-link-item"><strong>AI Trust Layer</strong><span>The verification gate, in full</span></a>
+<a href="/vocabulary/ai-readability" class="vp-link-item"><strong>AI Readability</strong><span>The readability gate, in full</span></a>
+<a href="/vocabulary/machine-trust-signals" class="vp-link-item"><strong>Machine Trust Signals</strong><span>What machine-verifiable trust looks like</span></a>
+<a href="/vocabulary/recommendation-confidence" class="vp-link-item"><strong>Recommendation Confidence</strong><span>Ranking, once you are eligible</span></a>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/#pricing">AI Commerce Score&trade;</a>
+        <a href="/#pricing">AI Readiness Report</a>
+        <a href="/#pricing">AI Monitoring</a>
+        <a href="/#pricing">Recommendation Intelligence</a>
+        <a href="/#pricing">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav goes compact once scrolled.
+  (function(){
+    var nav = document.querySelector('header.nav');
+    if (!nav) return;
+    var ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) { nav.classList.add('nav-compact'); }
+      else { nav.classList.remove('nav-compact'); }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  // Mobile hamburger nav.
+  (function(){
+    var nav = document.querySelector('header.nav');
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(function(item){ item.classList.remove('dd-open'); });
+    }
+    toggle.addEventListener('click', function(){
+      var open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(function(item){
+      var trigger = item.querySelector('.nav-trigger');
+      var dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', function(e){
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(function(other){ other.classList.remove('dd-open'); });
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+  })();
+
+  // Shared keyboard handler for 3D flip cards.
+  function resFlipKey(e, el){
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.classList.toggle('is-flipped'); }
+  }
+
+  // ---------- HERO: READY TO ENTER (flagship gate sequence) ----------
+  var resGateInitial = [false, false, false, true, true];
+  var resGateState = resGateInitial.slice();
+  var resGateCount = 5;
+  function resGateRender(){
+    var open = resGateState.filter(function(s){ return s; }).length;
+    document.getElementById('resHeroCounter').innerHTML = open + '<span class="slash">&nbsp;/&nbsp;5</span>';
+    resGateState.forEach(function(ok, i){
+      var dot = document.getElementById('resGateDot' + i);
+      var chip = document.getElementById('resGateChip' + i);
+      dot.classList.toggle('is-fail', !ok);
+      chip.disabled = ok;
+    });
+    var verdict = document.getElementById('resHeroVerdict');
+    var eligible = open >= resGateCount;
+    verdict.textContent = eligible ? 'Eligible' : 'Not Eligible';
+    verdict.classList.toggle('is-eligible', eligible);
+  }
+  function resGateOpen(i){
+    if (resGateState[i]) return;
+    resGateState[i] = true;
+    resGateRender();
+  }
+  function resGateReset(){
+    resGateState = resGateInitial.slice();
+    resGateRender();
+  }
+  resGateRender();
+
+  // ---------- THE METRO MAP ----------
+  var resMetroNames = ["Start", "Readable", "Trust", "Structured", "Intent", "Eligible", "Ranking"];
+  var resMetroBroken = {};
+  function resMetroRender(){
+    var brokenIdx = null;
+    for (var i = 1; i < resMetroNames.length - 1; i++) {
+      var dot = document.getElementById('resMetroDot' + i);
+      var station = document.getElementById('resMetroStation' + i);
+      var isBroken = !!resMetroBroken[i];
+      dot.classList.toggle('is-fail', isBroken);
+      station.classList.toggle('is-broken', isBroken);
+      if (isBroken && brokenIdx === null) brokenIdx = i;
+    }
+    var verdict = document.getElementById('resMetroVerdict');
+    if (brokenIdx === null) {
+      verdict.textContent = 'All stations clear. Ranking reached.';
+      verdict.classList.remove('is-broken');
+    } else {
+      verdict.textContent = 'Trip ends at ' + resMetroNames[brokenIdx] + '.';
+      verdict.classList.add('is-broken');
+    }
+  }
+  function resMetroToggle(i){
+    resMetroBroken[i] = !resMetroBroken[i];
+    resMetroRender();
+  }
+
+  // ---------- BEFORE AI RECOMMENDS: staggered dramatic reveal ----------
+  (function(){
+    var drama = document.getElementById('resDrama');
+    if (!drama) return;
+    var sequence = ['resDramaL0','resDramaA0','resDramaL1','resDramaA1','resDramaL2','resDramaL3','resDramaA2','resDramaL4','resDramaL5','resDramaEnd'];
+    function play(){
+      sequence.forEach(function(id, i){
+        setTimeout(function(){
+          var el = document.getElementById(id);
+          if (el) el.classList.add('is-in');
+        }, i * 420);
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){ if (entry.isIntersecting) { play(); obs.unobserve(entry.target); } });
+      }, { threshold: 0.5 });
+      obs.observe(drama);
+    } else {
+      play();
+    }
+  })();
+
+  // ---------- DISTANCE TO ELIGIBILITY / RECOMMENDATION POOL ----------
+  var resWowDone = [false, false, false];
+  var resWowGateBase = 2;
+  var resWowGateMax = 5;
+  var resWowTotalCells = 15;
+  function resWowRender(){
+    var doneCount = resWowDone.filter(function(d){ return d; }).length;
+    var gatesOpen = resWowGateBase + doneCount;
+    document.getElementById('resWowSub').textContent = gatesOpen + ' / ' + resWowGateMax + ' gates open';
+    var filled = Math.round(resWowTotalCells * gatesOpen / resWowGateMax);
+    var grid = document.getElementById('resWowPoolGrid');
+    grid.innerHTML = '';
+    for (var i = 0; i < resWowTotalCells; i++) {
+      var cell = document.createElement('div');
+      cell.className = 'res-wow-pool-cell' + (i < filled ? ' is-filled' : '');
+      grid.appendChild(cell);
+    }
+    var eligible = gatesOpen >= resWowGateMax;
+    document.getElementById('resWowPoolLabel').textContent = eligible ? 'Inside' : 'Outside';
+    var state = document.getElementById('resWowState');
+    state.textContent = eligible ? 'Eligible' : 'Not Eligible';
+    state.classList.toggle('is-eligible', eligible);
+    document.getElementById('resWowFinal').classList.toggle('is-in', eligible);
+  }
+  function resWowToggle(i){
+    resWowDone[i] = !resWowDone[i];
+    document.getElementById('resWowItem' + i).classList.toggle('is-done', resWowDone[i]);
+    resWowRender();
+  }
+  resWowRender();
+</script>
+
+</body>
+</html>
