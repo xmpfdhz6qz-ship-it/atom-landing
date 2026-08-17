@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT Shopping: How ChatGPT Decides What to Recommend</title>
+<meta name="description" content="ChatGPT is becoming a product discovery layer between buyer intent and ecommerce. See the decision process ChatGPT runs through, from buyer intent to recommendation, and what determines whether it recommends your store.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/vocabulary/chatgpt-shopping">
+<meta property="og:title" content="ChatGPT Shopping: How ChatGPT Decides What to Recommend">
+<meta property="og:description" content="ChatGPT does not rank stores. It constructs recommendations. Here is what it needs to know before it will recommend yours.">
+<meta property="og:url" content="https://atomfoundry.dev/vocabulary/chatgpt-shopping">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#webpage",
+      "url": "https://atomfoundry.dev/vocabulary/chatgpt-shopping",
+      "name": "ChatGPT Shopping: How ChatGPT Decides What to Recommend",
+      "description": "ChatGPT is becoming a product discovery layer between buyer intent and ecommerce. See the decision process ChatGPT runs through, from buyer intent to recommendation, and what determines whether it recommends your store.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": { "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#faq" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#breadcrumb" }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#article",
+      "headline": "ChatGPT Shopping: How ChatGPT Decides What to Recommend",
+      "description": "ChatGPT is becoming a product discovery layer between buyer intent and ecommerce.",
+      "author": { "@type": "Person", "name": "Daniel Pokorny", "url": "https://atomfoundry.dev" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "datePublished": "2026-05-21",
+      "dateModified": "2026-08-17",
+      "url": "https://atomfoundry.dev/vocabulary/chatgpt-shopping",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#webpage" },
+      "about": ["ChatGPT Shopping", "Intent Authority", "Recommendation Share", "AI Commerce Score"]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#faq",
+      "isPartOf": { "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#webpage" },
+      "mainEntity": [
+        { "@type": "Question", "name": "What is ChatGPT Shopping?", "acceptedAnswer": { "@type": "Answer", "text": "ChatGPT Shopping is the product discovery layer inside ChatGPT: when a buyer asks what to buy, ChatGPT interprets the request, retrieves candidate merchants and products, evaluates trust and fit, and generates a recommendation." } },
+        { "@type": "Question", "name": "How does ChatGPT choose products to recommend?", "acceptedAnswer": { "@type": "Answer", "text": "ChatGPT builds a decision model of every candidate: what it sells, who it is for, whether its commercial facts can be verified, and whether it is trustworthy enough to recommend for this specific buyer intent." } },
+        { "@type": "Question", "name": "Does ChatGPT rank ecommerce stores?", "acceptedAnswer": { "@type": "Answer", "text": "Not in the way Google Shopping ranks a feed. ChatGPT constructs a small set of recommendations based on how confidently it can match a merchant to the buyer's specific question." } },
+        { "@type": "Question", "name": "Can ChatGPT recommend a store it has never seen before?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, if the store publishes machine-readable product, merchant, and trust signals ChatGPT can retrieve and verify at request time." } },
+        { "@type": "Question", "name": "Why is my store visible but not recommended?", "acceptedAnswer": { "@type": "Answer", "text": "Visibility and recommendation are different layers. A store can be fully discoverable and understood by ChatGPT and still fail the trust or intent-fit checks that come after." } },
+        { "@type": "Question", "name": "Does product schema affect ChatGPT Shopping?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, but it is one input among several. Schema makes identity and commerce facts machine-verifiable, which is necessary but not sufficient." } },
+        { "@type": "Question", "name": "Does llms.txt make ChatGPT recommend my store?", "acceptedAnswer": { "@type": "Answer", "text": "Not by itself. llms.txt can help ChatGPT understand a store faster during retrieval, but it does not substitute for verifiable product data, trust signals, or intent-specific positioning." } },
+        { "@type": "Question", "name": "What is the difference between ChatGPT visibility and recommendation?", "acceptedAnswer": { "@type": "Answer", "text": "Visibility means ChatGPT can find and read a store. Recommendation means ChatGPT actually selects that store as the answer to a specific buyer question." } },
+        { "@type": "Question", "name": "How can I measure my Recommendation Share in ChatGPT?", "acceptedAnswer": { "@type": "Answer", "text": "By running a controlled set of real buyer-intent prompts against ChatGPT, extracting which brands get mentioned, and calculating how often your store appears relative to competitors." } },
+        { "@type": "Question", "name": "How do I know which buyer intents ChatGPT associates with my brand?", "acceptedAnswer": { "@type": "Answer", "text": "Run the same buyer-intent testing methodology used to measure Recommendation Share, segmented by individual query. This is Intent Authority." } }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/vocabulary/chatgpt-shopping#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Vocabulary", "item": "https://atomfoundry.dev/vocabulary" },
+        { "@type": "ListItem", "position": 3, "name": "ChatGPT Shopping", "item": "https://atomfoundry.dev/vocabulary/chatgpt-shopping" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root{
+  --white:#fdfcfa;
+  --off-white:#f1efe8;
+  --gray-100:#fbfaf7;
+  --gray-300:#e6e2d6;
+  --gray-500:#938f81;
+  --gray-700:#4a463c;
+  --black:#161512;
+  --cream:#f0eee6;
+  --orange:#fe6a03;
+  --green:#1D9E75;
+  --amber:#e0a233;
+  --red:#d93c3c;
+  --bar-gray:#847e6d;
+  --card:#e3dacc;
+  --card-line:rgba(22,21,18,0.09);
+  --radius:4px;
+  --maxw:1440px;
+  --serif:"Nunito","Inter",sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  color:var(--black);
+  background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+em{font-style:normal;}
+
+/* ---------- NAV ---------- */
+header.nav{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(240,238,230,0.88);
+  backdrop-filter:saturate(160%) blur(16px);
+  -webkit-backdrop-filter:saturate(160%) blur(16px);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+  transition:padding .6s cubic-bezier(.65,0,.35,1);
+}
+header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+.nav-brand{display:flex;align-items:center;}
+.logo{display:flex;align-items:center;transition:opacity .25s ease;}
+.logo:hover{opacity:0.8;}
+.logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+.logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+.logo-word .atom{color:var(--black);white-space:nowrap;}
+.logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+.logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+.nav-item{position:relative;display:flex;align-items:center;}
+.nav-trigger{
+  font-size:13px;font-weight:700;color:var(--black);
+  text-transform:uppercase;letter-spacing:0.07em;
+  position:relative;padding:4px 2px;white-space:nowrap;
+  text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+  transition:color .2s ease, text-decoration-color .2s ease;
+}
+.nav-trigger.strong{color:var(--orange);}
+.nav-chevron{
+  display:inline-flex;width:10px;height:7px;margin-left:6px;
+  vertical-align:middle;color:currentColor;
+  transition:transform .2s ease;
+}
+.nav-chevron svg{display:block;width:100%;height:100%;}
+.nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+@media (hover:hover) and (pointer:fine){
+  .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+  .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.dropdown{
+  position:absolute;top:100%;left:0;margin-top:6px;
+  background:var(--cream);
+  border:1px solid var(--card-line);
+  border-radius:var(--radius);
+  box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+  padding:12px;width:max-content;max-width:300px;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index:1100;
+}
+.dropdown.dropdown-right{left:auto;right:0;}
+.nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+a.dd-item:hover{background:rgba(22,21,18,0.06);}
+a.dd-item:hover .dd-title{color:var(--orange);}
+.dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+/* ---------- FINAL CTA (pixel copy of the real landing page #score block) ---------- */
+.scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+.scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+.scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+.scan-box input::placeholder{color:var(--gray-500);}
+.scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+.scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+.scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+.scan-note span{margin:0 8px;}
+.final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);max-width:var(--maxw);margin:0 auto;padding:48px 56px;}
+.final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
+.final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+.final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+.final-cta .scan-box{max-width:640px;margin:24px auto 0;padding:6px;}
+.final-cta .scan-box input{padding:12px 18px;font-size:15px;}
+.final-cta .scan-box button{padding:12px 22px;font-size:14px;}
+
+/* ---------- FOOTER ---------- */
+footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+.footer-inner{max-width:var(--maxw);margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+.footer-brand-col .logo-word{margin-bottom:14px;}
+.footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+.footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+.footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+.footer-stats-row b{color:var(--black);font-weight:700;}
+.footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+.footer-col{display:flex;flex-direction:column;gap:12px;}
+.footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+.footer-col a:hover{color:var(--orange);}
+.footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+.social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+.social-row a{color:var(--gray-500);transition:color .25s ease;}
+.social-row a:hover{color:var(--orange);}
+.social-row a.strong{font-weight:800;color:var(--black);}
+.social-row a.strong:hover{color:var(--orange);}
+.ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+.ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+.ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:var(--mono);}
+.ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+.ai-sitemap a:hover{color:var(--orange);}
+
+/* ---------- RESPONSIVE (nav + footer) ---------- */
+@media (max-width:900px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+  nav.links{gap:14px;}
+  .nav-trigger{font-size:12px;}
+}
+@media (max-width:680px){
+  .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+  header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+  .logo-word{font-size:24px;}
+  .logo-word .tail{max-width:160px;}
+  .nav-toggle{display:flex;}
+  nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+  header.nav.nav-mobile-open nav.links{display:flex;}
+  .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
+  .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
+  .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+  .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+  .scan-box{flex-direction:column;border-radius:4px;}
+  .scan-box button{width:100%;}
+  .final-cta{padding:36px 22px;}
+  .final-cta .scan-box{max-width:none;}
+  .footer-inner{padding:0 4px;}
+}
+
+/* ---------- HERO (shared typography scale) ---------- */
+.vp-hero{padding:64px 0 8px;}
+.hero-kicker{display:block;font-size:13px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
+h1{font-family:var(--serif);font-size:clamp(28px,4.6vw,44px);font-weight:800;line-height:1.16;color:var(--black);margin-bottom:14px;letter-spacing:-0.02em;max-width:780px;}
+h1 em{color:var(--orange);}
+.vp-hero-sub{font-size:15.5px;font-weight:500;color:var(--gray-700);line-height:1.6;max-width:660px;margin:0 0 8px;}
+.term-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;margin-bottom:8px;}
+.term-tag{font-size:11.5px;color:var(--gray-700);border:1px solid var(--card-line);border-radius:var(--radius);padding:5px 12px;}
+.term-tag strong{color:var(--orange);font-weight:700;}
+
+/* ---------- SECTION SHELL (shared) ---------- */
+.vp-section{padding:40px 0 88px;scroll-margin-top:120px;}
+.vp-section-tight{padding-top:24px;}
+.section-kicker{font-size:10.5px;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:14px;}
+h2{font-family:var(--serif);font-size:clamp(22px,2.8vw,28px);font-weight:800;color:var(--black);margin-bottom:16px;line-height:1.25;letter-spacing:-0.01em;}
+h2 em{color:var(--orange);}
+.body-text{font-size:14px;color:var(--gray-700);line-height:1.65;max-width:680px;margin-bottom:32px;}
+.body-text strong{color:var(--black);}
+.body-text a{color:var(--orange);font-weight:700;text-decoration:underline;}
+.vp-note{font-size:12px;color:var(--gray-500);margin-top:18px;}
+
+/* ---------- READING PIPELINE (reused component) ---------- */
+.vh-readpipe{margin:32px 0 0;}
+.vh-readpipe-row{position:relative;display:flex;justify-content:space-between;gap:8px;padding-top:8px;}
+.vh-readpipe-row::before{content:"";position:absolute;left:18px;right:18px;top:26px;height:1px;background:var(--card-line);}
+.vh-readpipe-step{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;}
+.vh-readpipe-num{width:35px;height:35px;border-radius:var(--radius);background:var(--white);border:1.5px solid var(--card-line);color:var(--gray-500);font-family:var(--serif);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .3s ease, border-color .3s ease, color .3s ease;}
+.vh-readpipe-step.is-active .vh-readpipe-num{background:var(--orange);border-color:var(--orange);color:var(--white);}
+.vh-readpipe-label{font-size:12px;font-weight:700;color:var(--gray-500);transition:color .3s ease;}
+.vh-readpipe-step.is-active .vh-readpipe-label{color:var(--black);}
+.vh-readpipe-detail{margin-top:24px;background:var(--off-white);border-radius:var(--radius);padding:20px 24px;font-size:14px;color:var(--gray-700);line-height:1.6;min-height:24px;}
+@media (max-width:700px){
+  .vh-readpipe-row{flex-wrap:wrap;row-gap:20px;}
+  .vh-readpipe-row::before{display:none;}
+  .vh-readpipe-step{flex:0 0 30%;}
+}
+
+/* ---------- PLAIN LISTS (FAQ, reused component) ---------- */
+.vp-acc{display:flex;flex-direction:column;gap:22px;max-width:820px;}
+.vp-acc-item{padding-top:18px;border-top:1px solid var(--card-line);}
+.vp-acc-item:first-child{padding-top:0;border-top:none;}
+.vp-acc-q{font-size:15px;font-weight:800;color:var(--black);margin-bottom:6px;}
+.vp-acc-body{font-size:14px;color:var(--gray-700);line-height:1.7;}
+
+/* ---------- INTERNAL LINKS (reused component) ---------- */
+.vp-links{background:var(--off-white);border-radius:var(--radius);padding:28px 30px;margin-top:32px;}
+.vp-links-label{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:18px;}
+.vp-links-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.vp-link-item{display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:64px;padding:16px 18px;background:var(--white);border-radius:var(--radius);box-shadow:0 10px 20px -12px rgba(22,21,18,0.16), 0 2px 5px rgba(22,21,18,0.05);transition:transform .25s ease, background .25s ease, box-shadow .25s ease;}
+.vp-link-item strong{font-size:13.5px;color:var(--orange);font-weight:800;transition:color .25s ease;}
+.vp-link-item span{font-size:12px;color:var(--gray-700);transition:color .25s ease;}
+@media (hover:hover) and (pointer:fine){
+  .vp-link-item:hover{background:var(--orange);transform:scale(1.2);box-shadow:0 20px 40px -14px rgba(22,21,18,0.32);position:relative;z-index:2;}
+  .vp-link-item:hover strong{color:var(--white);}
+  .vp-link-item:hover span{color:rgba(255,255,255,0.85);}
+}
+@media (max-width:820px){.vp-links-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:520px){.vp-links-grid{grid-template-columns:1fr;}}
+
+/* ---------- DECISION CASCADE (flagship, section 2) ---------- */
+.cgs-cascade{max-width:520px;margin:36px auto 0;}
+.cgs-cascade-q{background:var(--card);border-radius:var(--radius);padding:20px 24px;text-align:center;margin-bottom:6px;}
+.cgs-cascade-q-tag{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-500);font-weight:800;margin-bottom:8px;}
+.cgs-cascade-q-text{display:block;font-family:var(--serif);font-size:18px;font-weight:800;color:var(--black);}
+.cgs-cascade-arrow{text-align:center;font-size:14px;color:var(--gray-300);padding:4px 0;opacity:0;transition:opacity .4s ease;}
+.cgs-cascade.is-in .cgs-cascade-arrow{opacity:1;transition-delay:calc(var(--i) * 160ms);}
+.cgs-cascade-step{background:var(--off-white);border-radius:var(--radius);padding:13px 20px;text-align:center;font-size:14px;font-weight:700;color:var(--black);opacity:0;transform:translateY(8px);transition:opacity .4s ease, transform .4s ease;}
+.cgs-cascade.is-in .cgs-cascade-step{opacity:1;transform:translateY(0);transition-delay:calc(var(--i) * 160ms);}
+.cgs-cascade-step.final{background:var(--black);color:var(--white);font-family:var(--serif);font-size:17px;letter-spacing:0.03em;margin-top:2px;}
+.cgs-cascade-punch{text-align:center;margin-top:28px;font-family:var(--serif);font-size:17px;font-weight:800;color:var(--black);line-height:1.5;}
+.cgs-cascade-punch em{color:var(--orange);}
+
+/* ---------- LAYER FLIP CARDS (section 3) ---------- */
+.cgs-layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:32px 0 0;perspective:1400px;}
+.cgs-layer-flip{position:relative;height:168px;}
+.cgs-layer-flip:focus{outline:2px solid var(--orange);outline-offset:3px;}
+.cgs-layer-flip-inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;animation:cgsWiggle 1.5s ease-in-out 1;animation-delay:calc(var(--ci,0) * 150ms + 650ms);}
+@keyframes cgsWiggle{0%,100%{transform:rotateY(0deg);}38%{transform:rotateY(-15deg);}68%{transform:rotateY(6deg);}}
+@media (hover:hover) and (pointer:fine){
+  .cgs-layer-flip:hover .cgs-layer-flip-inner{transform:rotateY(180deg);animation:none;}
+}
+.cgs-layer-flip.is-flipped .cgs-layer-flip-inner{transform:rotateY(180deg);animation:none;}
+.cgs-layer-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--radius);padding:20px 20px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 16px 30px -18px rgba(22,21,18,0.2), 0 3px 8px rgba(22,21,18,0.05);}
+.cgs-layer-front{background:var(--off-white);}
+.cgs-layer-back{background:var(--card);transform:rotateY(180deg);}
+.cgs-layer-num{font-family:var(--serif);font-size:12px;font-weight:800;color:var(--gray-500);margin-bottom:8px;}
+.cgs-layer-name{font-size:15px;font-weight:800;color:var(--black);margin-bottom:6px;}
+.cgs-layer-arrow{position:absolute;right:14px;bottom:12px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius);background:rgba(254,106,3,0.14);color:var(--orange);}
+.cgs-layer-arrow svg{display:block;width:11px;height:7px;}
+.cgs-layer-why{font-size:12.5px;color:var(--gray-700);line-height:1.55;}
+@media (max-width:760px){.cgs-layer-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:460px){.cgs-layer-grid{grid-template-columns:1fr;}}
+
+/* ---------- INTENT FIT CARDS (section 4) ---------- */
+.cgs-intent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0 0;}
+.cgs-intent-card{background:var(--off-white);border-radius:var(--radius);padding:22px 22px;text-align:center;opacity:0;transform:translateY(8px);transition:opacity .45s ease, transform .45s ease;}
+.cgs-intent-grid.is-in .cgs-intent-card{opacity:1;transform:translateY(0);transition-delay:calc(var(--i) * 140ms);}
+.cgs-intent-q{font-size:13px;font-style:italic;color:var(--gray-700);margin-bottom:16px;min-height:52px;}
+.cgs-intent-badge{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;border-radius:var(--radius);padding:5px 10px;margin-bottom:6px;}
+.cgs-intent-card.high .cgs-intent-badge{background:rgba(29,158,117,0.14);color:var(--green);}
+.cgs-intent-card.medium .cgs-intent-badge{background:rgba(224,162,51,0.16);color:var(--amber);}
+.cgs-intent-card.low .cgs-intent-badge{background:rgba(217,60,60,0.14);color:var(--red);}
+.cgs-intent-result{margin-top:14px;padding-top:14px;border-top:1px solid var(--card-line);font-family:var(--serif);font-size:16px;font-weight:800;}
+.cgs-intent-card.high .cgs-intent-result{color:var(--green);}
+.cgs-intent-card.medium .cgs-intent-result{color:var(--amber);}
+.cgs-intent-card.low .cgs-intent-result{color:var(--red);}
+@media (max-width:760px){.cgs-intent-grid{grid-template-columns:1fr;}}
+
+/* ---------- SKIP REASONS GRID (section 5) ---------- */
+.cgs-skip-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 0;}
+.cgs-skip-card{background:var(--off-white);border-radius:var(--radius);padding:20px 22px;transition:transform .25s ease, box-shadow .25s ease;}
+@media (hover:hover) and (pointer:fine){
+  .cgs-skip-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -18px rgba(22,21,18,0.24);}
+}
+.cgs-skip-name{font-size:14.5px;font-weight:800;color:var(--black);margin-bottom:6px;}
+.cgs-skip-desc{font-size:12.5px;color:var(--gray-700);line-height:1.55;}
+@media (max-width:640px){.cgs-skip-grid{grid-template-columns:1fr;}}
+
+/* ---------- STAGE CHAIN (section 7) ---------- */
+.cgs-chain{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:32px 0 0;}
+.cgs-chain-step{background:var(--off-white);border-radius:var(--radius);padding:22px 18px;text-align:center;opacity:0;transform:translateY(8px);transition:opacity .4s ease, transform .4s ease;}
+.cgs-chain.is-in .cgs-chain-step{opacity:1;transform:translateY(0);transition-delay:calc(var(--i) * 140ms);}
+.cgs-chain-num{font-family:var(--serif);font-size:11px;font-weight:800;color:var(--gray-500);margin-bottom:10px;letter-spacing:0.06em;}
+.cgs-chain-name{font-size:15px;font-weight:800;color:var(--black);}
+.cgs-chain-step.final{background:var(--card);}
+@media (max-width:700px){.cgs-chain{grid-template-columns:1fr 1fr;}}
+@media (max-width:420px){.cgs-chain{grid-template-columns:1fr;}}
+
+/* ---------- VS TABLE (section 8, 3 columns) ---------- */
+.cgs-vs{margin:32px 0 0;background:var(--off-white);border-radius:var(--radius);overflow:hidden;}
+.cgs-vs-head{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px;padding:14px 24px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);font-weight:800;border-bottom:1px solid var(--card-line);}
+.cgs-vs-head span:nth-child(2),.cgs-vs-head span:nth-child(3){text-align:center;}
+.cgs-vs-row{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px;padding:15px 24px;border-bottom:1px solid var(--card-line);align-items:center;transition:background .2s ease;}
+.cgs-vs-row:last-child{border-bottom:none;}
+.cgs-vs-row:hover{background:var(--white);}
+.cgs-vs-dim{font-size:13.5px;font-weight:800;color:var(--black);}
+.cgs-vs-g,.cgs-vs-c{font-size:13px;color:var(--gray-700);text-align:center;}
+.cgs-vs-row.final .cgs-vs-c{color:var(--orange);font-weight:800;}
+@media (max-width:640px){.cgs-vs-head{display:none;}.cgs-vs-row{grid-template-columns:1fr;gap:4px;text-align:left;}.cgs-vs-g,.cgs-vs-c{text-align:left;}.cgs-vs-g::before{content:"Google Shopping: ";color:var(--gray-500);font-weight:700;}.cgs-vs-c::before{content:"ChatGPT Shopping: ";color:var(--gray-500);font-weight:700;}}
+
+/* ---------- MEASUREMENT TERMINAL (section 9) ---------- */
+.cgs-term{background:var(--black);border-radius:var(--radius);padding:30px 32px;margin:32px auto 0;max-width:600px;box-shadow:0 26px 48px -22px rgba(22,21,18,0.28);}
+.cgs-term-head{display:flex;align-items:center;gap:8px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.cgs-term-dot{width:8px;height:8px;border-radius:var(--radius);background:rgba(255,255,255,0.18);}
+.cgs-term-title{font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-left:6px;}
+.cgs-term-body{font-family:var(--mono);font-size:13px;line-height:2.1;}
+.cgs-term-row{opacity:0;transform:translateY(4px);transition:opacity .35s ease, transform .35s ease;color:var(--white);}
+.cgs-term.is-in .cgs-term-row{opacity:1;transform:translateY(0);transition-delay:calc(var(--i) * 160ms);}
+.cgs-term-row .arrow{color:var(--orange);margin-right:8px;}
+.cgs-term-row.final{color:var(--green);font-weight:700;padding-top:8px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.1);}
+@media (max-width:640px){.cgs-term{padding:24px 20px;}.cgs-term-body{font-size:12px;}}
+
+/* ---------- REAL EXAMPLE TABLE (section 10) ---------- */
+.cgs-ex{margin:32px 0 0;background:var(--off-white);border-radius:var(--radius);overflow:hidden;}
+.cgs-ex-head{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;padding:14px 24px;font-size:10.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);font-weight:800;border-bottom:1px solid var(--card-line);}
+.cgs-ex-head span:nth-child(2),.cgs-ex-head span:nth-child(3){text-align:center;}
+.cgs-ex-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;padding:16px 24px;border-bottom:1px solid var(--card-line);align-items:center;opacity:0;transform:translateY(6px);transition:opacity .4s ease, transform .4s ease;}
+.cgs-ex.is-in .cgs-ex-row{opacity:1;transform:translateY(0);transition-delay:calc(var(--i) * 130ms);}
+.cgs-ex-row:last-child{border-bottom:none;}
+.cgs-ex-q{font-size:13px;color:var(--gray-700);font-style:italic;}
+.cgs-ex-pos{font-family:var(--serif);font-size:16px;font-weight:800;text-align:center;color:var(--black);}
+.cgs-ex-result{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;text-align:center;}
+.cgs-ex-row.win .cgs-ex-pos,.cgs-ex-row.win .cgs-ex-result{color:var(--green);}
+.cgs-ex-row.weak .cgs-ex-pos,.cgs-ex-row.weak .cgs-ex-result{color:var(--amber);}
+.cgs-ex-row.miss .cgs-ex-pos,.cgs-ex-row.miss .cgs-ex-result{color:var(--red);}
+@media (max-width:640px){.cgs-ex-head{display:none;}.cgs-ex-row{grid-template-columns:1fr;gap:4px;text-align:left;}.cgs-ex-pos,.cgs-ex-result{text-align:left;}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#pricing" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/#score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/#pricing" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="vp-hero">
+  <div class="hero-kicker">Platform Term &middot; ChatGPT Shopping&trade;</div>
+  <h1>How ChatGPT decides <em>what to recommend</em>.</h1>
+  <p class="vp-hero-sub">ChatGPT is becoming a product discovery layer between buyer intent and ecommerce. When a buyer asks what to buy, ChatGPT does not simply return stores that exist. It interprets the request, retrieves candidates, evaluates product and merchant signals, and produces a recommendation.</p>
+  <div class="term-tags"><span class="term-tag"><strong>Category</strong>&nbsp;Platform Term</span><span class="term-tag"><strong>Environment</strong>&nbsp;Recommendation Construction</span><span class="term-tag"><strong>Measures</strong>&nbsp;Intent-Specific Fit</span></div>
+</div>
+
+<div class="vp-section vp-section-tight">
+  <div class="section-kicker">The core concept</div>
+  <h2>ChatGPT doesn't rank stores. <em>It constructs recommendations.</em></h2>
+  <p class="body-text">There is no scrollable results page inside ChatGPT. Every query runs through the same construction process before an answer ever appears.</p>
+  <div class="cgs-cascade" data-observe-group>
+    <div class="cgs-cascade-q">
+      <span class="cgs-cascade-q-tag">Buyer asks</span>
+      <span class="cgs-cascade-q-text">"What's the best minimalist leather wallet under $100?"</span>
+    </div>
+    <div class="cgs-cascade-arrow" style="--i:0;opacity:1;">&#8595;</div>
+    <div class="cgs-cascade-step" style="--i:0">Understand intent</div>
+    <div class="cgs-cascade-arrow" style="--i:1">&#8595;</div>
+    <div class="cgs-cascade-step" style="--i:2">Retrieve candidates</div>
+    <div class="cgs-cascade-arrow" style="--i:3">&#8595;</div>
+    <div class="cgs-cascade-step" style="--i:4">Compare products</div>
+    <div class="cgs-cascade-arrow" style="--i:5">&#8595;</div>
+    <div class="cgs-cascade-step" style="--i:6">Evaluate trust</div>
+    <div class="cgs-cascade-arrow" style="--i:7">&#8595;</div>
+    <div class="cgs-cascade-step" style="--i:8">Match buyer &#8594; product</div>
+    <div class="cgs-cascade-arrow" style="--i:9">&#8595;</div>
+    <div class="cgs-cascade-step final" style="--i:10">Generate recommendation</div>
+  </div>
+  <div class="cgs-cascade-punch">The question is therefore not "Can ChatGPT find my store?" It is <em>"Does ChatGPT have enough confidence to recommend it?"</em></div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">The recommendation model</div>
+  <h2>What ChatGPT needs to know <em>before it can recommend you</em></h2>
+  <p class="body-text">Six questions, answered in order. Click a card to see what actually answers each one.</p>
+  <div class="cgs-layer-grid">
+    <div class="cgs-layer-flip" tabindex="0" role="button" style="--ci:0" aria-label="Identity"><div class="cgs-layer-flip-inner"><div class="cgs-layer-face cgs-layer-front"><div class="cgs-layer-num">01</div><div class="cgs-layer-name">Identity</div><span class="cgs-layer-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="cgs-layer-face cgs-layer-back"><div class="cgs-layer-name">What brand and merchant is this?</div><div class="cgs-layer-why">Answered by a persistent, machine-identifiable merchant identity, not just a logo a human recognizes.</div></div></div></div>
+    <div class="cgs-layer-flip" tabindex="0" role="button" style="--ci:1" aria-label="Product"><div class="cgs-layer-flip-inner"><div class="cgs-layer-face cgs-layer-front"><div class="cgs-layer-num">02</div><div class="cgs-layer-name">Product</div><span class="cgs-layer-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="cgs-layer-face cgs-layer-back"><div class="cgs-layer-name">What exactly is being sold?</div><div class="cgs-layer-why">Answered by structured product data ChatGPT can extract without guessing, not marketing copy.</div></div></div></div>
+    <div class="cgs-layer-flip" tabindex="0" role="button" style="--ci:2" aria-label="Intent Fit"><div class="cgs-layer-flip-inner"><div class="cgs-layer-face cgs-layer-front"><div class="cgs-layer-num">03</div><div class="cgs-layer-name">Intent Fit</div><span class="cgs-layer-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="cgs-layer-face cgs-layer-back"><div class="cgs-layer-name">Which buyer problems does it solve?</div><div class="cgs-layer-why">Answered by content that names the specific buyer and use case, not generic category language.</div></div></div></div>
+    <div class="cgs-layer-flip" tabindex="0" role="button" style="--ci:3" aria-label="Commerce Facts"><div class="cgs-layer-flip-inner"><div class="cgs-layer-face cgs-layer-front"><div class="cgs-layer-num">04</div><div class="cgs-layer-name">Commerce Facts</div><span class="cgs-layer-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="cgs-layer-face cgs-layer-back"><div class="cgs-layer-name">What does it cost? Is it available? How do shipping and returns work?</div><div class="cgs-layer-why">Answered by machine-readable price, stock, and policy data ChatGPT can verify at request time.</div></div></div></div>
+    <div class="cgs-layer-flip" tabindex="0" role="button" style="--ci:4" aria-label="Trust"><div class="cgs-layer-flip-inner"><div class="cgs-layer-face cgs-layer-front"><div class="cgs-layer-num">05</div><div class="cgs-layer-name">Trust</div><span class="cgs-layer-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="cgs-layer-face cgs-layer-back"><div class="cgs-layer-name">Can the system confidently rely on this merchant?</div><div class="cgs-layer-why">Answered by verifiable reviews, policies, and external signals, not visual design cues.</div></div></div></div>
+    <div class="cgs-layer-flip" tabindex="0" role="button" style="--ci:5" aria-label="Recommendation Fit"><div class="cgs-layer-flip-inner"><div class="cgs-layer-face cgs-layer-front"><div class="cgs-layer-num">06</div><div class="cgs-layer-name">Recommendation Fit</div><span class="cgs-layer-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="cgs-layer-face cgs-layer-back"><div class="cgs-layer-name">Is this actually a good answer to this particular buyer?</div><div class="cgs-layer-why">Answered last, and only if every layer above already passed.</div></div></div></div>
+  </div>
+  <p class="body-text" style="margin-top:28px;">This chain maps directly onto what Atom Foundry measures: <a href="/vocabulary/ai-extractability">AI Extractability</a> &#8594; <a href="/vocabulary/semantic-clarity">Semantic Clarity</a> &#8594; <a href="/vocabulary/ai-commerce-score">Commerce Accuracy</a> &#8594; <a href="/vocabulary/ai-trust-layer">AI Trust</a> &#8594; <a href="/vocabulary/intent-authority">Intent Authority</a> &#8594; <a href="/vocabulary/recommendation-confidence">Recommendation Confidence</a>.</p>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">The same store, three outcomes</div>
+  <h2>The same store can be <em>recommended for one query and ignored for another</em></h2>
+  <p class="body-text">Store: a premium organic coffee brand. Same product catalog, same site, three different buyer intents.</p>
+  <div class="cgs-intent-grid" data-observe-group>
+    <div class="cgs-intent-card high" style="--i:0"><div class="cgs-intent-q">"best organic coffee subscription under $40"</div><div class="cgs-intent-badge">HIGH FIT</div><br><div class="cgs-intent-badge">HIGH CONFIDENCE</div><div class="cgs-intent-result">Recommended</div></div>
+    <div class="cgs-intent-card medium" style="--i:1"><div class="cgs-intent-q">"best coffee for espresso machines"</div><div class="cgs-intent-badge">MEDIUM FIT</div><br><div class="cgs-intent-badge">MEDIUM CONFIDENCE</div><div class="cgs-intent-result">Maybe</div></div>
+    <div class="cgs-intent-card low" style="--i:2"><div class="cgs-intent-q">"best decaf coffee for pregnancy"</div><div class="cgs-intent-badge">LOW / UNKNOWN FIT</div><br><div class="cgs-intent-badge">LOW CONFIDENCE</div><div class="cgs-intent-result">Skipped</div></div>
+  </div>
+  <p class="body-text" style="margin-top:24px;">ChatGPT recommendation is intent-specific, not store-specific. This is exactly what <a href="/vocabulary/intent-authority">Intent Authority&trade;</a> measures.</p>
+  <div class="vp-note">Illustrative example, not a specific measured result.</div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">The failure modes</div>
+  <h2>Why <em>ChatGPT skips stores</em></h2>
+  <p class="body-text">AI cannot confidently answer when critical facts are missing, ambiguous, or contradictory. In practice, that comes down to six specific problems.</p>
+  <div class="cgs-skip-grid">
+    <div class="cgs-skip-card"><div class="cgs-skip-name">Product ambiguity</div><div class="cgs-skip-desc">AI cannot determine exactly what the product is.</div></div>
+    <div class="cgs-skip-card"><div class="cgs-skip-name">Intent ambiguity</div><div class="cgs-skip-desc">The store doesn't clearly communicate who the product is for.</div></div>
+    <div class="cgs-skip-card"><div class="cgs-skip-name">Commerce ambiguity</div><div class="cgs-skip-desc">Price, variants, or availability aren't reliably extractable.</div></div>
+    <div class="cgs-skip-card"><div class="cgs-skip-name">Trust uncertainty</div><div class="cgs-skip-desc">The system cannot verify important merchant claims.</div></div>
+    <div class="cgs-skip-card"><div class="cgs-skip-name">Entity fragmentation</div><div class="cgs-skip-desc">Brand identity differs across the web.</div></div>
+    <div class="cgs-skip-card"><div class="cgs-skip-name">Recommendation mismatch</div><div class="cgs-skip-desc">The store is understandable but doesn't strongly match the requested intent.</div></div>
+  </div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">What actually moves the number</div>
+  <h2>How to increase your <em>ChatGPT recommendation probability</em></h2>
+  <p class="body-text">Six actions, in order of leverage. It cycles on its own, or click a step to jump straight to it.</p>
+  <div class="vh-readpipe" data-observe-group>
+    <div class="vh-readpipe-row">
+      <button type="button" class="vh-readpipe-step is-active" data-detail="Product, Organization, and merchant identity data that resolves to one consistent entity."><span class="vh-readpipe-num">1</span><span class="vh-readpipe-label">Make the merchant machine-identifiable</span></button>
+      <button type="button" class="vh-readpipe-step" data-detail="Don't describe what the product looks like. Describe what it is for."><span class="vh-readpipe-num">2</span><span class="vh-readpipe-label">Make products semantically explicit</span></button>
+      <button type="button" class="vh-readpipe-step" data-detail="Price, currency, variants, availability, shipping, and returns, all in plain HTML."><span class="vh-readpipe-num">3</span><span class="vh-readpipe-label">Make commercial facts exact</span></button>
+      <button type="button" class="vh-readpipe-step" data-detail="Reviews, policies, business information, and external authority a system can check."><span class="vh-readpipe-num">4</span><span class="vh-readpipe-label">Make trust verifiable</span></button>
+      <button type="button" class="vh-readpipe-step" data-detail="Build explicit connections between products and the problems buyers ask AI to solve."><span class="vh-readpipe-num">5</span><span class="vh-readpipe-label">Align content with buyer intent</span></button>
+      <button type="button" class="vh-readpipe-step" data-detail="Run controlled prompts and track what happens, not what you assume happens."><span class="vh-readpipe-num">6</span><span class="vh-readpipe-label">Measure actual recommendations</span></button>
+    </div>
+    <div class="vh-readpipe-detail" id="readpipeDetail">Product, Organization, and merchant identity data that resolves to one consistent entity.</div>
+  </div>
+  <p class="body-text" style="margin-top:28px;">Step six is the one most merchants skip: measuring <a href="/vocabulary/recommendation-share">Recommendation Share</a>, <a href="/vocabulary/recommendation-position">Recommendation Position</a>, <a href="/vocabulary/recommendation-confidence">Recommendation Confidence</a>, and <a href="/vocabulary/intent-authority">Intent Authority</a> directly, instead of guessing from schema checklists.</p>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">The gap most merchants miss</div>
+  <h2>Visibility is <em>not recommendation</em></h2>
+  <p class="body-text">A store can be discoverable without being recommendable. Each stage below is a separate, measurable gate, and failing any one of them stops the chain.</p>
+  <div class="cgs-chain" data-observe-group>
+    <div class="cgs-chain-step" style="--i:0"><div class="cgs-chain-num">STAGE 1 OF 4</div><div class="cgs-chain-name">Discovered</div></div>
+    <div class="cgs-chain-step" style="--i:1"><div class="cgs-chain-num">STAGE 2 OF 4</div><div class="cgs-chain-name">Understood</div></div>
+    <div class="cgs-chain-step" style="--i:2"><div class="cgs-chain-num">STAGE 3 OF 4</div><div class="cgs-chain-name">Eligible</div></div>
+    <div class="cgs-chain-step final" style="--i:3"><div class="cgs-chain-num">STAGE 4 OF 4</div><div class="cgs-chain-name">Recommended</div></div>
+  </div>
+  <p class="body-text" style="margin-top:24px;"><a href="/vocabulary/ai-visibility">AI Visibility</a> &#8594; <a href="/vocabulary/ai-interpretability">AI Interpretability</a> &#8594; <a href="/vocabulary/ai-recommendation-eligibility">AI Recommendation Eligibility</a> &#8594; <a href="/vocabulary/recommendation-confidence">Recommendation Confidence</a> &#8594; <a href="/vocabulary/recommendation-share">Recommendation Share</a>.</p>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">Two different systems</div>
+  <h2>ChatGPT Shopping <em>vs Google Shopping</em></h2>
+  <p class="body-text">These are not competing versions of the same thing. They optimize for different outcomes entirely.</p>
+  <div class="cgs-vs">
+    <div class="cgs-vs-head"><span>Dimension</span><span>Google Shopping</span><span>ChatGPT Shopping</span></div>
+    <div class="cgs-vs-row"><span class="cgs-vs-dim">Starting point</span><span class="cgs-vs-g">Keyword</span><span class="cgs-vs-c">Buyer intent</span></div>
+    <div class="cgs-vs-row"><span class="cgs-vs-dim">Output</span><span class="cgs-vs-g">Product listings</span><span class="cgs-vs-c">Recommendation</span></div>
+    <div class="cgs-vs-row"><span class="cgs-vs-dim">Unit</span><span class="cgs-vs-g">Product / feed</span><span class="cgs-vs-c">Product + merchant + intent</span></div>
+    <div class="cgs-vs-row"><span class="cgs-vs-dim">Core question</span><span class="cgs-vs-g">"What matches?"</span><span class="cgs-vs-c">"What should I buy?"</span></div>
+    <div class="cgs-vs-row"><span class="cgs-vs-dim">Decision</span><span class="cgs-vs-g">Buyer</span><span class="cgs-vs-c">AI-assisted</span></div>
+    <div class="cgs-vs-row"><span class="cgs-vs-dim">Optimization</span><span class="cgs-vs-g">SEO / feed / bids</span><span class="cgs-vs-c">Understanding / trust / recommendation</span></div>
+    <div class="cgs-vs-row final"><span class="cgs-vs-dim">Success metric</span><span class="cgs-vs-g">Visibility</span><span class="cgs-vs-c">Recommendation</span></div>
+  </div>
+  <p class="body-text" style="margin-top:24px;">Atom Foundry's own success metric sits one level above both: <strong>Recommendation Intelligence</strong>, whether AI systems as a category actually recommend you.</p>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">The Atom Foundry difference</div>
+  <h2>How we measure <em>ChatGPT recommendation</em></h2>
+  <p class="body-text">Atom Foundry doesn't ask whether your store looks optimized for AI. We measure whether AI actually recommends it.</p>
+  <div class="cgs-term" data-observe-group>
+    <div class="cgs-term-head"><span class="cgs-term-dot"></span><span class="cgs-term-dot"></span><span class="cgs-term-dot"></span><span class="cgs-term-title">measurement_pipeline.log</span></div>
+    <div class="cgs-term-body">
+    <div class="cgs-term-row" style="--i:0"><span class="arrow">&#8594;</span>100 buyer intents</div>
+    <div class="cgs-term-row" style="--i:1"><span class="arrow">&#8594;</span>controlled prompts</div>
+    <div class="cgs-term-row" style="--i:2"><span class="arrow">&#8594;</span>ChatGPT responses</div>
+    <div class="cgs-term-row" style="--i:3"><span class="arrow">&#8594;</span>brand extraction</div>
+    <div class="cgs-term-row" style="--i:4"><span class="arrow">&#8594;</span>recommendation position</div>
+    <div class="cgs-term-row" style="--i:5"><span class="arrow">&#8594;</span>recommendation frequency</div>
+    <div class="cgs-term-row" style="--i:6"><span class="arrow">&#8594;</span>recommendation confidence</div>
+    <div class="cgs-term-row final" style="--i:7"><span class="arrow">&#8594;</span>Recommendation Share&trade;</div>
+    </div>
+  </div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">One store, tested three ways</div>
+  <h2>One store. Three prompts. <em>Three outcomes.</em></h2>
+  <div class="cgs-ex" data-observe-group>
+    <div class="cgs-ex-head"><span>Buyer intent</span><span>Position</span><span>Result</span></div>
+    <div class="cgs-ex-row win" style="--i:0"><span class="cgs-ex-q">"best organic coffee subscription"</span><span class="cgs-ex-pos">#1</span><span class="cgs-ex-result">Recommended</span></div>
+    <div class="cgs-ex-row weak" style="--i:1"><span class="cgs-ex-q">"best coffee for espresso"</span><span class="cgs-ex-pos">#4</span><span class="cgs-ex-result">Weak</span></div>
+    <div class="cgs-ex-row miss" style="--i:2"><span class="cgs-ex-q">"best decaf coffee for pregnancy"</span><span class="cgs-ex-pos">&mdash;</span><span class="cgs-ex-result">Not recommended</span></div>
+  </div>
+  <p class="body-text" style="margin-top:24px;">This is why a single AI visibility score is not enough. See <a href="/vocabulary/intent-authority">Intent Authority&trade;</a>, <a href="/vocabulary/recommendation-share">Recommendation Share&trade;</a>, and <a href="/vocabulary/recommendation-position">Recommendation Position&trade;</a>.</p>
+  <div class="vp-note">Illustrative example, not a specific measured result.</div>
+</div>
+
+<div class="vp-section">
+  <div class="section-kicker">FAQ</div>
+  <h2>ChatGPT Shopping <em>questions</em></h2>
+  <div class="vp-acc">
+    <div class="vp-acc-item"><div class="vp-acc-q">What is ChatGPT Shopping?</div><div class="vp-acc-body">ChatGPT Shopping is the product discovery layer inside ChatGPT: when a buyer asks what to buy, ChatGPT interprets the request, retrieves candidate merchants and products, evaluates trust and fit, and generates a recommendation, sometimes with a direct purchase path.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">How does ChatGPT choose products to recommend?</div><div class="vp-acc-body">ChatGPT builds a decision model of every candidate: what it sells, who it is for, whether its commercial facts can be verified, and whether it is trustworthy enough to recommend for this specific buyer intent. The strongest match across every layer gets recommended.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">Does ChatGPT rank ecommerce stores?</div><div class="vp-acc-body">Not in the way Google Shopping ranks a feed. ChatGPT does not produce a ranked list for a human to scroll through. It constructs a small set of recommendations, sometimes just one, based on how confidently it can match a merchant to the buyer's specific question.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">Can ChatGPT recommend a store it has never seen before?</div><div class="vp-acc-body">Yes, if the store publishes machine-readable product, merchant, and trust signals ChatGPT can retrieve and verify at request time. Prior visibility helps but is not required; confidence at the moment of the query is what matters.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">Why is my store visible but not recommended?</div><div class="vp-acc-body">Visibility and recommendation are different layers. A store can be fully discoverable and understood by ChatGPT and still fail the trust or intent-fit checks that come after, which means it never gets recommended even though ChatGPT technically knows it exists.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">Does product schema affect ChatGPT Shopping?</div><div class="vp-acc-body">Yes, but it is one input among several. Product and Organization schema make identity and commerce facts machine-verifiable, which is necessary but not sufficient. A store can have perfect schema and still lose on intent fit or trust.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">Does llms.txt make ChatGPT recommend my store?</div><div class="vp-acc-body">Not by itself. llms.txt can help ChatGPT understand a store faster during retrieval, but it does not substitute for verifiable product data, trust signals, or intent-specific positioning. Treating llms.txt as the whole strategy is a common and costly mistake.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">What is the difference between ChatGPT visibility and recommendation?</div><div class="vp-acc-body">Visibility means ChatGPT can find and read a store. Recommendation means ChatGPT actually selects that store as the answer to a specific buyer question. A store can be visible for thousands of queries and recommended for almost none of them.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">How can I measure my Recommendation Share in ChatGPT?</div><div class="vp-acc-body">Recommendation Share is measured by running a controlled set of real buyer-intent prompts against ChatGPT, extracting which brands get mentioned, and calculating how often your store appears relative to competitors across that intent set.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">How do I know which buyer intents ChatGPT associates with my brand?</div><div class="vp-acc-body">Run the same buyer-intent testing methodology used to measure Recommendation Share, segmented by individual query. The results show exactly which intents your brand is strongly associated with and which ones it is invisible for, this is Intent Authority.</div></div>
+  </div>
+</div>
+
+<div class="vp-section" style="padding-top:24px;">
+  <div class="final-cta">
+    <h2>Is ChatGPT recommending you <em>&mdash; or your competitor?</em></h2>
+    <div class="final-cta-tag">Test the buyer intents that matter to your business and see how ChatGPT actually positions your brand.</div>
+    <p>Get a free AI Commerce Score and see the exact signals ChatGPT checks before it will recommend anyone.</p>
+    <div class="scan-box">
+      <input type="text" placeholder="Paste your store URL">
+      <button>Check My AI Commerce Score</button>
+    </div>
+    <div class="scan-note">See Recommendation Share <span>&middot;</span> Position <span>&middot;</span> Confidence <span>&middot;</span> Intent Gaps</div>
+  </div>
+</div>
+
+<div class="vp-section" style="padding-top:0;border-top:none;">
+  <div class="vp-links">
+    <div class="vp-links-label">Related terms</div>
+    <div class="vp-links-grid">
+      <a href="/vocabulary/intent-authority" class="vp-link-item"><strong>Intent Authority</strong><span>Which buyer intents your brand actually owns</span></a>
+<a href="/vocabulary/recommendation-share" class="vp-link-item"><strong>Recommendation Share</strong><span>How often you get mentioned vs competitors</span></a>
+<a href="/vocabulary/recommendation-position" class="vp-link-item"><strong>Recommendation Position</strong><span>Where you land when you do get mentioned</span></a>
+<a href="/vocabulary/ai-recommendation-eligibility" class="vp-link-item"><strong>AI Recommendation Eligibility</strong><span>The gate before recommendation</span></a>
+<a href="/vocabulary/ai-shopping" class="vp-link-item"><strong>AI Shopping</strong><span>The full landscape this page sits inside</span></a>
+<a href="/vocabulary/ai-commerce-score" class="vp-link-item"><strong>AI Commerce Score</strong><span>All 8 factors explained</span></a>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/#pricing">AI Commerce Score&trade;</a>
+        <a href="/#pricing">AI Readiness Report</a>
+        <a href="/#pricing">AI Monitoring</a>
+        <a href="/#pricing">Recommendation Intelligence</a>
+        <a href="/#pricing">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav goes compact once scrolled.
+  (function(){
+    var nav = document.querySelector('header.nav');
+    if (!nav) return;
+    var ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) { nav.classList.add('nav-compact'); }
+      else { nav.classList.remove('nav-compact'); }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  // Mobile hamburger nav.
+  (function(){
+    var nav = document.querySelector('header.nav');
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(function(item){ item.classList.remove('dd-open'); });
+    }
+    toggle.addEventListener('click', function(){
+      var open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(function(item){
+      var trigger = item.querySelector('.nav-trigger');
+      var dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', function(e){
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(function(other){ other.classList.remove('dd-open'); });
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+  })();
+
+  // Fix-priority pipeline: auto-cycles every 3s. Clicking a step jumps
+  // straight to it and pauses there, then auto-advance resumes after 3s.
+  (function(){
+    var group = document.querySelector('.vh-readpipe');
+    if (!group) return;
+    var steps = Array.prototype.slice.call(group.querySelectorAll('.vh-readpipe-step'));
+    var detail = group.querySelector('.vh-readpipe-detail');
+    if (!steps.length) return;
+    var current = 0;
+    var autoTimer = null;
+    var resumeTimer = null;
+
+    function activate(idx){
+      current = idx;
+      steps.forEach(function(s){ s.classList.remove('is-active'); });
+      steps[idx].classList.add('is-active');
+      if (detail) detail.textContent = steps[idx].dataset.detail;
+    }
+
+    function stopAuto(){
+      if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+
+    function startAuto(){
+      stopAuto();
+      autoTimer = setInterval(function(){
+        activate((current + 1) % steps.length);
+      }, 3000);
+    }
+
+    steps.forEach(function(step, idx){
+      step.addEventListener('click', function(){
+        stopAuto();
+        if (resumeTimer) clearTimeout(resumeTimer);
+        activate(idx);
+        resumeTimer = setTimeout(startAuto, 3000);
+      });
+    });
+
+    startAuto();
+  })();
+
+  // Layer flip-card keyboard support (Enter / Space) + click toggle.
+  document.querySelectorAll('.cgs-layer-flip').forEach(function(card){
+    card.addEventListener('click', function(){ card.classList.toggle('is-flipped'); });
+    card.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        card.classList.toggle('is-flipped');
+      }
+    });
+  });
+
+  // Scroll-triggered reveal.
+  (function(){
+    if ('IntersectionObserver' in window) {
+      var groupObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) { entry.target.classList.add('is-in'); groupObs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('[data-observe-group]').forEach(function(el){ groupObs.observe(el); });
+    } else {
+      document.querySelectorAll('[data-observe-group]').forEach(function(el){ el.classList.add('is-in'); });
+    }
+  })();
+</script>
+
+</body>
+</html>
