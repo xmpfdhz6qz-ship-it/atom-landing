@@ -228,7 +228,7 @@
      tab sticks out furthest of all) and swaps its content into the page
      pane beside it, inline, never a popup. A little idle motion on the
      active tab keeps the whole thing feeling alive rather than static. ---------- */
-  .notebook{display:flex;align-items:stretch;gap:0;perspective:1400px;min-height:420px;}
+  .notebook{display:flex;align-items:stretch;gap:0;perspective:1400px;min-height:520px;}
   .notebook-tabs{display:flex;flex-direction:column;flex:0 0 260px;padding:6px 0;justify-content:center;}
   .notebook-tab{
     position:relative;text-align:left;font-family:inherit;border:none;cursor:pointer;
@@ -270,6 +270,11 @@
     flex:1;min-width:0;position:relative;margin-left:-18px;
     background:var(--card);border-radius:var(--radius);
     padding:40px 44px 40px 120px;
+    /* Fixed height, not content-driven: every page of the notebook is the
+       same size, so hovering between tabs never resizes the binder itself,
+       only swaps what is sitting on the page. Tall content scrolls inside
+       .notebook-page-inner instead of growing the page. */
+    height:520px;
     transform:rotateY(-1.3deg) rotateX(0.5deg);
     transform-style:preserve-3d;
     box-shadow:0 34px 64px -22px rgba(22,21,18,0.48), 0 2px 0 rgba(22,21,18,0.06) inset;
@@ -287,7 +292,14 @@
   /* Switching tabs shows the matching page straight away, already sat
      there, nothing sliding or fading in. */
   .notebook-page-inner{display:none;}
-  .notebook-page-inner.is-active{display:block;}
+  .notebook-page-inner.is-active{
+    display:block;height:100%;overflow-y:auto;padding-right:10px;margin-right:-10px;
+    scrollbar-width:thin;scrollbar-color:rgba(22,21,18,0.25) transparent;
+  }
+  .notebook-page-inner.is-active::-webkit-scrollbar{width:6px;}
+  .notebook-page-inner.is-active::-webkit-scrollbar-track{background:transparent;}
+  .notebook-page-inner.is-active::-webkit-scrollbar-thumb{background:rgba(22,21,18,0.22);border-radius:99px;}
+  .notebook-page-inner.is-active::-webkit-scrollbar-thumb:hover{background:rgba(22,21,18,0.38);}
   .notebook-page-title{font-weight:800;color:var(--black);margin-bottom:18px;font-size:16px;}
 
   /* ---------- CONFIDENCE METER ---------- */
@@ -516,20 +528,20 @@
           <button type="button" class="notebook-tab is-active" data-page="score">
             <span class="notebook-tab-label">AI Commerce Score</span>
           </button>
-          <button type="button" class="notebook-tab" data-page="summary">
-            <span class="notebook-tab-label">Recommendation Summary</span>
-          </button>
           <button type="button" class="notebook-tab" data-page="journey">
             <span class="notebook-tab-label">Recommendation Journey</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="summary">
+            <span class="notebook-tab-label">Recommendation Summary</span>
           </button>
           <button type="button" class="notebook-tab" data-page="probability">
             <span class="notebook-tab-label">Probability</span>
           </button>
-          <button type="button" class="notebook-tab" data-page="blockers">
-            <span class="notebook-tab-label">Top Blockers</span>
-          </button>
           <button type="button" class="notebook-tab" data-page="result">
             <span class="notebook-tab-label">Result</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="blockers">
+            <span class="notebook-tab-label">Top Blockers</span>
           </button>
           <button type="button" class="notebook-tab" data-page="whatif">
             <span class="notebook-tab-label">How to Change the Decision</span>
@@ -552,14 +564,6 @@
             <div id="simRows"></div>
           </div>
 
-          <div class="notebook-page-inner" data-page-content="summary">
-            <div class="notebook-page-title">Why AI made that decision</div>
-            <div id="examinedList" class="examined-row"></div>
-            <div class="reasoning-label">Recommendation summary</div>
-            <div class="reasoning-bubble" id="reasoningBubble"></div>
-            <div class="reasoning-note">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
-          </div>
-
           <div class="notebook-page-inner" data-page-content="journey">
             <div class="notebook-page-title">What AI found at each stage</div>
             <div class="journey-tabbook" id="journeyTabbook">
@@ -570,20 +574,28 @@
             </div>
           </div>
 
+          <div class="notebook-page-inner" data-page-content="summary">
+            <div class="notebook-page-title">Why AI made that decision</div>
+            <div id="examinedList" class="examined-row"></div>
+            <div class="reasoning-label">Recommendation summary</div>
+            <div class="reasoning-bubble" id="reasoningBubble"></div>
+            <div class="reasoning-note">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
+          </div>
+
           <div class="notebook-page-inner" data-page-content="probability">
             <div class="notebook-page-title">Would AI recommend this store?</div>
             <div class="confidence-num" id="confidenceNum">--%</div>
             <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
           </div>
 
-          <div class="notebook-page-inner" data-page-content="blockers">
-            <div id="blockersList"></div>
-          </div>
-
           <div class="notebook-page-inner" data-page-content="result">
             <div class="hero-meta-label">Result</div>
             <div class="hero-meta-value" id="heroVerdictValue">--</div>
             <div class="hero-verdict-reason" id="heroVerdictReason"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="blockers">
+            <div id="blockersList"></div>
           </div>
 
           <div class="notebook-page-inner" data-page-content="whatif">
@@ -839,8 +851,8 @@
     // and grouped by stage for the Missing / Confirmed lists in the journey.
     const OPPORTUNITIES = [
       { key:'reviews',    name:'Missing reviews',     fixName:'Add reviews',          itemLabel:'Reviews',        stage:'trust',      points:8, when: d => !truthy(d.has_reviews) },
-      { key:'pricing',    name:'Pricing not visible', fixName:'Make pricing visible', itemLabel:'Pricing',        stage:'understand', points:4, when: d => !truthy(d.pricing_visible) },
-      { key:'intent',     name:'Generic positioning', fixName:'Clarify positioning',  itemLabel:'Positioning',    stage:'recommend',  points:5, when: d => Number(d.intent_score ?? 0) < 6 },
+      { key:'pricing',    name:'Pricing not visible', fixName:'Make pricing visible', itemLabel:'Pricing',        stage:'recommend',  points:4, when: d => !truthy(d.pricing_visible) },
+      { key:'intent',     name:'Generic positioning', fixName:'Clarify positioning',  itemLabel:'Positioning',    stage:'understand', points:5, when: d => Number(d.intent_score ?? 0) < 6 },
       { key:'schema',     name:'Weak schema',         fixName:'Improve schema',       itemLabel:'Schema',         stage:'read',       points:6, when: d => Number(d.schema_score ?? 0) < 9 },
       { key:'trustbadge', name:'No trust badges',     fixName:'Add trust badges',     itemLabel:'Trust Badges',   stage:'trust',       points:4, when: d => !truthy(d.has_trust_badges) },
       { key:'return',     name:'No return policy',    fixName:'Add a return policy',  itemLabel:'Return Policy', stage:'trust',       points:3, when: d => !truthy(d.has_return_policy) },
