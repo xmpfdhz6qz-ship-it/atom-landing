@@ -279,80 +279,159 @@ h2 em{color:var(--orange);}
 .callout strong{color:var(--black);}
 
 /* ---------------------------------------------------------------------
-   AI SIGNAL CONSOLE -- a dark HUD/mission-control "terminal" panel
-   embedded inside this otherwise-light page (same pattern already used
-   for the AI Agent Snapshot preview panel on products/index.html). The
-   PAGE stays the standard light cream shell -- products/ai-agent-
-   snapshot.html remains the only fully-black page on the site, per the
-   user's explicit rule. All colors below are scoped to .aisig-console
-   via local custom properties, never touching body-level theme.
+   AI SIGNAL -- v3, single consolidated window, per explicit user brief
+   ("chci mit pouze jedno okno, kde to bude vse"). The page canvas stays
+   the site's normal cream/beige (never black -- products/ai-agent-
+   snapshot.html remains the only fully-black page on the site); ALL
+   data now lives inside one large dark window with a single green
+   accent, no internal borders/divider lines anywhere (every previous
+   row/cell border removed, spacing does the separating instead), and
+   every sub-section header reuses the exact same .aisig-sub-label /
+   .aisig-sub-desc pair so titles read as visually identical. The window
+   chrome (three dots) and the live badge use the same heartbeat-pulse
+   icon as the sitewide widget (aiw-heart-*) instead of a plain dot, for
+   pixel consistency across the site. No scanline sweeps, no corner
+   brackets, no blinking cursor, no multi-neon glow: those read as
+   "1999 terminal," which is what the user rejected in the first place.
    --------------------------------------------------------------------- */
-.aisig-console{
-  --a-line:#1c1f21; --a-line2:#262b2e; --a-text:#f2f4f5; --a-muted:#b4b8bc; --a-dim:#868c91; --a-faint:#565c60;
-  --a-green:#5fe0af; --a-orange:#fe6a03; --a-amber:#e0a233; --a-cyan:#38bdf8; --a-red:#d93c3c;
-  background:#0b0d0e;border-radius:20px;padding:26px 26px 30px;box-shadow:0 44px 90px -30px rgba(22,21,18,0.28);position:relative;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--a-text);
+.aisig-window{
+  --a-text:#f2f4f5; --a-muted:#b7b3a8; --a-dim:#8c887c; --a-faint:#5c584e;
+  --a-green:#5fe0af; --a-amber:#e0a233; --a-cyan:#7dd3fc; --a-red:#e8746e;
+  background:#0a0d0a;border-radius:20px;padding:0 0 34px;
+  box-shadow:0 30px 60px -26px rgba(0,0,0,0.45),0 8px 18px rgba(0,0,0,0.2);
+  position:relative;overflow:hidden;font-family:"Nunito","Inter",-apple-system,sans-serif;color:var(--a-text);
 }
-.aisig-console::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 40% at 50% -10%, rgba(95,224,175,0.08), transparent);}
-.aisig-topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;position:relative;z-index:1;}
-.aisig-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--a-green);display:flex;align-items:center;gap:8px;}
-.aisig-pulse{width:6px;height:6px;border-radius:50%;background:var(--a-green);box-shadow:0 0 0 0 rgba(95,224,175,0.6);animation:aisigPulse 2.4s infinite;flex-shrink:0;}
-@keyframes aisigPulse{70%{box-shadow:0 0 0 7px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
-@media(prefers-reduced-motion:reduce){.aisig-pulse{animation:none;}}
-.aisig-updated{font-family:var(--mono);font-size:10.5px;color:var(--a-faint);text-transform:uppercase;letter-spacing:0.06em;}
-.aisig-readout{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--a-line);border-radius:14px;overflow:hidden;background:#0e1011;margin-bottom:18px;position:relative;z-index:1;}
-.aisig-cell{padding:16px 16px;border-right:1px solid var(--a-line);}
-.aisig-cell:last-child{border-right:none;}
+.aisig-window-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 30px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:30px;}
+.aisig-window-dots{display:flex;gap:6px;}
+.aisig-window-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.14);display:block;}
+.aisig-boot{padding:0 30px;height:0;display:flex;align-items:center;gap:16px;overflow:hidden;opacity:1;margin-bottom:0;transition:height .5s cubic-bezier(.65,0,.35,1),margin-bottom .5s cubic-bezier(.65,0,.35,1),opacity .4s ease;}
+.aisig-boot.is-active{height:44px;margin-bottom:28px;}
+.aisig-boot.is-done{height:0;margin-bottom:0;opacity:0;}
+.aisig-boot-track{flex:1;height:16px;border-radius:99px;background:rgba(255,255,255,0.07);overflow:hidden;}
+.aisig-boot-fill{display:block;height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#2b8f68,var(--a-green));box-shadow:0 0 12px rgba(95,224,175,0.55);}
+.aisig-boot-pct{font-family:var(--mono);font-size:13.5px;font-weight:800;color:var(--a-green);letter-spacing:.04em;min-width:46px;text-align:right;flex-shrink:0;}
+.aisig-live{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;color:var(--a-green);text-transform:uppercase;letter-spacing:0.06em;}
+.aisig-heart{width:15px;height:15px;display:inline-flex;flex-shrink:0;}
+.aisig-heart svg{width:100%;height:100%;}
+.aisig-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aisig-heart-pulse{stroke:var(--a-green);fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aisigHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aisigHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aisig-heart-pulse{animation:none;}}
+
+.aisig-block{padding:0 30px;margin-bottom:56px;}
+.aisig-block:last-child{margin-bottom:0;}
+.aisig-sub-label{font-family:var(--mono);font-size:11px;color:var(--a-green);text-transform:uppercase;letter-spacing:0.08em;font-weight:800;margin-bottom:4px;}
+.aisig-sub-desc{font-size:12.5px;color:var(--a-dim);margin-bottom:20px;max-width:560px;line-height:1.5;}
+.aisig-block.danger .aisig-sub-label{color:var(--a-red);}
+
+.aisig-readout{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;}
 .aisig-cell .k{font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--a-faint);}
-.aisig-cell .v{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--a-text);margin-top:8px;letter-spacing:-0.02em;}
+.aisig-cell .v{font-family:"Nunito",sans-serif;font-size:38px;font-weight:800;color:var(--a-text);margin-top:8px;letter-spacing:-0.02em;}
+.aisig-cell .d{font-size:11.5px;color:var(--a-dim);margin-top:8px;line-height:1.45;}
 .aisig-cell.accent .v{color:var(--a-green);}
-.aisig-cell.cyan .v{color:var(--a-cyan);}
-.aisig-panel{border:1px solid var(--a-line);border-radius:14px;background:#0e1011;padding:18px 20px 20px;margin-bottom:16px;position:relative;z-index:1;}
-.aisig-ph{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
-.aisig-ph h3{font-size:14.5px;font-weight:700;color:var(--a-text);letter-spacing:-0.01em;}
-.aisig-ph .aside{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--a-faint);}
-.aisig-pcz{font-size:12.5px;color:var(--a-dim);margin-bottom:16px;}
-.aisig-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.aisig-rows{display:grid;}
-.aisig-r{display:grid;grid-template-columns:minmax(0,1.1fr) 74px minmax(60px,1fr) 40px;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.045);}
-.aisig-r:last-child{border-bottom:none;}
+.aisig-cell.danger .v{color:var(--a-red);}
+
+.aisig-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.aisig-insight{padding:0;}
+.aisig-insight-num{font-family:"Nunito",sans-serif;font-size:22px;font-weight:800;color:var(--a-green);margin-bottom:8px;line-height:1.2;word-break:break-word;}
+.aisig-insight-text{font-size:12.5px;color:var(--a-dim);line-height:1.55;}
+
+.aisig-grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+.aisig-rows{display:grid;gap:12px;}
+.aisig-r{display:grid;grid-template-columns:minmax(0,1.1fr) 74px minmax(60px,1fr) 40px;align-items:center;gap:12px;min-height:36px;}
 .aisig-r .who{display:flex;flex-direction:column;min-width:0;}
 .aisig-r .nm{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--a-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.aisig-r .seen{font-size:10px;color:var(--a-faint);font-family:var(--mono);margin-top:2px;}
+.aisig-r .seen{font-size:11.5px;color:var(--a-dim);font-family:var(--mono);margin-top:2px;}
 .aisig-r .val{font-family:var(--mono);font-size:13.5px;font-weight:700;text-align:right;color:var(--a-text);}
-.aisig-track{height:6px;background:#181a1b;border-radius:99px;overflow:hidden;}
+.aisig-track{height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;}
 .aisig-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2b8f68,var(--a-green));}
 .aisig-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.04em;padding:3px 6px;border-radius:5px;font-weight:700;text-align:center;text-transform:lowercase;white-space:nowrap;}
 .aisig-t-retrieval{color:#3ddba4;background:rgba(95,224,175,0.14);}
 .aisig-t-search{color:#f3b551;background:rgba(224,162,51,0.14);}
-.aisig-t-training{color:#fb923c;background:rgba(254,106,3,0.14);}
-.aisig-t-capability_probe{color:#7dd3fc;background:rgba(56,189,248,0.14);}
-.aisig-spectrum{display:flex;height:12px;border-radius:99px;overflow:hidden;background:#181a1b;margin:4px 0 16px;}
-.aisig-spectrum span{display:block;height:100%;}
+.aisig-t-training{color:var(--a-cyan);background:rgba(125,211,252,0.14);}
+.aisig-t-capability_probe{color:var(--a-amber);background:rgba(224,162,51,0.14);}
+
+.aisig-spectrum{display:flex;height:24.2px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,0.08);margin:4px 0 18px;}
+.aisig-spectrum span{display:block;height:100%;width:0;transition:width 2s cubic-bezier(.16,1,.3,1);}
+.aisig-spectrum span:nth-child(1){transition-delay:.1s;}
+.aisig-spectrum span:nth-child(2){transition-delay:.35s;}
+.aisig-spectrum span:nth-child(3){transition-delay:.6s;}
+.aisig-spectrum span:nth-child(4){transition-delay:.85s;}
+.aisig-spectrum.is-in span{width:var(--w);}
 .aisig-sp-retrieval{background:linear-gradient(90deg,#2b8f68,var(--a-green));}
 .aisig-sp-search{background:linear-gradient(90deg,#b8791d,var(--a-amber));}
-.aisig-sp-training{background:linear-gradient(90deg,#c2410c,var(--a-orange));}
-.aisig-sp-capability_probe{background:linear-gradient(90deg,#0369a1,var(--a-cyan));}
-.aisig-splegend{display:grid;gap:10px;}
+.aisig-sp-training{background:linear-gradient(90deg,#0369a1,var(--a-cyan));}
+.aisig-sp-capability_probe{background:rgba(255,255,255,0.28);}
+.aisig-splegend{display:grid;gap:14px;}
 .aisig-spitem{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;}
 .aisig-spitem .txt{min-width:0;}
-.aisig-spitem .dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.aisig-spitem .dot{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
 .aisig-spitem .nm{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--a-text);}
 .aisig-spitem .ds{font-size:11.5px;color:var(--a-dim);}
 .aisig-spitem .num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--a-text);}
-.aisig-feed .f{display:grid;grid-template-columns:minmax(0,auto) 74px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.045);font-family:var(--mono);font-size:12px;}
-.aisig-feed .f:last-child{border-bottom:none;}
-.aisig-feed .bot{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
-.aisig-feed .path{color:var(--a-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.aisig-feed .t{color:var(--a-faint);font-size:10.5px;white-space:nowrap;text-align:right;}
-.aisig-trend{display:flex;align-items:flex-end;gap:5px;height:96px;padding-bottom:20px;margin-top:4px;position:relative;}
-.aisig-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative;}
-.aisig-col b{display:block;background:linear-gradient(180deg,var(--a-green),#2b8f68);border-radius:3px 3px 0 0;min-height:3px;height:0%;transition:height .9s cubic-bezier(.16,1,.3,1);}
-.aisig-console.is-in .aisig-col b{height:var(--h);}
-.aisig-col .d{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:9px;color:var(--a-faint);}
-.aisig-note{font-size:11px;color:var(--a-faint);line-height:1.6;margin-top:4px;position:relative;z-index:1;}
+
+.aisig-feed{display:grid;gap:13px;}
+.aisig-feed .f{display:grid;grid-template-columns:minmax(0,auto) 90px minmax(0,1fr) auto;gap:14px;align-items:center;font-family:var(--mono);font-size:13px;}
+.aisig-feed .f.f3{grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;}
+.aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
+.aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.aisig-feed .t{color:var(--a-dim);font-size:11.5px;white-space:nowrap;text-align:right;}
+
+/* ---------- MONTH-SWITCHABLE, FULL-WIDTH SMOOTH LINE CHART ---------- */
+.aisig-month-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+.aisig-month-nav{display:flex;align-items:center;gap:12px;}
+.aisig-month-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.16);background:transparent;color:var(--a-text);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease,border-color .2s ease;}
+.aisig-month-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.3);}
+.aisig-month-btn:disabled{opacity:0.25;cursor:default;}
+.aisig-month-btn:disabled:hover{background:transparent;border-color:rgba(255,255,255,0.16);}
+.aisig-month-btn svg{width:9px;height:9px;}
+.aisig-month-label{font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;color:var(--a-text);min-width:110px;text-align:center;}
+.aisig-month-total{font-family:var(--mono);font-size:11px;color:var(--a-faint);text-transform:uppercase;letter-spacing:0.06em;}
+.aisig-month-total b{color:var(--a-green);font-weight:800;}
+.aisig-chart-wrap{position:relative;clip-path:inset(0 100% 0 0);transition:clip-path 1.4s cubic-bezier(.65,0,.35,1);}
+.aisig-chart-wrap.is-in{clip-path:inset(0 0% 0 0);}
+.aisig-linechart{width:100%;height:150px;display:block;overflow:visible;cursor:crosshair;}
+.aisig-linechart .line{fill:none;stroke:var(--a-green);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(95,224,175,0.35));}
+.aisig-linechart circle{fill:var(--a-green);}
+.aisig-tooltip{position:absolute;left:0;top:0;pointer-events:none;background:#12160f;border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:9px 14px;font-family:"Nunito",sans-serif;color:#fff;white-space:nowrap;transform:translate(-50%,-124%);opacity:0;transition:opacity .12s ease;box-shadow:0 14px 30px rgba(0,0,0,0.4);z-index:5;}
+.aisig-tooltip.is-visible{opacity:1;}
+.aisig-tooltip .tt-date{font-size:12px;font-weight:800;color:var(--a-green);margin-bottom:2px;}
+.aisig-tooltip .tt-val{font-size:12.5px;color:var(--a-text);}
+
+/* ---------- BOOT-SEQUENCE REVEAL (spaceship start-up) ---------- */
+.aisig-sub-label,.aisig-sub-desc,
+.aisig-cell .k,.aisig-cell .v,.aisig-cell .d,
+.aisig-spitem,.aisig-feed .f,.aisig-insight,.aisig-r,.aisig-month-head{
+  opacity:0;transform:translateY(8px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.aisig-sub-label.is-in,.aisig-sub-desc.is-in,
+.aisig-cell .k.is-in,.aisig-cell .v.is-in,.aisig-cell .d.is-in,
+.aisig-spitem.is-in,.aisig-feed .f.is-in,.aisig-insight.is-in,.aisig-r.is-in,.aisig-month-head.is-in{
+  opacity:1;transform:translateY(0);
+}
+@media(prefers-reduced-motion:reduce){
+  .aisig-sub-label,.aisig-sub-desc,.aisig-cell .k,.aisig-cell .v,.aisig-cell .d,
+  .aisig-spitem,.aisig-feed .f,.aisig-insight,.aisig-r,.aisig-month-head,.aisig-chart-wrap{
+    transition:none;
+  }
+}
+
+.aisig-note{font-size:11px;color:var(--gray-500);line-height:1.6;margin-top:4px;max-width:680px;}
 @media(max-width:860px){
-  .aisig-readout{grid-template-columns:repeat(2,1fr);}
-  .aisig-cell{border-bottom:1px solid var(--a-line);}
+  .aisig-readout{grid-template-columns:repeat(2,1fr);row-gap:20px;}
+  .aisig-insights{grid-template-columns:1fr;}
   .aisig-grid2{grid-template-columns:1fr;}
   .aisig-r{grid-template-columns:minmax(0,1fr) 66px 36px;}
   .aisig-r .aisig-track{display:none;}
@@ -377,7 +456,7 @@ h2 em{color:var(--orange);}
       <a href="/" class="logo">
         <span class="logo-word-wrap">
           <span class="logo-word">
-            <span class="atom">ATOM</span><span class="foundry">FOUNDRY</span>
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
           </span>
         </span>
       </a>
@@ -450,73 +529,111 @@ h2 em{color:var(--orange);}
 </header>
 
 <div class="vp-hero wrap">
-  <span class="hero-kicker">Transparency</span>
-  <h1>Which AI reads <em>atomfoundry.dev</em>.</h1>
-  <p class="vp-hero-sub">A live look at which AI agents read this site, what they read, and how often they come back. This is the same signal AI Agent Snapshot gives you for your own store.</p>
+  <span class="hero-kicker">AI signal</span>
+  <h1>AI is already reading <em>atomfoundry.dev</em></h1>
+  <p class="vp-hero-sub">This is proof, not a dashboard. One live signal, straight from our own site: this is the same detection AI Agent Snapshot gives you for your own store or website.</p>
   <div class="term-tags">
     <span class="term-tag"><strong>Illustrative example</strong> data</span>
     <span class="term-tag">Single-site signal, atomfoundry.dev only</span>
   </div>
 </div>
 <div class="vp-section vp-section-tight wrap">
-  <div class="aisig-console" id="aisigConsole">
-    <div class="aisig-topbar">
-      <span class="aisig-eyebrow"><span class="aisig-pulse"></span> Live signal &middot; Atom Foundry</span>
-      <span class="aisig-updated">Last updated 18.08.2026</span>
+  <div class="aisig-window" id="aisigWindow">
+    <div class="aisig-window-bar">
+      <span class="aisig-window-dots"><i></i><i></i><i></i></span>
+      <span class="aisig-live"><span class="aisig-heart"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="aisig-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path class="aisig-heart-pulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>AI visit detected</span>
+    </div>
+    <div class="aisig-boot" id="aisigBoot">
+      <div class="aisig-boot-track"><div class="aisig-boot-fill" id="aisigBootFill"></div></div>
+      <span class="aisig-boot-pct" id="aisigBootPct">0%</span>
     </div>
     
-    <section class="aisig-readout">
-      <div class="aisig-cell accent"><div class="k">Total reads</div><div class="v">182</div></div>
-      <div class="aisig-cell"><div class="k">Today</div><div class="v">3</div></div>
-      <div class="aisig-cell"><div class="k">Agents</div><div class="v">6</div></div>
-      <div class="aisig-cell cyan"><div class="k">Readiness queries</div><div class="v">24</div></div>
-    </section>
+    <div class="aisig-block" id="aisigBlockReadout">
+      <div class="aisig-sub-label">Live signal</div>
+      <p class="aisig-sub-desc">Total AI activity on atomfoundry.dev, updated continuously once this is wired to live data.</p>
+      <section class="aisig-readout">
+        <div class="aisig-cell accent"><div class="k">Total reads</div><div class="v">1137</div><div class="d">Every time an AI agent read a page on this site.</div></div>
+        <div class="aisig-cell"><div class="k">Today</div><div class="v">3</div><div class="d">Reads counted so far today.</div></div>
+        <div class="aisig-cell"><div class="k">Agents</div><div class="v">6</div><div class="d">Distinct AI bots that have visited.</div></div>
+        <div class="aisig-cell"><div class="k">Readiness queries</div><div class="v">24</div><div class="d">Checks against status, discovery and capabilities.</div></div>
+        <div class="aisig-cell danger"><div class="k">Spoofed</div><div class="v">7</div><div class="d">Fake AI agents scanning for secrets, not real traffic.</div></div>
+      </section>
+    </div>
     
-    <section class="aisig-panel">
-      <div class="aisig-ph"><h3>AI Readiness Layer</h3><span class="aside">status &middot; discovery &middot; capabilities</span></div>
-      <p class="aisig-pcz">Who checked what this site can do, instead of just reading its content. Exact day and hour for every query.</p>
-      <div class="aisig-rows">
-          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 96px minmax(120px,auto)"><span class="who"><span class="nm">ClaudeBot</span></span><span class="aisig-tag aisig-t-capability_probe">capabilities</span><span class="seen" style="text-align:right">18.08.2026 09:12 &middot; 2h ago</span></div>
-          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 96px minmax(120px,auto)"><span class="who"><span class="nm">GPTBot</span></span><span class="aisig-tag aisig-t-capability_probe">status</span><span class="seen" style="text-align:right">17.08.2026 22:40 &middot; 14h ago</span></div>
-          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 96px minmax(120px,auto)"><span class="who"><span class="nm">PerplexityBot</span></span><span class="aisig-tag aisig-t-capability_probe">discovery</span><span class="seen" style="text-align:right">17.08.2026 15:05 &middot; 21h ago</span></div>
-          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 96px minmax(120px,auto)"><span class="who"><span class="nm">Amazonbot</span></span><span class="aisig-tag aisig-t-capability_probe">status</span><span class="seen" style="text-align:right">16.08.2026 11:30 &middot; 1d ago</span></div>
+    <div class="aisig-block" id="aisigBlockSpectrum">
+      <div class="aisig-sub-label">Read spectrum</div>
+      <p class="aisig-sub-desc">Why AI read this site: to answer a user, to learn, to search and index, or to check what the site can do.</p>
+      <div class="aisig-spectrum" id="aisigSpectrum"><span class="aisig-sp-retrieval" style="--w:53%" title="retrieval: 96"></span><span class="aisig-sp-search" style="--w:23%" title="search: 41"></span><span class="aisig-sp-training" style="--w:15%" title="training: 28"></span><span class="aisig-sp-capability_probe" style="--w:9%" title="capability_probe: 17"></span></div>
+      <div class="aisig-splegend"><div class="aisig-spitem"><span class="dot aisig-sp-retrieval"></span><span class="txt"><span class="nm">retrieval</span> <span class="ds">&middot; reading you to answer a user right now</span></span><span class="num">96</span></div><div class="aisig-spitem"><span class="dot aisig-sp-search"></span><span class="txt"><span class="nm">search</span> <span class="ds">&middot; classic search and indexing</span></span><span class="num">41</span></div><div class="aisig-spitem"><span class="dot aisig-sp-training"></span><span class="txt"><span class="nm">training</span> <span class="ds">&middot; learning from you into parametric memory</span></span><span class="num">28</span></div><div class="aisig-spitem"><span class="dot aisig-sp-capability_probe"></span><span class="txt"><span class="nm">capability_probe</span> <span class="ds">&middot; checking what the site can do</span></span><span class="num">17</span></div></div>
+    </div>
+    
+    <div class="aisig-block" id="aisigBlockSignal">
+      <div class="aisig-grid2">
+        <div>
+          <div class="aisig-sub-label">Signal log</div>
+          <p class="aisig-sub-desc">Most recent activity: who, what page, when.</p>
+          <div class="aisig-feed"><div class="f"><span class="bot">ChatGPT-User</span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="path">/products/ai-agent-snapshot</span><span class="t">8m ago</span></div><div class="f"><span class="bot">ClaudeBot</span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="path">/</span><span class="t">22m ago</span></div><div class="f"><span class="bot">PerplexityBot</span><span class="aisig-tag aisig-t-search">search</span><span class="path">/vocabulary/learn/what-is-ai-commerce-visibility</span><span class="t">1h ago</span></div><div class="f"><span class="bot">GPTBot</span><span class="aisig-tag aisig-t-capability_probe">capability_probe</span><span class="path">/api/ai/status</span><span class="t">1h ago</span></div><div class="f"><span class="bot">Claude-Web</span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="path">/products</span><span class="t">3h ago</span></div><div class="f"><span class="bot">Google-Extended</span><span class="aisig-tag aisig-t-training">training</span><span class="path">/vocabulary/geo-vs-seo</span><span class="t">6h ago</span></div><div class="f"><span class="bot">Amazonbot</span><span class="aisig-tag aisig-t-search">search</span><span class="path">/products/recommendation-intelligence</span><span class="t">9h ago</span></div><div class="f"><span class="bot">Bytespider</span><span class="aisig-tag aisig-t-search">search</span><span class="path">/vocabulary</span><span class="t">14h ago</span></div></div>
+        </div>
+        <div>
+          <div class="aisig-sub-label" style="color:var(--a-red)">Spoofed probes</div>
+          <p class="aisig-sub-desc">Fake AI user-agents scanning for secrets. Harmless here, every one got a 404.</p>
+          <div class="aisig-feed"><div class="f f3"><span class="bot">GPTBot</span><span class="path" style="color:var(--a-red)">/wp-admin/.env</span><span class="t">18.08.2026 06:44 &middot; 5h ago</span></div><div class="f f3"><span class="bot">ClaudeBot</span><span class="path" style="color:var(--a-red)">/.git/config</span><span class="t">17.08.2026 19:02 &middot; 16h ago</span></div><div class="f f3"><span class="bot">Google-Extended</span><span class="path" style="color:var(--a-red)">/api/internal/keys</span><span class="t">16.08.2026 08:15 &middot; 2d ago</span></div></div>
+        </div>
       </div>
-    </section>
-    
-    <section class="aisig-panel">
-      <div class="aisig-ph"><h3>Read spectrum</h3><span class="aside">why they came</span></div>
-      <p class="aisig-pcz">Why AI read this site: to answer a user, to learn, to search and index, or to check what the site can do.</p>
-      <div class="aisig-spectrum"><span class="aisig-sp-retrieval" style="width:53%" title="retrieval: 96"></span><span class="aisig-sp-search" style="width:23%" title="search: 41"></span><span class="aisig-sp-training" style="width:15%" title="training: 28"></span><span class="aisig-sp-capability_probe" style="width:9%" title="capability_probe: 17"></span></div>
-      <div class="aisig-splegend"><div class="aisig-spitem"><span class="dot aisig-sp-retrieval"></span><span class="txt"><span class="nm">retrieval</span> <span class="ds">&mdash; reading you to answer a user right now</span></span><span class="num">96</span></div><div class="aisig-spitem"><span class="dot aisig-sp-search"></span><span class="txt"><span class="nm">search</span> <span class="ds">&mdash; classic search and indexing</span></span><span class="num">41</span></div><div class="aisig-spitem"><span class="dot aisig-sp-training"></span><span class="txt"><span class="nm">training</span> <span class="ds">&mdash; learning from you into parametric memory</span></span><span class="num">28</span></div><div class="aisig-spitem"><span class="dot aisig-sp-capability_probe"></span><span class="txt"><span class="nm">capability_probe</span> <span class="ds">&mdash; checking what the site can do</span></span><span class="num">17</span></div></div>
-    </section>
-    
-    <div class="aisig-grid2">
-      <section class="aisig-panel">
-        <div class="aisig-ph"><h3>Who reads you</h3></div>
-        <p class="aisig-pcz">Which agents read this site, and when they were last seen.</p>
-        <div class="aisig-rows"><div class="aisig-r"><span class="who"><span class="nm">ChatGPT-User</span><span class="seen">last seen 8m</span></span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="aisig-track"><i style="width:100%"></i></span><span class="val">52</span></div><div class="aisig-r"><span class="who"><span class="nm">ClaudeBot</span><span class="seen">last seen 22m</span></span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="aisig-track"><i style="width:65%"></i></span><span class="val">34</span></div><div class="aisig-r"><span class="who"><span class="nm">PerplexityBot</span><span class="seen">last seen 1h</span></span><span class="aisig-tag aisig-t-search">search</span><span class="aisig-track"><i style="width:56%"></i></span><span class="val">29</span></div><div class="aisig-r"><span class="who"><span class="nm">GPTBot</span><span class="seen">last seen 3h</span></span><span class="aisig-tag aisig-t-search">search</span><span class="aisig-track"><i style="width:46%"></i></span><span class="val">24</span></div><div class="aisig-r"><span class="who"><span class="nm">Claude-Web</span><span class="seen">last seen 6h</span></span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="aisig-track"><i style="width:37%"></i></span><span class="val">19</span></div><div class="aisig-r"><span class="who"><span class="nm">Google-Extended</span><span class="seen">last seen 1d</span></span><span class="aisig-tag aisig-t-training">training</span><span class="aisig-track"><i style="width:46%"></i></span><span class="val">24</span></div></div>
-      </section>
-      <section class="aisig-panel">
-        <div class="aisig-ph"><h3>Top pages</h3></div>
-        <p class="aisig-pcz">The most-read pages on atomfoundry.dev.</p>
-        <div class="aisig-rows"><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/</span></span><span class="aisig-track"><i style="width:100%"></i></span><span class="val">58</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/products/ai-agent-snapshot</span></span><span class="aisig-track"><i style="width:71%"></i></span><span class="val">41</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/vocabulary/learn/what-is-ai-commerce-visibility</span></span><span class="aisig-track"><i style="width:47%"></i></span><span class="val">27</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/products</span></span><span class="aisig-track"><i style="width:41%"></i></span><span class="val">24</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/api/ai/status</span></span><span class="aisig-track"><i style="width:28%"></i></span><span class="val">16</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/vocabulary/geo-vs-seo</span></span><span class="aisig-track"><i style="width:28%"></i></span><span class="val">16</span></div></div>
-      </section>
     </div>
     
-    <div class="aisig-grid2">
-      <section class="aisig-panel">
-        <div class="aisig-ph"><h3>Reads per day</h3></div>
-        <p class="aisig-pcz">Last 14 days.</p>
-        <div class="aisig-trend"><div class="aisig-col" title="9 reads" style="--h:43%"><b></b><span class="d">1</span></div><div class="aisig-col" title="11 reads" style="--h:52%"><b></b><span class="d">2</span></div><div class="aisig-col" title="8 reads" style="--h:38%"><b></b><span class="d">3</span></div><div class="aisig-col" title="13 reads" style="--h:62%"><b></b><span class="d">4</span></div><div class="aisig-col" title="10 reads" style="--h:48%"><b></b><span class="d">5</span></div><div class="aisig-col" title="15 reads" style="--h:71%"><b></b><span class="d">6</span></div><div class="aisig-col" title="12 reads" style="--h:57%"><b></b><span class="d">7</span></div><div class="aisig-col" title="17 reads" style="--h:81%"><b></b><span class="d">8</span></div><div class="aisig-col" title="14 reads" style="--h:67%"><b></b><span class="d">9</span></div><div class="aisig-col" title="19 reads" style="--h:90%"><b></b><span class="d">10</span></div><div class="aisig-col" title="15 reads" style="--h:71%"><b></b><span class="d">11</span></div><div class="aisig-col" title="21 reads" style="--h:100%"><b></b><span class="d">12</span></div><div class="aisig-col" title="17 reads" style="--h:81%"><b></b><span class="d">13</span></div><div class="aisig-col" title="3 reads" style="--h:14%"><b></b><span class="d">14</span></div></div>
-      </section>
-      <section class="aisig-panel aisig-feed">
-        <div class="aisig-ph"><h3>Signal log</h3><span class="aside">who &middot; page &middot; when</span></div>
-        <p class="aisig-pcz">Most recent activity.</p>
-        <div class="f"><span class="bot">ChatGPT-User</span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="path">/products/ai-agent-snapshot</span><span class="t">8m ago</span></div><div class="f"><span class="bot">ClaudeBot</span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="path">/</span><span class="t">22m ago</span></div><div class="f"><span class="bot">PerplexityBot</span><span class="aisig-tag aisig-t-search">search</span><span class="path">/vocabulary/learn/what-is-ai-commerce-visibility</span><span class="t">1h ago</span></div><div class="f"><span class="bot">GPTBot</span><span class="aisig-tag aisig-t-capability_probe">capability_probe</span><span class="path">/api/ai/status</span><span class="t">1h ago</span></div><div class="f"><span class="bot">Claude-Web</span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="path">/products</span><span class="t">3h ago</span></div><div class="f"><span class="bot">Google-Extended</span><span class="aisig-tag aisig-t-training">training</span><span class="path">/vocabulary/geo-vs-seo</span><span class="t">6h ago</span></div><div class="f"><span class="bot">Amazonbot</span><span class="aisig-tag aisig-t-search">search</span><span class="path">/products/recommendation-intelligence</span><span class="t">9h ago</span></div><div class="f"><span class="bot">Bytespider</span><span class="aisig-tag aisig-t-search">search</span><span class="path">/vocabulary</span><span class="t">14h ago</span></div>
-      </section>
+    <div class="aisig-block" id="aisigBlockInsight">
+      <div class="aisig-sub-label">What this means</div>
+      <p class="aisig-sub-desc">The numbers above, read in plain language.</p>
+      <div class="aisig-insights"><div class="aisig-insight"><div class="aisig-insight-num">53%</div><div class="aisig-insight-text">of AI reads are retrieval: an agent actively answering someone with your content right now, not just training or indexing.</div></div><div class="aisig-insight"><div class="aisig-insight-num">/products/ai-agent-snapshot</div><div class="aisig-insight-text">is the most-read page after the homepage, with 41 reads and counting.</div></div><div class="aisig-insight"><div class="aisig-insight-num">0.6%</div><div class="aisig-insight-text">of all signal was a spoofed scan. Harmless here, every one got a 404, and it barely moves the needle.</div></div></div>
     </div>
-    <p class="aisig-note">Illustrative example data. This report shows only atomfoundry.dev's own single-site AI traffic, never which stores AI reads through any product on this site.</p>
+    
+    <div class="aisig-block" id="aisigBlockChart">
+      <div class="aisig-sub-label">Reads per day</div>
+      <p class="aisig-sub-desc">Every day, one month at a time. Hover a point for the exact count.</p>
+      <div class="aisig-month-head">
+        <div class="aisig-month-nav">
+          <button class="aisig-month-btn" id="aisigPrevMonth" type="button" aria-label="Previous month"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none" style="transform:rotate(90deg);"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <span class="aisig-month-label" id="aisigMonthLabel">August 2026</span>
+          <button class="aisig-month-btn" id="aisigNextMonth" type="button" aria-label="Next month" disabled><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none" style="transform:rotate(-90deg);"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <span class="aisig-month-total" id="aisigMonthTotal"><b>373</b> reads</span>
+      </div>
+      <div class="aisig-chart-wrap" id="aisigChartWrap">
+        <svg class="aisig-linechart" id="aisigLineChart" viewBox="0 0 1000 150" preserveAspectRatio="none"></svg>
+        <div class="aisig-tooltip" id="aisigTooltip"></div>
+      </div>
+    </div>
+    
+    <div class="aisig-block" id="aisigBlockBotsPages">
+      <div class="aisig-grid2">
+        <div>
+          <div class="aisig-sub-label">Who reads you</div>
+          <p class="aisig-sub-desc">Which agents read this site, and when they were last seen.</p>
+          <div class="aisig-rows"><div class="aisig-r"><span class="who"><span class="nm">ChatGPT-User</span><span class="seen">last seen 8m</span></span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="aisig-track"><i style="width:100%"></i></span><span class="val">52</span></div><div class="aisig-r"><span class="who"><span class="nm">ClaudeBot</span><span class="seen">last seen 22m</span></span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="aisig-track"><i style="width:65%"></i></span><span class="val">34</span></div><div class="aisig-r"><span class="who"><span class="nm">PerplexityBot</span><span class="seen">last seen 1h</span></span><span class="aisig-tag aisig-t-search">search</span><span class="aisig-track"><i style="width:56%"></i></span><span class="val">29</span></div><div class="aisig-r"><span class="who"><span class="nm">GPTBot</span><span class="seen">last seen 3h</span></span><span class="aisig-tag aisig-t-search">search</span><span class="aisig-track"><i style="width:46%"></i></span><span class="val">24</span></div><div class="aisig-r"><span class="who"><span class="nm">Claude-Web</span><span class="seen">last seen 6h</span></span><span class="aisig-tag aisig-t-retrieval">retrieval</span><span class="aisig-track"><i style="width:37%"></i></span><span class="val">19</span></div><div class="aisig-r"><span class="who"><span class="nm">Google-Extended</span><span class="seen">last seen 1d</span></span><span class="aisig-tag aisig-t-training">training</span><span class="aisig-track"><i style="width:46%"></i></span><span class="val">24</span></div></div>
+        </div>
+        <div>
+          <div class="aisig-sub-label">Top pages</div>
+          <p class="aisig-sub-desc">The most-read pages on atomfoundry.dev.</p>
+          <div class="aisig-rows"><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/ (homepage)</span></span><span class="aisig-track"><i style="width:100%"></i></span><span class="val">58</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/products/ai-agent-snapshot</span></span><span class="aisig-track"><i style="width:71%"></i></span><span class="val">41</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/vocabulary/learn/what-is-ai-commerce-visibility</span></span><span class="aisig-track"><i style="width:47%"></i></span><span class="val">27</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/products</span></span><span class="aisig-track"><i style="width:41%"></i></span><span class="val">24</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/api/ai/status</span></span><span class="aisig-track"><i style="width:28%"></i></span><span class="val">16</span></div><div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">/vocabulary/geo-vs-seo</span></span><span class="aisig-track"><i style="width:28%"></i></span><span class="val">16</span></div></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="aisig-block" id="aisigBlockReadiness">
+      <div class="aisig-sub-label">AI Readiness Layer</div>
+      <p class="aisig-sub-desc">Who checked what this site can do (status, discovery, capabilities), instead of just reading its content.</p>
+      <div class="aisig-rows">
+          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 100px 190px"><span class="who"><span class="nm">ClaudeBot</span></span><span class="aisig-tag aisig-t-capability_probe">capabilities</span><span class="seen" style="text-align:left">18.08.2026 09:12 &middot; 2h ago</span></div>
+          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 100px 190px"><span class="who"><span class="nm">GPTBot</span></span><span class="aisig-tag aisig-t-capability_probe">status</span><span class="seen" style="text-align:left">17.08.2026 22:40 &middot; 14h ago</span></div>
+          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 100px 190px"><span class="who"><span class="nm">PerplexityBot</span></span><span class="aisig-tag aisig-t-capability_probe">discovery</span><span class="seen" style="text-align:left">17.08.2026 15:05 &middot; 21h ago</span></div>
+          <div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 100px 190px"><span class="who"><span class="nm">Amazonbot</span></span><span class="aisig-tag aisig-t-capability_probe">status</span><span class="seen" style="text-align:left">16.08.2026 11:30 &middot; 1d ago</span></div>
+      </div>
+    </div>
   </div>
+</div>
+<div class="vp-section vp-section-tight wrap">
+  <p class="aisig-note">Illustrative example data. This report shows only atomfoundry.dev's own single-site AI traffic, never which stores AI reads through any product on this site.</p>
 </div>
 <div class="vp-section vp-section-tight wrap">
   <div class="aisig-cta">
@@ -635,7 +752,7 @@ h2 em{color:var(--orange);}
     </nav>
   </div>
 </footer>
-
+<script>window.AISIG_MONTHS = [{"label": "June 2026", "days": [4, 6, 3, 7, 5, 8, 6, 9, 7, 5, 8, 6, 10, 7, 9, 6, 11, 8, 10, 7, 12, 9, 11, 8, 13, 9, 12, 8, 14, 10]}, {"label": "July 2026", "days": [11, 9, 13, 10, 14, 11, 15, 12, 16, 13, 17, 12, 18, 14, 19, 13, 20, 15, 21, 14, 22, 16, 23, 15, 24, 17, 25, 16, 26, 18, 27]}, {"label": "August 2026", "days": [20, 16, 22, 18, 24, 17, 25, 19, 26, 21, 27, 19, 28, 22, 29, 20, 17, 3]}];</script>
 <script>
   (function(){
     var nav = document.querySelector('header.nav');
@@ -664,18 +781,287 @@ h2 em{color:var(--orange);}
   })();
 
   (function(){
-    var consoleEl = document.getElementById('aisigConsole');
-    if (!consoleEl) return;
-    if (!('IntersectionObserver' in window)) { consoleEl.classList.add('is-in'); return; }
-    var observer = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
-          observer.unobserve(entry.target);
+    var win = document.getElementById('aisigWindow');
+    if (!win) return;
+
+    function qa(sel, root){ return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+    function wait(ms){ return new Promise(function(resolve){ setTimeout(resolve, ms); }); }
+    function reveal(el){ if (el) el.classList.add('is-in'); }
+    function revealSeq(els, stagger){
+      return new Promise(function(resolve){
+        var i = 0;
+        function step(){
+          if (i >= els.length) { resolve(); return; }
+          reveal(els[i]);
+          i++;
+          setTimeout(step, stagger);
         }
+        step();
       });
-    }, { threshold: 0.2 });
-    observer.observe(consoleEl);
+    }
+    function countUp(el, duration){
+      return new Promise(function(resolve){
+        if (!el) { resolve(); return; }
+        reveal(el);
+        var raw = el.textContent.trim();
+        var m = raw.match(/^(-?\d+(?:\.\d+)?)(.*)$/);
+        if (!m) { resolve(); return; }
+        var target = parseFloat(m[1]);
+        var suffix = m[2] || '';
+        var decimals = (m[1].split('.')[1] || '').length;
+        var start = null;
+        function step(ts){
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = (target * eased).toFixed(decimals) + suffix;
+          if (p < 1) { requestAnimationFrame(step); }
+          else { el.textContent = target.toFixed(decimals) + suffix; resolve(); }
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    async function boot(){
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) {
+        qa('.aisig-sub-label, .aisig-sub-desc, .aisig-cell .k, .aisig-cell .v, .aisig-cell .d, .aisig-spitem, .aisig-feed .f, .aisig-insight, .aisig-r, .aisig-month-head', win).forEach(reveal);
+        var spectrumInstant = document.getElementById('aisigSpectrum');
+        if (spectrumInstant) spectrumInstant.classList.add('is-in');
+        var chartInstant = document.getElementById('aisigChartWrap');
+        if (chartInstant) chartInstant.classList.add('is-in');
+        var bootInstant = document.getElementById('aisigBoot');
+        var bootFillInstant = document.getElementById('aisigBootFill');
+        var bootPctInstant = document.getElementById('aisigBootPct');
+        if (bootFillInstant) bootFillInstant.style.width = '100%';
+        if (bootPctInstant) bootPctInstant.textContent = '100%';
+        if (bootInstant) bootInstant.classList.add('is-done');
+        return;
+      }
+
+      var bootRow = document.getElementById('aisigBoot');
+      var bootFill = document.getElementById('aisigBootFill');
+      var bootPct = document.getElementById('aisigBootPct');
+      if (bootRow && bootFill) {
+        bootRow.classList.add('is-active');
+        await wait(150);
+        await new Promise(function(resolve){
+          var duration = 3200;
+          var start = null;
+          function step(ts){
+            if (!start) start = ts;
+            var p = Math.min((ts - start) / duration, 1);
+            var pct = Math.round(p * 100);
+            bootFill.style.width = pct + '%';
+            if (bootPct) bootPct.textContent = pct + '%';
+            if (p < 1) { requestAnimationFrame(step); }
+            else { resolve(); }
+          }
+          requestAnimationFrame(step);
+        });
+        await wait(320);
+        bootRow.classList.remove('is-active');
+        bootRow.classList.add('is-done');
+        await wait(550);
+      }
+
+      var readout = document.getElementById('aisigBlockReadout');
+      if (readout) {
+        reveal(readout.querySelector('.aisig-sub-label')); await wait(260);
+        reveal(readout.querySelector('.aisig-sub-desc')); await wait(320);
+        var cells = qa('.aisig-cell', readout);
+        await revealSeq(cells.map(function(c){ return c.querySelector('.k'); }), 70);
+        await wait(150);
+        for (var i = 0; i < cells.length; i++) {
+          await countUp(cells[i].querySelector('.v'), 650);
+          await wait(120);
+        }
+        await revealSeq(cells.map(function(c){ return c.querySelector('.d'); }), 160);
+        await wait(200);
+      }
+
+      var spec = document.getElementById('aisigBlockSpectrum');
+      if (spec) {
+        reveal(spec.querySelector('.aisig-sub-label')); await wait(260);
+        reveal(spec.querySelector('.aisig-sub-desc')); await wait(320);
+        var bar = document.getElementById('aisigSpectrum');
+        if (bar) { bar.classList.add('is-in'); await wait(2100); }
+        await revealSeq(qa('.aisig-spitem', spec), 150);
+        await wait(200);
+      }
+
+      var sig = document.getElementById('aisigBlockSignal');
+      if (sig) {
+        var sigCols = qa('.aisig-grid2 > div', sig);
+        var logCol = sigCols[0], spoofCol = sigCols[1];
+        if (logCol) {
+          reveal(logCol.querySelector('.aisig-sub-label')); await wait(220);
+          reveal(logCol.querySelector('.aisig-sub-desc')); await wait(280);
+          await revealSeq(qa('.aisig-feed .f', logCol), 90);
+          await wait(150);
+        }
+        if (spoofCol) {
+          reveal(spoofCol.querySelector('.aisig-sub-label')); await wait(220);
+          reveal(spoofCol.querySelector('.aisig-sub-desc')); await wait(280);
+          await revealSeq(qa('.aisig-feed .f', spoofCol), 110);
+          await wait(200);
+        }
+      }
+
+      var ins = document.getElementById('aisigBlockInsight');
+      if (ins) {
+        reveal(ins.querySelector('.aisig-sub-label')); await wait(260);
+        reveal(ins.querySelector('.aisig-sub-desc')); await wait(320);
+        var items = qa('.aisig-insight', ins);
+        for (var j = 0; j < items.length; j++) {
+          reveal(items[j]);
+          await countUp(items[j].querySelector('.aisig-insight-num'), 600);
+          await wait(160);
+        }
+        await wait(200);
+      }
+
+      var chartBlock = document.getElementById('aisigBlockChart');
+      if (chartBlock) {
+        reveal(chartBlock.querySelector('.aisig-sub-label')); await wait(260);
+        reveal(chartBlock.querySelector('.aisig-sub-desc')); await wait(280);
+        reveal(chartBlock.querySelector('.aisig-month-head')); await wait(280);
+        var wrap = document.getElementById('aisigChartWrap');
+        if (wrap) { wrap.classList.add('is-in'); await wait(1500); }
+        await wait(150);
+      }
+
+      var bp = document.getElementById('aisigBlockBotsPages');
+      if (bp) {
+        var bpCols = qa('.aisig-grid2 > div', bp);
+        bpCols.forEach(function(col){
+          reveal(col.querySelector('.aisig-sub-label'));
+          reveal(col.querySelector('.aisig-sub-desc'));
+        });
+        await wait(320);
+        var botRows = bpCols[0] ? qa('.aisig-r', bpCols[0]) : [];
+        var pageRows = bpCols[1] ? qa('.aisig-r', bpCols[1]) : [];
+        var maxLen = Math.max(botRows.length, pageRows.length);
+        for (var k = 0; k < maxLen; k++) {
+          reveal(botRows[k]);
+          reveal(pageRows[k]);
+          await wait(130);
+        }
+        await wait(200);
+      }
+
+      var ready = document.getElementById('aisigBlockReadiness');
+      if (ready) {
+        reveal(ready.querySelector('.aisig-sub-label')); await wait(260);
+        reveal(ready.querySelector('.aisig-sub-desc')); await wait(320);
+        await revealSeq(qa('.aisig-r', ready), 150);
+      }
+    }
+
+    if (document.readyState === 'complete') {
+      setTimeout(boot, 50);
+    } else {
+      window.addEventListener('load', function(){ setTimeout(boot, 50); });
+    }
+  })();
+
+  (function(){
+    var svg = document.getElementById('aisigLineChart');
+    var wrap = document.getElementById('aisigChartWrap');
+    var tooltip = document.getElementById('aisigTooltip');
+    var label = document.getElementById('aisigMonthLabel');
+    var total = document.getElementById('aisigMonthTotal');
+    var prevBtn = document.getElementById('aisigPrevMonth');
+    var nextBtn = document.getElementById('aisigNextMonth');
+    if (!svg || !window.AISIG_MONTHS) return;
+    var idx = window.AISIG_MONTHS.length - 1;
+    var W = 1000, H = 150, PAD_TOP = 12, PAD_BOTTOM = 20;
+    var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var currentPts = [];
+    var currentLabel = '';
+
+    function dateInfo(monthLabel, dayNum){
+      var parts = monthLabel.split(' ');
+      var mIdx = MONTH_NAMES.indexOf(parts[0]);
+      var year = parseInt(parts[1], 10);
+      var d = new Date(year, mIdx, dayNum);
+      var weekday = d.toLocaleDateString('en-US', { weekday: 'long' });
+      var full = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      return weekday + ', ' + full;
+    }
+
+    function render(){
+      var m = window.AISIG_MONTHS[idx];
+      var mx = Math.max.apply(null, m.days);
+      var n = m.days.length;
+      var step = n > 1 ? W / (n - 1) : W;
+      var sum = 0;
+      var pts = m.days.map(function(v, i){
+        sum += v;
+        var x = i * step;
+        var y = H - PAD_BOTTOM - (v / mx) * (H - PAD_TOP - PAD_BOTTOM);
+        return { x: x, y: y, v: v };
+      });
+      currentPts = pts;
+      currentLabel = m.label;
+      var linePath = 'M' + pts.map(function(p){ return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' L');
+      var areaPath = linePath + ' L' + W + ',' + H + ' L0,' + H + ' Z';
+      var gradId = 'aisigGrad';
+      var circles = pts.map(function(p, i){
+        var showLabel = ((i + 1) % 5 === 0) || i === 0 || i === n - 1;
+        var txt = showLabel
+          ? '<text x="' + p.x.toFixed(1) + '" y="' + (H - 4) + '" font-family="ui-monospace,Menlo,monospace" font-size="9" fill="rgba(255,255,255,0.35)" text-anchor="middle">' + (i + 1) + '</text>'
+          : '';
+        return '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="2.6"></circle>' + txt;
+      }).join('');
+      svg.innerHTML =
+        '<defs><linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="#5fe0af" stop-opacity="0.32"/>' +
+        '<stop offset="100%" stop-color="#5fe0af" stop-opacity="0"/>' +
+        '</linearGradient></defs>' +
+        '<path d="' + areaPath + '" fill="url(#' + gradId + ')" stroke="none"></path>' +
+        '<path class="line" d="' + linePath + '"></path>' +
+        circles;
+      label.textContent = m.label;
+      total.innerHTML = '<b>' + sum.toLocaleString('en-US') + '</b> reads';
+      prevBtn.disabled = (idx === 0);
+      nextBtn.disabled = (idx === window.AISIG_MONTHS.length - 1);
+      tooltip.classList.remove('is-visible');
+    }
+    prevBtn.addEventListener('click', function(){ if (idx > 0) { idx--; render(); } });
+    nextBtn.addEventListener('click', function(){ if (idx < window.AISIG_MONTHS.length - 1) { idx++; render(); } });
+
+    if (wrap && tooltip) {
+      wrap.addEventListener('mousemove', function(e){
+        if (!currentPts.length) return;
+        var svgRect = svg.getBoundingClientRect();
+        var wrapRect = wrap.getBoundingClientRect();
+        var relX = (e.clientX - svgRect.left) / svgRect.width * W;
+        var nearestIdx = 0, nearestDist = Infinity;
+        currentPts.forEach(function(p, i){
+          var d = Math.abs(p.x - relX);
+          if (d < nearestDist) { nearestDist = d; nearestIdx = i; }
+        });
+        var p = currentPts[nearestIdx];
+        var px = svgRect.left - wrapRect.left + (p.x / W) * svgRect.width;
+        var py = svgRect.top - wrapRect.top + (p.y / H) * svgRect.height;
+        tooltip.innerHTML = '<div class="tt-date">' + dateInfo(currentLabel, nearestIdx + 1) + '</div>' +
+          '<div class="tt-val">' + p.v + ' AI visits</div>';
+        tooltip.style.left = px + 'px';
+        tooltip.style.top = py + 'px';
+        tooltip.style.transform = 'translate(-50%,-124%)';
+        tooltip.classList.add('is-visible');
+        var ttWidth = tooltip.offsetWidth;
+        var half = ttWidth / 2;
+        var minCenter = half + 6;
+        var maxCenter = wrapRect.width - half - 6;
+        var clampedPx = Math.min(Math.max(px, minCenter), maxCenter);
+        var shiftX = clampedPx - px;
+        tooltip.style.transform = 'translate(calc(-50% + ' + shiftX.toFixed(1) + 'px), -124%)';
+      });
+      wrap.addEventListener('mouseleave', function(){ tooltip.classList.remove('is-visible'); });
+    }
+    render();
   })();
 </script>
 
@@ -813,7 +1199,6 @@ h2 em{color:var(--orange);}
 })();
 </script>
 <!-- AI_SIGNAL_WIDGET:END -->
-
 
 </body>
 </html>
