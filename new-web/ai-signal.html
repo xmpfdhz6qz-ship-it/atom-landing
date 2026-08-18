@@ -362,12 +362,13 @@ h2 em{color:var(--orange);}
 .aisig-t-training{color:var(--a-cyan);background:rgba(125,211,252,0.14);}
 .aisig-t-capability_probe{color:var(--a-amber);background:rgba(224,162,51,0.14);}
 
-.aisig-spectrum{display:flex;height:24.2px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,0.08);margin:4px 0 18px;}
+.aisig-spectrum{display:flex;height:24.2px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,0.08);margin:4px 0 18px;opacity:0;transition:opacity .5s ease;}
 .aisig-spectrum span{display:block;height:100%;width:0;transition:width 2s cubic-bezier(.16,1,.3,1);}
 .aisig-spectrum span:nth-child(1){transition-delay:.1s;}
 .aisig-spectrum span:nth-child(2){transition-delay:.35s;}
 .aisig-spectrum span:nth-child(3){transition-delay:.6s;}
 .aisig-spectrum span:nth-child(4){transition-delay:.85s;}
+.aisig-spectrum.is-in{opacity:1;}
 .aisig-spectrum.is-in span{width:var(--w);}
 .aisig-sp-retrieval{background:linear-gradient(90deg,#2b8f68,var(--a-green));}
 .aisig-sp-search{background:linear-gradient(90deg,#b8791d,var(--a-amber));}
@@ -399,8 +400,14 @@ h2 em{color:var(--orange);}
 .aisig-month-label{font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;color:var(--a-text);min-width:110px;text-align:center;}
 .aisig-month-total{font-family:var(--mono);font-size:11px;color:var(--a-faint);text-transform:uppercase;letter-spacing:0.06em;}
 .aisig-month-total b{color:var(--a-green);font-weight:800;}
+/* Closed state must be a true zero-width box (no negative insets here, or
+   a sliver of the chart's overflow allowance leaks through on the left
+   before the reveal even starts). Only once revealed does the box gain
+   extra negative inset on top/bottom/left so day-dots and labels sitting
+   right at its edges are never clipped. Once the wipe finishes, JS clears
+   clip-path entirely so nothing stays clipped. */
 .aisig-chart-wrap{position:relative;clip-path:inset(0 100% 0 0);transition:clip-path 1.4s cubic-bezier(.65,0,.35,1);}
-.aisig-chart-wrap.is-in{clip-path:inset(0 0% 0 0);}
+.aisig-chart-wrap.is-in{clip-path:inset(-12px 0% -12px -12px);}
 .aisig-linechart{width:100%;height:150px;display:block;overflow:visible;cursor:crosshair;}
 .aisig-linechart .line{fill:none;stroke:var(--a-green);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(95,224,175,0.35));}
 .aisig-linechart circle{fill:var(--a-green);}
@@ -829,7 +836,7 @@ h2 em{color:var(--orange);}
         var spectrumInstant = document.getElementById('aisigSpectrum');
         if (spectrumInstant) spectrumInstant.classList.add('is-in');
         var chartInstant = document.getElementById('aisigChartWrap');
-        if (chartInstant) chartInstant.classList.add('is-in');
+        if (chartInstant) { chartInstant.classList.add('is-in'); chartInstant.style.clipPath = 'none'; }
         var bootInstant = document.getElementById('aisigBoot');
         var bootFillInstant = document.getElementById('aisigBootFill');
         var bootPctInstant = document.getElementById('aisigBootPct');
@@ -846,7 +853,7 @@ h2 em{color:var(--orange);}
         bootRow.classList.add('is-active');
         await wait(150);
         await new Promise(function(resolve){
-          var duration = 3200;
+          var duration = 5200;
           var start = null;
           function step(ts){
             if (!start) start = ts;
@@ -927,7 +934,7 @@ h2 em{color:var(--orange);}
         reveal(chartBlock.querySelector('.aisig-sub-desc')); await wait(280);
         reveal(chartBlock.querySelector('.aisig-month-head')); await wait(280);
         var wrap = document.getElementById('aisigChartWrap');
-        if (wrap) { wrap.classList.add('is-in'); await wait(1500); }
+        if (wrap) { wrap.classList.add('is-in'); await wait(1500); wrap.style.clipPath = 'none'; }
         await wait(150);
       }
 
