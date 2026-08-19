@@ -84,7 +84,7 @@
         { "@type": "Question", "name": "How is GEO different from SEO for Shopify stores?", "acceptedAnswer": { "@type": "Answer", "text": "SEO optimizes for keyword rankings, backlinks, and human-readable content. GEO for Shopify requires structured data, machine-readable trust signals, AI agent files like llms.txt, commerce accuracy, and niche positioning that matches how buyers query AI assistants. A store can rank number one on Google and still be invisible to AI shopping agents." } },
         { "@type": "Question", "name": "What AI systems does GEO for Shopify target?", "acceptedAnswer": { "@type": "Answer", "text": "GEO for Shopify primarily targets Alexa for Shopping, ChatGPT Shopping, Google AI Mode and AI Overviews, Perplexity, Microsoft Copilot Shopping, and Shopify's own AI agent infrastructure via llms.txt and agents.md." } },
         { "@type": "Question", "name": "What are the most important GEO factors for Shopify stores?", "acceptedAnswer": { "@type": "Answer", "text": "The most important GEO factors are Product JSON-LD schema markup, AggregateRating schema for reviews, prices visible in HTML without JavaScript, return and shipping policy in crawlable text, specific niche positioning for AI intent matching, llms.txt via Shopify's Agentic Dashboard, and Organization schema with brand identity." } },
-        { "@type": "Question", "name": "How do I check if my Shopify store is GEO optimized?", "acceptedAnswer": { "@type": "Answer", "text": "Run a free AI Commerce Score scan. The scan analyzes your store across factors including AI Structured Signals, Semantic Clarity, AI Trust Layer, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals, in about 30 seconds, no signup required." } },
+        { "@type": "Question", "name": "How do I check if my Shopify store is GEO optimized?", "acceptedAnswer": { "@type": "Answer", "text": "Run a free AI Commerce Score scan. The scan analyzes your store across all 8 factors, Semantic Visuals & Image Clarity, AI Structured Signals, Core Technical & Interpretability, AI Trust & Transaction Confidence, Commerce & Feed Accuracy, User Intent Match, Recommendation Confidence, and External Authority Signals, in about 10 seconds, no signup required." } },
         { "@type": "Question", "name": "How long does GEO optimization take for Shopify?", "acceptedAnswer": { "@type": "Answer", "text": "Unlike SEO, which can take months, GEO improvements are often visible within days. Schema markup additions take one to two hours to implement and start being read by AI agents almost immediately." } },
         { "@type": "Question", "name": "Does GEO replace SEO for Shopify stores?", "acceptedAnswer": { "@type": "Answer", "text": "No, GEO and SEO are complementary. SEO drives traffic from Google search. GEO drives recommendations from AI shopping agents. Stores that optimize for both capture traffic from traditional search and the growing AI recommendation layer." } }
       ]
@@ -1009,7 +1009,7 @@ h2 em{color:var(--orange);}
 <div class="vp-acc-item"><div class="vp-acc-q">How is GEO different from SEO for Shopify stores?</div><div class="vp-acc-body">SEO optimizes for keyword rankings, backlinks, and human-readable content. GEO for Shopify requires structured data, machine-readable trust signals, AI agent files like llms.txt, commerce accuracy (prices in HTML, not JavaScript), and niche positioning that matches how buyers query AI assistants. A store can rank number one on Google and still be invisible to AI shopping agents.</div></div>
 <div class="vp-acc-item"><div class="vp-acc-q">What AI systems does GEO for Shopify target?</div><div class="vp-acc-body">GEO for Shopify primarily targets Alexa for Shopping (Amazon's AI shopping layer, formerly Rufus), ChatGPT Shopping, Google AI Mode and AI Overviews, Perplexity, Microsoft Copilot Shopping, and Shopify's own AI agent infrastructure via llms.txt and agents.md.</div></div>
 <div class="vp-acc-item"><div class="vp-acc-q">What are the most important GEO factors for Shopify stores?</div><div class="vp-acc-body">The most important GEO factors are Product JSON-LD schema markup, AggregateRating schema for reviews, prices visible in HTML without JavaScript, return and shipping policy in crawlable text, specific niche positioning for AI intent matching, llms.txt via Shopify's Agentic Dashboard, and Organization schema with brand identity. See the full <a href="/vocabulary/ai-commerce-score">AI Commerce Score</a> methodology for all 8 factors.</div></div>
-<div class="vp-acc-item"><div class="vp-acc-q">How do I check if my Shopify store is GEO optimized?</div><div class="vp-acc-body">Run a free AI Commerce Score scan at <a href="/#score">atomfoundry.dev</a>. The scan analyzes your store across factors including AI Structured Signals, Semantic Clarity, AI Trust Layer, User Intent Match, AI Interpretability, Commerce Accuracy, Recommendation Confidence, and External Authority Signals, in about 30 seconds, no signup required.</div></div>
+<div class="vp-acc-item"><div class="vp-acc-q">How do I check if my Shopify store is GEO optimized?</div><div class="vp-acc-body">Run a free AI Commerce Score scan at <a href="/#score">atomfoundry.dev</a>. The scan analyzes your store across all 8 factors, Semantic Visuals & Image Clarity, AI Structured Signals, Core Technical & Interpretability, AI Trust & Transaction Confidence, Commerce & Feed Accuracy, User Intent Match, Recommendation Confidence, and External Authority Signals, in about 10 seconds, no signup required.</div></div>
 <div class="vp-acc-item"><div class="vp-acc-q">How long does GEO optimization take for Shopify?</div><div class="vp-acc-body">Unlike SEO, which can take months, GEO improvements are often visible within days. Schema markup additions take one to two hours to implement and start being read by AI agents almost immediately. Trust signal improvements can take under an hour. AI agents re-crawl frequently, so fixes tend to show up fast.</div></div>
 <div class="vp-acc-item"><div class="vp-acc-q">Does GEO replace SEO for Shopify stores?</div><div class="vp-acc-body">No, GEO and SEO are complementary. SEO drives traffic from Google search. GEO drives recommendations from AI shopping agents. As AI-referred orders continue to grow, GEO becomes increasingly important alongside SEO. Stores that optimize for both capture traffic from traditional search and the growing AI recommendation layer.</div></div>
   </div>
@@ -1427,5 +1427,27 @@ h2 em{color:var(--orange);}
 })();
 </script>
 <!-- AIW_LIVE:END -->
+<!-- SCAN_BOX_CONNECT:START -->
+<script>
+(function(){
+  function cleanDomain(v){
+    return (v || '').trim().replace(/^https?:\/\//i,'').replace(/\/.*$/,'').replace(/^www\./i,'');
+  }
+  document.querySelectorAll('.scan-box').forEach(function(box){
+    var input = box.querySelector('input');
+    var btn = box.querySelector('button');
+    if (!input || !btn) return;
+    function go(){
+      var domain = cleanDomain(input.value);
+      if (!domain) { input.focus(); return; }
+      window.location.href = '/scan.html?domain=' + encodeURIComponent(domain);
+    }
+    btn.addEventListener('click', go);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') go(); });
+  });
+})();
+</script>
+<!-- SCAN_BOX_CONNECT:END -->
+
 </body>
 </html>

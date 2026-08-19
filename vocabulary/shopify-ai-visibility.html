@@ -801,7 +801,7 @@ h2 em{color:var(--orange);}
   <div class="section-kicker">FAQ</div>
   <h2>Shopify AI Visibility <em>questions</em></h2>
   <div class="vp-acc">
-    <div class="vp-acc-item"><div class="vp-acc-q">How do I check if my Shopify store is visible to AI?</div><div class="vp-acc-body">Run a free AI Commerce Score scan at atomfoundry.dev. The scan analyzes your store across 8 factors and shows exactly which signals are missing and the fastest fixes. Results in 30 seconds, no signup required.</div></div>
+    <div class="vp-acc-item"><div class="vp-acc-q">How do I check if my Shopify store is visible to AI?</div><div class="vp-acc-body">Run a free AI Commerce Score scan at atomfoundry.dev. The scan analyzes your store across 8 factors and shows exactly which signals are missing and the fastest fixes. Results in 10 seconds, no signup required.</div></div>
 <div class="vp-acc-item"><div class="vp-acc-q">Does Shopify automatically make my store AI visible?</div><div class="vp-acc-body">Partially. Shopify's Agentic Dashboard generates llms.txt and agents.md for every store automatically. But this only addresses one layer of AI visibility. Schema markup, trust signals, semantic clarity, and commerce accuracy still require manual setup or apps. Most Shopify themes do not include Product schema by default.</div></div>
 <div class="vp-acc-item"><div class="vp-acc-q">Which AI agents evaluate Shopify stores?</div><div class="vp-acc-body">The primary AI shopping agents today include ChatGPT Shopping, Google AI Mode and AI Overviews, Perplexity, Microsoft Copilot Shopping, and emerging voice and agentic shopping assistants. All of them evaluate stores based on structured data, trust signals, and semantic clarity, not keyword rankings.</div></div>
 <div class="vp-acc-item"><div class="vp-acc-q">How long does it take to fix AI visibility issues?</div><div class="vp-acc-body">Most AI visibility fixes take 1 to 8 hours to implement. Schema markup takes 1 to 2 hours. Trust signal improvements take under an hour. Unlike SEO which takes months to show results, AI visibility improvements can take effect within days as AI agents re-crawl frequently.</div></div>
@@ -815,7 +815,7 @@ h2 em{color:var(--orange);}
 <div class="vp-section" style="padding-top:0;">
   <div class="final-cta">
     <h2>Find out what AI sees <em>when it visits your store.</em></h2>
-    <p>Free AI Commerce Score with the exact revenue impact per visibility gap. Results in 30 seconds.</p>
+    <p>Free AI Commerce Score and the 8 factors behind it. Results in 10 seconds.</p>
     <div class="scan-box">
       <input type="text" placeholder="Paste your Shopify store URL">
       <button>Run Free AI Commerce Scan</button>
@@ -1242,5 +1242,27 @@ h2 em{color:var(--orange);}
 })();
 </script>
 <!-- AIW_LIVE:END -->
+<!-- SCAN_BOX_CONNECT:START -->
+<script>
+(function(){
+  function cleanDomain(v){
+    return (v || '').trim().replace(/^https?:\/\//i,'').replace(/\/.*$/,'').replace(/^www\./i,'');
+  }
+  document.querySelectorAll('.scan-box').forEach(function(box){
+    var input = box.querySelector('input');
+    var btn = box.querySelector('button');
+    if (!input || !btn) return;
+    function go(){
+      var domain = cleanDomain(input.value);
+      if (!domain) { input.focus(); return; }
+      window.location.href = '/scan.html?domain=' + encodeURIComponent(domain);
+    }
+    btn.addEventListener('click', go);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') go(); });
+  });
+})();
+</script>
+<!-- SCAN_BOX_CONNECT:END -->
+
 </body>
 </html>

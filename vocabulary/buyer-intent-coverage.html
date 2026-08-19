@@ -972,7 +972,7 @@ h2 em{color:var(--orange);}
       <input type="text" placeholder="Paste your store URL">
       <button>See My Coverage</button>
     </div>
-    <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> No credit card <span>&middot;</span> Results in 30 seconds</div>
+    <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> No credit card <span>&middot;</span> Results in 10 seconds</div>
   </div>
 </div>
 
@@ -1471,5 +1471,27 @@ h2 em{color:var(--orange);}
 })();
 </script>
 <!-- AIW_LIVE:END -->
+<!-- SCAN_BOX_CONNECT:START -->
+<script>
+(function(){
+  function cleanDomain(v){
+    return (v || '').trim().replace(/^https?:\/\//i,'').replace(/\/.*$/,'').replace(/^www\./i,'');
+  }
+  document.querySelectorAll('.scan-box').forEach(function(box){
+    var input = box.querySelector('input');
+    var btn = box.querySelector('button');
+    if (!input || !btn) return;
+    function go(){
+      var domain = cleanDomain(input.value);
+      if (!domain) { input.focus(); return; }
+      window.location.href = '/scan.html?domain=' + encodeURIComponent(domain);
+    }
+    btn.addEventListener('click', go);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') go(); });
+  });
+})();
+</script>
+<!-- SCAN_BOX_CONNECT:END -->
+
 </body>
 </html>

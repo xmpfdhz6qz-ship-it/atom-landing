@@ -759,7 +759,7 @@ h2 em{color:var(--orange);}
   <h2>How AI Commerce Intelligence becomes <em>operational.</em></h2>
   <p class="body-text">From a free 30-second scan to a full enterprise recommendation intelligence infrastructure.</p>
   <div class="aci-platform vp-reveal">
-    <div class="aci-platform-item rc-cascade-item" style="--i:0;"><div class="aci-platform-num">01</div><div style="flex:1;"><div class="aci-platform-verb">Measure<span class="aci-platform-name">AI Commerce Score</span></div><div class="aci-platform-desc">One number, three critical issues, competitor comparison, 30 seconds.</div></div><div class="aci-platform-tag">Free</div></div>
+    <div class="aci-platform-item rc-cascade-item" style="--i:0;"><div class="aci-platform-num">01</div><div style="flex:1;"><div class="aci-platform-verb">Measure<span class="aci-platform-name">AI Commerce Score</span></div><div class="aci-platform-desc">One number, three critical issues, competitor comparison, 10 seconds.</div></div><div class="aci-platform-tag">Free</div></div>
     <div class="aci-platform-item rc-cascade-item" style="--i:1;"><div class="aci-platform-num">02</div><div style="flex:1;"><div class="aci-platform-verb">Diagnose<span class="aci-platform-name">Recommendation Intelligence Audit</span></div><div class="aci-platform-desc">Full 8-factor breakdown, Authority / Relevance / Extractability scores, 50-prompt Prompt Visibility Testing, priority fix list.</div></div><div class="aci-platform-tag">$399</div></div>
     <div class="aci-platform-item rc-cascade-item" style="--i:2;"><div class="aci-platform-num">03</div><div style="flex:1;"><div class="aci-platform-verb">Observe<span class="aci-platform-name">Continuous Intelligence</span></div><div class="aci-platform-desc">Weekly score delta, Recommendation Share trend, competitor movement alerts, content decay detection.</div></div><div class="aci-platform-tag">$149/mo</div></div>
     <div class="aci-platform-item rc-cascade-item" style="--i:3;"><div class="aci-platform-num">04</div><div style="flex:1;"><div class="aci-platform-verb">Benchmark<span class="aci-platform-name">AI Commerce Index</span></div><div class="aci-platform-desc">Category benchmarks across the full 66,090-store dataset.</div></div><div class="aci-platform-tag">Included</div></div>
@@ -798,7 +798,7 @@ h2 em{color:var(--orange);}
       <input type="text" placeholder="Paste your store URL">
       <button>Get My Free AI Commerce Score</button>
     </div>
-    <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> No credit card <span>&middot;</span> Results in 30 seconds</div>
+    <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> No credit card <span>&middot;</span> Results in 10 seconds</div>
   </div>
 </div>
 
@@ -1184,5 +1184,27 @@ function aciFlipKey(e, el) {
 })();
 </script>
 <!-- AIW_LIVE:END -->
+<!-- SCAN_BOX_CONNECT:START -->
+<script>
+(function(){
+  function cleanDomain(v){
+    return (v || '').trim().replace(/^https?:\/\//i,'').replace(/\/.*$/,'').replace(/^www\./i,'');
+  }
+  document.querySelectorAll('.scan-box').forEach(function(box){
+    var input = box.querySelector('input');
+    var btn = box.querySelector('button');
+    if (!input || !btn) return;
+    function go(){
+      var domain = cleanDomain(input.value);
+      if (!domain) { input.focus(); return; }
+      window.location.href = '/scan.html?domain=' + encodeURIComponent(domain);
+    }
+    btn.addEventListener('click', go);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') go(); });
+  });
+})();
+</script>
+<!-- SCAN_BOX_CONNECT:END -->
+
 </body>
 </html>
