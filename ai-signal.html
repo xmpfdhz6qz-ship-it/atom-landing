@@ -640,6 +640,12 @@ h2 em{color:var(--orange);}
       <p class="aisig-sub-desc">Who checked what this site can do (status, discovery, capabilities), instead of just reading its content.</p>
       <div class="aisig-rows" id="aisigReadinessRows"></div>
     </div>
+
+    <div class="aisig-block" id="aisigBlockSpoofed">
+      <div class="aisig-sub-label">Spoofed probes</div>
+      <p class="aisig-sub-desc">Requests with an AI agent's name in the header, but scanning for exploits (.env, .git, wp-admin, credentials) instead of reading content. Counted separately, never mixed into the numbers above.</p>
+      <div class="aisig-feed" id="aisigSpoofedFeed"></div>
+    </div>
   </div>
 </div>
 <div class="vp-section vp-section-tight wrap">
@@ -952,6 +958,7 @@ window.AISIG_DATA_READY = (function(){
       var spectrumResult = buildSpectrum(data.spectrum);
       buildFeed('aisigFeed', data.recent_activity, 'recent');
       buildFeed('aisigReadinessFeed', (data.readiness_activity || []).slice(0, 5), 'readiness');
+      buildFeed('aisigSpoofedFeed', data.spoofed_activity, 'readiness');
       buildInsights(data, spectrumResult);
       buildWhoRows(data.who_reads_you);
       buildPageRows(data.top_pages);
