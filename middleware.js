@@ -39,10 +39,14 @@ export default async function middleware(request) {
     try {
       const url = new URL(request.url);
       const path = url.pathname;
-      const isStore = path.startsWith('/store/');
+      // Covers both /store/domain (live SSR route) and the pre-generated
+      // static fallback pages at /_pages/store/domain/... -- both reveal a
+      // specific customer's domain and must never surface in public reports.
+      const isStore = path.startsWith('/store/') || path.startsWith('/_pages/store/');
       let storeDomain = '';
       if (isStore) {
-        try { storeDomain = decodeURIComponent(path.slice('/store/'.length)).split('/')[0]; } catch (e) {}
+        const rest = path.startsWith('/store/') ? path.slice('/store/'.length) : path.slice('/_pages/store/'.length);
+        try { storeDomain = decodeURIComponent(rest).split('/')[0]; } catch (e) {}
       }
       await fetch('https://n8n-production-1d7c.up.railway.app/webhook/ai-visit', {
         method: 'POST',
