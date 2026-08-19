@@ -1,19 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The State of AI Recommendations in Pets: Atom Foundry</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The State of AI Recommendations in Pets | Atom Foundry</title>
 <meta name="description" content="We asked an AI model 20 high-intent pet shopping questions, 20 times each. Across 4,000 recommendations, the most recommended pet brands tend to have slightly worse stores, not better.">
 <meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
 <link rel="canonical" href="https://atomfoundry.dev/research/state-of-ai-recommendations-pets">
 <meta property="og:title" content="The State of AI Recommendations in Pets">
-<meta property="og:description" content="In pets, recommendation frequency is weakly negatively related to AI Commerce Score. The most recommended brands tend to have worse stores.">
+<meta property="og:description" content="We asked an AI model 20 high-intent pet shopping questions, 20 times each. Across 4,000 recommendations, the most recommended pet brands tend to have slightly worse stores, not better.">
+<meta property="og:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -56,10 +65,10 @@
       "@type": "Article",
       "@id": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets#article",
       "headline": "The State of AI Recommendations in Pets",
-      "description": "How AI recommends pet brands across 20 high-intent shopping prompts. In pets, recommendation frequency is weakly negatively related to how AI-ready a store is.",
+      "description": "We asked an AI model 20 high-intent pet shopping questions, 20 times each. Across 4,000 recommendations, the most recommended pet brands tend to have slightly worse stores, not better.",
+      "datePublished": "2026-06-12",
       "author": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
-      "datePublished": "2026-06-12",
       "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets",
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
       "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets#webpage" },
@@ -69,7 +78,7 @@
       "@type": "Dataset",
       "@id": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets#dataset",
       "name": "AI Recommendations in Pets: Recommendation Share dataset",
-      "description": "4000 brand recommendations captured from 20 high-intent pet shopping prompts run 20 times each (400 prompt-runs) through a single AI model, mapped to measured store AI Commerce Scores. Marketplaces separated from single-brand stores.",
+      "description": "4,000 brand recommendations captured from 20 high-intent pets shopping prompts run 20 times each (400 prompt-runs) through a single AI model, mapped to measured store AI Commerce Scores. Frequency to score correlation r = -0.366.",
       "creator": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
       "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets",
@@ -89,461 +98,1116 @@
 }
 </script>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; overflow-x: hidden; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent), radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent); pointer-events: none; z-index: 0; }
-a { color: inherit; text-decoration: none; }
-.page { position: relative; z-index: 1; }
-.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
-.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
-.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
-.nav-logo span { color: #f97316; }
-.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
-.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
-.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
-.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
-.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
-.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
-.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
-.nav-links a.research.active { background: rgba(239,159,39,0.14); border-color: rgba(239,159,39,0.55); }
-.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
-.nav-links a.cta-nav:hover { background: #ea580c; }
-.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
-.hero { padding: 22px 0 8px; }
-.hero-kicker { font-size: 11px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 14px; }
-.hero h1 { font-size: clamp(30px, 5vw, 52px); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px; }
-.hero h1 em { font-style: normal; color: #f97316; }
-.hero-sub { font-size: 18px; color: #999; line-height: 1.7; max-width: 600px; }
-.byline { font-size: 12px; color: #555; margin-top: 16px; }
-.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin: 32px 0 8px; }
-.stat-cell { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid #1e1e1e; }
-.stat-cell:last-child { border-right: none; }
-.stat-num { font-size: 22px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
-.stat-label { font-size: 10.5px; color: #777; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
-.section { margin: 48px 0; }
-.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
-.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
-.section-title em { font-style: normal; color: #f97316; }
-.section-body { font-size: 15px; color: #aaa; line-height: 1.85; max-width: 680px; }
-.section-body strong { color: #e8e8e8; }
-.method-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 28px; margin-top: 8px; }
-.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-bottom: 18px; }
-.method-item { font-size: 13px; color: #999; padding: 7px 0; border-bottom: 1px solid #161616; }
-.method-item span { color: #e8e8e8; font-weight: 600; }
-.metric-defs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 16px; }
-.metric-card { background: #0a0a0a; border: 1px solid #1e1e1e; border-radius: 12px; padding: 14px 16px; }
-.metric-card h4 { font-size: 13px; color: #f97316; font-weight: 700; margin-bottom: 6px; }
-.metric-card p { font-size: 12px; color: #888; line-height: 1.6; }
-.limits { font-size: 12.5px; color: #777; line-height: 1.7; margin-top: 18px; padding-top: 16px; border-top: 1px solid #161616; }
-.limits strong { color: #999; }
-.lb-table { width: 100%; border-collapse: collapse; margin-top: 8px; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; overflow: hidden; }
-.lb-table thead th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: #666; font-weight: 600; text-align: left; padding: 12px 14px; border-bottom: 1px solid #1e1e1e; background: #0c0c0c; }
-.lb-table thead th.num { text-align: right; }
-.lb-table td { padding: 11px 14px; border-bottom: 1px solid #151515; font-size: 13px; vertical-align: middle; }
-.lb-table tr:last-child td { border-bottom: none; }
-.lb-rank { color: #555; font-weight: 700; width: 30px; }
-.lb-brand { color: #e8e8e8; font-weight: 600; }
-.lb-flag { font-size: 9px; color: #777; border: 1px solid #2a2a2a; border-radius: 100px; padding: 1px 7px; margin-left: 6px; font-weight: 500; vertical-align: middle; }
-.lb-num { text-align: right; color: #bbb; white-space: nowrap; }
-.lb-bar-wrap { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; margin-top: 5px; }
-.lb-bar { height: 100%; border-radius: 999px; }
-.lb-scorecell { text-align: right; white-space: nowrap; }
-.lb-score { font-weight: 800; font-size: 15px; }
-.lb-score.off { color: #444; }
-.lb-zone { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
-.lb-zone.off { color: #555; }
-.chart-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 24px 12px; margin-top: 8px; }
-.sc-tick { fill: #555; font-size: 11px; font-family: inherit; }
-.sc-axis { fill: #888; font-size: 12px; font-weight: 600; font-family: inherit; }
-.sc-label { fill: #ccc; font-size: 11px; font-family: inherit; }
-.chart-legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 8px; padding-top: 14px; border-top: 1px solid #161616; }
-.legend-item { font-size: 11px; color: #888; display: flex; align-items: center; gap: 6px; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-.callout { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 16px 20px; margin-top: 20px; font-size: 14px; color: #bbb; line-height: 1.7; }
-.callout strong { color: #4ade80; }
-.callout.warn { background: #1a0d0a; border-color: #2e1a1a; border-left-color: #E24B4A; }
-.callout.warn strong { color: #f87171; }
-.split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
-.split-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; }
-.split-card .big { font-size: 34px; font-weight: 800; color: #f97316; line-height: 1; }
-.split-card .lbl { font-size: 13px; color: #999; margin-top: 6px; line-height: 1.5; }
-.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin: 40px 0 8px; }
-.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
-.cta-title em { font-style: normal; color: #f97316; }
-.cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; max-width: 520px; margin-left: auto; margin-right: auto; }
-.cta-btn { display: inline-block; padding: 16px 36px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
-.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-.footer-left { font-size: 12px; color: #444; line-height: 2; }
-.footer-left a { color: #555; }
-.footer-left a:hover { color: #f97316; }
-.footer-right { font-size: 14px; font-weight: 700; color: #f97316; text-align: right; }
-.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
-.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
-.footer-social a { color: #444; transition: color 0.2s; }
-.footer-social a:hover { color: #f97316; }
-.related { margin: 48px 0 8px; }
-.related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 18px; }
-.related-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 18px 20px; transition: all 0.2s; display: block; }
-.related-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
-.related-card .rc-kicker { font-size: 10px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 6px; }
-.related-card.flagship .rc-kicker { color: #f97316; }
-.related-card .rc-title { font-size: 15px; color: #fff; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; }
-.related-card .rc-desc { font-size: 12px; color: #888; line-height: 1.5; }
-.related-more { margin-top: 16px; font-size: 14px; color: #777; }
-.related-more a { color: #EF9F27; }
-.related-more a:hover { color: #f97316; }
-@media (max-width: 640px) {
-  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
-  .nav-links { flex-wrap: wrap; }
-  .wrap { padding: 0 18px; }
-  .hero h1 { font-size: 28px; }
-  .stats-bar { flex-wrap: wrap; }
-  .stat-cell { flex: 1 0 50%; border-bottom: 1px solid #1e1e1e; }
-  .method-grid, .metric-defs, .split2 { grid-template-columns: 1fr; }
-  .related-grid { grid-template-columns: 1fr; }
-  .lb-table thead th.hide-m, .lb-table td.hide-m { display: none; }
-  .cta-section { padding: 28px 20px; }
-}
+
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  /* Cross-document view transition: on browsers that support navigating
+     same-origin pages with the View Transitions API (Chromium 126+), the
+     incoming page rolls down over the outgoing one like a blind being
+     pulled down, instead of the default cross-fade. Unsupported browsers
+     just navigate normally — this is a pure progressive enhancement. */
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  em{font-style:normal;}
+
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(240,238,230,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .6s cubic-bezier(.65,0,.35,1);
+  }
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{
+    font-size:13px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.07em;
+    position:relative;padding:4px 2px;white-space:nowrap;
+    text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+    transition:color .2s ease, text-decoration-color .2s ease;
+  }
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-chevron{
+    display:inline-flex;width:10px;height:7px;margin-left:6px;
+    vertical-align:middle;color:currentColor;
+    transition:transform .2s ease;
+  }
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-chevron.chevron-r-pre{margin-left:0;margin-right:6px;transform:rotate(-90deg);}
+  .nav-chevron.chevron-l-pre{margin-left:0;margin-right:6px;transform:rotate(90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .dropdown{
+    position:absolute;top:100%;left:0;margin-top:6px;
+    background:var(--cream);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+    padding:12px;width:max-content;max-width:300px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:1100;
+  }
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+  section{padding:64px 24px;}
+  section.alt{background:var(--off-white);}
+  .container{max-width:var(--maxw);margin:0 auto;}
+  .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:14px;}
+  .page-title{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:820px;margin-bottom:18px;}
+  .page-title em{color:var(--orange);}
+  .section-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
+  .section-title em{color:var(--orange);}
+  .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:780px;}
+  .section-body strong{color:var(--black);}
+  .section-body a{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:rgba(254,106,3,0.3);}
+
+  .research-hero{padding:88px 24px 48px;background:var(--cream);}
+  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:60%;margin-top:36px;}
+  .byline-note{font-size:12px;color:var(--gray-500);margin-top:16px;}
+  .byline-note a{color:var(--orange);font-weight:700;}
+
+  .hero-stat-row{display:flex;flex-wrap:nowrap;align-items:baseline;row-gap:14px;margin-top:52px;gap:0;}
+  .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
+  .hero-stat:not(:first-child)::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
+  .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
+
+  .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;transition:transform .3s ease, box-shadow .3s ease;}
+  .chart-card.chart-card-wide{max-width:940px;padding:36px 44px;}
+  @media (hover:hover) and (pointer:fine){
+    .chart-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .chart-card-title{font-size:12px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:4px;}
+  .chart-card-sub{font-size:12.5px;color:var(--gray-500);margin-bottom:18px;}
+  .chart-legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:14px;padding-top:16px;border-top:1px solid var(--card-line);}
+  .legend-item{font-size:12px;color:var(--gray-700);display:flex;align-items:center;gap:6px;}
+  .legend-dot{width:10px;height:10px;border-radius:50%;}
+
+  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:780px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .bias-card strong{color:var(--black);}
+
+  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-bottom:18px;}
+  .method-item{font-size:13.5px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--card-line);}
+  .method-item span{color:var(--black);font-weight:700;}
+  .metric-defs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
+  .metric-card{background:var(--white);border:1px solid var(--card-line);border-radius:var(--radius);padding:14px 16px;}
+  .metric-card h4{font-size:13px;color:var(--orange);font-weight:800;margin-bottom:6px;}
+  .metric-card p{font-size:12.5px;color:var(--gray-700);line-height:1.6;}
+  .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
+  .limits strong{color:var(--black);}
+
+  /* leaderboard: bare, "on the page" list — no boxed card. Rows slide
+     in one after another as they scroll into view. */
+  .leaderboard{width:100%;border-collapse:collapse;margin-top:24px;}
+  .leaderboard thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-500);font-weight:700;text-align:left;padding:0 10px 10px;border-bottom:2px solid var(--gray-300);}
+  .leaderboard thead th.lb-th-num{text-align:right;}
+  .leaderboard tbody tr.lb-row{opacity:0;transform:translateX(-18px);transition:opacity .5s ease, transform .5s cubic-bezier(.16,.8,.4,1);transition-delay:calc(var(--i) * 70ms);}
+  .leaderboard.in-view tbody tr.lb-row{opacity:1;transform:translateX(0);}
+  .leaderboard td{padding:12px 10px;border-bottom:1px solid var(--card-line);font-size:13.5px;vertical-align:middle;}
+  .lb-rank{color:var(--gray-500);font-weight:800;width:28px;}
+  .lb-brand{color:var(--black);font-weight:700;}
+  .lb-flag{font-size:9.5px;color:var(--gray-500);border:1px solid var(--gray-300);border-radius:100px;padding:1px 7px;margin-left:6px;font-weight:600;vertical-align:middle;white-space:nowrap;}
+  .lb-share{min-width:150px;}
+  .lb-share-val{display:block;font-size:13px;color:var(--black);font-weight:700;margin-bottom:5px;}
+  .lb-bar-track{display:block;height:5px;background:var(--gray-300);border-radius:999px;overflow:hidden;}
+  .lb-bar-fill{display:block;height:100%;border-radius:999px;width:0;background:var(--orange);transition:width 1.1s cubic-bezier(.16,.8,.4,1);transition-delay:calc(var(--i) * 70ms + .2s);}
+  .leaderboard.in-view .lb-bar-fill{width:var(--w);}
+  .lb-num{text-align:right;color:var(--gray-700);white-space:nowrap;}
+  .lb-score-cell{text-align:right;white-space:nowrap;}
+  .lb-score{font-weight:800;font-size:15px;}
+  .lb-score.off{color:var(--gray-500);}
+  .lb-zone{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:0.04em;margin-top:2px;}
+  .lb-zone.off{color:var(--gray-500);}
+
+  /* scatter-card: the bubble chart. Dots pop in with a springy stagger,
+     the grid fades in underneath, and each bubble grows a touch on
+     hover. */
+  .scatter-wrap{width:100%;}
+  .scatter-wrap svg{width:100%;height:auto;display:block;overflow:visible;}
+  .scatter-wrap .sc-tick{fill:var(--gray-500);font-size:11px;font-family:var(--serif);}
+  .scatter-wrap .sc-axis{fill:var(--gray-700);font-size:12px;font-weight:700;font-family:var(--serif);}
+  .scatter-wrap .sc-label{fill:var(--black);font-size:10.5px;font-weight:700;font-family:var(--serif);}
+  .scatter-gridlines{opacity:0;transition:opacity .9s ease;}
+  .scatter-card.in-view .scatter-gridlines{opacity:1;}
+  .scatter-dot{transform-box:fill-box;transform-origin:center;opacity:0;transition:r .2s ease, stroke-width .2s ease, opacity .2s ease;}
+  .scatter-card.in-view .scatter-dot{animation:bubblePop .65s cubic-bezier(.34,1.56,.64,1) forwards;animation-delay:calc(var(--i) * 45ms);}
+  @keyframes bubblePop{ from{opacity:0;transform:scale(0);} to{opacity:1;transform:scale(1);} }
+  .scatter-dot:hover{r:9;stroke-width:2.5;cursor:pointer;}
+  text.sc-label{opacity:0;transition:opacity .5s ease .6s;}
+  .scatter-card.in-view text.sc-label{opacity:1;}
+
+  /* mini synthesis table (home-living only) — small, static, no
+     animation needed, just clean typography. */
+  .mini-lb-table{width:100%;border-collapse:collapse;}
+  .mini-lb-table thead th{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-500);font-weight:700;text-align:left;padding:8px 8px;border-bottom:2px solid var(--gray-300);}
+  .mini-lb-table thead th.num{text-align:right;}
+  .mini-lb-table td{padding:9px 8px;border-bottom:1px solid var(--card-line);font-size:13px;color:var(--gray-700);}
+  .mini-lb-table .mini-lb-brand{color:var(--black);font-weight:700;}
+  .mini-lb-table .mini-lb-num{text-align:right;}
+
+  /* stat-pair: two plain descriptive stat cards (on-index split). */
+  .stat-pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;max-width:780px;}
+  .stat-pair-card{background:var(--card);border-radius:var(--radius);padding:22px 24px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .stat-pair-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .stat-pair-big{font-family:var(--serif);font-size:32px;font-weight:800;color:var(--orange);line-height:1;}
+  .stat-pair-lbl{font-size:13.5px;color:var(--gray-700);margin-top:8px;line-height:1.55;}
+
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .mini-card{border-radius:var(--radius);padding:24px 22px;background:var(--card);display:flex;flex-direction:column;min-height:150px;transition:transform .3s ease, box-shadow .3s ease;}
+  .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
+  .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
+  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;flex:1;margin-bottom:12px;}
+  .mini-card-link{margin-top:auto;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;}
+  .mini-card:hover .mini-card-link{color:var(--orange);}
+  .related-more{margin-top:18px;font-size:13.5px;color:var(--gray-700);}
+  .related-more a{color:var(--orange);font-weight:700;}
+  .related-more a:hover{text-decoration:underline;}
+
+  .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+  .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+  .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+  .scan-box input::placeholder{color:var(--gray-500);}
+  .scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+  .scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+  .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+  .scan-note span{margin:0 8px;}
+  .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);padding:48px 56px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
+  .final-cta h2 em{color:var(--orange);}
+  .final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+  .final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+  .final-cta .scan-box{max-width:640px;margin:0 auto;padding:6px;}
+  .final-cta .scan-box input{padding:12px 18px;font-size:15px;}
+  .final-cta .scan-box button{padding:12px 22px;font-size:14px;}
+
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col .logo-word{margin-bottom:14px;}
+  .footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{color:var(--black);font-weight:700;}
+  .footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  @media (max-width:900px){
+    .products-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .research-hero{padding:72px 24px 40px;}
+    .research-hero-sub{max-width:100%;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .hero-stat-row{gap:0;}
+    .hero-stat{gap:5px;font-size:13px;}
+    .hero-stat:not(:first-child)::before{margin-right:8px;}
+    .hero-stat-num{font-size:28px;}
+    .metric-defs{grid-template-columns:1fr;}
+    .stat-pair-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{
+      position:relative;flex-direction:column;align-items:stretch;
+      width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;
+    }
+    .nav-trigger{
+      font-size:13px;width:100%;box-sizing:border-box;min-width:0;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:13px 4px;border-bottom:1px solid var(--card-line);
+      white-space:normal;text-align:left;
+    }
+    .dropdown{
+      position:static;box-shadow:none;background:var(--card);
+      margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;
+      opacity:1;visibility:hidden;transform:none;
+      max-height:0;overflow:hidden;transition:max-height .25s ease;
+    }
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    section{padding:44px 20px;}
+    .research-hero{padding:56px 20px 32px;}
+    .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
+    .hero-stat:not(:first-child)::before{display:none;}
+    .hero-stat-num{font-size:26px;}
+    .chart-card{padding:18px;max-width:none;margin-top:32px;}
+    .chart-card.chart-card-wide{padding:18px;max-width:none;}
+    .bias-card{padding:16px 18px;}
+    .products-grid{grid-template-columns:1fr;}
+    .final-cta{padding:40px 24px;}
+    .final-cta .scan-box{max-width:none;}
+    .scan-box{flex-direction:column;border-radius:4px;}
+    .scan-box button{width:100%;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+    .method-grid{grid-template-columns:1fr;}
+    .hide-mobile{display:none;}
+    .lb-share{min-width:100px;}
+    .leaderboard td{padding:10px 6px;font-size:12.5px;}
+    .lb-score{font-size:13px;}
+  }
+
 </style>
 </head>
 <body>
-<div class="page">
-  <nav class="nav">
+<header class="nav">
+  <div class="nav-inner">
     <div class="nav-brand">
-      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
-      <div class="nav-subline">The AI Commerce Graph&trade;</div>
-      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
     </div>
-    <div class="nav-links">
-      <a href="/stores">Stores</a>
-      <a href="/methodology">Methodology</a>
-      <a href="/vocabulary">Vocabulary</a>
-      <a href="/framework" class="framework">Framework</a>
-      <a href="/research" class="research active">Research</a>
-      <a href="/#score" class="cta-nav">Free Score</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger active">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="research-hero">
+  <div class="container">
+    <div class="kicker">Recommendation Intelligence Research™ · Category Report</div>
+    <h1 class="page-title">The State of AI Recommendations in <em>Pets</em></h1>
+    <p class="research-hero-sub">We asked one AI model 20 high-intent pet shopping questions, 20 times each. Then we checked the same thing we checked in beauty, supplements, and coffee, and pets gave a different, sharper answer.</p>
+    <div class="byline-note">Atom Foundry &middot; June 2026 &middot; Fourth in the Recommendation Intelligence Research&trade; series</div>
+    <div class="hero-stat-row">
+      <div class="hero-stat"><b class="hero-stat-num" id="statRec" data-target="4000" data-comma="1">0</b><span>Recommendations</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statBrands" data-target="405">0</b><span>Distinct brands</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statIntents" data-target="20">0</b><span>Shopping intents</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statRuns" data-target="400">0</b><span>Prompt-runs</span></div>
     </div>
-  </nav>
-  <div class="wrap">
-    <div class="hero">
-      <div class="hero-kicker">Recommendation Intelligence Research&trade;</div>
-      <h1>The State of AI Recommendations in <em>Pets</em></h1>
-      <p class="hero-sub">We asked one AI model 20 high-intent pet shopping questions, 20 times each. Then we checked the same thing we checked in beauty, supplements, and coffee, and pets gave a different, sharper answer.</p>
-      <div class="byline">Atom Foundry &middot; June 2026 &middot; Fourth in the Recommendation Intelligence Research&trade; series</div>
-    </div>
-    <div class="stats-bar">
-      <div class="stat-cell"><div class="stat-num">4,000</div><div class="stat-label">Recommendations</div></div>
-      <div class="stat-cell"><div class="stat-num">405</div><div class="stat-label">Distinct brands</div></div>
-      <div class="stat-cell"><div class="stat-num">20</div><div class="stat-label">Shopping intents</div></div>
-      <div class="stat-cell"><div class="stat-num">400</div><div class="stat-label">Prompt-runs</div></div>
-    </div>
-    <div class="section">
-      <div class="section-kicker">How we measured it</div>
-      <h2 class="section-title">Methodology, <em>up front</em></h2>
-      <p class="section-body">Same method as the first three reports, so all four are directly comparable. Everything below is computed from real captured responses. Nothing is estimated or projected.</p>
-      <div class="method-box">
-        <div class="method-grid">
-          <div class="method-item">Category: <span>Pets</span></div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">How we measured it</div>
+    <h2 class="section-title">Methodology, <em>up front</em></h2>
+    <p class="section-body">Same method as the first three reports, so all four are directly comparable. Everything below is computed from real captured responses. Nothing is estimated or projected.</p>
+    <div class="method-box">
+      <div class="method-grid">
+        <div class="method-item">Category: <span>Pets</span></div>
           <div class="method-item">Model: <span>one model (gpt-4o-mini)</span></div>
           <div class="method-item">Intents: <span>20 high-intent prompts</span></div>
           <div class="method-item">Runs per intent: <span>20</span></div>
           <div class="method-item">Prompt-runs total: <span>400</span></div>
           <div class="method-item">Recommendations captured: <span>4,000</span></div>
+      </div>
+      <div class="metric-defs">
+          <div class="metric-card"><h4>Recommendation Share™</h4><p>A brand's share of all recommendations captured. The whole field sums to 100 percent.</p></div>
+          <div class="metric-card"><h4>Recommendation Frequency™</h4><p>In what percent of the 400 prompt-runs the brand appeared at least once.</p></div>
+          <div class="metric-card"><h4>Recommendation Position™</h4><p>Average rank in the answer when the brand appeared. Lower is better.</p></div>
         </div>
-        <div class="metric-defs">
-          <div class="metric-card"><h4>Recommendation Share&trade;</h4><p>A brand's share of all recommendations captured. The whole field sums to 100 percent.</p></div>
-          <div class="metric-card"><h4>Recommendation Frequency&trade;</h4><p>In what percent of the 400 prompt-runs the brand appeared at least once.</p></div>
-          <div class="metric-card"><h4>Recommendation Position&trade;</h4><p>Average rank in the answer when the brand appeared. Lower is better.</p></div>
-        </div>
-        <div class="limits"><strong>Marketplaces are not brands.</strong> Retailers and marketplaces (Chewy, Petco, Amazon, PetSmart, Frisco) were separated out and excluded from the brand-level analysis. The contest measured here is between single brands and their own stores. <strong>A note on pets:</strong> the biggest food names (Purina, Royal Canin, Hill's, Taste of the Wild) are not in our store index, so they appear off-index and stay out of the correlation. One brand, Wellness, was dropped from the on-index set after we found its name had auto-matched to an unrelated health-directory domain; we report it off-index rather than attach a wrong store. <strong>Other limits:</strong> one model, one category, one point in time. Each intent ran 20 times. Brands map to the real stores we measure where a match exists; the rest are off-index, never invented.</div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-kicker">Who AI recommends</div>
-      <h2 class="section-title">The pet <em>recommendation leaderboard</em></h2>
-      <p class="section-body">Top 20 brands by share of voice across all 4,000 recommendations, with retailers excluded. The last column is each brand's real AI Commerce Score&trade; from our index. Note how many of the most recommended names are either off-index or sit deep in the red.</p>
-      <table class="lb-table">
-        <thead><tr>
-          <th>#</th><th>Brand</th>
-          <th class="num">Share&trade;</th>
-          <th class="num">Freq&trade;</th>
-          <th class="num hide-m">Pos&trade;</th>
-          <th class="num">AI Commerce Score&trade;</th>
-        </tr></thead>
-        <tbody>
-<tr>
-      <td class="lb-rank">1</td>
-      <td class="lb-brand">Blue Buffalo</td>
-      <td class="lb-num">2.8%<div class="lb-bar-wrap"><div class="lb-bar" style="width:100.0%;background:#f97316;"></div></div></td>
-      <td class="lb-num">27.8%</td>
-      <td class="lb-num hide-m">3.9</td>
-      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">30</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">2</td>
-      <td class="lb-brand">PetFusion <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">2.7%<div class="lb-bar-wrap"><div class="lb-bar" style="width:96.4%;background:#f97316;"></div></div></td>
-      <td class="lb-num">25.0%</td>
-      <td class="lb-num hide-m">4.2</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">3</td>
-      <td class="lb-brand">Purina Pro Plan <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">2.7%<div class="lb-bar-wrap"><div class="lb-bar" style="width:96.4%;background:#f97316;"></div></div></td>
-      <td class="lb-num">26.8%</td>
-      <td class="lb-num hide-m">3.4</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">4</td>
-      <td class="lb-brand">Merrick</td>
-      <td class="lb-num">2.5%<div class="lb-bar-wrap"><div class="lb-bar" style="width:89.3%;background:#f97316;"></div></div></td>
-      <td class="lb-num">24.8%</td>
-      <td class="lb-num hide-m">6.5</td>
-      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">42</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">5</td>
-      <td class="lb-brand">Wellness <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">2.3%<div class="lb-bar-wrap"><div class="lb-bar" style="width:82.1%;background:#f97316;"></div></div></td>
-      <td class="lb-num">22.8%</td>
-      <td class="lb-num hide-m">5.0</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">6</td>
-      <td class="lb-brand">Royal Canin <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">2.1%<div class="lb-bar-wrap"><div class="lb-bar" style="width:75.0%;background:#f97316;"></div></div></td>
-      <td class="lb-num">20.8%</td>
-      <td class="lb-num hide-m">1.6</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">7</td>
-      <td class="lb-brand">Hill's Science Diet <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">2.1%<div class="lb-bar-wrap"><div class="lb-bar" style="width:75.0%;background:#f97316;"></div></div></td>
-      <td class="lb-num">20.5%</td>
-      <td class="lb-num hide-m">1.9</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">8</td>
-      <td class="lb-brand">PetSafe <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">2.1%<div class="lb-bar-wrap"><div class="lb-bar" style="width:75.0%;background:#f97316;"></div></div></td>
-      <td class="lb-num">20.5%</td>
-      <td class="lb-num hide-m">4.0</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">9</td>
-      <td class="lb-brand">Vet's Best <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">1.9%<div class="lb-bar-wrap"><div class="lb-bar" style="width:67.9%;background:#f97316;"></div></div></td>
-      <td class="lb-num">18.8%</td>
-      <td class="lb-num hide-m">5.9</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">10</td>
-      <td class="lb-brand">Taste of the Wild <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">1.8%<div class="lb-bar-wrap"><div class="lb-bar" style="width:64.3%;background:#f97316;"></div></div></td>
-      <td class="lb-num">18.0%</td>
-      <td class="lb-num hide-m">6.7</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">11</td>
-      <td class="lb-brand">BarkBox <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">1.5%<div class="lb-bar-wrap"><div class="lb-bar" style="width:53.6%;background:#f97316;"></div></div></td>
-      <td class="lb-num">15.3%</td>
-      <td class="lb-num hide-m">6.2</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">12</td>
-      <td class="lb-brand">Zesty Paws <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">1.4%<div class="lb-bar-wrap"><div class="lb-bar" style="width:50.0%;background:#f97316;"></div></div></td>
-      <td class="lb-num">14.3%</td>
-      <td class="lb-num hide-m">3.4</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">13</td>
-      <td class="lb-brand">Canidae</td>
-      <td class="lb-num">1.2%<div class="lb-bar-wrap"><div class="lb-bar" style="width:42.9%;background:#f97316;"></div></div></td>
-      <td class="lb-num">11.5%</td>
-      <td class="lb-num hide-m">7.0</td>
-      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">44</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">14</td>
-      <td class="lb-brand">Burt's Bees</td>
-      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.7%;background:#f97316;"></div></div></td>
-      <td class="lb-num">10.0%</td>
-      <td class="lb-num hide-m">4.9</td>
-      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">34</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">15</td>
-      <td class="lb-brand">Big Barker <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.7%;background:#f97316;"></div></div></td>
-      <td class="lb-num">10.0%</td>
-      <td class="lb-num hide-m">1.3</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">16</td>
-      <td class="lb-brand">Ruffwear</td>
-      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.7%;background:#f97316;"></div></div></td>
-      <td class="lb-num">10.0%</td>
-      <td class="lb-num hide-m">4.7</td>
-      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">66</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">17</td>
-      <td class="lb-brand">Wellness CORE <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.7%;background:#f97316;"></div></div></td>
-      <td class="lb-num">9.8%</td>
-      <td class="lb-num hide-m">5.3</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">18</td>
-      <td class="lb-brand">KONG</td>
-      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.7%;background:#f97316;"></div></div></td>
-      <td class="lb-num">9.5%</td>
-      <td class="lb-num hide-m">3.2</td>
-      <td class="lb-scorecell"><span class="lb-score" style="color:#E8A030;">66</span><span class="lb-zone" style="color:#E8A030;">Low</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">19</td>
-      <td class="lb-brand">Orijen</td>
-      <td class="lb-num">1.0%<div class="lb-bar-wrap"><div class="lb-bar" style="width:35.7%;background:#f97316;"></div></div></td>
-      <td class="lb-num">9.5%</td>
-      <td class="lb-num hide-m">3.3</td>
-      <td class="lb-scorecell"><span class="lb-score" style="color:#E24B4A;">14</span><span class="lb-zone" style="color:#E24B4A;">AI Invisible</span></td>
-    </tr>
-<tr>
-      <td class="lb-rank">20</td>
-      <td class="lb-brand">Petmate <span class="lb-flag">off-index</span></td>
-      <td class="lb-num">0.9%<div class="lb-bar-wrap"><div class="lb-bar" style="width:32.1%;background:#f97316;"></div></div></td>
-      <td class="lb-num">8.8%</td>
-      <td class="lb-num hide-m">4.3</td>
-      <td class="lb-scorecell"><span class="lb-score off">&mdash;</span><span class="lb-zone off">Off-index</span></td>
-    </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="section">
-      <div class="section-kicker">The central finding</div>
-      <h2 class="section-title">In pets, being recommended is if anything a sign of a <em>worse</em> store</h2>
-      <p class="section-body">In the first three categories the relationship between recommendation and readiness was zero. Pets is different. Here the correlation between Recommendation Frequency&trade; and AI Commerce Score&trade; is <strong>r = -0.366 (n = 39)</strong>, a weak but marginally significant <strong>negative</strong> relationship. The more often AI recommends a pet brand, the slightly worse its store tends to be. Each dot is a single-brand store.</p>
-      <div class="chart-box">
-        <svg viewBox="0 0 720 430" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scatter plot of recommendation frequency versus AI Commerce Score for pet brands, showing a weak negative relationship">
-  <line x1="64" y1="374.0" x2="696" y2="374.0" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="378.0" text-anchor="end" class="sc-tick">0</text><line x1="64" y1="287.5" x2="696" y2="287.5" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="291.5" text-anchor="end" class="sc-tick">25</text><line x1="64" y1="201.0" x2="696" y2="201.0" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="205.0" text-anchor="end" class="sc-tick">50</text><line x1="64" y1="114.5" x2="696" y2="114.5" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="118.5" text-anchor="end" class="sc-tick">75</text><line x1="64" y1="28.0" x2="696" y2="28.0" stroke="#1a1a1a" stroke-width="1"/><text x="54" y="32.0" text-anchor="end" class="sc-tick">100</text><line x1="64.0" y1="28" x2="64.0" y2="374" stroke="#141414" stroke-width="1"/><text x="64.0" y="394" text-anchor="middle" class="sc-tick">0%</text><line x1="169.3" y1="28" x2="169.3" y2="374" stroke="#141414" stroke-width="1"/><text x="169.3" y="394" text-anchor="middle" class="sc-tick">5%</text><line x1="274.7" y1="28" x2="274.7" y2="374" stroke="#141414" stroke-width="1"/><text x="274.7" y="394" text-anchor="middle" class="sc-tick">10%</text><line x1="380.0" y1="28" x2="380.0" y2="374" stroke="#141414" stroke-width="1"/><text x="380.0" y="394" text-anchor="middle" class="sc-tick">15%</text><line x1="485.3" y1="28" x2="485.3" y2="374" stroke="#141414" stroke-width="1"/><text x="485.3" y="394" text-anchor="middle" class="sc-tick">20%</text><line x1="590.7" y1="28" x2="590.7" y2="374" stroke="#141414" stroke-width="1"/><text x="590.7" y="394" text-anchor="middle" class="sc-tick">25%</text><line x1="696.0" y1="28" x2="696.0" y2="374" stroke="#141414" stroke-width="1"/><text x="696.0" y="394" text-anchor="middle" class="sc-tick">30%</text><line x1="64" y1="201.0" x2="696" y2="201.0" stroke="#E8A030" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="4 4"/><line x1="64" y1="131.8" x2="696" y2="131.8" stroke="#EF9F27" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="4 4"/><line x1="64" y1="79.9" x2="696" y2="79.9" stroke="#1D9E75" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="4 4"/>
-  <circle cx="649.7" cy="270.2" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Blue Buffalo: 27.8% frequency, score 30</title></circle><circle cx="586.5" cy="228.7" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Merrick: 24.8% frequency, score 42</title></circle><circle cx="306.3" cy="221.8" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Canidae: 11.5% frequency, score 44</title></circle><circle cx="274.7" cy="145.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Ruffwear: 10.0% frequency, score 66</title></circle><circle cx="274.7" cy="256.4" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Burt's Bees: 10.0% frequency, score 34</title></circle><circle cx="264.1" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Orijen: 9.5% frequency, score 14</title></circle><circle cx="264.1" cy="145.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>KONG: 9.5% frequency, score 66</title></circle><circle cx="179.9" cy="176.8" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Acana: 5.5% frequency, score 57</title></circle><circle cx="179.9" cy="162.9" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Kurgo: 5.5% frequency, score 61</title></circle><circle cx="169.3" cy="100.7" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Benebone: 5.0% frequency, score 79</title></circle><circle cx="169.3" cy="242.5" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Catit: 5.0% frequency, score 38</title></circle><circle cx="169.3" cy="194.1" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>World's Best Cat Litter: 5.0% frequency, score 52</title></circle><circle cx="169.3" cy="197.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Ollie: 5.0% frequency, score 51</title></circle><circle cx="169.3" cy="156.0" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>West Paw: 5.0% frequency, score 63</title></circle><circle cx="169.3" cy="204.5" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>PetPlate: 5.0% frequency, score 49</title></circle><circle cx="169.3" cy="173.3" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>The Farmer's Dog: 5.0% frequency, score 58</title></circle><circle cx="169.3" cy="207.9" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Nylabone: 5.0% frequency, score 48</title></circle><circle cx="169.3" cy="204.5" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Nom Nom: 5.0% frequency, score 49</title></circle><circle cx="154.6" cy="159.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Just Food For Dogs: 4.3% frequency, score 62</title></circle><circle cx="133.5" cy="190.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>A Pup Above: 3.3% frequency, score 53</title></circle><circle cx="127.2" cy="325.6" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Solid Gold: 3.0% frequency, score 14</title></circle><circle cx="106.1" cy="197.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Zee.Dog: 2.0% frequency, score 51</title></circle><circle cx="101.9" cy="183.7" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Greenies: 1.8% frequency, score 55</title></circle><circle cx="91.4" cy="180.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Orvis: 1.3% frequency, score 56</title></circle><circle cx="91.4" cy="201.0" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Zignature: 1.3% frequency, score 50</title></circle><circle cx="85.1" cy="207.9" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Outward Hound: 1.0% frequency, score 48</title></circle><circle cx="80.9" cy="124.9" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Pawstruck: 0.8% frequency, score 72</title></circle><circle cx="74.5" cy="197.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Petlibro: 0.5% frequency, score 51</title></circle><circle cx="74.5" cy="121.4" r="6" fill="#EF9F27" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Casper: 0.5% frequency, score 73</title></circle><circle cx="74.5" cy="152.6" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Petcube: 0.5% frequency, score 64</title></circle><circle cx="74.5" cy="159.5" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Litter-Robot: 0.5% frequency, score 62</title></circle><circle cx="74.5" cy="135.3" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Brentwood Home: 0.5% frequency, score 69</title></circle><circle cx="70.3" cy="180.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Spot and Tango: 0.3% frequency, score 56</title></circle><circle cx="70.3" cy="138.7" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>L.L. Bean: 0.3% frequency, score 68</title></circle><circle cx="70.3" cy="232.1" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Vivo: 0.3% frequency, score 41</title></circle><circle cx="70.3" cy="180.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Hello Fresh: 0.3% frequency, score 56</title></circle><circle cx="70.3" cy="180.2" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Earth Animal: 0.3% frequency, score 56</title></circle><circle cx="70.3" cy="246.0" r="6" fill="#E24B4A" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Advantage: 0.3% frequency, score 37</title></circle><circle cx="70.3" cy="162.9" r="6" fill="#E8A030" fill-opacity="0.85" stroke="#080808" stroke-width="1.5"><title>Diggs: 0.3% frequency, score 61</title></circle>
-  <text x="639.7" y="273.7" text-anchor="end" class="sc-label">Blue Buffalo</text><text x="284.7" y="259.9" text-anchor="start" class="sc-label">Burt's Bees</text><text x="179.3" y="104.2" text-anchor="start" class="sc-label">Benebone</text><text x="284.7" y="149.1" text-anchor="start" class="sc-label">Ruffwear</text><text x="316.3" y="225.3" text-anchor="start" class="sc-label">Canidae</text><text x="596.5" y="232.2" text-anchor="start" class="sc-label">Merrick</text><text x="274.1" y="329.1" text-anchor="start" class="sc-label">Orijen</text><text x="254.1" y="149.1" text-anchor="end" class="sc-label">KONG</text>
-  <text x="380" y="422" text-anchor="middle" class="sc-axis">Recommendation Frequency&trade; (percent of prompts)</text>
-  <text x="16" y="201" text-anchor="middle" class="sc-axis" transform="rotate(-90 16 201)">AI Commerce Score&trade;</text>
-</svg>
-        <div class="chart-legend">
-          <div class="legend-item"><span class="legend-dot" style="background:#1D9E75;"></span>Highly (85+)</div>
-          <div class="legend-item"><span class="legend-dot" style="background:#EF9F27;"></span>Moderately (70 to 84)</div>
-          <div class="legend-item"><span class="legend-dot" style="background:#E8A030;"></span>Low (50 to 69)</div>
-          <div class="legend-item"><span class="legend-dot" style="background:#E24B4A;"></span>AI Invisible (under 50)</div>
-        </div>
-      </div>
-      <div class="callout warn">The pet-food establishment dominates on fame. <strong>Blue Buffalo</strong> (27.8 percent of prompts, score 30), <strong>Merrick</strong> (24.8 percent, score 42), and <strong>Purina Pro Plan</strong> (26.8 percent, not even in our index) win the most recommendations while their stores are weak or absent. Meanwhile the best-built stores in the set, <strong>Benebone</strong> (79), <strong>Casper</strong> (73), and <strong>Pawstruck</strong> (72), barely appear at all.</div>
-      <p class="section-body" style="margin-top:20px;">This is the clearest inversion we have measured. The legacy food giants AI grew up on dominate the answers, and the modern direct-to-consumer brands building the most readable stores are the ones it overlooks. The average AI Commerce Score&trade; across all on-index recommended brands is just <strong>52.7</strong>.</p>
-      <div class="callout">Four categories now. Beauty came in at r = 0.17, supplements at r = -0.015, coffee at r = 0.019, and pets at r = -0.366. Across more than 16,000 recommendations, recommendation frequency is <strong>never positively related</strong> to store readiness. In three categories the link is zero; in pets it tilts negative. Being recommended is a sign of fame, not of a better store.</div>
-    </div>
-    <div class="section">
-      <div class="section-kicker">What maps to a real store</div>
-      <h2 class="section-title">Brands, not <em>retailers</em></h2>
-      <p class="section-body">Pets is the most marketplace-driven category we have measured. Retailers like Chewy, Petco, and Amazon took 7.1 percent of recommendations, more than in beauty, supplements, or coffee. And only 19.8 percent of recommendations map to a single-brand store we measure, the lowest share yet.</p>
-      <div class="split2">
-        <div class="split-card"><div class="big">19.8%</div><div class="lbl">of recommendations map to a single-brand store we actually measure (on-index)</div></div>
-        <div class="split-card"><div class="big">7.1%</div><div class="lbl">go to retailers and marketplaces, separated out and kept entirely out of the brand analysis</div></div>
-      </div>
-      <p class="section-body" style="margin-top:18px;">Two things drive that low on-index share. So much of pet commerce runs through Chewy and Petco rather than brand stores, and the biggest brands of all, Purina, Royal Canin, and Hill's, are not in our index. They are recommended on pure brand fame, not because an agent read and rated their store.</p>
-    </div>
-    <div class="section">
-      <div class="section-kicker">What it means</div>
-      <h2 class="section-title">Visibility is not <em>recommendation</em>, and recommendation is not <em>readiness</em></h2>
-      <p class="section-body">Today AI recommends from memory. It reaches for the names it saw most during training, which in pets means the legacy food giants, even when their stores are weak or absent and the best modern stores go unnamed. That bias is baked in, and it is temporary. As AI shopping moves from recalling names to live retrieval and agents that browse, compare, and check out, the advantage shifts to the stores an agent can actually read, trust, and act on.</p>
-      <p class="section-body" style="margin-top:14px;">That is the gap this research exposes and the one the <a href="/framework" style="color:#1D9E75;">Recommendation Intelligence Framework&trade;</a> is built to close: AI Readability, AI Understanding, AI Trust, Recommendation Intelligence, and Decision Confidence. The brands coasting on fame today are the ones with the most to lose when the model changes. The modern brands building readable, trustworthy, machine-legible stores now are the ones that keep the recommendation when memory stops being enough.</p>
-    </div>
-    <div class="cta-section">
-      <div class="cta-title">Will AI still <em>recommend</em> you when it has to read your store?</div>
-      <div class="cta-sub">Get your free AI Commerce Score&trade; in 10 seconds and see exactly where your store stands on the signals that decide AI recommendations.</div>
-      <a href="/#score" class="cta-btn">Get My Free AI Score</a>
-    </div>
-    <!-- INTERNAL LINKING: flagship + sibling niches + framework -->
-    <div class="related">
-      <div class="section-kicker">Keep reading</div>
-      <h2 class="section-title">Part of the <em>five-niche series</em></h2>
-      <p class="section-body">Pets is one of five category studies, and the sharpest result of the set. They roll up into one cross-commerce flagship, and each sibling niche runs the identical method.</p>
-      <div class="related-grid">
-        <a class="related-card flagship" href="/research/ai-recommendations-across-commerce-2026">
-          <div class="rc-kicker">&#9733; Flagship</div>
-          <div class="rc-title">Across Commerce 2026</div>
-          <div class="rc-desc">20,000 recommendations, 1,490 brands, five categories. The full synthesis.</div>
-        </a>
-        <a class="related-card" href="/research/state-of-ai-recommendations-beauty">
-          <div class="rc-kicker">Category report</div>
-          <div class="rc-title">Beauty</div>
-          <div class="rc-desc">4,000 recommendations, 238 brands. Frequency vs readiness r = +0.170.</div>
-        </a>
-        <a class="related-card" href="/research/state-of-ai-recommendations-supplements">
-          <div class="rc-kicker">Category report</div>
-          <div class="rc-title">Supplements</div>
-          <div class="rc-desc">4,000 recommendations, 367 brands. Frequency vs readiness r = &minus;0.015.</div>
-        </a>
-        <a class="related-card" href="/research/state-of-ai-recommendations-coffee">
-          <div class="rc-kicker">Category report</div>
-          <div class="rc-title">Coffee</div>
-          <div class="rc-desc">4,000 recommendations, 228 brands. Frequency vs readiness r = +0.019.</div>
-        </a>
-        <a class="related-card" href="/research/state-of-ai-recommendations-home-living">
-          <div class="rc-kicker">Category report</div>
-          <div class="rc-title">Home &amp; Living</div>
-          <div class="rc-desc">4,000 recommendations, 271 brands. Frequency vs readiness r = +0.108.</div>
-        </a>
-        <a class="related-card" href="/framework">
-          <div class="rc-kicker">Framework</div>
-          <div class="rc-title">Recommendation Intelligence Framework&trade;</div>
-          <div class="rc-desc">The five layers that decide whether AI reads, trusts, and recommends your store.</div>
-        </a>
-      </div>
-      <p class="related-more"><a href="/research">&larr; All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp; <a href="/stores">Stores</a></p>
+      <div class="limits"><strong>Marketplaces are not brands.</strong> Retailers and marketplaces (Chewy, Petco, Amazon, PetSmart, Frisco) were separated out and excluded from the brand-level analysis. The contest measured here is between single brands and their own stores. <strong>A note on pets:</strong> the biggest food names (Purina, Royal Canin, Hill's, Taste of the Wild) are not in our store index, so they appear off-index and stay out of the correlation. One brand, Wellness, was dropped from the on-index set after we found its name had auto-matched to an unrelated health-directory domain; we report it off-index rather than attach a wrong store. <strong>Other limits:</strong> one model, one category, one point in time. Each intent ran 20 times. Brands map to the real stores we measure where a match exists; the rest are off-index, never invented.</div>
     </div>
   </div>
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
-        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
-        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
-        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
-        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
-        <a href="/privacy-policy">Privacy</a><br>
-        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
+</section>
+
+<!-- LEADERBOARD -->
+<section>
+  <div class="container">
+    <div class="kicker">Who AI recommends</div>
+    <h2 class="section-title">The pet <em>recommendation leaderboard</em></h2>
+    <p class="section-body">Top 20 brands by share of voice across all 4,000 recommendations, with retailers excluded. The last column is each brand's real AI Commerce Score&trade; from our index. Note how many of the most recommended names are either off-index or sit deep in the red.</p>
+    <table class="leaderboard">
+      <thead><tr>
+        <th>#</th><th>Brand</th>
+        <th class="lb-th-num">Share™</th>
+        <th class="lb-th-num">Freq™</th>
+        <th class="lb-th-num hide-mobile">Pos™</th>
+        <th class="lb-th-num">AI Commerce Score™</th>
+      </tr></thead>
+      <tbody>
+<tr class="lb-row" style="--i:0;">
+      <td class="lb-rank">1</td>
+      <td class="lb-brand">Blue Buffalo</td>
+      <td class="lb-share"><span class="lb-share-val">2.8%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:100.0%;"></span></span></td>
+      <td class="lb-num">27.8%</td>
+      <td class="lb-num hide-mobile">3.9</td>
+      <td class="lb-score-cell"><span class="lb-score" style="color:var(--red);">30</span><span class="lb-zone" style="color:var(--red);">AI Invisible</span></td>
+    </tr>
+<tr class="lb-row" style="--i:1;">
+      <td class="lb-rank">2</td>
+      <td class="lb-brand">PetFusion <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">2.7%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:96.4%;"></span></span></td>
+      <td class="lb-num">25.0%</td>
+      <td class="lb-num hide-mobile">4.2</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:2;">
+      <td class="lb-rank">3</td>
+      <td class="lb-brand">Purina Pro Plan <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">2.7%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:96.4%;"></span></span></td>
+      <td class="lb-num">26.8%</td>
+      <td class="lb-num hide-mobile">3.4</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:3;">
+      <td class="lb-rank">4</td>
+      <td class="lb-brand">Merrick</td>
+      <td class="lb-share"><span class="lb-share-val">2.5%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:89.3%;"></span></span></td>
+      <td class="lb-num">24.8%</td>
+      <td class="lb-num hide-mobile">6.5</td>
+      <td class="lb-score-cell"><span class="lb-score" style="color:var(--red);">42</span><span class="lb-zone" style="color:var(--red);">AI Invisible</span></td>
+    </tr>
+<tr class="lb-row" style="--i:4;">
+      <td class="lb-rank">5</td>
+      <td class="lb-brand">Wellness <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">2.3%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:82.1%;"></span></span></td>
+      <td class="lb-num">22.8%</td>
+      <td class="lb-num hide-mobile">5.0</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:5;">
+      <td class="lb-rank">6</td>
+      <td class="lb-brand">Royal Canin <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">2.1%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:75.0%;"></span></span></td>
+      <td class="lb-num">20.8%</td>
+      <td class="lb-num hide-mobile">1.6</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:6;">
+      <td class="lb-rank">7</td>
+      <td class="lb-brand">Hill's Science Diet <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">2.1%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:75.0%;"></span></span></td>
+      <td class="lb-num">20.5%</td>
+      <td class="lb-num hide-mobile">1.9</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:7;">
+      <td class="lb-rank">8</td>
+      <td class="lb-brand">PetSafe <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">2.1%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:75.0%;"></span></span></td>
+      <td class="lb-num">20.5%</td>
+      <td class="lb-num hide-mobile">4.0</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:8;">
+      <td class="lb-rank">9</td>
+      <td class="lb-brand">Vet's Best <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">1.9%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:67.9%;"></span></span></td>
+      <td class="lb-num">18.8%</td>
+      <td class="lb-num hide-mobile">5.9</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:9;">
+      <td class="lb-rank">10</td>
+      <td class="lb-brand">Taste of the Wild <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">1.8%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:64.3%;"></span></span></td>
+      <td class="lb-num">18.0%</td>
+      <td class="lb-num hide-mobile">6.7</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:10;">
+      <td class="lb-rank">11</td>
+      <td class="lb-brand">BarkBox <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">1.5%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:53.6%;"></span></span></td>
+      <td class="lb-num">15.3%</td>
+      <td class="lb-num hide-mobile">6.2</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:11;">
+      <td class="lb-rank">12</td>
+      <td class="lb-brand">Zesty Paws <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">1.4%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:50.0%;"></span></span></td>
+      <td class="lb-num">14.3%</td>
+      <td class="lb-num hide-mobile">3.4</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:12;">
+      <td class="lb-rank">13</td>
+      <td class="lb-brand">Canidae</td>
+      <td class="lb-share"><span class="lb-share-val">1.2%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:42.9%;"></span></span></td>
+      <td class="lb-num">11.5%</td>
+      <td class="lb-num hide-mobile">7.0</td>
+      <td class="lb-score-cell"><span class="lb-score" style="color:var(--red);">44</span><span class="lb-zone" style="color:var(--red);">AI Invisible</span></td>
+    </tr>
+<tr class="lb-row" style="--i:13;">
+      <td class="lb-rank">14</td>
+      <td class="lb-brand">Burt's Bees</td>
+      <td class="lb-share"><span class="lb-share-val">1.0%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:35.7%;"></span></span></td>
+      <td class="lb-num">10.0%</td>
+      <td class="lb-num hide-mobile">4.9</td>
+      <td class="lb-score-cell"><span class="lb-score" style="color:var(--red);">34</span><span class="lb-zone" style="color:var(--red);">AI Invisible</span></td>
+    </tr>
+<tr class="lb-row" style="--i:14;">
+      <td class="lb-rank">15</td>
+      <td class="lb-brand">Big Barker <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">1.0%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:35.7%;"></span></span></td>
+      <td class="lb-num">10.0%</td>
+      <td class="lb-num hide-mobile">1.3</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:15;">
+      <td class="lb-rank">16</td>
+      <td class="lb-brand">Ruffwear</td>
+      <td class="lb-share"><span class="lb-share-val">1.0%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:35.7%;"></span></span></td>
+      <td class="lb-num">10.0%</td>
+      <td class="lb-num hide-mobile">4.7</td>
+      <td class="lb-score-cell"><span class="lb-score" style="color:var(--bar-gray);">66</span><span class="lb-zone" style="color:var(--bar-gray);">Low</span></td>
+    </tr>
+<tr class="lb-row" style="--i:16;">
+      <td class="lb-rank">17</td>
+      <td class="lb-brand">Wellness CORE <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">1.0%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:35.7%;"></span></span></td>
+      <td class="lb-num">9.8%</td>
+      <td class="lb-num hide-mobile">5.3</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+<tr class="lb-row" style="--i:17;">
+      <td class="lb-rank">18</td>
+      <td class="lb-brand">KONG</td>
+      <td class="lb-share"><span class="lb-share-val">1.0%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:35.7%;"></span></span></td>
+      <td class="lb-num">9.5%</td>
+      <td class="lb-num hide-mobile">3.2</td>
+      <td class="lb-score-cell"><span class="lb-score" style="color:var(--bar-gray);">66</span><span class="lb-zone" style="color:var(--bar-gray);">Low</span></td>
+    </tr>
+<tr class="lb-row" style="--i:18;">
+      <td class="lb-rank">19</td>
+      <td class="lb-brand">Orijen</td>
+      <td class="lb-share"><span class="lb-share-val">1.0%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:35.7%;"></span></span></td>
+      <td class="lb-num">9.5%</td>
+      <td class="lb-num hide-mobile">3.3</td>
+      <td class="lb-score-cell"><span class="lb-score" style="color:var(--red);">14</span><span class="lb-zone" style="color:var(--red);">AI Invisible</span></td>
+    </tr>
+<tr class="lb-row" style="--i:19;">
+      <td class="lb-rank">20</td>
+      <td class="lb-brand">Petmate <span class="lb-flag">off-index</span></td>
+      <td class="lb-share"><span class="lb-share-val">0.9%</span><span class="lb-bar-track"><span class="lb-bar-fill" style="--w:32.1%;"></span></span></td>
+      <td class="lb-num">8.8%</td>
+      <td class="lb-num hide-mobile">4.3</td>
+      <td class="lb-score-cell"><span class="lb-score off">N/A</span><span class="lb-zone off">Off-index</span></td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- THE CENTRAL FINDING -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">The central finding</div>
+    <h2 class="section-title">In pets, being recommended is if anything a sign of a <em>worse</em> store</h2>
+    <p class="section-body">In the first three categories the relationship between recommendation and readiness was zero. Pets is different. Here the correlation between Recommendation Frequency&trade; and AI Commerce Score&trade; is <strong>r = -0.366 (n = 39)</strong>, a weak but marginally significant <strong>negative</strong> relationship. The more often AI recommends a pet brand, the slightly worse its store tends to be. Each dot is a single-brand store.</p>
+    <div class="chart-card chart-card-wide scatter-card" id="scatter-pets">
+      <div class="chart-card-title">Recommendation Frequency&trade; vs AI Commerce Score&trade;</div>
+      <div class="chart-card-sub">Each dot is a brand. 39 on-index brands shown.</div>
+      <div class="scatter-wrap">
+        <svg viewBox="0 0 720 430" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scatter plot of recommendation frequency versus AI Commerce Score for pet brands, showing a weak negative relationship"><g class="scatter-gridlines">
+  <line x1="64" y1="374.0" x2="696" y2="374.0" stroke="var(--card-line)" stroke-width="1"/><text x="54" y="378.0" text-anchor="end" class="sc-tick">0</text><line x1="64" y1="287.5" x2="696" y2="287.5" stroke="var(--card-line)" stroke-width="1"/><text x="54" y="291.5" text-anchor="end" class="sc-tick">25</text><line x1="64" y1="201.0" x2="696" y2="201.0" stroke="var(--card-line)" stroke-width="1"/><text x="54" y="205.0" text-anchor="end" class="sc-tick">50</text><line x1="64" y1="114.5" x2="696" y2="114.5" stroke="var(--card-line)" stroke-width="1"/><text x="54" y="118.5" text-anchor="end" class="sc-tick">75</text><line x1="64" y1="28.0" x2="696" y2="28.0" stroke="var(--card-line)" stroke-width="1"/><text x="54" y="32.0" text-anchor="end" class="sc-tick">100</text><line x1="64.0" y1="28" x2="64.0" y2="374" stroke="var(--card-line)" stroke-width="1"/><text x="64.0" y="394" text-anchor="middle" class="sc-tick">0%</text><line x1="169.3" y1="28" x2="169.3" y2="374" stroke="var(--card-line)" stroke-width="1"/><text x="169.3" y="394" text-anchor="middle" class="sc-tick">5%</text><line x1="274.7" y1="28" x2="274.7" y2="374" stroke="var(--card-line)" stroke-width="1"/><text x="274.7" y="394" text-anchor="middle" class="sc-tick">10%</text><line x1="380.0" y1="28" x2="380.0" y2="374" stroke="var(--card-line)" stroke-width="1"/><text x="380.0" y="394" text-anchor="middle" class="sc-tick">15%</text><line x1="485.3" y1="28" x2="485.3" y2="374" stroke="var(--card-line)" stroke-width="1"/><text x="485.3" y="394" text-anchor="middle" class="sc-tick">20%</text><line x1="590.7" y1="28" x2="590.7" y2="374" stroke="var(--card-line)" stroke-width="1"/><text x="590.7" y="394" text-anchor="middle" class="sc-tick">25%</text><line x1="696.0" y1="28" x2="696.0" y2="374" stroke="var(--card-line)" stroke-width="1"/><text x="696.0" y="394" text-anchor="middle" class="sc-tick">30%</text><line x1="64" y1="201.0" x2="696" y2="201.0" stroke="var(--bar-gray)" stroke-opacity="0.4" stroke-width="1" stroke-dasharray="4 4"/><line x1="64" y1="131.8" x2="696" y2="131.8" stroke="var(--amber)" stroke-opacity="0.4" stroke-width="1" stroke-dasharray="4 4"/><line x1="64" y1="79.9" x2="696" y2="79.9" stroke="var(--green)" stroke-opacity="0.4" stroke-width="1" stroke-dasharray="4 4"/>
+  
+  
+  
+  
+<text x="380" y="422" text-anchor="middle" class="sc-axis">Recommendation Frequency&trade; (percent of prompts)</text><text x="16" y="201" text-anchor="middle" class="sc-axis" transform="rotate(-90 16 201)">AI Commerce Score&trade;</text></g><g class="scatter-dots"><circle class="scatter-dot" style="--i:0;" cx="649.7" cy="270.2" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Blue Buffalo: 27.8% frequency, score 30</title></circle><circle class="scatter-dot" style="--i:1;" cx="586.5" cy="228.7" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Merrick: 24.8% frequency, score 42</title></circle><circle class="scatter-dot" style="--i:2;" cx="306.3" cy="221.8" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Canidae: 11.5% frequency, score 44</title></circle><circle class="scatter-dot" style="--i:3;" cx="274.7" cy="145.6" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Ruffwear: 10.0% frequency, score 66</title></circle><circle class="scatter-dot" style="--i:4;" cx="274.7" cy="256.4" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Burt's Bees: 10.0% frequency, score 34</title></circle><circle class="scatter-dot" style="--i:5;" cx="264.1" cy="325.6" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Orijen: 9.5% frequency, score 14</title></circle><circle class="scatter-dot" style="--i:6;" cx="264.1" cy="145.6" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>KONG: 9.5% frequency, score 66</title></circle><circle class="scatter-dot" style="--i:7;" cx="179.9" cy="176.8" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Acana: 5.5% frequency, score 57</title></circle><circle class="scatter-dot" style="--i:8;" cx="179.9" cy="162.9" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Kurgo: 5.5% frequency, score 61</title></circle><circle class="scatter-dot" style="--i:9;" cx="169.3" cy="100.7" r="6" fill="var(--amber)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Benebone: 5.0% frequency, score 79</title></circle><circle class="scatter-dot" style="--i:10;" cx="169.3" cy="242.5" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Catit: 5.0% frequency, score 38</title></circle><circle class="scatter-dot" style="--i:11;" cx="169.3" cy="194.1" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>World's Best Cat Litter: 5.0% frequency, score 52</title></circle><circle class="scatter-dot" style="--i:12;" cx="169.3" cy="197.5" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Ollie: 5.0% frequency, score 51</title></circle><circle class="scatter-dot" style="--i:13;" cx="169.3" cy="156.0" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>West Paw: 5.0% frequency, score 63</title></circle><circle class="scatter-dot" style="--i:14;" cx="169.3" cy="204.5" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>PetPlate: 5.0% frequency, score 49</title></circle><circle class="scatter-dot" style="--i:15;" cx="169.3" cy="173.3" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>The Farmer's Dog: 5.0% frequency, score 58</title></circle><circle class="scatter-dot" style="--i:16;" cx="169.3" cy="207.9" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Nylabone: 5.0% frequency, score 48</title></circle><circle class="scatter-dot" style="--i:17;" cx="169.3" cy="204.5" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Nom Nom: 5.0% frequency, score 49</title></circle><circle class="scatter-dot" style="--i:18;" cx="154.6" cy="159.5" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Just Food For Dogs: 4.3% frequency, score 62</title></circle><circle class="scatter-dot" style="--i:19;" cx="133.5" cy="190.6" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>A Pup Above: 3.3% frequency, score 53</title></circle><circle class="scatter-dot" style="--i:20;" cx="127.2" cy="325.6" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Solid Gold: 3.0% frequency, score 14</title></circle><circle class="scatter-dot" style="--i:21;" cx="106.1" cy="197.5" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Zee.Dog: 2.0% frequency, score 51</title></circle><circle class="scatter-dot" style="--i:22;" cx="101.9" cy="183.7" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Greenies: 1.8% frequency, score 55</title></circle><circle class="scatter-dot" style="--i:23;" cx="91.4" cy="180.2" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Orvis: 1.3% frequency, score 56</title></circle><circle class="scatter-dot" style="--i:24;" cx="91.4" cy="201.0" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Zignature: 1.3% frequency, score 50</title></circle><circle class="scatter-dot" style="--i:25;" cx="85.1" cy="207.9" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Outward Hound: 1.0% frequency, score 48</title></circle><circle class="scatter-dot" style="--i:26;" cx="80.9" cy="124.9" r="6" fill="var(--amber)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Pawstruck: 0.8% frequency, score 72</title></circle><circle class="scatter-dot" style="--i:27;" cx="74.5" cy="197.5" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Petlibro: 0.5% frequency, score 51</title></circle><circle class="scatter-dot" style="--i:28;" cx="74.5" cy="121.4" r="6" fill="var(--amber)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Casper: 0.5% frequency, score 73</title></circle><circle class="scatter-dot" style="--i:29;" cx="74.5" cy="152.6" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Petcube: 0.5% frequency, score 64</title></circle><circle class="scatter-dot" style="--i:30;" cx="74.5" cy="159.5" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Litter-Robot: 0.5% frequency, score 62</title></circle><circle class="scatter-dot" style="--i:31;" cx="74.5" cy="135.3" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Brentwood Home: 0.5% frequency, score 69</title></circle><circle class="scatter-dot" style="--i:32;" cx="70.3" cy="180.2" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Spot and Tango: 0.3% frequency, score 56</title></circle><circle class="scatter-dot" style="--i:33;" cx="70.3" cy="138.7" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>L.L. Bean: 0.3% frequency, score 68</title></circle><circle class="scatter-dot" style="--i:34;" cx="70.3" cy="232.1" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Vivo: 0.3% frequency, score 41</title></circle><circle class="scatter-dot" style="--i:35;" cx="70.3" cy="180.2" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Hello Fresh: 0.3% frequency, score 56</title></circle><circle class="scatter-dot" style="--i:36;" cx="70.3" cy="180.2" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Earth Animal: 0.3% frequency, score 56</title></circle><circle class="scatter-dot" style="--i:37;" cx="70.3" cy="246.0" r="6" fill="var(--red)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Advantage: 0.3% frequency, score 37</title></circle><circle class="scatter-dot" style="--i:38;" cx="70.3" cy="162.9" r="6" fill="var(--bar-gray)" fill-opacity="0.85" stroke="var(--card)" stroke-width="1.5"><title>Diggs: 0.3% frequency, score 61</title></circle><text x="639.7" y="273.7" text-anchor="end" class="sc-label">Blue Buffalo</text><text x="284.7" y="259.9" text-anchor="start" class="sc-label">Burt's Bees</text><text x="179.3" y="104.2" text-anchor="start" class="sc-label">Benebone</text><text x="284.7" y="149.1" text-anchor="start" class="sc-label">Ruffwear</text><text x="316.3" y="225.3" text-anchor="start" class="sc-label">Canidae</text><text x="596.5" y="232.2" text-anchor="start" class="sc-label">Merrick</text><text x="274.1" y="329.1" text-anchor="start" class="sc-label">Orijen</text><text x="254.1" y="149.1" text-anchor="end" class="sc-label">KONG</text></g></svg>
       </div>
-      <div>
-        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
-          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
-          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      <div class="chart-legend"><div class="legend-item"><span class="legend-dot" style="background:var(--green);"></span>Highly (85+)</div><div class="legend-item"><span class="legend-dot" style="background:var(--amber);"></span>Moderately (70 to 84)</div><div class="legend-item"><span class="legend-dot" style="background:var(--bar-gray);"></span>Low (50 to 69)</div><div class="legend-item"><span class="legend-dot" style="background:var(--red);"></span>AI Invisible (under 50)</div></div>
+    </div>
+    <div class="bias-card">The pet-food establishment dominates on fame. <strong>Blue Buffalo</strong> (27.8 percent of prompts, score 30), <strong>Merrick</strong> (24.8 percent, score 42), and <strong>Purina Pro Plan</strong> (26.8 percent, not even in our index) win the most recommendations while their stores are weak or absent. Meanwhile the best-built stores in the set, <strong>Benebone</strong> (79), <strong>Casper</strong> (73), and <strong>Pawstruck</strong> (72), barely appear at all.</div>
+    <p class="section-body" style="margin-top:20px;">This is the clearest inversion we have measured. The legacy food giants AI grew up on dominate the answers, and the modern direct-to-consumer brands building the most readable stores are the ones it overlooks. The average AI Commerce Score&trade; across all on-index recommended brands is just <strong>52.7</strong>.</p>
+  </div>
+</section>
+
+<!-- ON INDEX -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">What maps to a real store</div>
+    <h2 class="section-title">Brands, not <em>retailers</em></h2>
+    <p class="section-body">Pets is the most marketplace-driven category we have measured. Retailers like Chewy, Petco, and Amazon took 7.1 percent of recommendations, more than in beauty, supplements, or coffee. And only 19.8 percent of recommendations map to a single-brand store we measure, the lowest share yet.</p>
+    <div class="stat-pair-grid">
+      <div class="stat-pair-card"><div class="stat-pair-big">19.8%</div><div class="stat-pair-lbl">of recommendations map to a single-brand store we actually measure (on-index)</div></div>
+      <div class="stat-pair-card"><div class="stat-pair-big">7.1%</div><div class="stat-pair-lbl">go to retailers and marketplaces, separated out and kept entirely out of the brand analysis</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT MEANS -->
+<section>
+  <div class="container">
+    <div class="kicker">What it means</div>
+    <h2 class="section-title">Visibility is not <em>recommendation</em>, and recommendation is not <em>readiness</em></h2>
+    <p class="section-body">Today AI recommends from memory. It reaches for the names it saw most during training, which in pets means the legacy food giants, even when their stores are weak or absent and the best modern stores go unnamed. That bias is baked in, and it is temporary. As AI shopping moves from recalling names to live retrieval and agents that browse, compare, and check out, the advantage shifts to the stores an agent can actually read, trust, and act on.</p>
+    <p class="section-body" style="margin-top:14px;">That is the gap this research exposes and the one the <a href="/framework">Recommendation Intelligence Framework&trade;</a> is built to close: AI Readability, AI Understanding, AI Trust, Recommendation Intelligence, and Decision Confidence. The brands coasting on fame today are the ones with the most to lose when the model changes. The modern brands building readable, trustworthy, machine-legible stores now are the ones that keep the recommendation when memory stops being enough.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="score">
+  <div class="container">
+    <div class="final-cta">
+      <h2>Will AI still <em>recommend</em> you when it has to read your store?</h2>
+      <p>Get your free AI Commerce Score™ in 10 seconds and see exactly where your store stands on the signals that decide AI recommendations.</p>
+      <div class="scan-box">
+        <input type="text" placeholder="Paste your store URL">
+        <button>Get My Free AI Score</button>
+      </div>
+      <div class="scan-note">Free <span>·</span> No signup <span>·</span> Results in 10 seconds</div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED SERIES -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Keep reading</div>
+    <h2 class="section-title">Part of the <em>five-niche series</em></h2>
+    <p class="section-body" style="margin-bottom:24px;">Pets is one of five category studies. They roll up into one cross-commerce flagship, and each sibling niche runs the identical method.</p>
+    <div class="products-grid">
+      <a class="mini-card" href="/research/ai-recommendations-across-commerce-2026" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">★ Flagship</div>
+        <div class="mini-card-title">Across Commerce 2026</div>
+        <div class="mini-card-body">20,000 recommendations, 1,490 brands, five categories. The full synthesis.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/state-of-ai-recommendations-beauty" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Category report</div>
+        <div class="mini-card-title">Beauty</div>
+        <div class="mini-card-body">4,000 recommendations, 238 brands. Frequency vs readiness r = +0.17.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/state-of-ai-recommendations-coffee" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Category report</div>
+        <div class="mini-card-title">Coffee</div>
+        <div class="mini-card-body">4,000 recommendations, 228 brands. Frequency vs readiness r = +0.019.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/state-of-ai-recommendations-supplements" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Category report</div>
+        <div class="mini-card-title">Supplements</div>
+        <div class="mini-card-body">4,000 recommendations, 371 brands. Frequency vs readiness r = &minus;0.015.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/state-of-ai-recommendations-home-living" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Category report</div>
+        <div class="mini-card-title">Home & Living</div>
+        <div class="mini-card-body">4,000 recommendations, 271 brands. Frequency vs readiness r = +0.108.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/framework" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Framework</div>
+        <div class="mini-card-title">Recommendation Intelligence Framework™</div>
+        <div class="mini-card-body">The five layers that decide whether AI reads, trusts, and recommends your store.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+    </div>
+    <p class="related-more"><a href="/research"><span class="nav-chevron chevron-l-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>All research</a> &nbsp;·&nbsp; <a href="/methodology">Methodology</a> &nbsp;·&nbsp; <a href="/vocabulary">Vocabulary</a> &nbsp;·&nbsp; <a href="/stores">Stores</a></p>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
         </div>
-        <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
       </div>
     </div>
-  </footer>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) nav.classList.add('nav-compact');
+      else nav.classList.remove('nav-compact');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
+  })();
+
+  // Hero stat count-up: numbers animate from 0 to their real value
+  // once scrolled into view, same eased pattern used across the site.
+  (function(){
+    function easeOutCubic(p){ return 1 - Math.pow(1 - p, 3); }
+    function animateValueEl(el, duration){
+      if (!el) return;
+      const target = Number(el.dataset.target) || 0;
+      const comma = el.dataset.comma === '1';
+      const start = performance.now();
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = easeOutCubic(p);
+        const val = eased * target;
+        el.textContent = comma ? Math.round(val).toLocaleString('en-US') : Math.round(val).toString();
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    document.querySelectorAll('.hero-stat-num[data-target]').forEach(el => {
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { animateValueEl(el, 1100); io.unobserve(entry.target); }
+          });
+        }, { threshold: 0.4 });
+        io.observe(el);
+      } else {
+        animateValueEl(el, 1100);
+      }
+    });
+  })();
+
+  // Reveal-on-scroll for the leaderboard: rows cascade in one after
+  // another (speed set via --i * delay in CSS, easy to retune later).
+  (function(){
+    document.querySelectorAll('.leaderboard').forEach(table => {
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { table.classList.add('in-view'); io.unobserve(entry.target); }
+          });
+        }, { threshold: 0.05, rootMargin: '0px 0px -10% 0px' });
+        io.observe(table);
+      } else {
+        table.classList.add('in-view');
+      }
+    });
+  })();
+
+  // Reveal-on-scroll for the scatter/bubble chart: dots pop in with a
+  // staggered springy animation, gridlines fade in underneath.
+  (function(){
+    document.querySelectorAll('.scatter-card').forEach(card => {
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { card.classList.add('in-view'); io.unobserve(entry.target); }
+          });
+        }, { threshold: 0.15 });
+        io.observe(card);
+      } else {
+        card.classList.add('in-view');
+      }
+    });
+  })();
+</script>
+<style>
+.aiw-root{position:fixed;bottom:22px;right:22px;z-index:2000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+.aiw-fab{position:relative;width:52px;height:52px;border-radius:14px;background:#0b0d0e;border:1px solid #262b2e;display:flex;align-items:center;justify-content:center;color:#5fe0af;cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,0.45);transition:transform .2s ease,box-shadow .2s ease;padding:0;}
+.aiw-fab:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.5);}
+.aiw-heart{width:22px;height:22px;}
+.aiw-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aiw-heart-pulse{stroke:#5fe0af;fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aiwHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aiwHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aiw-heart-pulse,.aiw-panel-dot{animation:none;}}
+.aiw-panel{position:absolute;bottom:64px;right:0;width:230px;background:#0b0d0e;border:1px solid #262b2e;border-radius:18px;padding:22px 20px 20px;box-shadow:0 34px 64px -20px rgba(0,0,0,0.6);transform-origin:bottom right;transform:scale(0.94) translateY(8px);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;}
+.aiw-root.is-open .aiw-panel{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
+.aiw-root.is-open .aiw-fab{color:#e8e8e8;}
+.aiw-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#565c60;font-size:18px;cursor:pointer;line-height:1;padding:2px;font-family:inherit;}
+.aiw-close:hover{color:#e8e8e8;}
+.aiw-panel-head{margin-bottom:20px;padding-right:18px;}
+.aiw-panel-title-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.aiw-panel-dot{width:6px;height:6px;border-radius:50%;background:#5fe0af;box-shadow:0 0 0 0 rgba(95,224,175,.6);animation:aiwDotPulse 2.4s infinite;flex-shrink:0;}
+@keyframes aiwDotPulse{70%{box-shadow:0 0 0 6px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
+.aiw-panel-title-main{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11.5px;font-weight:800;color:#f2f4f5;letter-spacing:.03em;line-height:1.3;}
+.aiw-panel-title-sub{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:10px;color:#868c91;letter-spacing:.03em;}
+.aiw-rings{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.aiw-ring-item{display:flex;align-items:center;gap:12px;text-align:left;}
+.aiw-ring-visual{position:relative;width:44px;height:44px;flex-shrink:0;}
+.aiw-ring-visual svg{width:100%;height:100%;transform:rotate(-90deg);}
+.aiw-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.aiw-ring-fill{fill:none;stroke:#5fe0af;stroke-width:5;stroke-linecap:round;stroke-dashoffset:106.81;transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.aiw-root.is-open .aiw-ring-fill{stroke-dashoffset:var(--offset);}
+.aiw-ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;font-weight:800;color:#f2f4f5;}
+.aiw-ring-label{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;color:#b4b8bc;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.aiw-note{font-size:10.5px;color:#565c60;line-height:1.5;margin:0 0 14px;}
+.aiw-link{display:block;text-align:center;background:#5fe0af;color:#080808;font-weight:700;font-size:12.5px;padding:10px;border-radius:9px;text-decoration:none;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;transition:background .15s;}
+.aiw-link:hover{background:#7ee9be;}
+@media(max-width:520px){
+  .aiw-root{bottom:16px;right:16px;}
+  .aiw-panel{width:calc(100vw - 32px);right:-6px;}
+}
+</style>
+<!-- AI_SIGNAL_WIDGET:START -->
+<div class="aiw-root" id="aiwRoot">
+  <button class="aiw-fab" id="aiwFab" aria-label="AI signal for atomfoundry.dev" aria-expanded="false" type="button">
+    <svg class="aiw-heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="aiw-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="aiw-heart-pulse" id="aiwHeartPulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="aiw-panel" id="aiwPanel" role="dialog" aria-label="AI signal for atomfoundry.dev">
+    <button class="aiw-close" id="aiwClose" aria-label="Close" type="button">&times;</button>
+    <div class="aiw-panel-head">
+      <div class="aiw-panel-title-row"><span class="aiw-panel-dot"></span><span class="aiw-panel-title-main">AI AGENT SNAPSHOT</span></div>
+      <div class="aiw-panel-title-sub">ATOM FOUNDRY.dev</div>
+    </div>
+    <div class="aiw-rings">
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:42.72"/>
+            </svg>
+            <div class="aiw-ring-value">3</div>
+          </div>
+          <div class="aiw-ring-label">Today</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:58.75"/>
+            </svg>
+            <div class="aiw-ring-value">6</div>
+          </div>
+          <div class="aiw-ring-label">Bots</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:10.68"/>
+            </svg>
+            <div class="aiw-ring-value">4m</div>
+          </div>
+          <div class="aiw-ring-label">Last seen</div>
+        </div>
+    </div>
+    <p class="aiw-note">Illustrative example &middot; single-site signal for atomfoundry.dev.</p>
+    <a href="/ai-signal" class="aiw-link">View full signals &rarr;</a>
+  </div>
 </div>
+<!-- AI_SIGNAL_WIDGET:END -->
+<script>
+(function(){
+  var root = document.getElementById('aiwRoot');
+  if(!root) return;
+  var fab = document.getElementById('aiwFab');
+  var closeBtn = document.getElementById('aiwClose');
+  var heart = document.getElementById('aiwHeartPulse');
+  function restartHeartbeat(){
+    if (!heart) return;
+    heart.style.animation = 'none';
+    void heart.getBBox();
+    heart.style.animation = '';
+  }
+  function setOpen(open){
+    root.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    restartHeartbeat();
+  }
+  fab.addEventListener('click', function(){ setOpen(!root.classList.contains('is-open')); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+  }
+  document.addEventListener('click', function(e){
+    if (root.classList.contains('is-open') && !root.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
 </body>
 </html>
