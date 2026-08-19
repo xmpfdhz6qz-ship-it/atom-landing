@@ -1129,5 +1129,64 @@ h2 em{color:var(--orange);}
   });
 })();
 </script>
+<!-- AIW_LIVE:START -->
+<script>
+(function(){
+  // Pulls real numbers for the AI signal widget from the shop_ai_visits log
+  // (via /webhook/shop-ai-signal) and replaces the static placeholder values
+  // baked into the markup above. Ring order in the DOM is fixed: Today,
+  // Bots, Last seen -- selected positionally, no id changes needed.
+  var ringsRoot = document.querySelector('.aiw-rings');
+  if (!ringsRoot) return;
+  var items = ringsRoot.querySelectorAll('.aiw-ring-item');
+  if (items.length < 3) return;
+  var todayValue = items[0].querySelector('.aiw-ring-value');
+  var todayFill  = items[0].querySelector('.aiw-ring-fill');
+  var botsValue  = items[1].querySelector('.aiw-ring-value');
+  var botsFill   = items[1].querySelector('.aiw-ring-fill');
+  var lastValue  = items[2].querySelector('.aiw-ring-value');
+  var lastFill   = items[2].querySelector('.aiw-ring-fill');
+  var noteEl = document.querySelector('.aiw-note');
+  var CIRC = 106.81;
+
+  function setFill(el, fraction){
+    if (!el) return;
+    var f = Math.max(0, Math.min(1, fraction || 0));
+    el.style.setProperty('--offset', (CIRC * (1 - f)).toFixed(2));
+  }
+  function relTime(iso){
+    if (!iso) return '\u2014';
+    var diffMs = Date.now() - new Date(iso).getTime();
+    if (isNaN(diffMs)) return '\u2014';
+    var mins = Math.max(0, Math.round(diffMs / 60000));
+    if (mins < 1) return 'now';
+    if (mins < 60) return mins + 'm';
+    var hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + 'h';
+    var days = Math.round(hrs / 24);
+    return days + 'd';
+  }
+
+  fetch('https://n8n-production-1d7c.up.railway.app/webhook/shop-ai-signal', { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ if (!r.ok) throw new Error('bad status'); return r.json(); })
+    .then(function(data){
+      var visits = Number(data.today_count) || 0;
+      var agents = Number(data.unique_agents) || 0;
+      var lastSeen = data.last_seen || null;
+      if (todayValue) todayValue.textContent = visits.toLocaleString('en-US');
+      setFill(todayFill, visits / 30);
+      if (botsValue) botsValue.textContent = String(agents);
+      setFill(botsFill, agents / 12);
+      if (lastValue) lastValue.textContent = relTime(lastSeen);
+      var minsAgo = lastSeen ? (Date.now() - new Date(lastSeen).getTime()) / 60000 : null;
+      setFill(lastFill, minsAgo == null ? 0 : (1 - Math.min(minsAgo / 120, 1)));
+      if (noteEl) noteEl.textContent = 'Live AI crawler activity on atomfoundry.dev.';
+    })
+    .catch(function(){
+      if (noteEl) noteEl.textContent = 'Live signal temporarily unavailable.';
+    });
+})();
+</script>
+<!-- AIW_LIVE:END -->
 </body>
 </html>
