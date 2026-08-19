@@ -3,8 +3,15 @@
 // pass straight through. Fire-and-forget with a 2s timeout — never blocks a page.
 //
 // Note: /store/(.*) is no longer handled here. It's proxied directly in
-// vercel.json to the "AI Readiness — Store SSR" n8n webhook, which renders
-// every scanned store live from Postgres (see that workflow + README notes).
+// vercel.json to /store.html, which renders every scanned store live via
+// the /get-store API (see vercel.json + store.html for details).
+//
+// Beacon target: /webhook/ai-visit -> ai_visits table (atomfoundry.dev's own
+// traffic only, incl. our /api/ai/* readiness probes). Read back by
+// /webhook/shop-ai-signal (name kept for compatibility with the widget script
+// already deployed sitewide) for the AI signal widget + /ai-signal. Do NOT
+// point this at shop-ai-visit / shop_ai_visits -- that table is customer-eshop
+// AI Monitoring data, unrelated to atomfoundry.dev's own site.
 
 export const config = {
   // Pages + text/xml (llms.txt, robots.txt, sitemaps); SKIP static assets.
