@@ -3,254 +3,638 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Shopify Store AI Readiness Scan — Atom Foundry</title>
-<meta name="description" content="Find out why AI assistants like ChatGPT and Perplexity skip your Shopify store. Free scan reveals your AI Readiness Score and the exact revenue leaks costing you sales.">
+<title>Free AI Commerce Score Results · Atom Foundry</title>
+<meta name="description" content="See your free AI Commerce Score and the 8 factors behind it. Free, instant, no signup required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+:root{
+  --white:#fdfcfa;
+  --off-white:#f1efe8;
+  --gray-100:#fbfaf7;
+  --gray-300:#e6e2d6;
+  --gray-500:#938f81;
+  --gray-700:#4a463c;
+  --black:#161512;
+  --cream:#f0eee6;
+  --orange:#fe6a03;
+  --green:#1D9E75;
+  --amber:#e0a233;
+  --red:#d93c3c;
+  --bar-gray:#847e6d;
+  --card:#e3dacc;
+  --card-line:rgba(22,21,18,0.09);
+  --radius:4px;
+  --maxw:1440px;
+  --serif:"Nunito","Inter",sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  color:var(--black);
+  background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 45%);
-  pointer-events: none;
-  z-index: 0;
+/* ---------- NAV ---------- */
+header.nav{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(240,238,230,0.88);
+  backdrop-filter:saturate(160%) blur(16px);
+  -webkit-backdrop-filter:saturate(160%) blur(16px);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+  transition:padding .6s cubic-bezier(.65,0,.35,1);
+}
+header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+.nav-brand{display:flex;align-items:center;}
+.logo{display:flex;align-items:center;transition:opacity .25s ease;}
+.logo:hover{opacity:0.8;}
+.logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+.logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;text-transform:uppercase;}
+.logo-word .atom{color:var(--black);white-space:nowrap;}
+.logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+
+nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+.nav-item{position:relative;display:flex;align-items:center;}
+.nav-trigger{
+  font-size:13px;font-weight:700;color:var(--black);
+  text-transform:uppercase;letter-spacing:0.07em;
+  position:relative;padding:4px 2px;white-space:nowrap;
+  text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+  transition:color .2s ease, text-decoration-color .2s ease;
+}
+.nav-trigger.strong{color:var(--orange);}
+.nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+.nav-chevron{
+  display:inline-flex;width:10px;height:7px;margin-left:6px;
+  vertical-align:middle;color:currentColor;
+  transition:transform .2s ease;
+}
+.nav-chevron svg{display:block;width:100%;height:100%;}
+.nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+@media (hover:hover) and (pointer:fine){
+  .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+  .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.dropdown{
+  position:absolute;top:100%;left:0;margin-top:6px;
+  background:var(--cream);
+  border:1px solid var(--card-line);
+  border-radius:var(--radius);
+  box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+  padding:12px;width:max-content;max-width:300px;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index:1100;
+}
+.dropdown.dropdown-right{left:auto;right:0;}
+.nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+a.dd-item:hover{background:rgba(22,21,18,0.06);}
+a.dd-item:hover .dd-title{color:var(--orange);}
+.dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+/* ---------- FOOTER ---------- */
+footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;}
+.footer-inner{max-width:var(--maxw);margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+.footer-brand-col .logo-word{margin-bottom:14px;}
+.footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+.footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+.footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+.footer-stats-row b{color:var(--black);font-weight:700;}
+.footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+.footer-col{display:flex;flex-direction:column;gap:12px;}
+.footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+.footer-col a:hover{color:var(--orange);}
+.footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+.social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+.social-row a{color:var(--gray-500);transition:color .25s ease;}
+.social-row a:hover{color:var(--orange);}
+.social-row a.strong{font-weight:800;color:var(--black);}
+.social-row a.strong:hover{color:var(--orange);}
+.ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+.ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+.ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:var(--mono);}
+.ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+.ai-sitemap a:hover{color:var(--orange);}
+
+/* ---------- RESPONSIVE (nav + footer) ---------- */
+@media (max-width:900px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+  nav.links{gap:14px;}
+  .nav-trigger{font-size:12px;}
+}
+@media (max-width:680px){
+  .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+  header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+  .logo-word{font-size:24px;}
+  .nav-toggle{display:flex;}
+  nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+  header.nav.nav-mobile-open nav.links{display:flex;}
+  .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
+  .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
+  .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+  .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+  .footer-inner{padding:0 4px;}
 }
 
-#redirectScreen {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #0a0a0a;
-  z-index: 200;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 24px;
-}
-#redirectScreen.active { display: flex; }
+/* =====================================================================
+   SCAN RESULTS PAGE
+   ===================================================================== */
+.rs-shell{max-width:640px;margin:0 auto;padding:56px 24px 96px;min-height:56vh;}
 
-.redirect-logo {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  color: white;
-  margin-bottom: 48px;
-}
-.redirect-logo span { color: #ff6b35; }
+/* ---- state visibility ---- */
+#redirectScreen,#scanningOverlay,#resultOverlay{display:none;}
+#redirectScreen.active{display:block;}
+#scanningOverlay.active,#resultOverlay.active{display:flex;flex-direction:column;align-items:center;text-align:center;}
 
-.cards-wrap {
-  max-width: 520px;
-  width: 100%;
-  margin-bottom: 48px;
-}
+/* ---- redirect screen (fallback if someone opens /scan.html with no domain) ---- */
+.rs-kicker{display:block;font-size:12px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;text-align:center;}
+.rs-redirect-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);font-weight:800;text-align:center;margin-bottom:36px;letter-spacing:-0.01em;}
+.rs-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:36px;}
+.rs-info-card{background:var(--white);border:1px solid var(--gray-300);border-radius:12px;padding:22px 24px;display:flex;align-items:flex-start;gap:16px;text-align:left;box-shadow:0 10px 24px -16px rgba(22,21,18,0.16);opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
+.rs-info-card.visible{opacity:1;transform:translateY(0);}
+.rs-info-card.highlight{border-color:rgba(254,106,3,0.3);background:linear-gradient(160deg,#fff 0%,var(--off-white) 100%);}
+.rs-card-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.rs-card-title{font-size:15px;font-weight:800;color:var(--black);margin-bottom:4px;}
+.rs-card-desc{font-size:13px;color:var(--gray-700);line-height:1.6;}
+.rs-card-stat{font-size:21px;font-weight:900;color:var(--orange);margin-bottom:2px;font-family:var(--serif);}
+.rs-redirect-footer{font-size:13px;color:var(--gray-500);display:flex;align-items:center;justify-content:center;gap:10px;}
+.rs-redirect-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:rsBlink 1s ease-in-out infinite;}
+@keyframes rsBlink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.7);}}
+.rs-progress-wrap{width:200px;height:3px;background:var(--gray-300);border-radius:2px;margin:20px auto 0;overflow:hidden;}
+.rs-progress-bar{height:100%;background:var(--orange);border-radius:2px;width:0%;transition:width linear;}
 
-.info-card {
-  background: #111;
-  border: 1px solid #1e1e1e;
-  border-radius: 14px;
-  padding: 24px 28px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  text-align: left;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.info-card.visible { opacity: 1; transform: translateY(0); }
-.info-card.highlight { border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.05); }
+/* ---- scanning overlay ---- */
+.rs-scan-domain{font-family:var(--serif);font-size:24px;font-weight:800;color:var(--black);margin-bottom:6px;}
+.rs-scan-status{font-size:14.5px;color:var(--gray-700);margin-bottom:28px;}
+.rs-scan-track{width:100%;max-width:340px;height:6px;background:var(--gray-300);border-radius:3px;overflow:hidden;margin-bottom:10px;}
+.rs-scan-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff8a3d,var(--orange));border-radius:3px;transition:width .25s ease;}
+.rs-scan-pct{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--orange);margin-bottom:32px;}
+.rs-scan-steps{display:flex;flex-direction:column;gap:10px;max-width:320px;width:100%;}
+.rs-step{font-size:13px;color:var(--gray-300);display:flex;align-items:center;gap:10px;text-align:left;}
+.rs-step.done{color:var(--gray-500);}
+.rs-step.done::before{content:'✓';color:var(--orange);font-weight:800;}
+.rs-step.active{color:var(--black);font-weight:700;}
+.rs-step.active::before{content:'›';color:var(--orange);font-size:16px;font-weight:800;}
+.rs-step.pending::before{content:'○';color:var(--gray-300);}
 
-.card-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
-.card-body {}
-.card-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-.card-desc { font-size: 13px; color: #888; line-height: 1.6; }
-.card-stat { font-size: 22px; font-weight: 800; color: #ff6b35; margin-bottom: 2px; }
+/* ---- result overlay: sci-fi ring ---- */
+.rs-result-kicker{font-size:12px;color:var(--orange);letter-spacing:0.14em;text-transform:uppercase;font-weight:800;margin-bottom:14px;}
+.rs-result-domain{font-family:var(--serif);font-size:22px;font-weight:800;color:var(--black);margin-bottom:30px;}
 
-.redirect-footer {
-  font-size: 13px;
-  color: #555;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.redirect-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: #ff6b35;
-  animation: pulse 1s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.7); }
-}
+.rs-ring-wrap{position:relative;width:200px;height:200px;margin:0 auto 28px;}
+.rs-ring-wrap svg{position:absolute;inset:0;overflow:visible;}
+.rs-ring-outer{animation:rsRingSpin 50s linear infinite;transform-origin:center;}
+@keyframes rsRingSpin{to{transform:rotate(360deg);}}
+.rs-ring-ticks line{stroke:var(--gray-300);}
+.rs-ring-main{transform:rotate(-90deg);transform-origin:center;}
+.rs-ring-glow{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle,rgba(254,106,3,0.22),transparent 70%);filter:blur(8px);animation:rsGlowPulse 2.8s ease-in-out infinite;pointer-events:none;}
+@keyframes rsGlowPulse{0%,100%{opacity:.45;transform:scale(.94);}50%{opacity:1;transform:scale(1.05);}}
+.rs-ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.rs-score-val{font-family:var(--serif);font-size:54px;font-weight:900;color:var(--black);line-height:1;letter-spacing:-0.02em;}
+.rs-score-max{font-size:12.5px;color:var(--gray-500);font-family:var(--mono);margin-top:3px;}
+.rs-score-label{font-size:10.5px;color:var(--gray-500);letter-spacing:0.14em;margin-top:3px;font-weight:800;}
 
-.progress-bar-wrap {
-  width: 200px;
-  height: 2px;
-  background: #1e1e1e;
-  border-radius: 1px;
-  margin: 24px auto 0;
-  overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%;
-  background: #ff6b35;
-  border-radius: 1px;
-  width: 0%;
-  transition: width linear;
-}
+.rs-level-kicker{font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-500);margin-bottom:6px;}
+.rs-level{font-family:var(--serif);font-size:21px;font-weight:800;margin-bottom:16px;}
+.rs-message{font-size:15px;color:var(--gray-700);line-height:1.65;max-width:480px;margin:0 auto 36px;}
 
-/* SCANNING STATE */
-.scanning-overlay { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; }
-.scanning-overlay.active { display: flex; }
-.spinner { width: 48px; height: 48px; border: 3px solid #1a1a1a; border-top-color: #ff6b35; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 24px; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.scanning-domain { font-size: 22px; font-weight: 700; color: #ff6b35; margin-bottom: 8px; }
-.scanning-status { font-size: 15px; color: #555; }
-.scanning-steps { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; max-width: 360px; }
-.step { font-size: 13px; color: #333; display: flex; align-items: center; gap: 10px; }
-.step.done { color: #555; }
-.step.done::before { content: '✓'; color: #ff6b35; }
-.step.active { color: #888; }
-.step.active::before { content: '›'; color: #ff6b35; font-size: 16px; font-weight: 700; }
-.step.pending::before { content: '○'; color: #222; }
+/* ---- 8-factor breakdown ---- */
+.rs-factors-label{font-size:11px;font-weight:800;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;text-align:left;width:100%;max-width:480px;}
+.rs-factors{display:flex;flex-direction:column;gap:10px;width:100%;max-width:480px;text-align:left;margin-bottom:40px;}
+.rs-factor-row{background:var(--white);border:1px solid var(--gray-300);border-radius:10px;padding:12px 16px;box-shadow:0 2px 6px rgba(22,21,18,0.05);}
+.rs-factor-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;}
+.rs-factor-label{font-size:12.5px;font-weight:700;color:var(--black);}
+.rs-factor-score{font-size:11.5px;color:var(--gray-500);font-family:var(--mono);flex-shrink:0;}
+.rs-factor-track{height:6px;background:var(--gray-300);border-radius:3px;overflow:hidden;}
+.rs-factor-fill{height:100%;background:var(--orange);border-radius:3px;width:0%;transition:width .8s cubic-bezier(.16,1,.3,1);}
 
-/* RESULT STATE */
-.result-overlay { display: none; position: fixed; inset: 0; background: #0a0a0a; z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; overflow-y: auto; }
-.result-overlay.active { display: flex; }
-.result-inner { max-width: 540px; width: 100%; }
-.result-badge { font-size: 12px; color: #ff6b35; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
-.result-domain { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 32px; }
-.score-ring { position: relative; margin: 0 auto 32px; width: 160px; height: 160px; }
-.score-number { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.score-val { font-size: 56px; font-weight: 800; color: #ff6b35; line-height: 1; }
-.score-max { font-size: 14px; color: #444; }
-.score-label { font-size: 13px; color: #666; margin-top: 4px; }
-svg.ring { transform: rotate(-90deg); }
-.result-level { display: inline-block; padding: 6px 18px; border-radius: 100px; font-size: 13px; font-weight: 600; margin-bottom: 24px; }
-.level-invisible   { background: rgba(239,68,68,0.15);   color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-.level-low         { background: rgba(239,68,68,0.12);   color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
-.level-partial     { background: rgba(245,158,11,0.15);  color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
-.level-moderate    { background: rgba(249,115,22,0.12);  color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
-.level-ready       { background: rgba(34,197,94,0.15);   color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
-.result-message { font-size: 16px; color: #888; line-height: 1.6; margin-bottom: 24px; }
+/* ---- other-products windows ---- */
+.rs-prod-kicker{font-size:12px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}
+.rs-prod-sub{font-size:13.5px;color:var(--gray-700);margin-bottom:20px;}
+.rs-prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;text-align:left;margin-bottom:32px;}
+.rs-prod-card{display:block;background:linear-gradient(160deg,var(--white) 0%,var(--off-white) 100%);border-radius:12px;overflow:hidden;box-shadow:0 14px 26px -18px rgba(22,21,18,0.24),0 4px 10px rgba(22,21,18,0.08);transition:transform .25s ease,box-shadow .25s ease;}
+.rs-prod-card:hover{transform:translateY(-3px);box-shadow:0 20px 34px -16px rgba(22,21,18,0.3);}
+.rs-prod-card-bar{display:flex;align-items:center;gap:6px;padding:9px 14px;border-bottom:1px solid var(--card-line);}
+.rs-prod-card-bar i{width:6px;height:6px;border-radius:50%;background:var(--card-line);display:block;}
+.rs-prod-card-body{padding:14px 16px 16px;}
+.rs-prod-card-name{font-family:var(--serif);font-size:14.5px;font-weight:800;color:var(--black);margin-bottom:6px;line-height:1.25;}
+.rs-prod-card-what{font-size:12px;color:var(--gray-700);line-height:1.5;margin-bottom:10px;}
+.rs-prod-card-cta{font-size:11px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.04em;}
+@media(max-width:520px){.rs-prod-grid{grid-template-columns:1fr;}}
 
-.result-insights { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left; }
-.insight-card { background: #111; border: 1px solid #1a1a1a; border-radius: 10px; padding: 14px 18px; }
-.insight-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-.insight-value { font-size: 14px; color: #ccc; line-height: 1.5; }
-.insight-value strong { color: #ff6b35; }
+.rs-scan-again{font-size:13.5px;color:var(--gray-500);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.rs-scan-again:hover{color:var(--orange);}
 
-.result-cta-primary { display: block; background: #ff6b35; color: #fff; padding: 16px 32px; border-radius: 10px; font-size: 17px; font-weight: 700; text-decoration: none; margin-bottom: 12px; transition: background 0.2s; }
-.result-cta-primary:hover { background: #e55a25; }
-.result-cta-secondary { font-size: 14px; color: #444; cursor: pointer; text-decoration: underline; }
-.result-cta-secondary:hover { color: #666; }
-
-@media (max-width: 600px) {
-  .info-card { padding: 18px 20px; }
-  .card-stat { font-size: 18px; }
+@media (max-width:600px){
+  .rs-shell{padding:40px 20px 72px;}
+  .rs-info-card{padding:18px 20px;}
 }
 </style>
 </head>
 <body>
 
-<!-- REDIRECT ANIMATION SCREEN -->
-<div id="redirectScreen">
-  <div class="redirect-logo">Atom<span>Foundry</span></div>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger active">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
 
-  <div class="cards-wrap">
-    <div class="info-card" id="card1">
-      <div class="card-icon">🤖</div>
-      <div class="card-body">
-        <div class="card-title">AI is now how people shop</div>
-        <div class="card-desc">ChatGPT, Perplexity, and Google AI Overviews are replacing traditional search for product discovery. If AI can't read your store — buyers never find you.</div>
+<main class="rs-shell">
+
+  <!-- REDIRECT ANIMATION SCREEN (shown only if /scan.html is opened with no domain) -->
+  <div id="redirectScreen">
+    <span class="rs-kicker">Atom Foundry &middot; Free AI Commerce Score</span>
+    <div class="rs-redirect-title">Taking you to the free scan</div>
+
+    <div class="rs-cards">
+      <div class="rs-info-card" id="card1">
+        <div class="rs-card-icon">🤖</div>
+        <div>
+          <div class="rs-card-title">AI is now how people shop</div>
+          <div class="rs-card-desc">ChatGPT, Perplexity, and Google AI Overviews are replacing traditional search for product discovery. If AI cannot read your store, buyers never find you.</div>
+        </div>
+      </div>
+
+      <div class="rs-info-card" id="card2">
+        <div class="rs-card-icon">📉</div>
+        <div>
+          <div class="rs-card-stat">78%</div>
+          <div class="rs-card-title">of Shopify stores are AI Invisible</div>
+          <div class="rs-card-desc">Most stores lack schema markup, structured content, and trust signals: the exact things AI needs to recommend a store to shoppers.</div>
+        </div>
+      </div>
+
+      <div class="rs-info-card highlight" id="card3">
+        <div class="rs-card-icon">📊</div>
+        <div>
+          <div class="rs-card-stat">55/100</div>
+          <div class="rs-card-title">average AI Commerce Score&trade;</div>
+          <div class="rs-card-desc">Across 66,090 scanned stores, the average AI Commerce Score is 55 out of 100. Most stores have real, fixable gaps.</div>
+        </div>
+      </div>
+
+      <div class="rs-info-card" id="card4">
+        <div class="rs-card-icon">⚡</div>
+        <div>
+          <div class="rs-card-title">Free scan, 10 seconds, instant results</div>
+          <div class="rs-card-desc">See your AI Commerce Score and the 8 factors behind it. No credit card, no signup, no commitment.</div>
+        </div>
       </div>
     </div>
 
-    <div class="info-card" id="card2">
-      <div class="card-icon">📉</div>
-      <div class="card-body">
-        <div class="card-stat">78%</div>
-        <div class="card-title">of Shopify stores are AI Invisible</div>
-        <div class="card-desc">Most stores lack schema markup, structured content, and trust signals — the exact things AI needs to recommend a store to shoppers.</div>
-      </div>
+    <div class="rs-redirect-footer">
+      <div class="rs-redirect-dot"></div>
+      <span id="redirectMsg">Taking you to the free scan...</span>
     </div>
-
-    <div class="info-card highlight" id="card3">
-      <div class="card-icon">💸</div>
-      <div class="card-body">
-        <div class="card-stat">$330/day</div>
-        <div class="card-title">average revenue leak we find</div>
-        <div class="card-desc">Across 500+ scanned stores, the average daily revenue lost to AI invisibility and conversion gaps is $330. Most stores have 3–4 fixable leaks.</div>
-      </div>
-    </div>
-
-    <div class="info-card" id="card4">
-      <div class="card-icon">⚡</div>
-      <div class="card-body">
-        <div class="card-title">Free scan · 30 seconds · instant results</div>
-        <div class="card-desc">See your AI Readiness Score, your biggest revenue leaks, and exactly what to fix — all for free. No credit card, no commitment.</div>
-      </div>
+    <div class="rs-progress-wrap">
+      <div class="rs-progress-bar" id="progressBar"></div>
     </div>
   </div>
 
-  <div class="redirect-footer">
-    <div class="redirect-dot"></div>
-    <span id="redirectMsg">Taking you to the free scan...</span>
+  <!-- SCANNING STATE -->
+  <div class="scanning-overlay" id="scanningOverlay">
+    <span class="rs-kicker">Scanning</span>
+    <div class="rs-scan-domain" id="scanningDomain"></div>
+    <div class="rs-scan-status">Analyzing your store...</div>
+    <div class="rs-scan-track"><div class="rs-scan-fill" id="scanProgressFill"></div></div>
+    <div class="rs-scan-pct" id="scanProgressPct">0%</div>
+    <div class="rs-scan-steps">
+      <div class="rs-step pending" id="step1">Fetching store data</div>
+      <div class="rs-step pending" id="step2">Checking AI structured signals</div>
+      <div class="rs-step pending" id="step3">Scoring the 8 factors</div>
+      <div class="rs-step pending" id="step4">Finalizing your AI Commerce Score</div>
+    </div>
   </div>
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="progressBar"></div>
-  </div>
-</div>
 
-<!-- SCANNING OVERLAY -->
-<div class="scanning-overlay" id="scanningOverlay">
-  <div class="spinner"></div>
-  <div class="scanning-domain" id="scanningDomain"></div>
-  <div class="scanning-status">Analyzing your store...</div>
-  <div class="scanning-steps">
-    <div class="step pending" id="step1">Fetching store data</div>
-    <div class="step pending" id="step2">Running AI analysis</div>
-    <div class="step pending" id="step3">Calculating revenue leaks</div>
-    <div class="step pending" id="step4">Generating score</div>
-  </div>
-</div>
+  <!-- RESULT STATE -->
+  <div class="result-overlay" id="resultOverlay">
+    <div class="rs-result-kicker">Atom Foundry &middot; Scan Complete</div>
+    <div class="rs-result-domain" id="resultDomain"></div>
 
-<!-- RESULT OVERLAY -->
-<div class="result-overlay" id="resultOverlay">
-  <div class="result-inner">
-    <div class="result-badge">ATOM FOUNDRY — SCAN COMPLETE</div>
-    <div class="result-domain" id="resultDomain"></div>
-    <div class="score-ring">
-      <svg class="ring" width="160" height="160" viewBox="0 0 160 160">
-        <circle cx="80" cy="80" r="68" fill="none" stroke="#1a1a1a" stroke-width="10"/>
-        <circle cx="80" cy="80" r="68" fill="none" stroke="#ff6b35" stroke-width="10" stroke-linecap="round"
-          stroke-dasharray="427" stroke-dashoffset="427" id="scoreCircle" style="transition:stroke-dashoffset 1.2s ease"/>
+    <div class="rs-ring-wrap">
+      <svg class="rs-ring-outer" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="var(--gray-300)" stroke-width="1" stroke-dasharray="1 7" opacity="0.7"/>
       </svg>
-      <div class="score-number">
-        <div class="score-val" id="scoreVal">--</div>
-        <div class="score-max">/100</div>
-        <div class="score-label">AI Score</div>
+      <svg class="rs-ring-ticks" id="ringTicks" viewBox="0 0 200 200"></svg>
+      <svg class="rs-ring-main" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="82" fill="none" stroke="var(--gray-300)" stroke-width="8"/>
+        <circle cx="100" cy="100" r="82" fill="none" stroke="var(--orange)" stroke-width="8" stroke-linecap="round"
+          stroke-dasharray="515.2" stroke-dashoffset="515.2" id="scoreCircle" style="transition:stroke-dashoffset 1.2s cubic-bezier(.16,1,.3,1), stroke .4s ease"/>
+      </svg>
+      <div class="rs-ring-glow"></div>
+      <div class="rs-ring-center">
+        <div class="rs-score-val" id="scoreVal">--</div>
+        <div class="rs-score-max">/100</div>
+        <div class="rs-score-label">AI SCORE</div>
       </div>
     </div>
-    <div class="result-level" id="resultLevel"></div>
-    <div class="result-message" id="resultMessage"></div>
-    <div class="result-insights" id="resultInsights"></div>
-    <a href="/audit" class="result-cta-primary">Get Your Full Paid Audit — $399</a>
-    <div class="result-cta-secondary" onclick="resetScan()">← Scan another store</div>
+
+    <div class="rs-level-kicker">Readiness band</div>
+    <div class="rs-level" id="resultLevel"></div>
+    <div class="rs-message" id="resultMessage"></div>
+
+    <div class="rs-factors-label">The 8 factors</div>
+    <div class="rs-factors" id="resultFactors"></div>
+
+    <div class="rs-prod-kicker">Go deeper</div>
+    <p class="rs-prod-sub">The free score tells you where you stand. These show you what to do next.</p>
+    <div class="rs-prod-grid">
+      <a href="/products/ai-commerce-audit" class="rs-prod-card">
+        <div class="rs-prod-card-bar"><i></i><i></i><i></i></div>
+        <div class="rs-prod-card-body">
+          <div class="rs-prod-card-name">AI Readiness Report</div>
+          <div class="rs-prod-card-what">Finds exactly what is blocking AI from recommending you.</div>
+          <div class="rs-prod-card-cta">Get the report →</div>
+        </div>
+      </a>
+      <a href="/products/recommendation-intelligence" class="rs-prod-card">
+        <div class="rs-prod-card-bar"><i></i><i></i><i></i></div>
+        <div class="rs-prod-card-body">
+          <div class="rs-prod-card-name">Recommendation Intelligence</div>
+          <div class="rs-prod-card-what">Shows who AI recommends instead of you, and why.</div>
+          <div class="rs-prod-card-cta">See the intelligence →</div>
+        </div>
+      </a>
+      <a href="/products/ai-monitoring" class="rs-prod-card">
+        <div class="rs-prod-card-bar"><i></i><i></i><i></i></div>
+        <div class="rs-prod-card-body">
+          <div class="rs-prod-card-name">AI Monitoring</div>
+          <div class="rs-prod-card-what">Tracks your AI visibility every single day.</div>
+          <div class="rs-prod-card-cta">Start monitoring →</div>
+        </div>
+      </a>
+      <a href="/products/ai-agent-snapshot" class="rs-prod-card">
+        <div class="rs-prod-card-bar"><i></i><i></i><i></i></div>
+        <div class="rs-prod-card-body">
+          <div class="rs-prod-card-name">AI Agent Snapshot</div>
+          <div class="rs-prod-card-what">Shows every AI agent visiting your store, live.</div>
+          <div class="rs-prod-card-cta">View snapshot →</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="rs-scan-again" onclick="resetScan()">Scan another store</div>
   </div>
-</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/products">Products</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var nav = document.querySelector('header.nav');
+    if (!nav) return;
+    var ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) { nav.classList.add('nav-compact'); }
+      else { nav.classList.remove('nav-compact'); }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  (function(){
+    var nav = document.querySelector('header.nav');
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(function(item){ item.classList.remove('dd-open'); });
+    }
+    toggle.addEventListener('click', function(){
+      var open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(function(item){
+      var trigger = item.querySelector('.nav-trigger');
+      var dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', function(e){
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(function(other){ other.classList.remove('dd-open'); });
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+  })();
+</script>
 
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const prefilledDomain = urlParams.get('domain') || urlParams.get('url') || '';
 
+function setState(id) {
+  ['redirectScreen','scanningOverlay','resultOverlay'].forEach(function(s){
+    document.getElementById(s).classList.toggle('active', s === id);
+  });
+}
+
+function buildRingTicks() {
+  const svg = document.getElementById('ringTicks');
+  if (!svg) return;
+  const ns = 'http://www.w3.org/2000/svg';
+  for (let i = 0; i < 36; i++) {
+    const angle = i * 10;
+    const major = i % 3 === 0;
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', '100'); line.setAttribute('y1', '6');
+    line.setAttribute('x2', '100'); line.setAttribute('y2', major ? '15' : '11');
+    line.setAttribute('transform', 'rotate(' + angle + ' 100 100)');
+    line.setAttribute('stroke-width', major ? '2' : '1');
+    svg.appendChild(line);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  buildRingTicks();
   if (prefilledDomain) {
     const clean = prefilledDomain.replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
     setTimeout(() => startScan(clean), 300);
@@ -260,8 +644,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showRedirectAnimation() {
-  const screen = document.getElementById('redirectScreen');
-  screen.classList.add('active');
+  setState('redirectScreen');
 
   const cards = ['card1','card2','card3','card4'];
   const delays = [300, 900, 1600, 2400];
@@ -282,12 +665,12 @@ let scanInProgress = false;
 
 function animateSteps() {
   const steps = ['step1','step2','step3','step4'];
-  steps.forEach(id => { document.getElementById(id).className = 'step pending'; });
+  steps.forEach(id => { document.getElementById(id).className = 'rs-step pending'; });
   steps.forEach((id, i) => {
     setTimeout(() => {
-      if (i > 0) document.getElementById(steps[i-1]).className = 'step done';
-      document.getElementById(id).className = 'step active';
-    }, i * 5000);
+      if (i > 0) document.getElementById(steps[i-1]).className = 'rs-step done';
+      document.getElementById(id).className = 'rs-step active';
+    }, i * 4000);
   });
 }
 
@@ -303,8 +686,21 @@ function startScan(domainOverride) {
 
   scanInProgress = true;
   document.getElementById('scanningDomain').textContent = domain;
-  document.getElementById('scanningOverlay').classList.add('active');
+  setState('scanningOverlay');
   animateSteps();
+
+  const fillEl = document.getElementById('scanProgressFill');
+  const pctEl = document.getElementById('scanProgressPct');
+  let pct = 0;
+  function setPct(p) {
+    pct = p;
+    if (fillEl) fillEl.style.width = p + '%';
+    if (pctEl) pctEl.textContent = Math.round(p) + '%';
+  }
+  setPct(2);
+  const progressTimer = setInterval(() => {
+    if (pct < 90) setPct(Math.min(pct + (90 - pct) * 0.08 + 0.4, 90));
+  }, 220);
 
   fetch('https://n8n-production-1d7c.up.railway.app/webhook/score-store', {
     method: 'POST',
@@ -313,111 +709,108 @@ function startScan(domainOverride) {
   })
   .then(r => r.json())
   .then(data => {
+    clearInterval(progressTimer);
+    setPct(100);
     const result = Array.isArray(data) ? data[0] : data;
-    if (result && result.status === 'limit_reached') {
-      showLimitReached(domain);
-      return;
-    }
-    showResult(domain, result);
+    setTimeout(() => {
+      if (result && result.status === 'limit_reached') {
+        showLimitReached(domain);
+      } else {
+        showResult(domain, result);
+      }
+    }, 250);
   })
-  .catch(() => showResult(domain, {}))
+  .catch(() => {
+    clearInterval(progressTimer);
+    setPct(100);
+    setTimeout(() => showResult(domain, {}), 250);
+  })
   .finally(() => { scanInProgress = false; });
 }
 
 function showLimitReached(domain) {
-  document.getElementById('scanningOverlay').classList.remove('active');
   document.getElementById('resultDomain').textContent = domain;
   document.getElementById('scoreVal').textContent = '--';
-  document.getElementById('resultLevel').style.display = 'none';
+  document.getElementById('resultLevel').textContent = '';
   document.getElementById('resultMessage').textContent = 'This store was already scanned in the last 30 days. Check your inbox for the previous report, or wait before scanning again.';
-  document.getElementById('resultInsights').innerHTML = '';
-  document.getElementById('resultOverlay').classList.add('active');
+  document.getElementById('resultFactors').innerHTML = '';
+  setState('resultOverlay');
 }
 
-// v2.0 level label + class
-function getLevelInfo(level, score) {
-  // Handle both old and new readiness_level values
-  const map = {
-    'highly_recommendable':          { label: 'Highly Recommendable',          cls: 'level-ready'    },
-    'moderately_recommendable':      { label: 'Moderately Recommendable',      cls: 'level-moderate' },
-    'low_recommendation_confidence': { label: 'Low Recommendation Confidence', cls: 'level-low'      },
-    'ai_invisible_risk':             { label: 'AI Invisible Risk',             cls: 'level-invisible' },
-    // fallback for old DB values
-    'ai_ready':    { label: 'Highly Recommendable', cls: 'level-ready'    },
-    'ai_partial':  { label: 'Partially Visible',    cls: 'level-partial'  },
-    'ai_invisible':{ label: 'AI Invisible Risk',    cls: 'level-invisible' },
-  };
-  if (level && map[level]) return map[level];
-  // Fallback by score if no level
-  if (score >= 85) return { label: 'Highly Recommendable',          cls: 'level-ready'    };
-  if (score >= 70) return { label: 'Moderately Recommendable',      cls: 'level-moderate' };
-  if (score >= 50) return { label: 'Low Recommendation Confidence', cls: 'level-low'      };
-  return                  { label: 'AI Invisible Risk',             cls: 'level-invisible' };
+// Band thresholds match the AI Commerce Score methodology (products/ai-commerce-score.html).
+function bandFor(score) {
+  if (score >= 85) return { label: 'Highly Recommendable', color: 'var(--green)' };
+  if (score >= 70) return { label: 'Moderately Recommendable', color: 'var(--amber)' };
+  if (score >= 50) return { label: 'Low Recommendation Confidence', color: 'var(--orange)' };
+  return { label: 'AI Invisible Risk', color: 'var(--red)' };
 }
 
 function showResult(domain, data) {
-  document.getElementById('scanningOverlay').classList.remove('active');
-
+  data = data || {};
   const rj = data.report_json || {};
   const score = data.total_score ?? data.ars_score ?? data.score ?? null;
-  const level = data.readiness_level || rj.readiness_level || '';
-  const mainLeak = data.main_leak || rj.main_leak || '';
-  const quickFix = data.quick_fix || rj.quick_fix || '';
+  const levelText = data.readiness_level || rj.readiness_level || '';
 
   document.getElementById('resultDomain').textContent = domain;
   document.getElementById('scoreVal').textContent = score !== null ? score : '--';
 
-  if (score !== null) {
-    const circumference = 427;
-    setTimeout(() => {
-      document.getElementById('scoreCircle').style.strokeDashoffset =
-        circumference - (circumference * score / 100);
-    }, 100);
-  }
-
-  // v2.0 level badge
+  const circleEl = document.getElementById('scoreCircle');
   const levelEl = document.getElementById('resultLevel');
-  if (score !== null) {
-    const info = getLevelInfo(level, score);
-    levelEl.textContent = info.label;
-    levelEl.className = `result-level ${info.cls}`;
-  } else {
-    levelEl.style.display = 'none';
-  }
-
-  // Message by score
   const msgEl = document.getElementById('resultMessage');
-  if (score === null) {
-    msgEl.textContent = 'We couldn\'t complete the scan. Please check your domain and try again.';
-  } else if (score < 50) {
-    msgEl.textContent = 'Your store is likely invisible to AI assistants. ChatGPT and Perplexity probably won\'t recommend you — and you\'re missing significant revenue as a result.';
-  } else if (score < 70) {
-    msgEl.textContent = 'Your store has partial AI visibility. You\'re missing key signals that could significantly increase your AI-driven traffic.';
-  } else if (score < 85) {
-    msgEl.textContent = 'Your store is moderately visible to AI. There\'s still meaningful revenue on the table — the full audit shows exactly what to fix.';
+  const factorsEl = document.getElementById('resultFactors');
+
+  if (score !== null) {
+    const band = bandFor(score);
+    const circumference = 515.2;
+    setTimeout(() => {
+      circleEl.style.strokeDashoffset = circumference - (circumference * score / 100);
+      circleEl.style.stroke = band.color;
+    }, 100);
+    levelEl.textContent = levelText || band.label;
+    levelEl.style.color = band.color;
+
+    if (score < 50) {
+      msgEl.textContent = 'This store is likely invisible to AI shopping assistants. ChatGPT and Perplexity are unlikely to recommend it, and that costs real traffic.';
+    } else if (score < 70) {
+      msgEl.textContent = 'This store has partial AI visibility. Several signals AI agents look for are still missing.';
+    } else if (score < 85) {
+      msgEl.textContent = 'This store is moderately visible to AI. The AI Readiness Report shows exactly what to fix next.';
+    } else {
+      msgEl.textContent = 'Strong foundation. This store is highly recommendable to AI agents, with room left to optimize.';
+    }
+
+    const DEFAULT_FACTORS = [
+      { label: 'Semantic Visuals & Image Clarity',       max: 15, key: 'visual_score' },
+      { label: 'AI Structured Signals',                  max: 15, key: 'schema_score' },
+      { label: 'Core Technical & Interpretability',      max: 15, key: 'technical_score' },
+      { label: 'AI Trust & Transaction Confidence',      max: 15, key: 'trust_score' },
+      { label: 'Commerce & Feed Accuracy',                max: 15, key: 'price_score' },
+      { label: 'User Intent Match',                       max: 10, key: 'intent_score' },
+      { label: 'Recommendation Confidence',               max: 10, key: 'rec_score' },
+      { label: 'External Authority Signals',              max: 5,  key: 'brand_score' }
+    ];
+    const factors = Array.isArray(rj.factor_breakdown) && rj.factor_breakdown.length === 8
+      ? rj.factor_breakdown
+      : DEFAULT_FACTORS.map(f => ({ label: f.label, max: f.max, score: data[f.key] ?? rj[f.key] ?? 0 }));
+
+    factorsEl.innerHTML = factors.map(f => {
+      const pct = f.max ? Math.round((f.score / f.max) * 100) : 0;
+      return '<div class="rs-factor-row">' +
+        '<div class="rs-factor-top"><span class="rs-factor-label">' + f.label + '</span><span class="rs-factor-score">' + f.score + '/' + f.max + '</span></div>' +
+        '<div class="rs-factor-track"><div class="rs-factor-fill" style="width:' + pct + '%"></div></div>' +
+      '</div>';
+    }).join('');
   } else {
-    msgEl.textContent = 'Strong foundation — your store is highly recommendable to AI agents. The full audit identifies remaining opportunities for maximum AI visibility.';
+    circleEl.style.strokeDashoffset = 515.2;
+    levelEl.textContent = '';
+    msgEl.textContent = 'We could not complete the scan. Please check your domain and try again.';
+    factorsEl.innerHTML = '';
   }
 
-  const insightsEl = document.getElementById('resultInsights');
-  insightsEl.innerHTML = '';
-  if (mainLeak) {
-    insightsEl.innerHTML += `<div class="insight-card"><div class="insight-label">Biggest leak found</div><div class="insight-value">${mainLeak}</div></div>`;
-  }
-  if (quickFix) {
-    insightsEl.innerHTML += `<div class="insight-card"><div class="insight-label">Quick win</div><div class="insight-value"><strong>#1 fix:</strong> ${quickFix}</div></div>`;
-  }
-
-  document.getElementById('resultOverlay').classList.add('active');
+  setState('resultOverlay');
 }
 
 function resetScan() {
-  document.getElementById('resultOverlay').classList.remove('active');
-  document.getElementById('scoreCircle').style.transition = 'none';
-  document.getElementById('scoreCircle').style.strokeDashoffset = '427';
-  setTimeout(() => {
-    document.getElementById('scoreCircle').style.transition = 'stroke-dashoffset 1.2s ease';
-  }, 50);
   window.location.href = 'https://atomfoundry.dev';
 }
 </script>
