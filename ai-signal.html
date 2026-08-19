@@ -1181,6 +1181,13 @@ window.AISIG_DATA_READY = (function(){
         reveal(ready.querySelector('.aisig-sub-label')); await wait(260);
         reveal(ready.querySelector('.aisig-sub-desc')); await wait(320);
         await revealSeq(qa('.aisig-r', ready), 150);
+        await wait(200);
+      }
+      var spoofedBlock = document.getElementById('aisigBlockSpoofed');
+      if (spoofedBlock) {
+        reveal(spoofedBlock.querySelector('.aisig-sub-label')); await wait(260);
+        reveal(spoofedBlock.querySelector('.aisig-sub-desc')); await wait(320);
+        await revealSeq(qa('.aisig-feed .f', spoofedBlock), 110);
       }
     }
 
