@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Commerce Graph&trade; | Atom Foundry</title>
+<meta name="description" content="The AI Commerce Graph: the intelligence layer that maps how businesses, products, categories, mentions, trust signals, and customer intent connect inside AI systems. Built by Atom Foundry.">
+<meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
+<link rel="canonical" href="https://atomfoundry.dev/framework/ai-commerce-graph">
+<meta property="og:title" content="The AI Commerce Graph&trade; | Atom Foundry">
+<meta property="og:description" content="The intelligence layer that maps how AI systems understand commerce: the relationships between businesses, products, categories, mentions, trust signals, and recommendations.">
+<meta property="og:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:url" content="https://atomfoundry.dev/framework/ai-commerce-graph">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ],
+      "owns": { "@id": "https://founder.atomfoundry.dev/#store" }
+    },
+    {
+      "@type": "OnlineStore",
+      "@id": "https://founder.atomfoundry.dev/#store",
+      "name": "Founder Lab",
+      "url": "https://founder.atomfoundry.dev/",
+      "description": "Founder Lab is Atom Foundry's own live Shopify store, operated as a permanent controlled experiment.",
+      "brand": { "@id": "https://atomfoundry.dev/#organization" },
+      "additionalType": "https://atomfoundry.dev/#research-laboratory"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/framework/ai-commerce-graph#webpage",
+      "url": "https://atomfoundry.dev/framework/ai-commerce-graph",
+      "name": "The AI Commerce Graph",
+      "description": "The intelligence layer that maps how AI systems understand commerce: the relationships between businesses, products, categories, mentions, trust signals, and recommendations.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "author": { "@id": "https://atomfoundry.dev/#organization" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/framework/ai-commerce-graph#definedterm" }
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://atomfoundry.dev/framework/ai-commerce-graph#definedterm",
+      "name": "AI Commerce Graph",
+      "description": "The data layer beneath the AI Commerce Intelligence Framework, modeling the relationships between businesses, products, categories, mentions, trust signals, customer intent, and recommendations.",
+      "inDefinedTermSet": "https://atomfoundry.dev/vocabulary"
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://atomfoundry.dev/framework/ai-commerce-graph#itemlist",
+      "name": "The core entities of the AI Commerce Graph",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Businesses", "description": "Every business becomes a unique entity inside the graph, storing how AI identifies, understands, and connects it across different contexts.", "url": "https://atomfoundry.dev/framework/ai-commerce-graph#entity-businesses" },
+        { "@type": "ListItem", "position": 2, "name": "Products", "description": "Products are the objects AI recommends, carrying semantic attributes that help AI understand what a product is and who it is for.", "url": "https://atomfoundry.dev/framework/ai-commerce-graph#entity-products" },
+        { "@type": "ListItem", "position": 3, "name": "Categories", "description": "Categories organize commerce into meaningful groups, connecting similar products and businesses to relevant customer intent.", "url": "https://atomfoundry.dev/framework/ai-commerce-graph#entity-categories" },
+        { "@type": "ListItem", "position": 4, "name": "Mentions", "description": "Mentions represent where and how businesses appear across AI-accessible content, measured by frequency, context, source quality, and relevance.", "url": "https://atomfoundry.dev/framework/ai-commerce-graph#entity-mentions" },
+        { "@type": "ListItem", "position": 5, "name": "Trust Signals", "description": "Trust signals help AI estimate whether a business is reliable, influencing confidence rather than just visibility.", "url": "https://atomfoundry.dev/framework/ai-commerce-graph#entity-trust-signals" },
+        { "@type": "ListItem", "position": 6, "name": "Recommendations", "description": "Recommendations are the observable output of the graph, the combined effect of hundreds of connected signals.", "url": "https://atomfoundry.dev/framework/ai-commerce-graph#entity-recommendations" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/framework/ai-commerce-graph#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Framework", "item": "https://atomfoundry.dev/framework" },
+        { "@type": "ListItem", "position": 3, "name": "AI Commerce Graph", "item": "https://atomfoundry.dev/framework/ai-commerce-graph" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  em{font-style:normal;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  /* ---------- NAV (shared component, identical to the rest of the site) ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(240,238,230,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .6s cubic-bezier(.65,0,.35,1);
+  }
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{
+    font-size:13px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.07em;
+    position:relative;padding:4px 2px;white-space:nowrap;
+    text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+    transition:color .2s ease, text-decoration-color .2s ease;
+  }
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-chevron{
+    display:inline-flex;width:10px;height:7px;margin-left:6px;
+    vertical-align:middle;color:currentColor;
+    transition:transform .2s ease;
+  }
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .dropdown{
+    position:absolute;top:100%;left:0;margin-top:6px;
+    background:var(--cream);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+    padding:12px;width:max-content;max-width:300px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:1100;
+  }
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+  .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+  .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+  .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+  .scan-box input::placeholder{color:var(--gray-500);}
+  .scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+  .scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+  .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+  .scan-note span{margin:0 8px;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:64px 24px;}
+  section.alt{background:var(--off-white);}
+  .container{max-width:var(--maxw);margin:0 auto;}
+  .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:14px;}
+  .page-title{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:820px;margin-bottom:18px;}
+  .page-title em{color:var(--orange);}
+  .section-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
+  .section-title em{color:var(--orange);}
+  .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:680px;}
+  .section-body p{margin-bottom:14px;}
+  .section-body p:last-child{margin-bottom:0;}
+  .section-body strong{color:var(--black);}
+
+  /* ---------- GRAPH HERO ---------- */
+  .acg-hero{padding:88px 32px 56px;background:var(--cream);}
+  .acg-hero-inner{max-width:760px;margin:0;}
+  .acg-hero .page-title{max-width:none;margin:0 0 18px;}
+  .acg-hero-sub{font-size:18px;color:var(--gray-700);line-height:1.7;margin-bottom:24px;}
+  .acg-hero-lede{font-size:16px;color:var(--gray-700);line-height:1.75;}
+  .acg-hero-lede p{margin-bottom:10px;}
+  .acg-hero-lede p:last-child{margin-bottom:0;}
+  .acg-hero-lede strong{color:var(--black);font-weight:800;}
+
+  /* ---------- INTERACTIVE GRAPH (no card background: it sits directly in
+     the page's own color, sized down slightly from full width, with a
+     visual hierarchy of node sizes so the diagram reads as a story even
+     before anyone hovers anything: Customer Intent is the largest, pulsing
+     node, the entry point; Businesses and Products are the second tier;
+     Categories, Mentions and Trust Signals are the smaller supporting
+     tier. Recommendations is deliberately NOT one of these nodes: it is
+     the output of the graph, so it lives below the mesh as its own
+     separated, solid box reached by a single connector arrow.) ---------- */
+  .acg-graph-wrap{margin-top:8px;padding:12px 0 4px;}
+  .acg-graph-layout{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start;}
+  .acg-graph-col{min-width:0;}
+  .acg-graph{width:93%;height:auto;display:block;margin:0 auto;}
+  .acg-edge{stroke:var(--card-line);stroke-width:1.6;transition:stroke .3s ease,stroke-width .3s ease,opacity .3s ease;}
+  .acg-edge.is-active{stroke:var(--orange);stroke-width:2.8;opacity:1;}
+  .acg-edge.is-dim{opacity:0.2;}
+  .acg-edge.acg-pre-reveal{opacity:0.06;transition:opacity .4s ease;}
+  .acg-node{cursor:pointer;outline:none;}
+  .acg-node-hit{fill:transparent;}
+  .acg-node-dot{fill:var(--card);stroke:var(--orange);stroke-width:1.6;transition:fill .25s ease,stroke-width .25s ease,r .3s ease,filter .3s ease;}
+  .acg-node:hover .acg-node-dot,.acg-node:focus .acg-node-dot,.acg-node.is-active .acg-node-dot{fill:var(--orange);stroke-width:2;}
+  .acg-node.is-dim{opacity:0.3;}
+  .acg-node-label{font-family:var(--serif);font-size:16px;font-weight:800;fill:var(--black);transition:fill .25s ease,font-size .3s ease;}
+  .acg-node:hover .acg-node-label,.acg-node:focus .acg-node-label,.acg-node.is-active .acg-node-label{fill:var(--orange);}
+  .acg-node.acg-pre-reveal{opacity:0.15;transition:opacity .4s ease;}
+
+  /* While the mouse is actually over a supporting node, it briefly borrows
+     the same filled, glowing treatment Customer Intent always has, so a
+     visitor discovers that look through hovering rather than clicking. */
+  .acg-node.is-hover-hero .acg-node-dot{fill:var(--orange);stroke-width:0;r:15px;filter:drop-shadow(0 0 10px rgba(254,106,3,0.55));}
+  .acg-node.is-hover-hero .acg-node-label{fill:var(--orange);font-size:19px;}
+  .acg-graph-caption{margin-top:20px;font-size:13.5px;color:var(--gray-500);text-align:center;}
+
+  /* tier 2 (Businesses, Products) and tier 3 (Categories, Mentions, Trust
+     Signals) share the same look, just different radii set inline on the
+     circle; only the hero node gets its own treatment */
+  .acg-node.tier-support .acg-node-label{font-size:14px;}
+
+  /* Customer Intent: the entry point, always filled, with a soft pulsing
+     halo that rings outward continuously */
+  .acg-node-hero .acg-node-dot{fill:var(--orange);stroke-width:0;filter:drop-shadow(0 0 10px rgba(254,106,3,0.55));}
+  .acg-node-hero .acg-node-label{font-size:19px;}
+  .acg-node-halo{fill:none;stroke:var(--orange);stroke-width:2;opacity:0.5;transform-origin:center;animation:acgPulse 2.6s ease-out infinite;}
+  @keyframes acgPulse{
+    0%{r:15px;opacity:0.55;}
+    100%{r:36px;opacity:0;}
+  }
+  .acg-node-caption{font-size:12px;fill:var(--gray-500);font-style:italic;}
+
+  @media (prefers-reduced-motion: reduce){
+    .acg-node-halo{animation:none;display:none;}
+  }
+
+  /* Recommendations, detached from the mesh: a single connector arrow
+     leading down to a distinct, solid output box, so it reads as the
+     result of the graph rather than another node in it. A small ticker
+     inside keeps rotating through example outputs, so it reads as alive
+     rather than a static label. */
+  .acg-output-connector{display:flex;flex-direction:column;align-items:center;gap:5px;margin:26px 0 14px;transition:opacity .4s ease;}
+  .acg-output-connector svg{width:13px;height:26px;overflow:visible;}
+  .acg-output-connector path{fill:none;stroke:var(--orange);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+  .acg-output-connector-label{font-size:10px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.06em;text-align:center;}
+  .acg-output-box{display:block;max-width:220px;margin:0 auto;background:var(--orange);color:var(--white);text-align:center;padding:12px 18px;border-radius:var(--radius);transition:opacity .4s ease,transform .25s ease;}
+  .acg-output-box:hover{transform:translateY(-2px);}
+  .acg-output-connector.acg-pre-reveal,.acg-output-box.acg-pre-reveal{opacity:0;}
+  .acg-output-eyebrow{display:block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:rgba(255,255,255,0.75);margin-bottom:6px;}
+  .acg-output-ticker{display:block;transition:opacity .3s ease;}
+  .acg-output-brand{display:block;font-family:var(--serif);font-size:15px;font-weight:800;margin-bottom:4px;}
+  .acg-output-meta{display:flex;justify-content:center;align-items:center;gap:10px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.92);}
+  .acg-output-stars{letter-spacing:1px;color:#fff;font-size:11px;}
+
+  /* ---------- SIDE DETAIL PANEL. All six variants are real, static HTML
+     present in the page from the start (readable by any crawler or AI
+     system with no JavaScript at all); hovering a node just shows the
+     matching one and hides the rest via a CSS class. ---------- */
+  .acg-detail-panel{border:1px solid var(--card-line);border-radius:var(--radius);padding:22px;background:var(--card);min-height:200px;position:sticky;top:110px;}
+  .acg-detail-placeholder{font-size:13.5px;color:var(--gray-500);font-style:italic;}
+  .acg-detail-content{display:none;}
+  .acg-detail-content.is-active{display:block;}
+  .acg-detail-title{font-family:var(--serif);font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-bottom:8px;}
+  .acg-detail-blurb{font-size:13.5px;color:var(--gray-700);line-height:1.6;margin-bottom:4px;}
+  .acg-detail-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--orange);margin:14px 0 6px;}
+  .acg-detail-list{list-style:none;}
+  .acg-detail-list li{font-size:13px;color:var(--gray-700);padding:4px 0;border-bottom:1px solid var(--card-line);}
+  .acg-detail-list li:last-child{border-bottom:none;}
+  .acg-detail-connected{list-style:none;}
+  .acg-detail-connected-btn{display:flex;align-items:center;gap:6px;width:100%;background:none;border:none;padding:5px 0;font-size:13px;font-weight:700;color:var(--black);cursor:pointer;text-align:left;font-family:inherit;transition:color .2s ease,transform .2s ease;}
+  .acg-detail-connected-btn:hover{color:var(--orange);transform:translateX(2px);}
+  .acg-detail-connected-btn::before{content:"\2713";color:var(--orange);}
+  .acg-live-list{display:flex;flex-direction:column;gap:2px;}
+  .acg-live-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;padding:4px 0;border-bottom:1px solid var(--card-line);}
+  .acg-live-row:last-child{border-bottom:none;}
+  .acg-live-row-name{color:var(--gray-700);font-weight:600;}
+  .acg-live-row-count{color:var(--black);font-weight:800;font-variant-numeric:tabular-nums;}
+  .acg-detail-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease,transform .2s ease;}
+  .acg-detail-link:hover{color:var(--orange);transform:translateX(2px);}
+  .acg-detail-link .nav-chevron{margin-left:0;}
+
+  @media (max-width:900px){
+    .acg-graph-layout{grid-template-columns:1fr;}
+    .acg-graph{width:100%;}
+    .acg-detail-panel{position:static;margin-top:20px;}
+  }
+
+  /* ---------- CLOSING VISUAL: THE VISIBLE OUTCOME ---------- */
+  .acg-final-chain{max-width:340px;margin:32px auto 0;opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease;}
+  .acg-final-chain.is-visible{opacity:1;transform:translateY(0);}
+  .acg-final-node{border:1.5px solid rgba(254,106,3,0.4);background:var(--card);border-radius:var(--radius);padding:14px 22px;text-align:center;font-family:var(--serif);font-weight:800;font-size:16px;}
+  .acg-final-node-output{background:var(--orange);border-color:var(--orange);color:var(--white);font-size:18px;}
+  .acg-final-arrow{display:flex;justify-content:center;margin:8px 0;}
+  .acg-final-arrow svg{width:14px;height:22px;overflow:visible;}
+  .acg-final-arrow path{fill:none;stroke:var(--orange);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .acg-final-caption{text-align:center;margin-top:22px;font-size:14.5px;font-style:italic;color:var(--gray-500);}
+
+  /* ---------- CORE ENTITIES (shaded, embossed cards that lift and grow
+     20% on hover, like they are physically stepping off the page) ---------- */
+  .acg-entity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px;}
+  .acg-entity-card{
+    position:relative;border-radius:var(--radius);padding:28px 26px;background:var(--card);
+    display:flex;flex-direction:column;opacity:0;transform:translateY(16px);
+    box-shadow:0 1px 0 rgba(255,255,255,0.4) inset,0 10px 22px -16px rgba(22,21,18,0.35),0 2px 5px rgba(22,21,18,0.1);
+    transition:opacity .5s ease,transform .35s cubic-bezier(.16,.8,.4,1),box-shadow .35s ease,z-index 0s;
+    scroll-margin-top:96px;
+  }
+  .acg-entity-card.is-visible{opacity:1;transform:translateY(0);}
+  .acg-entity-card:hover{
+    transform:scale(1.1);
+    z-index:5;
+    box-shadow:0 1px 0 rgba(255,255,255,0.5) inset,0 30px 54px -20px rgba(22,21,18,0.42),0 10px 18px -6px rgba(22,21,18,0.2);
+  }
+  .acg-entity-icon{flex-shrink:0;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--orange);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .acg-entity-icon svg{width:20px;height:20px;fill:none;stroke:var(--orange);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .acg-entity-title{font-family:var(--serif);font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-bottom:8px;}
+  .acg-entity-body{font-size:14px;color:var(--gray-700);line-height:1.65;margin-bottom:6px;}
+  .acg-entity-body:last-of-type{margin-bottom:14px;}
+  .acg-entity-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--orange);margin-bottom:8px;margin-top:auto;}
+  .acg-entity-list{list-style:none;}
+  .acg-entity-list li{font-size:13.5px;color:var(--gray-700);padding:6px 0;border-bottom:1px solid var(--card-line);}
+  .acg-entity-list li:last-child{border-bottom:none;}
+
+  /* ---------- RELATIONSHIPS CHAIN (each block stays dim until the
+     visitor's mouse actually rests on it, revealed one at a time by
+     hovering down the list rather than by an automatic scroll animation) ---------- */
+  .acg-chain{max-width:460px;margin:32px auto 0;cursor:default;}
+  .acg-chain-node{border:1.5px solid rgba(254,106,3,0.45);background:var(--card);border-radius:var(--radius);padding:16px 24px;text-align:center;font-family:var(--serif);font-weight:800;font-size:17px;color:rgba(22,21,18,0.28);transition:color .3s ease,border-color .3s ease,box-shadow .3s ease;}
+  .acg-chain-node.is-revealed{color:var(--black);border-color:var(--orange);}
+  .acg-chain-node.is-demo{border-color:var(--orange);box-shadow:0 0 0 2px rgba(254,106,3,0.18),0 0 16px rgba(254,106,3,0.3);}
+  .acg-chain-verb{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;padding:14px 0;margin:0;opacity:0.14;transition:opacity .3s ease;}
+  .acg-chain-verb.is-revealed{opacity:1;}
+  .acg-chain-verb svg{width:14px;height:22px;overflow:visible;}
+  .acg-chain-verb path{fill:none;stroke:var(--orange);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+  .acg-chain-verb span{font-size:12px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.06em;}
+  .acg-chain-note{text-align:center;margin-top:26px;font-size:15px;font-weight:800;color:var(--black);}
+  @media (hover:none){
+    .acg-chain-node{color:var(--black);border-color:var(--orange);}
+    .acg-chain-verb{opacity:1;}
+  }
+
+  /* ---------- CUSTOMER INTENT ---------- */
+  .acg-intent-box{max-width:640px;margin:28px auto 0;text-align:center;border-top:1px solid var(--card-line);border-bottom:1px solid var(--card-line);padding:28px 12px;}
+  .acg-intent-box p{font-size:16px;color:var(--gray-700);line-height:1.75;margin-bottom:10px;}
+  .acg-intent-box p:last-child{margin-bottom:0;font-weight:800;color:var(--black);}
+
+  /* ---------- SOURCE / OUTPUT LISTS ---------- */
+  .acg-source-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 28px;margin:22px 0;max-width:640px;}
+  .acg-source-item{font-size:14.5px;font-weight:700;color:var(--black);padding:10px 0;border-bottom:1px solid var(--card-line);}
+
+  /* ---------- WHY IT MATTERS ---------- */
+  .acg-why-list{margin:22px 0;max-width:640px;}
+  .acg-why-list p{position:relative;font-size:16px;font-weight:700;color:var(--black);padding:8px 0 8px 24px;margin-bottom:8px;}
+  .acg-why-list p::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:9px;height:9px;background:var(--orange);}
+
+  /* ---------- CTA ---------- */
+  .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);padding:48px 56px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
+  .final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+  .final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+  .acg-cta-button{display:inline-block;background:var(--black);color:var(--white);padding:14px 28px;border-radius:var(--radius);font-size:15px;font-weight:700;transition:background .25s ease,transform .2s ease;}
+  .acg-cta-button:hover{background:var(--orange);transform:translateY(-1px);}
+
+  /* ---------- FOOTER (shared component, identical to the rest of the site) ---------- */
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col .logo-word{margin-bottom:14px;}
+  .footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{color:var(--black);font-weight:700;}
+  .footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .acg-entity-grid{grid-template-columns:1fr 1fr;}
+    .acg-source-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
+    .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
+    .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    section{padding:44px 20px;}
+    .acg-hero{padding:56px 20px 36px;}
+    .acg-entity-grid{grid-template-columns:1fr;}
+    .final-cta{padding:40px 24px;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger active">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="acg-hero">
+  <div class="container">
+    <div class="acg-hero-inner">
+      <div class="kicker">The Intelligence Layer Behind AI Commerce</div>
+      <h1 class="page-title">The AI Commerce <em>Graph&trade;</em></h1>
+      <p class="acg-hero-sub">The intelligence layer that maps how AI systems understand commerce.</p>
+      <div class="acg-hero-lede">
+        <p>AI doesn't understand websites the way humans do. It understands relationships.</p>
+        <p>The AI Commerce Graph&trade; maps how businesses, products, trust, content, and customer intent connect inside AI systems, creating the foundation for recommendation intelligence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE BIG IDEA + INTERACTIVE GRAPH -->
+<section id="big-idea">
+  <div class="container">
+    <div class="kicker">The Big Idea</div>
+    <h2 class="section-title">AI doesn't think in pages. <em>It thinks in relationships.</em></h2>
+    <div class="section-body">
+      <p>Every recommendation is the result of thousands of connected signals. The AI Commerce Graph&trade; models those relationships so we can measure, analyze, and improve how businesses are understood by AI.</p>
+    </div>
+
+    <div class="acg-graph-wrap">
+      <div class="acg-graph-layout">
+        <div class="acg-graph-col">
+          <svg class="acg-graph" id="acgGraph" viewBox="0 0 1000 390" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network diagram of the AI Commerce Graph, showing Customer Intent as the central entry point connected to Categories, Products, Businesses, Mentions, and Trust Signals.">
+            <g class="acg-edges">
+              <line class="acg-edge" data-a="customer-intent" data-b="categories" x1="500" y1="90" x2="240" y2="210"></line>
+              <line class="acg-edge" data-a="customer-intent" data-b="products" x1="500" y1="90" x2="760" y2="210"></line>
+              <line class="acg-edge" data-a="categories" data-b="products" x1="240" y1="210" x2="760" y2="210"></line>
+              <line class="acg-edge" data-a="categories" data-b="businesses" x1="240" y1="210" x2="110" y2="350"></line>
+              <line class="acg-edge" data-a="categories" data-b="mentions" x1="240" y1="210" x2="500" y2="350"></line>
+              <line class="acg-edge" data-a="products" data-b="trust-signals" x1="760" y1="210" x2="890" y2="350"></line>
+              <line class="acg-edge" data-a="products" data-b="mentions" x1="760" y1="210" x2="500" y2="350"></line>
+              <line class="acg-edge" data-a="businesses" data-b="mentions" x1="110" y1="350" x2="500" y2="350"></line>
+              <line class="acg-edge" data-a="businesses" data-b="trust-signals" x1="110" y1="350" x2="890" y2="350"></line>
+              <line class="acg-edge" data-a="mentions" data-b="trust-signals" x1="500" y1="350" x2="890" y2="350"></line>
+            </g>
+            <g class="acg-node acg-node-hero" data-id="customer-intent" tabindex="0" role="button" aria-label="Customer Intent">
+              <circle class="acg-node-hit" cx="500" cy="90" r="40"></circle>
+              <circle class="acg-node-halo" cx="500" cy="90" r="15"></circle>
+              <circle class="acg-node-dot" cx="500" cy="90" r="15"></circle>
+              <text class="acg-node-caption" x="500" y="26" text-anchor="middle">Every recommendation starts with customer intent.</text>
+              <text class="acg-node-label" x="500" y="56" text-anchor="middle">Customer Intent</text>
+            </g>
+            <g class="acg-node tier-support" data-id="categories" tabindex="0" role="button" aria-label="Categories">
+              <circle class="acg-node-hit" cx="240" cy="210" r="30"></circle>
+              <circle class="acg-node-dot" cx="240" cy="210" r="7"></circle>
+              <text class="acg-node-label" x="240" y="190" text-anchor="middle">Categories</text>
+            </g>
+            <g class="acg-node" data-id="products" tabindex="0" role="button" aria-label="Products">
+              <circle class="acg-node-hit" cx="760" cy="210" r="32"></circle>
+              <circle class="acg-node-dot" cx="760" cy="210" r="9"></circle>
+              <text class="acg-node-label" x="760" y="188" text-anchor="middle">Products</text>
+            </g>
+            <g class="acg-node" data-id="businesses" tabindex="0" role="button" aria-label="Businesses">
+              <circle class="acg-node-hit" cx="110" cy="350" r="32"></circle>
+              <circle class="acg-node-dot" cx="110" cy="350" r="9"></circle>
+              <text class="acg-node-label" x="72" y="354" text-anchor="end">Businesses</text>
+            </g>
+            <g class="acg-node tier-support" data-id="mentions" tabindex="0" role="button" aria-label="Mentions">
+              <circle class="acg-node-hit" cx="500" cy="350" r="30"></circle>
+              <circle class="acg-node-dot" cx="500" cy="350" r="7"></circle>
+              <text class="acg-node-label" x="500" y="330" text-anchor="middle">Mentions</text>
+            </g>
+            <g class="acg-node tier-support" data-id="trust-signals" tabindex="0" role="button" aria-label="Trust Signals">
+              <circle class="acg-node-hit" cx="890" cy="350" r="30"></circle>
+              <circle class="acg-node-dot" cx="890" cy="350" r="7"></circle>
+              <text class="acg-node-label" x="928" y="354" text-anchor="start">Trust Signals</text>
+            </g>
+          </svg>
+
+          <div class="acg-output-connector" id="acgOutputConnector">
+            <svg viewBox="0 0 16 34" aria-hidden="true"><path d="M8,2 V24 M3,19 L8,26 L13,19"></path></svg>
+            <span class="acg-output-connector-label">Generated by the AI Commerce Graph&trade;</span>
+          </div>
+          <a class="acg-output-box" id="acgOutputBox" href="#entity-recommendations">
+            <span class="acg-output-eyebrow">Recommendation Output</span>
+            <span class="acg-output-ticker" id="acgTicker">
+              <span class="acg-output-brand">Northfield Goods</span>
+              <span class="acg-output-meta"><span class="acg-output-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>Confidence 92</span></span>
+            </span>
+          </a>
+
+          <p class="acg-graph-caption">Hovering a node highlights every connected relationship. Clicking a node opens its details on the right.</p>
+        </div>
+
+        <div class="acg-detail-panel" id="acgDetailPanel">
+          <p class="acg-detail-placeholder" id="acgDetailPlaceholder">Hover any node to see how it connects.</p>
+
+          <div class="acg-detail-content" data-panel="customer-intent">
+            <div class="acg-detail-title">Customer Intent</div>
+            <p class="acg-detail-blurb">The starting point of every recommendation. AI first understands what the customer wants, then searches the graph for the most relevant businesses and products.</p>
+            <div class="acg-detail-label">Connected to</div>
+            <ul class="acg-detail-connected">
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="categories">Categories</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="products">Products</button></li>
+            </ul>
+            <div class="acg-detail-label">Live connections</div>
+            <div class="acg-live-list">
+              <div class="acg-live-row"><span class="acg-live-row-name">Categories</span><span class="acg-live-row-count">11</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Products</span><span class="acg-live-row-count">42</span></div>
+            </div>
+            <a class="acg-detail-link" href="#customer-intent">Explore Customer Intent<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+
+          <div class="acg-detail-content" data-panel="businesses">
+            <div class="acg-detail-title">Businesses</div>
+            <p class="acg-detail-blurb">Every business becomes a unique entity inside the graph.</p>
+            <div class="acg-detail-label">What it includes</div>
+            <ul class="acg-detail-list">
+              <li>Brand identity</li>
+              <li>Website</li>
+              <li>Industry</li>
+              <li>Authority</li>
+              <li>Reputation</li>
+            </ul>
+            <div class="acg-detail-label">Connected to</div>
+            <ul class="acg-detail-connected">
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="categories">Categories</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="mentions">Mentions</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="trust-signals">Trust Signals</button></li>
+            </ul>
+            <div class="acg-detail-label">Live connections</div>
+            <div class="acg-live-list">
+              <div class="acg-live-row"><span class="acg-live-row-name">Categories</span><span class="acg-live-row-count">11</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Mentions</span><span class="acg-live-row-count">92,104</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Trust Signals</span><span class="acg-live-row-count">27</span></div>
+            </div>
+            <a class="acg-detail-link" href="#entity-businesses">Explore Businesses<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+
+          <div class="acg-detail-content" data-panel="products">
+            <div class="acg-detail-title">Products</div>
+            <p class="acg-detail-blurb">Products are the objects AI recommends.</p>
+            <div class="acg-detail-label">What it includes</div>
+            <ul class="acg-detail-list">
+              <li>Product name</li>
+              <li>Features</li>
+              <li>Price</li>
+              <li>Availability</li>
+              <li>Attributes</li>
+            </ul>
+            <div class="acg-detail-label">Connected to</div>
+            <ul class="acg-detail-connected">
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="customer-intent">Customer Intent</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="categories">Categories</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="trust-signals">Trust Signals</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="mentions">Mentions</button></li>
+            </ul>
+            <div class="acg-detail-label">Live connections</div>
+            <div class="acg-live-list">
+              <div class="acg-live-row"><span class="acg-live-row-name">Categories</span><span class="acg-live-row-count">11</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Trust Signals</span><span class="acg-live-row-count">27</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Mentions</span><span class="acg-live-row-count">92,104</span></div>
+            </div>
+            <a class="acg-detail-link" href="#entity-products">Explore Products<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+
+          <div class="acg-detail-content" data-panel="categories">
+            <div class="acg-detail-title">Categories</div>
+            <p class="acg-detail-blurb">Categories organize commerce into meaningful groups.</p>
+            <div class="acg-detail-label">What it includes</div>
+            <ul class="acg-detail-list">
+              <li>Coffee</li>
+              <li>Supplements</li>
+              <li>Beauty</li>
+              <li>Home</li>
+              <li>Fashion</li>
+            </ul>
+            <div class="acg-detail-label">Connected to</div>
+            <ul class="acg-detail-connected">
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="customer-intent">Customer Intent</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="products">Products</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="businesses">Businesses</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="mentions">Mentions</button></li>
+            </ul>
+            <div class="acg-detail-label">Live connections</div>
+            <div class="acg-live-list">
+              <div class="acg-live-row"><span class="acg-live-row-name">Products</span><span class="acg-live-row-count">42</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Businesses</span><span class="acg-live-row-count">8,412</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Mentions</span><span class="acg-live-row-count">92,104</span></div>
+            </div>
+            <a class="acg-detail-link" href="#entity-categories">Explore Categories<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+
+          <div class="acg-detail-content" data-panel="mentions">
+            <div class="acg-detail-title">Mentions</div>
+            <p class="acg-detail-blurb">Mentions represent where and how businesses appear across AI-accessible content.</p>
+            <div class="acg-detail-label">What it includes</div>
+            <ul class="acg-detail-list">
+              <li>Articles</li>
+              <li>Reviews</li>
+              <li>Forums</li>
+              <li>Research</li>
+              <li>Social content</li>
+            </ul>
+            <div class="acg-detail-label">Connected to</div>
+            <ul class="acg-detail-connected">
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="categories">Categories</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="products">Products</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="businesses">Businesses</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="trust-signals">Trust Signals</button></li>
+            </ul>
+            <div class="acg-detail-label">Live connections</div>
+            <div class="acg-live-list">
+              <div class="acg-live-row"><span class="acg-live-row-name">Categories</span><span class="acg-live-row-count">11</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Products</span><span class="acg-live-row-count">42</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Businesses</span><span class="acg-live-row-count">8,412</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Trust Signals</span><span class="acg-live-row-count">27</span></div>
+            </div>
+            <a class="acg-detail-link" href="#entity-mentions">Explore Mentions<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+
+          <div class="acg-detail-content" data-panel="trust-signals">
+            <div class="acg-detail-title">Trust Signals</div>
+            <p class="acg-detail-blurb">Trust signals help AI estimate whether a business is reliable.</p>
+            <div class="acg-detail-label">What it includes</div>
+            <ul class="acg-detail-list">
+              <li>Structured Data</li>
+              <li>Business Information</li>
+              <li>Policies</li>
+              <li>Reviews</li>
+              <li>Brand Consistency</li>
+              <li>Technical Quality</li>
+            </ul>
+            <div class="acg-detail-label">Connected to</div>
+            <ul class="acg-detail-connected">
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="products">Products</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="businesses">Businesses</button></li>
+              <li><button type="button" class="acg-detail-connected-btn" data-goto="mentions">Mentions</button></li>
+            </ul>
+            <div class="acg-detail-label">Live connections</div>
+            <div class="acg-live-list">
+              <div class="acg-live-row"><span class="acg-live-row-name">Products</span><span class="acg-live-row-count">42</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Businesses</span><span class="acg-live-row-count">8,412</span></div>
+              <div class="acg-live-row"><span class="acg-live-row-name">Mentions</span><span class="acg-live-row-count">92,104</span></div>
+            </div>
+            <a class="acg-detail-link" href="#entity-trust-signals">Explore Trust Signals<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE ENTITIES -->
+<section class="alt" id="core-entities">
+  <div class="container">
+    <div class="kicker">The Core Entities</div>
+    <h2 class="section-title">What the graph is <em>built from</em></h2>
+    <div class="section-body">
+      <p>The AI Commerce Graph&trade; is built from six entity types. Together, they form the structure AI systems search when deciding who and what to recommend.</p>
+    </div>
+
+    <div class="acg-entity-grid" id="entityGrid">
+      <div class="acg-entity-card" id="entity-businesses">
+        <span class="acg-entity-icon"><svg viewBox="0 0 24 24"><path d="M6 21V6l6-3 6 3v15"/><path d="M9 21v-4h6v4"/><path d="M9 10h1M9 13h1M14 10h1M14 13h1"/></svg></span>
+        <h3 class="acg-entity-title">Businesses</h3>
+        <p class="acg-entity-body">Every business becomes a unique entity inside the graph.</p>
+        <p class="acg-entity-body">The graph stores how AI identifies, understands, and connects businesses across different contexts.</p>
+        <div class="acg-entity-label">Examples</div>
+        <ul class="acg-entity-list">
+          <li>Brand identity</li>
+          <li>Website</li>
+          <li>Industry</li>
+          <li>Authority</li>
+          <li>Reputation</li>
+        </ul>
+      </div>
+
+      <div class="acg-entity-card" id="entity-products">
+        <span class="acg-entity-icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 3v9M12 12l8-4.5M12 12l-8-4.5"/></svg></span>
+        <h3 class="acg-entity-title">Products</h3>
+        <p class="acg-entity-body">Products are the objects AI recommends.</p>
+        <p class="acg-entity-body">Each product carries semantic attributes that help AI understand what it is, who it is for, and when it should be recommended.</p>
+        <div class="acg-entity-label">Examples</div>
+        <ul class="acg-entity-list">
+          <li>Product name</li>
+          <li>Features</li>
+          <li>Price</li>
+          <li>Availability</li>
+          <li>Attributes</li>
+        </ul>
+      </div>
+
+      <div class="acg-entity-card" id="entity-categories">
+        <span class="acg-entity-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.8"/><circle cx="6" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/><path d="M12 7v4M12 11L6 16M12 11l6 5"/></svg></span>
+        <h3 class="acg-entity-title">Categories</h3>
+        <p class="acg-entity-body">Categories organize commerce into meaningful groups.</p>
+        <p class="acg-entity-body">They allow AI systems to connect similar products and businesses to relevant customer intent.</p>
+        <div class="acg-entity-label">Examples</div>
+        <ul class="acg-entity-list">
+          <li>Coffee</li>
+          <li>Supplements</li>
+          <li>Beauty</li>
+          <li>Home</li>
+          <li>Fashion</li>
+        </ul>
+      </div>
+
+      <div class="acg-entity-card" id="entity-mentions">
+        <span class="acg-entity-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 3v-3H4z"/><circle cx="9" cy="10.5" r="0.8" fill="currentColor" stroke="none"/><circle cx="12" cy="10.5" r="0.8" fill="currentColor" stroke="none"/><circle cx="15" cy="10.5" r="0.8" fill="currentColor" stroke="none"/></svg></span>
+        <h3 class="acg-entity-title">Mentions</h3>
+        <p class="acg-entity-body">Mentions represent where and how businesses appear across AI-accessible content.</p>
+        <p class="acg-entity-body">Not every mention is equal. The graph measures frequency, context, source quality, and semantic relevance.</p>
+        <div class="acg-entity-label">Examples</div>
+        <ul class="acg-entity-list">
+          <li>Articles</li>
+          <li>Reviews</li>
+          <li>Forums</li>
+          <li>Research</li>
+          <li>Social content</li>
+        </ul>
+      </div>
+
+      <div class="acg-entity-card" id="entity-trust-signals">
+        <span class="acg-entity-icon"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <h3 class="acg-entity-title">Trust Signals</h3>
+        <p class="acg-entity-body">Trust signals help AI estimate whether a business is reliable.</p>
+        <p class="acg-entity-body">These signals influence confidence, not just visibility.</p>
+        <div class="acg-entity-label">Examples</div>
+        <ul class="acg-entity-list">
+          <li>Structured Data</li>
+          <li>Business Information</li>
+          <li>Policies</li>
+          <li>Reviews</li>
+          <li>Brand Consistency</li>
+          <li>Technical Quality</li>
+        </ul>
+      </div>
+
+      <div class="acg-entity-card" id="entity-recommendations">
+        <span class="acg-entity-icon"><svg viewBox="0 0 24 24"><path d="M5 20v-5M11 20v-9M17 20v-3"/><path d="M14 4l4-1 1 4"/></svg></span>
+        <h3 class="acg-entity-title">Recommendations</h3>
+        <p class="acg-entity-body">Recommendations are the observable output of the graph.</p>
+        <p class="acg-entity-body">Every recommendation represents the combined effect of hundreds of connected signals.</p>
+        <div class="acg-entity-label">We measure</div>
+        <ul class="acg-entity-list">
+          <li>Recommendation Frequency</li>
+          <li>Recommendation Position</li>
+          <li>Recommendation Share&trade;</li>
+          <li>Recommendation Consistency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATIONSHIPS -->
+<section id="relationships">
+  <div class="container">
+    <div class="kicker">Relationships</div>
+    <h2 class="section-title">The graph doesn't only map entities. <em>It maps how they connect.</em></h2>
+
+    <div class="acg-chain" id="acgChain">
+      <div class="acg-chain-node">Business</div>
+      <div class="acg-chain-verb"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"/></svg><span>creates</span></div>
+      <div class="acg-chain-node">Products</div>
+      <div class="acg-chain-verb"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"/></svg><span>belong to</span></div>
+      <div class="acg-chain-node">Categories</div>
+      <div class="acg-chain-verb"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"/></svg><span>generate</span></div>
+      <div class="acg-chain-node">Mentions</div>
+      <div class="acg-chain-verb"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"/></svg><span>increase</span></div>
+      <div class="acg-chain-node">Trust</div>
+      <div class="acg-chain-verb"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"/></svg><span>influences</span></div>
+      <div class="acg-chain-node">Recommendations</div>
+    </div>
+    <p class="acg-chain-note">Relationships matter more than individual nodes.</p>
+  </div>
+</section>
+
+<!-- CUSTOMER INTENT -->
+<section class="alt" id="customer-intent">
+  <div class="container">
+    <div class="kicker">Customer Intent</div>
+    <h2 class="section-title">Intent connects <em>everything</em></h2>
+    <div class="acg-intent-box">
+      <p>Customer intent is the starting point of every recommendation. AI first understands what the customer wants. Only then does it search the graph for the most relevant businesses and products.</p>
+      <p>Intent connects everything.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE THE DATA COMES FROM -->
+<section id="data-sources">
+  <div class="container">
+    <div class="kicker">Where the Data Comes From</div>
+    <h2 class="section-title">One graph, <em>many sources</em></h2>
+    <div class="section-body">
+      <p>The AI Commerce Graph&trade; is continuously refined using multiple independent data sources.</p>
+    </div>
+    <div class="acg-source-grid">
+      <div class="acg-source-item">AI Commerce Score&trade;</div>
+      <div class="acg-source-item">Recommendation Intelligence&trade;</div>
+      <div class="acg-source-item">Founder Lab</div>
+      <div class="acg-source-item">AI Store Scan</div>
+      <div class="acg-source-item">Structured Data Analysis</div>
+      <div class="acg-source-item">Public Web Signals</div>
+      <div class="acg-source-item">Research Experiments</div>
+      <div class="acg-source-item">AI Recommendation Testing</div>
+    </div>
+    <div class="section-body"><p>Each source strengthens different parts of the graph.</p></div>
+  </div>
+</section>
+
+<!-- FROM GRAPH TO INTELLIGENCE -->
+<section class="alt" id="graph-to-intelligence">
+  <div class="container">
+    <div class="kicker">From Graph to Intelligence</div>
+    <h2 class="section-title">The graph itself is <em>not the product</em></h2>
+    <div class="section-body">
+      <p>It powers everything we build. It provides the underlying relationships used by:</p>
+    </div>
+    <div class="acg-source-grid">
+      <div class="acg-source-item">AI Commerce Score&trade;</div>
+      <div class="acg-source-item">Recommendation Intelligence&trade;</div>
+      <div class="acg-source-item">AI Store Scan</div>
+      <div class="acg-source-item">AI Agent Snapshot</div>
+      <div class="acg-source-item">Future AI Commerce products</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section id="why-it-matters">
+  <div class="container">
+    <div class="kicker">Why It Matters</div>
+    <h2 class="section-title">Without a graph, AI commerce appears <em>random</em></h2>
+    <div class="acg-why-list">
+      <p>With a graph, recommendations become measurable.</p>
+      <p>Businesses become connected.</p>
+      <p>Trust becomes visible.</p>
+      <p>Patterns become explainable.</p>
+    </div>
+    <div class="section-body">
+      <p>The AI Commerce Graph&trade; transforms isolated observations into a structured understanding of how AI systems discover, evaluate, trust, and recommend businesses.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOOKING AHEAD -->
+<section class="alt" id="looking-ahead">
+  <div class="container">
+    <div class="kicker">Looking Ahead</div>
+    <h2 class="section-title">The graph keeps <em>expanding</em></h2>
+    <div class="section-body">
+      <p>The AI Commerce Graph&trade; is continuously expanding. As new businesses, products, recommendations, and trust signals are discovered, the graph evolves alongside the AI ecosystem, providing an increasingly complete representation of how intelligent systems understand commerce.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE VISIBLE OUTCOME -->
+<section id="visible-outcome">
+  <div class="container">
+    <div class="kicker">The Visible Outcome</div>
+    <h2 class="section-title">Everything on this page produces <em>one thing</em></h2>
+    <div class="acg-final-chain" id="acgFinalChain">
+      <div class="acg-final-node">Business</div>
+      <div class="acg-final-arrow"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"></path></svg></div>
+      <div class="acg-final-node">Products</div>
+      <div class="acg-final-arrow"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"></path></svg></div>
+      <div class="acg-final-node">Trust</div>
+      <div class="acg-final-arrow"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7,2 V14 M3,10 L7,16 L11,10"></path></svg></div>
+      <div class="acg-final-node acg-final-node-output">Recommendations</div>
+    </div>
+    <p class="acg-final-caption">The only node users actually see.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="score">
+  <div class="container">
+    <div class="final-cta">
+      <h2>Explore the AI Commerce Framework</h2>
+      <p>Discover how the AI Commerce Graph&trade; powers the complete AI Commerce Intelligence Framework and the products built on top of it.</p>
+      <a href="/framework" class="acg-cta-button">Go to the Framework Overview</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Navbar compacts on scroll (same behavior as the rest of the site).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) nav.classList.add('nav-compact');
+      else nav.classList.remove('nav-compact');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  // Mobile hamburger nav (same behavior as the rest of the site).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
+  })();
+
+  // Interactive graph. There is nothing to click here: hovering a node is
+  // the whole interaction. Hovering highlights every edge and node
+  // connected to it, dims everything else, temporarily gives that node
+  // the same filled, glowing look Customer Intent always has, and updates
+  // the live detail panel next to the graph. Customer Intent itself never
+  // needs the temporary treatment, since it already looks that way all
+  // the time. On touch devices, where hovering is not possible, a tap
+  // does the same thing. When the graph first scrolls into view, the
+  // nodes light up one at a time, in the order a visitor should read
+  // them, ending with the separated Recommendations output box.
+  (function(){
+    const svg = document.getElementById('acgGraph');
+    const wrap = document.querySelector('.acg-graph-wrap');
+    const panel = document.getElementById('acgDetailPanel');
+    const outputConnector = document.getElementById('acgOutputConnector');
+    const outputBox = document.getElementById('acgOutputBox');
+    if (!svg || !wrap) return;
+    const nodes = Array.from(svg.querySelectorAll('.acg-node'));
+    const edges = Array.from(svg.querySelectorAll('.acg-edge'));
+    if (!nodes.length) return;
+
+    const adjacency = {};
+    nodes.forEach(n => { adjacency[n.dataset.id] = new Set(); });
+    edges.forEach(edge => {
+      const a = edge.dataset.a, b = edge.dataset.b;
+      if (adjacency[a]) adjacency[a].add(b);
+      if (adjacency[b]) adjacency[b].add(a);
+    });
+
+    // All six panel variants already exist as static HTML inside
+    // #acgDetailPanel (readable by any crawler with no JavaScript at
+    // all). Hovering a node just shows the matching one.
+    const panelContents = panel ? Array.from(panel.querySelectorAll('.acg-detail-content')) : [];
+    const placeholder = document.getElementById('acgDetailPlaceholder');
+
+    function highlight(id){
+      const connected = adjacency[id] || new Set();
+      nodes.forEach(n => {
+        const isRelated = n.dataset.id === id || connected.has(n.dataset.id);
+        n.classList.toggle('is-active', n.dataset.id === id);
+        n.classList.toggle('is-dim', !isRelated);
+      });
+      edges.forEach(edge => {
+        const related = edge.dataset.a === id || edge.dataset.b === id;
+        edge.classList.toggle('is-active', related);
+        edge.classList.toggle('is-dim', !related);
+      });
+    }
+
+    function reset(){
+      nodes.forEach(n => { n.classList.remove('is-active','is-dim'); });
+      edges.forEach(e => { e.classList.remove('is-active','is-dim'); });
+    }
+
+    function renderPanel(id){
+      const target = panelContents.find(el => el.dataset.panel === id);
+      if (!target) return;
+      panelContents.forEach(el => el.classList.toggle('is-active', el === target));
+      if (placeholder) placeholder.style.display = 'none';
+    }
+
+    // Clicking a "Connected to" entry re-runs renderPanel for that node
+    // (the panel content is sticky, so it stays put once shown, letting a
+    // visitor walk the whole graph from inside the panel itself).
+    if (panel) {
+      panel.addEventListener('click', (e) => {
+        const btn = e.target.closest('.acg-detail-connected-btn');
+        if (btn) renderPanel(btn.dataset.goto);
+      });
+    }
+
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    function enter(node){
+      const id = node.dataset.id;
+      highlight(id);
+      if (!node.classList.contains('acg-node-hero')) node.classList.add('is-hover-hero');
+      renderPanel(id);
+    }
+    function leave(node){
+      reset();
+      node.classList.remove('is-hover-hero');
+    }
+
+    nodes.forEach(node => {
+      if (canHover) {
+        node.addEventListener('mouseenter', () => enter(node));
+        node.addEventListener('mouseleave', () => leave(node));
+        node.addEventListener('focus', () => enter(node));
+        node.addEventListener('blur', () => leave(node));
+      } else {
+        node.addEventListener('click', () => {
+          const alreadyOn = node.classList.contains('is-hover-hero') || node.classList.contains('acg-node-hero');
+          nodes.forEach(n => { if (n !== node) leave(n); });
+          if (alreadyOn && !node.classList.contains('acg-node-hero')) {
+            leave(node);
+          } else {
+            enter(node);
+          }
+        });
+      }
+    });
+
+    // Sequential load-in-view reveal: Customer Intent first, then each
+    // supporting node roughly 0.2s apart, in reading order, finishing with
+    // the separated Recommendations output.
+    const order = ['customer-intent','categories','products','businesses','mentions','trust-signals'];
+    const stepDelay = 220;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function revealAll(){
+      nodes.forEach(n => n.classList.remove('acg-pre-reveal'));
+      edges.forEach(e => e.classList.remove('acg-pre-reveal'));
+      if (outputConnector) outputConnector.classList.remove('acg-pre-reveal');
+      if (outputBox) outputBox.classList.remove('acg-pre-reveal');
+    }
+
+    function runSequence(){
+      if (reduced) { revealAll(); return; }
+      nodes.forEach(n => n.classList.add('acg-pre-reveal'));
+      edges.forEach(e => e.classList.add('acg-pre-reveal'));
+      if (outputConnector) outputConnector.classList.add('acg-pre-reveal');
+      if (outputBox) outputBox.classList.add('acg-pre-reveal');
+
+      order.forEach((id, i) => {
+        setTimeout(() => {
+          const node = svg.querySelector(`.acg-node[data-id="${id}"]`);
+          if (node) node.classList.remove('acg-pre-reveal');
+          edges.forEach(edge => {
+            const a = edge.dataset.a, b = edge.dataset.b;
+            const maxIdx = Math.max(order.indexOf(a), order.indexOf(b));
+            if (maxIdx === i) edge.classList.remove('acg-pre-reveal');
+          });
+        }, i * stepDelay);
+      });
+
+      setTimeout(() => {
+        if (outputConnector) outputConnector.classList.remove('acg-pre-reveal');
+        if (outputBox) outputBox.classList.remove('acg-pre-reveal');
+      }, order.length * stepDelay);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            runSequence();
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      io.observe(wrap);
+    } else {
+      revealAll();
+    }
+  })();
+
+  // Recommendation Output ticker: rotates through a few illustrative
+  // example outputs every few seconds, so the box reads as a live result
+  // of the graph rather than a static label. The names here are
+  // placeholder examples, not real businesses.
+  (function(){
+    const ticker = document.getElementById('acgTicker');
+    if (!ticker) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const brandEl = ticker.querySelector('.acg-output-brand');
+    const confidenceEl = ticker.querySelector('.acg-output-meta span:last-child');
+    if (!brandEl || !confidenceEl) return;
+
+    const examples = [
+      { brand: 'Northfield Goods', confidence: 92 },
+      { brand: 'Cedar and Sage', confidence: 88 },
+      { brand: 'Lumen Wellness', confidence: 95 },
+      { brand: 'Aurora Supply Co.', confidence: 90 }
+    ];
+    let i = 0;
+
+    setInterval(() => {
+      i = (i + 1) % examples.length;
+      ticker.style.opacity = '0';
+      setTimeout(() => {
+        brandEl.textContent = examples[i].brand;
+        confidenceEl.textContent = 'Confidence ' + examples[i].confidence;
+        ticker.style.opacity = '1';
+      }, 300);
+    }, 2800);
+  })();
+
+  // Core entity cards reveal top to bottom as the grid scrolls into view,
+  // one at a time, matching the stagger reveal used elsewhere on the site.
+  (function(){
+    const grid = document.getElementById('entityGrid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.acg-entity-card'));
+    if (!cards.length) return;
+
+    function revealNext(i){
+      if (i >= cards.length) return;
+      const card = cards[i];
+      card.classList.add('is-visible');
+      let done = false;
+      function advance(){
+        if (done) return;
+        done = true;
+        card.removeEventListener('transitionend', onEnd);
+        revealNext(i + 1);
+      }
+      function onEnd(e){
+        if (e.target === card && e.propertyName === 'transform') advance();
+      }
+      card.addEventListener('transitionend', onEnd);
+      setTimeout(advance, 450);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            revealNext(0);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      io.observe(grid);
+    } else {
+      cards.forEach(card => card.classList.add('is-visible'));
+    }
+  })();
+
+  // The Relationships chain no longer auto-reveals on scroll. Instead, as
+  // the visitor's mouse moves down the whole block, every step up to and
+  // including the one level with the cursor lights up, so the reveal
+  // tracks the mouse continuously rather than requiring a precise hover
+  // over each thin arrow.
+  (function(){
+    const chain = document.getElementById('acgChain');
+    if (!chain) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const steps = Array.from(chain.children);
+    if (!steps.length) return;
+
+    chain.addEventListener('mousemove', (e) => {
+      const chainRect = chain.getBoundingClientRect();
+      const y = e.clientY - chainRect.top;
+      steps.forEach(step => {
+        const stepRect = step.getBoundingClientRect();
+        const stepMid = (stepRect.top - chainRect.top) + stepRect.height / 2;
+        step.classList.toggle('is-revealed', y >= stepMid - 24);
+      });
+    });
+    chain.addEventListener('mouseleave', () => {
+      steps.forEach(step => step.classList.remove('is-revealed'));
+    });
+  })();
+
+  // Until a visitor actually interacts with the Relationships chain, a
+  // thin orange highlight travels from box to box on its own, a small
+  // hint that these rectangles are meant to be hovered. It stops for good
+  // the first time the visitor's mouse (or a tap) reaches the chain.
+  (function(){
+    const chain = document.getElementById('acgChain');
+    if (!chain) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const boxes = Array.from(chain.querySelectorAll('.acg-chain-node'));
+    if (!boxes.length) return;
+
+    let i = 0;
+    let timer = null;
+
+    function tick(){
+      boxes.forEach(b => b.classList.remove('is-demo'));
+      boxes[i].classList.add('is-demo');
+      i = (i + 1) % boxes.length;
+    }
+
+    function stopDemo(){
+      if (timer) { clearInterval(timer); timer = null; }
+      boxes.forEach(b => b.classList.remove('is-demo'));
+    }
+
+    tick();
+    timer = setInterval(tick, 700);
+
+    chain.addEventListener('mouseenter', stopDemo, { once: true });
+    chain.addEventListener('touchstart', stopDemo, { once: true, passive: true });
+  })();
+
+  // Closing "visible outcome" chain fades in as one unit once it scrolls
+  // into view.
+  (function(){
+    const finalChain = document.getElementById('acgFinalChain');
+    if (!finalChain) return;
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            finalChain.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      io.observe(finalChain);
+    } else {
+      finalChain.classList.add('is-visible');
+    }
+  })();
+</script>
+<style>
+.aiw-root{position:fixed;bottom:22px;right:22px;z-index:2000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+.aiw-fab{position:relative;width:52px;height:52px;border-radius:14px;background:#0b0d0e;border:1px solid #262b2e;display:flex;align-items:center;justify-content:center;color:#5fe0af;cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,0.45);transition:transform .2s ease,box-shadow .2s ease;padding:0;}
+.aiw-fab:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.5);}
+.aiw-heart{width:22px;height:22px;}
+.aiw-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aiw-heart-pulse{stroke:#5fe0af;fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aiwHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aiwHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aiw-heart-pulse,.aiw-panel-dot{animation:none;}}
+.aiw-panel{position:absolute;bottom:64px;right:0;width:230px;background:#0b0d0e;border:1px solid #262b2e;border-radius:18px;padding:22px 20px 20px;box-shadow:0 34px 64px -20px rgba(0,0,0,0.6);transform-origin:bottom right;transform:scale(0.94) translateY(8px);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;}
+.aiw-root.is-open .aiw-panel{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
+.aiw-root.is-open .aiw-fab{color:#e8e8e8;}
+.aiw-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#565c60;font-size:18px;cursor:pointer;line-height:1;padding:2px;font-family:inherit;}
+.aiw-close:hover{color:#e8e8e8;}
+.aiw-panel-head{margin-bottom:20px;padding-right:18px;}
+.aiw-panel-title-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.aiw-panel-dot{width:6px;height:6px;border-radius:50%;background:#5fe0af;box-shadow:0 0 0 0 rgba(95,224,175,.6);animation:aiwDotPulse 2.4s infinite;flex-shrink:0;}
+@keyframes aiwDotPulse{70%{box-shadow:0 0 0 6px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
+.aiw-panel-title-main{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11.5px;font-weight:800;color:#f2f4f5;letter-spacing:.03em;line-height:1.3;}
+.aiw-panel-title-sub{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:10px;color:#868c91;letter-spacing:.03em;}
+.aiw-rings{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.aiw-ring-item{display:flex;align-items:center;gap:12px;text-align:left;}
+.aiw-ring-visual{position:relative;width:44px;height:44px;flex-shrink:0;}
+.aiw-ring-visual svg{width:100%;height:100%;transform:rotate(-90deg);}
+.aiw-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.aiw-ring-fill{fill:none;stroke:#5fe0af;stroke-width:5;stroke-linecap:round;stroke-dashoffset:106.81;transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.aiw-root.is-open .aiw-ring-fill{stroke-dashoffset:var(--offset);}
+.aiw-ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;font-weight:800;color:#f2f4f5;}
+.aiw-ring-label{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;color:#b4b8bc;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.aiw-note{font-size:10.5px;color:#565c60;line-height:1.5;margin:0 0 14px;}
+.aiw-link{display:block;text-align:center;background:#5fe0af;color:#080808;font-weight:700;font-size:12.5px;padding:10px;border-radius:9px;text-decoration:none;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;transition:background .15s;}
+.aiw-link:hover{background:#7ee9be;}
+@media(max-width:520px){
+  .aiw-root{bottom:16px;right:16px;}
+  .aiw-panel{width:calc(100vw - 32px);right:-6px;}
+}
+</style>
+<!-- AI_SIGNAL_WIDGET:START -->
+<div class="aiw-root" id="aiwRoot">
+  <button class="aiw-fab" id="aiwFab" aria-label="AI signal for atomfoundry.dev" aria-expanded="false" type="button">
+    <svg class="aiw-heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="aiw-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="aiw-heart-pulse" id="aiwHeartPulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="aiw-panel" id="aiwPanel" role="dialog" aria-label="AI signal for atomfoundry.dev">
+    <button class="aiw-close" id="aiwClose" aria-label="Close" type="button">&times;</button>
+    <div class="aiw-panel-head">
+      <div class="aiw-panel-title-row"><span class="aiw-panel-dot"></span><span class="aiw-panel-title-main">AI AGENT SNAPSHOT</span></div>
+      <div class="aiw-panel-title-sub">ATOM FOUNDRY.dev</div>
+    </div>
+    <div class="aiw-rings">
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:42.72"/>
+            </svg>
+            <div class="aiw-ring-value">3</div>
+          </div>
+          <div class="aiw-ring-label">Today</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:58.75"/>
+            </svg>
+            <div class="aiw-ring-value">6</div>
+          </div>
+          <div class="aiw-ring-label">Bots</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:10.68"/>
+            </svg>
+            <div class="aiw-ring-value">4m</div>
+          </div>
+          <div class="aiw-ring-label">Last seen</div>
+        </div>
+    </div>
+    <p class="aiw-note">Illustrative example &middot; single-site signal for atomfoundry.dev.</p>
+    <a href="/ai-signal" class="aiw-link">View full signals &rarr;</a>
+  </div>
+</div>
+<!-- AI_SIGNAL_WIDGET:END -->
+<script>
+(function(){
+  var root = document.getElementById('aiwRoot');
+  if(!root) return;
+  var fab = document.getElementById('aiwFab');
+  var closeBtn = document.getElementById('aiwClose');
+  var heart = document.getElementById('aiwHeartPulse');
+  function restartHeartbeat(){
+    if (!heart) return;
+    heart.style.animation = 'none';
+    void heart.getBBox();
+    heart.style.animation = '';
+  }
+  function setOpen(open){
+    root.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    restartHeartbeat();
+  }
+  fab.addEventListener('click', function(){ setOpen(!root.classList.contains('is-open')); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+  }
+  document.addEventListener('click', function(e){
+    if (root.classList.contains('is-open') && !root.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
+</body>
+</html>
