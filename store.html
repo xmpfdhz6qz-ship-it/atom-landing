@@ -3,673 +3,1457 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitle">AI Commerce Score: Atom Foundry</title>
-<meta name="description" id="pageDesc" content="See the AI Commerce Score for this store.">
-<meta property="og:title" id="ogTitle" content="AI Commerce Score: Atom Foundry">
-<meta property="og:description" id="ogDesc" content="AI Commerce analysis powered by Atom Foundry.">
+<title id="pageTitle">AI Commerce Score Report: Atom Foundry</title>
+<meta name="description" id="pageDesc" content="Watch how an AI shopping agent reads, understands, and decides whether to recommend this store, measured across the AI Commerce Framework.">
+<meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
+<link rel="canonical" href="https://atomfoundry.dev/store" id="canonicalLink">
+<meta property="og:title" id="ogTitle" content="AI Commerce Score Report: Atom Foundry">
+<meta property="og:description" id="ogDesc" content="Watch how an AI shopping agent reads, understands, and decides whether to recommend this store.">
+<meta property="og:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/favicon.ico">
-<script type="application/ld+json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json" id="baseLd">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "WebPage",
-      "@id": "https://atomfoundry.dev/store#webpage",
-      "name": "AI Commerce Score Report",
-      "description": "AI Commerce Score report for a DTC store, measuring how well AI shopping agents such as ChatGPT, Gemini, Claude, and Perplexity can understand, trust, and recommend it across 8 factors.",
-      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
-      "about": { "@id": "https://atomfoundry.dev/stores#dataset" },
-      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
-    },
-    {
       "@type": "Organization",
       "@id": "https://atomfoundry.dev/#organization",
       "name": "Atom Foundry",
-      "url": "https://atomfoundry.dev"
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
     }
   ]
 }
 </script>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; overflow-x: hidden; }
-body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.11), transparent); pointer-events: none; z-index: 0; }
-a { color: inherit; text-decoration: none; }
-.page { position: relative; z-index: 1; }
-/* NAV - identical to landing page */
-.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
-.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
-.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
-.nav-logo span { color: #f97316; }
-.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
-.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
-.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
-.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
-.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
-.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
-.nav-links a.framework:hover { color: #29c48f; border-color: rgba(29,158,117,0.6); }
-.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
-.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
-.nav-links a.cta-nav:hover { background: #ea580c; }
-@media (max-width: 700px) { .nav { flex-direction: column; padding: 16px 20px; gap: 14px; } .nav-links { flex-wrap: wrap; } }
-/* LAYOUT */
-.container { max-width: 860px; margin: 0 auto; padding: 28px 28px 56px; }
-/* STATES */
-#loadingState { text-align: center; padding: 80px 20px; font-size: 15px; color: #666; }
-#notFoundState { display: none; padding: 80px 20px; max-width: 860px; margin: 0 auto; }
-#notFoundState h2 { font-size: 24px; margin-bottom: 12px; color: #fff; }
-#notFoundState p { color: #888; font-size: 15px; margin-bottom: 28px; line-height: 1.7; }
-/* BREADCRUMB */
-.breadcrumb { font-size: 12px; color: #555; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
-.breadcrumb a { color: #555; }
-.breadcrumb a:hover { color: #f97316; }
-/* STORE HEADER */
-.domain-label { font-size: 14px; color: #aaa; margin-bottom: 4px; font-weight: 500; }
-.domain-sublabel { font-size: 12px; color: #555; margin-bottom: 10px; }
-.store-title { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 4px; letter-spacing: -0.5px; line-height: 1.2; }
-.store-title span { color: #f97316; }
-.store-meta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; margin-top: 10px; }
-/* BOT PROTECTION BADGE */
-.bot-protection-badge { display: none; background: rgba(249,115,22,0.05); border: 1px solid rgba(249,115,22,0.2); border-left: 3px solid #f97316; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; }
-.bot-protection-badge.visible { display: block; }
-.bot-protection-badge-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.bot-protection-badge-icon { font-size: 16px; }
-.bot-protection-badge-title { font-size: 12px; font-weight: 700; color: #f97316; text-transform: uppercase; letter-spacing: 0.08em; }
-.bot-protection-badge-body { font-size: 13px; color: #888; line-height: 1.7; }
-.bot-protection-badge-body strong { color: #ccc; }
-.bot-protection-badge-reason { display: inline-block; margin-top: 8px; font-size: 11px; color: #f97316; background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2); border-radius: 999px; padding: 2px 10px; }
-.meta-tag { font-size: 11px; color: #888; background: #111; border: 1px solid #1e1e1e; padding: 3px 10px; border-radius: 100px; }
-/* STATUS BLOCK */
-.ai-status-block { border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
-.ai-status-block.high   { background: rgba(29,158,117,0.08);  border: 1px solid rgba(29,158,117,0.25); }
-.ai-status-block.medium { background: rgba(249,115,22,0.08);  border: 1px solid rgba(249,115,22,0.25); }
-.ai-status-block.low    { background: rgba(226,75,74,0.08);   border: 1px solid rgba(226,75,74,0.25); }
-.ai-status-dot { font-size: 22px; flex-shrink: 0; }
-.ai-status-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 3px; }
-.ai-status-block.high   .ai-status-label { color: #1D9E75; }
-.ai-status-block.medium .ai-status-label { color: #f97316; }
-.ai-status-block.low    .ai-status-label { color: #E24B4A; }
-.ai-status-text { font-size: 13px; color: #bbb; line-height: 1.5; }
-/* SCORE */
-.scores-section { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; padding: 18px 20px; margin-bottom: 8px; }
-.score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
-.score-label { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; min-width: 110px; }
-.score-num { font-size: 22px; font-weight: 700; min-width: 65px; line-height: 1; }
-.score-bar-wrap { flex: 1; height: 7px; background: #1e1e1e; border-radius: 999px; overflow: hidden; }
-.score-bar-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
-.score-verdict { font-size: 12px; font-weight: 600; margin-bottom: 16px; padding-left: 124px; line-height: 1.4; }
-/* LOSS BLOCK */
-.loss-block { background: #0d0d0d; border: 1px solid #1e1e1e; border-left: 3px solid #E24B4A; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.loss-block-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 4px; }
-.loss-block-amount { font-size: 28px; font-weight: 800; color: #E24B4A; line-height: 1; }
-.loss-block-amount span { font-size: 14px; color: #888; font-weight: 400; }
-/* EXPLAIN TOGGLE */
-.explain-toggle { font-size: 13px; color: #f97316; cursor: pointer; text-align: center; padding: 10px; margin-bottom: 16px; user-select: none; }
-.explain-toggle:hover { color: #fb923c; }
-.explain-box { display: none; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; font-size: 13px; color: #aaa; line-height: 1.8; }
-.explain-box.open { display: block; }
-.explain-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 12px; }
-.explain-item { margin-bottom: 10px; padding-left: 4px; }
-.explain-item:last-child { margin-bottom: 0; }
-.explain-highlight { color: #f97316; font-weight: 600; }
-/* BREAKDOWN */
-.breakdown-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; }
-.breakdown-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 6px; }
-.breakdown-desc { font-size: 13px; color: #777; line-height: 1.6; margin-bottom: 16px; }
-.factor-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #141414; }
-.factor-row:last-of-type { border-bottom: none; padding-bottom: 0; }
-.factor-left { flex: 1; }
-.factor-name { font-size: 13px; color: #aaa; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-.factor-name .new-tag { font-size: 9px; font-weight: 700; color: #1D9E75; background: rgba(29,158,117,0.12); border: 1px solid rgba(29,158,117,0.25); border-radius: 3px; padding: 1px 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-.factor-bar { height: 4px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
-.factor-fill { height: 100%; border-radius: 999px; transition: width 1s ease; }
-.factor-score { font-size: 13px; font-weight: 700; min-width: 50px; text-align: right; }
-/* OWN STORE */
-.own-store-box { background: #111; border: 1px solid #1e1e1e; border-left: 3px solid #f97316; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.own-store-text h3 { font-size: 15px; font-weight: 700; color: #e8e8e8; margin-bottom: 4px; }
-.own-store-text p { font-size: 13px; color: #888; margin: 0; }
-.own-store-btn { background: #f97316; color: #000; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
-.own-store-btn:hover { background: #ea580c; }
-/* SECTIONS */
-.section-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px; }
-.main-leak-box { background: #111; border: 1px solid #1e1e1e; border-left: 3px solid #E24B4A; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.main-leak-text { font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.6; }
-.signals-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.signals-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 14px; }
-.signals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.signal-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #aaa; }
-.signal-dot { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
-.signal-dot.pass { background: rgba(29,158,117,0.15); color: #1D9E75; }
-.signal-dot.fail { background: rgba(226,75,74,0.12); color: #E24B4A; }
-.locked-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.locked-title { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; font-weight: 600; }
-.locked-item { font-size: 14px; color: #aaa; margin-bottom: 10px; line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
-.locked-item:last-child { margin-bottom: 0; }
-.locked-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-.fix-label { font-size: 11px; color: #1D9E75; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 8px; }
-.fix-box { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.fix-text { font-size: 15px; color: #4ade80; line-height: 1.6; }
-/* CTA */
-.cta-btn { display: block; width: 100%; padding: 20px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 17px; text-align: center; cursor: pointer; text-decoration: none; box-shadow: 0 12px 30px rgba(249,115,22,0.4); transition: all 0.25s; margin-bottom: 14px; font-family: inherit; }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(249,115,22,0.65); }
-.cta-trust { font-size: 13px; color: #999; text-align: center; line-height: 1.8; margin-bottom: 6px; }
-.cta-trust-green { font-size: 13px; color: #1D9E75; text-align: center; margin-bottom: 24px; }
-/* EDU + STATS + CHANNELS */
-.edu-box { background: #111; border: 1px solid #1e1e1e; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; }
-.edu-title { font-size: 14px; font-weight: 700; color: #ddd; margin-bottom: 12px; }
-.edu-text { font-size: 13px; color: #888; line-height: 1.8; margin-bottom: 12px; }
-.edu-text:last-child { margin-bottom: 0; }
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-.stat-card { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px; }
-.stat-number { font-size: 32px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 4px; }
-.stat-label-sm { font-size: 12px; color: #888; line-height: 1.5; }
-.channels-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.channel-item { padding: 10px 0; border-bottom: 1px solid #141414; }
-.channel-item:last-child { border-bottom: none; padding-bottom: 0; }
-.channel-name { font-size: 13px; font-weight: 700; color: #ddd; margin-bottom: 3px; }
-.channel-desc { font-size: 12px; color: #777; line-height: 1.5; }
-/* SEO BOX */
-.seo-box { background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; }
-.seo-box h2 { font-size: 16px; font-weight: 700; color: #ddd; margin-bottom: 10px; }
-.seo-box h3 { font-size: 14px; font-weight: 700; color: #ccc; margin: 16px 0 8px; }
-.seo-box p { font-size: 13px; color: #777; line-height: 1.8; margin-bottom: 10px; }
-.seo-box p:last-child { margin-bottom: 0; }
-/* EXPLORE GRID */
-.explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-.explore-card { display: block; background: #0d0d0d; border: 1px solid #1e1e1e; border-radius: 12px; padding: 16px 18px; transition: all 0.2s; }
-.explore-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
-.explore-card-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-.explore-card-desc { font-size: 12px; color: #888; line-height: 1.5; }
-.explore-card-arrow { font-size: 11px; color: #f97316; margin-top: 8px; display: block; font-weight: 600; }
-@media (max-width: 480px) { .explore-grid { grid-template-columns: 1fr; } }
-/* FOOTER */
-.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-.footer-left { font-size: 12px; color: #444; line-height: 2; }
-.footer-left a { color: #555; }
-.footer-left a:hover { color: #f97316; }
-.footer-right { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
-.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
-.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
-.footer-social a { color: #444; transition: color 0.2s; }
-.footer-social a:hover { color: #f97316; }
-.footer-disclaimer { font-size: 11px; color: #333; margin-top: 16px; line-height: 1.7; max-width: 480px; }
-@media (max-width: 480px) {
-  .score-label { min-width: 90px; font-size: 11px; }
-  .score-num { font-size: 20px; min-width: 55px; }
-  .score-verdict { padding-left: 100px; }
-  .signals-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: 1fr; }
-  .cta-btn { font-size: 15px; padding: 18px; }
-  .store-title { font-size: 22px; }
-  .loss-block { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
-  .footer-platform { text-align: left; }
-}
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  em{font-style:normal;}
+
+  /* ---------- NAV (verbatim boilerplate, same as every other page) ---------- */
+  header.nav{position:sticky;top:0;z-index:1000;background:rgba(240,238,230,0.88);backdrop-filter:saturate(160%) blur(16px);-webkit-backdrop-filter:saturate(160%) blur(16px);}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:22px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px;transition:padding .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{font-size:13px;font-weight:700;color:var(--black);text-transform:uppercase;letter-spacing:0.07em;position:relative;padding:4px 2px;white-space:nowrap;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;transition:color .2s ease, text-decoration-color .2s ease;}
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-chevron{display:inline-flex;width:10px;height:7px;margin-left:6px;vertical-align:middle;color:currentColor;transition:transform .2s ease;}
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .dropdown{position:absolute;top:100%;left:0;margin-top:6px;background:var(--cream);border:1px solid var(--card-line);border-radius:var(--radius);box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);padding:12px;width:max-content;max-width:300px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .18s ease, transform .18s ease, visibility .18s;z-index:1100;}
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+  /* ---------- LOADING / NOT FOUND ---------- */
+  .store-loading{padding:200px 24px;text-align:center;font-size:15px;color:var(--gray-500);}
+  .store-notfound{display:none;padding:180px 24px 120px;max-width:480px;margin:0 auto;text-align:center;}
+  .store-notfound h1{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:14px;}
+  .store-notfound p{color:var(--gray-700);font-size:15px;line-height:1.7;margin-bottom:28px;}
+
+  /* ---------- SHARED SECTION RHYTHM: thin dividers, generous whitespace,
+     an editorial reading column, no boxed dashboard cards, no popups. ---------- */
+  .store-block{padding:0 32px;}
+  .store-block-inner{max-width:var(--maxw);margin:0 auto;padding:44px 0;}
+  /* Content sits centered in its own reading-width column; the section
+     label stays pinned to the left edge of the wide container above it. */
+  .store-content{max-width:640px;margin:0 auto;}
+  .store-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:22px;}
+  /* The whole page cascades in top to bottom, one section after another,
+     rather than sitting fully rendered on first paint. */
+  .section-reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .section-reveal.is-visible{opacity:1;transform:translateY(0);}
+  .icon-pill{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+  .icon-pill.is-pass{background:rgba(29,158,117,0.15);color:var(--green);}
+  .icon-pill.is-fail{background:rgba(217,60,60,0.12);color:var(--red);}
+  .why-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--card-line);font-size:17px;font-weight:600;}
+  .why-row:last-child{border-bottom:none;}
+
+  /* ---------- HERO: no score up front. A short simulated read of the four
+     stages, staged in over about three seconds. ---------- */
+  .store-hero{padding:140px 32px 44px;}
+  .store-hero-inner{max-width:var(--maxw);margin:0 auto;}
+  .store-top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+  .store-domain-label{font-size:14px;font-weight:700;color:var(--gray-700);}
+  .store-visit-link{font-size:13px;font-weight:800;color:var(--orange);white-space:nowrap;}
+  .store-h1{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-0.02em;margin-bottom:22px;line-height:1.2;}
+  .store-h1 em{color:var(--orange);}
+  .hero-meta-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:4px;}
+  .hero-meta-value{font-family:var(--serif);font-weight:800;font-size:19px;}
+  .hero-meta-value.is-pass{color:var(--green);}
+  .hero-meta-value.is-fail{color:var(--red);}
+  /* The score is the star of its own notebook page now, not a small
+     unobtrusive line, so it gets to be big here. */
+  #heroMetaScore{font-size:clamp(48px,6vw,68px);margin-bottom:28px;}
+  .sim-row{display:flex;align-items:center;gap:16px;padding:10px 0;opacity:0;transform:translateY(6px);transition:opacity .4s ease, transform .4s ease;}
+  .sim-row.is-visible{opacity:1;transform:translateY(0);}
+  .sim-label{font-size:15px;font-weight:700;color:var(--gray-700);min-width:150px;flex-shrink:0;}
+  .sim-bar-wrap{flex:1;height:9px;background:var(--card);border-radius:100px;overflow:hidden;}
+  .sim-bar-fill{height:100%;border-radius:100px;width:0%;transition:width .9s cubic-bezier(.4,0,.2,1);}
+  /* Revealed only once every row above has finished filling. The reason
+     line fades in a beat after the result itself. */
+  #heroVerdictValue{font-size:clamp(36px,4.6vw,52px);margin-bottom:20px;}
+  .hero-verdict-reason{margin-top:12px;font-size:16px;font-weight:700;color:var(--gray-700);opacity:0;transform:translateY(6px);transition:opacity .5s ease, transform .5s ease;max-width:640px;}
+  .hero-verdict-reason.is-visible{opacity:1;transform:translateY(0);}
+
+  /* ---------- WHY: a one-line dissection, then a reasoning bubble instead
+     of eight progress bars. Lives on the notebook's Summary page. ---------- */
+  .examined-row{display:flex;flex-wrap:wrap;align-items:center;gap:22px;padding:6px 0 4px;margin-bottom:22px;}
+  .examined-chip{display:inline-flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--black);}
+  .reasoning-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin:28px 0 14px;}
+  .reasoning-bubble{max-width:640px;background:var(--card);border-radius:14px;padding:26px 28px;font-size:16.5px;line-height:1.85;color:var(--black);}
+  .reasoning-bubble p{margin-bottom:4px;}
+  .reasoning-bubble p:last-child{margin-bottom:0;}
+  .reasoning-note{max-width:640px;font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
+
+  /* ---------- RECOMMENDATION JOURNEY (nested inside the notebook's Journey
+     page): four stage tabs sit along the top like binder dividers, all at
+     the same height as the plain flow steps beside them; hovering one (no
+     click, no window) drops the matching page down directly beneath it. ---------- */
+  .journey-tabbook{margin-bottom:0;}
+  .journey-row{display:flex;align-items:stretch;flex-wrap:nowrap;gap:4px;margin-bottom:0;overflow-x:auto;padding-bottom:0;}
+  .journey-store-node{
+    display:flex;align-items:center;flex-shrink:0;font-weight:800;font-size:13px;color:var(--gray-700);
+    padding:10px 13px;border-radius:var(--radius);background:var(--off-white);
+    opacity:0;transform:translateX(-8px);transition:opacity .4s ease, transform .4s ease;
+  }
+  .journey-store-node.is-visible{opacity:1;transform:translateX(0);}
+  .journey-arrow{display:flex;align-items:center;color:var(--gray-500);font-size:13px;flex-shrink:0;opacity:0;transition:opacity .3s ease;}
+  .journey-arrow.is-visible{opacity:1;}
+  /* Nothing here clicks or unfolds: every stage's own pass/fail marker sits
+     plainly in the flow, and everything AI found is already laid out below,
+     fully open, all at once. */
+  .journey-node{
+    display:flex;align-items:center;gap:7px;flex-shrink:0;padding:10px 14px;
+    border-radius:var(--radius);
+    background:var(--card);font-size:13.5px;font-weight:800;color:var(--gray-700);
+    opacity:0;transform:translateX(-8px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .journey-node.is-visible{opacity:1;transform:translateX(0);}
+  .journey-detail-list{margin-top:26px;}
+  .journey-detail-block{padding:16px 0;border-bottom:1px solid var(--card-line);}
+  .journey-detail-block:last-child{border-bottom:none;}
+  .journey-detail-title{font-weight:800;color:var(--black);margin-bottom:12px;font-size:15px;}
+  .journey-detail-list-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-700);margin-bottom:10px;}
+  .journey-detail-items{display:flex;flex-wrap:wrap;gap:8px;}
+  .journey-detail-item{font-size:13.5px;font-weight:700;padding:6px 13px;border-radius:100px;background:rgba(22,21,18,0.07);color:var(--gray-700);}
+
+  /* ---------- THE NOTEBOOK: a stack of folder tabs at staggered depths,
+     each one named after its page. Hovering brings it forward (the active
+     tab sticks out furthest of all) and swaps its content into the page
+     pane beside it, inline, never a popup. A little idle motion on the
+     active tab keeps the whole thing feeling alive rather than static. ---------- */
+  .notebook{display:flex;align-items:stretch;gap:0;perspective:1400px;min-height:520px;}
+  .notebook-tabs{display:flex;flex-direction:column;flex:0 0 260px;padding:6px 0;justify-content:center;}
+  .notebook-tab{
+    position:relative;text-align:left;font-family:inherit;border:none;cursor:pointer;
+    padding:16px 22px;margin-bottom:14px;
+    background:var(--off-white);color:var(--gray-700);
+    border-radius:var(--radius) 0 0 var(--radius);
+    box-shadow:0 6px 14px -8px rgba(22,21,18,0.35);
+    transform-origin:right center;
+    transform:translateX(0) rotateY(0deg);
+    transition:transform .4s cubic-bezier(.34,1.3,.64,1), box-shadow .3s ease, background .3s ease, color .3s ease, z-index 0s;
+  }
+  .notebook-tab:last-child{margin-bottom:0;}
+  .notebook-tab-label{font-size:13.5px;font-weight:800;letter-spacing:0.01em;line-height:1.3;display:block;}
+  /* Every tab rests flush on the same straight edge, a clean column rather
+     than a hand-staggered zigzag; only the active/hovered one pushes out
+     further to the right, so it is still obvious which page is open. */
+  .notebook-tab{z-index:1;}
+  .notebook-tab:hover{background:var(--orange);color:var(--white);box-shadow:0 12px 26px -8px rgba(254,106,3,0.5);}
+  .notebook-tab.is-active{
+    background:var(--orange);color:var(--white);
+    box-shadow:0 18px 34px -10px rgba(254,106,3,0.55);
+    transform:translateX(30px) rotateY(-3deg) !important;
+    z-index:9;
+    animation:notebook-tab-breathe 3.2s ease-in-out infinite;
+  }
+  .notebook-tab.is-hidden{display:none;}
+  @keyframes notebook-tab-breathe{
+    0%,100%{ box-shadow:0 18px 34px -10px rgba(254,106,3,0.55); }
+    50%{ box-shadow:0 22px 40px -8px rgba(254,106,3,0.65); }
+  }
+  /* The page tucks in just under the tabs' resting edge, so the whole
+     assembly reads as one connected, bound object rather than two floating
+     pieces sitting side by side. A faint, permanent tilt (the perspective
+     is set on the parent .notebook) plus a deep multi-layer shadow give it
+     real thickness, like a binder sitting on a desk, not a flat card. The
+     extra left inset on the text pulls the content further into the page's
+     own space, away from the bound edge. */
+  .notebook-page{
+    flex:1;min-width:0;position:relative;margin-left:-18px;
+    background:var(--card);border-radius:var(--radius);
+    padding:40px 44px 40px 120px;
+    /* Fixed height, not content-driven: every page of the notebook is the
+       same size, so hovering between tabs never resizes the binder itself,
+       only swaps what is sitting on the page. Tall content scrolls inside
+       .notebook-page-inner instead of growing the page. */
+    height:520px;
+    transform:rotateY(-1.3deg) rotateX(0.5deg);
+    transform-style:preserve-3d;
+    box-shadow:0 34px 64px -22px rgba(22,21,18,0.48), 0 2px 0 rgba(22,21,18,0.06) inset;
+  }
+  /* Two faint pages peeking out from behind at slightly uneven angles, so
+     the whole thing reads as a thick stack of bound notebooks rather than
+     one flat card floating in place. */
+  .notebook-page::before, .notebook-page::after{
+    content:'';position:absolute;left:14px;right:-14px;border-radius:var(--radius);
+    background:var(--off-white);z-index:-1;
+    box-shadow:0 20px 40px -20px rgba(22,21,18,0.35);
+  }
+  .notebook-page::before{top:14px;bottom:-14px;opacity:0.85;transform:rotateZ(0.5deg);}
+  .notebook-page::after{top:30px;bottom:-30px;opacity:0.55;transform:rotateZ(-0.5deg);}
+  /* Switching tabs shows the matching page straight away, already sat
+     there, nothing sliding or fading in. */
+  .notebook-page-inner{display:none;}
+  .notebook-page-inner.is-active{
+    display:block;height:100%;overflow-y:auto;padding-right:10px;margin-right:-10px;
+    scrollbar-width:thin;scrollbar-color:rgba(22,21,18,0.25) transparent;
+  }
+  .notebook-page-inner.is-active::-webkit-scrollbar{width:6px;}
+  .notebook-page-inner.is-active::-webkit-scrollbar-track{background:transparent;}
+  .notebook-page-inner.is-active::-webkit-scrollbar-thumb{background:rgba(22,21,18,0.22);border-radius:99px;}
+  .notebook-page-inner.is-active::-webkit-scrollbar-thumb:hover{background:rgba(22,21,18,0.38);}
+  .notebook-page-title{font-weight:800;color:var(--black);margin-bottom:18px;font-size:16px;}
+
+  /* ---------- CONFIDENCE METER ---------- */
+  .confidence-num{font-family:var(--serif);font-weight:800;font-size:clamp(40px,5.6vw,56px);letter-spacing:-0.02em;margin-bottom:18px;}
+  .confidence-bar-wrap{height:14px;background:var(--card);border-radius:100px;overflow:hidden;max-width:420px;}
+  .confidence-bar-fill{height:100%;border-radius:100px;width:0%;transition:width 1.2s cubic-bezier(.34,1.1,.64,1);}
+
+  /* ---------- TOP 3 BLOCKERS: negative signal, not a High/Medium tag ---------- */
+  .blocker-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--card-line);}
+  .blocker-row:last-child{border-bottom:none;}
+  .blocker-name{font-size:18px;font-weight:700;}
+  .blocker-impact{font-family:var(--serif);font-weight:800;font-size:19px;color:var(--red);flex-shrink:0;}
+
+  /* ---------- WHAT WOULD CHANGE THE DECISION ---------- */
+  .whatif-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--card-line);}
+  .whatif-row:last-child{border-bottom:none;}
+  .whatif-name{font-size:16px;font-weight:700;}
+  .whatif-scores{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:800;font-size:19px;flex-shrink:0;}
+  .whatif-scores .from{color:var(--gray-500);}
+  .whatif-scores .arrow{color:var(--gray-500);font-size:14px;}
+  .whatif-scores .to{color:var(--green);}
+
+  /* ---------- SIMILAR RECOMMENDED STORES ---------- */
+  .similar-item{padding:11px 0;border-bottom:1px solid var(--card-line);}
+  .similar-item:last-child{border-bottom:none;}
+  .similar-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:6px;}
+  .similar-name{font-size:17px;font-weight:700;transition:color .2s ease;}
+  .similar-name:hover{color:var(--orange);}
+  .similar-score{font-family:var(--serif);font-weight:800;font-size:19px;color:var(--green);}
+  .similar-signal-list{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;}
+  .similar-signal-chip{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
+
+  /* ---------- TECHNICAL FACTOR BREAKDOWN: always open, no click needed ---------- */
+  .store-detail-desc{font-size:13.5px;color:var(--gray-700);margin-bottom:22px;line-height:1.6;}
+  .factor-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--card-line);}
+  .factor-row:last-child{border-bottom:none;}
+  .factor-left{flex:1;min-width:0;}
+  .factor-name{font-size:13px;color:var(--gray-700);margin-bottom:6px;font-weight:600;}
+  .factor-bar{height:5px;background:var(--card);border-radius:100px;overflow:hidden;}
+  .factor-fill{height:100%;border-radius:100px;transition:width 1s ease;}
+  .factor-score{font-size:13px;font-weight:800;min-width:52px;text-align:right;flex-shrink:0;}
+
+  /* ---------- FINAL CTA: the only call to action on the page, at the very end,
+     styled like the landing page's own score card. The report is a
+     simulation of a decision, so the close should offer the same thing,
+     not a generic scan button. ---------- */
+  .store-cta-final{padding:44px 32px;}
+  .store-cta-box{max-width:var(--maxw);margin:0 auto;text-align:center;background:var(--card);border-radius:var(--radius);padding:48px 40px;}
+  .store-cta-lead{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
+  .store-cta-btn{display:inline-flex;align-items:center;gap:10px;padding:20px 48px;border-radius:var(--radius);background:var(--off-white);color:var(--black);font-weight:800;font-size:16px;transition:background .2s ease, color .2s ease, transform .2s ease;}
+  .store-cta-btn:hover{background:var(--orange);color:var(--white);transform:translateY(-2px);}
+  .store-cta-btn:hover .nav-chevron{color:var(--white);}
+  .store-cta-sub{font-size:13px;color:var(--gray-500);margin-top:18px;}
+
+  /* ---------- SOURCE ROW: the domain and outbound link, moved to the very
+     end of the page rather than the hero. No breadcrumb any more. ---------- */
+  .store-source-row{max-width:var(--maxw);margin:0 auto;padding:44px 32px;}
+
+  /* ---------- STANDARD SITE FOOTER (verbatim boilerplate, same as every other page) ---------- */
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:10px;max-width:280px;}
+  .footer-tagline-text{font-weight:700;color:var(--black);}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+  .footer-col-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:14px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--gray-700);margin-bottom:10px;transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:28px 40px;padding:28px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{font-family:var(--serif);font-size:17px;color:var(--black);margin-right:6px;}
+  .footer-meta{font-size:12px;color:var(--gray-500);padding:16px 0;border-top:1px solid var(--gray-300);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
+    .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
+    .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    .store-hero{padding:96px 20px 28px;}
+    .store-block{padding:8px 20px 32px;}
+    .store-block-inner{padding-top:28px;}
+    .why-row,.blocker-row,.quickwin-row,.whatif-row{font-size:15px;}
+    .sim-label{min-width:120px;font-size:13px;}
+    .notebook{flex-direction:column;perspective:none;}
+    .notebook-tabs{flex-direction:row;flex-wrap:wrap;flex:0 0 auto;padding:0 0 14px;gap:6px;justify-content:flex-start;}
+    .notebook-tab{margin-bottom:0;transform:none !important;border-radius:var(--radius);animation:none;}
+    .notebook-tab.is-active{transform:none !important;}
+    .notebook-page{padding:28px 20px;transform:none;}
+    .notebook-page::before, .notebook-page::after{display:none;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+  }
 </style>
 </head>
 <body>
-<div class="page">
-<nav class="nav">
-  <div class="nav-brand">
-    <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
-    <div class="nav-subline">The AI Commerce Graph&trade;</div>
-    <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
-  </div>
-  <div class="nav-links">
-    <a href="/stores">Stores</a>
-    <a href="/methodology">Methodology</a>
-    <a href="/vocabulary">Vocabulary</a>
-    <a href="/framework" class="framework">Framework</a>
-    <a href="/research" class="research">Research</a>
-    <a href="/#score" class="cta-nav">Free Score</a>
-  </div>
-</nav>
-<div id="loadingState" style="text-align:center;padding:80px 20px;font-size:15px;color:#666;">Analyzing store data...</div>
-<div id="notFoundState" style="display:none;">
-  <div style="text-align:center;padding:80px 20px;max-width:480px;margin:0 auto;">
-    <h2 style="font-size:24px;margin-bottom:12px;color:#fff;">Store not found</h2>
-    <p id="notFoundMsg" style="color:#888;font-size:15px;margin-bottom:28px;line-height:1.7;">We have not scanned this store yet.</p>
-    <a href="/scan" id="notFoundLink" class="cta-btn" style="max-width:320px;margin:0 auto;display:block;">Scan this store free</a>
-  </div>
-</div>
-<div id="mainContent" style="display:none;">
-<div class="container">
-  <div class="breadcrumb">
-    <a href="/">Home</a> &rsaquo; <a href="/stores">Stores</a> &rsaquo; <span id="bcDomain"></span>
-  </div>
-  <div class="domain-label">AI Commerce Score Report</div>
-  <div class="domain-sublabel">Measured against 8 AI recommendation factors &middot; v3.1</div>
-  <div class="store-title" id="storeTitle"></div>
-  <div class="store-meta-row" id="storeMeta"></div>
-  <!-- BOT PROTECTION BADGE -->
-  <div class="bot-protection-badge" id="botProtectionBadge">
-    <div class="bot-protection-badge-header">
-      <span class="bot-protection-badge-icon">&#128737;</span>
-      <span class="bot-protection-badge-title">AI Crawler Access Restricted</span>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
     </div>
-    <div class="bot-protection-badge-body">
-      <strong>This store restricts independent AI crawler access.</strong> Our scanner &mdash; like most independent AI agents &mdash; was blocked from reading this store's content. Only major platforms with whitelisted access (OpenAI, Anthropic, Apple) may be able to reach it.<br><br>
-      This score reflects real-world AI visibility: stores that block independent crawlers are invisible to the growing ecosystem of open-source AI agents, local AI assistants, and emerging shopping agents that do not have whitelist access. This is a genuine AI Visibility Risk&trade;.
-      <div id="blockReasonTag"></div>
-    </div>
-  </div>
-  <div class="ai-status-block" id="aiStatusBlock">
-    <div class="ai-status-dot" id="aiStatusDot"></div>
-    <div class="ai-status-content">
-      <div class="ai-status-label" id="aiStatusLabel"></div>
-      <div class="ai-status-text" id="aiStatusText"></div>
-    </div>
-  </div>
-  <div class="scores-section">
-    <div class="score-row">
-      <div class="score-label">AI Score</div>
-      <div class="score-num" id="aiScoreNum">--<span style="font-size:13px;color:#888;">/100</span></div>
-      <div class="score-bar-wrap"><div class="score-bar-fill" id="aiBar" style="width:0%;"></div></div>
-    </div>
-    <div class="score-verdict" id="aiVerdict"></div>
-  </div>
-  <div id="lossBlock" style="display:none;" class="loss-block">
-    <div>
-      <div class="loss-block-label">Estimated monthly revenue at risk</div>
-      <div class="loss-block-amount" id="lossAmount">--<span>/month</span></div>
-    </div>
-    <div style="font-size:32px;flex-shrink:0;">&#128184;</div>
-  </div>
-  <div class="explain-toggle" onclick="toggleExplain()">&#9658; What does this score mean?</div>
-  <div class="explain-box" id="explainBox">
-    <div class="explain-title">Understanding the AI Commerce Score</div>
-    <div class="explain-item"><span class="explain-highlight">85 to 100: Highly Recommendable</span><br>AI agents can clearly understand, trust, and recommend this store to shoppers.</div>
-    <div class="explain-item"><span class="explain-highlight">70 to 84: Moderately Recommendable</span><br>AI recommends this store but stronger signals would win more traffic and recommendations.</div>
-    <div class="explain-item"><span class="explain-highlight">50 to 69: Low Recommendation Confidence</span><br>AI can see the store but misses key signals. Competitors with higher scores win more customers.</div>
-    <div class="explain-item"><span class="explain-highlight">0 to 49: AI Invisible Risk</span><br>Critical gaps prevent AI agents from recommending this store. Urgent action needed.</div>
-  </div>
-  <div class="breakdown-box">
-    <div class="breakdown-title">AI Commerce Score v3.1 &mdash; factor breakdown</div>
-    <div class="breakdown-desc">8 factors determine how confidently AI shopping agents like Alexa for Shopping, ChatGPT, and Google AI Mode can understand, trust, and recommend this store.</div>
-    <div id="factorRows"></div>
-  </div>
-  <div class="own-store-box">
-    <div class="own-store-text">
-      <h3 id="ownTitle">Do you own this store?</h3>
-      <p>See your real AI Commerce Score free, in 30 seconds.</p>
-    </div>
-    <a href="/#score" class="own-store-btn" id="ownLink">Get my free score</a>
-  </div>
-  <div class="section-label">Biggest AI visibility gap detected</div>
-  <div class="main-leak-box"><div class="main-leak-text" id="mainLeakText">Analyzing...</div></div>
-  <div class="section-label">Signal checklist</div>
-  <div class="signals-box">
-    <div class="signals-title">What we checked</div>
-    <div class="signals-grid" id="signalsGrid"></div>
-  </div>
-  <div class="locked-box" id="lockedBox">
-    <div class="locked-title">&#128274; More AI visibility gaps available in full audit</div>
-    <div id="lockedItems"></div>
-  </div>
-  <div class="fix-label">Quick win &mdash; fix this first</div>
-  <div class="fix-box"><div class="fix-text" id="quickFixText">Loading...</div></div>
-  <div style="background:#111;border:1px solid #1e1e1e;border-radius:14px;padding:24px 20px;margin-bottom:20px;text-align:center;">
-    <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:10px;">Is your store losing money too?</div>
-    <div style="font-size:18px;font-weight:800;color:white;margin-bottom:8px;letter-spacing:-0.3px;">Find your AI visibility gaps free</div>
-    <div style="font-size:14px;color:#888;margin-bottom:20px;line-height:1.6;">AI agents are the new storefront. See exactly where your store is invisible to ChatGPT, Alexa for Shopping, and Google AI Mode. Results in 30 seconds.</div>
-    <a href="/#score" class="cta-btn" style="margin-bottom:10px;">Scan my store free</a>
-    <div style="font-size:12px;color:#666;">Free &middot; No credit card &middot; Results in 30 seconds</div>
-  </div>
-  <div class="section-label">What is AI Commerce Intelligence?</div>
-  <div class="edu-box">
-    <div class="edu-title">Why AI assistants skip most Shopify stores</div>
-    <div class="edu-text">When a shopper asks ChatGPT "what is the best minimalist skincare brand for sensitive skin?" or Alexa for Shopping "find me eco-friendly coffee under $30," AI agents scan thousands of stores and recommend only the ones they can fully understand, trust, and match to the buyer's intent.</div>
-    <div class="edu-text">To recommend a store, AI needs structured data (schema markup), clear semantic positioning, explicit pricing, trust signals like reviews and return policies, fast crawlable structure, and content that matches specific buyer intents &mdash; the eight factors in our <a href="/methodology" style="color:#f97316;">scoring methodology</a>. Shopify confirmed it in May 2026: your store is becoming a product database for AI agents.</div>
-    <div class="edu-text">Most Shopify stores were built for human visitors and Google search, not for AI recommendation engines. Stores that have not adapted are being systematically skipped &mdash; see <a href="/research" style="color:#f97316;">what AI actually recommends</a> across commerce categories. <strong style="color:#ddd;">If AI cannot confidently understand and trust your store, it will not recommend it.</strong></div>
-  </div>
-  <div class="stats-grid">
-    <div class="stat-card"><div class="stat-number" id="dbStores">&mdash;</div><div class="stat-label-sm">DTC stores scored in the Atom Foundry database</div></div>
-    <div class="stat-card"><div class="stat-number" id="dbAvg">&mdash;</div><div class="stat-label-sm">Average AI Commerce Score across scored stores</div></div>
-    <div class="stat-card"><div class="stat-number" id="dbRisk">&mdash;</div><div class="stat-label-sm">Score under 50: AI Invisible Risk to shopping agents</div></div>
-    <div class="stat-card"><div class="stat-number" id="dbHigh">&mdash;</div><div class="stat-label-sm">Score 70 or above: recommendable to AI agents</div></div>
-  </div>
-  <div class="section-label">Where AI recommendation readiness matters</div>
-  <div class="channels-box">
-    <div class="channel-item"><div class="channel-name">Alexa for Shopping</div><div class="channel-desc">300M plus users (launched May 2026). Embedded directly into Amazon search. Structured product data, variants, pricing, and trust signals are critical.</div></div>
-    <div class="channel-item"><div class="channel-name">ChatGPT Shopping</div><div class="channel-desc">Uses schema markup, semantic clarity, and brand entity signals. Intent match is the key ranking factor. Generic stores are invisible.</div></div>
-    <div class="channel-item"><div class="channel-name">Perplexity</div><div class="channel-desc">Crawls and evaluates stores in real time. Clear content, trust signals, and reviews are key signals for recommendation.</div></div>
-    <div class="channel-item"><div class="channel-name">Google AI Overviews</div><div class="channel-desc">Stores without rich snippets and commerce accuracy get excluded from AI-generated product summaries in search results.</div></div>
-    <div class="channel-item"><div class="channel-name">Shopify AI</div><div class="channel-desc">Shopify confirmed that stores are becoming product databases for AI agents. llms.txt and structured product feeds matter for agentic checkout flows.</div></div>
-    <div class="channel-item"><div class="channel-name">Apple Intelligence</div><div class="channel-desc">As AI assistants gain shopping capabilities, external authority signals and brand entity recognition become increasingly critical for recommendation.</div></div>
-  </div>
-  <a href="/#score" class="cta-btn" style="margin-bottom:14px;">Is your store losing money? Find out free</a>
-  <div class="cta-trust">Free &middot; No credit card &middot; 30 seconds</div>
-  <div class="cta-trust-green" id="ctaTrustLine">See your AI visibility gaps instantly</div>
-  <div class="seo-box" id="seoBox"></div>
-
-  <div class="section-label">Explore the platform</div>
-  <div class="explore-grid">
-    <a href="/stores" class="explore-card">
-      <div class="explore-card-name">Store Database</div>
-      <div class="explore-card-desc">Browse live AI Commerce Scores for thousands of DTC stores.</div>
-      <span class="explore-card-arrow">Browse the data &rarr;</span>
-    </a>
-    <a href="/methodology" class="explore-card">
-      <div class="explore-card-name">Methodology v3.1</div>
-      <div class="explore-card-desc">The 8-factor, 100-point model behind this report.</div>
-      <span class="explore-card-arrow">See how we score &rarr;</span>
-    </a>
-    <a href="/framework" class="explore-card">
-      <div class="explore-card-name">The Framework</div>
-      <div class="explore-card-desc">How AI reads, understands, trusts, and recommends a store.</div>
-      <span class="explore-card-arrow">Read the framework &rarr;</span>
-    </a>
-    <a href="/research" class="explore-card">
-      <div class="explore-card-name">Research</div>
-      <div class="explore-card-desc">What AI actually recommends across five commerce categories.</div>
-      <span class="explore-card-arrow">Read the research &rarr;</span>
-    </a>
-    <a href="/vocabulary" class="explore-card">
-      <div class="explore-card-name">Vocabulary</div>
-      <div class="explore-card-desc">Every term in this report, defined with examples.</div>
-      <span class="explore-card-arrow">Open the glossary &rarr;</span>
-    </a>
-    <a href="/#score" class="explore-card">
-      <div class="explore-card-name">Free AI Commerce Score</div>
-      <div class="explore-card-desc">Scan your own store across all 8 factors in 10 seconds.</div>
-      <span class="explore-card-arrow">Scan my store &rarr;</span>
-    </a>
-  </div>
-</div>
-</div>
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-left">
-      <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
-      <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
-      <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
-      <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
-      <a href="/research">Research</a> &nbsp;&middot;&nbsp;
-      <a href="/privacy-policy">Privacy</a><br>
-      <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
-      <div class="footer-disclaimer">This analysis is based on publicly available data and automated signals. Revenue estimates are modeled projections, not verified figures. Atom Foundry is not affiliated with the analyzed stores.</div>
-    </div>
-    <div>
-      <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
-        <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
       </div>
-      <div class="footer-platform">The AI Commerce Graph&trade;</div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger active">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<div id="loadingState" class="store-loading">Analyzing store...</div>
+
+<div id="notFoundState" class="store-notfound">
+  <h1>Store not found</h1>
+  <p id="notFoundMsg">We have not scanned this store yet.</p>
+  <a href="/#score" id="notFoundLink" class="store-cta-btn">Scan this store free</a>
+</div>
+
+<div id="mainContent" style="display:none;">
+
+  <!-- HERO: just the title now. The score, the live simulation, and the
+       result all moved into the notebook's own first page below. -->
+  <section class="store-hero">
+    <div class="store-hero-inner">
+      <h1 class="store-h1">How AI sees <em id="storeNameEm"></em></h1>
     </div>
+  </section>
+
+  <!-- THE NOTEBOOK: every section lives on one page of a single tabbed
+       binder now, instead of stacking as separate blocks. Tabs sit in a
+       staggered stack at different depths, like real folder dividers, each
+       flush against the page itself so it reads as one bound object;
+       hovering one brings it forward (orange) and swaps in its page, right
+       here on the page, never a popup or overlay. -->
+  <section class="store-block section-reveal" id="notebookSection">
+    <div class="store-block-inner">
+      <div class="notebook" id="notebook">
+        <div class="notebook-tabs" id="notebookTabs">
+          <button type="button" class="notebook-tab is-active" data-page="score">
+            <span class="notebook-tab-label">AI Commerce Score</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="journey">
+            <span class="notebook-tab-label">Recommendation Journey</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="summary">
+            <span class="notebook-tab-label">Recommendation Summary</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="probability">
+            <span class="notebook-tab-label">Probability</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="result">
+            <span class="notebook-tab-label">Result</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="blockers">
+            <span class="notebook-tab-label">Top Blockers</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="whatif">
+            <span class="notebook-tab-label">How to Change the Decision</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="technical">
+            <span class="notebook-tab-label">Technical Breakdown</span>
+          </button>
+          <button type="button" class="notebook-tab" data-page="similar" id="similarTab">
+            <span class="notebook-tab-label">Stores AI Recommends Instead</span>
+          </button>
+        </div>
+
+        <div class="notebook-page" id="notebookPage">
+          <div class="notebook-page-inner is-active" data-page-content="score">
+            <div class="hero-meta-label">AI Commerce Score&#8482;</div>
+            <div class="hero-meta-value" id="heroMetaScore">--</div>
+            <!-- The whole four-row read happens automatically on load: this
+                 IS "watch AI evaluate this store," so nothing else needs to
+                 sit there statically before it, or duplicate it elsewhere. -->
+            <div id="simRows"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="journey">
+            <div class="notebook-page-title">What AI found at each stage</div>
+            <div class="journey-tabbook" id="journeyTabbook">
+              <div class="journey-row" id="journeyRow">
+                <span class="journey-store-node">Store</span>
+              </div>
+              <div class="journey-detail-list" id="journeyDetail"></div>
+            </div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="summary">
+            <div class="notebook-page-title">Why AI made that decision</div>
+            <div id="examinedList" class="examined-row"></div>
+            <div class="reasoning-label">Recommendation summary</div>
+            <div class="reasoning-bubble" id="reasoningBubble"></div>
+            <div class="reasoning-note">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="probability">
+            <div class="notebook-page-title">Would AI recommend this store?</div>
+            <div class="confidence-num" id="confidenceNum">--%</div>
+            <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="result">
+            <div class="hero-meta-label">Result</div>
+            <div class="hero-meta-value" id="heroVerdictValue">--</div>
+            <div class="hero-verdict-reason" id="heroVerdictReason"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="blockers">
+            <div id="blockersList"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="whatif">
+            <div id="whatifList"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="technical">
+            <div class="notebook-page-title">The eight factors behind the decision above, measured by the AI Commerce Score methodology v3.1.</div>
+            <div id="factorRows"></div>
+          </div>
+
+          <div class="notebook-page-inner" data-page-content="similar">
+            <div id="similarList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA: the only call to action on the page, styled like the landing
+       page's own score card and as wide as the navbar. This is a simulation
+       of a decision, not an audit, so the close offers the same thing
+       rather than a generic scan button. -->
+  <section class="store-cta-final section-reveal" id="ctaSection">
+    <div class="store-cta-box">
+      <div class="store-cta-lead">Curious how AI sees your store?</div>
+      <a href="/#score" class="store-cta-btn" id="ctaFinalBtn">Start your AI Evaluation<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <div class="store-cta-sub">Free &middot; No credit card &middot; Results in 30 seconds</div>
+    </div>
+  </section>
+
+  <!-- Source: the domain itself and the outbound link, kept modest, no
+       breadcrumb. -->
+  <div class="store-source-row section-reveal" id="sourceSection">
+    <div class="store-top-row">
+      <div class="store-domain-label" id="storeDomainLabel"></div>
+      <a href="#" id="visitStoreLink" class="store-visit-link" target="_blank" rel="nofollow noopener">Visit store &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
   </div>
 </footer>
-</div>
+
 <script>
-function getDomain() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('domain')) return params.get('domain').toLowerCase().replace(/^www\./, '');
-  const parts = window.location.pathname.split('/');
-  const idx = parts.indexOf('store');
-  return idx >= 0 && parts[idx + 1] ? decodeURIComponent(parts[idx + 1]).toLowerCase().replace(/^www\./, '') : '';
-}
-function getColor(s) { return s >= 85 ? '#1D9E75' : s >= 50 ? '#EF9F27' : '#E24B4A'; }
-function getFactorColor(p) { return p >= 70 ? '#1D9E75' : p >= 40 ? '#EF9F27' : '#E24B4A'; }
-function getLevelLabel(l) {
-  const m = { 'highly_recommendable':'Highly Recommendable','moderately_recommendable':'Moderately Recommendable','low_recommendation_confidence':'Low Recommendation Confidence','ai_invisible_risk':'AI Invisible Risk','ai_ready':'Highly Recommendable','ai_partial':'Partially Visible','ai_invisible':'AI Invisible Risk' };
-  return m[l] || l.replace(/_/g,' ');
-}
-function getAiStatusBlock(s) {
-  if (s >= 85) return { cls:'high',   dot:'&#128994;', label:'HIGHLY RECOMMENDABLE',          text:'AI agents can clearly understand, trust, and recommend this store.' };
-  if (s >= 70) return { cls:'medium', dot:'&#128993;', label:'MODERATELY RECOMMENDABLE',       text:'AI recommends this store but stronger signals would win more traffic.' };
-  if (s >= 50) return { cls:'medium', dot:'&#128993;', label:'LOW RECOMMENDATION CONFIDENCE',  text:'AI can see this store but misses key signals. Competitors score higher.' };
-  return              { cls:'low',    dot:'&#128308;', label:'AI INVISIBLE RISK',               text:'Critical gaps prevent AI agents from recommending this store.' };
-}
-function getAiVerdict(s) {
-  if (s >= 85) return `<span style="color:#1D9E75;">&#10003; Highly Recommendable &mdash; AI agents can confidently recommend this store</span>`;
-  if (s >= 70) return `<span style="color:#EF9F27;">&#9680; Moderately Recommendable &mdash; AI recommends but stronger signals win more traffic</span>`;
-  if (s >= 50) return `<span style="color:#EF9F27;">&#9888; Low Recommendation Confidence &mdash; competitors with higher scores win</span>`;
-  return `<span style="color:#E24B4A;">&#10007; AI Invisible Risk &mdash; critical gaps prevent AI agents from recommending this store</span>`;
-}
-function leakCopy(gap) {
-  const m = {
-    schema:    { leak:'AI assistants cannot read structured product data. Without JSON-LD schema and llms.txt, ChatGPT and Alexa for Shopping cannot extract pricing or product details and skip this store entirely.', fix:'Add Product, Organization, and BreadcrumbList schema markup via Shopify theme.liquid or a schema app. Add llms.txt for AI agent readability.' },
-    content:   { leak:'Product pages lack the semantic clarity AI needs to confidently recommend this store. Generic messaging means AI cannot match this store to specific buyer intents.', fix:'Rewrite product descriptions with explicit use case, target customer, and key differentiators. Aim for 150 or more words per product. Add a FAQ section.' },
-    trust:     { leak:'No visible reviews, trust badges, or return policy above the fold. AI agents weight trust signals heavily and stores without machine-readable trust data rarely get recommended.', fix:'Add a review app like Judge.me or Yotpo. Display star ratings prominently. Make return policy visible on every product page in crawlable HTML.' },
-    technical: { leak:'Missing meta descriptions, no Open Graph tags, or slow mobile load speed reduces how well AI crawlers can parse and categorize this store.', fix:'Add unique meta descriptions to all key pages. Enable Open Graph tags. Optimize image sizes for mobile load speed under 3 seconds.' },
-    price:     { leak:'Price and stock data is not surfaced in a way AI systems can reliably extract. Stores with unclear pricing are consistently passed over.', fix:'Add price data to structured schema markup. Display prices and availability clearly in HTML without requiring JavaScript.' },
-    brand:     { leak:'AI systems cannot establish a clear brand identity. No About page, no social proof, and no brand entity in structured data reduces recommendation confidence.', fix:'Create a detailed About page. Add Organization schema with brand name, logo, and social profile links. Build external mentions through press and creator outreach.' },
-    intent:    { leak:'This store does not match the specific queries buyers ask AI systems. Generic positioning means AI cannot confidently map this store to a buyer intent.', fix:'Identify your top 3 buyer personas and their exact search queries. Rewrite homepage and product copy to directly answer those queries.' },
-    rec:       { leak:'Overall recommendation confidence is low. Multiple weak signals combine to make AI systems uncertain about recommending this store.', fix:'Address the highest-scoring opportunity factors first. Schema, trust signals, and semantic clarity have the biggest compound impact.' }
-  };
-  return m[gap] || { leak:'AI visibility gaps were detected across multiple factors.', fix:'Review the full audit for specific, prioritized recommendations across all 8 scoring factors.' };
-}
-function buildLockedLeaks(data) {
-  const candidates = [
-    { key:'intent', score:data.intent_score??0, max:14, threshold:10, text:'User Intent Match analysis &mdash; does your positioning match how buyers search AI?' },
-    { key:'price',  score:data.price_score??0,  max:10, threshold:7,  text:'Commerce Accuracy gaps &mdash; pricing, stock, and variant structure &middot; estimated impact $180 to $320 per month' },
-    { key:'brand',  score:data.brand_score??0,  max:3,  threshold:2,  text:'External Authority Signals compared to top competitors in the same niche' },
-    { key:'rec',    score:data.rec_score??0,    max:5,  threshold:3,  text:'Recommendation Confidence deep dive &mdash; compound signal analysis' }
-  ];
-  const weak = candidates.filter(c => c.score < c.threshold);
-  if (!weak.length) { document.getElementById('lockedBox').style.display='none'; return; }
-  document.getElementById('lockedItems').innerHTML = weak.map(c => `<div class="locked-item"><span class="locked-icon">&#128274;</span><span>${c.text}</span></div>`).join('');
-}
-function showBotProtectionBadge(data) {
-  const blocked = data.homepage_blocked === true;
-  const reason = data.block_reason || '';
-  if (!blocked && (!reason || reason === 'success')) return;
-  const badge = document.getElementById('botProtectionBadge');
-  badge.classList.add('visible');
-  const reasonLabels = {
-    'cloudflare': 'Cloudflare Bot Protection',
-    'blocked_403': '403 Access Denied',
-    'js_only': 'JavaScript-Only Rendering',
-    'empty_html': 'Empty Response',
-    'offline': 'Store Offline or Unreachable'
-  };
-  const label = reasonLabels[reason] || reason;
-  if (label) {
-    document.getElementById('blockReasonTag').innerHTML = `<span class="bot-protection-badge-reason">&#128737; ${label}</span>`;
-  }
-}
-function renderPage(data) {
-  const domain = data.domain || getDomain();
-  const storeName = domain.split('.')[0].replace(/-/g,' ');
-  const storeNameCap = storeName.charAt(0).toUpperCase() + storeName.slice(1);
-  const score = data.total_score ?? 0;
-  const level = data.readiness_level || '';
-  const platform = data.platform || '';
-  const country = data.country || '';
-  const scannedAt = data.scanned_at ? new Date(data.scanned_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : 'recently';
-  const rawGap = data.biggest_gap || 'schema';
-  const biggestGap = rawGap.includes('|') ? 'schema' : rawGap;
-  const mainLeak = data.main_leak || leakCopy(biggestGap).leak;
+  // Navbar compacts on scroll (same behavior as every other page).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) nav.classList.add('nav-compact');
+      else nav.classList.remove('nav-compact');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
 
-  // --- AI loop closure: canonical + machine-readable store entity ---
-  try {
-    var _canon = 'https://atomfoundry.dev/store/' + domain;
-    var _c = document.querySelector('link[rel="canonical"]') || document.createElement('link');
-    _c.setAttribute('rel','canonical'); _c.setAttribute('href', _canon);
-    if (!_c.parentNode) document.head.appendChild(_c);
-    var _ld = {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebPage",
-          "@id": _canon + "#webpage",
-          "url": _canon,
-          "name": storeNameCap + " \u2014 AI Commerce Score",
-          "about": { "@id": _canon + "#store" },
-          "isPartOf": { "@id": "https://atomfoundry.dev/#website" }
-        },
-        {
-          "@type": "Organization",
-          "@id": _canon + "#store",
-          "name": storeNameCap,
-          "url": "https://" + domain,
-          "additionalProperty": [{
-            "@type": "PropertyValue",
-            "name": "AI Commerce Score",
-            "value": score,
-            "maxValue": 100,
-            "description": "How ready this store is for AI shopping agents, measured by Atom Foundry."
-          }]
-        }
-      ]
+  // Mobile hamburger nav (same behavior as every other page).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
+  })();
+
+  // Store detail, told as a decision rather than a report. Everything below
+  // is computed from one real record returned by /get-store?domain=; nothing
+  // is a real AI transcript, it is a rule-based summary of the signals the
+  // methodology actually measures.
+  (function(){
+    const BASE = "https://n8n-production-1d7c.up.railway.app/webhook";
+
+    const FACTORS = [
+      { key:'visual_score',  name:'Semantic Visuals & Image Clarity',  max:15 },
+      { key:'schema_score',  name:'AI Structured Signals',              max:15 },
+      { key:'content_score', name:'Core Technical & Interpretability',  max:15 },
+      { key:'trust_score',   name:'AI Trust & Transaction Confidence',  max:15 },
+      { key:'price_score',   name:'Commerce & Feed Accuracy',           max:15 },
+      { key:'intent_score',  name:'User Intent Match',                  max:10 },
+      { key:'rec_score',     name:'Recommendation Confidence',          max:10 },
+      { key:'brand_score',   name:'External Authority Signals',         max: 5 }
+    ];
+
+    // Four-stage funnel, reused in the hero simulation, the dissection, and
+    // the interactive journey below. Sixty percent of a stage's max is the
+    // pass line; this is a deliberate simplification of the eight factors
+    // into one readable story, not a new scoring model.
+    const STAGES = [
+      { key:'read', label:'Read', simLabel:'Reading', parts:['schema_score','content_score'], max:30,
+        passText:'AI can read and parse this store.', failText:'AI struggles to read this store\'s structure.',
+        reason:'Weak technical readability.' },
+      { key:'understand', label:'Understand', simLabel:'Understanding', parts:['visual_score','intent_score'], max:25,
+        passText:'AI understands the products.', failText:'AI cannot clearly understand the products.',
+        reason:'Unclear product understanding.' },
+      { key:'trust', label:'Trust', simLabel:'Trust', parts:['trust_score'], max:15,
+        passText:'AI can verify trust signals.', failText:'AI cannot verify trust.',
+        reason:'Low trust confidence.' },
+      { key:'recommend', label:'Recommend', simLabel:'Recommendation', parts:['rec_score','brand_score','price_score'], max:30,
+        passText:'AI has strong recommendation signals.', failText:'AI finds limited recommendation signals.',
+        reason:'Weak recommendation signals.' }
+    ];
+
+    // The six concrete things AI is shown examining in the Why dissection.
+    const EXAMINED = [
+      { key:'products',  label:'Products',  check: d => Number(d.content_score ?? 0) >= 9 },
+      { key:'prices',    label:'Prices',     check: d => truthy(d.pricing_visible) },
+      { key:'images',    label:'Images',     check: d => Number(d.visual_score ?? 0) >= 9 },
+      { key:'reviews',   label:'Reviews',    check: d => truthy(d.has_reviews) },
+      { key:'authority', label:'Authority',  check: d => Number(d.brand_score ?? 0) >= 3 },
+      { key:'intent',    label:'Intent',     check: d => Number(d.intent_score ?? 0) >= 6 }
+    ];
+
+    // Candidate opportunities. Only the ones that apply to this store are
+    // shown, ranked into Top 3 Blockers and What Would Change The Decision,
+    // and grouped by stage for the Missing / Confirmed lists in the journey.
+    const OPPORTUNITIES = [
+      { key:'reviews',    name:'Missing reviews',     fixName:'Add reviews',          itemLabel:'Reviews',        stage:'trust',      points:8, when: d => !truthy(d.has_reviews) },
+      { key:'pricing',    name:'Pricing not visible', fixName:'Make pricing visible', itemLabel:'Pricing',        stage:'recommend',  points:4, when: d => !truthy(d.pricing_visible) },
+      { key:'intent',     name:'Generic positioning', fixName:'Clarify positioning',  itemLabel:'Positioning',    stage:'understand', points:5, when: d => Number(d.intent_score ?? 0) < 6 },
+      { key:'schema',     name:'Weak schema',         fixName:'Improve schema',       itemLabel:'Schema',         stage:'read',       points:6, when: d => Number(d.schema_score ?? 0) < 9 },
+      { key:'trustbadge', name:'No trust badges',     fixName:'Add trust badges',     itemLabel:'Trust Badges',   stage:'trust',       points:4, when: d => !truthy(d.has_trust_badges) },
+      { key:'return',     name:'No return policy',    fixName:'Add a return policy',  itemLabel:'Return Policy', stage:'trust',       points:3, when: d => !truthy(d.has_return_policy) },
+      { key:'brand',      name:'Weak brand authority',fixName:'Build brand authority',itemLabel:'Brand Authority',stage:'recommend',  points:3, when: d => Number(d.brand_score ?? 0) < 3 },
+      { key:'faq',        name:'No FAQ page',         fixName:'Add an FAQ',           itemLabel:'FAQ',            stage:'understand',  points:2, when: d => !truthy(d.has_faq) }
+    ];
+
+
+    const els = {
+      loading: document.getElementById('loadingState'),
+      notFound: document.getElementById('notFoundState'),
+      notFoundMsg: document.getElementById('notFoundMsg'),
+      notFoundLink: document.getElementById('notFoundLink'),
+      main: document.getElementById('mainContent'),
+      domainLabel: document.getElementById('storeDomainLabel'),
+      visitLink: document.getElementById('visitStoreLink'),
+      storeNameEm: document.getElementById('storeNameEm'),
+      heroVerdictValue: document.getElementById('heroVerdictValue'),
+      heroVerdictReason: document.getElementById('heroVerdictReason'),
+      heroMetaScore: document.getElementById('heroMetaScore'),
+      simRows: document.getElementById('simRows'),
+      notebookSection: document.getElementById('notebookSection'),
+      notebook: document.getElementById('notebook'),
+      notebookTabs: document.getElementById('notebookTabs'),
+      notebookPage: document.getElementById('notebookPage'),
+      similarTab: document.getElementById('similarTab'),
+      examinedList: document.getElementById('examinedList'),
+      reasoningBubble: document.getElementById('reasoningBubble'),
+      journeyTabbook: document.getElementById('journeyTabbook'),
+      journeyRow: document.getElementById('journeyRow'),
+      journeyDetail: document.getElementById('journeyDetail'),
+      confidenceNum: document.getElementById('confidenceNum'),
+      confidenceBar: document.getElementById('confidenceBar'),
+      blockersList: document.getElementById('blockersList'),
+      whatifList: document.getElementById('whatifList'),
+      similarList: document.getElementById('similarList'),
+      factorRows: document.getElementById('factorRows'),
+      ctaSection: document.getElementById('ctaSection'),
+      sourceSection: document.getElementById('sourceSection'),
+      pageTitle: document.getElementById('pageTitle'),
+      pageDesc: document.getElementById('pageDesc'),
+      ogTitle: document.getElementById('ogTitle'),
+      ogDesc: document.getElementById('ogDesc'),
+      canonicalLink: document.getElementById('canonicalLink')
     };
-    var _prev = document.getElementById('storeLd'); if (_prev) _prev.remove();
-    var _sc = document.createElement('script');
-    _sc.type = 'application/ld+json'; _sc.id = 'storeLd';
-    _sc.textContent = JSON.stringify(_ld);
-    document.head.appendChild(_sc);
-  } catch(e) {}
 
-  const quickFix = data.quick_fix || leakCopy(biggestGap).fix;
-  const agenticReady = data.has_llms_txt && data.has_llms_full && data.has_agents_md;
-  document.title = `${storeNameCap} AI Commerce Score: ${score}/100 &mdash; Atom Foundry`;
-  document.getElementById('pageDesc').content = `${storeNameCap} (${domain}) scored ${score}/100 on AI Commerce Score. Find out if ChatGPT, Alexa for Shopping, and Google AI Mode recommend this store.`;
-  document.getElementById('ogTitle').content = `${storeNameCap} AI Commerce Score: ${score}/100`;
-  document.getElementById('ogDesc').content = `${storeNameCap} scored ${score}/100. See the full AI Commerce Score breakdown.`;
-  document.getElementById('bcDomain').textContent = domain;
-  document.getElementById('storeTitle').innerHTML = `${storeNameCap} <span>(${domain})</span>`;
-  document.getElementById('storeMeta').innerHTML = `
-        <a class="meta-tag" href="https://${domain}" target="_blank" rel="nofollow noopener" style="color:#f97316;font-weight:700;text-decoration:none;">Visit store \u2192</a>
-    <span class="meta-tag">Scanned ${scannedAt}</span>
-    ${platform ? `<span class="meta-tag">${platform.charAt(0).toUpperCase()+platform.slice(1)}</span>` : ''}
-    ${country ? `<span class="meta-tag">${country}</span>` : ''}
-    <span class="meta-tag">Score: ${score}/100</span>
-    ${level ? `<span class="meta-tag" style="color:${getColor(score)};border-color:${getColor(score)}33">${getLevelLabel(level)}</span>` : ''}
-    ${agenticReady ? `<span class="meta-tag" style="color:#1D9E75;border-color:rgba(29,158,117,0.3);background:rgba(29,158,117,0.06);">Agentic ready</span>` : ''}
-  `;
-  // Show bot protection badge if applicable
-  showBotProtectionBadge(data);
-  const status = getAiStatusBlock(score);
-  document.getElementById('aiStatusBlock').className = `ai-status-block ${status.cls}`;
-  document.getElementById('aiStatusDot').innerHTML = status.dot;
-  document.getElementById('aiStatusLabel').textContent = status.label;
-  document.getElementById('aiStatusText').textContent = status.text;
-  const aiColor = getColor(score);
-  document.getElementById('aiScoreNum').innerHTML = `${score}<span style="font-size:13px;color:#888;">/100</span>`;
-  document.getElementById('aiScoreNum').style.color = aiColor;
-  document.getElementById('aiBar').style.background = aiColor;
-  document.getElementById('aiVerdict').innerHTML = getAiVerdict(score);
-  setTimeout(() => { document.getElementById('aiBar').style.width = score + '%'; }, 300);
-  if (data.estimated_loss && data.estimated_loss > 0) {
-    document.getElementById('lossBlock').style.display = 'flex';
-    document.getElementById('lossAmount').innerHTML = `$${Number(data.estimated_loss).toLocaleString('en-US')}<span>/month</span>`;
-  }
-  const factors = [
-    { name:'Semantic Visuals &amp; Image Clarity',  score:Math.min(data.visual_score  ??0,15), max:15, isNew:true  },
-    { name:'AI Structured Signals',                  score:Math.min(data.schema_score  ??0,15), max:15, isNew:false },
-    { name:'Core Technical &amp; Interpretability',  score:Math.min(data.content_score ??0,15), max:15, isNew:false },
-    { name:'AI Trust &amp; Transaction Confidence',  score:Math.min(data.trust_score   ??0,15), max:15, isNew:false },
-    { name:'Commerce &amp; Feed Accuracy',           score:Math.min(data.price_score   ??0,15), max:15, isNew:false },
-    { name:'User Intent Match',                      score:Math.min(data.intent_score  ??0,10), max:10, isNew:false },
-    { name:'Recommendation Confidence',              score:Math.min(data.rec_score     ??0,10), max:10, isNew:false },
-    { name:'External Authority Signals',             score:Math.min(data.brand_score   ??0, 5), max: 5, isNew:false },
-  ];
-  // Fallback for stores scanned with old scoring (v3.0) — factors sum to 0 but total_score > 0
-  const factorSum = (data.visual_score??0) + (data.schema_score??0) + (data.content_score??0) +
-                    (data.trust_score??0) + (data.price_score??0) + (data.intent_score??0) +
-                    (data.rec_score??0) + (data.brand_score??0);
-  if (factorSum === 0 && score > 0) {
-    document.getElementById('factorRows').innerHTML = `
-      <div style="text-align:center;padding:24px 0;color:#555;font-size:13px;line-height:1.7;">
-        <div style="font-size:20px;margin-bottom:8px;">&#8987;</div>
-        <strong style="color:#888;">Factor breakdown pending rescan</strong><br>
-        This store was scanned with an earlier version of our scoring engine.<br>
-        Updated breakdown will appear after the next scan (usually within 24 hours).
-      </div>`;
-    return;
-  }
-  document.getElementById('factorRows').innerHTML = factors.map(f => {
-    const pct = f.max > 0 ? Math.round((f.score/f.max)*100) : 0;
-    const col = getFactorColor(pct);
-    const newTag = f.isNew ? `<span class="new-tag">New</span>` : '';
-    return `<div class="factor-row"><div class="factor-left"><div class="factor-name">${f.name}${newTag}</div><div class="factor-bar"><div class="factor-fill" style="width:${pct}%;background:${col};"></div></div></div><div class="factor-score" style="color:${col};">${f.score}/${f.max}</div></div>`;
-  }).join('');
-  document.getElementById('ownTitle').textContent = `Do you own ${storeNameCap}?`;
-  document.getElementById('mainLeakText').textContent = mainLeak;
-  const signals = [
-    { name:'SSL / HTTPS', pass:data.has_ssl },
-    { name:'Schema markup', pass:data.has_schema_markup },
-    { name:'Open Graph tags', pass:data.has_og_tags },
-    { name:'Reviews present', pass:data.has_reviews },
-    { name:'Trust badges', pass:data.has_trust_badges },
-    { name:'Return policy', pass:data.has_return_policy },
-    { name:'Shipping info', pass:data.has_shipping_info },
-    { name:'Email capture', pass:data.has_email_capture },
-    { name:'Blog / content', pass:data.has_blog },
-    { name:'FAQ page', pass:data.has_faq },
-    { name:'Pricing visible', pass:data.pricing_visible },
-    { name:'Structured data', pass:data.has_structured_data },
-  ];
-  document.getElementById('signalsGrid').innerHTML = signals.map(s => `<div class="signal-item"><div class="signal-dot ${s.pass?'pass':'fail'}">${s.pass?'&#10003;':'&#10007;'}</div><span style="color:${s.pass?'#aaa':'#666'}">${s.name}</span></div>`).join('');
-  buildLockedLeaks(data);
-  document.getElementById('quickFixText').textContent = quickFix;
-  fetch('https://n8n-production-1d7c.up.railway.app/webhook/stores',{headers:{'Accept':'application/json'}})
-    .then(r=>r.json()).then(d=>{
-      const rows = Array.isArray(d)?d:(d.stores||[]);
-      const valid = rows.filter(r=>(r.domain||r.store_domain||''));
-      const count = valid.length;
-      if (count>0) document.getElementById('ctaTrustLine').textContent=`${count.toLocaleString('en-US')} stores analyzed \u00b7 see your AI visibility gaps instantly`;
-      // Live, truthful database stats (blocked stores excluded from scores/averages)
-      const isBlocked = (r) => r.homepage_blocked === true || String(r.readiness_level||'').toLowerCase() === 'blocked';
-      const scores = valid.filter(r=>!isBlocked(r)).map(r=>Number(r.total_score ?? r.score ?? 0)).filter(s=>s>0);
-      const set = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
-      if (count>0) set('dbStores', count.toLocaleString('en-US'));
-      if (scores.length){
-        const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
-        const riskPct = Math.round(scores.filter(s=>s<50).length/scores.length*100);
-        const highPct = Math.round(scores.filter(s=>s>=70).length/scores.length*100);
-        set('dbAvg', avg+'/100');
-        set('dbRisk', riskPct+'%');
-        set('dbHigh', highPct+'%');
+    function truthy(v){ return v === true || v === 'true' || v === 1 || v === '1'; }
+    function scoreColor(pct){ return pct >= 0.7 ? 'var(--green)' : pct >= 0.4 ? 'var(--amber)' : 'var(--red)'; }
+
+    function getDomain(){
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('domain')) return params.get('domain').toLowerCase().replace(/^www\./, '');
+      const parts = window.location.pathname.split('/');
+      const idx = parts.indexOf('store');
+      return idx >= 0 && parts[idx + 1] ? decodeURIComponent(parts[idx + 1]).toLowerCase().replace(/^www\./, '') : '';
+    }
+
+    function storeNameFromDomain(domain){
+      const base = domain.split('.')[0].replace(/[-_]/g, ' ');
+      return base.charAt(0).toUpperCase() + base.slice(1);
+    }
+
+    function stageValue(data, stage){
+      const raw = stage.parts.reduce((sum, key) => sum + Number(data[key] ?? 0), 0);
+      const pct = stage.max > 0 ? raw / stage.max : 0;
+      return { raw, pct, pass: pct >= 0.6 };
+    }
+
+    function computeStages(data){
+      return STAGES.map(stage => Object.assign({}, stage, stageValue(data, stage)));
+    }
+
+    function computeOpportunities(data){
+      return OPPORTUNITIES.filter(o => o.when(data));
+    }
+
+    function weakestStage(stages){
+      return stages.reduce((worst, s) => (s.pct < worst.pct ? s : worst), stages[0]);
+    }
+
+    function countUp(el, target, duration){
+      const start = performance.now();
+      const from = Number(String(el.textContent).replace(/[^0-9.-]/g, '')) || 0;
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(from + (target - from) * eased);
+        if (p < 1) requestAnimationFrame(step);
       }
-    }).catch(()=>{});
-  const levelDesc = score>=85 ? `With a score of ${score}/100, ${storeNameCap} is highly recommendable.`
-    : score>=70 ? `With a score of ${score}/100, ${storeNameCap} is moderately recommendable.`
-    : score>=50 ? `With a score of ${score}/100, ${storeNameCap} has low recommendation confidence.`
-    : `With a score of ${score}/100, ${storeNameCap} is currently invisible to most AI shopping agents.`;
-  document.getElementById('seoBox').innerHTML = `
-    <h2>${storeNameCap} AI Commerce Score: ${score}/100</h2>
-    <p>${levelDesc} This page is part of Atom Foundry's <a href="/framework" style="color:#777;">AI Commerce Graph</a> &mdash; an ongoing scan of stores for AI recommendation readiness.</p>
-    <h3>What does the ${storeNameCap} score mean?</h3>
-    <p>A score of ${score}/100 means AI assistants like ChatGPT, Alexa for Shopping, Perplexity, and Google AI Mode ${score>=85?'can clearly understand, trust, and recommend this store':score>=70?'can moderately recommend this store':score>=50?'can partially understand this store but miss key signals':'struggle to read, trust, and recommend this store'}. The score covers <a href="/methodology" style="color:#777;">8 factors</a>: Semantic Visuals, AI Structured Signals, Core Technical, AI Trust, Commerce Accuracy, User Intent Match, Recommendation Confidence, and External Authority Signals.</p>
-    <h3>How can ${storeNameCap} improve its AI Commerce Score?</h3>
-    <p>The biggest opportunity is in the ${biggestGap.replace('_',' ')} category. ${leakCopy(biggestGap).leak} The fastest improvement: ${leakCopy(biggestGap).fix.toLowerCase()}</p>
-    <p style="margin-top:12px;font-size:12px;color:#555;">Last updated: ${scannedAt} &middot; Methodology v3.1 &middot; Powered by <a href="/" style="color:#555;">Atom Foundry</a></p>
-  `;
-}
-async function init() {
-  const domain = getDomain();
-  if (!domain) { document.getElementById('loadingState').style.display='none'; document.getElementById('notFoundState').style.display='block'; return; }
-  try {
-    const res = await fetch(`https://n8n-production-1d7c.up.railway.app/webhook/get-store?domain=${encodeURIComponent(domain)}`);
-    if (!res.ok) throw new Error('not found');
-    const data = await res.json();
-    if (!data || !data.domain) throw new Error('empty');
-    document.getElementById('loadingState').style.display='none';
-    document.getElementById('mainContent').style.display='block';
-    renderPage(data);
-  } catch(e) {
-    document.getElementById('loadingState').style.display='none';
-    document.getElementById('notFoundState').style.display='block';
-    document.getElementById('notFoundMsg').textContent = `We have not scanned ${domain} yet. Run a free scan to generate this store's AI Commerce Score report.`;
-    document.getElementById('notFoundLink').href = `/scan?domain=${domain}`;
-  }
-}
-function toggleExplain() {
-  const box = document.getElementById('explainBox');
-  const toggle = document.querySelector('.explain-toggle');
-  box.classList.toggle('open');
-  toggle.innerHTML = box.classList.contains('open') ? '&#9660; What does this score mean?' : '&#9658; What does this score mean?';
-}
-document.addEventListener('DOMContentLoaded', init);
+      requestAnimationFrame(step);
+    }
+
+    // HERO: rows appear one at a time. Each row's bar takes 1.5s to fill
+    // before the next row is even shown, so the simulation reads as a real
+    // sequence (Reading, then Understanding, then Trust, then
+    // Recommendation) rather than four bars animating in parallel. The
+    // returned promise resolves only once every row has finished, so the
+    // caller can reveal the verdict after the simulation, not before it.
+    function wait(ms){ return new Promise(resolve => setTimeout(resolve, ms)); }
+
+    async function runHeroSimulation(stages){
+      els.simRows.innerHTML = '';
+      for (const s of stages) {
+        const row = document.createElement('div');
+        row.className = 'sim-row';
+        row.dataset.row = s.key;
+        row.innerHTML = '<span class="sim-label">' + s.simLabel + '...</span>' +
+          '<span class="sim-bar-wrap"><span class="sim-bar-fill" data-target="' + Math.round(s.pct * 100) + '" style="background:' + scoreColor(s.pct) + ';"></span></span>';
+        els.simRows.appendChild(row);
+
+        await wait(20);
+        row.classList.add('is-visible');
+        const fill = row.querySelector('.sim-bar-fill');
+        await wait(20);
+        fill.style.width = fill.getAttribute('data-target') + '%';
+        await wait(900);
+      }
+    }
+
+    function revealHeroVerdict(recommended, reasonText){
+      if (!els.heroVerdictValue) return;
+      els.heroVerdictValue.textContent = recommended ? 'WOULD RECOMMEND' : 'WOULD NOT RECOMMEND';
+      els.heroVerdictValue.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
+      // The reason lands a beat after the result itself, not both at once.
+      if (els.heroVerdictReason) {
+        els.heroVerdictReason.textContent = reasonText;
+        setTimeout(() => els.heroVerdictReason.classList.add('is-visible'), 400);
+      }
+    }
+
+    // The rest of the page keeps cascading in, one section at a time, so
+    // the whole page (not just the hero) reads as a single top-to-bottom
+    // reveal rather than everything else sitting there fully rendered
+    // underneath the animating hero. Each section's own content populates
+    // (and its meters/bars animate) right as it is revealed, not before.
+    function revealRestOfPage(tasks){
+      tasks.filter(t => t.el).forEach((t, i) => setTimeout(() => {
+        t.el.classList.add('is-visible');
+        if (t.fn) t.fn();
+      }, i * 340));
+    }
+
+    function renderExamined(data){
+      els.examinedList.innerHTML = EXAMINED.map(sig => {
+        const pass = sig.check(data);
+        return '<span class="examined-chip"><span class="icon-pill ' + (pass ? 'is-pass' : 'is-fail') + '">' + (pass ? '&#10003;' : '&#10007;') + '</span>' + sig.label + '</span>';
+      }).join('');
+    }
+
+    function renderReasoning(stages, examinedPasses, recommended){
+      const passedNames = EXAMINED.filter(e => examinedPasses[e.key]).map(e => e.label.toLowerCase());
+      const line1 = passedNames.length
+        ? 'I found ' + passedNames.join(', ') + '.'
+        : 'I had trouble identifying what this store sells.';
+      const understandStage = stages.find(s => s.key === 'understand');
+      const line2 = understandStage.pass ? 'I understand what the store sells.' : 'I do not fully understand what the store sells.';
+      let html = '<p>' + line1 + '</p><p>' + line2 + '</p>';
+      if (!recommended) {
+        const worst = weakestStage(stages);
+        html += '<p>However...</p><p>' + worst.failText + '</p><p>Another merchant appears safer.</p>';
+      } else {
+        html += '<p>This store compares well on trust and clarity.</p>';
+      }
+      els.reasoningBubble.innerHTML = html;
+    }
+
+    function renderJourney(stages, storeName, opps){
+      const nodes = stages.map(s =>
+        '<span class="journey-arrow">&rarr;</span><span class="journey-node"><span class="icon-pill ' + (s.pass ? 'is-pass' : 'is-fail') + '">' + (s.pass ? '&#10003;' : '&#10007;') + '</span>' + s.label + '</span>'
+      ).join('');
+      // Homepage and Products are the plain lead-in steps AI takes before any
+      // of the four scored stages begin, so the journey reads as the whole
+      // visit rather than starting mid-story.
+      els.journeyRow.innerHTML =
+        '<span class="journey-store-node">Homepage</span>' +
+        '<span class="journey-arrow">&rarr;</span><span class="journey-store-node">Products</span>' +
+        nodes;
+
+      // Nodes and arrows slide/fade in left to right, one at a time, so the
+      // whole visit reads as something that is actively happening.
+      const journeyEls = Array.from(els.journeyRow.children);
+      journeyEls.forEach((el, i) => setTimeout(() => el.classList.add('is-visible'), i * 160));
+
+      // Every stage's findings sit fully open beneath the flow, all at once,
+      // nothing to click or hover to reveal.
+      els.journeyDetail.innerHTML = stages.map(s => {
+        const stageOpps = opps.filter(o => o.stage === s.key);
+        const listLabel = s.pass ? 'Confirmed' : 'Missing';
+        const items = s.pass
+          ? (stageOpps.length ? [] : ['Nothing missing'])
+          : stageOpps.map(o => o.itemLabel);
+        const itemsHtml = items.length
+          ? '<div class="journey-detail-items">' + items.map(i => '<span class="journey-detail-item">' + i + '</span>').join('') + '</div>'
+          : '';
+        return '<div class="journey-detail-block">' +
+          '<div class="journey-detail-title">' + (s.pass ? s.passText : s.failText) + '</div>' +
+          (itemsHtml ? '<div class="journey-detail-list-label">' + listLabel + '</div>' + itemsHtml : '') +
+          '</div>';
+      }).join('');
+    }
+
+    // THE NOTEBOOK: hovering a tab in the stack brings it forward and swaps
+    // its page into the shared pane, right there on the page, no popup.
+    // Whatever was last hovered stays open when the pointer leaves, so the
+    // notebook always shows something rather than collapsing to blank.
+    function switchNotebookPage(page){
+      if (!els.notebookTabs || !els.notebookPage) return;
+      els.notebookTabs.querySelectorAll('.notebook-tab').forEach(b => b.classList.toggle('is-active', b.dataset.page === page));
+      els.notebookPage.querySelectorAll('.notebook-page-inner').forEach(p => p.classList.toggle('is-active', p.dataset.pageContent === page));
+    }
+
+    // Some pages (What would change it, Similar stores) only exist if there
+    // is real data to show; if their tab has to hide and it was the open
+    // one, fall back to the first page rather than leaving the notebook on
+    // a tab that no longer exists.
+    function setNotebookTabVisible(page, visible){
+      if (!els.notebookTabs) return;
+      const tab = els.notebookTabs.querySelector('[data-page="' + page + '"]');
+      if (!tab) return;
+      tab.classList.toggle('is-hidden', !visible);
+      if (!visible && tab.classList.contains('is-active')) switchNotebookPage('score');
+    }
+
+    function initNotebook(){
+      if (!els.notebookTabs) return;
+      els.notebookTabs.querySelectorAll('.notebook-tab').forEach(btn => {
+        btn.addEventListener('mouseenter', () => switchNotebookPage(btn.dataset.page));
+        btn.addEventListener('focus', () => switchNotebookPage(btn.dataset.page));
+      });
+    }
+
+    function renderConfidence(stages){
+      const product = stages.reduce((acc, s) => acc * Math.max(0.02, Math.min(1, s.pct)), 1);
+      const confidence = Math.max(1, Math.min(99, Math.round(product * 100)));
+      countUp(els.confidenceNum, confidence, 1200);
+      requestAnimationFrame(() => { els.confidenceBar.style.width = confidence + '%'; els.confidenceBar.style.background = scoreColor(confidence / 100); });
+      setTimeout(() => { els.confidenceNum.textContent = confidence + '%'; }, 1250);
+    }
+
+    function renderBlockers(opps){
+      const top = opps.slice().sort((a, b) => b.points - a.points).slice(0, 3);
+      if (!top.length) {
+        els.blockersList.innerHTML = '<div class="why-row">No major blockers detected. This store covers the fundamentals.</div>';
+        return;
+      }
+      els.blockersList.innerHTML = top.map(o =>
+        '<div class="blocker-row"><span class="blocker-name">' + o.name + '</span><span class="blocker-impact">&minus;' + o.points + '</span></div>'
+      ).join('');
+    }
+
+    function renderWhatIf(score, opps){
+      const top = opps.slice().sort((a, b) => b.points - a.points).slice(0, 2);
+      if (!top.length) {
+        setNotebookTabVisible('whatif', false);
+        return;
+      }
+      const rows = [];
+      const s1 = Math.min(100, score + top[0].points);
+      rows.push({ name: 'If you ' + top[0].fixName.toLowerCase(), to: s1 });
+      if (top[1]) {
+        const s2 = Math.min(100, score + top[1].points);
+        rows.push({ name: 'If you ' + top[1].fixName.toLowerCase(), to: s2 });
+        const sBoth = Math.min(100, score + top[0].points + top[1].points);
+        rows.push({ name: 'If you improved both', to: sBoth });
+      }
+      els.whatifList.innerHTML = rows.map(r =>
+        '<div class="whatif-row"><span class="whatif-name">' + r.name + '</span><span class="whatif-scores"><span class="from">' + score + '</span><span class="arrow">&rarr;</span><span class="to">' + r.to + '</span></span></div>'
+      ).join('');
+    }
+
+    async function loadSimilarStores(data, score){
+      try {
+        const niche = data.niche ? String(data.niche).toLowerCase().trim() : '';
+        const params = new URLSearchParams({ limit: '100', offset: '0', sort: 'newest' });
+        if (niche) params.set('niche', niche);
+        const res = await fetch(BASE + '/stores-list?' + params.toString(), { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const json = await res.json();
+        const raw = json.stores || (Array.isArray(json) ? json : []);
+        const currentDomain = String(data.domain || '').toLowerCase();
+        const rows = raw
+          .map(r => ({ domain: String(r.domain || r.store_domain || '').replace(/^www\./, '').toLowerCase(), score: Number(r.total_score ?? r.score ?? 0) }))
+          .filter(r => r.domain && r.domain !== currentDomain && r.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+        if (!rows.length) { setNotebookTabVisible('similar', false); return; }
+
+        // Reviews / Trust / Brand are fetched live per competitor (its own
+        // /get-store record), not fabricated, and loaded up front for all
+        // three so the comparison sits fully open on the page, nothing to
+        // click or unfold.
+        const details = await Promise.all(rows.map(async r => {
+          try {
+            const res2 = await fetch(BASE + '/get-store?domain=' + encodeURIComponent(r.domain), { headers: { 'Accept': 'application/json' } });
+            const json2 = await res2.json();
+            const d2 = Array.isArray(json2) ? json2[0] : (json2 && json2.data ? json2.data[0] : json2);
+            return [
+              { label:'Reviews', pass: truthy(d2.has_reviews) },
+              { label:'Trust', pass: Number(d2.trust_score ?? 0) >= 9 },
+              { label:'Brand', pass: Number(d2.brand_score ?? 0) >= 3 }
+            ];
+          } catch (e) {
+            return null;
+          }
+        }));
+
+        els.similarList.innerHTML = rows.map((r, i) => {
+          const checks = details[i];
+          const chipsHtml = checks
+            ? '<div class="similar-signal-list">' + checks.map(c => '<span class="similar-signal-chip"><span class="icon-pill ' + (c.pass ? 'is-pass' : 'is-fail') + '">' + (c.pass ? '&#10003;' : '&#10007;') + '</span>' + c.label + '</span>').join('') + '</div>'
+            : '';
+          return '<div class="similar-item">' +
+            '<div class="similar-head">' +
+              '<a class="similar-name" href="/store/' + r.domain + '">' + storeNameFromDomain(r.domain) + '</a>' +
+              '<span class="similar-score">' + r.score + '</span>' +
+            '</div>' +
+            chipsHtml +
+          '</div>';
+        }).join('');
+      } catch (e) {
+        setNotebookTabVisible('similar', false);
+      }
+    }
+
+    function renderFactorRows(data){
+      els.factorRows.innerHTML = FACTORS.map(f => {
+        const score = Math.min(Number(data[f.key] ?? 0), f.max);
+        const pct = f.max > 0 ? score / f.max : 0;
+        return '<div class="factor-row"><div class="factor-left"><div class="factor-name">' + f.name + '</div><div class="factor-bar"><div class="factor-fill" style="width:0%;background:' + scoreColor(pct) + ';" data-target="' + Math.round(pct * 100) + '"></div></div></div><div class="factor-score" style="color:' + scoreColor(pct) + ';">' + score + '/' + f.max + '</div></div>';
+      }).join('');
+    }
+
+    function updateSeo(domain, storeName, score){
+      const canonical = 'https://atomfoundry.dev/store/' + domain;
+      document.title = els.pageTitle.textContent = 'How AI sees ' + storeName + ': Atom Foundry';
+      els.pageDesc.content = 'Watch how an AI shopping agent reads, understands, and decides whether to recommend ' + storeName + ' (' + domain + ').';
+      els.ogTitle.content = 'How AI sees ' + storeName;
+      els.ogDesc.content = 'Watch how an AI shopping agent reads, understands, and decides whether to recommend ' + storeName + '.';
+      els.canonicalLink.href = canonical;
+
+      const prev = document.getElementById('storeLd');
+      if (prev) prev.remove();
+      const ld = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": canonical + "#webpage",
+            "url": canonical,
+            "name": "How AI sees " + storeName,
+            "about": { "@id": canonical + "#store" },
+            "isPartOf": { "@id": "https://atomfoundry.dev/#website" }
+          },
+          {
+            "@type": "Organization",
+            "@id": canonical + "#store",
+            "name": storeName,
+            "url": "https://" + domain,
+            "additionalProperty": [{
+              "@type": "PropertyValue",
+              "name": "AI Commerce Score",
+              "value": score,
+              "maxValue": 100,
+              "description": "How ready this store is for AI shopping agents, measured by Atom Foundry."
+            }]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": canonical + "#breadcrumb",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev/" },
+              { "@type": "ListItem", "position": 2, "name": "Stores", "item": "https://atomfoundry.dev/stores" },
+              { "@type": "ListItem", "position": 3, "name": domain, "item": canonical }
+            ]
+          }
+        ]
+      };
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'storeLd';
+      script.textContent = JSON.stringify(ld);
+      document.head.appendChild(script);
+    }
+
+    function render(data){
+      const domain = data.domain || getDomain();
+      const storeName = storeNameFromDomain(domain);
+      const score = Math.round(Number(data.total_score ?? 0));
+
+      els.domainLabel.textContent = domain;
+      // The outbound visit link is kept exactly as it was on the previous
+      // page on purpose. There is a known issue here the site owner flagged
+      // to investigate separately, so do not change this construction
+      // without that follow-up.
+      els.visitLink.href = 'https://' + domain;
+      els.storeNameEm.textContent = storeName;
+
+      const stages = computeStages(data);
+      const examinedPasses = {};
+      EXAMINED.forEach(e => { examinedPasses[e.key] = e.check(data); });
+      const opps = computeOpportunities(data);
+
+      const recommended = stages.every(s => s.pass);
+      const worst = weakestStage(stages);
+      const reasonText = recommended ? 'Strong signals across read, understand, trust, and recommend.' : worst.reason;
+
+      updateSeo(domain, storeName, score);
+
+      // Every notebook page's content is populated as its section reveals
+      // (hovering a tab still has to show real content immediately, not a
+      // loading flash, but nothing animates while hidden behind opacity:0).
+      // The AI Commerce Score page is the notebook's default page, so its
+      // live simulation is what plays the moment the notebook itself comes
+      // into view: this row-by-row read IS "watch AI evaluate this store."
+      const revealTasks = [
+        { el: els.notebookSection, fn: () => {
+          if (els.heroMetaScore) els.heroMetaScore.textContent = score;
+          renderExamined(data);
+          renderReasoning(stages, examinedPasses, recommended);
+          renderJourney(stages, storeName, opps);
+          renderConfidence(stages);
+          renderBlockers(opps);
+          renderWhatIf(score, opps);
+          loadSimilarStores(data, score);
+          renderFactorRows(data);
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              els.factorRows.querySelectorAll('.factor-fill').forEach(f => { f.style.width = f.getAttribute('data-target') + '%'; });
+            }, 60);
+          });
+          runHeroSimulation(stages).then(() => revealHeroVerdict(recommended, reasonText));
+        } },
+        { el: els.ctaSection, fn: null },
+        { el: els.sourceSection, fn: null }
+      ];
+
+      revealRestOfPage(revealTasks);
+
+      els.loading.style.display = 'none';
+      els.main.style.display = 'block';
+    }
+
+    async function init(){
+      const domain = getDomain();
+      if (!domain) {
+        els.loading.style.display = 'none';
+        els.notFound.style.display = 'block';
+        return;
+      }
+      try {
+        const res = await fetch(BASE + '/get-store?domain=' + encodeURIComponent(domain), { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('not found');
+        const data = await res.json();
+        const record = Array.isArray(data) ? data[0] : (data && data.data ? data.data[0] : data);
+        if (!record || !record.domain) throw new Error('empty');
+        render(record);
+      } catch (e) {
+        els.loading.style.display = 'none';
+        els.notFound.style.display = 'block';
+        els.notFoundMsg.textContent = 'We have not scanned ' + domain + ' yet. Run a free scan to generate this store\'s AI Commerce Score report.';
+        els.notFoundLink.href = '/#score';
+      }
+    }
+
+    initNotebook();
+    document.addEventListener('DOMContentLoaded', init);
+  })();
 </script>
-  <script src="/track.js" defer></script>
+<style>
+.aiw-root{position:fixed;bottom:22px;right:22px;z-index:2000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+.aiw-fab{position:relative;width:52px;height:52px;border-radius:14px;background:#0b0d0e;border:1px solid #262b2e;display:flex;align-items:center;justify-content:center;color:#5fe0af;cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,0.45);transition:transform .2s ease,box-shadow .2s ease;padding:0;}
+.aiw-fab:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.5);}
+.aiw-heart{width:22px;height:22px;}
+.aiw-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aiw-heart-pulse{stroke:#5fe0af;fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aiwHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aiwHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aiw-heart-pulse,.aiw-panel-dot{animation:none;}}
+.aiw-panel{position:absolute;bottom:64px;right:0;width:230px;background:#0b0d0e;border:1px solid #262b2e;border-radius:18px;padding:22px 20px 20px;box-shadow:0 34px 64px -20px rgba(0,0,0,0.6);transform-origin:bottom right;transform:scale(0.94) translateY(8px);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;}
+.aiw-root.is-open .aiw-panel{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
+.aiw-root.is-open .aiw-fab{color:#e8e8e8;}
+.aiw-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#565c60;font-size:18px;cursor:pointer;line-height:1;padding:2px;font-family:inherit;}
+.aiw-close:hover{color:#e8e8e8;}
+.aiw-panel-head{margin-bottom:20px;padding-right:18px;}
+.aiw-panel-title-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.aiw-panel-dot{width:6px;height:6px;border-radius:50%;background:#5fe0af;box-shadow:0 0 0 0 rgba(95,224,175,.6);animation:aiwDotPulse 2.4s infinite;flex-shrink:0;}
+@keyframes aiwDotPulse{70%{box-shadow:0 0 0 6px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
+.aiw-panel-title-main{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11.5px;font-weight:800;color:#f2f4f5;letter-spacing:.03em;line-height:1.3;}
+.aiw-panel-title-sub{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:10px;color:#868c91;letter-spacing:.03em;}
+.aiw-rings{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.aiw-ring-item{display:flex;align-items:center;gap:12px;text-align:left;}
+.aiw-ring-visual{position:relative;width:44px;height:44px;flex-shrink:0;}
+.aiw-ring-visual svg{width:100%;height:100%;transform:rotate(-90deg);}
+.aiw-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.aiw-ring-fill{fill:none;stroke:#5fe0af;stroke-width:5;stroke-linecap:round;stroke-dashoffset:106.81;transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.aiw-root.is-open .aiw-ring-fill{stroke-dashoffset:var(--offset);}
+.aiw-ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;font-weight:800;color:#f2f4f5;}
+.aiw-ring-label{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;color:#b4b8bc;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.aiw-note{font-size:10.5px;color:#565c60;line-height:1.5;margin:0 0 14px;}
+.aiw-link{display:block;text-align:center;background:#5fe0af;color:#080808;font-weight:700;font-size:12.5px;padding:10px;border-radius:9px;text-decoration:none;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;transition:background .15s;}
+.aiw-link:hover{background:#7ee9be;}
+@media(max-width:520px){
+  .aiw-root{bottom:16px;right:16px;}
+  .aiw-panel{width:calc(100vw - 32px);right:-6px;}
+}
+</style>
+<!-- AI_SIGNAL_WIDGET:START -->
+<div class="aiw-root" id="aiwRoot">
+  <button class="aiw-fab" id="aiwFab" aria-label="AI signal for atomfoundry.dev" aria-expanded="false" type="button">
+    <svg class="aiw-heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="aiw-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="aiw-heart-pulse" id="aiwHeartPulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="aiw-panel" id="aiwPanel" role="dialog" aria-label="AI signal for atomfoundry.dev">
+    <button class="aiw-close" id="aiwClose" aria-label="Close" type="button">&times;</button>
+    <div class="aiw-panel-head">
+      <div class="aiw-panel-title-row"><span class="aiw-panel-dot"></span><span class="aiw-panel-title-main">AI AGENT SNAPSHOT</span></div>
+      <div class="aiw-panel-title-sub">ATOM FOUNDRY.dev</div>
+    </div>
+    <div class="aiw-rings">
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:42.72"/>
+            </svg>
+            <div class="aiw-ring-value">3</div>
+          </div>
+          <div class="aiw-ring-label">Today</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:58.75"/>
+            </svg>
+            <div class="aiw-ring-value">6</div>
+          </div>
+          <div class="aiw-ring-label">Bots</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:10.68"/>
+            </svg>
+            <div class="aiw-ring-value">4m</div>
+          </div>
+          <div class="aiw-ring-label">Last seen</div>
+        </div>
+    </div>
+    <p class="aiw-note">Illustrative example &middot; single-site signal for atomfoundry.dev.</p>
+    <a href="/ai-signal" class="aiw-link">View full signals &rarr;</a>
+  </div>
+</div>
+<!-- AI_SIGNAL_WIDGET:END -->
+<script>
+(function(){
+  var root = document.getElementById('aiwRoot');
+  if(!root) return;
+  var fab = document.getElementById('aiwFab');
+  var closeBtn = document.getElementById('aiwClose');
+  var heart = document.getElementById('aiwHeartPulse');
+  function restartHeartbeat(){
+    if (!heart) return;
+    heart.style.animation = 'none';
+    void heart.getBBox();
+    heart.style.animation = '';
+  }
+  function setOpen(open){
+    root.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    restartHeartbeat();
+  }
+  fab.addEventListener('click', function(){ setOpen(!root.classList.contains('is-open')); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+  }
+  document.addEventListener('click', function(e){
+    if (root.classList.contains('is-open') && !root.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
 </body>
 </html>

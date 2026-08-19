@@ -2,813 +2,1705 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Atom Foundry: The AI Commerce Graph</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants. Free AI Commerce Score in 10 seconds.">
+<title>Atom Foundry: The AI Commerce Graph</title>
+<meta name="description" content="Understand why AI recommends one brand over another. Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents discover, evaluate, trust, and recommend e-commerce stores, then turns those findings into practical tools.">
 <meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
 <link rel="canonical" href="https://atomfoundry.dev/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Atom Foundry">
-<meta property="og:title" content="Will AI shopping agents recommend your store?">
-<meta property="og:description" content="Most stores are optimized for humans, not AI retrieval systems. Get your free AI Commerce Score across 8 factors in 10 seconds and see if AI will recommend you.">
+<meta property="og:title" content="Atom Foundry: The AI Commerce Graph">
+<meta property="og:description" content="Understand why AI recommends one brand over another. We measure how AI shopping agents discover, evaluate, and recommend e-commerce stores.">
+<meta property="og:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:url" content="https://atomfoundry.dev/">
-<meta property="og:image" content="https://atomfoundry.dev/apple-touch-icon.png">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Will AI shopping agents recommend your store?">
-<meta name="twitter:description" content="Get your free AI Commerce Score across 8 factors in 10 seconds. See if AI will recommend your store.">
-<meta name="twitter:image" content="https://atomfoundry.dev/apple-touch-icon.png">
+<meta property="og:type" content="website">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" href="/favicon.ico">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ],
+      "owns": { "@id": "https://founder.atomfoundry.dev/#store" }
+    },
+    {
+      "@type": "OnlineStore",
+      "@id": "https://founder.atomfoundry.dev/#store",
+      "name": "Founder Lab",
+      "url": "https://founder.atomfoundry.dev/",
+      "description": "Founder Lab is Atom Foundry's own live Shopify store, operated as a permanent controlled experiment.",
+      "brand": { "@id": "https://atomfoundry.dev/#organization" },
+      "additionalType": "https://atomfoundry.dev/#research-laboratory"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/#webpage",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry: The AI Commerce Graph",
+      "description": "Understand why AI recommends one brand over another. Atom Foundry measures how AI shopping agents discover, evaluate, and recommend e-commerce stores.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    }
+  ]
+}
+</script>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; overflow-x: hidden; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #080808; color: #e8e8e8; line-height: 1.7; -webkit-font-smoothing: antialiased;
-}
-body::before {
-  content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(249,115,22,0.14), transparent),
-              radial-gradient(ellipse 40% 30% at 80% 60%, rgba(249,115,22,0.04), transparent);
-  pointer-events: none; z-index: 0;
-}
-.page { position: relative; z-index: 1; }
-/* ── LAYOUT ── */
-.wrap { max-width: 860px; width: 100%; margin: 0 auto; padding: 0 28px; }
-/* ── NAV ── */
-.nav { padding: 24px 28px; max-width: 860px; margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 10; }
-.nav-brand { display: flex; flex-direction: column; gap: 0; flex-shrink: 0; }
-.nav-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.4px; text-decoration: none; display: block; line-height: 1.2; }
-.nav-logo span { color: #f97316; }
-.nav-subline { font-size: 13px; color: #f97316; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
-.nav-tagline-long { font-size: 11.5px; color: #555; line-height: 1.55; max-width: 400px; margin-top: 7px; font-weight: 400; }
-.nav-links { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; flex-shrink: 0; padding-top: 2px; }
-.nav-links a { font-size: 12px; color: #999; text-decoration: none; border: 1px solid #1e1e1e; padding: 5px 12px; border-radius: 8px; transition: all 0.2s; font-weight: 500; white-space: nowrap; }
-.nav-links a:hover { color: #f97316; border-color: rgba(249,115,22,0.4); }
-.nav-links a.framework { color: #1D9E75; border-color: rgba(29,158,117,0.35); background: rgba(29,158,117,0.07); }
-.nav-links a.framework:hover { color: #29c48f; border-color: rgba(29,158,117,0.6); }
-.nav-links a.research { color: #EF9F27; border-color: rgba(239,159,39,0.3); background: rgba(239,159,39,0.06); }
-.nav-links a.cta-nav { background: #f97316; color: #000; font-weight: 700; border-color: #f97316; }
-.nav-links a.cta-nav:hover { background: #ea580c; }
-/* ── STATS BAR ── */
-.stats-bar { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; display: flex; align-items: stretch; overflow: hidden; margin-bottom: 20px; }
-.stat-cell { flex: 1; padding: 13px 16px; text-align: center; border-right: 1px solid #1e1e1e; }
-.stat-cell:last-child { border-right: none; }
-.stat-num { font-size: 21px; font-weight: 700; color: #f97316; line-height: 1; margin-bottom: 3px; }
-.stat-label { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
-/* ── HERO ── */
-.hero { padding: 8px 0 14px; text-align: center; }
-.hero h1 { font-size: clamp(32px, 5.5vw, 56px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: #fff; margin-bottom: 14px; }
-.hero h1 em { font-style: normal; color: #f97316; }
-.hero-sub { font-size: 17px; color: #888; line-height: 1.6; max-width: 560px; margin: 0 auto 12px; }
-/* ── SCAN BOX ── */
-.scan-section { margin-bottom: 20px; }
-.scan-box { background: #111; border: 1px solid #1e1e1e; border-radius: 20px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-.scan-box-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 14px; text-align: center; }
-input[type="text"] { width: 100%; padding: 16px 20px; border-radius: 12px; border: 1px solid #222; background: #080808; color: #fff; font-size: 16px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit; }
-input[type="text"]::placeholder { color: #444; }
-input[type="text"]:focus { border-color: #f97316; box-shadow: 0 0 0 1px rgba(249,115,22,0.4); }
-.scan-btn { margin-top: 12px; width: 100%; padding: 16px; border-radius: 10px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 17px; cursor: pointer; font-family: inherit; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
-.scan-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
-.scan-btn:active { transform: scale(0.98); }
-.scan-btn:disabled { opacity: 0.7; cursor: default; transform: none; }
-.scan-meta { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 14px; flex-wrap: wrap; }
-.scan-meta-item { font-size: 12px; color: #666; }
-.scan-proof { margin-top: 12px; text-align: center; font-size: 13px; color: #f97316; font-weight: 600; }
-.scan-example { margin-top: 8px; text-align: center; }
-.scan-example a { font-size: 12px; color: #555; text-decoration: none; border-bottom: 1px dotted #333; padding-bottom: 1px; transition: color 0.2s; }
-.scan-example a:hover { color: #999; }
-/* ── SCORE PREVIEW ── */
-.score-preview { margin-bottom: 28px; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 28px; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; }
-.score-preview-label { font-size: 12px; color: #555; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; text-align: center; }
-.score-circle-wrap { position: relative; width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; }
-.score-ring { position: absolute; top: 0; left: 0; }
-.score-circle-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
-.score-circle-num { font-size: 30px; font-weight: 800; color: #E24B4A; line-height: 1; transition: color 0.5s; }
-.score-circle-denom { font-size: 12px; color: #555; font-weight: 500; margin-top: 2px; }
-.score-preview-sub { font-size: 13px; color: #555; text-align: center; max-width: 320px; }
-/* ── SPLIT VIEW: HUMAN vs AI ── */
-.split-view { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; overflow: hidden; margin-bottom: 36px; }
-.split-col { padding: 24px; }
-.split-col.human { border-right: 1px solid #1e1e1e; }
-.split-col-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-.split-col.human .split-col-label { color: #1D9E75; }
-.split-col.ai .split-col-label { color: #E24B4A; }
-.split-item { font-size: 13px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); color: #bbb; display: flex; align-items: center; gap: 8px; }
-.split-item:last-child { border-bottom: none; }
-.split-item.pos { color: #4ade80; }
-.split-item.neg { color: #f87171; }
-.split-caption { grid-column: 1 / -1; text-align: center; font-size: 15px; font-weight: 700; color: #e8e8e8; padding: 18px 28px; border-top: 1px solid #1e1e1e; line-height: 1.6; }
-.split-caption span { color: #f97316; }
-/* ── DATA STRIP ── */
-.data-strip { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 28px; margin-bottom: 48px; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: center; gap: 0; }
-.data-strip-num { font-size: 26px; font-weight: 800; color: #f97316; line-height: 1; }
-.data-strip-label { font-size: 12px; color: #888; margin-top: 3px; }
-.data-strip-divider { width: 1px; height: 40px; background: #1e1e1e; flex-shrink: 0; }
-/* ── SECTIONS ── */
-.section { margin-bottom: 56px; }
-.section-kicker { font-size: 10px; color: #f97316; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 12px; }
-.section-title { font-size: clamp(22px, 3vw, 30px); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.2; letter-spacing: -0.01em; }
-.section-title em { font-style: normal; color: #f97316; }
-.section-body { font-size: 15px; color: #999; line-height: 1.8; max-width: 660px; }
-/* ── SHIFT BOX ── */
-.shift-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 28px 32px; margin-top: 24px; }
-.shift-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.shift-flow:last-of-type { margin-bottom: 0; }
-.flow-node { background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 8px 16px; font-size: 13px; color: #777; font-weight: 500; min-width: 100px; text-align: center; }
-.flow-old-prefix { background: rgba(255,255,255,0.04); border: 1px solid #2a2a2a; color: #888; font-weight: 700; min-width: 70px; }
-.flow-old { background: rgba(255,255,255,0.03); border: 1px solid #222; color: #888; }
-.flow-new-prefix { background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.25); color: #1D9E75; font-weight: 700; min-width: 70px; }
-.flow-new { background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2); color: #fb923c; font-weight: 600; }
-.flow-arrow { color: #333; font-size: 14px; }
-.shift-note { font-size: 13px; color: #999; line-height: 1.7; padding-top: 16px; border-top: 1px solid #161616; margin-top: 16px; }
-.shift-note strong { color: #f97316; }
-/* ── COMPARE GRID ── */
-.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
-.compare-col { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px; }
-.compare-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
-.compare-col-label.old { color: #444; }
-.compare-col-label.new { color: #1D9E75; }
-.compare-item { font-size: 13px; padding: 6px 0; border-bottom: 1px solid #161616; color: #aaa; line-height: 1.4; }
-.compare-item:last-child { border-bottom: none; }
-.compare-item.struck { text-decoration: line-through; text-decoration-color: #333; color: #444; }
-.compare-item.bright { color: #4ade80; }
-/* ── SIGNALS ── */
-.signals-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 28px 32px; margin-top: 24px; }
-.signals-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 6px; text-align: center; }
-.sig-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #161616; }
-.sig-row:last-child { border-bottom: none; }
-.sig-name { font-size: 12px; color: #aaa; font-weight: 500; width: 175px; flex-shrink: 0; }
-.sig-bar-wrap { flex: 1; height: 5px; background: #1a1a1a; border-radius: 999px; overflow: hidden; }
-.sig-bar-fill { height: 100%; border-radius: 999px; }
-.sig-score { font-size: 11px; font-weight: 700; width: 52px; text-align: right; flex-shrink: 0; }
-.signals-note { font-size: 12px; color: #444; text-align: center; margin-top: 16px; font-style: italic; }
-/* ── RISK LIST ── */
-.risk-list { margin-top: 20px; display: flex; flex-direction: column; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; overflow: hidden; }
-.risk-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 22px; border-bottom: 1px solid #161616; font-size: 14px; color: #aaa; line-height: 1.5; }
-.risk-row:last-child { border-bottom: none; }
-.risk-icon { font-size: 14px; flex-shrink: 0; margin-top: 2px; color: #E24B4A; }
-/* ── FINDINGS ── */
-.findings-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 28px 32px; margin-top: 24px; }
-.finding-arc { background: #0a1a0a; border: 1px solid #1a2e1a; border-left: 3px solid #1D9E75; border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; font-size: 13px; color: #888; line-height: 1.6; }
-.finding-arc-label { font-size: 10px; color: #1D9E75; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-.finding-arc-result { color: #4ade80; font-weight: 600; }
-.finding-item { font-size: 13px; color: #aaa; padding: 8px 0; border-bottom: 1px solid #161616; line-height: 1.5; }
-.finding-item:last-child { border-bottom: none; }
-.finding-amount { color: #E24B4A; font-weight: 700; }
-/* ── FUTURE BOX ── */
-.future-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 28px 32px; margin-top: 24px; }
-.future-title { font-size: 18px; font-weight: 700; color: #f97316; margin-bottom: 10px; }
-.future-body { font-size: 14px; color: #999; line-height: 1.7; margin-bottom: 20px; }
-.future-items { display: flex; flex-direction: column; }
-.future-item { font-size: 13px; color: #999; padding: 8px 0; border-bottom: 1px solid #161616; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
-.future-item:last-child { border-bottom: none; }
-.future-item-arrow { color: #f97316; flex-shrink: 0; margin-top: 2px; }
-/* ── FPFP ── */
-.fpfp-box { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 32px; margin-top: 24px; }
-.fpfp-row { display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; }
-.fpfp-step { position: relative; padding: 10px 14px; cursor: default; text-align: center; }
-.fpfp-step-label { font-size: 18px; font-weight: 800; color: #f97316; }
-.fpfp-tip { position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(6px); background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 10px 14px; width: 190px; font-size: 12px; color: #aaa; line-height: 1.5; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 99; }
-.fpfp-step-desc { font-size: 13px; color: #999; margin-top: 5px; }
-.fpfp-arrow { color: #333; font-size: 16px; padding: 0 2px; }
-.steps-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 32px; }
-.step-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 22px 18px; text-align: center; }
-.step-num { font-size: 40px; font-weight: 800; color: #f97316; line-height: 1; margin-bottom: 10px; }
-.step-text { font-size: 15px; color: #999; line-height: 1.5; }
-/* ── RESEARCH CARD ── */
-.research-card { display: block; text-decoration: none; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 16px; padding: 24px 28px; margin-top: 24px; transition: border-color 0.2s; }
-.research-card:hover { border-color: rgba(239,159,39,0.45); }
-.research-card-kicker { font-size: 10px; color: #EF9F27; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 10px; }
-.research-card-title { font-size: 20px; font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 14px; letter-spacing: -0.01em; }
-.research-stats { display: flex; gap: 0; background: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
-.research-stat { flex: 1; padding: 12px 8px; text-align: center; border-right: 1px solid #1a1a1a; }
-.research-stat:last-child { border-right: none; }
-.research-stat-num { font-size: 18px; font-weight: 800; color: #f97316; line-height: 1; }
-.research-stat-num.warn { color: #E24B4A; }
-.research-stat-label { font-size: 10px; color: #777; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-.research-card-cta { font-size: 14px; color: #EF9F27; font-weight: 700; }
-/* ── EXPLORE GRID (internal linking) ── */
-.explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
-.explore-card { display: block; text-decoration: none; background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 14px; padding: 20px 22px; transition: all 0.2s; }
-.explore-card:hover { border-color: rgba(249,115,22,0.4); transform: translateY(-2px); }
-.explore-card-name { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-.explore-card-desc { font-size: 12.5px; color: #999; line-height: 1.55; }
-.explore-card-arrow { font-size: 12px; color: #f97316; margin-top: 10px; display: block; font-weight: 600; }
-@media (max-width: 640px) { .explore-grid { grid-template-columns: 1fr; } }
-/* ── PATHS (two audiences) ── */
-.paths { margin-bottom: 48px; padding-top: 6px; }
-.paths-head { text-align: center; margin-bottom: 28px; }
-.paths-head .kicker { font-size: 23px; color: #f97316; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800; margin-bottom: 12px; }
-.paths-head h2 { font-size: 48px; font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.08; }
-.paths-head p { font-size: 16px; color: #999; margin-top: 12px; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-.paths-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-/* shared card */
-.path { border-radius: 20px; padding: 30px 28px; display: flex; flex-direction: column; }
-.path-tag { display: inline-flex; align-items: center; gap: 7px; align-self: flex-start; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 13px; border-radius: 999px; margin-bottom: 18px; }
-.path-title { font-size: 23px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px; }
-.path-lead { font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
-/* DTC = orange */
-.path.dtc { background: linear-gradient(160deg, rgba(249,115,22,0.09), rgba(249,115,22,0.02)); border: 1px solid rgba(249,115,22,0.28); }
-.path.dtc .path-tag { background: rgba(249,115,22,0.15); color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
-.path.dtc .path-lead { color: #c9a48a; }
-/* Agency = green */
-.path.agency { background: linear-gradient(160deg, rgba(29,158,117,0.10), rgba(29,158,117,0.02)); border: 1px solid rgba(29,158,117,0.3); }
-.path.agency .path-tag { background: rgba(29,158,117,0.16); color: #34d399; border: 1px solid rgba(29,158,117,0.32); }
-.path.agency .path-lead { color: #8fc4ad; }
-/* steps inside DTC */
-.path-step { display: flex; gap: 14px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.07); }
-.path-step:first-of-type { border-top: none; padding-top: 0; }
-.path-step-num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; }
-.path.dtc .path-step-num { background: rgba(249,115,22,0.16); color: #fb923c; }
-.path-step-body { flex: 1; }
-.path-step-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
-.path-step-name { font-size: 16px; font-weight: 700; color: #fff; }
-.path-step-price { font-size: 14px; font-weight: 800; flex-shrink: 0; }
-.path-step-price.free { color: #34d399; }
-.path-step-price.paid { color: #fb923c; }
-.path-step-price.soon { color: #666; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
-.path-step-desc { font-size: 13px; color: #999; line-height: 1.55; }
-/* agency deliverables list */
-.path-deliv { display: flex; flex-direction: column; gap: 0; margin-bottom: 4px; }
-.path-deliv-item { display: flex; gap: 12px; padding: 13px 0; border-top: 1px solid rgba(255,255,255,0.07); font-size: 14.5px; color: #d8d8d8; line-height: 1.5; align-items: flex-start; }
-.path-deliv-item:first-child { border-top: none; padding-top: 0; }
-.path-deliv-check { color: #34d399; flex-shrink: 0; font-weight: 800; font-size: 15px; margin-top: 1px; }
-.path-deliv-item .bonus-tag { display: inline-block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #34d399; background: rgba(29,158,117,0.15); border: 1px solid rgba(29,158,117,0.3); border-radius: 5px; padding: 1px 7px; margin-right: 7px; vertical-align: middle; }
-.path-price-line { display: flex; align-items: baseline; gap: 10px; margin: 20px 0 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.07); }
-.path-price-big { font-size: 32px; font-weight: 800; color: #fff; line-height: 1; }
-.path-price-note { font-size: 12px; color: #777; line-height: 1.4; }
-/* CTA buttons */
-.path-cta { margin-top: auto; display: block; text-align: center; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 15px; text-decoration: none; cursor: pointer; border: none; font-family: inherit; transition: all 0.25s; width: 100%; }
-.path.dtc .path-cta { background: linear-gradient(135deg, #f97316, #ea580c); color: #000; box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
-.path.dtc .path-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(249,115,22,0.5); }
-.path.agency .path-cta { background: linear-gradient(135deg, #1D9E75, #15805d); color: #fff; box-shadow: 0 8px 24px rgba(29,158,117,0.3); }
-.path.agency .path-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(29,158,117,0.45); }
-.path-cta-sub { font-size: 11.5px; color: #777; text-align: center; margin-top: 10px; }
-/* ── RESPONSIVE ── */
-@media (max-width: 720px) {
-  .paths-grid { grid-template-columns: 1fr; }
-  .path { padding: 26px 22px; }
-}
-@media (max-width: 640px) {
-  .nav { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
-  .nav-links { flex-wrap: wrap; }
-  .wrap { padding: 0 20px; }
-  .hero h1 { font-size: 30px; }
-  .hero-sub { font-size: 16px; }
-  .split-view { grid-template-columns: 1fr; }
-  .split-col.human { border-right: none; border-bottom: 1px solid #1e1e1e; }
-  .scan-box { padding: 22px 20px; }
-  .compare-grid { grid-template-columns: 1fr; }
-  .steps-row { grid-template-columns: 1fr; }
-  .data-strip { grid-template-columns: 1fr 1fr; text-align: center; }
-  .data-strip-divider { display: none; }
-  .cta-section { padding: 28px 20px; }
-  .sig-name { width: 130px; font-size: 11px; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
-  .footer-platform { text-align: left; }
-  .score-preview { padding: 22px 20px; }
-  .paths-head h2 { font-size: 32px; }
-  .signals-section, .findings-section, .future-box, .fpfp-box, .shift-box { padding: 20px 18px; }
-}
-/* ── CTA ── */
-.cta-section { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 20px; padding: 40px 36px; text-align: center; margin-top: 32px; }
-.cta-title { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.02em; }
-.cta-sub { font-size: 15px; color: #999; margin-bottom: 24px; line-height: 1.6; }
-.cta-btn { display: inline-block; padding: 18px 40px; border-radius: 14px; border: none; background: linear-gradient(135deg, #f97316, #ea580c); color: #000; font-weight: 900; font-size: 16px; cursor: pointer; font-family: inherit; text-decoration: none; box-shadow: 0 8px 24px rgba(249,115,22,0.4); transition: all 0.25s; }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(249,115,22,0.6); }
-/* ── FOOTER ── */
-.footer { padding: 32px 28px; max-width: 860px; margin: 0 auto; border-top: 1px solid #111; }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-.footer-left { font-size: 12px; color: #444; line-height: 2; }
-.footer-left a { color: #555; text-decoration: none; }
-.footer-left a:hover { color: #f97316; }
-.footer-right { font-size: 14px; font-weight: 700; color: #f97316; letter-spacing: 0.04em; }
-.footer-platform { font-size: 10px; color: #333; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; text-align: right; }
-.footer-social { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
-.footer-social a { color: #444; transition: color 0.2s; }
-.footer-social a:hover { color: #f97316; }
-.ai-sitemap { border-top:1px solid #161616; margin-top:22px; padding:16px 0 4px; }
-.ai-sitemap-inner { max-width:1080px; margin:0 auto; padding:0 24px; display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; }
-.ai-sitemap-label { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#4a4a4a; margin-right:4px; }
-.ai-sitemap a { font-size:12px; color:#666; text-decoration:none; transition:color .2s; }
-.ai-sitemap a:hover { color:#f97316; }
-@media (max-width:640px){ .ai-sitemap-inner{ gap:8px 12px; } }
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  /* Cross-document view transition: on browsers that support navigating
+     same-origin pages with the View Transitions API (Chromium 126+), the
+     incoming page rolls down over the outgoing one like a blind being
+     pulled down, instead of the default cross-fade. Unsupported browsers
+     just navigate normally — this is a pure progressive enhancement. */
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  em{font-style:normal;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(240,238,230,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .6s cubic-bezier(.65,0,.35,1);
+  }
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  /* plain single-line inline text — no flexbox here, so there is no wrap
+     edge-case possible; the whole wordmark is always exactly one line */
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  /* "TOM" and "OUNDRY" are true erase-tails: they wipe away right-to-left
+     (the Y goes first) as the nav goes compact, leaving "A" and "F" sitting
+     next to each other — one continuous wipe, no crossfade, no swap */
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{
+    font-size:13px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.07em;
+    position:relative;padding:4px 2px;white-space:nowrap;
+    text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+    transition:color .2s ease, text-decoration-color .2s ease;
+  }
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-chevron{
+    display:inline-flex;width:10px;height:7px;margin-left:6px;
+    vertical-align:middle;color:currentColor;
+    transition:transform .2s ease;
+  }
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-chevron.chevron-r-pre{margin-left:0;margin-right:6px;transform:rotate(-90deg);}
+  .nav-chevron.chevron-l-pre{margin-left:0;margin-right:6px;transform:rotate(90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  /* hover-only effects live behind a real hover query — on touch devices
+     (iOS Safari especially) an element with :hover styles needs a first
+     "ghost" tap just to register the hover state before a second tap
+     actually fires the click, which is why menu items needed two taps */
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+
+  /* ---------- MOBILE NAV TOGGLE (hidden on desktop) ---------- */
+  /* button itself is a full 44px touch target; the visible bars inside
+     are smaller and centered so it doesn't look oversized */
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ---------- NAV DROPDOWNS ---------- */
+  .dropdown{
+    position:absolute;top:100%;left:0;margin-top:6px;
+    background:var(--cream);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+    padding:12px;width:max-content;max-width:300px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:1100;
+  }
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+  .dd-desc{display:block;font-size:11.5px;color:var(--gray-700);margin-top:3px;font-weight:500;text-transform:none;letter-spacing:0;line-height:1.4;}
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{padding:96px 0 64px;background:var(--cream);}
+  .masthead-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  .masthead-h1{font-family:var(--serif);font-size:clamp(38px,6vw,68px);font-weight:800;letter-spacing:-0.02em;line-height:1.06;max-width:920px;margin-bottom:26px;}
+  .masthead-h1 em{color:var(--orange);}
+  .masthead-lede{font-size:19px;color:var(--black);font-weight:700;line-height:1.5;max-width:640px;margin-bottom:16px;}
+  .masthead-sub{font-size:16px;color:var(--gray-700);line-height:1.65;font-weight:500;max-width:600px;margin-bottom:34px;}
+  .masthead-cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .cta-square{display:inline-flex;align-items:center;justify-content:center;padding:16px 28px;font-size:14px;font-weight:700;border-radius:0;transition:background .25s ease, color .25s ease, border-color .25s ease, transform .2s ease;}
+  .cta-square-primary{background:var(--black);color:var(--white);}
+  .cta-square-primary:hover{background:var(--orange);transform:translateY(-1px);}
+  .cta-square-secondary{background:transparent;color:var(--black);border:1.5px solid var(--black);}
+  .cta-square-secondary:hover{border-color:var(--orange);color:var(--orange);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:56px 0 40px;text-align:left;background:var(--cream);}
+  .hero-inner{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+
+  .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+  .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+  .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+  .scan-box input::placeholder{color:var(--gray-500);}
+  .scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+  .scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+  .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+  .scan-note span{margin:0 8px;}
+
+  /* ---------- META ROW (flat, no bubbles, square swatches) ---------- */
+  .chip-row{display:flex;flex-wrap:wrap;align-items:center;row-gap:10px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:600;color:var(--gray-700);
+    white-space:nowrap;
+  }
+  .chip i{width:9px;height:9px;border-radius:2px;display:inline-block;flex-shrink:0;}
+  .chip b{font-size:16px;font-weight:800;color:var(--black);}
+  .chip-sep{margin:0 14px;color:var(--gray-300);}
+
+  /* ---------- SCORE PANEL ---------- */
+  .score-panel{margin:8px 0 0;padding-top:12px;border-top:1px solid var(--gray-300);}
+
+  /* ---------- NICHE CHART (flat, embedded in the page, no card) ---------- */
+  .niche-chart-section{margin-top:0;}
+  .niche-chart-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:14px;margin-bottom:32px;}
+  .niche-chart-label{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
+  .niche-chart-stores{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;display:flex;align-items:baseline;gap:8px;}
+  .niche-chart-stores::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
+  .niche-chart-stores b{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
+  .niche-overall{display:flex;align-items:baseline;gap:10px;}
+  .niche-overall::before{content:"·";margin-right:4px;color:var(--gray-300);font-weight:700;}
+  .niche-overall b{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--orange);letter-spacing:-0.02em;line-height:1;}
+  .niche-overall span{font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;}
+
+  /* flat, card-language chart — no gradients or glossy caps, same sharp
+     4px radius / hairline / black+orange system as the rest of the page.
+     Same width as the navbar/hero content column, not edge-to-edge. */
+  .niche-chart{
+    display:flex;align-items:flex-end;gap:0;height:230px;
+    background:var(--card);border-radius:var(--radius);
+    border-bottom:2px solid var(--black);
+    padding:24px 20px 0;
+    position:relative;
+    box-sizing:border-box;
+  }
+  .niche-chart-watermark{margin-top:9px;padding-left:28px;font-size:11px;font-weight:500;color:var(--gray-500);letter-spacing:0.02em;}
+  .niche-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative;cursor:pointer;padding:0 8px;border-right:1px solid var(--card-line);}
+  .niche-bar:last-child{border-right:none;}
+  .niche-bar-value{font-size:15px;font-weight:800;color:var(--black);margin-bottom:10px;transition:color .2s ease, transform .25s ease;}
+  .niche-bar-fill{
+    position:relative;width:100%;max-width:80px;
+    height:0%;border-radius:var(--radius) var(--radius) 0 0;
+    transition:height 1.1s cubic-bezier(.16,.8,.4,1), background .2s ease;
+    transform-origin:bottom center;
+    background:var(--bar-color);
+  }
+  .niche-bar.is-visible .niche-bar-fill{height:var(--h);}
+  .niche-bar:hover .niche-bar-value{transform:translateY(-3px);color:var(--orange);}
+  .niche-bar-label{font-size:14px;color:var(--gray-700);margin-top:14px;text-align:center;font-weight:700;line-height:1.25;padding:0 2px 16px;transition:color .2s ease;}
+  .niche-bar:hover .niche-bar-label{color:var(--black);}
+
+  .niche-tip{
+    position:absolute;bottom:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(6px);
+    background:var(--black);border-radius:4px;padding:9px 12px;width:170px;
+    font-size:11px;color:var(--white);line-height:1.5;opacity:0;
+    transition:all .2s ease;pointer-events:none;z-index:50;text-align:left;
+  }
+  .niche-bar:hover .niche-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .niche-chart-legend{margin-top:28px;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:80px 24px;}
+  section.alt{background:var(--off-white);}
+  .section-headline{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--black);margin-top:18px;line-height:1.4;}
+  .products-def{font-size:17px;color:var(--gray-700);font-weight:500;line-height:1.6;max-width:680px;}
+
+  /* ---------- PRODUCTS HEAD (left-aligned, masthead-style h2) ---------- */
+  .products-head{max-width:var(--maxw);margin:0 auto 48px;text-align:left;}
+  .products-h2{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:920px;margin-bottom:22px;}
+  .products-h2 em{color:var(--orange);}
+  .products-sub{margin-top:16px;color:var(--gray-700);font-size:16px;line-height:1.6;max-width:600px;}
+
+  /* ---------- PRODUCTS GRID ---------- */
+  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:var(--maxw);margin:0 auto;}
+  .mini-card{border-radius:var(--radius);padding:36px 28px;background:var(--card);display:flex;flex-direction:column;min-height:220px;transition:transform .3s ease, box-shadow .3s ease;}
+  .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .mini-card-title{font-family:var(--serif);font-size:18px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:10px;}
+  .mini-card-tag{font-size:13.5px;color:var(--gray-700);font-weight:600;line-height:1.5;margin-bottom:22px;flex:1;}
+  .mini-card-price{font-size:22px;font-weight:800;margin-bottom:18px;}
+  .mini-card-price.free{color:var(--green);}
+  .mini-card-price.paid{color:var(--orange);}
+  .mini-card-price.soon{color:var(--gray-500);font-size:13px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700;}
+  .mini-card-cta{
+    margin-top:auto;display:flex;align-items:center;justify-content:center;
+    width:100%;box-sizing:border-box;white-space:nowrap;
+    background:var(--black);color:var(--white);
+    font-size:13.5px;font-weight:700;
+    padding:13px 16px;border-radius:var(--radius);
+    transition:background .2s ease, color .2s ease;
+  }
+  .mini-card-cta:hover{background:var(--orange);color:var(--black);}
+
+  /* ---------- PRODUCT FLIP CARDS (From Research to Products) ----------
+     Five tall portrait rectangles, one row, same flip mechanism (and the
+     same navbar chevron icon) as the Category Reports cards on
+     /research/category-reports. Front shows only the product name,
+     centered; back shows a short description, a CTA line, and the
+     chevron, each back tinted per product. */
+  #pricing.products-grid{grid-template-columns:repeat(5,1fr);}
+  .product-flip-card{
+    --flip-dir:180deg;
+    display:block;text-decoration:none;perspective:1400px;
+    border-radius:var(--radius);height:320px;
+  }
+  .product-flip-card:nth-child(even){--flip-dir:-180deg;}
+  .product-flip-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .product-flip-card.is-flipped .product-flip-inner{transform:rotateY(var(--flip-dir));}
+  @media (hover:hover) and (pointer:fine){
+    .product-flip-card:hover .product-flip-inner{transform:rotateY(var(--flip-dir));}
+  }
+  .product-flip-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:26px 24px;overflow:hidden;
+    display:flex;flex-direction:column;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .product-flip-card.is-flipped .product-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .product-flip-card:hover .product-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  }
+  .product-flip-face-front{background:var(--card);align-items:center;justify-content:center;text-align:center;}
+  .product-flip-name{font-family:var(--serif);font-size:21px;font-weight:800;letter-spacing:-0.01em;color:var(--black);line-height:1.3;}
+  .product-flip-face-back{transform:rotateY(180deg);justify-content:space-between;}
+  .product-flip-body{font-size:14.5px;line-height:1.6;}
+  .product-flip-cta{display:flex;align-items:center;font-size:13.5px;font-weight:800;}
+  .product-flip-back-orange{background:var(--orange);color:var(--white);}
+  .product-flip-back-orange .product-flip-body{color:rgba(255,255,255,0.9);}
+  .product-flip-back-orange-light{background:rgba(254,106,3,0.14);color:var(--black);}
+  .product-flip-back-orange-light .product-flip-body{color:rgba(22,21,18,0.85);}
+  .product-flip-back-teal{background:#2bb991;color:var(--white);}
+  .product-flip-back-teal .product-flip-body{color:rgba(255,255,255,0.9);}
+
+  /* Research Findings: same card language, but broken into an asymmetric
+     "bento" layout instead of a uniform 4-up row — one big card, two
+     stacked smaller ones, one wide banner card underneath. */
+  .research-grid{grid-template-columns:1.35fr 1fr;grid-template-rows:auto auto auto;}
+  /* nth-child placement only applies on desktop — kept behind a min-width
+     query so it can never outrank the mobile reset below (a bare :nth-child
+     selector is MORE specific than a plain class selector and would win
+     regardless of source order otherwise, which is what broke mobile) */
+  @media (min-width:901px){
+    .research-grid .mini-card:nth-child(1){grid-column:1;grid-row:1 / span 2;min-height:100%;}
+    .research-grid .mini-card:nth-child(1) .mini-card-title{font-size:23px;max-width:420px;}
+    .research-grid .mini-card:nth-child(2){grid-column:2;grid-row:1;min-height:0;}
+    .research-grid .mini-card:nth-child(3){grid-column:2;grid-row:2;min-height:0;}
+  }
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:12px;}
+  .mini-card-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:4px 0 22px;padding-top:18px;border-top:1px solid var(--card-line);}
+  .mini-card-stats div{display:flex;flex-direction:column;gap:2px;}
+  .mini-card-stats b{font-size:20px;font-weight:800;color:var(--black);}
+  .mini-card-stats span{font-size:11.5px;color:var(--gray-700);}
+
+  /* wide banner card underneath: title left, one memorable line centered,
+     button right — pushed down an extra 50% versus the row gap above it */
+  .research-grid .mini-card-banner{grid-column:1 / span 2;grid-row:3;min-height:0;margin-top:10px;flex-direction:row;align-items:center;justify-content:space-between;gap:28px;}
+  .mini-card-banner .mini-card-title{margin-bottom:0;flex:0 0 auto;max-width:260px;}
+  .mini-card-banner-line{flex:1;text-align:center;font-family:var(--serif);font-size:17px;font-weight:700;letter-spacing:-0.01em;color:var(--black);margin:0;}
+  .mini-card-banner .mini-card-cta{width:auto;margin-top:0;flex:0 0 auto;}
+
+  /* ---------- BUILT IN PUBLIC (lab) ---------- */
+  .lab-divider{max-width:var(--maxw);margin:44px auto 0;border:none;border-top:1px solid var(--card-line);}
+  .lab-closing{max-width:var(--maxw);margin:28px auto 0;}
+  .lab-closing-inner{display:inline-block;max-width:640px;color:var(--gray-700);font-size:16px;line-height:1.6;}
+  .lab-cta-row{max-width:var(--maxw);margin:28px auto 0;display:flex;gap:14px;flex-wrap:wrap;}
+  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;margin-bottom:20px;flex:1;}
+  .research-findings-num{color:var(--orange);}
+
+  /* "explore all reports" link below the research grid */
+  .products-explore{max-width:var(--maxw);margin:36px auto 0;display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;row-gap:8px;}
+  .products-stats{font-size:14px;color:var(--gray-700);font-weight:600;white-space:nowrap;}
+  .products-stats-sep{margin:0 12px;color:var(--gray-300);}
+  .products-explore-link{font-size:14px;font-weight:700;color:var(--black);white-space:nowrap;transition:color .2s ease;}
+  .products-explore-link:hover{color:var(--orange);}
+
+  /* sentence below the cards, unrolls left-to-right when the section is hovered */
+  .products-reveal{max-width:var(--maxw);margin:40px auto 0;}
+  .products-reveal-inner{
+    display:inline-block;white-space:nowrap;
+    color:var(--gray-700);font-size:18px;font-weight:400;line-height:1.6;
+  }
+  .products-reveal-num{color:var(--orange);font-weight:800;font-size:22px;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);max-width:var(--maxw);margin:0 auto;padding:48px 56px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;white-space:nowrap;}
+  .final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+  .final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+  .final-cta .scan-box{max-width:640px;margin:0 auto;padding:6px;}
+  .final-cta .scan-box input{padding:12px 18px;font-size:15px;}
+  .final-cta .scan-box button{padding:12px 22px;font-size:14px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col .logo-word{margin-bottom:14px;}
+  .footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{color:var(--black);font-weight:700;}
+  .footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  /* ---------- COOKIE CONSENT (small, bottom-right, non-blocking) ---------- */
+  .cookie-banner{
+    position:fixed;right:20px;bottom:20px;z-index:2000;
+    width:100%;max-width:320px;
+    background:var(--cream);border:1px solid var(--card-line);border-radius:var(--radius);
+    box-shadow:0 24px 48px -18px rgba(22,21,18,0.28);
+    padding:20px;
+    opacity:0;visibility:hidden;transform:translateY(16px);
+    transition:opacity .35s ease, transform .35s ease, visibility .35s;
+  }
+  .cookie-banner.is-visible{opacity:1;visibility:visible;transform:translateY(0);}
+  .cookie-banner-title{font-family:var(--serif);font-size:15px;font-weight:800;color:var(--black);margin-bottom:8px;}
+  .cookie-banner-text{font-size:12.5px;color:var(--gray-700);line-height:1.55;margin-bottom:16px;}
+  .cookie-banner-actions{display:flex;align-items:center;gap:16px;}
+  .cookie-banner-accept{
+    flex:1;text-align:center;background:var(--black);color:var(--white);
+    font-size:13px;font-weight:700;padding:11px 14px;border:none;border-radius:var(--radius);
+    cursor:pointer;transition:background .2s ease,color .2s ease;
+  }
+  .cookie-banner-accept:hover{background:var(--orange);color:var(--black);}
+  .cookie-banner-decline{background:none;border:none;font-size:12.5px;font-weight:700;color:var(--gray-700);cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color .2s ease;}
+  .cookie-banner-decline:hover{color:var(--black);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .products-grid{grid-template-columns:1fr 1fr;}
+    #pricing.products-grid{grid-template-columns:1fr 1fr;}
+    .research-grid .mini-card{grid-column:auto;grid-row:auto;min-height:220px;}
+    .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
+    .research-grid .mini-card-banner{grid-column:1 / span 2;flex-direction:column;align-items:stretch;gap:0;margin-top:20px;}
+    .mini-card-banner .mini-card-title{margin-bottom:10px;max-width:none;}
+    .mini-card-banner-line{text-align:left;margin-bottom:20px;}
+    .mini-card-banner .mini-card-cta{width:100%;margin-top:auto;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .masthead{padding:72px 0 48px;}
+    .masthead-inner{padding:0 24px;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+  }
+  @media (max-width:680px){
+    .products-reveal-inner{white-space:normal;font-size:15px;}
+    .products-stats, .products-explore-link{white-space:normal;text-align:center;}
+    .products-explore-sep{display:none;}
+    .mini-card-cta{white-space:normal;text-align:center;}
+    /* collapsed hamburger nav: brand + toggle stay on one row, the full
+       link list (and its dropdowns) hide behind the toggle so the header
+       doesn't eat the whole first screen on a phone */
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{
+      position:relative;flex-direction:column;align-items:stretch;
+      width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;
+    }
+    .nav-trigger{
+      font-size:13px;width:100%;box-sizing:border-box;min-width:0;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:13px 4px;border-bottom:1px solid var(--card-line);
+      white-space:normal;text-align:left;
+    }
+    .dropdown{
+      position:static;box-shadow:none;background:var(--card);
+      margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;
+      opacity:1;visibility:hidden;transform:none;
+      max-height:0;overflow:hidden;transition:max-height .25s ease;
+    }
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    .hero{padding:40px 0 32px;}
+    .hero-inner{padding:0 20px;}
+    .scan-box{flex-direction:column;border-radius:4px;}
+    .scan-box button{width:100%;}
+    .score-panel{margin-top:20px;padding-top:14px;}
+    /* the "·" separators (chip-sep, and the ::before dots on the stat
+       lines) are meant to sit BETWEEN items on one line — once the row
+       wraps to one item per line on a phone, a leftover separator at the
+       start of a line drags its own margin along and knocks that line out
+       of alignment with everything else. Just drop them on mobile so
+       every line sits flush with the same left edge. */
+    .chip-sep{display:none;}
+    .chip-row{flex-direction:column;align-items:flex-start;}
+    .niche-chart-stores::before,.niche-overall::before{display:none;}
+    .niche-chart-head{gap:8px;flex-direction:column;align-items:flex-start;}
+    .niche-overall b{font-size:34px;}
+    .niche-chart-stores b{font-size:28px;}
+    /* 10 categories don't fit a phone screen without colliding — give each
+       bar a fixed column width and let the chart scroll sideways instead
+       of squeezing labels until they overlap each other */
+    .niche-chart{height:150px;padding:16px 16px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .niche-bar{flex:0 0 60px;padding:0 6px;}
+    .niche-chart-watermark{padding-left:19px;}
+    .masthead{padding:56px 0 40px;}
+    .masthead-inner{padding:0 20px;}
+    .masthead-cta-row{flex-direction:column;align-items:stretch;}
+    .cta-square{width:100%;}
+    .niche-bar-value{font-size:11px;}
+    .niche-bar-label{font-size:10px;padding-bottom:10px;}
+    section{padding:52px 20px;}
+    .products-grid{grid-template-columns:1fr;}
+    #pricing.products-grid{grid-template-columns:1fr;}
+    .product-flip-card{height:220px;}
+    .research-grid .mini-card-banner{grid-column:1;}
+    .research-grid .mini-card-stats{grid-template-columns:1fr 1fr;}
+    .sig-name{width:130px;font-size:12px;}
+    .final-cta{padding:44px 24px;border-radius:4px;}
+    .final-cta h2{white-space:normal;}
+    .final-cta .scan-box{max-width:none;}
+    .research-stats{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+    .cookie-banner{right:12px;bottom:12px;left:12px;max-width:none;}
+  }
+
+  /* ---------- AI VIEW PORTAL: a small white frame that appears 3.5s after
+     load with a quick strobe flicker, offering "See as AI". It stays on
+     screen permanently once it appears (no auto-hide, no retracting) —
+     clicking it only ever swaps its label between the two states. */
+  .ai-portal{
+    position:fixed;top:50%;right:24px;z-index:900;
+    transform:translateY(-50%);
+  }
+  .ai-portal-frame{
+    background:var(--white);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 12px 32px -14px rgba(22,21,18,0.3);
+    padding:16px 22px;
+    opacity:0;
+    transform:translateX(10px);
+    transition:opacity .4s ease, transform .4s ease;
+    pointer-events:none;
+  }
+  .ai-portal.is-visible .ai-portal-frame{
+    opacity:1;transform:translateX(0);
+    pointer-events:auto;
+  }
+  /* the one-time strobe: the frame blinks a couple of times right as it
+     appears, then simply settles fully visible and stays that way */
+  .ai-portal.is-visible.is-flickering .ai-portal-frame{
+    animation:ai-frame-strobe .6s steps(1,end) 1;
+  }
+  @keyframes ai-frame-strobe{
+    0%{opacity:0;}
+    12%{opacity:1;}
+    24%{opacity:.12;}
+    36%{opacity:1;}
+    50%{opacity:.1;}
+    64%{opacity:1;}
+    100%{opacity:1;}
+  }
+  .ai-portal-btn{
+    border:none;background:none;cursor:pointer;
+    font-family:"Nunito",sans-serif;font-weight:800;font-size:13px;
+    letter-spacing:0.06em;text-transform:uppercase;color:var(--black);
+    white-space:nowrap;
+  }
+  @media (max-width:680px){
+    .ai-portal{right:14px;}
+    .ai-portal-frame{padding:12px 16px;}
+    .ai-portal-btn{font-size:11.5px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ai-portal-frame{transition-duration:.2s;}
+    .ai-portal.is-visible.is-flickering .ai-portal-frame{animation:none;opacity:1;}
+  }
+
+  /* ---------- AI VIEW: raw extracted data, the way a crawler or shopping
+     agent actually reads this page. White, monospace, no visual design. */
+  body > *:not(.ai-portal):not(.ai-view){
+    transition:opacity 1.7s ease, filter 1.7s ease;
+  }
+  body.ai-active > *:not(.ai-portal):not(.ai-view){
+    opacity:0;filter:blur(6px);pointer-events:none;
+  }
+  .ai-view{
+    position:fixed;inset:0;z-index:800;
+    background:#fff;color:#000;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    opacity:0;pointer-events:none;
+    transition:opacity 1.7s ease;
+  }
+  body.ai-active .ai-view{opacity:1;pointer-events:auto;}
+  .ai-view-inner{
+    height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    padding:100px 24px 100px;
+  }
+  .ai-view-wrap{max-width:720px;margin:0 auto;font-size:13.5px;line-height:1.85;}
+  .ai-view-line{color:#000;opacity:.6;margin-bottom:26px;white-space:pre-line;}
+  .ai-status-line{margin-bottom:22px;}
+  #aiStatusText{transition:color .2s ease;}
+  #aiStatusText.is-done{color:#1ecb56;opacity:1;font-weight:700;}
+  .ai-view-block{border-top:1px solid #e2e2e2;padding-top:18px;margin-top:18px;}
+  .ai-view-block:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  .ai-view-tag{color:#000;font-weight:700;margin-bottom:10px;}
+  .ai-view-row{display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;margin-bottom:4px;}
+  .ai-view-row .k{color:#000;opacity:.55;min-width:150px;flex-shrink:0;}
+  .ai-view-row .v{color:#000;word-break:break-word;}
+  /* green checkmarks that pop in row by row, as if the AI were verifying
+     each field one at a time, once the AI view has actually opened */
+  .ai-check{
+    margin-left:auto;padding-left:10px;flex-shrink:0;
+    color:#1ecb56;font-weight:900;font-size:19px;line-height:1;
+    opacity:0;transform:scale(.4);display:inline-block;
+  }
+  body.ai-active .ai-view-row .ai-check{
+    animation:ai-check-in .3s cubic-bezier(.34,1.56,.64,1) both;
+    animation-delay:calc(var(--i,0) * 0.5s + 0.3s);
+  }
+  @keyframes ai-check-in{
+    0%{opacity:0;transform:scale(.4);}
+    60%{opacity:1;transform:scale(1.2);}
+    100%{opacity:1;transform:scale(1);}
+  }
+  .ai-view-note{font-size:12px;color:#000;opacity:.55;margin-top:34px;line-height:1.7;}
+  @media (max-width:680px){
+    .ai-view-inner{padding:88px 18px 90px;}
+    .ai-view-row .k{min-width:120px;}
+    .ai-view-wrap{font-size:12.5px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ai-check{transition:none;}
+    body.ai-active .ai-view-row .ai-check{animation-duration:.01s;animation-delay:0s;opacity:1;transform:scale(1);}
+  }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://atomfoundry.dev/#organization","name":"Atom Foundry","alternateName":"The AI Commerce Graph","url":"https://atomfoundry.dev","logo":{"@type":"ImageObject","url":"https://atomfoundry.dev/apple-touch-icon.png"},"description":"Atom Foundry is an AI Commerce Intelligence platform researching how AI systems such as ChatGPT, Gemini, Claude, and Perplexity discover, interpret, trust, and recommend brands, products, and stores.","founder":{"@type":"Person","name":"Daniel Pokorny","jobTitle":"Founder"},"knowsAbout":["AI Commerce Intelligence","AI Readability","AI Understanding","AI Trust","Recommendation Intelligence","Decision Confidence","AI Commerce Graph","Agentic Commerce","AI shopping agents","Generative Engine Optimization"],"sameAs":["https://github.com/Atom-Foundry","https://www.linkedin.com/in/daniel-atomfoundry","https://www.instagram.com/atom_foundry/","https://x.com/atomfoundryai","https://www.tiktok.com/@atomfoundry","https://www.youtube.com/@atomfoundry"]},{"@type":"WebSite","@id":"https://atomfoundry.dev/#website","url":"https://atomfoundry.dev","name":"Atom Foundry","description":"The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.","publisher":{"@id":"https://atomfoundry.dev/#organization"}},{"@type":"WebPage","@id":"https://atomfoundry.dev/#webpage","url":"https://atomfoundry.dev","name":"Atom Foundry: The AI Commerce Graph","isPartOf":{"@id":"https://atomfoundry.dev/#website"},"about":{"@id":"https://atomfoundry.dev/#organization"},"description":"Will AI shopping agents recommend your store? Free AI Commerce Score across 8 factors in 10 seconds.","dateModified":"2026-08-19","mainEntity":{"@id":"https://atomfoundry.dev/#dataset"}},{"@type":"Dataset","@id":"https://atomfoundry.dev/#dataset","name":"Atom Foundry AI Commerce Score Database","description":"Live measurement of how confidently AI shopping agents can understand, trust, and recommend Shopify and DTC stores, scored with the AI Commerce Score v3.1 methodology.","url":"https://atomfoundry.dev/stores","creator":{"@id":"https://atomfoundry.dev/#organization"},"isAccessibleForFree":true,"dateModified":"2026-08-19","variableMeasured":[{"@type":"PropertyValue","name":"Stores analyzed","value":66090},{"@type":"PropertyValue","name":"Average AI Commerce Score","value":55,"maxValue":100},{"@type":"PropertyValue","name":"Stores at AI Invisible Risk (percent)","value":24}]},{"@type":"Service","@id":"https://atomfoundry.dev/#service","serviceType":"AI Commerce Visibility Audit","provider":{"@id":"https://atomfoundry.dev/#organization"},"name":"AI Commerce Score","description":"Free and paid audits measuring how AI shopping agents discover, understand, trust, and recommend a Shopify or DTC ecommerce store.","areaServed":"Worldwide","audience":{"@type":"BusinessAudience","audienceType":"Ecommerce merchants"},"offers":[{"@type":"Offer","name":"Free AI Commerce Score","price":"0","priceCurrency":"USD","url":"https://atomfoundry.dev/#score"},{"@type":"Offer","name":"Full AI Readiness Report","price":"399","priceCurrency":"USD","url":"https://atomfoundry.dev/#score"}]}]}</script>
 </head>
 <body>
-<div class="page">
-  <!-- NAV -->
-  <nav class="nav">
+
+<header class="nav">
+  <div class="nav-inner">
     <div class="nav-brand">
-      <a href="/" class="nav-logo">ATOM <span>FOUNDRY</span></a>
-      <div class="nav-subline">The AI Commerce Graph&trade;</div>
-      <div class="nav-tagline-long">The global infrastructure mapping how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, and route transactions to digital merchants.</div>
-    </div>
-    <div class="nav-links">
-      <a href="/stores">Stores</a>
-      <a href="/methodology">Methodology</a>
-      <a href="/vocabulary">Vocabulary</a>
-      <a href="/founders-reality-check">Founder's Reality Check</a>
-      <a href="/framework" class="framework">Framework</a>
-      <a href="/research" class="research">Research</a>
-      <a href="#score" class="cta-nav">Free Score</a>
-    </div>
-  </nav>
-  <!-- STATS BAR -->
-  <div class="wrap">
-    <div class="stats-bar">
-      <div class="stat-cell"><div class="stat-num" id="statStores">66,090</div><div class="stat-label">Stores analyzed</div></div>
-      <div class="stat-cell"><div class="stat-num">8</div><div class="stat-label">Scoring factors</div></div>
-      <div class="stat-cell"><div class="stat-num">10s</div><div class="stat-label">To see results</div></div>
-    </div>
-    <div class="stats-updated" style="text-align:center;font-size:12px;color:#666;margin-top:10px;">Live data &middot; <span id="dataAsOf">updated Aug 19, 2026</span></div>
-    <!-- HERO -->
-    <div class="hero">
-      <h1>Will AI shopping agents<br><em>recommend</em> your store?</h1>
-      <p class="hero-sub">Most stores are optimized for humans. Very few are optimized for AI retrieval systems. Find out where yours stands.</p>
-    </div>
-    <!-- SCAN BOX -->
-    <div class="scan-section" id="score">
-      <div class="scan-box">
-        <div class="scan-box-label">Free AI Commerce Score&trade;</div>
-        <form id="scanForm">
-          <input type="text" name="store" id="storeInput" placeholder="yourstorename.com" required autocomplete="off" autocapitalize="none" spellcheck="false">
-          <button type="submit" class="scan-btn" id="scanBtn">Get My Free AI Commerce Score</button>
-          <div class="scan-meta">
-            <span class="scan-meta-item">No signup</span>
-            <span class="scan-meta-item">No setup</span>
-            <span class="scan-meta-item">Free</span>
-            <span class="scan-meta-item">Results in 10 seconds</span>
-          </div>
-          <div class="scan-proof" id="proofLine">Average AI Commerce Score&trade; across 66,090 scanned stores: 55/100</div>
-          <div class="scan-example">
-            <a href="/store/naadam.co">See a sample free scan result</a>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- SCORE PREVIEW -->
-    <div class="score-preview">
-      <div class="score-preview-label" id="scorePreviewLabel">Average AI Commerce Score&trade; across 66,090 scanned stores</div>
-      <div class="score-circle-wrap">
-        <svg class="score-ring" viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
-          <circle cx="60" cy="60" r="50" fill="none" stroke="#1a1a1a" stroke-width="8"/>
-          <circle cx="60" cy="60" r="50" fill="none" stroke="#E24B4A" stroke-width="8"
-            stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"
-            transform="rotate(-90 60 60)" id="scoreArc"/>
-        </svg>
-        <div class="score-circle-inner">
-          <div class="score-circle-num" id="scoreNum">55</div>
-          <div class="score-circle-denom">/100</div>
-        </div>
-      </div>
-    </div>
-    <!-- PATHS (two audiences) -->
-    <div class="paths">
-      <div class="paths-head">
-        <div class="kicker">Two ways to work with us</div>
-        <h2>Find out where you stand, then go deeper</h2>
-        <p>Start free. Go further when you want the full picture of how AI sees and recommends a store.</p>
-      </div>
-      <div class="paths-grid">
-        <!-- LEFT: DTC store owner -->
-        <div class="path dtc">
-          <span class="path-tag">&#128717; For store owners</span>
-          <div class="path-title">Your store, scored and ranked</div>
-          <div class="path-lead">See how AI reads your store today, then get the full readiness picture and where you rank against every store we have scanned.</div>
-          <div class="path-step">
-            <div class="path-step-num">1</div>
-            <div class="path-step-body">
-              <div class="path-step-top">
-                <span class="path-step-name">Free AI Commerce Score</span>
-                <span class="path-step-price free">Free</span>
-              </div>
-              <div class="path-step-desc">Your AI Commerce Score&trade; in 10 seconds, plus how your store performs across all 8 readiness factors.</div>
-            </div>
-          </div>
-          <div class="path-step">
-            <div class="path-step-num">2</div>
-            <div class="path-step-body">
-              <div class="path-step-top">
-                <span class="path-step-name">Full AI Readiness Report</span>
-                <span class="path-step-price paid">$399</span>
-              </div>
-              <div class="path-step-desc">The complete breakdown of all 8 factors with exact fixes, plus where your store ranks against every store in our database in your category. AI readiness can shift as models change, so this is the full picture of where you stand today.</div>
-            </div>
-          </div>
-          <div class="path-step">
-            <div class="path-step-num">3</div>
-            <div class="path-step-body">
-              <div class="path-step-top">
-                <span class="path-step-name">Monitoring</span>
-                <span class="path-step-price soon">On the way</span>
-              </div>
-              <div class="path-step-desc">Ongoing rescans that track how your readiness and ranking move over time. Coming soon.</div>
-            </div>
-          </div>
-          <a href="#score" class="path-cta" onclick="document.getElementById('storeInput').focus();window.scrollTo({top:0,behavior:'smooth'});return false;">Start with the free score &rarr;</a>
-          <div class="path-cta-sub">No signup &middot; No credit card &middot; Results in 10 seconds</div>
-        </div>
-        <!-- RIGHT: Agencies -->
-        <div class="path agency">
-          <span class="path-tag">&#9733; For agencies</span>
-          <div class="path-title">See why AI picks your client's competitors</div>
-          <div class="path-lead">A Recommendation Intelligence report for one of your clients: where they actually stand when AI recommends, and who wins instead.</div>
-          <div class="path-deliv">
-            <div class="path-deliv-item"><span class="path-deliv-check">&#10003;</span><span>Your client's <strong>Recommendation Share</strong>: how often AI recommends them when a shopper asks</span></div>
-            <div class="path-deliv-item"><span class="path-deliv-check">&#10003;</span><span>The exact buyer questions where your client is <strong>invisible</strong>, and which brand AI recommends first instead</span></div>
-            <div class="path-deliv-item"><span class="path-deliv-check">&#10003;</span><span>The attributes AI ties to the winners: <strong>the language your client has to own</strong> to enter the conversation</span></div>
-            <div class="path-deliv-item"><span class="path-deliv-check">&#10003;</span><span>Run on <strong>20 buyer questions you choose</strong> for your client's category</span></div>
-            <div class="path-deliv-item"><span class="path-deliv-check">&#10003;</span><span><span class="bonus-tag">Bonus</span>An extra set of questions from us, layered on top of yours</span></div>
-          </div>
-          <div class="path-price-line">
-            <span class="path-price-big">$399</span>
-            <span class="path-price-note">per client report &middot; measured on ChatGPT today, other AI models coming</span>
-          </div>
-          <a href="mailto:founder@atomfoundry.dev?subject=Recommendation%20Intelligence%20report&body=Hi%20Daniel%2C%20I%27d%20like%20a%20Recommendation%20Intelligence%20report%20for%20one%20of%20our%20clients." class="path-cta">Email me to start &rarr;</a>
-          <div class="path-cta-sub">founder@atomfoundry.dev &middot; written, no call required</div>
-        </div>
-      </div>
-    </div>
-    <!-- SPLIT VIEW: HUMAN vs AI -->
-    <div class="split-view">
-      <div class="split-col human">
-        <div class="split-col-label">&#9654; What humans see</div>
-        <div class="split-item pos">&#10003; Premium skincare brand</div>
-        <div class="split-item pos">&#10003; Beautiful lifestyle visuals</div>
-        <div class="split-item pos">&#10003; Clear brand identity</div>
-        <div class="split-item pos">&#10003; Trust-building design</div>
-      </div>
-      <div class="split-col ai">
-        <div class="split-col-label">&#129302; What AI agents see</div>
-        <div class="split-item neg">&#10007; Unclear product category</div>
-        <div class="split-item neg">&#10007; No machine-readable trust</div>
-        <div class="split-item neg">&#10007; Missing semantic structure</div>
-        <div class="split-item neg">&#10007; Low recommendation confidence</div>
-      </div>
-      <div class="split-caption">
-        Shopify makes your store readable to AI.<br>
-        <span>Atom Foundry tells you if AI will actually choose you.</span>
-      </div>
-    </div>
-    <!-- DATA STRIP -->
-    <div class="data-strip">
-      <div><div class="data-strip-num" id="stripStores">66,090</div><div class="data-strip-label">DTC stores analyzed</div></div>
-      <div class="data-strip-divider"></div>
-      <div><div class="data-strip-num" id="stripRisk">24%</div><div class="data-strip-label">AI Invisible Risk</div></div>
-      <div class="data-strip-divider"></div>
-      <div><div class="data-strip-num" id="stripAvg">55/100</div><div class="data-strip-label">Avg. AI Commerce Score</div></div>
-      <div class="data-strip-divider"></div>
-      <div><div class="data-strip-num" id="stripHighly">0%</div><div class="data-strip-label">Highly Recommendable</div></div>
-    </div>
-    <!-- THE SHIFT -->
-    <div class="section">
-      <div class="section-kicker">The new commerce layer</div>
-      <h2 class="section-title">AI agents are starting to <em>buy,</em> not just recommend.</h2>
-      <p class="section-body">The old customer journey ran through Google. The new one runs through AI. Shopify confirmed it in May 2026: your store is becoming a product database for AI agents. The question is whether that database is readable. Our <a href="/framework" style="color:#f97316;text-decoration:none;">AI Commerce Intelligence Framework</a> maps how AI reads, understands, trusts, and recommends a store.</p>
-      <div class="shift-box">
-        <div class="shift-flow">
-          <div class="flow-node flow-old-prefix">Before</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-old">Human</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-old">Google</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-old">Store</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-old">Checkout</div>
-        </div>
-        <div class="shift-flow">
-          <div class="flow-node flow-new-prefix">Now</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-new">Human</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-new">ChatGPT or Alexa</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-new">AI picks store</div>
-          <div class="flow-arrow">&rarr;</div>
-          <div class="flow-node flow-new">AI buys</div>
-        </div>
-        <div class="shift-note">Shopify is building <strong>Agentic Storefronts</strong> designed for AI agents. Stores that AI cannot read will be bypassed entirely as this model scales.</div>
-      </div>
-    </div>
-    <!-- OLD vs NEW -->
-    <div class="section">
-      <div class="section-kicker">Old world vs. new world</div>
-      <h2 class="section-title">What actually matters now in <em>ecommerce optimization</em></h2>
-      <p class="section-body">The tools that drove growth for the last decade still work. But they optimize for humans and Google. AI agents evaluate your store on entirely different criteria.</p>
-      <div class="compare-grid">
-        <div class="compare-col">
-          <div class="compare-col-label old">What used to matter</div>
-          <div class="compare-item struck">SEO keyword ranking</div>
-          <div class="compare-item struck">Paid ads and retargeting</div>
-          <div class="compare-item struck">Landing page conversion</div>
-          <div class="compare-item struck">CRO and A/B testing</div>
-          <div class="compare-item struck">Visual design quality</div>
-        </div>
-        <div class="compare-col">
-          <div class="compare-col-label new">What AI agents evaluate</div>
-          <div class="compare-item bright">AI discoverability signals</div>
-          <div class="compare-item bright">Recommendation confidence</div>
-          <div class="compare-item bright">Structured product intelligence</div>
-          <div class="compare-item bright">Machine-readable trust</div>
-          <div class="compare-item bright">Semantic positioning clarity</div>
-        </div>
-      </div>
-    </div>
-    <!-- SIGNALS -->
-    <div class="section">
-      <div class="section-kicker">What AI actually sees</div>
-      <h2 class="section-title">Most stores score poorly on four or more of these <em>signals</em></h2>
-      <p class="section-body">When an AI shopping agent evaluates your store, it reads structure and machine-readable signals. Not design. Not branding. These are the factors it weighs &mdash; each one defined in our <a href="/vocabulary" style="color:#f97316;text-decoration:none;">AI Commerce vocabulary</a>.</p>
-      <div class="signals-section">
-        <div class="signals-label">Average across <span id="signalsCount">66,090</span> DTC stores</div>
-        <div class="sig-row"><div class="sig-name">AI Interpretation</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:28%;background:#E24B4A;"></div></div><div class="sig-score" style="color:#E24B4A;">Low</div></div>
-        <div class="sig-row"><div class="sig-name">Recommendation Confidence</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:22%;background:#E24B4A;"></div></div><div class="sig-score" style="color:#E24B4A;">Critical</div></div>
-        <div class="sig-row"><div class="sig-name">Semantic Clarity</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:41%;background:#EF9F27;"></div></div><div class="sig-score" style="color:#EF9F27;">Partial</div></div>
-        <div class="sig-row"><div class="sig-name">Trust Signals</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:35%;background:#EF9F27;"></div></div><div class="sig-score" style="color:#EF9F27;">Weak</div></div>
-        <div class="sig-row"><div class="sig-name">Comparison Strength</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:18%;background:#E24B4A;"></div></div><div class="sig-score" style="color:#E24B4A;">Critical</div></div>
-        <div class="sig-row"><div class="sig-name">Product Understanding</div><div class="sig-bar-wrap"><div class="sig-bar-fill" style="width:45%;background:#EF9F27;"></div></div><div class="sig-score" style="color:#EF9F27;">Partial</div></div>
-        <div class="signals-note" id="signalsDate">Directional pattern across scanned stores &middot; run your store for exact factor scores</div>
-      </div>
-    </div>
-    <!-- RISK -->
-    <div class="section">
-      <div class="section-kicker">What happens when AI skips your store</div>
-      <h2 class="section-title">Being invisible to AI costs more <em>every day</em></h2>
-      <div class="risk-list">
-        <div class="risk-row"><span class="risk-icon">&#10007;</span>Skipped by Alexa for Shopping, ChatGPT, and Google AI Mode when buyers ask for product recommendations</div>
-        <div class="risk-row"><span class="risk-icon">&#10007;</span>Invisible in AI-powered discovery while competitors with higher scores capture that traffic</div>
-        <div class="risk-row"><span class="risk-icon">&#10007;</span>AI cannot explain what you sell or to whom, so it defaults to a competitor it understands better</div>
-        <div class="risk-row"><span class="risk-icon">&#10007;</span>Bypassed in Agentic Storefronts as AI agents complete purchases at stores they can confidently read</div>
-        <div class="risk-row"><span class="risk-icon">&#10007;</span>Losing a growing share of AI-driven revenue every day while the gap widens</div>
-      </div>
-    </div>
-    <!-- WHAT THE DATA SHOWS -->
-    <div class="section">
-      <div class="section-kicker">What the data shows</div>
-      <h2 class="section-title">What we found across the stores we have <em>actually scanned</em></h2>
-      <p class="section-body">These figures are computed live from the <a href="/stores" style="color:#f97316;text-decoration:none;">stores in our database</a>, scored on the 8-factor <a href="/methodology" style="color:#f97316;text-decoration:none;">AI Commerce Score</a>. They update as we scan more stores. No projections, no estimates. Just what the scores show.</p>
-      <div class="findings-section">
-        <div class="finding-arc">
-          <div class="finding-arc-label">Live across our database</div>
-          Of <span id="dataStores">61,897</span> DTC stores scored so far, <span id="dataRisk">14,686 (24%)</span> fall into AI Invisible Risk (under 50/100), and <span id="dataHighly">78 (0%)</span> reach Highly Recommendable (85+). The average score is <span id="dataAvg">55</span>/100.
-        </div>
-        <div class="finding-item">The most common critical gap is missing or weak structured data, the JSON-LD that lets AI agents read what you sell, at what price, and how trustworthy you are.</div>
-        <div class="finding-item">Since Shopify began auto-generating agentic files in May 2026, the presence of llms.txt is no longer the differentiator. Quality and store-specificity are.</div>
-        <div class="finding-item">Run your own store above to see exactly which of the 8 factors are holding your score down.</div>
-      </div>
-    </div>
-    <!-- RECOMMENDATION INTELLIGENCE RESEARCH -->
-    <div class="section">
-      <div class="section-kicker">Recommendation Intelligence Research&trade;</div>
-      <h2 class="section-title">We measured what AI <em>actually recommends</em></h2>
-      <p class="section-body">We asked an AI model 20 high-intent beauty shopping questions, 20 times each, and captured 4,000 recommendations. Then we checked something nobody else is measuring: does being recommended have anything to do with how AI-ready your store is? It does not. The correlation is r = 0.17, statistically indistinguishable from zero.</p>
-      <a href="/research/state-of-ai-recommendations-beauty" class="research-card">
-        <div class="research-card-kicker">First in the series</div>
-        <div class="research-card-title">The State of AI Recommendations in Beauty</div>
-        <div class="research-stats">
-          <div class="research-stat"><div class="research-stat-num">4,000</div><div class="research-stat-label">Recommendations</div></div>
-          <div class="research-stat"><div class="research-stat-num">238</div><div class="research-stat-label">Brands</div></div>
-          <div class="research-stat"><div class="research-stat-num">20</div><div class="research-stat-label">Intents</div></div>
-          <div class="research-stat"><div class="research-stat-num warn">r = 0.17</div><div class="research-stat-label">Freq vs Score</div></div>
-        </div>
-        <div class="research-card-cta">Read the report &rarr;</div>
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
       </a>
     </div>
-    <!-- FUTURE -->
-    <div class="section">
-      <div class="section-kicker">Where this is going</div>
-      <h2 class="section-title">AI is becoming the new <em>shopping layer</em></h2>
-      <div class="future-box">
-        <div class="future-title">AI is the new shopping layer.</div>
-        <div class="future-body">Alexa for Shopping, ChatGPT, Google AI Mode, and Perplexity now recommend products to hundreds of millions of buyers. Shopify confirmed it: your store is becoming a product database for AI agents.</div>
-        <div class="future-items">
-          <div class="future-item"><span class="future-item-arrow">&rarr;</span>AI recommends products and drives purchase decisions in conversation</div>
-          <div class="future-item"><span class="future-item-arrow">&rarr;</span>AI agents browse, compare, and buy autonomously via Agentic Storefronts</div>
-          <div class="future-item"><span class="future-item-arrow">&rarr;</span>Stores invisible to AI lose a growing share of discovery every single day</div>
-          <div class="future-item"><span class="future-item-arrow">&rarr;</span>Stores that close AI gaps in 2026 will dominate AI discovery in 2027</div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
         </div>
       </div>
-    </div>
-    <!-- HOW IT WORKS -->
-    <div class="section">
-      <div class="section-kicker">How it works</div>
-      <h2 class="section-title">Find the gap. Prove the cost. <em>Fix it.</em></h2>
-      <div class="fpfp-box">
-        <div class="fpfp-row">
-          <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-            <div class="fpfp-step-label">Find</div>
-            <div class="fpfp-step-desc">Scan your store</div>
-            <div class="fpfp-tip">We scan your store and identify exactly what AI systems cannot understand or recommend.</div>
-          </div>
-          <span class="fpfp-arrow">&rarr;</span>
-          <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-            <div class="fpfp-step-label">Prove</div>
-            <div class="fpfp-step-desc">Score each gap</div>
-            <div class="fpfp-tip">We show how each AI interpretation gap affects your score across the 8 factors.</div>
-          </div>
-          <span class="fpfp-arrow">&rarr;</span>
-          <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-            <div class="fpfp-step-label">Fix</div>
-            <div class="fpfp-step-desc">Exact actions to take</div>
-            <div class="fpfp-tip">You get specific, actionable fixes to improve AI readability and recommendation confidence.</div>
-          </div>
-          <span class="fpfp-arrow">&rarr;</span>
-          <div class="fpfp-step" onmouseenter="this.querySelector('.fpfp-tip').style.opacity='1';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(0)'" onmouseleave="this.querySelector('.fpfp-tip').style.opacity='0';this.querySelector('.fpfp-tip').style.transform='translateX(-50%) translateY(6px)'">
-            <div class="fpfp-step-label">Protect</div>
-            <div class="fpfp-step-desc">Ongoing monitoring</div>
-            <div class="fpfp-tip">Ongoing monitoring catches new AI readability issues before they cost you revenue.</div>
-          </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
         </div>
       </div>
-      <div class="steps-row">
-        <div class="step-card"><div class="step-num">1</div><div class="step-text">Paste your store URL</div></div>
-        <div class="step-card"><div class="step-num">2</div><div class="step-text">See your AI Commerce Score&trade; across 8 factors</div></div>
-        <div class="step-card"><div class="step-num">3</div><div class="step-text">Get the exact fix to become AI recommendable</div></div>
-      </div>
-    </div>
-    <!-- EXPLORE THE PLATFORM (internal linking) -->
-    <div class="section">
-      <div class="section-kicker">Explore the platform</div>
-      <h2 class="section-title">Everything connects to one <em>question</em></h2>
-      <p class="section-body">How does AI see your store? Every part of Atom Foundry answers a piece of it.</p>
-      <div class="explore-grid">
-        <a href="/framework" class="explore-card">
-          <div class="explore-card-name">The Framework</div>
-          <div class="explore-card-desc">The seven-layer model: how AI reads, understands, trusts, and recommends a business.</div>
-          <span class="explore-card-arrow">Read the framework &rarr;</span>
-        </a>
-        <a href="/methodology" class="explore-card">
-          <div class="explore-card-name">Methodology v3.1</div>
-          <div class="explore-card-desc">The 8-factor, 100-point model behind every AI Commerce Score.</div>
-          <span class="explore-card-arrow">See how we score &rarr;</span>
-        </a>
-        <a href="/research" class="explore-card">
-          <div class="explore-card-name">Research</div>
-          <div class="explore-card-desc">What AI actually recommends across five commerce categories, measured.</div>
-          <span class="explore-card-arrow">Read the research &rarr;</span>
-        </a>
-        <a href="/stores" class="explore-card">
-          <div class="explore-card-name">Store Database</div>
-          <div class="explore-card-desc">Browse live AI Commerce Scores for real DTC stores. Filter by niche and score.</div>
-          <span class="explore-card-arrow">Browse the data &rarr;</span>
-        </a>
-        <a href="/vocabulary" class="explore-card">
-          <div class="explore-card-name">Vocabulary</div>
-          <div class="explore-card-desc">Every term in AI Commerce Intelligence, defined with examples.</div>
-          <span class="explore-card-arrow">Open the glossary &rarr;</span>
-        </a>
-        <a href="/vocabulary/learn" class="explore-card">
-          <div class="explore-card-name">Learn Guides</div>
-          <div class="explore-card-desc">Free guides on how AI shopping systems discover and recommend stores.</div>
-          <span class="explore-card-arrow">Start learning &rarr;</span>
-        </a>
-      </div>
-    </div>
-    <!-- BOTTOM CTA -->
-    <div class="cta-section">
-      <div class="cta-title">Will AI systems <em>recommend</em> your store?</div>
-      <div class="cta-sub">Get your free AI Commerce Score in 10 seconds. See exactly where your store stands on semantic clarity, trust, structured data, and recommendation readiness.</div>
-      <a href="#score" class="cta-btn" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Get My Free AI Score</a>
-      <div style="font-size:12px;color:#444;margin-top:12px;">Free &middot; No signup &middot; No credit card &middot; Results in 10 seconds</div>
-    </div>
-  </div><!-- /wrap -->
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span id="footerStores">66,090</span> DTC stores analyzed &nbsp;&middot;&nbsp;
-        avg score <span id="footerAvg">55</span>/100 &nbsp;&middot;&nbsp; atomfoundry.dev<br>
-        <a href="/stores">Stores</a> &nbsp;&middot;&nbsp;
-        <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp;
-        <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
-        <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
-        <a href="/research">Research</a> &nbsp;&middot;&nbsp;
-        <a href="/benchmarks">Benchmarks</a> &nbsp;&middot;&nbsp;
-        <a href="/terms-of-service.html">Terms</a> &nbsp;&middot;&nbsp;
-        <a href="/privacy-policy.html">Privacy</a><br>
-        <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
-      </div>
-      <div>
-        <div class="footer-right">Find &rarr; Prove &rarr; Fix &rarr; Protect</div>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener" title="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg></a>
-          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener" title="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg></a>
-          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener" title="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener" title="X"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener" title="YouTube"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#0A0A0A" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
         </div>
-        <div class="footer-platform">The AI Commerce Graph&trade;</div>
       </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- MASTHEAD -->
+<section class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-h1">Understand why AI recommends <em>one brand over another.</em></h1>
+    <p class="masthead-lede">AI shopping agents already influence millions of buying decisions. We're measuring how they choose.</p>
+    <p class="masthead-sub">We measure how AI discovers, evaluates and recommends e-commerce stores. Then we turn those findings into practical tools.</p>
+    <div class="masthead-cta-row">
+      <a href="#score" class="cta-square cta-square-primary">Get Your AI Commerce Score™</a>
+      <a href="/research" class="cta-square cta-square-secondary">Explore Research</a>
+    </div>
+  </div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-inner">
+  <div class="niche-chart-section">
+    <div class="niche-chart-head">
+      <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
+      <div class="niche-chart-stores"><b id="nicheStoresNum" data-target="66087">0</b> Stores analyzed</div>
+      <div class="niche-overall"><b id="nicheOverallNum" data-target="57">0</b><span>/100 avg across 66,087 scanned stores</span></div>
+    </div>
+    <div class="niche-chart" id="nicheChart">
+      <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">Fashion</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Beauty<br>Risk: 17% · Best: 93/100</div><div class="niche-bar-label">Beauty</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Health and Wellness<br>Risk: 19% · Best: 94/100</div><div class="niche-bar-label">Health</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Food and Drink<br>Risk: 20% · Best: 87/100</div><div class="niche-bar-label">Food</div></div>
+      <div class="niche-bar" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Home and Living<br>Risk: 15% · Best: 92/100</div><div class="niche-bar-label">Home</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Sports and Outdoor<br>Risk: 17% · Best: 89/100</div><div class="niche-bar-label">Sports</div></div>
+      <div class="niche-bar" style="--h:45%;"><div class="niche-bar-value">54</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Pets<br>Risk: 24% · Best: 84/100</div><div class="niche-bar-label">Pets</div></div>
+      <div class="niche-bar" style="--h:60%;"><div class="niche-bar-value">57</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Tech and Gadgets<br>Risk: 18% · Best: 93/100</div><div class="niche-bar-label">Tech</div></div>
+      <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Kids and Baby<br>Risk: 19% · Best: 83/100</div><div class="niche-bar-label">Kids</div></div>
+      <div class="niche-bar" style="--h:70%;"><div class="niche-bar-value">59</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Jewelry<br>Risk: 13% · Best: 85/100</div><div class="niche-bar-label">Jewelry</div></div>
+    </div>
+    <div class="niche-chart-watermark">AI Commerce Bar™</div>
+  </div>
+
+  <div class="score-panel">
+    <div class="chip-row">
+      <span class="chip"><b>8</b>Scoring factors</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--red);"></i>0 to 49 AI Invisible Risk</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--orange);"></i>50 to 69 Low Confidence</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--amber);"></i>70 to 84 Moderately Recommendable</span>
+      <span class="chip-sep">·</span>
+      <span class="chip"><i style="background:var(--green);"></i>85 to 100 Highly Recommendable</span>
+      <span class="chip-sep">·</span>
+      <span class="chip" id="liveDataChip">Live data · updated Jul 22, 2026</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FROM RESEARCH TO PRODUCTS -->
+<section id="products">
+  <div class="products-head">
+    <h2 class="products-h2">From Research <em>to Products</em></h2>
+    <p class="section-headline">Everything we build starts with research. Everything we learn becomes a product.</p>
+    <p class="products-sub">Every experiment we run becomes something useful. Some findings become free tools. Others become detailed reports or long-term monitoring.</p>
+  </div>
+  <div class="products-grid" id="pricing">
+    <a class="product-flip-card" id="product-score" href="/products/ai-commerce-score">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Commerce Score™</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange">
+          <p class="product-flip-body">Free AI assessment for every store.</p>
+          <span class="product-flip-cta">Get Started<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
+
+    <a class="product-flip-card" id="product-report" href="/products/ai-commerce-audit">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Readiness Report</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange-light">
+          <p class="product-flip-body">A comprehensive analysis tailored to your store.</p>
+          <span class="product-flip-cta">Customize Report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
+
+    <a class="product-flip-card" id="product-monitoring" href="/products/ai-monitoring">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Monitoring</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange-light">
+          <p class="product-flip-body">Continuous measurement of your AI visibility.</p>
+          <span class="product-flip-cta">Learn More<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
+
+    <a class="product-flip-card" id="product-recommendation" href="/products/recommendation-intelligence">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">Recommendation Intelligence</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-orange">
+          <p class="product-flip-body">Understand why AI recommends your competitors.</p>
+          <span class="product-flip-cta">Explore Analysis<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
+
+    <a class="product-flip-card" id="product-snapshot" href="/products/ai-agent-snapshot">
+      <div class="product-flip-inner">
+        <div class="product-flip-face product-flip-face-front">
+          <div class="product-flip-name">AI Agent Snapshot</div>
+        </div>
+        <div class="product-flip-face product-flip-face-back product-flip-back-teal">
+          <p class="product-flip-body">See what leading AI shopping agents understand about your store today.</p>
+          <span class="product-flip-cta">View Details<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        </div>
+      </div>
+    </a>
+  </div>
+  <p class="products-reveal"><span class="products-reveal-inner">Every product is built and validated using our research across <b class="products-reveal-num" data-target="66087">0</b> e-commerce stores.</span></p>
+</section>
+
+
+<!-- RESEARCH FINDINGS -->
+<section class="alt" id="research-findings">
+  <div class="products-head">
+    <h2 class="products-h2">Research that challenged <em>AI commerce assumptions</em></h2>
+    <p class="products-def">AI Commerce Intelligence™ is the study of how AI shopping systems discover, evaluate, compare, and recommend brands.</p>
+    <p class="section-headline">Built from <b class="research-findings-num" data-target="66087">0</b> analyzed stores and tens of thousands of AI recommendations.</p>
+    <p class="products-sub">We don't publish opinions. We publish experiments. The strongest findings become tools, reports and products.</p>
+  </div>
+  <div class="products-grid research-grid">
+    <div class="mini-card">
+      <div class="mini-card-eyebrow">The State of AI Recommendations Across Commerce 2026</div>
+      <div class="mini-card-title">Store quality doesn't predict recommendations</div>
+      <div class="mini-card-tag">Measured using the AI Commerce Score™.</div>
+      <p class="mini-card-body">66,087 stores. Five industries. Almost no relationship.</p>
+      <div class="mini-card-stats">
+        <div><b>20,000</b><span>Recommendations</span></div>
+        <div><b>1,490</b><span>Distinct brands</span></div>
+        <div><b>5</b><span>Categories</span></div>
+        <div><b>100</b><span>Shopping intents</span></div>
+      </div>
+      <a href="/research/ai-recommendations-across-commerce-2026" class="mini-card-cta">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </div>
+
+    <div class="mini-card">
+      <div class="mini-card-title">Web Search changes 77% of recommendations</div>
+      <p class="mini-card-body">Same model. Same prompts. Only browsing changed.</p>
+      <a href="/research/web-search-changes-ai-recommendations" class="mini-card-cta">Explore findings<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </div>
+
+    <div class="mini-card">
+      <div class="mini-card-title">AI knows your website. Still won't recommend you.</div>
+      <p class="mini-card-body">Recognition. Understanding. Recommendation. Three different things.</p>
+      <a href="/research/mechanism-studies" class="mini-card-cta">See methodology<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </div>
+
+    <div class="mini-card mini-card-banner">
+      <div class="mini-card-title">Getting considered isn't getting recommended</div>
+      <p class="mini-card-banner-line">Recommendation Candidate ≠ Recommendation Winner</p>
+      <a href="/research/candidacy-vs-selection" class="mini-card-cta">View dataset<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    </div>
+  </div>
+  <div class="products-explore">
+    <span class="products-stats">15 public studies <span class="products-stats-sep">·</span> 66,087 stores <span class="products-stats-sep">·</span> 40,000+ recommendations <span class="products-stats-sep">·</span> 1,490 brands</span>
+    <span class="products-stats-sep products-explore-sep">·</span>
+    <a href="/research" class="products-explore-link">Browse all public research<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+  </div>
+</section>
+
+<!-- BUILT IN PUBLIC -->
+<section class="alt" id="lab">
+  <div class="products-head">
+    <h2 class="products-h2">Built <em>in public.</em></h2>
+    <p class="section-headline">Every experiment, every finding and every product starts in our own laboratory before it reaches customers.</p>
+  </div>
+  <div class="products-grid">
+    <div class="mini-card" id="founder-lab">
+      <div class="mini-card-title">Founder Lab</div>
+      <div class="mini-card-tag">Our own Shopify store.</div>
+      <a href="/founder-lab" class="mini-card-cta"><span class="nav-chevron chevron-r-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Follow the experiments</a>
+    </div>
+
+    <div class="mini-card" id="research">
+      <div class="mini-card-title">Research</div>
+      <div class="mini-card-tag">15 public studies.</div>
+      <a href="/research" class="mini-card-cta"><span class="nav-chevron chevron-r-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Browse research</a>
+    </div>
+
+    <div class="mini-card" id="methodology">
+      <div class="mini-card-title">Methodology</div>
+      <div class="mini-card-tag">How every experiment is measured.</div>
+      <a href="/methodology" class="mini-card-cta"><span class="nav-chevron chevron-r-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>See methodology</a>
+    </div>
+
+    <div class="mini-card" id="vocabulary">
+      <div class="mini-card-title">AI Commerce Vocabulary</div>
+      <div class="mini-card-tag">The language behind Recommendation Intelligence.</div>
+      <a href="/vocabulary" class="mini-card-cta"><span class="nav-chevron chevron-r-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Browse glossary</a>
+    </div>
+  </div>
+
+  <hr class="lab-divider">
+
+  <p class="lab-closing"><span class="lab-closing-inner">We're still learning. Every new experiment is published. Every validated finding becomes a product. Every product helps merchants understand AI recommendations.</span></p>
+
+  <div class="lab-cta-row">
+    <a href="/research" class="cta-square cta-square-secondary">Explore Research<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <a href="/founder-lab" class="cta-square cta-square-secondary">Founder Lab<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <a href="#score" class="cta-square cta-square-primary">Get Your Score<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+  </div>
+</section>
+
+
+<!-- FINAL CTA -->
+<section id="score">
+  <div class="final-cta">
+    <h2>AI Commerce Score™</h2>
+    <div class="final-cta-tag">Measure your AI readiness.</div>
+    <p>Get your free AI Commerce Score™ in 10 seconds. See exactly where you stand on clarity, trust, structured data, and recommendation readiness.</p>
+    <div class="scan-box">
+      <input type="text" placeholder="Paste your store URL">
+      <button>Get My Free Score</button>
+    </div>
+    <div class="scan-note">Free <span>·</span> No signup <span>·</span> No credit card <span>·</span> Results in 10 seconds</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>15</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
     </div>
     <nav class="ai-sitemap" aria-label="Site directory">
       <div class="ai-sitemap-inner">
         <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
         <a href="/stores">Store database</a>
         <a href="/benchmarks">Category benchmarks</a>
         <a href="/vocabulary">AI Commerce Vocabulary</a>
         <a href="/vocabulary/learn">AI Commerce University</a>
-        <a href="/framework">AI Readiness Framework</a>
-        <a href="/methodology">Methodology</a>
         <a href="/research">Research</a>
-        <a href="/ai-commerce-intelligence">AI Commerce Intelligence</a>
-        <a href="/founders-reality-check">Founder&rsquo;s Reality Check</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/about">About</a>
       </div>
     </nav>
-  </footer>
-</div>
+  </div>
+</footer>
+
 <script>
-// Site stats: read PRE-COMPUTED aggregates from a tiny endpoint (single row, ~200 bytes).
-// No full-table download. Numbers are also baked into the HTML below, so AI crawlers
-// and first paint see real values instantly; this only refreshes them.
-(async function() {
-  try {
-    const res = await fetch("https://n8n-production-1d7c.up.railway.app/webhook/site-stats", { headers: { "Accept": "application/json" } });
-    const d = await res.json();
-    const s = Array.isArray(d) ? d[0] : (d && d.data ? d.data[0] : d);
-    if (!s || s.total_scanned == null) { animateScore(Number(document.getElementById('dataAvg')?.innerText) || 45); return; }
-    const num = x => Number(x).toLocaleString('en-US');
-    const set = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = v; };
-    const total = Number(s.total_scanned);
-    const avg   = Number(s.avg_score);
-    const invisPct = Number(s.invis_pct), highPct = Number(s.high_pct);
-    set('statStores', num(total)); set('footerStores', num(total));
-    set('stripStores', num(total)); set('signalsCount', num(total));
-    set('proofLine', 'Average AI Commerce Score™ across ' + num(total) + ' scanned stores: ' + avg + '/100');
-    set('scorePreviewLabel', 'Average AI Commerce Score™ across ' + num(total) + ' scanned stores');
-    set('stripRisk', invisPct + '%'); set('stripAvg', avg + '/100'); set('stripHighly', highPct + '%');
-    set('dataStores', num(s.scored_count));
-    set('dataRisk', num(s.invis_count) + ' (' + invisPct + '%)');
-    set('dataHighly', num(s.high_count) + ' (' + highPct + '%)');
-    set('dataAvg', avg); set('footerAvg', avg);
-    animateScore(avg);
-  } catch(e) {
-    animateScore(Number(document.getElementById('dataAvg')?.innerText) || 45);
-  }
-})();
-function animateScore(TARGET) {
-  const CIRCUMFERENCE = 314;
-  const arc = document.getElementById('scoreArc');
-  const numEl = document.getElementById('scoreNum');
-  const DURATION = 1800;
-  const DELAY = 600;
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-  function getColor(s) { return s >= 85 ? '#1D9E75' : s >= 50 ? '#EF9F27' : '#E24B4A'; }
-  setTimeout(function() {
-    let start = null;
-    function step(ts) {
-      if (!start) start = ts;
-      const p = Math.min((ts - start) / DURATION, 1);
-      const cur = Math.round(easeOut(p) * TARGET);
-      arc.setAttribute('stroke-dashoffset', CIRCUMFERENCE - CIRCUMFERENCE * cur / 100);
-      arc.setAttribute('stroke', getColor(cur));
-      numEl.textContent = cur;
-      numEl.style.color = getColor(cur);
+  // Shared count-up helper (eased, comma-formatted) used by several sections.
+  function countUp(el, target, duration){
+    const start = performance.now();
+    function step(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target).toLocaleString('en-US');
       if (p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
-  }, DELAY);
-}
-// Scan form
-document.getElementById("scanForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById("scanBtn");
-  btn.disabled = true;
-  let dotCount = 0;
-  const dotInterval = setInterval(() => {
-    dotCount = (dotCount % 3) + 1;
-    btn.innerText = "Scanning" + ".".repeat(dotCount);
-  }, 400);
-  btn.innerText = "Scanning.";
-  let url = document.querySelector("input[name='store']").value.trim();
-  url = url.replace(/^https?:\/\//, "").replace(/\/$/, "").trim();
-  const domain = url;
-  url = "https://" + url;
-  try {
-    const response = await fetch("https://n8n-production-43ab.up.railway.app/webhook/scan-store", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url })
-    });
-    const data = await response.json();
-    const token = data.token;
-    clearInterval(dotInterval);
-    if (token) {
-      window.location.href = "/audit-in-progress?" + new URLSearchParams({ token, domain }).toString();
-    } else {
-      window.location.href = "/audit-in-progress?" + new URLSearchParams({ domain }).toString();
-    }
-  } catch (err) {
-    clearInterval(dotInterval);
-    window.location.href = "/audit-in-progress?" + new URLSearchParams({ domain }).toString();
   }
-});
+
+  // "Live data · updated <date>" chip always shows today's date, so it
+  // never needs a manual edit — it just reflects whenever the page is loaded.
+  (function(){
+    const chip = document.getElementById('liveDataChip');
+    if (!chip) return;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const d = new Date();
+    chip.textContent = 'Live data · updated ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  })();
+
+  // Navbar always stays visible (sticky) but goes compact once the page
+  // is scrolled down: the wordmark collapses from "ATOM FOUNDRY" to "AF"
+  // and the padding tightens. Scrolling back near the top restores it.
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-compact');
+      } else {
+        nav.classList.remove('nav-compact');
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    });
+    onScroll();
+  })();
+
+  // Mobile hamburger nav: the toggle shows/hides the full link list (which
+  // is display:none by default below 680px). Every top-level item has a
+  // dropdown, so on mobile the ENTIRE row (not just the small chevron —
+  // that hit target was too easy to miss) toggles that item's submenu
+  // open/closed (accordion-style) instead of following the link straight
+  // through; the real destinations are the links inside the dropdown.
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return; // desktop still uses hover
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+
+    // Close the mobile menu if the viewport grows past the breakpoint
+    // (e.g. rotating a tablet) so it doesn't get stuck open on desktop.
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 680) closeMenu();
+    });
+
+    // Scrolling the page away from the menu should close it on its own —
+    // nobody wants to hunt for the X button first.
+    window.addEventListener('scroll', () => {
+      if (nav.classList.contains('nav-mobile-open')) closeMenu();
+    }, { passive: true });
+  })();
+
+  // Animate the niche chart bars in with a stagger, either shortly after
+  // load (it sits near the top of the page) or when scrolled into view.
+  // The overall average number counts up in sync with the bars.
+  (function(){
+    const chart = document.getElementById('nicheChart');
+    if (!chart) return;
+    const bars = Array.from(chart.querySelectorAll('.niche-bar'));
+    const overallNum = document.getElementById('nicheOverallNum');
+    const storesNum = document.getElementById('nicheStoresNum');
+    let played = false;
+
+    // Color each bar by its own score, matching the 4-tier legend below
+    // the chart (0-49 red, 50-69 orange, 70-84 amber, 85-100 green).
+    function scoreColor(score){
+      if (score < 50) return 'var(--red)';
+      if (score < 70) return 'var(--orange)';
+      if (score < 85) return 'var(--amber)';
+      return 'var(--green)';
+    }
+    bars.forEach(bar => {
+      const valueEl = bar.querySelector('.niche-bar-value');
+      const fill = bar.querySelector('.niche-bar-fill');
+      if (!valueEl || !fill) return;
+      const score = parseInt(valueEl.textContent, 10);
+      if (!isNaN(score)) fill.style.setProperty('--bar-color', scoreColor(score));
+    });
+
+    // On hover, replay the rise-from-zero animation instead of just
+    // sitting there — snap the fill to 0%, force a reflow, then let the
+    // existing CSS transition carry it back up to its target height.
+    bars.forEach(bar => {
+      const fill = bar.querySelector('.niche-bar-fill');
+      if (!fill) return;
+      bar.addEventListener('mouseenter', () => {
+        const target = bar.style.getPropertyValue('--h');
+        fill.style.transition = 'none';
+        fill.style.height = '0%';
+        requestAnimationFrame(() => {
+          fill.style.transition = 'height 1.9s cubic-bezier(.16,.8,.4,1)';
+          requestAnimationFrame(() => { fill.style.height = target; });
+        });
+      });
+    });
+
+    function playChart(){
+      if (played) return;
+      played = true;
+      bars.forEach((bar, i) => {
+        setTimeout(() => bar.classList.add('is-visible'), i * 90);
+      });
+      if (overallNum) {
+        const target = Number(overallNum.dataset.target) || 0;
+        countUp(overallNum, target, 1200);
+      }
+      if (storesNum) {
+        const target = Number(storesNum.dataset.target) || 0;
+        countUp(storesNum, target, 1400);
+      }
+    }
+    // Only play once the chart is actually scrolled into view, so the
+    // visitor sees the bars and numbers count up rather than finding
+    // them already finished off-screen.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) playChart(); });
+      }, { threshold: 0.3 });
+      io.observe(chart);
+    } else {
+      window.addEventListener('load', () => setTimeout(playChart, 400));
+    }
+  })();
+
+  // Count a number up once its element scrolls into view. Reused for every
+  // standalone stat on the page (products sentence, research headline, etc.)
+  function observeCountUp(el, duration){
+    if (!el) return;
+    let played = false;
+    function play(){
+      if (played) return;
+      played = true;
+      const target = Number(el.dataset.target) || 0;
+      countUp(el, target, duration || 1400);
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) play(); });
+      }, { threshold: 0.3 });
+      io.observe(el);
+    } else {
+      window.addEventListener('load', () => setTimeout(play, 400));
+    }
+  }
+  observeCountUp(document.querySelector('.products-reveal-num'), 1400);
+  observeCountUp(document.querySelector('.research-findings-num'), 1400);
+
+  // Cookie consent — small, bottom-right, non-blocking. Shows once per
+  // browser (remembered in localStorage) after a short delay so it doesn't
+  // slam into view the instant the page loads. Accept/Decline don't wire
+  // up to real tracking yet — that comes later — this just records the
+  // choice and dismisses the banner.
+  (function(){
+    const banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+    const KEY = 'af_cookie_consent';
+    let stored;
+    try { stored = localStorage.getItem(KEY); } catch (e) { stored = null; }
+    if (stored) return;
+
+    setTimeout(() => banner.classList.add('is-visible'), 900);
+
+    function dismiss(choice){
+      banner.classList.remove('is-visible');
+      try { localStorage.setItem(KEY, choice); } catch (e) {}
+    }
+    document.getElementById('cookieAccept').addEventListener('click', () => dismiss('accepted'));
+    document.getElementById('cookieDecline').addEventListener('click', () => dismiss('declined'));
+  })();
+
+  // Product flip cards are real links, so on hover-capable devices the
+  // flip is purely a CSS hover effect and a click just follows the href.
+  // On touch, there is no hover: the first tap flips the card to reveal
+  // the description, and a second tap follows the link — same pattern as
+  // the Category Reports cards on /research/category-reports.
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.product-flip-card'));
+    if (!cards.length) return;
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (!card.classList.contains('is-flipped')) {
+            e.preventDefault();
+            card.classList.add('is-flipped');
+          }
+        });
+      });
+    }
+  })();
 </script>
-  <script src="/track.js" defer></script>
+
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-banner-title">Cookies</div>
+  <p class="cookie-banner-text">We use cookies to run this site and understand how visitors, both human and AI, find and evaluate it. See our <a href="#" style="color:var(--black);text-decoration:underline;">cookie policy</a>.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-banner-accept" id="cookieAccept">Accept</button>
+    <button class="cookie-banner-decline" id="cookieDecline">Decline</button>
+  </div>
+</div>
+
+<!-- AI VIEW PORTAL: a small white frame that fades and flickers in once,
+     3.5s after load, and then simply stays put. It never disappears. -->
+<div class="ai-portal" id="aiPortal" aria-hidden="true">
+  <div class="ai-portal-frame">
+    <button type="button" class="ai-portal-btn" id="aiPortalBtn">See as AI</button>
+  </div>
+</div>
+
+<!-- AI VIEW: the same page, read the way a crawler or shopping agent
+     actually reads it: structured data, not the visual design. -->
+<div class="ai-view" id="aiView" aria-hidden="true">
+  <div class="ai-view-inner">
+    <div class="ai-view-wrap">
+      <div class="ai-view-line">GET / HTTP/1.1 &rarr; 200 OK
+content type: text/html; charset=utf8</div>
+
+      <div class="ai-view-line ai-status-line">// status: <span id="aiStatusText">checking data completeness&hellip;</span></div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">&lt;title&gt;</div>
+        <div class="ai-view-row" style="--i:0"><span class="v">Atom Foundry: The AI Commerce Graph</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">&lt;meta name=description&gt;</div>
+        <div class="ai-view-row" style="--i:1"><span class="v">Understand why AI recommends one brand over another. Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents discover, evaluate, trust, and recommend e-commerce stores, then turns those findings into practical tools.</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">document meta</div>
+        <div class="ai-view-row" style="--i:2"><span class="k">canonical</span><span class="v">atomfoundry.dev</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:3"><span class="k">viewport</span><span class="v">width=device-width, initial-scale=1.0</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:4"><span class="k">og:title</span><span class="v">Atom Foundry: The AI Commerce Graph</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:5"><span class="k">og:description</span><span class="v">Understand why AI recommends one brand over another. We measure how AI shopping agents discover, evaluate, and recommend e-commerce stores.</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/Organization</div>
+        <div class="ai-view-row" style="--i:6"><span class="k">name</span><span class="v">Atom Foundry</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:7"><span class="k">owns</span><span class="v">Founder Lab (OnlineStore)</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/OnlineStore</div>
+        <div class="ai-view-row" style="--i:8"><span class="k">name</span><span class="v">Founder Lab</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:9"><span class="k">description</span><span class="v">A live Shopify store, built in public as the test subject for Atom Foundry's own research.</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/WebSite</div>
+        <div class="ai-view-row" style="--i:10"><span class="k">part of</span><span class="v">Atom Foundry</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">schema.org/WebPage</div>
+        <div class="ai-view-row" style="--i:11"><span class="k">inLanguage</span><span class="v">en</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">content outline</div>
+        <div class="ai-view-row" style="--i:12"><span class="k">h1</span><span class="v">Understand why AI recommends one brand over another.</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:13"><span class="k">h2</span><span class="v">From Research to Products</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:14"><span class="k">h2</span><span class="v">Research that challenged AI commerce assumptions</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:15"><span class="k">h2</span><span class="v">Built in public.</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:16"><span class="k">h2</span><span class="v">AI Commerce Score&trade;</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">figure: ai_commerce_bar_by_niche</div>
+        <div class="v" style="margin-bottom:10px;">Bar chart comparing the average AI Commerce Score, the AI Invisible Risk percentage, and the top scoring store, across 10 retail niches. Values below are score / risk / best.</div>
+        <div class="ai-view-row" style="--i:17"><span class="k">fashion</span><span class="v">56 / 20% / 93</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:18"><span class="k">beauty</span><span class="v">57 / 17% / 93</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:19"><span class="k">health_and_wellness</span><span class="v">57 / 19% / 94</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:20"><span class="k">food_and_drink</span><span class="v">57 / 20% / 87</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:21"><span class="k">home_and_living</span><span class="v">59 / 15% / 92</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:22"><span class="k">sports_and_outdoor</span><span class="v">57 / 17% / 89</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:23"><span class="k">pets</span><span class="v">54 / 24% / 84</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:24"><span class="k">tech_and_gadgets</span><span class="v">57 / 18% / 93</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:25"><span class="k">kids_and_baby</span><span class="v">56 / 19% / 83</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:26"><span class="k">jewelry</span><span class="v">59 / 13% / 85</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">risk / confidence tiers</div>
+        <div class="ai-view-row" style="--i:27"><span class="k">0 to 49</span><span class="v">AI Invisible Risk</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:28"><span class="k">50 to 69</span><span class="v">Low Confidence</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:29"><span class="k">70 to 84</span><span class="v">Moderately Recommendable</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:30"><span class="k">85 to 100</span><span class="v">Highly Recommendable</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">key signals</div>
+        <div class="ai-view-row" style="--i:31"><span class="k">stores_analyzed</span><span class="v">66087</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:32"><span class="k">avg_commerce_score</span><span class="v">57 / 100</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:33"><span class="k">scoring_factors</span><span class="v">8</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:34"><span class="k">risk_confidence_tiers</span><span class="v">4</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">products</div>
+        <div class="ai-view-row" style="--i:35"><span class="k">AI Commerce Score&trade;</span><span class="v">Free AI assessment for every store. cta: Get Started</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:36"><span class="k">AI Readiness Report</span><span class="v">A comprehensive analysis tailored to your store. cta: Customize Report</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:37"><span class="k">AI Monitoring</span><span class="v">Continuous measurement of your AI visibility. cta: Learn More</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:38"><span class="k">Recommendation Intelligence</span><span class="v">Understand why AI recommends your competitors. cta: Explore Analysis</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:39"><span class="k">AI Agent Snapshot</span><span class="v">See what leading AI shopping agents understand about your store today.</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">footer stats</div>
+        <div class="ai-view-row" style="--i:40"><span class="k">public_studies</span><span class="v">15</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:41"><span class="k">stores</span><span class="v">66,087</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:42"><span class="k">recommendations</span><span class="v">40,000+</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:43"><span class="k">brands</span><span class="v">1,490</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">extracted links (a href)</div>
+        <div class="ai-view-row" style="--i:44"><span class="k">/research</span><span class="v">Research</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:45"><span class="k">/framework</span><span class="v">Framework</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:46"><span class="k">/methodology</span><span class="v">Methodology</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:47"><span class="k">/stores</span><span class="v">Stores</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:48"><span class="k">/vocabulary</span><span class="v">Learn</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:49"><span class="k">#pricing</span><span class="v">Products</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:50"><span class="k">/founders-reality-check</span><span class="v">Founder's Reality Check</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:51"><span class="k">/about</span><span class="v">About</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:52"><span class="k">/research/ai-recommendations-across-commerce-2026</span><span class="v">Flagship Report</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:53"><span class="k">/research/mechanism-studies</span><span class="v">Mechanism Studies</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:54"><span class="k">/research/category-reports</span><span class="v">Category Reports</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:55"><span class="k">/founder-lab</span><span class="v">Founder Lab</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:56"><span class="k">/benchmarks</span><span class="v">Benchmarks</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:57"><span class="k">/privacy-policy</span><span class="v">Privacy</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:58"><span class="k">/research/web-search-changes-ai-recommendations</span><span class="v">Web search vs AI recommendations</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:59"><span class="k">/research/the-model-predicts-itself</span><span class="v">The model predicts itself</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:60"><span class="k">/research/founder-lab/log</span><span class="v">Founder Lab Log</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-block">
+        <div class="ai-view-tag">sameAs (social profiles)</div>
+        <div class="ai-view-row" style="--i:61"><span class="k">instagram</span><span class="v">instagram.com/atom_foundry</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:62"><span class="k">tiktok</span><span class="v">tiktok.com/@atomfoundry</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:63"><span class="k">linkedin</span><span class="v">linkedin.com/in/daniel-atomfoundry</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:64"><span class="k">x</span><span class="v">x.com/atomfoundryai</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:65"><span class="k">youtube</span><span class="v">youtube.com/@atomfoundry</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:66"><span class="k">medium</span><span class="v">medium.com/@Atom_Foundry</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:67"><span class="k">dev_to</span><span class="v">dev.to/atom_foundry</span><span class="ai-check">&#10003;</span></div>
+        <div class="ai-view-row" style="--i:68"><span class="k">indie_hackers</span><span class="v">indiehackers.com/atomfoundryai</span><span class="ai-check">&#10003;</span></div>
+      </div>
+
+      <div class="ai-view-note">No images on this page. It is entirely text and structured data, which is also exactly what an AI reads. Scroll normally, nothing here is off limits.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // AI VIEW state machine: a small white frame appears on its own 3.5s
+  // after load, offering "See as AI", with a one-time strobe flicker as it
+  // fades in. It never auto-hides and never retracts — once it's there,
+  // it stays there for good. Clicking it only ever swaps its label and
+  // toggles the structured-data view underneath.
+  (function(){
+    const portal = document.getElementById('aiPortal');
+    const btn = document.getElementById('aiPortalBtn');
+    const view = document.getElementById('aiView');
+    if (!portal || !btn || !view) return;
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const T_APPEAR = reduceMotion ? 600 : 3500;
+    let inAiView = false;
+
+    function showPortal(){
+      portal.setAttribute('aria-hidden', 'false');
+      portal.classList.add('is-flickering');
+      requestAnimationFrame(() => portal.classList.add('is-visible'));
+      // the flicker only plays once, right as the frame appears
+      setTimeout(() => portal.classList.remove('is-flickering'), 650);
+    }
+
+    // The green checkmarks (see .ai-check in CSS) finish popping in row by
+    // row, one every 0.5s, at roughly (68 * 0.5s + 0.3s + 0.3s) ~= 34.6s
+    // after ai-active is set; once they're all done, flip the status line.
+    const statusEl = document.getElementById('aiStatusText');
+    const T_STATUS_DONE = reduceMotion ? 200 : 34800;
+    let statusTimer = null;
+
+    function enterAiView(){
+      inAiView = true;
+      btn.textContent = 'Back to Human View';
+      document.body.classList.add('ai-active');
+      view.setAttribute('aria-hidden', 'false');
+      if (statusEl) {
+        statusEl.textContent = 'checking data completeness…';
+        statusEl.classList.remove('is-done');
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(() => {
+          statusEl.textContent = 'complete ✓';
+          statusEl.classList.add('is-done');
+        }, T_STATUS_DONE);
+      }
+    }
+
+    function exitAiView(){
+      inAiView = false;
+      btn.textContent = 'See as AI';
+      document.body.classList.remove('ai-active');
+      view.setAttribute('aria-hidden', 'true');
+      clearTimeout(statusTimer);
+    }
+
+    btn.addEventListener('click', () => {
+      if (!inAiView) enterAiView(); else exitAiView();
+    });
+
+    setTimeout(showPortal, T_APPEAR);
+  })();
+</script>
+
+<style>
+.aiw-root{position:fixed;bottom:22px;right:22px;z-index:2000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+.aiw-fab{position:relative;width:52px;height:52px;border-radius:14px;background:#0b0d0e;border:1px solid #262b2e;display:flex;align-items:center;justify-content:center;color:#5fe0af;cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,0.45);transition:transform .2s ease,box-shadow .2s ease;padding:0;}
+.aiw-fab:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.5);}
+.aiw-heart{width:22px;height:22px;}
+.aiw-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aiw-heart-pulse{stroke:#5fe0af;fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aiwHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aiwHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aiw-heart-pulse,.aiw-panel-dot{animation:none;}}
+.aiw-panel{position:absolute;bottom:64px;right:0;width:230px;background:#0b0d0e;border:1px solid #262b2e;border-radius:18px;padding:22px 20px 20px;box-shadow:0 34px 64px -20px rgba(0,0,0,0.6);transform-origin:bottom right;transform:scale(0.94) translateY(8px);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;}
+.aiw-root.is-open .aiw-panel{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
+.aiw-root.is-open .aiw-fab{color:#e8e8e8;}
+.aiw-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#565c60;font-size:18px;cursor:pointer;line-height:1;padding:2px;font-family:inherit;}
+.aiw-close:hover{color:#e8e8e8;}
+.aiw-panel-head{margin-bottom:20px;padding-right:18px;}
+.aiw-panel-title-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.aiw-panel-dot{width:6px;height:6px;border-radius:50%;background:#5fe0af;box-shadow:0 0 0 0 rgba(95,224,175,.6);animation:aiwDotPulse 2.4s infinite;flex-shrink:0;}
+@keyframes aiwDotPulse{70%{box-shadow:0 0 0 6px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
+.aiw-panel-title-main{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11.5px;font-weight:800;color:#f2f4f5;letter-spacing:.03em;line-height:1.3;}
+.aiw-panel-title-sub{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:10px;color:#868c91;letter-spacing:.03em;}
+.aiw-rings{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.aiw-ring-item{display:flex;align-items:center;gap:12px;text-align:left;}
+.aiw-ring-visual{position:relative;width:44px;height:44px;flex-shrink:0;}
+.aiw-ring-visual svg{width:100%;height:100%;transform:rotate(-90deg);}
+.aiw-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.aiw-ring-fill{fill:none;stroke:#5fe0af;stroke-width:5;stroke-linecap:round;stroke-dashoffset:106.81;transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.aiw-root.is-open .aiw-ring-fill{stroke-dashoffset:var(--offset);}
+.aiw-ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;font-weight:800;color:#f2f4f5;}
+.aiw-ring-label{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;color:#b4b8bc;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.aiw-note{font-size:10.5px;color:#565c60;line-height:1.5;margin:0 0 14px;}
+.aiw-link{display:block;text-align:center;background:#5fe0af;color:#080808;font-weight:700;font-size:12.5px;padding:10px;border-radius:9px;text-decoration:none;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;transition:background .15s;}
+.aiw-link:hover{background:#7ee9be;}
+@media(max-width:520px){
+  .aiw-root{bottom:16px;right:16px;}
+  .aiw-panel{width:calc(100vw - 32px);right:-6px;}
+}
+</style>
+<!-- AI_SIGNAL_WIDGET:START -->
+<div class="aiw-root" id="aiwRoot">
+  <button class="aiw-fab" id="aiwFab" aria-label="AI signal for atomfoundry.dev" aria-expanded="false" type="button">
+    <svg class="aiw-heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="aiw-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="aiw-heart-pulse" id="aiwHeartPulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="aiw-panel" id="aiwPanel" role="dialog" aria-label="AI signal for atomfoundry.dev">
+    <button class="aiw-close" id="aiwClose" aria-label="Close" type="button">&times;</button>
+    <div class="aiw-panel-head">
+      <div class="aiw-panel-title-row"><span class="aiw-panel-dot"></span><span class="aiw-panel-title-main">AI AGENT SNAPSHOT</span></div>
+      <div class="aiw-panel-title-sub">ATOM FOUNDRY.dev</div>
+    </div>
+    <div class="aiw-rings">
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:42.72"/>
+            </svg>
+            <div class="aiw-ring-value">3</div>
+          </div>
+          <div class="aiw-ring-label">Today</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:58.75"/>
+            </svg>
+            <div class="aiw-ring-value">6</div>
+          </div>
+          <div class="aiw-ring-label">Bots</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:10.68"/>
+            </svg>
+            <div class="aiw-ring-value">4m</div>
+          </div>
+          <div class="aiw-ring-label">Last seen</div>
+        </div>
+    </div>
+    <p class="aiw-note">Illustrative example &middot; single-site signal for atomfoundry.dev.</p>
+    <a href="/ai-signal" class="aiw-link">View full signals &rarr;</a>
+  </div>
+</div>
+<!-- AI_SIGNAL_WIDGET:END -->
+<script>
+(function(){
+  var root = document.getElementById('aiwRoot');
+  if(!root) return;
+  var fab = document.getElementById('aiwFab');
+  var closeBtn = document.getElementById('aiwClose');
+  var heart = document.getElementById('aiwHeartPulse');
+  function restartHeartbeat(){
+    if (!heart) return;
+    heart.style.animation = 'none';
+    void heart.getBBox();
+    heart.style.animation = '';
+  }
+  function setOpen(open){
+    root.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    restartHeartbeat();
+  }
+  fab.addEventListener('click', function(){ setOpen(!root.classList.contains('is-open')); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+  }
+  document.addEventListener('click', function(e){
+    if (root.classList.contains('is-open') && !root.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
+
 </body>
 </html>

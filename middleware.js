@@ -1,6 +1,10 @@
 // Vercel Edge Middleware — logs AI crawler/agent visits (whole site).
 // No dependencies, no build step. Only AI bots trigger a beacon; real users
 // pass straight through. Fire-and-forget with a 2s timeout — never blocks a page.
+//
+// Note: /store/(.*) is no longer handled here. It's proxied directly in
+// vercel.json to the "AI Readiness — Store SSR" n8n webhook, which renders
+// every scanned store live from Postgres (see that workflow + README notes).
 
 export const config = {
   // Pages + text/xml (llms.txt, robots.txt, sitemaps); SKIP static assets.
