@@ -306,7 +306,7 @@ function startScan(domainOverride) {
   document.getElementById('scanningOverlay').classList.add('active');
   animateSteps();
 
-  fetch('https://n8n-production-1d7c.up.railway.app/webhook/crawl-store', {
+  fetch('https://n8n-production-1d7c.up.railway.app/webhook/scan-store', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ domain: domain, url: 'https://www.' + domain })
@@ -314,10 +314,24 @@ function startScan(domainOverride) {
   .then(r => r.json())
   .then(data => {
     const result = Array.isArray(data) ? data[0] : data;
+    if (result && result.status === 'limit_reached') {
+      showLimitReached(domain);
+      return;
+    }
     showResult(domain, result);
   })
   .catch(() => showResult(domain, {}))
   .finally(() => { scanInProgress = false; });
+}
+
+function showLimitReached(domain) {
+  document.getElementById('scanningOverlay').classList.remove('active');
+  document.getElementById('resultDomain').textContent = domain;
+  document.getElementById('scoreVal').textContent = '--';
+  document.getElementById('resultLevel').style.display = 'none';
+  document.getElementById('resultMessage').textContent = 'This store was already scanned in the last 30 days. Check your inbox for the previous report, or wait before scanning again.';
+  document.getElementById('resultInsights').innerHTML = '';
+  document.getElementById('resultOverlay').classList.add('active');
 }
 
 // v2.0 level label + class
@@ -344,10 +358,11 @@ function getLevelInfo(level, score) {
 function showResult(domain, data) {
   document.getElementById('scanningOverlay').classList.remove('active');
 
-  const score = data.total_score ?? data.score ?? null;
-  const level = data.readiness_level || '';
-  const mainLeak = data.main_leak || '';
-  const quickFix = data.quick_fix || '';
+  const rj = data.report_json || {};
+  const score = data.total_score ?? data.ars_score ?? data.score ?? null;
+  const level = data.readiness_level || rj.readiness_level || '';
+  const mainLeak = data.main_leak || rj.main_leak || '';
+  const quickFix = data.quick_fix || rj.quick_fix || '';
 
   document.getElementById('resultDomain').textContent = domain;
   document.getElementById('scoreVal').textContent = score !== null ? score : '--';
