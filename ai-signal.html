@@ -360,11 +360,12 @@ h2 em{color:var(--orange);}
 .aisig-r .nm{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--a-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-r .seen{font-size:11.5px;color:var(--a-dim);font-family:var(--mono);margin-top:2px;}
 .aisig-r .val{font-family:var(--mono);font-size:13.5px;font-weight:700;text-align:right;color:var(--a-text);}
-.aisig-corner-fill{margin-top:32px;padding-top:20px;}
-.aisig-corner-tag{display:block;font-family:var(--mono);font-size:11px;font-weight:800;color:var(--a-green);letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px;}
-.aisig-corner-desc{font-size:12px;color:var(--a-dim);line-height:1.55;max-width:280px;margin-bottom:12px;}
-.aisig-corner-link{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--a-green);}
+.aisig-corner-fill{margin-top:68px;}
+.aisig-corner-tag{display:block;font-family:"Nunito",sans-serif;font-size:34px;font-weight:800;color:var(--a-green);letter-spacing:-0.01em;line-height:1.15;margin-bottom:14px;}
+.aisig-corner-desc{font-size:13.5px;color:var(--a-dim);line-height:1.6;max-width:300px;margin-bottom:16px;}
+.aisig-corner-link{display:inline-block;font-family:var(--mono);font-size:13.5px;font-weight:700;color:var(--a-green);}
 .aisig-corner-link:hover{text-decoration:underline;}
+@media(max-width:860px){.aisig-corner-tag{font-size:26px;}.aisig-corner-fill{margin-top:32px;}}
 .aisig-track{height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;}
 .aisig-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2b8f68,var(--a-green));}
 .aisig-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.04em;padding:3px 6px;border-radius:5px;font-weight:700;text-align:center;text-transform:lowercase;white-space:nowrap;}
@@ -395,7 +396,8 @@ h2 em{color:var(--orange);}
 
 .aisig-feed{display:grid;gap:13px;}
 .aisig-feed .f{display:grid;grid-template-columns:minmax(0,auto) 90px minmax(0,1fr) auto;gap:14px;align-items:center;font-family:var(--mono);font-size:13px;}
-.aisig-feed .f.f3{grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;}
+.aisig-feed .f.f3{grid-template-columns:130px 380px auto;justify-content:start;column-gap:22px;}
+.aisig-feed .f.f3 .path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
 .aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-feed .t{color:var(--a-dim);font-size:11.5px;white-space:nowrap;text-align:right;}
@@ -430,18 +432,21 @@ h2 em{color:var(--orange);}
 /* ---------- BOOT-SEQUENCE REVEAL (spaceship start-up) ---------- */
 .aisig-sub-label,.aisig-sub-desc,
 .aisig-cell .k,.aisig-cell .v,.aisig-cell .d,
-.aisig-spitem,.aisig-feed .f,.aisig-insight,.aisig-r,.aisig-month-head{
+.aisig-spitem,.aisig-feed .f,.aisig-insight,.aisig-r,.aisig-month-head,
+.aisig-corner-tag,.aisig-corner-desc,.aisig-corner-link{
   opacity:0;transform:translateY(8px);
   transition:opacity .5s ease,transform .5s ease;
 }
 .aisig-sub-label.is-in,.aisig-sub-desc.is-in,
 .aisig-cell .k.is-in,.aisig-cell .v.is-in,.aisig-cell .d.is-in,
-.aisig-spitem.is-in,.aisig-feed .f.is-in,.aisig-insight.is-in,.aisig-r.is-in,.aisig-month-head.is-in{
+.aisig-spitem.is-in,.aisig-feed .f.is-in,.aisig-insight.is-in,.aisig-r.is-in,.aisig-month-head.is-in,
+.aisig-corner-tag.is-in,.aisig-corner-desc.is-in,.aisig-corner-link.is-in{
   opacity:1;transform:translateY(0);
 }
 @media(prefers-reduced-motion:reduce){
   .aisig-sub-label,.aisig-sub-desc,.aisig-cell .k,.aisig-cell .v,.aisig-cell .d,
-  .aisig-spitem,.aisig-feed .f,.aisig-insight,.aisig-r,.aisig-month-head,.aisig-chart-wrap{
+  .aisig-spitem,.aisig-feed .f,.aisig-insight,.aisig-r,.aisig-month-head,.aisig-chart-wrap,
+  .aisig-corner-tag,.aisig-corner-desc,.aisig-corner-link{
     transition:none;
   }
 }
@@ -636,19 +641,23 @@ h2 em{color:var(--orange);}
           <div class="aisig-sub-label">Top pages</div>
           <p class="aisig-sub-desc">The most-read pages on atomfoundry.dev.</p>
           <div class="aisig-rows" id="aisigPageRows"></div>
-          <div class="aisig-corner-fill">
-            <span class="aisig-corner-tag">AI Agent Snapshot</span>
-            <p class="aisig-corner-desc">The exact same live detection, built for your own store or website.</p>
-            <a class="aisig-corner-link" href="/products/ai-agent-snapshot">Explore &rarr;</a>
-          </div>
         </div>
       </div>
     </div>
 
     <div class="aisig-block" id="aisigBlockReadiness">
-      <div class="aisig-sub-label">AI Readiness Layer</div>
-      <p class="aisig-sub-desc">Who checked what this site can do (status, discovery, capabilities), instead of just reading its content.</p>
-      <div class="aisig-rows" id="aisigReadinessRows"></div>
+      <div class="aisig-grid2">
+        <div>
+          <div class="aisig-sub-label">AI Readiness Layer</div>
+          <p class="aisig-sub-desc">Who checked what this site can do (status, discovery, capabilities), instead of just reading its content.</p>
+          <div class="aisig-rows" id="aisigReadinessRows"></div>
+        </div>
+        <div class="aisig-corner-fill">
+          <span class="aisig-corner-tag">AI Agent Snapshot</span>
+          <p class="aisig-corner-desc">The exact same live detection, built for your own store or website.</p>
+          <a class="aisig-corner-link" href="/products/ai-agent-snapshot">Explore &rarr;</a>
+        </div>
+      </div>
     </div>
 
     <div class="aisig-block" id="aisigBlockSpoofed">
@@ -877,7 +886,7 @@ window.AISIG_DATA_READY = (function(){
     }
     el.innerHTML = rows.map(function(r){
       if (kind === 'readiness') {
-        return '<div class="f"><span class="bot">' + esc(r.bot) + '</span><span class="path">' + esc(r.path) + '</span><span class="t">' + esc(relTime(r.created_at)) + '</span></div>';
+        return '<div class="f f3"><span class="bot">' + esc(r.bot) + '</span><span class="path">' + esc(r.path) + '</span><span class="t">' + esc(relTime(r.created_at)) + '</span></div>';
       }
       var type = r.bot_type || 'other';
       return '<div class="f"><span class="bot">' + esc(r.bot) + '</span><span class="aisig-tag aisig-t-' + esc(type) + '">' + esc(type) + '</span><span class="path">' + esc(r.path) + '</span><span class="t">' + esc(relTime(r.created_at)) + '</span></div>';
@@ -1061,7 +1070,7 @@ window.AISIG_DATA_READY = (function(){
     async function boot(){
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced) {
-        qa('.aisig-sub-label, .aisig-sub-desc, .aisig-cell .k, .aisig-cell .v, .aisig-cell .d, .aisig-spitem, .aisig-feed .f, .aisig-insight, .aisig-r, .aisig-month-head', win).forEach(reveal);
+        qa('.aisig-sub-label, .aisig-sub-desc, .aisig-cell .k, .aisig-cell .v, .aisig-cell .d, .aisig-spitem, .aisig-feed .f, .aisig-insight, .aisig-r, .aisig-month-head, .aisig-corner-tag, .aisig-corner-desc, .aisig-corner-link', win).forEach(reveal);
         var spectrumInstant = document.getElementById('aisigSpectrum');
         if (spectrumInstant) spectrumInstant.classList.add('is-in');
         var chartInstant = document.getElementById('aisigChartWrap');
@@ -1190,7 +1199,11 @@ window.AISIG_DATA_READY = (function(){
       if (ready) {
         reveal(ready.querySelector('.aisig-sub-label')); await wait(260);
         reveal(ready.querySelector('.aisig-sub-desc')); await wait(320);
+        reveal(ready.querySelector('.aisig-corner-tag'));
         await revealSeq(qa('.aisig-r', ready), 150);
+        await wait(160);
+        reveal(ready.querySelector('.aisig-corner-desc')); await wait(200);
+        reveal(ready.querySelector('.aisig-corner-link'));
         await wait(200);
       }
       var spoofedBlock = document.getElementById('aisigBlockSpoofed');
