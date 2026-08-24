@@ -399,11 +399,18 @@
     .stores-hero{padding:88px 20px 48px;}
     .stores-sub{margin-bottom:64px;}
     .stores-map-section{padding:16px 0 64px;}
-    .stores-map-canvas{padding:0 16px;}
-    .stores-map-canvas-bg{height:480px;}
+    /* the map's viewBox is a fixed 1000x560 (~1.8:1) shape. The old fixed
+       480px box didn't match that ratio, so the SVG (preserveAspectRatio
+       "meet") only filled a thin strip in the middle and left ~250px of
+       dead empty space above/below it -- that read as "the map is tiny".
+       Matching the box to the real aspect ratio removes that dead space,
+       and bleeding the canvas edge-to-edge (no side padding) gives the SVG
+       the full device width to render into, so the map fills the screen. */
+    .stores-map-canvas{padding:0;}
+    .stores-map-canvas-bg{height:auto;aspect-ratio:1000/560;}
     .world-country.is-region.is-hover{transform:scale(1.12);}
-    .map-label{font-size:15px;}
-    .map-blocked-label{font-size:14px;right:4%;bottom:4%;}
+    .map-label{font-size:18px;}
+    .map-blocked-label{font-size:16px;right:5%;bottom:6%;}
     .category-tabs{flex-direction:column;gap:10px;}
     .category-tab-list{flex:0 0 auto;width:100%;}
     .category-tab{border-radius:8px;transform:none;}
