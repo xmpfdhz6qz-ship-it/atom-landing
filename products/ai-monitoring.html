@@ -320,6 +320,7 @@ h2 em{color:var(--orange);}
 .mon-capture-sub{font-size:13.5px;color:var(--gray-700);line-height:1.6;margin-bottom:4px;}
 .mon-capture .scan-box{max-width:none;}
 .mon-capture-note{font-size:11.5px;color:var(--gray-500);margin-top:14px;}
+.mon-form-success{display:none;font-size:13.5px;color:var(--green);font-weight:700;padding:14px 0;font-family:var(--mono);}
 @media(max-width:520px){.mon-capture{padding:28px 24px;}}
 
 /* dashboard mockup */
@@ -455,10 +456,11 @@ h2 em{color:var(--orange);}
   <div class="mon-capture-label">Early Access</div>
   <h2>Be first to monitor your AI visibility.</h2>
   <p class="mon-capture-sub">AI Monitoring is live and still evolving. Join Early Access and we will email you the moment your store is invited in.</p>
-  <div class="scan-box">
-    <input type="text" placeholder="you@yourstore.com">
-    <button>Get Early Access</button>
-  </div>
+  <form class="scan-box" data-source="products-ai-monitoring">
+    <input type="email" placeholder="you@yourstore.com" required autocomplete="email">
+    <button type="submit">Get Early Access</button>
+  </form>
+  <div class="mon-form-success">You're on the list. We'll be in touch.</div>
   <div class="mon-capture-note">No credit card required.</div>
 </div>
 
@@ -543,10 +545,11 @@ h2 em{color:var(--orange);}
   <div class="final-cta-tag">Early Access</div>
   <h2>Get notified when AI Monitoring opens up.</h2>
   <p>Monthly subscription. Pricing has not been finalized yet... Early Access members will be the first to know.</p>
-  <div class="scan-box">
-    <input type="text" placeholder="you@yourstore.com">
-    <button>Get Early Access</button>
-  </div>
+  <form class="scan-box" data-source="products-ai-monitoring">
+    <input type="email" placeholder="you@yourstore.com" required autocomplete="email">
+    <button type="submit">Get Early Access</button>
+  </form>
+  <div class="mon-form-success">You're on the list. We'll be in touch.</div>
 </div>
 </div>
 
@@ -701,6 +704,48 @@ h2 em{color:var(--orange);}
         var isOpen = item.classList.contains('dd-open');
         links.querySelectorAll('.nav-item.dd-open').forEach(function(other){ other.classList.remove('dd-open'); });
         item.classList.toggle('dd-open', !isOpen);
+      });
+    });
+  })();
+
+  (function(){
+    var forms = document.querySelectorAll('form.scan-box[data-source]');
+    forms.forEach(function(form){
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var button = form.querySelector('button');
+        var emailInput = form.querySelector('input[type="email"]');
+        var successEl = form.parentElement.querySelector('.mon-form-success');
+        var email = emailInput ? emailInput.value : '';
+        var originalLabel = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Sending...';
+
+        fetch('https://n8n-production-1d7c.up.railway.app/webhook/ai-agent-snapshot-waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            source: form.getAttribute('data-source') || 'products-ai-monitoring',
+            referrer: document.referrer || ''
+          })
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+          if (data && data.ok) {
+            form.style.display = 'none';
+            if (successEl) successEl.style.display = 'block';
+          } else {
+            button.disabled = false;
+            button.textContent = originalLabel;
+            alert('Please enter a valid email address.');
+          }
+        })
+        .catch(function(){
+          button.disabled = false;
+          button.textContent = originalLabel;
+          alert('Something went wrong. Please try again.');
+        });
       });
     });
   })();
