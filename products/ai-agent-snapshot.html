@@ -578,20 +578,30 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
 @media (prefers-reduced-motion: reduce){
   .asn-stars,.asn-name-star{animation:none !important;opacity:0.25;}
 }
+
+/* mobile perf: each .asn-stars layer paints hundreds of box-shadow dots --
+   12 of them at once (3 staggered copies x 4 tiers) is heavy enough on
+   underpowered/older phones to hang the tab or force a memory-pressure
+   reload (page appears to "freeze then vanish"). Drop to 1 copy per tier
+   (4 total) and half the named-star count on small screens. */
+@media (max-width:680px){
+  .asn-stars.asn-extra{display:none;}
+  .asn-name-star:nth-of-type(even){display:none;}
+}
 </style>
 </head><body class="asn-space">
 <div class="asn-stars asn-warp-sm" style="animation-delay:-0.00s;"></div>
-<div class="asn-stars asn-warp-sm" style="animation-delay:-10.66s;"></div>
-<div class="asn-stars asn-warp-sm" style="animation-delay:-21.32s;"></div>
+<div class="asn-stars asn-warp-sm asn-extra" style="animation-delay:-10.66s;"></div>
+<div class="asn-stars asn-warp-sm asn-extra" style="animation-delay:-21.32s;"></div>
 <div class="asn-stars asn-warp-md" style="animation-delay:-0.00s;"></div>
-<div class="asn-stars asn-warp-md" style="animation-delay:-7.79s;"></div>
-<div class="asn-stars asn-warp-md" style="animation-delay:-15.58s;"></div>
+<div class="asn-stars asn-warp-md asn-extra" style="animation-delay:-7.79s;"></div>
+<div class="asn-stars asn-warp-md asn-extra" style="animation-delay:-15.58s;"></div>
 <div class="asn-stars asn-warp-lg" style="animation-delay:-0.00s;"></div>
-<div class="asn-stars asn-warp-lg" style="animation-delay:-5.33s;"></div>
-<div class="asn-stars asn-warp-lg" style="animation-delay:-10.66s;"></div>
+<div class="asn-stars asn-warp-lg asn-extra" style="animation-delay:-5.33s;"></div>
+<div class="asn-stars asn-warp-lg asn-extra" style="animation-delay:-10.66s;"></div>
 <div class="asn-stars asn-warp-signal" style="animation-delay:-0.00s;"></div>
-<div class="asn-stars asn-warp-signal" style="animation-delay:-8.61s;"></div>
-<div class="asn-stars asn-warp-signal" style="animation-delay:-17.22s;"></div>
+<div class="asn-stars asn-warp-signal asn-extra" style="animation-delay:-8.61s;"></div>
+<div class="asn-stars asn-warp-signal asn-extra" style="animation-delay:-17.22s;"></div>
 <span class="asn-name-star" style="--tx:-612px;--ty:81px;animation-duration:24s;animation-delay:-0.15s;">Perplexity-User</span>
 <span class="asn-name-star" style="--tx:-923px;--ty:-6px;animation-duration:22s;animation-delay:-20.60s;">ChatGPT-User</span>
 <span class="asn-name-star" style="--tx:-255px;--ty:-347px;animation-duration:21s;animation-delay:-19.98s;">Diffbot</span>
