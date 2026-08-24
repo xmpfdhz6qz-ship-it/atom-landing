@@ -223,8 +223,13 @@ h1 em{color:var(--orange);}
 .aisig-insight-text .aisig-cz{display:block;color:var(--a-faint);margin-top:3px;}
 
 .aisig-grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
-.aisig-rows{display:grid;gap:12px;}
-.aisig-r{display:grid;grid-template-columns:minmax(0,1.1fr) 74px minmax(60px,1fr) 40px;align-items:center;gap:12px;min-height:36px;}
+.aisig-rows{display:grid;row-gap:12px;column-gap:12px;align-items:center;}
+.aisig-r{display:contents;}
+.aisig-r>*{min-width:0;min-height:36px;}
+#aisigWhoRows{grid-template-columns:minmax(0,1.3fr) 88px minmax(60px,.6fr) 40px;}
+#aisigPageRows{grid-template-columns:minmax(0,1.9fr) minmax(60px,.6fr) 40px;}
+#aisigStoreRows{grid-template-columns:minmax(0,1.4fr) minmax(0,.9fr) minmax(60px,.6fr) 40px;}
+#aisigReadinessRows{grid-template-columns:minmax(0,1fr) 96px 150px;}
 .aisig-r .who{display:flex;flex-direction:column;min-width:0;}
 .aisig-r .nm{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--a-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-r .seen{font-size:11px;color:var(--a-dim);font-family:var(--mono);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -259,10 +264,12 @@ h1 em{color:var(--orange);}
 .aisig-spitem .ds{font-size:11.5px;color:var(--a-dim);}
 .aisig-spitem .num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--a-text);}
 
-.aisig-feed{display:grid;gap:13px;}
-.aisig-feed .f{display:grid;grid-template-columns:minmax(0,auto) 90px minmax(0,1fr) auto;gap:14px;align-items:center;font-family:var(--mono);font-size:13px;}
-.aisig-feed .f.f3{grid-template-columns:130px 380px auto;justify-content:start;column-gap:22px;}
-.aisig-feed .f.f3 .path{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.aisig-feed{display:grid;row-gap:13px;column-gap:16px;align-items:center;font-family:var(--mono);font-size:13px;}
+.aisig-feed .f{display:contents;}
+.aisig-feed .f>*{min-width:0;}
+#aisigFeed{grid-template-columns:148px 92px minmax(0,1fr) 128px;}
+#aisigReadinessFeed{grid-template-columns:148px minmax(0,1fr) 128px;}
+#aisigSpoofedFeed{grid-template-columns:148px minmax(0,1fr) 128px;}
 .aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
 .aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-feed .t{color:var(--a-dim);font-size:11px;white-space:nowrap;text-align:right;}
@@ -466,18 +473,6 @@ window.AISIG_DATA_READY = (function(){
     if (isNaN(d.getTime())) return 'N/A';
     return pad(d.getDate()) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
   }
-  function relTimeEN(iso){
-    if (!iso) return 'N/A';
-    var diffMs = Date.now() - new Date(iso).getTime();
-    if (isNaN(diffMs)) return 'N/A';
-    var mins = Math.max(0, Math.round(diffMs / 60000));
-    if (mins < 1) return 'just now';
-    if (mins < 60) return mins + 'm ago';
-    var hrs = Math.round(mins / 60);
-    if (hrs < 24) return hrs + 'h ago';
-    var days = Math.round(hrs / 24);
-    return days + 'd ago';
-  }
   function relTimeCZ(iso){
     if (!iso) return 'N/A';
     var diffMs = Date.now() - new Date(iso).getTime();
@@ -491,7 +486,7 @@ window.AISIG_DATA_READY = (function(){
     return 'před ' + days + ' d';
   }
   function bothTime(iso){
-    return absTime(iso) + ' &middot; ' + relTimeEN(iso) + ' &middot; ' + relTimeCZ(iso);
+    return absTime(iso) + ' &middot; ' + relTimeCZ(iso);
   }
 
   function buildMonths(daily){
@@ -552,7 +547,7 @@ window.AISIG_DATA_READY = (function(){
     var el = document.getElementById(elId);
     if (!el) return;
     if (!rows || !rows.length) {
-      el.innerHTML = '<div class="f"><span class="path">No activity recorded yet. Zatím žádná aktivita.</span></div>';
+      el.innerHTML = '<div class="f"><span class="path" style="grid-column:1/-1;white-space:normal;overflow:visible;text-overflow:clip;">No activity recorded yet. Zatím žádná aktivita.</span></div>';
       return;
     }
     el.innerHTML = rows.map(function(r){
@@ -567,7 +562,7 @@ window.AISIG_DATA_READY = (function(){
   function buildWhoRows(rows){
     var el = document.getElementById('aisigWhoRows');
     if (!el) return;
-    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r"><span class="who"><span class="nm">No agents seen yet. Zatím žádní agenti.</span></span></div>'; return; }
+    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r"><span class="who" style="grid-column:1/-1"><span class="nm">No agents seen yet. Zatím žádní agenti.</span></span></div>'; return; }
     var max = Math.max.apply(null, rows.map(function(r){ return Number(r.visits) || 0; }));
     el.innerHTML = rows.map(function(r){
       var w = max ? Math.round((Number(r.visits) || 0) / max * 100) : 0;
@@ -581,12 +576,12 @@ window.AISIG_DATA_READY = (function(){
   function buildPageRows(rows){
     var el = document.getElementById('aisigPageRows');
     if (!el) return;
-    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">No pages recorded yet. Zatím žádné stránky.</span></span></div>'; return; }
+    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r"><span class="who" style="grid-column:1/-1"><span class="nm">No pages recorded yet. Zatím žádné stránky.</span></span></div>'; return; }
     var max = Math.max.apply(null, rows.map(function(r){ return Number(r.visits) || 0; }));
     el.innerHTML = rows.map(function(r){
       var w = max ? Math.round((Number(r.visits) || 0) / max * 100) : 0;
       var label = (r.path === '/' ) ? '/ (homepage)' : r.path;
-      return '<div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">' + esc(label) + '</span></span>' +
+      return '<div class="aisig-r"><span class="who"><span class="nm">' + esc(label) + '</span></span>' +
         '<span class="aisig-track"><i style="width:' + w + '%"></i></span><span class="val">' + r.visits + '</span></div>';
     }).join('');
   }
@@ -594,11 +589,11 @@ window.AISIG_DATA_READY = (function(){
   function buildStoreRows(rows){
     var el = document.getElementById('aisigStoreRows');
     if (!el) return;
-    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r" style="grid-template-columns:minmax(0,1.4fr) minmax(0,.9fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">No store pages read yet. Zatím žádná stránka eshopu nebyla přečtena.</span></span></div>'; return; }
+    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r"><span class="who" style="grid-column:1/-1"><span class="nm">No store pages read yet. Zatím žádná stránka eshopu nebyla přečtena.</span></span></div>'; return; }
     var max = Math.max.apply(null, rows.map(function(r){ return Number(r.visits) || 0; }));
     el.innerHTML = rows.map(function(r){
       var w = max ? Math.round((Number(r.visits) || 0) / max * 100) : 0;
-      return '<div class="aisig-r" style="grid-template-columns:minmax(0,1.4fr) minmax(0,.9fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">' + esc(r.store_domain) + '</span></span>' +
+      return '<div class="aisig-r"><span class="who"><span class="nm">' + esc(r.store_domain) + '</span></span>' +
         '<span class="seen">' + esc(r.bots) + '</span>' +
         '<span class="aisig-track"><i style="width:' + w + '%"></i></span><span class="val">' + r.visits + '</span></div>';
     }).join('');
@@ -607,10 +602,10 @@ window.AISIG_DATA_READY = (function(){
   function buildReadinessRows(rows){
     var el = document.getElementById('aisigReadinessRows');
     if (!el) return;
-    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 100px 260px"><span class="who"><span class="nm">No readiness checks recorded yet. Zatím žádný dotaz.</span></span></div>'; return; }
+    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r"><span class="who" style="grid-column:1/-1"><span class="nm">No readiness checks recorded yet. Zatím žádný dotaz.</span></span></div>'; return; }
     el.innerHTML = rows.slice(0, 10).map(function(r){
       var tag = String(r.path || '').split('/').filter(Boolean).pop() || 'check';
-      return '<div class="aisig-r" style="grid-template-columns:minmax(0,1fr) 100px 260px"><span class="who"><span class="nm">' + esc(r.bot) + '</span></span>' +
+      return '<div class="aisig-r"><span class="who"><span class="nm">' + esc(r.bot) + '</span></span>' +
         '<span class="aisig-tag aisig-t-capability_probe">' + esc(tag) + '</span>' +
         '<span class="seen" style="text-align:left">' + bothTime(r.visited_at) + '</span></div>';
     }).join('');
@@ -665,9 +660,53 @@ window.AISIG_DATA_READY = (function(){
       var bots = data.by_bot || [], types = data.by_type || [], pages = data.top_pages || [];
       var stores = data.stores || [], recent = data.recent || [], probes = data.probes_list || [], trend = data.trend || [];
 
+      // Some scanners spoof a real AI agent's name (Amazonbot, bingbot,
+      // meta-externalagent...) while probing for leaked secrets/config
+      // files instead of reading real content. The backend only flags
+      // requests announcing themselves as "Diffbot" as spoofed; anything
+      // else hitting one of these paths still lands in the normal read
+      // counts and pollutes Top pages / Who reads you. Reclassify them
+      // here so the dashboard stays internally consistent: pulled out of
+      // the normal totals, folded into Spoofed probes instead.
+      var SUSPICIOUS_PATH_RE = /(^|\/)\.(?!well-known)|\.(env|bak|old)(\.|\/|$)|\/(wp-json|rclone\.conf|actuator\/configprops)$|(^|\/)(key|secrets?|credentials?|env|settings|config|openapi|serviceaccountkey|service-account|firebase-adminsdk)\.json$|\/api\/(env|config)$|[a-z0-9]{6,}-atomfoundry\.dev$/i;
+      function isSuspiciousPath(p){ return SUSPICIOUS_PATH_RE.test(String(p || '')); }
+
+      var suspiciousPages = pages.filter(function(r){ return isSuspiciousPath(r.path); });
+      var suspiciousVisitTotal = suspiciousPages.reduce(function(a, x){ return a + (Number(x.visits) || 0); }, 0);
+      pages = pages.filter(function(r){ return !isSuspiciousPath(r.path); });
+
+      var suspiciousRecent = recent.filter(function(r){ return isSuspiciousPath(r.path); });
+      recent = recent.filter(function(r){ return !isSuspiciousPath(r.path); });
+      probes = probes.concat(suspiciousRecent.map(function(r){ return { bot: r.bot, path: r.path, visited_at: r.visited_at }; }));
+      probes.sort(function(a, b){ return new Date(b.visited_at) - new Date(a.visited_at); });
+
+      // Best-effort per-bot correction: suspicious hits are only visible
+      // to us inside the recent-activity window, so this is a lower
+      // bound, not a full historical recount, but it stops e.g.
+      // Amazonbot's number from silently including exploit scanning.
+      var reclassByBot = {};
+      suspiciousRecent.forEach(function(r){ reclassByBot[r.bot] = (reclassByBot[r.bot] || 0) + 1; });
+      bots = bots.map(function(r){
+        var sub = reclassByBot[r.bot] || 0;
+        return sub ? Object.assign({}, r, { visits: Math.max(0, (Number(r.visits) || 0) - sub) }) : r;
+      }).filter(function(r){ return (Number(r.visits) || 0) > 0; });
+
+      if (suspiciousVisitTotal > 0) {
+        s.total = Math.max(0, (Number(s.total) || 0) - suspiciousVisitTotal);
+        s.probes = (Number(s.probes) || 0) + suspiciousVisitTotal;
+      }
+
       var readinessRecent = recent.filter(function(r){ return (r.path || '').indexOf('/api/ai/') === 0; });
       var readinessPages = pages.filter(function(r){ return (r.path || '').indexOf('/api/ai/') === 0; });
-      var readinessTotal = readinessPages.reduce(function(a, x){ return a + (Number(x.visits) || 0); }, 0);
+      // This used to come only from top_pages, which does not carry
+      // /api/ai/* entries the same way the activity log does, so it
+      // always read 0 even with real checks in the list below. Prefer a
+      // dedicated backend total if the API ever adds one, otherwise
+      // count from the same recent-activity data the Readiness Checks
+      // list below is built from, so the two numbers always agree.
+      var readinessTotal = (s.readiness != null)
+        ? (Number(s.readiness) || 0)
+        : (readinessPages.reduce(function(a, x){ return a + (Number(x.visits) || 0); }, 0) || readinessRecent.length);
 
       var cells = document.querySelectorAll('#aisigBlockReadout .aisig-cell .v');
       if (cells[0]) cells[0].textContent = String(Number(s.total) || 0);
