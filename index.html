@@ -1178,7 +1178,7 @@
     toggle.addEventListener('click', () => {
       const open = nav.classList.toggle('nav-mobile-open');
       toggle.setAttribute('aria-expanded', String(open));
-      if (!open) closeMenu();
+      if (open) { menuOpenScrollY = window.scrollY; } else { closeMenu(); }
     });
 
     links.querySelectorAll('.nav-item').forEach(item => {
@@ -1192,6 +1192,7 @@
         const isOpen = item.classList.contains('dd-open');
         links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
         item.classList.toggle('dd-open', !isOpen);
+        menuOpenScrollY = window.scrollY;
       });
     });
 
@@ -1203,8 +1204,10 @@
 
     // Scrolling the page away from the menu should close it on its own —
     // nobody wants to hunt for the X button first.
+    let menuOpenScrollY = window.scrollY;
     window.addEventListener('scroll', () => {
-      if (nav.classList.contains('nav-mobile-open')) closeMenu();
+      if (!nav.classList.contains('nav-mobile-open')) return;
+      if (Math.abs(window.scrollY - menuOpenScrollY) > 24) closeMenu();
     }, { passive: true });
   })();
 
