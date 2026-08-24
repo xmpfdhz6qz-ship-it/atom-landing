@@ -581,7 +581,6 @@ h2 em{color:var(--orange);}
         <div class="aisig-cell"><div class="k">Agents</div><div class="v">0</div><div class="d">Distinct AI bots that have visited.</div></div>
         <div class="aisig-cell"><div class="k">Readiness queries</div><div class="v">0</div><div class="d">Checks against status, discovery and capabilities.</div></div>
         <div class="aisig-cell"><div class="k">This week</div><div class="v">0</div><div class="d">Reads in the last 7 days.</div></div>
-        <div class="aisig-cell"><div class="k">Stores checked</div><div class="v">0</div><div class="d">Distinct stores AI pulled through our products (never which ones).</div></div>
         <div class="aisig-cell danger"><div class="k">Spoofed probes</div><div class="v">0</div><div class="d">Requests posing as AI agents while scanning for exploits, not reading content.</div></div>
       </section>
     </div>
@@ -972,8 +971,7 @@ window.AISIG_DATA_READY = (function(){
       if (cells[2]) cells[2].textContent = String(Number(data.unique_agents) || 0);
       if (cells[3]) cells[3].textContent = String(Number(data.readiness_queries) || 0);
       if (cells[4]) cells[4].textContent = String(Number(data.week_count) || 0);
-      if (cells[5]) cells[5].textContent = String(Number(data.stores_count) || 0);
-      if (cells[6]) cells[6].textContent = String(Number(data.spoofed_count) || 0);
+      if (cells[5]) cells[5].textContent = String(Number(data.spoofed_count) || 0);
 
       var spectrumResult = buildSpectrum(data.spectrum);
       buildFeed('aisigFeed', data.recent_activity, 'recent');
@@ -1016,13 +1014,32 @@ window.AISIG_DATA_READY = (function(){
   })();
 
   (function(){
+    var nav = document.querySelector('header.nav');
     var toggle = document.getElementById('navToggle');
     var links = document.getElementById('navLinks');
-    var header = document.querySelector('header.nav');
-    if (!toggle || !links || !header) return;
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(function(item){ item.classList.remove('dd-open'); });
+    }
     toggle.addEventListener('click', function(){
-      var open = header.classList.toggle('nav-mobile-open');
+      var open = nav.classList.toggle('nav-mobile-open');
       toggle.setAttribute('aria-expanded', String(open));
+      if (!open) closeMenu();
+    });
+    links.querySelectorAll('.nav-item').forEach(function(item){
+      var trigger = item.querySelector('.nav-trigger');
+      var dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', function(e){
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(function(other){ other.classList.remove('dd-open'); });
+        item.classList.toggle('dd-open', !isOpen);
+      });
     });
   })();
 
