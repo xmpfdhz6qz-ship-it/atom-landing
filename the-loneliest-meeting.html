@@ -267,7 +267,7 @@
     .logo-word{font-size:24px;}
     .logo-word .tail{max-width:160px;}
     .nav-toggle{display:flex;}
-    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:70vh;overflow-y:auto;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:none;overflow-y:visible;}
     header.nav.nav-mobile-open nav.links{display:flex;}
     .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
     .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
@@ -587,7 +587,7 @@
     toggle.addEventListener('click', () => {
       const open = nav.classList.toggle('nav-mobile-open');
       toggle.setAttribute('aria-expanded', String(open));
-      if (!open) closeMenu();
+      if (open) { menuOpenScrollY = window.scrollY; } else { closeMenu(); }
     });
     links.querySelectorAll('.nav-item').forEach(item => {
       const trigger = item.querySelector('.nav-trigger');
@@ -600,10 +600,15 @@
         const isOpen = item.classList.contains('dd-open');
         links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
         item.classList.toggle('dd-open', !isOpen);
+        menuOpenScrollY = window.scrollY;
       });
     });
     window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
-    window.addEventListener('scroll', () => { if (nav.classList.contains('nav-mobile-open')) closeMenu(); }, { passive: true });
+    let menuOpenScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      if (!nav.classList.contains('nav-mobile-open')) return;
+      if (Math.abs(window.scrollY - menuOpenScrollY) > 24) closeMenu();
+    }, { passive: true });
   })();
 </script>
 <style>
