@@ -632,5 +632,32 @@ function toggleExplain() {
   </footer>
 
 </div>
+<!-- SITE_VISIT_TRACKER:START -->
+<script>
+(function(){
+  try {
+    if (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1') return;
+    var VID_KEY = 'af_vid';
+    var vid = localStorage.getItem(VID_KEY);
+    if (!vid) {
+      vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2));
+      localStorage.setItem(VID_KEY, vid);
+    }
+    var payload = JSON.stringify({
+      visitor_id: vid,
+      path: location.pathname,
+      referrer: document.referrer || '',
+      user_agent: navigator.userAgent || ''
+    });
+    var url = 'https://n8n-production-1d7c.up.railway.app/webhook/site-visit';
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+    } else {
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+</script>
+<!-- SITE_VISIT_TRACKER:END -->
 </body>
 </html>

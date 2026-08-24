@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Human Traffic Live &middot; Atom Foundry</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white:#fdfcfa;
+  --off-white:#f1efe8;
+  --gray-100:#fbfaf7;
+  --gray-300:#e6e2d6;
+  --gray-500:#938f81;
+  --gray-700:#4a463c;
+  --black:#161512;
+  --cream:#f0eee6;
+  --orange:#fe6a03;
+  --green:#1D9E75;
+  --amber:#e0a233;
+  --red:#d93c3c;
+  --bar-gray:#847e6d;
+  --card:#e3dacc;
+  --card-line:rgba(22,21,18,0.09);
+  --radius:4px;
+  --maxw:1440px;
+  --serif:"Nunito","Inter",sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  color:var(--black);
+  background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+em{font-style:normal;}
+
+/* ---------- HERO ---------- */
+.vp-hero{padding:64px 0 8px;}
+.hero-kicker{display:block;font-size:13px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
+h1{font-family:var(--serif);font-size:clamp(28px,4.6vw,44px);font-weight:800;line-height:1.16;color:var(--black);margin-bottom:14px;letter-spacing:-0.02em;max-width:780px;}
+h1 em{color:var(--orange);}
+.vp-hero-sub{font-size:15.5px;font-weight:500;color:var(--gray-700);line-height:1.6;max-width:660px;margin:0 0 8px;}
+.vp-hero-sub.cz{color:var(--gray-500);font-size:14px;}
+.term-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;margin-bottom:8px;}
+.term-tag{font-size:11.5px;color:var(--gray-700);border:1px solid var(--card-line);border-radius:var(--radius);padding:5px 12px;}
+.term-tag strong{color:var(--orange);font-weight:700;}
+
+.vp-section{padding:40px 0 88px;scroll-margin-top:120px;}
+.vp-section-tight{padding-top:24px;}
+
+/* ---------- AI SIGNAL WINDOW component system, reused for human traffic ---------- */
+.aisig-window{
+  --a-text:#f2f4f5; --a-muted:#b7b3a8; --a-dim:#8c887c; --a-faint:#5c584e;
+  --a-green:#5fe0af; --a-amber:#e0a233; --a-cyan:#7dd3fc; --a-red:#e8746e;
+  background:#0a0d0a;border-radius:20px;padding:0 0 34px;
+  box-shadow:0 30px 60px -26px rgba(0,0,0,0.45),0 8px 18px rgba(0,0,0,0.2);
+  position:relative;overflow:hidden;font-family:"Nunito","Inter",-apple-system,sans-serif;color:var(--a-text);
+}
+.aisig-window-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 30px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:30px;}
+.aisig-window-dots{display:flex;gap:6px;}
+.aisig-window-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.14);display:block;}
+.aisig-live{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;color:var(--a-green);text-transform:uppercase;letter-spacing:0.06em;}
+.aisig-heart{width:15px;height:15px;display:inline-flex;flex-shrink:0;}
+.aisig-heart svg{width:100%;height:100%;}
+.aisig-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aisig-heart-pulse{stroke:var(--a-green);fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aisigHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aisigHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aisig-heart-pulse{animation:none;}}
+
+.aisig-block{padding:0 30px;margin-bottom:56px;}
+.aisig-block:last-child{margin-bottom:0;}
+.aisig-sub-label{font-family:var(--mono);font-size:11px;color:var(--a-green);text-transform:uppercase;letter-spacing:0.08em;font-weight:800;margin-bottom:4px;}
+.aisig-sub-desc{font-size:12.5px;color:var(--a-dim);margin-bottom:20px;max-width:620px;line-height:1.5;}
+.aisig-sub-desc .aisig-cz{display:block;color:var(--a-faint);margin-top:3px;}
+
+.aisig-readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:22px;}
+.aisig-cell .k{font-family:var(--mono);font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--a-faint);}
+.aisig-cell .v{font-family:"Nunito",sans-serif;font-size:38px;font-weight:800;color:var(--a-text);margin-top:8px;letter-spacing:-0.02em;}
+.aisig-cell .d{font-size:11.5px;color:var(--a-dim);margin-top:8px;line-height:1.45;}
+.aisig-cell .d .aisig-cz{display:block;color:var(--a-faint);margin-top:2px;}
+.aisig-cell.accent .v{color:var(--a-green);}
+
+.aisig-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.aisig-insight{padding:0;}
+.aisig-insight-num{font-family:"Nunito",sans-serif;font-size:22px;font-weight:800;color:var(--a-green);margin-bottom:8px;line-height:1.2;word-break:break-word;}
+.aisig-insight-text{font-size:12.5px;color:var(--a-dim);line-height:1.55;}
+.aisig-insight-text .aisig-cz{display:block;color:var(--a-faint);margin-top:3px;}
+
+.aisig-grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+.aisig-rows{display:grid;row-gap:12px;column-gap:12px;align-items:center;}
+.aisig-r{display:contents;}
+.aisig-r>*{min-width:0;min-height:36px;}
+.ht-rows{grid-template-columns:minmax(0,1.9fr) minmax(60px,.6fr) 40px;}
+.aisig-r .who{display:flex;flex-direction:column;min-width:0;}
+.aisig-r .nm{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--a-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.aisig-r .seen{font-size:11px;color:var(--a-dim);font-family:var(--mono);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.aisig-r .val{font-family:var(--mono);font-size:13.5px;font-weight:700;text-align:right;color:var(--a-text);}
+.aisig-track{height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;}
+.aisig-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2b8f68,var(--a-green));}
+.aisig-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.04em;padding:3px 6px;border-radius:5px;font-weight:700;text-align:center;text-transform:lowercase;white-space:nowrap;}
+.aisig-t-chrome{color:#3ddba4;background:rgba(95,224,175,0.14);}
+.aisig-t-safari{color:#f3b551;background:rgba(224,162,51,0.14);}
+.aisig-t-firefox{color:var(--a-cyan);background:rgba(125,211,252,0.14);}
+.aisig-t-edge{color:#7dd3fc;background:rgba(125,211,252,0.14);}
+.aisig-t-opera{color:var(--a-amber);background:rgba(224,162,51,0.14);}
+.aisig-t-other{color:var(--a-dim);background:rgba(255,255,255,0.06);}
+
+.aisig-spectrum{display:flex;height:24.2px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,0.08);margin:4px 0 18px;}
+.aisig-spectrum span{display:block;height:100%;width:var(--w);}
+.aisig-sp-desktop{background:linear-gradient(90deg,#2b8f68,var(--a-green));}
+.aisig-sp-mobile{background:linear-gradient(90deg,#b8791d,var(--a-amber));}
+.aisig-sp-tablet{background:linear-gradient(90deg,#0369a1,var(--a-cyan));}
+.aisig-sp-other{background:rgba(255,255,255,0.14);}
+.aisig-splegend{display:grid;gap:14px;}
+.aisig-spitem{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;}
+.aisig-spitem .txt{min-width:0;}
+.aisig-spitem .dot{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
+.aisig-spitem .nm{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--a-text);}
+.aisig-spitem .ds{font-size:11.5px;color:var(--a-dim);}
+.aisig-spitem .num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--a-text);}
+
+.aisig-feed{display:grid;row-gap:13px;column-gap:16px;align-items:center;font-family:var(--mono);font-size:13px;}
+.aisig-feed .f{display:contents;}
+.aisig-feed .f>*{min-width:0;}
+#htRecentFeed{grid-template-columns:170px 84px minmax(0,1fr) 128px;}
+.aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
+.aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.aisig-feed .t{color:var(--a-dim);font-size:11px;white-space:nowrap;text-align:right;}
+
+.aisig-month-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+.aisig-month-nav{display:flex;align-items:center;gap:12px;}
+.aisig-month-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.16);background:transparent;color:var(--a-text);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease,border-color .2s ease;}
+.aisig-month-btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.3);}
+.aisig-month-btn:disabled{opacity:0.25;cursor:default;}
+.aisig-month-btn:disabled:hover{background:transparent;border-color:rgba(255,255,255,0.16);}
+.aisig-month-btn svg{width:9px;height:9px;}
+.aisig-month-label{font-family:"Nunito",sans-serif;font-size:15px;font-weight:800;color:var(--a-text);min-width:110px;text-align:center;}
+.aisig-month-total{font-family:var(--mono);font-size:11px;color:var(--a-faint);text-transform:uppercase;letter-spacing:0.06em;}
+.aisig-month-total b{color:var(--a-green);font-weight:800;}
+.aisig-chart-wrap{position:relative;}
+.aisig-linechart{width:100%;height:150px;display:block;overflow:visible;cursor:crosshair;}
+.aisig-linechart .line{fill:none;stroke:var(--a-green);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(95,224,175,0.35));}
+.aisig-linechart circle{fill:var(--a-green);}
+.aisig-tooltip{position:absolute;left:0;top:0;pointer-events:none;background:#12160f;border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:9px 14px;font-family:"Nunito",sans-serif;color:#fff;white-space:nowrap;transform:translate(-50%,-124%);opacity:0;transition:opacity .12s ease;box-shadow:0 14px 30px rgba(0,0,0,0.4);z-index:5;}
+.aisig-tooltip.is-visible{opacity:1;}
+.aisig-tooltip .tt-date{font-size:12px;font-weight:800;color:var(--a-green);margin-bottom:2px;}
+.aisig-tooltip .tt-val{font-size:12.5px;color:var(--a-text);}
+
+.aisig-gate{padding:60px 30px;text-align:center;}
+.aisig-gate h3{font-size:18px;font-weight:800;margin-bottom:8px;}
+.aisig-gate p{font-size:13px;color:var(--a-dim);margin-bottom:4px;}
+.aisig-gate .mono{font-family:var(--mono);color:var(--a-green);}
+
+.aisig-note{font-size:11px;color:var(--gray-500);line-height:1.6;margin-top:4px;max-width:680px;}
+.aisig-note .aisig-cz{display:block;margin-top:2px;}
+@media(max-width:860px){
+  .aisig-readout{grid-template-columns:repeat(2,1fr);row-gap:20px;}
+  .aisig-insights{grid-template-columns:1fr;}
+  .aisig-grid2{grid-template-columns:1fr;}
+  .aisig-r{grid-template-columns:minmax(0,1fr) 66px 36px;}
+  .aisig-r .aisig-track{display:none;}
+  .aisig-feed .f{grid-template-columns:minmax(0,auto) 66px minmax(0,1fr);}
+  .aisig-feed .t{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="vp-hero wrap">
+  <span class="hero-kicker">Human traffic &middot; private</span>
+  <h1>Everyone who visits <em>atomfoundry.dev</em></h1>
+  <p class="vp-hero-sub">Real human visitors, not AI crawlers: every page, every referrer, every device, tracked with our own first-party beacon. No Google Analytics, no cookies banner, no IP stored.</p>
+  <p class="vp-hero-sub cz">Skuteční lidští návštěvníci, ne AI crawleři: každá stránka, každý referrer, každé zařízení, sledováno naším vlastním first-party beaconem. Žádné Google Analytics, žádný cookie banner, žádná uložená IP.</p>
+  <div class="term-tags">
+    <span class="term-tag"><strong>Live</strong> data &middot; <strong>Živá</strong> data</span>
+    <span class="term-tag">Private, key required &middot; Soukromé, vyžaduje klíč</span>
+  </div>
+</div>
+<div class="vp-section vp-section-tight wrap">
+  <div class="aisig-window" id="aisigWindow">
+    <div class="aisig-window-bar">
+      <span class="aisig-window-dots"><i></i><i></i><i></i></span>
+      <span class="aisig-live"><span class="aisig-heart"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="aisig-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path class="aisig-heart-pulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Visit detected</span>
+    </div>
+    <div id="aisigGate" style="display:none;" class="aisig-gate">
+      <h3>Access key required &middot; Vyžadován přístupový klíč</h3>
+      <p>Add <span class="mono">?key=YOUR_TOKEN</span> to the URL.</p>
+      <p>Přidej <span class="mono">?key=TVŮJ_TOKEN</span> do adresy.</p>
+    </div>
+
+    <div id="aisigBody">
+    <div class="aisig-block" id="aisigBlockReadout">
+      <div class="aisig-sub-label">Live signal</div>
+      <p class="aisig-sub-desc">Total human traffic on atomfoundry.dev, live from our own first-party tracker.<span class="aisig-cz">Celková lidská návštěvnost na atomfoundry.dev, živě z našeho vlastního trackeru.</span></p>
+      <section class="aisig-readout">
+        <div class="aisig-cell accent"><div class="k">Pageviews</div><div class="v">0</div><div class="d">Every recorded human pageview, ever.<span class="aisig-cz">Všechna zaznamenaná lidská zobrazení.</span></div></div>
+        <div class="aisig-cell"><div class="k">Unique visitors</div><div class="v">0</div><div class="d">Distinct browsers that have visited.<span class="aisig-cz">Počet různých prohlížečů/návštěvníků.</span></div></div>
+        <div class="aisig-cell"><div class="k">Today</div><div class="v">0</div><div class="d">Pageviews counted so far today.<span class="aisig-cz">Zobrazení za dnešek.</span></div></div>
+        <div class="aisig-cell"><div class="k">Today, unique</div><div class="v">0</div><div class="d">Distinct visitors so far today.<span class="aisig-cz">Různí návštěvníci za dnešek.</span></div></div>
+        <div class="aisig-cell"><div class="k">Pages / visitor</div><div class="v">0</div><div class="d">Average pages seen per visitor.<span class="aisig-cz">Průměrný počet stránek na návštěvníka.</span></div></div>
+        <div class="aisig-cell"><div class="k">Mobile share</div><div class="v">0%</div><div class="d">Pageviews coming from a phone.<span class="aisig-cz">Zobrazení z mobilního telefonu.</span></div></div>
+      </section>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockSpectrum">
+      <div class="aisig-sub-label">Device split</div>
+      <p class="aisig-sub-desc">What visitors are browsing on: desktop, mobile or tablet.<span class="aisig-cz">Na čem návštěvníci prohlíží: počítač, mobil nebo tablet.</span></p>
+      <div class="aisig-spectrum" id="aisigSpectrum"></div>
+      <div class="aisig-splegend" id="aisigSplegend"></div>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockSignal">
+      <div class="aisig-grid2">
+        <div>
+          <div class="aisig-sub-label">Recent visits</div>
+          <p class="aisig-sub-desc">Most recent pageviews: which page, which browser, when.<span class="aisig-cz">Poslední zobrazení: jaká stránka, jaký prohlížeč, kdy.</span></p>
+          <div class="aisig-feed" id="htRecentFeed"></div>
+        </div>
+        <div>
+          <div class="aisig-sub-label">Browsers</div>
+          <p class="aisig-sub-desc">Which browsers visitors use.<span class="aisig-cz">Jaké prohlížeče návštěvníci používají.</span></p>
+          <div class="aisig-rows ht-rows" id="htBrowserRows"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockInsight">
+      <div class="aisig-sub-label">What this means</div>
+      <p class="aisig-sub-desc">The numbers above, read in plain language.<span class="aisig-cz">Čísla výše, srozumitelně řečeno.</span></p>
+      <div class="aisig-insights" id="aisigInsights"></div>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockChart">
+      <div class="aisig-sub-label">Pageviews per day</div>
+      <p class="aisig-sub-desc">Every day, one month at a time. Hover a point for the exact count.<span class="aisig-cz">Každý den, po měsících. Najeď na bod pro přesný počet.</span></p>
+      <div class="aisig-month-head">
+        <div class="aisig-month-nav">
+          <button class="aisig-month-btn" id="aisigPrevMonth" type="button" aria-label="Previous month"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none" style="transform:rotate(90deg);"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <span class="aisig-month-label" id="aisigMonthLabel">&nbsp;</span>
+          <button class="aisig-month-btn" id="aisigNextMonth" type="button" aria-label="Next month" disabled><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none" style="transform:rotate(-90deg);"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <span class="aisig-month-total" id="aisigMonthTotal"><b>0</b> pageviews</span>
+      </div>
+      <div class="aisig-chart-wrap" id="aisigChartWrap">
+        <svg class="aisig-linechart" id="aisigLineChart" viewBox="0 0 1000 150" preserveAspectRatio="none"></svg>
+        <div class="aisig-tooltip" id="aisigTooltip"></div>
+      </div>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockPages">
+      <div class="aisig-grid2">
+        <div>
+          <div class="aisig-sub-label">Top pages</div>
+          <p class="aisig-sub-desc">The most-visited pages on atomfoundry.dev.<span class="aisig-cz">Nejnavštěvovanější stránky na atomfoundry.dev.</span></p>
+          <div class="aisig-rows ht-rows" id="htPageRows"></div>
+        </div>
+        <div>
+          <div class="aisig-sub-label">Top referrers</div>
+          <p class="aisig-sub-desc">Where visitors came from before landing here.<span class="aisig-cz">Odkud návštěvníci přišli, než se sem dostali.</span></p>
+          <div class="aisig-rows ht-rows" id="htReferrerRows"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockDevice">
+      <div class="aisig-grid2">
+        <div>
+          <div class="aisig-sub-label">Operating systems</div>
+          <p class="aisig-sub-desc">What visitors run on.<span class="aisig-cz">Na jakém systému návštěvníci jsou.</span></p>
+          <div class="aisig-rows ht-rows" id="htOsRows"></div>
+        </div>
+        <div>
+          <div class="aisig-sub-label">Devices</div>
+          <p class="aisig-sub-desc">Desktop, mobile or tablet, by pageview count.<span class="aisig-cz">Počítač, mobil nebo tablet, podle počtu zobrazení.</span></p>
+          <div class="aisig-rows ht-rows" id="htDeviceRows"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="vp-section vp-section-tight wrap">
+  <p class="aisig-note" id="aisigNote">Live data from our own first-party beacon. Private view, no Google Analytics involved.<span class="aisig-cz">Živá data z našeho vlastního first-party beaconu. Soukromý pohled, bez Google Analytics.</span></p>
+</div>
+<script>
+window.AISIG_MONTHS = [];
+window.AISIG_DATA_READY = (function(){
+  var BASE = "https://n8n-production-1d7c.up.railway.app/webhook";
+  var key = new URLSearchParams(location.search).get('key') || '';
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  }
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+  function absTime(iso){
+    if (!iso) return 'N/A';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return 'N/A';
+    return pad(d.getDate()) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+  function relTimeCZ(iso){
+    if (!iso) return 'N/A';
+    var diffMs = Date.now() - new Date(iso).getTime();
+    if (isNaN(diffMs)) return 'N/A';
+    var mins = Math.max(0, Math.round(diffMs / 60000));
+    if (mins < 1) return 'právě teď';
+    if (mins < 60) return 'před ' + mins + ' min';
+    var hrs = Math.round(mins / 60);
+    if (hrs < 24) return 'před ' + hrs + ' h';
+    var days = Math.round(hrs / 24);
+    return 'před ' + days + ' d';
+  }
+  function bothTime(iso){
+    return absTime(iso) + ' &middot; ' + relTimeCZ(iso);
+  }
+
+  function buildMonths(daily){
+    var byMonth = {};
+    (daily || []).forEach(function(row){
+      var d = new Date(row.day);
+      if (isNaN(d.getTime())) return;
+      var key2 = d.getFullYear() + '-' + d.getMonth();
+      if (!byMonth[key2]) byMonth[key2] = { year: d.getFullYear(), month: d.getMonth(), byDay: {} };
+      byMonth[key2].byDay[d.getDate()] = Number(row.visits) || 0;
+    });
+    var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var keys = Object.keys(byMonth).sort(function(a, b){
+      var A = byMonth[a], B = byMonth[b];
+      return (A.year - B.year) || (A.month - B.month);
+    });
+    var now = new Date();
+    return keys.map(function(key2){
+      var m = byMonth[key2];
+      var isCurrentMonth = (m.year === now.getFullYear() && m.month === now.getMonth());
+      var lastDay = isCurrentMonth ? now.getDate() : new Date(m.year, m.month + 1, 0).getDate();
+      var days = [];
+      for (var d = 1; d <= lastDay; d++) days.push(m.byDay[d] || 0);
+      return { label: MONTH_NAMES[m.month] + ' ' + m.year, days: days };
+    });
+  }
+
+  function buildDeviceSpectrum(devices){
+    var root = document.getElementById('aisigSpectrum');
+    var legend = document.getElementById('aisigSplegend');
+    if (!root || !legend) return;
+    var DESC_EN = { desktop: 'browsing on a computer', mobile: 'browsing on a phone', tablet: 'browsing on a tablet', other: 'unidentified device' };
+    var DESC_CZ = { desktop: 'prohlíží na počítači', mobile: 'prohlíží na mobilu', tablet: 'prohlíží na tabletu', other: 'neurčené zařízení' };
+    var rows = (devices || []).filter(function(r){ return r.device_type; });
+    var total = rows.reduce(function(s, r){ return s + (Number(r.visits) || 0); }, 0);
+    if (!total) {
+      root.innerHTML = '';
+      legend.innerHTML = '<div class="aisig-spitem"><span class="txt"><span class="ds">No visits recorded yet. Zatím žádné návštěvy.</span></span></div>';
+      return;
+    }
+    rows.sort(function(a, b){ return (Number(b.visits) || 0) - (Number(a.visits) || 0); });
+    root.innerHTML = rows.map(function(r){
+      var pct = Math.round((Number(r.visits) || 0) / total * 100);
+      var cls = 'aisig-sp-' + (r.device_type || 'other');
+      return '<span class="' + cls + '" style="--w:' + pct + '%" title="' + esc(r.device_type) + ': ' + r.visits + '"></span>';
+    }).join('');
+    legend.innerHTML = rows.map(function(r){
+      var pct = Math.round((Number(r.visits) || 0) / total * 100);
+      var type = r.device_type || 'other';
+      var cls = 'aisig-sp-' + type;
+      return '<div class="aisig-spitem"><span class="dot ' + cls + '"></span><span class="txt"><span class="nm">' + esc(type) +
+        '</span> <span class="ds">&middot; ' + esc(DESC_EN[type] || 'other') + ' / ' + esc(DESC_CZ[type] || 'ostatni') + '</span></span><span class="num">' + r.visits + '</span></div>';
+    }).join('');
+    return { rows: rows, total: total };
+  }
+
+  function buildRecentFeed(rows){
+    var el = document.getElementById('htRecentFeed');
+    if (!el) return;
+    if (!rows || !rows.length) {
+      el.innerHTML = '<div class="f"><span class="path" style="grid-column:1/-1;white-space:normal;overflow:visible;text-overflow:clip;">No visits recorded yet. Zatím žádné návštěvy.</span></div>';
+      return;
+    }
+    el.innerHTML = rows.map(function(r){
+      var browser = (r.browser || 'other').toLowerCase();
+      var ref = r.referrer ? r.referrer.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : 'Direct';
+      return '<div class="f"><span class="bot">' + esc(r.path) + '</span><span class="aisig-tag aisig-t-' + esc(browser) + '">' + esc(r.browser || 'other') + '</span><span class="path">' + esc(ref) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
+    }).join('');
+  }
+
+  function buildBarRows(elId, rows, labelKey, emptyText){
+    var el = document.getElementById(elId);
+    if (!el) return;
+    if (!rows || !rows.length) { el.innerHTML = '<div class="aisig-r"><span class="who" style="grid-column:1/-1"><span class="nm">' + esc(emptyText) + '</span></span></div>'; return; }
+    var max = Math.max.apply(null, rows.map(function(r){ return Number(r.visits) || 0; }));
+    el.innerHTML = rows.map(function(r){
+      var w = max ? Math.round((Number(r.visits) || 0) / max * 100) : 0;
+      var label = r[labelKey];
+      if (labelKey === 'path' && label === '/') label = '/ (homepage)';
+      return '<div class="aisig-r"><span class="who"><span class="nm">' + esc(label) + '</span></span>' +
+        '<span class="aisig-track"><i style="width:' + w + '%"></i></span><span class="val">' + r.visits + '</span></div>';
+    }).join('');
+  }
+
+  function buildInsights(summary, deviceResult, topPages, referrers){
+    var el = document.getElementById('aisigInsights');
+    if (!el) return;
+    var items = [];
+    if (deviceResult && deviceResult.total) {
+      var top = deviceResult.rows[0];
+      var pct = Math.round((Number(top.visits) || 0) / deviceResult.total * 100);
+      items.push({ num: pct + '%', en: 'of pageviews come from ' + esc(top.device_type) + '.', cz: esc(pct + '% zobrazení je z zařízení typu ' + top.device_type + '.') });
+    }
+    var topPage = (topPages || [])[0];
+    if (topPage) {
+      var label = topPage.path === '/' ? 'Homepage' : topPage.path;
+      items.push({ num: label, en: 'is the most visited page, with ' + topPage.visits + ' pageviews and counting.', cz: 'je nejnavštěvovanější stránka, s ' + topPage.visits + ' zobrazeními a dále roste.' });
+    }
+    var topRef = (referrers || [])[0];
+    var total = Number(summary.total) || 0;
+    if (topRef && total > 0) {
+      var rPct = Math.round((Number(topRef.visits) || 0) / total * 100);
+      items.push({ num: rPct + '%', en: 'of all traffic came from ' + esc(topRef.referrer_host) + '.', cz: 'veškeré návštěvnosti přišlo z ' + esc(topRef.referrer_host) + '.' });
+    }
+    if (!items.length) {
+      el.innerHTML = '<div class="aisig-insight"><div class="aisig-insight-num">0</div><div class="aisig-insight-text">No human traffic recorded yet.<span class="aisig-cz">Zatím žádná lidská návštěvnost.</span></div></div>';
+      return;
+    }
+    el.innerHTML = items.map(function(it){
+      return '<div class="aisig-insight"><div class="aisig-insight-num">' + it.num + '</div><div class="aisig-insight-text">' + it.en + '<span class="aisig-cz">' + it.cz + '</span></div></div>';
+    }).join('');
+  }
+
+  if (!key) {
+    var gate = document.getElementById('aisigGate');
+    var body = document.getElementById('aisigBody');
+    if (gate) gate.style.display = 'block';
+    if (body) body.style.display = 'none';
+    return Promise.reject(new Error('no key'));
+  }
+
+  return fetch(BASE + '/site-traffic?key=' + encodeURIComponent(key), { headers: { 'Accept': 'application/json' } })
+    .then(function(r){
+      if (r.status === 403) throw new Error('invalid key');
+      if (!r.ok) throw new Error('bad status');
+      return r.json();
+    })
+    .then(function(data){
+      var s = data.summary || {};
+      var pages = data.top_pages || [], referrers = data.referrers || [], browsers = data.browsers || [];
+      var os = data.os || [], devices = data.devices || [], trend = data.trend || [], recent = data.recent || [];
+
+      var total = Number(s.total) || 0;
+      var unique = Number(s.unique_visitors) || 0;
+      var avgPages = unique ? (total / unique).toFixed(1) : '0';
+      var mobileVisits = devices.filter(function(d){ return d.device_type === 'mobile'; }).reduce(function(a, x){ return a + (Number(x.visits) || 0); }, 0);
+      var mobilePct = total ? Math.round(mobileVisits / total * 100) : 0;
+
+      var cells = document.querySelectorAll('#aisigBlockReadout .aisig-cell .v');
+      if (cells[0]) cells[0].textContent = String(total);
+      if (cells[1]) cells[1].textContent = String(unique);
+      if (cells[2]) cells[2].textContent = String(Number(s.today) || 0);
+      if (cells[3]) cells[3].textContent = String(Number(s.today_unique) || 0);
+      if (cells[4]) cells[4].textContent = avgPages;
+      if (cells[5]) cells[5].textContent = mobilePct + '%';
+
+      var deviceResult = buildDeviceSpectrum(devices);
+      buildRecentFeed(recent);
+      buildBarRows('htBrowserRows', browsers, 'browser', 'No browser data yet. Zatím žádná data.');
+      buildInsights(s, deviceResult, pages, referrers);
+      buildBarRows('htPageRows', pages, 'path', 'No pages recorded yet. Zatím žádné stránky.');
+      buildBarRows('htReferrerRows', referrers, 'referrer_host', 'No referrers recorded yet. Zatím žádné referrery.');
+      buildBarRows('htOsRows', os, 'os', 'No OS data yet. Zatím žádná data.');
+      buildBarRows('htDeviceRows', devices, 'device_type', 'No device data yet. Zatím žádná data.');
+      window.AISIG_MONTHS = buildMonths(trend);
+
+      var note = document.getElementById('aisigNote');
+      if (note) {
+        note.innerHTML = total > 0
+          ? 'Live data from our own first-party beacon. Private view, no Google Analytics involved.<span class="aisig-cz">Živá data z našeho vlastního first-party beaconu. Soukromý pohled, bez Google Analytics.</span>'
+          : 'Live data from our own first-party beacon, no visits recorded yet.<span class="aisig-cz">Živá data z našeho vlastního beaconu, zatím žádné návštěvy.</span>';
+      }
+    })
+    .catch(function(err){
+      window.AISIG_MONTHS = [];
+      var note = document.getElementById('aisigNote');
+      if (err && err.message === 'invalid key') {
+        var gate = document.getElementById('aisigGate');
+        var body = document.getElementById('aisigBody');
+        if (gate) { gate.style.display = 'block'; gate.querySelector('h3').textContent = 'Invalid key / Neplatný klíč'; gate.querySelectorAll('p').forEach(function(p){ p.remove(); }); }
+        if (body) body.style.display = 'none';
+        return;
+      }
+      if (note) note.textContent = 'Live signal temporarily unavailable. Živý signál dočasně nedostupný.';
+    });
+})();
+</script>
+<script>
+  (function(){
+    var svg = document.getElementById('aisigLineChart');
+    var wrap = document.getElementById('aisigChartWrap');
+    var tooltip = document.getElementById('aisigTooltip');
+    var label = document.getElementById('aisigMonthLabel');
+    var total = document.getElementById('aisigMonthTotal');
+    var prevBtn = document.getElementById('aisigPrevMonth');
+    var nextBtn = document.getElementById('aisigNextMonth');
+    if (!svg) return;
+    var idx = 0;
+    var W = 1000, H = 150, PAD_TOP = 12, PAD_BOTTOM = 20;
+    var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var currentPts = [];
+    var currentLabel = '';
+
+    function dateInfo(monthLabel, dayNum){
+      var parts = monthLabel.split(' ');
+      var mIdx = MONTH_NAMES.indexOf(parts[0]);
+      var year = parseInt(parts[1], 10);
+      var d = new Date(year, mIdx, dayNum);
+      var weekday = d.toLocaleDateString('en-US', { weekday: 'long' });
+      var full = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      return weekday + ', ' + full;
+    }
+
+    function render(){
+      var m = window.AISIG_MONTHS[idx];
+      var mx = Math.max.apply(null, m.days.concat([1]));
+      var n = m.days.length;
+      var step = n > 1 ? W / (n - 1) : W;
+      var sum = 0;
+      var pts = m.days.map(function(v, i){
+        sum += v;
+        var x = i * step;
+        var y = H - PAD_BOTTOM - (v / mx) * (H - PAD_TOP - PAD_BOTTOM);
+        return { x: x, y: y, v: v };
+      });
+      currentPts = pts;
+      currentLabel = m.label;
+      var linePath = 'M' + pts.map(function(p){ return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' L');
+      var areaPath = linePath + ' L' + W + ',' + H + ' L0,' + H + ' Z';
+      var gradId = 'aisigGrad';
+      var circles = pts.map(function(p, i){
+        var showLabel = ((i + 1) % 5 === 0) || i === 0 || i === n - 1;
+        var txt = showLabel
+          ? '<text x="' + p.x.toFixed(1) + '" y="' + (H - 4) + '" font-family="ui-monospace,Menlo,monospace" font-size="9" fill="rgba(255,255,255,0.35)" text-anchor="middle">' + (i + 1) + '</text>'
+          : '';
+        return '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="2.6"></circle>' + txt;
+      }).join('');
+      svg.innerHTML =
+        '<defs><linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="#5fe0af" stop-opacity="0.32"/>' +
+        '<stop offset="100%" stop-color="#5fe0af" stop-opacity="0"/>' +
+        '</linearGradient></defs>' +
+        '<path d="' + areaPath + '" fill="url(#' + gradId + ')" stroke="none"></path>' +
+        '<path class="line" d="' + linePath + '"></path>' +
+        circles;
+      label.textContent = m.label;
+      total.innerHTML = '<b>' + sum.toLocaleString('en-US') + '</b> pageviews';
+      prevBtn.disabled = (idx === 0);
+      nextBtn.disabled = (idx === window.AISIG_MONTHS.length - 1);
+      tooltip.classList.remove('is-visible');
+    }
+    prevBtn.addEventListener('click', function(){ if (idx > 0) { idx--; render(); } });
+    nextBtn.addEventListener('click', function(){ if (idx < window.AISIG_MONTHS.length - 1) { idx++; render(); } });
+
+    if (wrap && tooltip) {
+      wrap.addEventListener('mousemove', function(e){
+        if (!currentPts.length) return;
+        var svgRect = svg.getBoundingClientRect();
+        var wrapRect = wrap.getBoundingClientRect();
+        var relX = (e.clientX - svgRect.left) / svgRect.width * W;
+        var nearestIdx = 0, nearestDist = Infinity;
+        currentPts.forEach(function(p, i){
+          var d = Math.abs(p.x - relX);
+          if (d < nearestDist) { nearestDist = d; nearestIdx = i; }
+        });
+        var p = currentPts[nearestIdx];
+        var px = svgRect.left - wrapRect.left + (p.x / W) * svgRect.width;
+        var py = svgRect.top - wrapRect.top + (p.y / H) * svgRect.height;
+        tooltip.innerHTML = '<div class="tt-date">' + dateInfo(currentLabel, nearestIdx + 1) + '</div>' +
+          '<div class="tt-val">' + p.v + ' pageviews</div>';
+        tooltip.style.left = px + 'px';
+        tooltip.style.top = py + 'px';
+        tooltip.style.transform = 'translate(-50%,-124%)';
+        tooltip.classList.add('is-visible');
+        var ttWidth = tooltip.offsetWidth;
+        var half = ttWidth / 2;
+        var minCenter = half + 6;
+        var maxCenter = wrapRect.width - half - 6;
+        var clampedPx = Math.min(Math.max(px, minCenter), maxCenter);
+        var shiftX = clampedPx - px;
+        tooltip.style.transform = 'translate(calc(-50% + ' + shiftX.toFixed(1) + 'px), -124%)';
+      });
+      wrap.addEventListener('mouseleave', function(){ tooltip.classList.remove('is-visible'); });
+    }
+    function renderWhenReady(){
+      idx = window.AISIG_MONTHS.length - 1;
+      if (idx < 0) {
+        label.textContent = 'No data yet';
+        total.innerHTML = '<b>0</b> pageviews';
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        svg.innerHTML = '';
+        return;
+      }
+      render();
+    }
+    var ready = window.AISIG_DATA_READY || Promise.resolve();
+    ready.then(renderWhenReady, renderWhenReady);
+  })();
+</script>
+</body>
+</html>
