@@ -152,10 +152,11 @@ h1 em{color:var(--orange);}
 .aisig-spitem .num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--a-text);}
 
 .aisig-feed{display:flex;flex-direction:column;row-gap:2px;font-family:var(--mono);font-size:13px;}
-.aisig-feed .f{display:grid;grid-template-columns:170px 92px minmax(0,1fr) 128px;column-gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.aisig-feed .f{display:grid;grid-template-columns:minmax(0,1.6fr) 72px 92px minmax(120px,.8fr) 128px;column-gap:16px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
 .aisig-feed .f:last-child{border-bottom:none;}
 .aisig-feed .f>*{min-width:0;}
-.aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
+.aisig-feed .bot{font-weight:700;white-space:normal;overflow-wrap:anywhere;word-break:break-word;line-height:1.4;color:var(--a-text);}
+.aisig-feed .vid{font-family:var(--mono);font-size:10.5px;color:var(--a-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:help;}
 .aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-feed .t{color:var(--a-dim);font-size:11px;white-space:nowrap;text-align:right;}
 
@@ -196,8 +197,9 @@ h1 em{color:var(--orange);}
   .aisig-grid2>*+*{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,0.08);padding-top:36px;}
   .ht-rows .aisig-r{grid-template-columns:minmax(0,1fr) 40px;}
   .aisig-r .aisig-track{display:none;}
-  .aisig-feed .f{grid-template-columns:minmax(0,auto) 74px minmax(0,1fr);}
+  .aisig-feed .f{grid-template-columns:minmax(0,1fr) 68px minmax(60px,.6fr);align-items:start;padding:12px 0;}
   .aisig-feed .t{display:none;}
+  .aisig-feed .vid{display:none;}
 }
 </style>
 </head>
@@ -258,18 +260,15 @@ h1 em{color:var(--orange);}
     </div>
 
     <div class="aisig-block" id="aisigBlockSignal">
-      <div class="aisig-grid2">
-        <div>
-          <div class="aisig-sub-label">Recent visits</div>
-          <p class="aisig-sub-desc">Most recent pageviews: which page, which browser, when.<span class="aisig-cz">Poslední zobrazení: jaká stránka, jaký prohlížeč, kdy.</span></p>
-          <div class="aisig-feed" id="htRecentFeed"></div>
-        </div>
-        <div>
-          <div class="aisig-sub-label">Browsers</div>
-          <p class="aisig-sub-desc">Which browsers visitors use.<span class="aisig-cz">Jaké prohlížeče návštěvníci používají.</span></p>
-          <div class="aisig-rows ht-rows" id="htBrowserRows"></div>
-        </div>
-      </div>
+      <div class="aisig-sub-label">Recent visits</div>
+      <p class="aisig-sub-desc">Most recent pageviews: which page, which visitor (first 8 chars, hover for full ID), which browser, when. Matching IDs across rows mean the same visitor.<span class="aisig-cz">Poslední zobrazení: jaká stránka, který návštěvník (prvních 8 znaků, po najetí celé ID), jaký prohlížeč, kdy. Stejné ID napříč řádky znamená stejného návštěvníka.</span></p>
+      <div class="aisig-feed" id="htRecentFeed"></div>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockBrowsers">
+      <div class="aisig-sub-label">Browsers</div>
+      <p class="aisig-sub-desc">Which browsers visitors use.<span class="aisig-cz">Jaké prohlížeče návštěvníci používají.</span></p>
+      <div class="aisig-rows ht-rows" id="htBrowserRows"></div>
     </div>
 
     <div class="aisig-block" id="aisigBlockInsight">
@@ -478,7 +477,9 @@ window.AISIG_DATA_READY = (function(){
     el.innerHTML = rows.map(function(r){
       var browser = (r.browser || 'other').toLowerCase();
       var ref = r.referrer ? r.referrer.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : 'Direct';
-      return '<div class="f"><span class="bot">' + esc(r.path) + '</span><span class="aisig-tag aisig-t-' + esc(browser) + '">' + esc(r.browser || 'other') + '</span><span class="path">' + esc(ref) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
+      var vidFull = String(r.visitor_id || '');
+      var vidShort = vidFull ? vidFull.slice(0, 8) : '&mdash;';
+      return '<div class="f"><span class="bot">' + esc(r.path) + '</span><span class="vid" title="' + esc(vidFull) + '">' + vidShort + '</span><span class="aisig-tag aisig-t-' + esc(browser) + '">' + esc(r.browser || 'other') + '</span><span class="path">' + esc(ref) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
     }).join('');
   }
 
