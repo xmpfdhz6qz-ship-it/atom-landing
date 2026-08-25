@@ -228,7 +228,7 @@ h1 em{color:var(--orange);}
 .aisig-r{display:grid;column-gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
 .aisig-r:last-child{border-bottom:none;}
 .aisig-r>*{min-width:0;min-height:36px;}
-#aisigWhoRows .aisig-r{grid-template-columns:minmax(0,1.3fr) 88px minmax(60px,.6fr) 40px;}
+#aisigWhoRows .aisig-r{grid-template-columns:minmax(0,1.3fr) 98px minmax(60px,.6fr) 40px;}
 #aisigPageRows .aisig-r{grid-template-columns:minmax(0,1.9fr) minmax(60px,.6fr) 40px;}
 #aisigStoreRows .aisig-r{grid-template-columns:minmax(0,1.4fr) minmax(0,.9fr) minmax(60px,.6fr) 40px;}
 #aisigReadinessRows .aisig-r{grid-template-columns:minmax(0,1fr) 96px 150px;}
@@ -244,7 +244,7 @@ h1 em{color:var(--orange);}
 @media(max-width:860px){.aisig-corner-tag{font-size:26px;}.aisig-corner-fill{margin-top:32px;}}
 .aisig-track{height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;}
 .aisig-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2b8f68,var(--a-green));}
-.aisig-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.04em;padding:3px 6px;border-radius:5px;font-weight:700;text-align:center;text-transform:lowercase;white-space:nowrap;}
+.aisig-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:0.04em;padding:4px 8px;border-radius:5px;font-weight:700;text-align:center;text-transform:lowercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .aisig-t-retrieval{color:#3ddba4;background:rgba(95,224,175,0.14);}
 .aisig-t-search{color:#f3b551;background:rgba(224,162,51,0.14);}
 .aisig-t-training{color:var(--a-cyan);background:rgba(125,211,252,0.14);}
@@ -267,10 +267,10 @@ h1 em{color:var(--orange);}
 .aisig-spitem .num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--a-text);}
 
 .aisig-feed{display:flex;flex-direction:column;row-gap:2px;font-family:var(--mono);font-size:13px;}
-.aisig-feed .f{display:grid;grid-template-columns:148px 92px minmax(0,1fr) 128px;column-gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.aisig-feed .f{display:grid;grid-template-columns:148px 100px minmax(0,1fr) 128px;column-gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
 .aisig-feed .f:last-child{border-bottom:none;}
 .aisig-feed .f>*{min-width:0;}
-.aisig-feed .f.f3{grid-template-columns:148px minmax(0,1fr) 128px;}
+.aisig-feed .f.f3{grid-template-columns:148px minmax(0,320px) 128px;width:max-content;max-width:100%;}
 .aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
 .aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-feed .t{color:var(--a-dim);font-size:11px;white-space:nowrap;text-align:right;}
@@ -299,6 +299,14 @@ h1 em{color:var(--orange);}
 .aisig-gate p{font-size:13px;color:var(--a-dim);margin-bottom:4px;}
 .aisig-gate .mono{font-family:var(--mono);color:var(--a-green);}
 
+.aisig-sortbar{display:flex;flex-wrap:wrap;gap:8px;}
+.aisig-sortbtn{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--a-dim);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:8px 15px;cursor:pointer;transition:background .15s ease,color .15s ease,border-color .15s ease;white-space:nowrap;}
+.aisig-sortbtn:hover{color:var(--a-text);border-color:rgba(255,255,255,0.28);}
+.aisig-sortbtn.is-active{color:#0a0d0a;background:var(--a-green);border-color:var(--a-green);}
+.aisig-mini-sortbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.aisig-mini-sortbtn{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--a-dim);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:5px 11px;cursor:pointer;transition:background .15s ease,color .15s ease,border-color .15s ease;white-space:nowrap;}
+.aisig-mini-sortbtn:hover{color:var(--a-text);border-color:rgba(255,255,255,0.28);}
+.aisig-mini-sortbtn.is-active{color:#0a0d0a;background:var(--a-green);border-color:var(--a-green);}
 .aisig-note{font-size:11px;color:var(--gray-500);line-height:1.6;margin-top:4px;max-width:680px;}
 .aisig-note .aisig-cz{display:block;margin-top:2px;}
 @media(max-width:860px){
@@ -306,12 +314,12 @@ h1 em{color:var(--orange);}
   .aisig-insights{grid-template-columns:1fr;}
   .aisig-grid2{grid-template-columns:1fr;gap:36px;}
   .aisig-grid2>*+*{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,0.08);padding-top:36px;}
-  #aisigWhoRows .aisig-r{grid-template-columns:minmax(0,1fr) 66px 36px;}
+  #aisigWhoRows .aisig-r{grid-template-columns:minmax(0,1fr) 74px 36px;}
   #aisigPageRows .aisig-r{grid-template-columns:minmax(0,1fr) 40px;}
   #aisigStoreRows .aisig-r{grid-template-columns:minmax(0,1fr) minmax(0,.6fr) 36px;}
   #aisigReadinessRows .aisig-r{grid-template-columns:minmax(0,1fr) 70px auto;}
   .aisig-r .aisig-track{display:none;}
-  .aisig-feed .f{grid-template-columns:minmax(0,auto) 66px minmax(0,1fr);}
+  .aisig-feed .f{grid-template-columns:minmax(0,auto) 74px minmax(0,1fr);}
   .aisig-feed .f.f3{grid-template-columns:minmax(0,auto) minmax(0,1fr);}
   .aisig-feed .t{display:none;}
 }
@@ -400,11 +408,27 @@ h1 em{color:var(--orange);}
       </div>
     </div>
 
+    <div class="aisig-block" id="aisigBlockSort">
+      <div class="aisig-sub-label">Sort signal log</div>
+      <p class="aisig-sub-desc">Reorder the signal log above: newest or oldest first, by the page's total visits, or by the AI's total visits.<span class="aisig-cz">Přerovnej signal log výše: od nejnovějších nebo nejstarších, podle celkových návštěv stránky, nebo podle celkových návštěv daného AI.</span></p>
+      <div class="aisig-sortbar" id="aisigSortBar">
+        <button type="button" class="aisig-sortbtn is-active" data-sort="date_desc">Newest &middot; Nejnovější</button>
+        <button type="button" class="aisig-sortbtn" data-sort="date_asc">Oldest &middot; Nejstarší</button>
+        <button type="button" class="aisig-sortbtn" data-sort="page">By page &middot; Podle stránky</button>
+        <button type="button" class="aisig-sortbtn" data-sort="bot">By AI &middot; Podle AI</button>
+      </div>
+    </div>
+
     <div class="aisig-block" id="aisigBlockBotsPages">
       <div class="aisig-grid2">
         <div>
           <div class="aisig-sub-label">Who reads you</div>
           <p class="aisig-sub-desc">Which agents read this site, and when they were last seen.<span class="aisig-cz">Kteří agenti tě čtou a kdy byli naposledy vidění.</span></p>
+          <div class="aisig-mini-sortbar" id="aisigWhoSortBar">
+            <button type="button" class="aisig-mini-sortbtn is-active" data-sort="visits">Visits &middot; Návštěvy</button>
+            <button type="button" class="aisig-mini-sortbtn" data-sort="seen_desc">Newest &middot; Nejnovější</button>
+            <button type="button" class="aisig-mini-sortbtn" data-sort="seen_asc">Oldest &middot; Nejstarší</button>
+          </div>
           <div class="aisig-rows" id="aisigWhoRows"></div>
         </div>
         <div>
@@ -617,6 +641,63 @@ window.AISIG_DATA_READY = (function(){
     }).join('');
   }
 
+  function sortRecentBy(mode){
+    var rows = (window.AISIG_RECENT || []).slice();
+    var pageVisits = window.AISIG_PAGE_VISITS || {};
+    var botVisits = window.AISIG_BOT_VISITS || {};
+    if (mode === 'date_asc') {
+      rows.sort(function(a, b){ return new Date(a.visited_at) - new Date(b.visited_at); });
+    } else if (mode === 'page') {
+      rows.sort(function(a, b){
+        var d = (pageVisits[b.path] || 0) - (pageVisits[a.path] || 0);
+        return d !== 0 ? d : (new Date(b.visited_at) - new Date(a.visited_at));
+      });
+    } else if (mode === 'bot') {
+      rows.sort(function(a, b){
+        var d = (botVisits[b.bot] || 0) - (botVisits[a.bot] || 0);
+        return d !== 0 ? d : (new Date(b.visited_at) - new Date(a.visited_at));
+      });
+    } else {
+      rows.sort(function(a, b){ return new Date(b.visited_at) - new Date(a.visited_at); });
+    }
+    buildFeed('aisigFeed', rows, 'recent');
+  }
+
+  function sortWhoBy(mode){
+    var rows = (window.AISIG_BOTS || []).slice();
+    if (mode === 'seen_desc') {
+      rows.sort(function(a, b){ return new Date(b.last_seen) - new Date(a.last_seen); });
+    } else if (mode === 'seen_asc') {
+      rows.sort(function(a, b){ return new Date(a.last_seen) - new Date(b.last_seen); });
+    } else {
+      rows.sort(function(a, b){ return (Number(b.visits) || 0) - (Number(a.visits) || 0); });
+    }
+    buildWhoRows(rows);
+  }
+
+  (function(){
+    var bar = document.getElementById('aisigSortBar');
+    if (bar) {
+      bar.addEventListener('click', function(e){
+        var btn = e.target.closest('.aisig-sortbtn');
+        if (!btn) return;
+        bar.querySelectorAll('.aisig-sortbtn').forEach(function(b){ b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        sortRecentBy(btn.getAttribute('data-sort'));
+      });
+    }
+    var miniBar = document.getElementById('aisigWhoSortBar');
+    if (miniBar) {
+      miniBar.addEventListener('click', function(e){
+        var btn = e.target.closest('.aisig-mini-sortbtn');
+        if (!btn) return;
+        miniBar.querySelectorAll('.aisig-mini-sortbtn').forEach(function(b){ b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        sortWhoBy(btn.getAttribute('data-sort'));
+      });
+    }
+  })();
+
   function buildInsights(summary, spectrumResult, topPages, readinessTotal){
     var el = document.getElementById('aisigInsights');
     if (!el) return;
@@ -721,6 +802,13 @@ window.AISIG_DATA_READY = (function(){
       if (cells[3]) cells[3].textContent = String(readinessTotal);
       if (cells[4]) cells[4].textContent = String(Number(s.stores) || 0);
       if (cells[5]) cells[5].textContent = String(Number(s.probes) || 0);
+
+      window.AISIG_RECENT = recent;
+      window.AISIG_BOTS = bots;
+      window.AISIG_PAGE_VISITS = {};
+      pages.forEach(function(p){ window.AISIG_PAGE_VISITS[p.path] = Number(p.visits) || 0; });
+      window.AISIG_BOT_VISITS = {};
+      bots.forEach(function(b){ window.AISIG_BOT_VISITS[b.bot] = Number(b.visits) || 0; });
 
       var spectrumResult = buildSpectrum(types);
       buildFeed('aisigFeed', recent, 'recent');
