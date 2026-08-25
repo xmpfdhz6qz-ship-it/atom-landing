@@ -1194,6 +1194,11 @@
         const data = await res.json();
         siteStats = Array.isArray(data) ? data[0] : (data && data.data ? data.data[0] : data);
         if (siteStats && siteStats.total_scanned != null) {
+          // Static markup already carries the real number (so crawlers and
+          // no-JS visitors never see a bare "0"); browsers reset to 0 here,
+          // purely visually, right before animating up so the count-up
+          // effect still plays for real visitors.
+          if (counterEl) counterEl.textContent = '0';
           countUp(counterEl, Number(siteStats.total_scanned), 1800);
           const storesText = Number(siteStats.total_scanned).toLocaleString('en-US');
           document.querySelectorAll('[data-stat="stores"]').forEach(el => { if (el !== counterEl) el.textContent = storesText; });
