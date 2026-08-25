@@ -3,7 +3,7 @@
 <head>
 <meta name="robots" content="noindex, nofollow">
 <meta charset="UTF-8">
-<title>AI Recommendation Report | Atom Foundry</title>
+<title>AI Commerce Score Report | Atom Foundry</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap');
@@ -288,17 +288,17 @@ function getFactorColor(pct) {
   const daily       = report.estimated_loss_daily || Math.round(lossMin / 30);
 
   const statusBadge = (() => {
-    if (aiScore >= 85) return { cls:"badge-high",     dot:"", text:"Highly Recommendable" };
-    if (aiScore >= 70) return { cls:"badge-medium",   dot:"", text:"Moderately Recommendable" };
-    if (aiScore >= 50) return { cls:"badge-medium",   dot:"", text:"Low Recommendation Confidence" };
+    if (aiScore >= 85) return { cls:"badge-high",     dot:"", text:"High Confidence" };
+    if (aiScore >= 70) return { cls:"badge-medium",   dot:"", text:"Moderate Confidence" };
+    if (aiScore >= 50) return { cls:"badge-medium",   dot:"", text:"Low Confidence" };
     return                    { cls:"badge-invisible", dot:"", text:"AI Invisible Risk" };
   })();
 
   const verdict = aiScore >= 85
-    ? `<span style="color:#1D9E75;">AI agents can clearly understand, trust, and recommend your store.</span>`
+    ? `<span style="color:#1D9E75;">AI agents can clearly understand and trust your store.</span>`
     : aiScore >= 50
-    ? `<span style="color:#EF9F27;">AI can see your store but misses key signals. Competitors with higher scores are winning your customers.</span>`
-    : `<span style="color:#E24B4A;">Critical gaps are preventing AI agents from recommending this store.</span>`;
+    ? `<span style="color:#EF9F27;">AI can see your store but misses key signals. Competitors with higher scores are read with more confidence.</span>`
+    : `<span style="color:#E24B4A;">Critical gaps are preventing AI agents from reading this store at all.</span>`;
 
   const mainLeak = report.main_leak || "AI agents may not confidently understand what your store sells.";
   const quickFix = report.quick_fix || "Add structured data and improve semantic clarity for AI systems.";
@@ -375,7 +375,7 @@ function getFactorColor(pct) {
   app.innerHTML = `
     <div class="domain-label">${displayDomain}</div>
     <div class="score-hero" style="color:${aiColor};">${aiScore}<span style="font-size:24px;color:#888;">/100</span></div>
-    <div class="score-hero-label">AI Recommendation Score</div>
+    <div class="score-hero-label">AI Commerce Score</div>
     <div class="ai-status-badge ${statusBadge.cls}">${statusBadge.text}</div>
 
     <div class="loss-strip">
@@ -395,15 +395,15 @@ function getFactorColor(pct) {
 
     <div class="explain-toggle" onclick="toggleExplain()">&#9658; What does this score mean?</div>
     <div class="explain-box" id="explainBox">
-      <div class="explain-title">Understanding your AI Recommendation Score</div>
-      <div class="explain-item"><span class="explain-highlight">85 to 100: Highly Recommendable</span><br>AI agents can clearly understand, trust, and recommend your store to shoppers.</div>
-      <div class="explain-item"><span class="explain-highlight">70 to 84: Moderately Recommendable</span><br>AI recommends you but stronger signals would increase frequency and position.</div>
-      <div class="explain-item"><span class="explain-highlight">50 to 69: Low Recommendation Confidence</span><br>AI can see your store but misses critical signals. Recommendations are weak or inconsistent.</div>
+      <div class="explain-title">Understanding your AI Commerce Score</div>
+      <div class="explain-item"><span class="explain-highlight">85 to 100: High Confidence</span><br>AI agents can clearly understand and trust your store.</div>
+      <div class="explain-item"><span class="explain-highlight">70 to 84: Moderate Confidence</span><br>AI reads you with moderate confidence; stronger signals would raise it.</div>
+      <div class="explain-item"><span class="explain-highlight">50 to 69: Low Confidence</span><br>AI can see your store but misses critical signals. Recommendations are weak or inconsistent.</div>
       <div class="explain-item"><span class="explain-highlight">0 to 49: AI Invisible Risk</span><br>Critical gaps prevent AI agents from recommending this store. Urgent action needed.</div>
     </div>
 
     <div class="breakdown-box">
-      <div class="breakdown-title">AI Recommendation Score breakdown</div>
+      <div class="breakdown-title">AI Commerce Score breakdown</div>
       <div class="breakdown-desc">8 factors determine how confidently AI shopping agents can understand, trust, and recommend your store.</div>
       ${factorRowsHTML}
     </div>
@@ -613,6 +613,9 @@ function toggleExplain() {
         <a href="/vocabulary">Vocabulary</a> &nbsp;&middot;&nbsp;
         <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
         <a href="/research">Research</a> &nbsp;&middot;&nbsp;
+        <a href="/research/how-ai-decides">How AI Decides</a> &nbsp;&middot;&nbsp;
+        <a href="/products">Products</a> &nbsp;&middot;&nbsp;
+        <a href="/ai-signal">AI Traffic</a> &nbsp;&middot;&nbsp;
         <a href="/terms-of-service.html">Terms</a> &nbsp;&middot;&nbsp;
         <a href="/privacy-policy.html">Privacy</a><br>
         <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>

@@ -225,6 +225,8 @@ footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;
 .rs-level-kicker{font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray-500);margin-bottom:6px;}
 .rs-level{font-family:var(--serif);font-size:23px;font-weight:800;margin-bottom:10px;}
 .rs-message{font-size:15px;color:var(--gray-700);line-height:1.6;}
+.rs-score-disclaimer{font-size:12.5px;color:var(--gray-500);line-height:1.6;margin-top:12px;max-width:420px;}
+.rs-score-disclaimer a{color:var(--gray-700);}
 
 /* ---- 8-factor breakdown: full navbar-width grid, 2 rows of 4 ---- */
 .rs-factors-label{font-size:12px;font-weight:800;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;text-align:left;}
@@ -280,6 +282,7 @@ footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;
         <div class="dropdown">
           <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
           <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/how-ai-decides" class="dd-item"><span class="dd-title">How AI Decides</span></a>
           <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
           <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
           <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
@@ -439,6 +442,7 @@ footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;
         <div class="rs-level-kicker">Readiness band</div>
         <div class="rs-level" id="resultLevel"></div>
         <div class="rs-message" id="resultMessage"></div>
+        <div class="rs-score-disclaimer">Measures AI readiness, not recommendation frequency. That is measured separately by <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>.</div>
       </div>
     </div>
 
@@ -454,7 +458,7 @@ footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;
         <div class="rs-prod-card-inner">
           <span class="rs-prod-tag">Essential</span>
           <div class="rs-prod-card-name">AI Readiness Report</div>
-          <div class="rs-prod-card-what">Finds exactly what is blocking AI from recommending you.</div>
+          <div class="rs-prod-card-what">Finds exactly what is blocking AI from reading and trusting you.</div>
           <div class="rs-prod-card-cta">Get the report →</div>
         </div>
       </a>
@@ -508,6 +512,7 @@ footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;
       <div class="footer-col">
         <div class="footer-col-label">Research</div>
         <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/how-ai-decides">How AI Decides</a>
         <a href="/research/mechanism-studies">Mechanism Studies</a>
         <a href="/research/category-reports">Category Reports</a>
         <a href="/founder-lab">Founder Lab</a>
@@ -531,6 +536,9 @@ footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Company</div>
+        <a href="/ai-signal">AI Traffic, Live</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms of Service</a>
         <a href="/about">About</a>
         <a href="#">Contact</a>
         <a href="/privacy-policy">Privacy</a>
@@ -549,7 +557,7 @@ footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);margin-top:64px;
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>15</b> Public Studies</div>
+      <div><b>17</b> Public Studies</div>
       <div><b>66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -756,9 +764,9 @@ function showLimitReached(domain) {
 
 // Band thresholds match the AI Commerce Score methodology (products/ai-commerce-score.html).
 function bandFor(score) {
-  if (score >= 85) return { label: 'Highly Recommendable', color: 'var(--green)' };
-  if (score >= 70) return { label: 'Moderately Recommendable', color: 'var(--amber)' };
-  if (score >= 50) return { label: 'Low Recommendation Confidence', color: 'var(--orange)' };
+  if (score >= 85) return { label: 'High Confidence', color: 'var(--green)' };
+  if (score >= 70) return { label: 'Moderate Confidence', color: 'var(--amber)' };
+  if (score >= 50) return { label: 'Low Confidence', color: 'var(--orange)' };
   return { label: 'AI Invisible Risk', color: 'var(--red)' };
 }
 
@@ -787,13 +795,13 @@ function showResult(domain, data) {
     levelEl.style.color = band.color;
 
     if (score < 50) {
-      msgEl.textContent = 'This store is likely invisible to AI shopping assistants. ChatGPT and Perplexity are unlikely to recommend it, and that costs real traffic.';
+      msgEl.textContent = 'This store is likely invisible to AI shopping assistants. ChatGPT and Perplexity may struggle to read or verify it, and that costs real traffic.';
     } else if (score < 70) {
       msgEl.textContent = 'This store has partial AI visibility. Several signals AI agents look for are still missing.';
     } else if (score < 85) {
       msgEl.textContent = 'This store is moderately visible to AI. The AI Readiness Report shows exactly what to fix next.';
     } else {
-      msgEl.textContent = 'Strong foundation. This store is highly recommendable to AI agents, with room left to optimize.';
+      msgEl.textContent = 'Strong foundation. AI agents can read and trust this store with high confidence, with room left to optimize.';
     }
 
     const DEFAULT_FACTORS = [

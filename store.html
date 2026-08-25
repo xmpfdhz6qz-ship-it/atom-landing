@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">AI Commerce Score Report: Atom Foundry</title>
-<meta name="description" id="pageDesc" content="Watch how an AI shopping agent reads, understands, and decides whether to recommend this store, measured across the AI Commerce Framework.">
+<meta name="description" id="pageDesc" content="Watch how an AI shopping agent reads and understands this store, measured across the AI Commerce Framework.">
 <meta name="robots" content="index, follow">
 <meta name="view-transition" content="same-origin">
 <link rel="canonical" href="https://atomfoundry.dev/store" id="canonicalLink">
 <meta property="og:title" id="ogTitle" content="AI Commerce Score Report: Atom Foundry">
-<meta property="og:description" id="ogDesc" content="Watch how an AI shopping agent reads, understands, and decides whether to recommend this store.">
+<meta property="og:description" id="ogDesc" content="Watch how an AI shopping agent reads and understands this store.">
 <meta property="og:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -194,6 +194,7 @@
   .reasoning-bubble p{margin-bottom:4px;}
   .reasoning-bubble p:last-child{margin-bottom:0;}
   .reasoning-note{max-width:640px;font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
+  .score-disclaimer{max-width:640px;font-size:12px;color:var(--gray-500);margin-top:14px;line-height:1.6;}
 
   /* ---------- RECOMMENDATION JOURNEY (nested inside the notebook's Journey
      page): four stage tabs sit along the top like binder dividers, all at
@@ -442,6 +443,7 @@
         <div class="dropdown">
           <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
           <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/how-ai-decides" class="dd-item"><span class="dd-title">How AI Decides</span></a>
           <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
           <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
           <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
@@ -535,28 +537,28 @@
             <span class="notebook-tab-label">AI Commerce Score</span>
           </button>
           <button type="button" class="notebook-tab" data-page="journey">
-            <span class="notebook-tab-label">Recommendation Journey</span>
+            <span class="notebook-tab-label">AI Reading Journey</span>
           </button>
           <button type="button" class="notebook-tab" data-page="summary">
-            <span class="notebook-tab-label">Recommendation Summary</span>
+            <span class="notebook-tab-label">Readiness Summary</span>
           </button>
           <button type="button" class="notebook-tab" data-page="probability">
-            <span class="notebook-tab-label">Probability</span>
+            <span class="notebook-tab-label">Readiness Confidence</span>
           </button>
           <button type="button" class="notebook-tab" data-page="result">
-            <span class="notebook-tab-label">Result</span>
+            <span class="notebook-tab-label">Readiness Verdict</span>
           </button>
           <button type="button" class="notebook-tab" data-page="blockers">
             <span class="notebook-tab-label">Top Blockers</span>
           </button>
           <button type="button" class="notebook-tab" data-page="whatif">
-            <span class="notebook-tab-label">How to Change the Decision</span>
+            <span class="notebook-tab-label">How to Improve the Score</span>
           </button>
           <button type="button" class="notebook-tab" data-page="technical">
             <span class="notebook-tab-label">Technical Breakdown</span>
           </button>
           <button type="button" class="notebook-tab" data-page="similar" id="similarTab">
-            <span class="notebook-tab-label">Stores AI Recommends Instead</span>
+            <span class="notebook-tab-label">Stores That Score Higher</span>
           </button>
         </div>
 
@@ -568,6 +570,7 @@
                  IS "watch AI evaluate this store," so nothing else needs to
                  sit there statically before it, or duplicate it elsewhere. -->
             <div id="simRows"></div>
+            <div class="score-disclaimer">AI Commerce Score measures AI readiness and understanding signals. It does not predict recommendation frequency. Recommendation behavior is measured separately through <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>.</div>
           </div>
 
           <div class="notebook-page-inner" data-page-content="journey">
@@ -581,21 +584,21 @@
           </div>
 
           <div class="notebook-page-inner" data-page-content="summary">
-            <div class="notebook-page-title">Why AI made that decision</div>
+            <div class="notebook-page-title">Why AI reads it this way</div>
             <div id="examinedList" class="examined-row"></div>
-            <div class="reasoning-label">Recommendation summary</div>
+            <div class="reasoning-label">Readiness summary</div>
             <div class="reasoning-bubble" id="reasoningBubble"></div>
             <div class="reasoning-note">This is not a real AI transcript. It is a plain-language summary built directly from the signals measured above.</div>
           </div>
 
           <div class="notebook-page-inner" data-page-content="probability">
-            <div class="notebook-page-title">Would AI recommend this store?</div>
+            <div class="notebook-page-title">How ready is this store for AI?</div>
             <div class="confidence-num" id="confidenceNum">--%</div>
             <div class="confidence-bar-wrap"><div class="confidence-bar-fill" id="confidenceBar"></div></div>
           </div>
 
           <div class="notebook-page-inner" data-page-content="result">
-            <div class="hero-meta-label">Result</div>
+            <div class="hero-meta-label">Readiness Verdict</div>
             <div class="hero-meta-value" id="heroVerdictValue">--</div>
             <div class="hero-verdict-reason" id="heroVerdictReason"></div>
           </div>
@@ -609,7 +612,7 @@
           </div>
 
           <div class="notebook-page-inner" data-page-content="technical">
-            <div class="notebook-page-title">The eight factors behind the decision above, measured by the AI Commerce Score methodology v3.1.</div>
+            <div class="notebook-page-title">The eight factors behind this read, measured by the AI Commerce Score methodology v3.1.</div>
             <div id="factorRows"></div>
           </div>
 
@@ -709,7 +712,7 @@
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>15</b> Public Studies</div>
+      <div><b>17</b> Public Studies</div>
       <div><b>66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -725,12 +728,19 @@
         <a href="/framework/7-layers">The 7 Layers</a>
         <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
         <a href="/methodology">Methodology</a>
+        <a href="/products">Products</a>
+        <a href="/products/ai-commerce-score">AI Commerce Score</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
         <a href="/stores">Store database</a>
         <a href="/benchmarks">Category benchmarks</a>
         <a href="/vocabulary">AI Commerce Vocabulary</a>
         <a href="/vocabulary/learn">AI Commerce University</a>
         <a href="/research">Research</a>
         <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/how-ai-decides">How AI Decides</a>
         <a href="/research/mechanism-studies">Mechanism Studies</a>
         <a href="/research/category-reports">Category Reports</a>
         <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
@@ -749,6 +759,9 @@
         <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
         <a href="/research/founder-lab/log">Founder Lab Log</a>
         <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/ai-signal">AI Traffic, Live</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms of Service</a>
         <a href="/about">About</a>
       </div>
     </nav>
@@ -842,9 +855,9 @@
       { key:'trust', label:'Trust', simLabel:'Trust', parts:['trust_score'], max:15,
         passText:'AI can verify trust signals.', failText:'AI cannot verify trust.',
         reason:'Low trust confidence.' },
-      { key:'recommend', label:'Recommend', simLabel:'Recommendation', parts:['rec_score','brand_score','price_score'], max:30,
-        passText:'AI has strong recommendation signals.', failText:'AI finds limited recommendation signals.',
-        reason:'Weak recommendation signals.' }
+      { key:'recommend', label:'Signals', simLabel:'Commerce Signals', parts:['rec_score','brand_score','price_score'], max:30,
+        passText:'AI finds strong commerce signals here.', failText:'AI finds limited commerce signals here.',
+        reason:'Weak commerce signals.' }
     ];
 
     // The six concrete things AI is shown examining in the Why dissection.
@@ -985,7 +998,7 @@
 
     function revealHeroVerdict(recommended, reasonText){
       if (!els.heroVerdictValue) return;
-      els.heroVerdictValue.textContent = recommended ? 'WOULD RECOMMEND' : 'WOULD NOT RECOMMEND';
+      els.heroVerdictValue.textContent = recommended ? 'AI CAN READ THIS STORE' : 'AI STRUGGLES WITH THIS STORE';
       els.heroVerdictValue.className = 'hero-meta-value ' + (recommended ? 'is-pass' : 'is-fail');
       // The reason lands a beat after the result itself, not both at once.
       if (els.heroVerdictReason) {
@@ -1023,9 +1036,9 @@
       let html = '<p>' + line1 + '</p><p>' + line2 + '</p>';
       if (!recommended) {
         const worst = weakestStage(stages);
-        html += '<p>However...</p><p>' + worst.failText + '</p><p>Another merchant appears safer.</p>';
+        html += '<p>However...</p><p>' + worst.failText + '</p><p>That creates real friction for AI trying to read and trust the store.</p>';
       } else {
-        html += '<p>This store compares well on trust and clarity.</p>';
+        html += '<p>This store reads cleanly across trust and clarity signals.</p>';
       }
       els.reasoningBubble.innerHTML = html;
     }
@@ -1199,9 +1212,9 @@
     function updateSeo(domain, storeName, score){
       const canonical = 'https://atomfoundry.dev/store/' + domain;
       document.title = els.pageTitle.textContent = 'How AI sees ' + storeName + ': Atom Foundry';
-      els.pageDesc.content = 'Watch how an AI shopping agent reads, understands, and decides whether to recommend ' + storeName + ' (' + domain + ').';
+      els.pageDesc.content = 'Watch how an AI shopping agent reads and understands ' + storeName + ' (' + domain + '), and see its AI Commerce Score.';
       els.ogTitle.content = 'How AI sees ' + storeName;
-      els.ogDesc.content = 'Watch how an AI shopping agent reads, understands, and decides whether to recommend ' + storeName + '.';
+      els.ogDesc.content = 'Watch how an AI shopping agent reads and understands ' + storeName + ', and see its AI Commerce Score.';
       els.canonicalLink.href = canonical;
 
       const prev = document.getElementById('storeLd');
@@ -1268,7 +1281,7 @@
 
       const recommended = stages.every(s => s.pass);
       const worst = weakestStage(stages);
-      const reasonText = recommended ? 'Strong signals across read, understand, trust, and recommend.' : worst.reason;
+      const reasonText = recommended ? 'Strong, consistent signals across the full read.' : worst.reason;
 
       updateSeo(domain, storeName, score);
 

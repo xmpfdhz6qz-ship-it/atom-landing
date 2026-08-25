@@ -3,8 +3,14 @@
 // pass straight through. Fire-and-forget with a 2s timeout — never blocks a page.
 //
 // Note: /store/(.*) is no longer handled here. It's proxied directly in
-// vercel.json to /store.html, which renders every scanned store live via
-// the /get-store API (see vercel.json + store.html for details).
+// vercel.json to /api/store, a serverless function that server renders
+// store.html with live data from the /get-store API (see vercel.json +
+// api/store.js for details).
+//
+// /_pages/store/* is a retired static pre render pipeline, superseded by
+// the /api/store SSR above. Nothing on the site links to it, but the files
+// are still sitting in the deployed output, so any request straight to that
+// path is blocked here with a 404 rather than serving stale, unlinked pages.
 //
 // Beacon target: /webhook/ai-visit -> ai_visits table (atomfoundry.dev's own
 // traffic only, incl. our /api/ai/* readiness probes). Read back by
@@ -33,6 +39,11 @@ function botType(bot) {
 }
 
 export default async function middleware(request) {
+  const requestUrl = new URL(request.url);
+  if (requestUrl.pathname.startsWith('/_pages/store/')) {
+    return new Response('Not found', { status: 404 });
+  }
+
   const ua = request.headers.get('user-agent') || '';
   const m = ua.match(AI_BOTS);
   if (m) {
