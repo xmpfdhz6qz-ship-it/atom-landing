@@ -223,13 +223,15 @@ h1 em{color:var(--orange);}
 .aisig-insight-text .aisig-cz{display:block;color:var(--a-faint);margin-top:3px;}
 
 .aisig-grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
-.aisig-rows{display:grid;row-gap:12px;column-gap:12px;align-items:center;}
-.aisig-r{display:contents;}
+.aisig-grid2>*+*{border-left:1px solid rgba(255,255,255,0.08);padding-left:34px;}
+.aisig-rows{display:flex;flex-direction:column;row-gap:2px;}
+.aisig-r{display:grid;column-gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.aisig-r:last-child{border-bottom:none;}
 .aisig-r>*{min-width:0;min-height:36px;}
-#aisigWhoRows{grid-template-columns:minmax(0,1.3fr) 88px minmax(60px,.6fr) 40px;}
-#aisigPageRows{grid-template-columns:minmax(0,1.9fr) minmax(60px,.6fr) 40px;}
-#aisigStoreRows{grid-template-columns:minmax(0,1.4fr) minmax(0,.9fr) minmax(60px,.6fr) 40px;}
-#aisigReadinessRows{grid-template-columns:minmax(0,1fr) 96px 150px;}
+#aisigWhoRows .aisig-r{grid-template-columns:minmax(0,1.3fr) 88px minmax(60px,.6fr) 40px;}
+#aisigPageRows .aisig-r{grid-template-columns:minmax(0,1.9fr) minmax(60px,.6fr) 40px;}
+#aisigStoreRows .aisig-r{grid-template-columns:minmax(0,1.4fr) minmax(0,.9fr) minmax(60px,.6fr) 40px;}
+#aisigReadinessRows .aisig-r{grid-template-columns:minmax(0,1fr) 96px 150px;}
 .aisig-r .who{display:flex;flex-direction:column;min-width:0;}
 .aisig-r .nm{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--a-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-r .seen{font-size:11px;color:var(--a-dim);font-family:var(--mono);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -264,12 +266,11 @@ h1 em{color:var(--orange);}
 .aisig-spitem .ds{font-size:11.5px;color:var(--a-dim);}
 .aisig-spitem .num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--a-text);}
 
-.aisig-feed{display:grid;row-gap:13px;column-gap:16px;align-items:center;font-family:var(--mono);font-size:13px;}
-.aisig-feed .f{display:contents;}
+.aisig-feed{display:flex;flex-direction:column;row-gap:2px;font-family:var(--mono);font-size:13px;}
+.aisig-feed .f{display:grid;grid-template-columns:148px 92px minmax(0,1fr) 128px;column-gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.aisig-feed .f:last-child{border-bottom:none;}
 .aisig-feed .f>*{min-width:0;}
-#aisigFeed{grid-template-columns:148px 92px minmax(0,1fr) 128px;}
-#aisigReadinessFeed{grid-template-columns:148px minmax(0,1fr) 128px;}
-#aisigSpoofedFeed{grid-template-columns:148px minmax(0,1fr) 128px;}
+.aisig-feed .f.f3{grid-template-columns:148px minmax(0,1fr) 128px;}
 .aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
 .aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-feed .t{color:var(--a-dim);font-size:11px;white-space:nowrap;text-align:right;}
@@ -303,10 +304,15 @@ h1 em{color:var(--orange);}
 @media(max-width:860px){
   .aisig-readout{grid-template-columns:repeat(2,1fr);row-gap:20px;}
   .aisig-insights{grid-template-columns:1fr;}
-  .aisig-grid2{grid-template-columns:1fr;}
-  .aisig-r{grid-template-columns:minmax(0,1fr) 66px 36px;}
+  .aisig-grid2{grid-template-columns:1fr;gap:36px;}
+  .aisig-grid2>*+*{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,0.08);padding-top:36px;}
+  #aisigWhoRows .aisig-r{grid-template-columns:minmax(0,1fr) 66px 36px;}
+  #aisigPageRows .aisig-r{grid-template-columns:minmax(0,1fr) 40px;}
+  #aisigStoreRows .aisig-r{grid-template-columns:minmax(0,1fr) minmax(0,.6fr) 36px;}
+  #aisigReadinessRows .aisig-r{grid-template-columns:minmax(0,1fr) 70px auto;}
   .aisig-r .aisig-track{display:none;}
   .aisig-feed .f{grid-template-columns:minmax(0,auto) 66px minmax(0,1fr);}
+  .aisig-feed .f.f3{grid-template-columns:minmax(0,auto) minmax(0,1fr);}
   .aisig-feed .t{display:none;}
 }
 </style>
@@ -486,7 +492,7 @@ window.AISIG_DATA_READY = (function(){
     return 'před ' + days + ' d';
   }
   function bothTime(iso){
-    return absTime(iso) + ' &middot; ' + relTimeCZ(iso);
+    return absTime(iso);
   }
 
   function buildMonths(daily){
