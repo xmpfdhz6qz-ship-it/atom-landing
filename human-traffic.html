@@ -113,17 +113,19 @@ h1 em{color:var(--orange);}
 .aisig-insight-text .aisig-cz{display:block;color:var(--a-faint);margin-top:3px;}
 
 .aisig-grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
-.aisig-rows{display:grid;row-gap:12px;column-gap:12px;align-items:center;}
-.aisig-r{display:contents;}
+.aisig-grid2>*+*{border-left:1px solid rgba(255,255,255,0.08);padding-left:34px;}
+.aisig-rows{display:flex;flex-direction:column;row-gap:2px;}
+.aisig-r{display:grid;column-gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.aisig-r:last-child{border-bottom:none;}
 .aisig-r>*{min-width:0;min-height:36px;}
-.ht-rows{grid-template-columns:minmax(0,1.9fr) minmax(60px,.6fr) 40px;}
+.ht-rows .aisig-r{grid-template-columns:minmax(0,1.9fr) minmax(60px,.6fr) 40px;}
 .aisig-r .who{display:flex;flex-direction:column;min-width:0;}
 .aisig-r .nm{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--a-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-r .seen{font-size:11px;color:var(--a-dim);font-family:var(--mono);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-r .val{font-family:var(--mono);font-size:13.5px;font-weight:700;text-align:right;color:var(--a-text);}
 .aisig-track{height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;}
 .aisig-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2b8f68,var(--a-green));}
-.aisig-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.04em;padding:3px 6px;border-radius:5px;font-weight:700;text-align:center;text-transform:lowercase;white-space:nowrap;}
+.aisig-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:0.04em;padding:4px 8px;border-radius:5px;font-weight:700;text-align:center;text-transform:lowercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .aisig-t-chrome{color:#3ddba4;background:rgba(95,224,175,0.14);}
 .aisig-t-safari{color:#f3b551;background:rgba(224,162,51,0.14);}
 .aisig-t-firefox{color:var(--a-cyan);background:rgba(125,211,252,0.14);}
@@ -137,6 +139,10 @@ h1 em{color:var(--orange);}
 .aisig-sp-mobile{background:linear-gradient(90deg,#b8791d,var(--a-amber));}
 .aisig-sp-tablet{background:linear-gradient(90deg,#0369a1,var(--a-cyan));}
 .aisig-sp-other{background:rgba(255,255,255,0.14);}
+.aisig-sp-search{background:linear-gradient(90deg,#2b8f68,var(--a-green));}
+.aisig-sp-social{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+.aisig-sp-direct{background:linear-gradient(90deg,#0369a1,var(--a-cyan));}
+.aisig-sp-internal{background:rgba(255,255,255,0.28);}
 .aisig-splegend{display:grid;gap:14px;}
 .aisig-spitem{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;}
 .aisig-spitem .txt{min-width:0;}
@@ -145,10 +151,10 @@ h1 em{color:var(--orange);}
 .aisig-spitem .ds{font-size:11.5px;color:var(--a-dim);}
 .aisig-spitem .num{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--a-text);}
 
-.aisig-feed{display:grid;row-gap:13px;column-gap:16px;align-items:center;font-family:var(--mono);font-size:13px;}
-.aisig-feed .f{display:contents;}
+.aisig-feed{display:flex;flex-direction:column;row-gap:2px;font-family:var(--mono);font-size:13px;}
+.aisig-feed .f{display:grid;grid-template-columns:170px 92px minmax(0,1fr) 128px;column-gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.aisig-feed .f:last-child{border-bottom:none;}
 .aisig-feed .f>*{min-width:0;}
-#htRecentFeed{grid-template-columns:170px 84px minmax(0,1fr) 128px;}
 .aisig-feed .bot{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-text);}
 .aisig-feed .path{color:rgba(255,255,255,0.78);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .aisig-feed .t{color:var(--a-dim);font-size:11px;white-space:nowrap;text-align:right;}
@@ -177,15 +183,20 @@ h1 em{color:var(--orange);}
 .aisig-gate p{font-size:13px;color:var(--a-dim);margin-bottom:4px;}
 .aisig-gate .mono{font-family:var(--mono);color:var(--a-green);}
 
+.aisig-sortbar{display:flex;flex-wrap:wrap;gap:8px;}
+.aisig-sortbtn{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--a-dim);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:8px 15px;cursor:pointer;transition:background .15s ease,color .15s ease,border-color .15s ease;white-space:nowrap;}
+.aisig-sortbtn:hover{color:var(--a-text);border-color:rgba(255,255,255,0.28);}
+.aisig-sortbtn.is-active{color:#0a0d0a;background:var(--a-green);border-color:var(--a-green);}
 .aisig-note{font-size:11px;color:var(--gray-500);line-height:1.6;margin-top:4px;max-width:680px;}
 .aisig-note .aisig-cz{display:block;margin-top:2px;}
 @media(max-width:860px){
   .aisig-readout{grid-template-columns:repeat(2,1fr);row-gap:20px;}
   .aisig-insights{grid-template-columns:1fr;}
-  .aisig-grid2{grid-template-columns:1fr;}
-  .aisig-r{grid-template-columns:minmax(0,1fr) 66px 36px;}
+  .aisig-grid2{grid-template-columns:1fr;gap:36px;}
+  .aisig-grid2>*+*{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,0.08);padding-top:36px;}
+  .ht-rows .aisig-r{grid-template-columns:minmax(0,1fr) 40px;}
   .aisig-r .aisig-track{display:none;}
-  .aisig-feed .f{grid-template-columns:minmax(0,auto) 66px minmax(0,1fr);}
+  .aisig-feed .f{grid-template-columns:minmax(0,auto) 74px minmax(0,1fr);}
   .aisig-feed .t{display:none;}
 }
 </style>
@@ -233,6 +244,17 @@ h1 em{color:var(--orange);}
       <p class="aisig-sub-desc">What visitors are browsing on: desktop, mobile or tablet.<span class="aisig-cz">Na čem návštěvníci prohlíží: počítač, mobil nebo tablet.</span></p>
       <div class="aisig-spectrum" id="aisigSpectrum"></div>
       <div class="aisig-splegend" id="aisigSplegend"></div>
+    </div>
+
+    <div class="aisig-block" id="aisigBlockSort">
+      <div class="aisig-sub-label">Sort recent visits</div>
+      <p class="aisig-sub-desc">Reorder the recent visits below: newest or oldest first, by the page's total pageviews, or by the browser's total pageviews.<span class="aisig-cz">Přerovnej poslední zobrazení níže: od nejnovějších nebo nejstarších, podle celkových zobrazení stránky, nebo podle celkových zobrazení daného prohlížeče.</span></p>
+      <div class="aisig-sortbar" id="aisigSortBar">
+        <button type="button" class="aisig-sortbtn is-active" data-sort="date_desc">Newest &middot; Nejnovější</button>
+        <button type="button" class="aisig-sortbtn" data-sort="date_asc">Oldest &middot; Nejstarší</button>
+        <button type="button" class="aisig-sortbtn" data-sort="page">By page &middot; Podle stránky</button>
+        <button type="button" class="aisig-sortbtn" data-sort="browser">By browser &middot; Podle prohlížeče</button>
+      </div>
     </div>
 
     <div class="aisig-block" id="aisigBlockSignal">
@@ -288,6 +310,13 @@ h1 em{color:var(--orange);}
       </div>
     </div>
 
+    <div class="aisig-block" id="aisigBlockSources">
+      <div class="aisig-sub-label">Traffic sources</div>
+      <p class="aisig-sub-desc">Where visitors come from before landing here: search engines (including Google), social media, direct visits, or links from elsewhere on the site.<span class="aisig-cz">Odkud návštěvníci přišli, než se sem dostali: vyhledávače (včetně Google), sociální sítě, přímé návštěvy, nebo odkazy odjinud z webu.</span></p>
+      <div class="aisig-spectrum" id="aisigSourceSpectrum"></div>
+      <div class="aisig-splegend" id="aisigSourceLegend"></div>
+    </div>
+
     <div class="aisig-block" id="aisigBlockDevice">
       <div class="aisig-grid2">
         <div>
@@ -339,7 +368,7 @@ window.AISIG_DATA_READY = (function(){
     return 'před ' + days + ' d';
   }
   function bothTime(iso){
-    return absTime(iso) + ' &middot; ' + relTimeCZ(iso);
+    return absTime(iso);
   }
 
   function buildMonths(daily){
@@ -396,6 +425,49 @@ window.AISIG_DATA_READY = (function(){
     return { rows: rows, total: total };
   }
 
+  var SEARCH_RE = /google\.|bing\.com|search\.yahoo|duckduckgo\.com|seznam\.cz|search\.brave\.com|yandex\./i;
+  var SOCIAL_RE = /facebook\.com|instagram\.com|twitter\.com|x\.com|t\.co$|linkedin\.com|tiktok\.com|reddit\.com|threads\.net|pinterest\./i;
+  function classifySource(host){
+    var h = String(host || '');
+    if (h === 'Direct') return 'direct';
+    if (h === 'Internal') return 'internal';
+    if (SEARCH_RE.test(h)) return 'search';
+    if (SOCIAL_RE.test(h)) return 'social';
+    return 'other';
+  }
+  function buildSourceSpectrum(referrers){
+    var root = document.getElementById('aisigSourceSpectrum');
+    var legend = document.getElementById('aisigSourceLegend');
+    if (!root || !legend) return;
+    var LABEL = { search: 'Search', social: 'Social', direct: 'Direct', internal: 'Internal', other: 'Other' };
+    var DESC_EN = { search: 'came in from a search engine', social: 'came in from social media', direct: 'typed the address or used a bookmark', internal: 'clicked here from another page on the site', other: 'came in from another website' };
+    var DESC_CZ = { search: 'přišli z vyhledávače', social: 'přišli ze sociální sítě', direct: 'napsali adresu nebo použili záložku', internal: 'proklikli se z jiné stránky webu', other: 'přišli z jiného webu' };
+    var buckets = { search: 0, social: 0, direct: 0, internal: 0, other: 0 };
+    var searchHosts = {};
+    (referrers || []).forEach(function(r){
+      var cat = classifySource(r.referrer_host);
+      buckets[cat] += Number(r.visits) || 0;
+      if (cat === 'search') searchHosts[r.referrer_host] = true;
+    });
+    var total = Object.keys(buckets).reduce(function(a, k){ return a + buckets[k]; }, 0);
+    if (!total) {
+      root.innerHTML = '';
+      legend.innerHTML = '<div class="aisig-spitem"><span class="txt"><span class="ds">No visits recorded yet. Zatím žádné návštěvy.</span></span></div>';
+      return;
+    }
+    var order = ['search', 'social', 'direct', 'internal', 'other'].filter(function(k){ return buckets[k] > 0; });
+    root.innerHTML = order.map(function(k){
+      var pct = Math.round(buckets[k] / total * 100);
+      return '<span class="aisig-sp-' + k + '" style="--w:' + pct + '%" title="' + LABEL[k] + ': ' + buckets[k] + '"></span>';
+    }).join('');
+    legend.innerHTML = order.map(function(k){
+      var pct = Math.round(buckets[k] / total * 100);
+      var extra = (k === 'search' && Object.keys(searchHosts).length) ? ' (' + esc(Object.keys(searchHosts).join(', ')) + ')' : '';
+      return '<div class="aisig-spitem"><span class="dot aisig-sp-' + k + '"></span><span class="txt"><span class="nm">' + LABEL[k] +
+        '</span> <span class="ds">&middot; ' + DESC_EN[k] + extra + ' / ' + DESC_CZ[k] + '</span></span><span class="num">' + buckets[k] + '</span></div>';
+    }).join('');
+  }
+
   function buildRecentFeed(rows){
     var el = document.getElementById('htRecentFeed');
     if (!el) return;
@@ -409,6 +481,40 @@ window.AISIG_DATA_READY = (function(){
       return '<div class="f"><span class="bot">' + esc(r.path) + '</span><span class="aisig-tag aisig-t-' + esc(browser) + '">' + esc(r.browser || 'other') + '</span><span class="path">' + esc(ref) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
     }).join('');
   }
+
+  function sortRecentBy(mode){
+    var rows = (window.HT_RECENT || []).slice();
+    var pageVisits = window.HT_PAGE_VISITS || {};
+    var browserVisits = window.HT_BROWSER_VISITS || {};
+    if (mode === 'date_asc') {
+      rows.sort(function(a, b){ return new Date(a.visited_at) - new Date(b.visited_at); });
+    } else if (mode === 'page') {
+      rows.sort(function(a, b){
+        var d = (pageVisits[b.path] || 0) - (pageVisits[a.path] || 0);
+        return d !== 0 ? d : (new Date(b.visited_at) - new Date(a.visited_at));
+      });
+    } else if (mode === 'browser') {
+      rows.sort(function(a, b){
+        var d = (browserVisits[b.browser] || 0) - (browserVisits[a.browser] || 0);
+        return d !== 0 ? d : (new Date(b.visited_at) - new Date(a.visited_at));
+      });
+    } else {
+      rows.sort(function(a, b){ return new Date(b.visited_at) - new Date(a.visited_at); });
+    }
+    buildRecentFeed(rows);
+  }
+
+  (function(){
+    var bar = document.getElementById('aisigSortBar');
+    if (!bar) return;
+    bar.addEventListener('click', function(e){
+      var btn = e.target.closest('.aisig-sortbtn');
+      if (!btn) return;
+      bar.querySelectorAll('.aisig-sortbtn').forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      sortRecentBy(btn.getAttribute('data-sort'));
+    });
+  })();
 
   function buildBarRows(elId, rows, labelKey, emptyText){
     var el = document.getElementById(elId);
@@ -486,7 +592,14 @@ window.AISIG_DATA_READY = (function(){
       if (cells[4]) cells[4].textContent = avgPages;
       if (cells[5]) cells[5].textContent = mobilePct + '%';
 
+      window.HT_RECENT = recent;
+      window.HT_PAGE_VISITS = {};
+      pages.forEach(function(p){ window.HT_PAGE_VISITS[p.path] = Number(p.visits) || 0; });
+      window.HT_BROWSER_VISITS = {};
+      browsers.forEach(function(b){ window.HT_BROWSER_VISITS[b.browser] = Number(b.visits) || 0; });
+
       var deviceResult = buildDeviceSpectrum(devices);
+      buildSourceSpectrum(referrers);
       buildRecentFeed(recent);
       buildBarRows('htBrowserRows', browsers, 'browser', 'No browser data yet. Zatím žádná data.');
       buildInsights(s, deviceResult, pages, referrers);
