@@ -585,7 +585,8 @@ window.AISIG_DATA_READY = (function(){
         return '<div class="f f3"><span class="bot">' + esc(r.bot) + '</span><span class="path">' + esc(r.path) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
       }
       var type = r.bot_type || 'other';
-      return '<div class="f"><span class="bot">' + esc(r.bot) + '</span><span class="aisig-tag aisig-t-' + esc(type) + '">' + esc(type) + '</span><span class="path">' + esc(r.path) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
+      var pathLabel = (r.path === '/') ? 'homepage' : r.path;
+      return '<div class="f"><span class="bot">' + esc(r.bot) + '</span><span class="aisig-tag aisig-t-' + esc(type) + '">' + esc(type) + '</span><span class="path">' + esc(pathLabel) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
     }).join('');
   }
 
