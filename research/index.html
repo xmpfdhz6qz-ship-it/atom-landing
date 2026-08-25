@@ -925,8 +925,8 @@
     <p class="research-hero-sub">We run automated scans on Shopify and DTC stores to understand how AI shopping agents actually read, evaluate, and recommend them. The data is live, continuously updated, and ours alone.</p>
     <div class="hero-stat-row">
       <div class="hero-stat"><b class="hero-stat-num" id="statStores" data-target="66090">66,090</b><span>Stores analyzed</span></div>
-      <div class="hero-stat"><b class="hero-stat-num" id="statAvg" data-target="56">56</b><span>/100 Average AI Commerce Score™</span></div>
-      <div class="hero-stat"><b class="hero-stat-num" id="statRisk" data-target="22">22</b><span>% AI Invisible Risk</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statAvg" data-target="55">55</b><span>/100 Average AI Commerce Score™</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statRisk" data-target="24">24</b><span>% AI Invisible Risk</span></div>
       <div class="hero-stat"><b class="hero-stat-num" id="statHighPct" data-target="0">0</b><span>% High Confidence Stores</span></div>
     </div>
   </div>
@@ -1613,12 +1613,12 @@
     </div>
     <div class="footer-stats-row">
       <div><b>17</b> Public Studies</div>
-      <div><b>66,090</b> Stores</div>
+      <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
     </div>
     <div class="footer-meta">
-      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+      <div><span data-stat="stores">66,090</span> DTC stores analyzed &middot; avg score <span data-stat="avg-score">55</span>/100 &middot; &copy; 2026 Atom Foundry</div>
     </div>
     <nav class="ai-sitemap" aria-label="Site directory">
       <div class="ai-sitemap-inner">
@@ -2235,6 +2235,10 @@
       const f = n => Number(n).toLocaleString('en-US');
       const count = Number(s.total_scanned), scoredCount = Number(s.scored_count);
       const avg = Number(s.avg_score), invisible = Number(s.invis_pct), partial = Number(s.partial_pct), highPct = Number(s.high_pct);
+      // Same live numbers also drive the footer stats row, so it never drifts
+      // from what this page's own hero stats show.
+      document.querySelectorAll('[data-stat="stores"]').forEach(el => { el.textContent = f(count); });
+      if (Number.isFinite(avg)) document.querySelectorAll('[data-stat="avg-score"]').forEach(el => { el.textContent = String(Math.round(avg)); });
       const highCount = Number(s.high_count);
       const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
       setStatTarget('statStores', count);

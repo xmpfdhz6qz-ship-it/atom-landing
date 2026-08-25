@@ -923,12 +923,12 @@
     </div>
     <div class="footer-stats-row">
       <div><b>17</b> Public Studies</div>
-      <div><b>66,090</b> Stores</div>
+      <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
     </div>
     <div class="footer-meta">
-      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+      <div><span data-stat="stores">66,090</span> DTC stores analyzed &middot; avg score <span data-stat="avg-score">55</span>/100 &middot; &copy; 2026 Atom Foundry</div>
     </div>
     <nav class="ai-sitemap" aria-label="Site directory">
       <div class="ai-sitemap-inner">
@@ -1334,5 +1334,32 @@
 })();
 </script>
 <!-- SITE_VISIT_TRACKER:END -->
+<!-- SITE_STATS_SYNC:START -->
+<script>
+(function(){
+  var STATS_URL = 'https://n8n-production-1d7c.up.railway.app/webhook/site-stats';
+  var CACHE_KEY = 'afSiteStats', CACHE_MS = 300000;
+  function apply(s){
+    if (!s || s.total_scanned == null) return;
+    var stores = Number(s.total_scanned).toLocaleString('en-US');
+    var avg = Math.round(Number(s.avg_score));
+    if (!isFinite(avg)) return;
+    document.querySelectorAll('[data-stat="stores"]').forEach(function(el){ el.textContent = stores; });
+    document.querySelectorAll('[data-stat="avg-score"]').forEach(function(el){ el.textContent = String(avg); });
+  }
+  var cached = null;
+  try { cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null'); } catch(e){}
+  if (cached && cached.s && (Date.now() - cached.t) < CACHE_MS) { apply(cached.s); return; }
+  fetch(STATS_URL, { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ return r.json(); })
+    .then(function(sd){
+      var s = Array.isArray(sd) ? sd[0] : (sd && sd.data ? sd.data[0] : sd);
+      apply(s);
+      try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), s: s })); } catch(e){}
+    })
+    .catch(function(){});
+})();
+</script>
+<!-- SITE_STATS_SYNC:END -->
 </body>
 </html>
