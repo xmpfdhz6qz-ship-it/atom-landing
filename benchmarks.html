@@ -636,12 +636,12 @@ h2 em{color:var(--orange);}
     </div>
     <div class="footer-stats-row">
       <div><b>17</b> Public Studies</div>
-      <div><b>66,090</b> Stores</div>
+      <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
     </div>
     <div class="footer-meta">
-      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+      <div><span data-stat="stores">66,090</span> DTC stores analyzed &middot; avg score <span data-stat="avg-score">55</span>/100 &middot; &copy; 2026 Atom Foundry</div>
     </div>
     <nav class="ai-sitemap" aria-label="Site directory">
       <div class="ai-sitemap-inner">
@@ -871,6 +871,12 @@ async function loadBenchmarks() {
       bmkCountUp(document.getElementById('avgScore'), Number(s.avg_score), { duration: 1200 });
       bmkCountUp(document.getElementById('invisiblePct'), Number(s.invis_pct), { duration: 1200, suffix: '%' });
       bmkCountUp(document.getElementById('highPct'), Number(s.high_pct), { duration: 1200, suffix: '%' });
+      // Same live numbers drive the footer stats row too.
+      document.querySelectorAll('[data-stat="stores"]').forEach(el => { el.textContent = total.toLocaleString('en-US'); });
+      if (Number.isFinite(Number(s.avg_score))) {
+        const avgText = String(Math.round(Number(s.avg_score)));
+        document.querySelectorAll('[data-stat="avg-score"]').forEach(el => { el.textContent = avgText; });
+      }
     }
     const niches = Array.isArray(nd) ? nd : (nd && nd.data ? nd.data : []);
     const byKey = {};

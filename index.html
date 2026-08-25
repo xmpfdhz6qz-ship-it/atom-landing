@@ -792,7 +792,7 @@
     <div class="niche-chart-head">
       <div class="niche-chart-label">Average AI Commerce Score™ by category</div>
       <div class="niche-chart-stores"><b id="nicheStoresNum" data-target="66090">66,090</b> Stores analyzed</div>
-      <div class="niche-overall"><b id="nicheOverallNum" data-target="57">57</b><span>/100 avg across 66,090 scanned stores</span></div>
+      <div class="niche-overall"><b id="nicheOverallNum" data-target="55">55</b><span>/100 avg across <span id="nicheOverallStores" data-stat="stores">66,090</span> scanned stores</span></div>
     </div>
     <div class="niche-chart" id="nicheChart">
       <div class="niche-bar" style="--h:55%;"><div class="niche-bar-value">56</div><div class="niche-bar-fill" style="--bar-color:var(--orange);"></div><div class="niche-tip">Fashion<br>Risk: 20% · Best: 93/100</div><div class="niche-bar-label">Fashion</div></div>
@@ -1070,12 +1070,12 @@
     </div>
     <div class="footer-stats-row">
       <div><b>17</b> Public Studies</div>
-      <div><b>66,090</b> Stores</div>
+      <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
     </div>
     <div class="footer-meta">
-      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+      <div><span data-stat="stores">66,090</span> DTC stores analyzed &middot; avg score <span data-stat="avg-score">55</span>/100 &middot; &copy; 2026 Atom Foundry</div>
     </div>
     <nav class="ai-sitemap" aria-label="Site directory">
       <div class="ai-sitemap-inner">
@@ -1126,6 +1126,46 @@
 </footer>
 
 <script>
+  // Single source of truth for every store/score stat on the page. Fetches
+  // once, updates every data-target (count-up) and data-stat (plain text)
+  // element with the live number, and never leaves anything at a bare "0" —
+  // the HTML already carries the last-known-good value as a fallback, so a
+  // slow or failed fetch just means the page shows that instead of live data.
+  var afStatsPromise = (function(){
+    var STATS_URL = 'https://n8n-production-1d7c.up.railway.app/webhook/site-stats';
+    var CACHE_KEY = 'afSiteStats', CACHE_MS = 300000;
+    function apply(s){
+      if (!s || s.total_scanned == null) return;
+      var storesNum = Number(s.total_scanned);
+      var avgNum = Math.round(Number(s.avg_score));
+      if (!isFinite(storesNum) || !isFinite(avgNum)) return;
+      document.querySelectorAll('[data-target]').forEach(function(el){
+        if (el.id === 'nicheStoresNum' || el.classList.contains('products-reveal-num') || el.classList.contains('research-findings-num')) {
+          el.dataset.target = String(storesNum);
+        } else if (el.id === 'nicheOverallNum') {
+          el.dataset.target = String(avgNum);
+        }
+      });
+      document.querySelectorAll('[data-stat="stores"]').forEach(function(el){ el.textContent = storesNum.toLocaleString('en-US'); });
+      document.querySelectorAll('[data-stat="avg-score"]').forEach(function(el){ el.textContent = String(avgNum); });
+    }
+    var cached = null;
+    try { cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null'); } catch(e){}
+    if (cached && cached.s && (Date.now() - cached.t) < CACHE_MS) {
+      apply(cached.s);
+      return Promise.resolve(cached.s);
+    }
+    return fetch(STATS_URL, { headers: { 'Accept': 'application/json' } })
+      .then(function(r){ return r.json(); })
+      .then(function(sd){
+        var s = Array.isArray(sd) ? sd[0] : (sd && sd.data ? sd.data[0] : sd);
+        apply(s);
+        try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), s: s })); } catch(e){}
+        return s;
+      })
+      .catch(function(){ return null; });
+  })();
+
   // Shared count-up helper (eased, comma-formatted) used by several sections.
   function countUp(el, target, duration){
     const start = performance.now();
@@ -1275,14 +1315,18 @@
       bars.forEach((bar, i) => {
         setTimeout(() => bar.classList.add('is-visible'), i * 90);
       });
-      if (overallNum) {
-        const target = Number(overallNum.dataset.target) || 0;
-        countUp(overallNum, target, 1200);
-      }
-      if (storesNum) {
-        const target = Number(storesNum.dataset.target) || 0;
-        countUp(storesNum, target, 1400);
-      }
+      // Wait for the live stats fetch (or its cached/fallback result) so the
+      // count-up always animates to the correct, current number.
+      afStatsPromise.then(() => {
+        if (overallNum) {
+          const target = Number(overallNum.dataset.target) || 0;
+          countUp(overallNum, target, 1200);
+        }
+        if (storesNum) {
+          const target = Number(storesNum.dataset.target) || 0;
+          countUp(storesNum, target, 1400);
+        }
+      });
     }
     // Only play once the chart is actually scrolled into view, so the
     // visitor sees the bars and numbers count up rather than finding
@@ -1305,8 +1349,10 @@
     function play(){
       if (played) return;
       played = true;
-      const target = Number(el.dataset.target) || 0;
-      countUp(el, target, duration || 1400);
+      afStatsPromise.then(() => {
+        const target = Number(el.dataset.target) || 0;
+        countUp(el, target, duration || 1400);
+      });
     }
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
