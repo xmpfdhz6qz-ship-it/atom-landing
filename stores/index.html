@@ -516,7 +516,7 @@
       <h1 class="stores-h1">Stores AI has learned to <em>understand</em>.</h1>
       <p class="stores-sub">Every store in this index has been scanned using the Atom Foundry Methodology and measured across the AI Commerce Framework.</p>
       <div class="stores-counter">
-        <div class="stores-counter-num" id="storesCounterNum">0</div>
+        <div class="stores-counter-num" id="storesCounterNum">66,090</div>
         <div class="stores-counter-label">Stores Indexed</div>
       </div>
     </div>
@@ -539,7 +539,7 @@
     <div class="stores-results" id="storesResults" aria-hidden="true">
       <div class="stores-results-inner">
         <div class="stores-results-count-row">
-          <div class="stores-results-count" id="storesResultsCount">0</div>
+          <div class="stores-results-count" id="storesResultsCount">66,090</div>
           <div class="stores-results-count-label" id="storesResultsCountLabel">stores analyzed</div>
         </div>
         <div class="stores-filters-label">Filter by category</div>
@@ -561,11 +561,12 @@
           <div class="category-tab-panel is-open" id="categoryTabPanel">
             <div class="category-tab-panel-inner">
               <div class="category-tab-panel-name" id="categoryPanelName">All</div>
-              <div class="category-tab-panel-count" id="categoryPanelCount">0</div>
+              <div class="category-tab-panel-count" id="categoryPanelCount">66,090</div>
               <div class="category-tab-panel-sub" id="categoryPanelSub">stores analyzed</div>
               <div class="category-tab-panel-score" id="categoryPanelScore" style="display:none;">
-                <div class="category-tab-panel-score-num" id="categoryPanelScoreNum">0</div>
+                <div class="category-tab-panel-score-num" id="categoryPanelScoreNum">55</div>
                 <div class="category-tab-panel-score-label">Avg AI commerce score</div>
+                <div style="font-size:11px;color:var(--gray-500);margin-top:4px;max-width:220px;">Measures AI readiness, not recommendation frequency.</div>
               </div>
               <div class="category-tab-panel-top" id="categoryPanelTop" style="display:none;">
                 <div class="category-tab-panel-top-label">Top stores</div>
@@ -656,12 +657,12 @@
     </div>
     <div class="footer-stats-row">
       <div><b>17</b> Public Studies</div>
-      <div><b>66,090</b> Stores</div>
+      <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
     </div>
     <div class="footer-meta">
-      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+      <div><span data-stat="stores">66,090</span> DTC stores analyzed &middot; avg score <span data-stat="avg-score">55</span>/100 &middot; &copy; 2026 Atom Foundry</div>
     </div>
     <nav class="ai-sitemap" aria-label="Site directory">
       <div class="ai-sitemap-inner">
@@ -1194,6 +1195,12 @@
         siteStats = Array.isArray(data) ? data[0] : (data && data.data ? data.data[0] : data);
         if (siteStats && siteStats.total_scanned != null) {
           countUp(counterEl, Number(siteStats.total_scanned), 1800);
+          const storesText = Number(siteStats.total_scanned).toLocaleString('en-US');
+          document.querySelectorAll('[data-stat="stores"]').forEach(el => { if (el !== counterEl) el.textContent = storesText; });
+          if (siteStats.avg_score != null) {
+            const avgText = String(Math.round(Number(siteStats.avg_score)));
+            document.querySelectorAll('[data-stat="avg-score"]').forEach(el => { el.textContent = avgText; });
+          }
         }
       } catch (e) {
         // Live endpoint unreachable — leave the counters blank rather than
