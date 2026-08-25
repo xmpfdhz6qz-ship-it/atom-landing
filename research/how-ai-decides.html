@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How AI Decides: Mapping the Path From Information to Recommendation | Atom Foundry</title>
+<meta name="description" content="AI does not simply see a brand and recommend it. Somewhere between discovery, retrieval, understanding, evaluation and selection, a decision gets made. This is the research map of what we have measured at each stage, and what we still do not know.">
+<meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
+<link rel="canonical" href="https://atomfoundry.dev/research/how-ai-decides">
+<meta property="og:title" content="How AI Decides: Mapping the Path From Information to Recommendation">
+<meta property="og:description" content="A working research map of the path from memory to purchase: what Atom Foundry has measured, what is still emerging, and what remains open research.">
+<meta property="og:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://atomfoundry.dev/research/how-ai-decides">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/research/how-ai-decides#webpage",
+      "url": "https://atomfoundry.dev/research/how-ai-decides",
+      "name": "How AI Decides: Mapping the Path From Information to Recommendation",
+      "description": "AI does not simply see a brand and recommend it. Somewhere between discovery, retrieval, understanding, evaluation and selection, a decision gets made. This is the research map of what we have measured at each stage, and what we still do not know.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": { "@id": "https://atomfoundry.dev/research/how-ai-decides#article" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/research/how-ai-decides#breadcrumb" }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/research/how-ai-decides#article",
+      "headline": "How AI Decides: Mapping the Path From Information to Recommendation",
+      "description": "A working research model of the path from memory to purchase, nine stages, what is measured, what is emerging, and what is still open research, updated as each new study lands.",
+      "datePublished": "2026-08-25",
+      "dateModified": "2026-08-25",
+      "author": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/how-ai-decides",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/how-ai-decides#webpage" },
+      "about": ["Recommendation Intelligence", "AI Commerce", "AI Decision Making", "Generative Engine Optimization"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/research/how-ai-decides#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://atomfoundry.dev/research" },
+        { "@type": "ListItem", "position": 3, "name": "How AI Decides", "item": "https://atomfoundry.dev/research/how-ai-decides" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  em{font-style:normal;}
+
+  /* ---------- NAV (shared component, identical to landing/research) ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(240,238,230,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .6s cubic-bezier(.65,0,.35,1);
+  }
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{
+    font-size:13px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.07em;
+    position:relative;padding:4px 2px;white-space:nowrap;
+    text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+    transition:color .2s ease, text-decoration-color .2s ease;
+  }
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-chevron{
+    display:inline-flex;width:10px;height:7px;margin-left:6px;
+    vertical-align:middle;color:currentColor;
+    transition:transform .2s ease;
+  }
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-chevron.chevron-r-pre{margin-left:0;margin-right:6px;transform:rotate(-90deg);}
+  .nav-chevron.chevron-l-pre{margin-left:0;margin-right:6px;transform:rotate(90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .dropdown{
+    position:absolute;top:100%;left:0;margin-top:6px;
+    background:var(--cream);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+    padding:12px;width:max-content;max-width:300px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:1100;
+  }
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:64px 24px;}
+  section.alt{background:var(--off-white);}
+  .container{max-width:var(--maxw);margin:0 auto;}
+  .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:14px;}
+  .page-title{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:820px;margin-bottom:18px;}
+  .page-title em{color:var(--orange);}
+  .section-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
+  .section-title em{color:var(--orange);}
+  .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:760px;}
+  .section-body strong{color:var(--black);}
+  .lede{font-size:18px;color:var(--black);line-height:1.6;max-width:760px;margin-bottom:16px;font-weight:700;}
+  .sub-head{font-family:var(--serif);font-weight:800;font-size:16px;color:var(--black);margin:24px 0 8px;letter-spacing:-0.01em;}
+  .vp-note{font-size:12px;color:var(--gray-500);margin-top:16px;max-width:760px;line-height:1.6;}
+
+  /* ---------- HERO ---------- */
+  .research-hero{padding:88px 24px 48px;background:var(--cream);}
+  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:56%;margin-top:28px;}
+  .byline-note{font-size:12px;color:var(--black);margin-top:24px;}
+  .byline-note a{color:var(--orange);font-weight:700;}
+
+  /* ---------- LAYER SECTION HEADER (kicker + status pill, question below) ---------- */
+  .layer-kicker-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
+  .layer-kicker-row .kicker{margin-bottom:0;}
+  .hd-status{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:6px 12px;border-radius:var(--radius);white-space:nowrap;flex-shrink:0;}
+  .hd-status i{display:none;}
+  .hd-status.measured{background:rgba(29,158,117,0.14);color:var(--green);}
+  .hd-status.emerging{background:rgba(224,162,51,0.18);color:var(--amber);}
+  .hd-status.open{background:rgba(217,60,60,0.14);color:var(--red);}
+  .hd-status.sm{font-size:10px;padding:3px 8px;}
+
+  /* ---------- RELATED RESEARCH LINKS (inline, small) ---------- */
+  .layer-related{margin-top:22px;display:flex;flex-direction:column;gap:10px;}
+  .layer-related-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:2px;}
+  .layer-related a{font-size:14px;font-weight:700;color:var(--black);transition:color .2s ease;display:inline-flex;align-items:center;gap:2px;}
+  .layer-related a:hover{color:var(--orange);}
+  .layer-related a .lr-text{animation:lr-text-pulse 2.6s ease-in-out infinite;}
+  .flow-arrows{display:inline-flex;align-items:center;gap:1px;margin-left:6px;}
+  .flow-arrows .nav-chevron{width:7px;height:6px;opacity:0.28;animation:lr-arrow-slide 1.7s ease-in-out infinite;}
+  .flow-arrows .nav-chevron:nth-child(1){animation-delay:0s;}
+  .flow-arrows .nav-chevron:nth-child(2){animation-delay:0.16s;}
+  .flow-arrows .nav-chevron:nth-child(3){animation-delay:0.32s;}
+  .flow-arrows .nav-chevron:nth-child(4){animation-delay:0.48s;}
+  @keyframes lr-text-pulse{0%,100%{opacity:1;}50%{opacity:0.62;}}
+  @keyframes lr-arrow-slide{0%{opacity:0.22;transform:translateX(-2px) rotate(-90deg);}50%{opacity:1;transform:translateX(1px) rotate(-90deg);}100%{opacity:0.22;transform:translateX(-2px) rotate(-90deg);}}
+
+  /* ---------- LAYER WINDOW (big embossed card wrapping each layer section) ---------- */
+  .layer-window{
+    background:#f9f7f1;
+    border-radius:16px;
+    padding:48px 52px;
+    max-width:960px;
+    margin:0 auto;
+    box-shadow:0 1px 0 rgba(255,255,255,0.9) inset, 0 24px 48px -26px rgba(22,21,18,0.20), 0 2px 10px -2px rgba(22,21,18,0.06);
+  }
+
+  /* ---------- 01 DECISION PATH TIMELINE ---------- */
+  .dp-caveat{font-size:13px;color:var(--gray-500);max-width:640px;margin:0 auto 36px;text-align:center;line-height:1.6;}
+  .decision-path{max-width:560px;margin:0 auto;}
+  .dp-stage{display:flex;align-items:flex-start;gap:20px;position:relative;padding-bottom:34px;opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,.8,.4,1), transform .7s cubic-bezier(.16,.8,.4,1);}
+  .dp-stage.is-visible{opacity:1;transform:translateY(0);}
+  .dp-stage:last-child{padding-bottom:0;}
+  .dp-stage::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:1px;background:var(--card-line);}
+  .dp-stage:last-child::before{display:none;}
+  .dp-num{width:40px;height:40px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:15px;color:var(--black);flex-shrink:0;}
+  .dp-body{padding-top:6px;}
+  .dp-name{font-family:var(--serif);font-weight:800;font-size:19px;letter-spacing:-0.01em;margin-bottom:4px;}
+  .dp-desc{font-size:14px;color:var(--gray-700);line-height:1.6;max-width:420px;}
+
+  /* ---------- WINNER VS LOSER BLOCK ---------- */
+  .wvl-block{background:var(--card);border-radius:var(--radius);padding:52px 48px;}
+  .wvl-intent{font-size:13px;color:var(--gray-700);text-align:center;margin-bottom:28px;}
+  .wvl-intent b{color:var(--black);}
+  .wvl-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:640px;margin:0 auto 32px;}
+  .wvl-card{background:var(--white);border-radius:var(--radius);padding:24px;text-align:center;}
+  .wvl-card-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .wvl-card.winner .wvl-card-label{color:var(--green);}
+  .wvl-card.loser .wvl-card-label{color:var(--gray-500);}
+  .wvl-card-brand{font-family:var(--serif);font-weight:800;font-size:20px;letter-spacing:-0.01em;}
+  .wvl-compare{max-width:640px;margin:0 auto;}
+  .wvl-compare-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:10px;text-align:center;}
+  .wvl-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .wvl-tags span{font-size:12.5px;font-weight:700;color:var(--gray-700);background:var(--white);border-radius:var(--radius);padding:6px 12px;animation:wvl-pulse 2.6s ease-in-out infinite;}
+  .wvl-tags span:nth-child(1){animation-delay:0s;}
+  .wvl-tags span:nth-child(2){animation-delay:0.12s;}
+  .wvl-tags span:nth-child(3){animation-delay:0.24s;}
+  .wvl-tags span:nth-child(4){animation-delay:0.36s;}
+  .wvl-tags span:nth-child(5){animation-delay:0.48s;}
+  .wvl-tags span:nth-child(6){animation-delay:0.6s;}
+  .wvl-tags span:nth-child(7){animation-delay:0.72s;}
+  .wvl-tags span:nth-child(8){animation-delay:0.84s;}
+  .wvl-tags span:nth-child(9){animation-delay:0.96s;}
+  .wvl-tags span:nth-child(10){animation-delay:1.08s;}
+  .wvl-tags span:nth-child(11){animation-delay:1.2s;}
+  @keyframes wvl-pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.55;transform:scale(0.97);}}
+
+  /* ---------- SUMMARY TABLE: 9 symmetric window cards, white to beige gradient ---------- */
+  .kt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+  .kt-card{border-radius:12px;padding:26px 24px;display:flex;flex-direction:column;gap:10px;min-height:180px;box-shadow:0 1px 0 rgba(255,255,255,0.7) inset, 0 14px 30px -18px rgba(22,21,18,0.22);}
+  .kt-card-layer{font-family:var(--serif);font-weight:800;font-size:16px;letter-spacing:-0.01em;}
+  .kt-card-know{font-size:13.5px;color:var(--gray-700);line-height:1.55;flex:1;}
+  .kt-card:nth-child(1){background:#fdfcfa;}
+  .kt-card:nth-child(2){background:#f9f7f3;}
+  .kt-card:nth-child(3){background:#f6f2eb;}
+  .kt-card:nth-child(4){background:#f2ede4;}
+  .kt-card:nth-child(5){background:#eee8dc;}
+  .kt-card:nth-child(6){background:#eae2d5;}
+  .kt-card:nth-child(7){background:#e7ddcd;}
+  .kt-card:nth-child(8){background:#e3d8c6;}
+  .kt-card:nth-child(9){background:#dfd3be;}
+
+  /* ---------- OPEN QUESTIONS ---------- */
+  .oq-list{margin-top:8px;max-width:760px;}
+  .oq-item{display:flex;align-items:flex-start;gap:10px;padding:13px 0;border-bottom:1px solid var(--card-line);font-size:15.5px;color:var(--black);line-height:1.55;font-weight:600;}
+  .oq-item:last-child{border-bottom:none;}
+  .oq-item .nav-chevron{margin-top:5px;flex-shrink:0;width:9px;height:6px;color:var(--orange);}
+  .oq-close{font-family:var(--serif);font-weight:800;font-size:19px;letter-spacing:-0.01em;margin-top:26px;}
+  .oq-close em{color:var(--orange);}
+
+  /* ---------- RESEARCH LIBRARY: full-width 3D windows ---------- */
+  .rl-group{margin-top:38px;}
+  .rl-group:first-child{margin-top:8px;}
+  .rl-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:14px;}
+  .products-grid{display:flex;flex-direction:column;gap:16px;}
+  .mini-card{
+    border-radius:14px;padding:28px 32px;background:#f9f7f1;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;
+    box-shadow:0 1px 0 rgba(255,255,255,0.8) inset, 0 16px 34px -20px rgba(22,21,18,0.22);
+    transition:transform .3s cubic-bezier(.16,.8,.4,1), box-shadow .3s ease;
+  }
+  .mini-card:hover{transform:scale(1.05);box-shadow:0 1px 0 rgba(255,255,255,0.8) inset, 0 28px 54px -22px rgba(22,21,18,0.30);position:relative;z-index:2;}
+  .mini-card-main{flex:1;min-width:0;}
+  .mini-card-tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px;}
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);}
+  .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:6px;}
+  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.55;}
+  .mini-card-link{flex-shrink:0;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;display:inline-flex;align-items:center;gap:2px;white-space:nowrap;}
+  .mini-card:hover .mini-card-link{color:var(--orange);}
+
+  /* ---------- FINAL SECTION ---------- */
+  .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);padding:56px 56px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-0.01em;margin-bottom:10px;}
+  .final-cta h2 em{color:var(--orange);}
+  .final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 30px;font-size:15.5px;line-height:1.6;}
+  .final-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .final-links a{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;padding:14px 24px;border-radius:var(--radius);transition:transform .2s ease, background .2s ease;}
+  .final-links a.primary{background:var(--black);color:var(--white);}
+  .final-links a.primary:hover{background:var(--orange);transform:translateY(-1px);}
+  .final-links a.secondary{background:var(--white);color:var(--black);}
+  .final-links a.secondary:hover{transform:translateY(-1px);}
+
+  /* ---------- FOOTER (shared component, identical to landing/research) ---------- */
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col .logo-word{margin-bottom:14px;}
+  .footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{color:var(--black);font-weight:700;}
+  .footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .research-hero{padding:72px 24px 40px;}
+    .research-hero-sub{max-width:100%;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .wvl-block{padding:36px 24px;}
+    .kt-grid{grid-template-columns:1fr 1fr;}
+    .layer-window{padding:36px 28px;}
+    .mini-card{flex-direction:column;align-items:flex-start;}
+  }
+  @media (max-width:680px){
+    .kt-grid{grid-template-columns:1fr;}
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:none;overflow-y:visible;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{position:relative;flex-direction:column;align-items:stretch;width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;}
+    .nav-trigger{font-size:13px;width:100%;box-sizing:border-box;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid var(--card-line);white-space:normal;text-align:left;}
+    .dropdown{position:static;box-shadow:none;background:var(--card);margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;opacity:1;visibility:hidden;transform:none;max-height:0;overflow:hidden;transition:max-height .25s ease;}
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    section{padding:44px 20px;}
+    .research-hero{padding:56px 20px 32px;}
+    .products-grid{grid-template-columns:1fr;}
+    .wvl-cards{grid-template-columns:1fr;}
+    .final-cta{padding:40px 22px;}
+    .final-links{flex-direction:column;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+    .dp-desc{max-width:none;}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger active">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/how-ai-decides" class="dd-item"><span class="dd-title">How AI Decides</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products" class="dd-item"><span class="dd-title">All Products</span></a>
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="research-hero">
+  <div class="container">
+    <div class="kicker">AI Commerce Research&trade; &middot; Research Map</div>
+    <h1 class="page-title">How AI <em>Decides</em></h1>
+    <p class="research-hero-sub">AI does not simply see a brand and recommend it. Somewhere between discovery, retrieval, understanding, evaluation and selection, a decision gets made. Atom Foundry is researching what happens at each stage, one study at a time.</p>
+    <div class="byline-note">Atom Foundry &middot; Updated August 2026 &middot; A living research map, expanded with every new study</div>
+  </div>
+</section>
+
+<!-- WHAT THIS PAGE IS -->
+<section class="alt">
+  <div class="container">
+    <p class="lede">What we know. What we have measured. What we still don't understand.</p>
+    <p class="section-body">This page is not a claim that Atom Foundry has solved AI recommendation. It is the opposite. Here is the system we are trying to understand. Here is the evidence we have collected so far. Here are the questions we have not solved yet. Every new study we publish becomes a new piece of this map, not just a new article.</p>
+  </div>
+</section>
+
+<!-- THE DECISION PATH -->
+<section>
+  <div class="container">
+    <div class="kicker" style="text-align:center;">The Decision Path</div>
+    <h2 class="section-title" style="text-align:center;max-width:none;">One possible path from <em>memory</em> to <em>purchase</em></h2>
+    <p class="dp-caveat">This is a working research model, not a claim about a fixed AI pipeline. Real systems may skip stages, run several at once, or loop back before answering.</p>
+    <div class="decision-path" id="decisionPath">
+      <div class="dp-stage">
+        <div class="dp-num">1</div>
+        <div class="dp-body">
+          <div class="dp-name">Memory</div>
+          <div class="dp-desc">What the model already knows before the conversation starts.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">2</div>
+        <div class="dp-body">
+          <div class="dp-name">Retrieval</div>
+          <div class="dp-desc">What live information the model finds and pulls in.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">3</div>
+        <div class="dp-body">
+          <div class="dp-name">Understanding</div>
+          <div class="dp-desc">What the model concludes your brand actually is.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">4</div>
+        <div class="dp-body">
+          <div class="dp-name">Candidacy</div>
+          <div class="dp-desc">Whether your brand enters the consideration set at all.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">5</div>
+        <div class="dp-body">
+          <div class="dp-name">Evaluation</div>
+          <div class="dp-desc">How the model compares the candidates against each other.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">6</div>
+        <div class="dp-body">
+          <div class="dp-name">Recommendation</div>
+          <div class="dp-desc">Which brand the model actually chooses to say out loud.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">7</div>
+        <div class="dp-body">
+          <div class="dp-name">Stability</div>
+          <div class="dp-desc">Whether the same answer holds up on the next run.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">8</div>
+        <div class="dp-body">
+          <div class="dp-name">Confidence</div>
+          <div class="dp-desc">How certain the model actually is behind that answer.</div>
+        </div>
+      </div>
+      <div class="dp-stage">
+        <div class="dp-num">9</div>
+        <div class="dp-body">
+          <div class="dp-name">Purchase</div>
+          <div class="dp-desc">Whether the recommendation ever turns into a transaction.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 1 MEMORY -->
+<section class="alt">
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">1 &middot; Memory</div>
+      <span class="hd-status emerging">Partially Measured</span>
+    </div>
+    <h2 class="section-title">What does AI already know?</h2>
+    <p class="section-body">Before a shopping question is ever asked, a language model already carries some notion of which brands exist and how they tend to be positioned. That prior knowledge comes from training, not from the live conversation, and it can shape an answer before retrieval or evaluation even begin.</p>
+    <div class="sub-head">What we've found</div>
+    <p class="section-body">Brand prominence appears to matter. Our fame study found that public recognition explains part of recommendation behavior, while measured store quality explains almost none of it.</p>
+    <div class="sub-head">What we don't know</div>
+    <p class="section-body">What exactly enters a model's memory, how strongly a brand is represented there, and how that internal representation shapes a recommendation later in the conversation.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/research/the-fame-study"><span class="lr-text">The Fame Study, Corrected</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 RETRIEVAL -->
+<section>
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">2 &middot; Retrieval</div>
+      <span class="hd-status measured">Measured</span>
+    </div>
+    <h2 class="section-title">What information does AI find?</h2>
+    <p class="section-body">When a model has live web access, it can supplement whatever it already knows with real time retrieval. A single switch, search on or off, turns out to matter more than almost anything else we have tested.</p>
+    <div class="sub-head">What we've found</div>
+    <p class="section-body"><strong>77% of product recommendations changed</strong> when web search was switched on, same model, same questions, the only change was retrieval.</p>
+    <div class="sub-head">What this tells us</div>
+    <p class="section-body">Retrieval is not a minor adjustment to AI recommendations. In many categories, it can fundamentally change the answer, and how much it changes the answer differs by category.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/research/web-search-changes-ai-recommendations"><span class="lr-text">I Flipped One Toggle and 77% of AI Recommendations Changed</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/category-reports"><span class="lr-text">Why AI Recommends Differently Across Categories</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 UNDERSTANDING -->
+<section class="alt">
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">3 &middot; Understanding</div>
+      <span class="hd-status measured">Measured</span>
+    </div>
+    <h2 class="section-title">What does AI think your brand actually is?</h2>
+    <p class="section-body">There is a difference between AI being able to read your information and AI understanding what that information means. A store may clearly describe itself as a performance running brand, while a model interprets it primarily as a fashion brand.</p>
+    <div class="sub-head">What we measure</div>
+    <p class="section-body">Category understanding, product understanding, attribute understanding, brand positioning, intent alignment, and the semantic relationships between them.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/framework/7-layers#ai-understanding"><span class="lr-text">AI Understanding&trade;, Framework Layer</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/search-changes-the-vocabulary"><span class="lr-text">Search Changes the Vocabulary</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 CANDIDACY -->
+<section>
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">4 &middot; Candidacy</div>
+      <span class="hd-status emerging">Emerging</span>
+    </div>
+    <h2 class="section-title">Does your brand enter the consideration set?</h2>
+    <p class="lede">A brand cannot be recommended if it never becomes a candidate.</p>
+    <p class="section-body">Getting considered and getting selected are different problems, governed by different things. Our full population study identified one store factor that consistently separates brands that are ever recommended from brands that never are, and it holds up under every check we ran. The open question is what else determines whether a brand enters the candidate set in the first place.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/research/candidacy-vs-selection"><span class="lr-text">Candidacy vs Selection</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 EVALUATION -->
+<section class="alt">
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">5 &middot; Evaluation</div>
+      <span class="hd-status open">Open Research</span>
+    </div>
+    <h2 class="section-title">How does AI compare the candidates?</h2>
+    <p class="section-body">Once a handful of candidates are inside the consideration set, the model has to compare them somehow. By price? By quality signals? By reviews? By authority? By familiarity? By product fit? By evidence? By category relevance? By something we have not measured at all?</p>
+    <p class="lede" style="margin-top:16px;">We don't know yet.</p>
+    <p class="section-body">This is the biggest open gap in the decision path right now, and one of the questions the rest of this research program is built to close.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 RECOMMENDATION -->
+<section>
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">6 &middot; Recommendation</div>
+      <span class="hd-status measured">Measured</span>
+    </div>
+    <h2 class="section-title">Which brand does AI actually choose?</h2>
+    <p class="section-body">This is where Recommendation Intelligence&trade; begins. We measure Recommendation Frequency&trade;, Recommendation Share&trade;, Recommendation Position&trade;, the reasons a model gives for its pick, and the differences between the brand that wins and the brands that don't.</p>
+    <div class="sub-head">The open part</div>
+    <p class="section-body">We can measure who gets recommended and how often. The mechanism behind the selection itself is not fully explained.</p>
+    <p class="section-body">We can also measure what reasons a model gives for its recommendation. We do not yet know whether those stated reasons are the actual causal drivers of the selection, or a justification constructed after the fact.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/research/ai-recommendations-across-commerce-2026"><span class="lr-text">The State of AI Recommendations Across Commerce 2026</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/the-model-predicts-itself"><span class="lr-text">The Model Predicts Itself</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/ai-confabulates-its-reasons"><span class="lr-text">The Model Confabulates Its Reasons</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 WINNER VS LOSER -->
+<section class="alt">
+  <div class="container">
+    <div class="layer-kicker-row">
+      <div class="kicker">7 &middot; The Winner vs The Loser</div>
+      <span class="hd-status emerging">Active Research</span>
+    </div>
+    <h2 class="section-title">We know who won. Now we want to know <em>why</em>.</h2>
+    <p class="section-body" style="margin-bottom:28px;">Every recommendation has a winner and, quietly, a brand that lost. We can already observe both sides of that outcome. What separates them is one of the questions we consider most important to answer next.</p>
+    <div class="wvl-block">
+      <div class="wvl-intent">Shopping intent: <b>"Best waterproof running shoe for wide feet under $200"</b></div>
+      <div class="wvl-cards">
+        <div class="wvl-card winner">
+          <div class="wvl-card-label">Winner</div>
+          <div class="wvl-card-brand">Brand A</div>
+        </div>
+        <div class="wvl-card loser">
+          <div class="wvl-card-label">Last place</div>
+          <div class="wvl-card-brand">Brand B</div>
+        </div>
+      </div>
+      <div class="wvl-compare">
+        <div class="wvl-compare-label">Compare</div>
+        <div class="wvl-tags">
+          <span>Price</span><span>Product attributes</span><span>Reviews</span><span>Content</span><span>Authority</span><span>Brand familiarity</span><span>Semantic positioning</span><span>Evidence</span><span>Structured information</span><span>AI understanding</span><span>Other observable signals</span>
+        </div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:28px;">What separates the brand AI selects from the brand it leaves behind?</p>
+  </div>
+</section>
+
+<!-- 8 STABILITY -->
+<section>
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">8 &middot; Stability</div>
+      <span class="hd-status emerging">Emerging</span>
+    </div>
+    <h2 class="section-title">Does the decision persist?</h2>
+    <p class="section-body">A model might recommend a brand today, but will it recommend the same brand again tomorrow, or even in the next run of the same question? We measure recommendation stability, position stability, whether the same winner keeps winning, and how much changes across repeated runs.</p>
+    <div class="sub-head">What we've found so far</div>
+    <p class="section-body">Early results show recommendation behavior can be more stable than expected, even in places where drift would seem likely. That stability is itself a variable we now factor into other studies.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/research/ai-knows-your-website"><span class="lr-text">AI Knows Your Website</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 CONFIDENCE -->
+<section class="alt">
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">9 &middot; Confidence</div>
+      <span class="hd-status open">Open Research</span>
+    </div>
+    <h2 class="section-title">How certain is AI about the recommendation?</h2>
+    <p class="section-body">A model can say it recommends Brand A. But how strong are the reasons behind that pick? How much would the answer change with slightly different phrasing? How close are the alternatives, and what is the actual margin between the first choice and the second?</p>
+    <p class="section-body">This is one of the biggest open questions in the whole decision path. Recommendation Confidence&trade; is the metric we expect to grow out of answering it.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/vocabulary/recommendation-confidence"><span class="lr-text">Recommendation Confidence, Defined</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 PURCHASE -->
+<section>
+  <div class="container">
+    <div class="layer-window">
+    <div class="layer-kicker-row">
+      <div class="kicker">10 &middot; Purchase</div>
+      <span class="hd-status open">Open Research</span>
+    </div>
+    <h2 class="section-title">Does recommendation actually influence the transaction?</h2>
+    <p class="lede">Recommendation is not purchase.</p>
+    <p class="section-body">A model may recommend a brand, and the person on the other end might still click somewhere else, change their mind, compare more options, abandon the purchase entirely, or buy from a competitor anyway. How an AI recommendation translates into actual commercial behavior is the final, and least understood, link in this chain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11 SUMMARY TABLE -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">11 &middot; What We Know, What We Don't</div>
+    <h2 class="section-title">The map so far</h2>
+    <div class="kt-grid">
+      <div class="kt-card"><div class="kt-card-layer">Memory</div><div class="kt-card-know">Prominence and fame appear to matter more than measured store quality.</div><span class="hd-status emerging sm">Partially Measured</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Retrieval</div><div class="kt-card-know">Search access can dramatically change which brand gets recommended.</div><span class="hd-status measured sm">Measured</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Understanding</div><div class="kt-card-know">Semantic understanding of a brand can be measured directly.</div><span class="hd-status measured sm">Measured</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Candidacy</div><div class="kt-card-know">Getting considered is a different problem from getting selected.</div><span class="hd-status emerging sm">Emerging</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Evaluation</div><div class="kt-card-know">The mechanism for comparing candidates remains unclear.</div><span class="hd-status open sm">Open Research</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Recommendation</div><div class="kt-card-know">We can measure who wins, and describe why they are described as winning.</div><span class="hd-status measured sm">Measured</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Stability</div><div class="kt-card-know">Recommendation persistence across repeated runs can be measured.</div><span class="hd-status emerging sm">Emerging</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Confidence</div><div class="kt-card-know">Decision confidence remains largely unexplored.</div><span class="hd-status open sm">Open Research</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Purchase</div><div class="kt-card-know">The relationship between recommendation and transaction remains open.</div><span class="hd-status open sm">Open Research</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 OPEN QUESTIONS -->
+<section>
+  <div class="container">
+    <div class="kicker">12 &middot; The Open Questions</div>
+    <h2 class="section-title">What we still don't know</h2>
+    <div class="oq-list">
+      <div class="oq-item"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Why does AI select one candidate over another?</div>
+      <div class="oq-item"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>What determines entry into the consideration set?</div>
+      <div class="oq-item"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>How much of recommendation behavior comes from training data provenance?</div>
+      <div class="oq-item"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>How does AI weigh evidence against familiarity?</div>
+      <div class="oq-item"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>What creates recommendation confidence?</div>
+      <div class="oq-item"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>When does a recommendation actually change purchasing behavior?</div>
+    </div>
+    <p class="oq-close">Every unanswered question is a <em>research opportunity</em>.</p>
+  </div>
+</section>
+
+<!-- 13 RESEARCH LIBRARY -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">13 &middot; Research Library</div>
+    <h2 class="section-title">Research behind the map</h2>
+    <p class="section-body" style="margin-bottom:8px;">Grouped by which stage of the decision path each study speaks to, not by publish date.</p>
+
+    <div class="rl-group">
+      <div class="rl-group-label">Memory</div>
+      <div class="products-grid">
+        <a class="mini-card" href="/research/the-fame-study">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Memory</span><span class="hd-status emerging sm">Partially Measured</span></div>
+            <div class="mini-card-title">The Fame Study, Corrected</div>
+            <div class="mini-card-body">Public fame explains a small share of recommendation, close to the noise floor.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="rl-group">
+      <div class="rl-group-label">Retrieval</div>
+      <div class="products-grid">
+        <a class="mini-card" href="/research/web-search-changes-ai-recommendations">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Retrieval</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">Web Search Rewrites 77% of AI Product Recommendations</div>
+            <div class="mini-card-body">Same model, same questions, only retrieval toggled on or off.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/category-reports">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Category Reports &middot; Retrieval</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">Five Categories, One Relationship</div>
+            <div class="mini-card-body">Beauty, supplements, coffee, pets, and home and living, tested the same way.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="rl-group">
+      <div class="rl-group-label">Understanding</div>
+      <div class="products-grid">
+        <a class="mini-card" href="/framework/7-layers#ai-understanding">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Framework &middot; Understanding</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">AI Understanding&trade;</div>
+            <div class="mini-card-body">Layer 02 of the 7 Layers framework.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read layer</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/search-changes-the-vocabulary">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Understanding</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">Search Changes the Vocabulary</div>
+            <div class="mini-card-body">Turning on search changes the words AI uses to describe your brand.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="rl-group">
+      <div class="rl-group-label">Candidacy</div>
+      <div class="products-grid">
+        <a class="mini-card" href="/research/candidacy-vs-selection">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Candidacy</span><span class="hd-status emerging sm">Emerging</span></div>
+            <div class="mini-card-title">Candidacy vs Selection</div>
+            <div class="mini-card-body">One store factor gets you in. It predicts nothing about who wins once you're there.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="rl-group">
+      <div class="rl-group-label">Recommendation &amp; Stability</div>
+      <div class="products-grid">
+        <a class="mini-card" href="/research/ai-recommendations-across-commerce-2026">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Flagship &middot; Recommendation</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">The State of AI Recommendations Across Commerce 2026</div>
+            <div class="mini-card-body">20,000 recommendations, five categories. The study that started this series.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/the-model-predicts-itself">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Recommendation</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">The Model Predicts Itself</div>
+            <div class="mini-card-body">Nothing about your brand predicts recommendation as well as the model's own past behavior.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/ai-confabulates-its-reasons">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Recommendation</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">The Model Confabulates Its Reasons</div>
+            <div class="mini-card-body">Almost every reason the model gives for a pick is unique. It rarely repeats itself.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/ai-knows-your-website">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Stability</span><span class="hd-status emerging sm">Emerging</span></div>
+            <div class="mini-card-title">AI Knows Your Website</div>
+            <div class="mini-card-body">Recall accuracy holds steady across recommendation stability bands.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="rl-group">
+      <div class="rl-group-label">Confidence</div>
+      <div class="products-grid">
+        <a class="mini-card" href="/vocabulary/recommendation-confidence">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Vocabulary &middot; Confidence</span><span class="hd-status open sm">Open Research</span></div>
+            <div class="mini-card-title">Recommendation Confidence, Defined</div>
+            <div class="mini-card-body">How strongly AI endorses a store once it decides to recommend it.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read definition</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 FINAL CTA -->
+<section>
+  <div class="container">
+    <div class="final-cta">
+      <h2>The map is <em>incomplete</em>.</h2>
+      <p>We're still discovering what happens between being seen and being chosen.</p>
+      <div class="final-links">
+        <a href="/research" class="primary">Explore the research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none" style="color:var(--white);"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-90 8 5)"/></svg></span></a>
+        <a href="/scan" class="secondary">Run an AI Commerce Scan<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-90 8 5)"/></svg></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/how-ai-decides">How AI Decides</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>17</b> Public Studies</div>
+      <div><b>66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div>66,090 DTC stores analyzed &middot; avg score 55/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/products">Products</a>
+        <a href="/products/ai-commerce-score">AI Commerce Score</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/how-ai-decides">How AI Decides</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/ai-signal">AI Traffic, Live</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms of Service</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Navbar compacts on scroll (same behavior as the rest of the site).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) nav.classList.add('nav-compact');
+      else nav.classList.remove('nav-compact');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  // Mobile hamburger nav (same behavior as the rest of the site).
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) { menuOpenScrollY = window.scrollY; } else { closeMenu(); }
+    });
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+        menuOpenScrollY = window.scrollY;
+      });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    let menuOpenScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      if (!nav.classList.contains('nav-mobile-open')) return;
+      if (Math.abs(window.scrollY - menuOpenScrollY) > 24) closeMenu();
+    }, { passive: true });
+  })();
+
+  // Decision Path: stages stay hidden until the section scrolls into view,
+  // then unfold one by one after a short pause.
+  (function(){
+    const path = document.getElementById('decisionPath');
+    if (!path) return;
+    const stages = path.querySelectorAll('.dp-stage');
+    if (!stages.length) return;
+    let revealed = false;
+    function reveal(){
+      if (revealed) return;
+      revealed = true;
+      stages.forEach((stage, i) => {
+        setTimeout(() => stage.classList.add('is-visible'), (i + 1) * 1000);
+      });
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          reveal();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    observer.observe(path);
+  })();
+
+  // Related-research and mini-card links show a single chevron in markup;
+  // clone it into a 4-arrow sequence so each link gets the sliding animation
+  // without repeating the same SVG four times in the HTML.
+  (function(){
+    document.querySelectorAll('.flow-arrows').forEach(group => {
+      const chevron = group.querySelector('.nav-chevron');
+      if (!chevron) return;
+      for (let i = 0; i < 3; i++) {
+        group.appendChild(chevron.cloneNode(true));
+      }
+    });
+  })();
+</script>
+</body>
+</html>
