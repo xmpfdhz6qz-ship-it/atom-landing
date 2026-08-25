@@ -194,7 +194,11 @@ h2 em { font-style: normal; color: #f97316; }
       <a href="/framework">Framework</a> &nbsp;&middot;&nbsp;
       <a href="/benchmarks">Benchmarks</a> &nbsp;&middot;&nbsp;
       <a href="/research">Research</a> &nbsp;&middot;&nbsp;
-      <a href="/privacy-policy">Privacy</a><br>
+      <a href="/research/how-ai-decides">How AI Decides</a> &nbsp;&middot;&nbsp;
+      <a href="/products">Products</a> &nbsp;&middot;&nbsp;
+      <a href="/ai-signal">AI Traffic</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy-policy">Privacy</a> &nbsp;&middot;&nbsp;
+      <a href="/terms-of-service">Terms</a><br>
       <span style="font-size:11px;margin-top:4px;display:block;">&copy; 2026 Atom Foundry &middot; The AI Commerce Graph&trade; &middot; atomfoundry.dev</span>
     </div>
     <div>
@@ -356,7 +360,7 @@ async function init() {
     </div>
     <div class="hero-kicker">AI Readiness Benchmarks &middot; ${niche.label.toUpperCase()} &middot; ${today.toUpperCase()}</div>
     <h1>${niche.icon} ${niche.label} stores average<br><em>${avg}/100</em> on AI Readiness.</h1>
-    <p class="hero-sub">Real data from <strong>${total.toLocaleString('en-US')} scanned ${niche.label.toLowerCase()} Shopify stores</strong>. ${invisPct}% are classified as AI Invisible Risk. ${highly === 0 ? 'Not one store has reached Highly Recommendable status yet.' : `${highly} stores have reached Highly Recommendable status.`}</p>
+    <p class="hero-sub">Real data from <strong>${total.toLocaleString('en-US')} scanned ${niche.label.toLowerCase()} Shopify stores</strong>. ${invisPct}% are classified as AI Invisible Risk. ${highly === 0 ? 'Not one store has reached High Confidence status yet.' : `${highly} stores have reached High Confidence status.`}</p>
     <div class="top-stats">
       <div class="top-stat"><div class="top-stat-num" style="color:#1D9E75;">${total.toLocaleString('en-US')}</div><div class="top-stat-label">Stores analyzed</div></div>
       <div class="top-stat"><div class="top-stat-num" style="color:${scoreColor(avg)};">${avg}/100</div><div class="top-stat-label">Average AI score</div></div>
@@ -383,7 +387,7 @@ async function init() {
       </div>
       <div class="dist-card">
         <div class="dist-num" style="color:#1D9E75;">${highly}</div>
-        <div class="dist-label">Highly Recommendable</div>
+        <div class="dist-label">High Confidence</div>
         <div class="dist-range">(85 or above)</div>
         <div class="dist-count">out of ${total.toLocaleString('en-US')} stores</div>
       </div>
@@ -445,5 +449,32 @@ async function init() {
 init();
 </script>
   <script src="/track.js" defer></script>
+<!-- SITE_VISIT_TRACKER:START -->
+<script>
+(function(){
+  try {
+    if (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1') return;
+    var VID_KEY = 'af_vid';
+    var vid = localStorage.getItem(VID_KEY);
+    if (!vid) {
+      vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2));
+      localStorage.setItem(VID_KEY, vid);
+    }
+    var payload = JSON.stringify({
+      visitor_id: vid,
+      path: location.pathname,
+      referrer: document.referrer || '',
+      user_agent: navigator.userAgent || ''
+    });
+    var url = 'https://n8n-production-1d7c.up.railway.app/webhook/site-visit';
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+    } else {
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+</script>
+<!-- SITE_VISIT_TRACKER:END -->
 </body>
 </html>
