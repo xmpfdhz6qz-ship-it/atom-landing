@@ -974,6 +974,7 @@
   .voc-side-search{box-shadow:0 14px 28px -12px rgba(22,21,18,0.28), 0 3px 8px rgba(22,21,18,0.1);}
   .voc-side-search input{width:100%;height:40px;border:1px solid var(--card-line);border-radius:var(--radius);background:var(--white);padding:0 14px;font-size:13px;font-family:inherit;color:var(--black);outline:none;}
   .voc-side-search input:focus{border-color:var(--orange);}
+  .voc-side-search input::placeholder{color:var(--gray-500);}
 
   .voc-hint-block{padding:0;background:transparent;}
   .voc-hint-flip{display:block;perspective:1200px;height:96px;text-decoration:none;}
@@ -6177,6 +6178,68 @@
     if (sideSearchInput && sideSearchResults) {
       sideSearchInput.addEventListener('input', () => runSearch(sideSearchInput.value, sideSearchResults));
     }
+
+    // ---- Rotating placeholder: both search boxes sit empty and inviting
+    // by default, so instead of a static "Search..." they type out real
+    // concept names from the 66-term index, one letter at a time, hold,
+    // delete, and move to the next, an unmistakable nudge to type
+    // something. Pauses the moment the box is focused or has a value, so
+    // it never fights with what the visitor is actually doing.
+    (function(){
+      const words = SEARCH_INDEX.map(t => t.name);
+      if (!words.length) return;
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function shuffle(arr){
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+        }
+        return a;
+      }
+      function startTypewriter(input){
+        if (!input) return;
+        let order = shuffle(words);
+        let wi = 0, ci = 0, deleting = false, paused = false, timer = null;
+        const TYPE_MS = 62, DELETE_MS = 30, HOLD_MS = 1500, GAP_MS = 420;
+        function nextWord(){
+          wi++;
+          if (wi >= order.length) { order = shuffle(words); wi = 0; }
+        }
+        function tick(){
+          if (paused) { timer = setTimeout(tick, 250); return; }
+          if (reduceMotion) {
+            input.setAttribute('placeholder', order[wi]);
+            nextWord();
+            timer = setTimeout(tick, 2200);
+            return;
+          }
+          const word = order[wi];
+          if (!deleting) {
+            ci++;
+            input.setAttribute('placeholder', word.slice(0, ci));
+            if (ci >= word.length) { deleting = true; timer = setTimeout(tick, HOLD_MS); return; }
+            timer = setTimeout(tick, TYPE_MS);
+          } else {
+            ci--;
+            input.setAttribute('placeholder', word.slice(0, ci));
+            if (ci <= 0) {
+              deleting = false;
+              nextWord();
+              timer = setTimeout(tick, GAP_MS);
+              return;
+            }
+            timer = setTimeout(tick, DELETE_MS);
+          }
+        }
+        input.addEventListener('focus', () => { paused = true; });
+        input.addEventListener('blur', () => { if (!input.value) paused = false; });
+        input.addEventListener('input', () => { paused = !!input.value; });
+        timer = setTimeout(tick, 600);
+      }
+      startTypewriter(document.getElementById('vocSearch'));
+      startTypewriter(document.getElementById('vocSideSearch'));
+    })();
 
     // ---- Copy definition button ----
     document.querySelectorAll('.voc-copy-btn').forEach(btn => {
