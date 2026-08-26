@@ -3,8 +3,12 @@
 # We WANT AI to read everything: parametric memory (training) and live retrieval
 # both drive recommendations. Every reputable crawler is welcome to read the site.
 #
-# ONE exception for everyone: /scan is the free-scan tool. Letting crawlers hit it
-# would trigger real scans and burn the system, so it is off-limits to all bots.
+# Exceptions, off-limits to all bots:
+# - /scan is the free-scan tool. Letting crawlers hit it would trigger real
+#   scans and burn the system.
+# - /audit, /audit-processing, /audit-in-progress, and /report are private,
+#   token-gated pages delivered to a single paying customer. They are for
+#   that person only, never for indexing or crawling.
 # (Robots groups do NOT inherit, so the same rules are repeated for named AI bots.)
 
 # --- AI answer engines, assistants, and training crawlers (explicit opt-in) ---
@@ -26,6 +30,10 @@ User-agent: meta-externalagent
 User-agent: Bytespider
 Allow: /
 Disallow: /scan
+Disallow: /audit
+Disallow: /audit-processing
+Disallow: /audit-in-progress
+Disallow: /report
 Disallow: /*?search=
 Disallow: /*?filter=
 Disallow: /*?q=
@@ -35,6 +43,10 @@ Disallow: /*?sort=
 User-agent: *
 Allow: /
 Disallow: /scan
+Disallow: /audit
+Disallow: /audit-processing
+Disallow: /audit-in-progress
+Disallow: /report
 Disallow: /*?search=
 Disallow: /*?filter=
 Disallow: /*?q=
