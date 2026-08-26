@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Months Later, the Model Still Agrees With Itself | Atom Foundry</title>
+<meta name="description" content="86% of 50 tracked shopping intents named the exact same #1 brand in every one of six independent sweeps across two months. For the 7 that didn't, we doubled the sample size: two turned out to be noise, one held up as a genuine split.">
+<meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
+<link rel="canonical" href="https://atomfoundry.dev/research/recommendation-lock-in">
+<meta property="og:title" content="Two Months Later, the Model Still Agrees With Itself">
+<meta property="og:description" content="86% of 50 tracked shopping intents named the exact same #1 brand in every one of six independent sweeps across two months, temperature 0.7 the whole way. We doubled the sample size on the 7 that didn't agree: two were noise, one was real.">
+<meta property="og:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/research/recommendation-lock-in#webpage",
+      "url": "https://atomfoundry.dev/research/recommendation-lock-in",
+      "name": "Two Months Later, the Model Still Agrees With Itself",
+      "description": "86% of 50 tracked shopping intents named the exact same #1 brand in every one of six independent sweeps across two months. For the 7 that didn't, we doubled the sample size: two turned out to be noise, one held up as a genuine split.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": { "@id": "https://atomfoundry.dev/research/recommendation-lock-in#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/recommendation-lock-in#dataset" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/research/recommendation-lock-in#breadcrumb" }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/research/recommendation-lock-in#article",
+      "headline": "Two Months Later, the Model Still Agrees With Itself",
+      "description": "50 shopping intents, six independent sweeps between June 30 and August 26 2026, same model, same temperature. 43 of 50 intents, 86%, kept the exact same #1 brand every single time. Doubling the sample size on the 7 borderline intents resolved two as noise and confirmed one as a genuine, ongoing split.",
+      "datePublished": "2026-08-26",
+      "author": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/recommendation-lock-in",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/recommendation-lock-in#webpage" },
+      "about": ["Recommendation Intelligence", "AI Commerce", "Recommendation Stability", "Generative Engine Optimization"]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://atomfoundry.dev/research/recommendation-lock-in#dataset",
+      "name": "Does the model's #1 recommendation hold over two months of independent, repeated sampling?",
+      "description": "Position-1 concordance across six independent sweeps of the same 50 shopping intents, June 30 to August 26 2026, gpt-4o-mini, temperature 0.7, plus a doubled-sample-size confirmatory check on the intents that did not fully agree.",
+      "creator": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/recommendation-lock-in",
+      "measurementTechnique": "Repeated independent sampling with position-1 concordance across sweeps, plus a binomial sample-size sensitivity check",
+      "variableMeasured": ["Position-1 Concordance", "Locked vs Contested Intents", "Sample-Size Sensitivity", "Recommendation Share by Brand"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/research/recommendation-lock-in#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://atomfoundry.dev/research" },
+        { "@type": "ListItem", "position": 3, "name": "Mechanism Studies", "item": "https://atomfoundry.dev/research/mechanism-studies" },
+        { "@type": "ListItem", "position": 4, "name": "Two Months Later, the Model Still Agrees With Itself", "item": "https://atomfoundry.dev/research/recommendation-lock-in" }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  em{font-style:normal;}
+
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(240,238,230,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .6s cubic-bezier(.65,0,.35,1);
+  }
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{
+    font-size:13px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.07em;
+    position:relative;padding:4px 2px;white-space:nowrap;
+    text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+    transition:color .2s ease, text-decoration-color .2s ease;
+  }
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-chevron{
+    display:inline-flex;width:10px;height:7px;margin-left:6px;
+    vertical-align:middle;color:currentColor;
+    transition:transform .2s ease;
+  }
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-chevron.chevron-r-pre{margin-left:0;margin-right:6px;transform:rotate(-90deg);}
+  .nav-chevron.chevron-l-pre{margin-left:0;margin-right:6px;transform:rotate(90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .dropdown{
+    position:absolute;top:100%;left:0;margin-top:6px;
+    background:var(--cream);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+    padding:12px;width:max-content;max-width:300px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:1100;
+  }
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+  section{padding:64px 24px;}
+  section.alt{background:var(--off-white);}
+  .container{max-width:var(--maxw);margin:0 auto;}
+  .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:14px;}
+  .page-title{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:820px;margin-bottom:18px;}
+  .page-title em{color:var(--orange);}
+  .section-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
+  .section-title em{color:var(--orange);}
+  .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:680px;}
+  .section-body strong{color:var(--black);}
+
+  .research-hero{padding:88px 24px 48px;background:var(--cream);}
+  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:56%;margin-top:36px;}
+  .byline-note{font-size:12px;color:var(--gray-500);margin-top:16px;}
+  .byline-note a{color:var(--orange);font-weight:700;}
+
+  .hero-stat-row{display:flex;flex-wrap:nowrap;align-items:baseline;row-gap:14px;margin-top:52px;gap:0;}
+  .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
+  .hero-stat:not(:first-child)::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
+  .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
+  .hero-stat-num.smaller{font-size:30px;}
+
+  .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;transition:transform .3s ease, box-shadow .3s ease;}
+  .chart-card.chart-card-wide{max-width:940px;padding:36px 44px;}
+  @media (hover:hover) and (pointer:fine){
+    .chart-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .chart-card-title{font-size:12px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:4px;}
+  .chart-card-sub{font-size:12.5px;color:var(--gray-500);margin-bottom:18px;}
+
+  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:680px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .bias-card strong{color:var(--black);}
+  .chart-caption{max-width:640px;margin:22px auto 0;font-size:15px;color:var(--gray-700);line-height:1.7;text-align:center;}
+  .chart-caption strong{color:var(--black);}
+
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .mini-card{border-radius:var(--radius);padding:24px 22px;background:var(--card);display:flex;flex-direction:column;min-height:150px;transition:transform .3s ease, box-shadow .3s ease;}
+  .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
+  .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
+  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;flex:1;margin-bottom:12px;}
+  .mini-card-link{margin-top:auto;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;}
+  .mini-card:hover .mini-card-link{color:var(--orange);}
+  .related-more{margin-top:18px;font-size:13.5px;color:var(--gray-700);}
+  .related-more a{color:var(--orange);font-weight:700;}
+  .related-more a:hover{text-decoration:underline;}
+
+  .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+  .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+  .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+  .scan-box input::placeholder{color:var(--gray-500);}
+  .scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+  .scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+  .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+  .scan-note span{margin:0 8px;}
+  .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);padding:48px 56px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
+  .final-cta h2 em{color:var(--orange);}
+  .final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+  .final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+  .final-cta .scan-box{max-width:640px;margin:0 auto;padding:6px;}
+  .final-cta .scan-box input{padding:12px 18px;font-size:15px;}
+  .final-cta .scan-box button{padding:12px 22px;font-size:14px;}
+
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col .logo-word{margin-bottom:14px;}
+  .footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{color:var(--black);font-weight:700;}
+  .footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  .lede{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:860px;margin-bottom:4px;font-weight:600;}
+  .noise-note{font-size:13px;color:var(--gray-500);margin-top:10px;}
+
+  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-bottom:18px;}
+  .method-item{font-size:13.5px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--card-line);}
+  .method-item span{color:var(--black);font-weight:700;}
+  .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
+  .limits strong{color:var(--black);}
+
+  .signal-chart{margin-top:8px;}
+  .signal-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  .signal-row:last-child{margin-bottom:0;}
+  .signal-name{flex:0 0 200px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
+  .signal-name.standout{color:var(--black);font-weight:800;}
+  .signal-track{flex:1;height:16px;background:var(--gray-300);border-radius:8px;overflow:hidden;position:relative;}
+  .signal-fill{height:100%;border-radius:8px;width:0;transition:width 1.3s cubic-bezier(.16,.8,.4,1);background:var(--bar-gray);}
+  .signal-fill.standout{background:var(--orange);box-shadow:0 0 14px rgba(254,106,3,0.55);}
+  .signal-chart.in-view .signal-fill{width:var(--w);}
+  .signal-val{flex:0 0 70px;text-align:right;font-family:var(--serif);font-weight:800;font-size:15px;color:var(--black);opacity:0;transition:opacity .4s ease .3s;}
+  .signal-val.standout{color:var(--orange);font-size:17px;}
+  .signal-chart.in-view .signal-val{opacity:1;}
+  .signal-tag{flex:0 0 auto;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);background:var(--black);padding:3px 9px;border-radius:20px;opacity:0;transition:opacity .4s ease .5s;}
+  .signal-chart.in-view .signal-tag{opacity:1;}
+
+  .col-chart{margin-top:8px;}
+  .col-chart-plot{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:32px;height:210px;padding-top:34px;border-bottom:1px solid var(--card-line);}
+  .col-chart-bar-wrap{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;width:100px;flex:0 0 auto;}
+  .col-chart-value{font-family:var(--serif);font-weight:800;font-size:15px;color:var(--black);margin-bottom:6px;opacity:0;transition:opacity .3s ease;white-space:nowrap;}
+  .col-chart.in-view .col-chart-value{opacity:1;}
+  .col-chart-value-r{font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:8px;opacity:0;transition:opacity .3s ease .2s;}
+  .col-chart.in-view .col-chart-value-r{opacity:1;}
+  .col-chart-bar{width:100%;max-width:78px;border-radius:6px 6px 2px 2px;height:0;background:var(--orange);transition:height 1.2s cubic-bezier(.16,.8,.4,1);}
+  .col-chart.in-view .col-chart-bar{height:var(--h);}
+  .col-chart-labels{display:flex;justify-content:center;gap:32px;padding-top:12px;}
+  .col-chart-label{width:100px;text-align:center;font-size:12.5px;font-weight:700;color:var(--gray-700);line-height:1.3;}
+
+  .flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;}
+  .flip-grid.cols-2{grid-template-columns:repeat(2,1fr);max-width:920px;gap:28px;margin:24px auto 0;}
+  .flip-grid.cols-2 .stat-flip-card{height:170px;}
+  .flip-grid.cols-2 .stat-flip-stack-num{font-size:32px;}
+  .flip-grid.cols-2 .stat-flip-face{padding:26px 32px;}
+  .flip-grid.cols-2 .stat-flip-face-back p{font-size:14.5px;line-height:1.65;}
+  .stat-flip-card{
+    --flip-dir:180deg;
+    perspective:1400px;border-radius:var(--radius);height:220px;
+  }
+  .stat-flip-card:nth-child(even){--flip-dir:-180deg;}
+  .stat-flip-card-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .stat-flip-card.is-flipped .stat-flip-card-inner{transform:rotateY(var(--flip-dir));}
+  @media (hover:hover) and (pointer:fine){
+    .stat-flip-card:hover .stat-flip-card-inner{transform:rotateY(var(--flip-dir));}
+  }
+  .stat-flip-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:22px 20px;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .stat-flip-card.is-flipped .stat-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .stat-flip-card:hover .stat-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  }
+  .stat-flip-face-front{background:var(--card);}
+  .stat-flip-face-front::after{content:"";position:absolute;right:18px;bottom:16px;width:10px;height:10px;border-radius:2px;background:var(--orange);}
+  .stat-flip-face-back{background:rgba(254,106,3,0.14);transform:rotateY(180deg);text-align:left;align-items:flex-start;justify-content:center;}
+  .stat-flip-face-back p{font-size:13.5px;color:rgba(22,21,18,0.8);line-height:1.55;}
+  .stat-flip-stack{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .stat-flip-stack-num{font-family:var(--serif);font-weight:800;font-size:26px;letter-spacing:-0.02em;line-height:1.15;}
+  .stat-flip-stack-mid{font-size:12.5px;font-weight:700;color:var(--gray-500);letter-spacing:0.02em;}
+
+  @media (max-width:900px){
+    .products-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .research-hero{padding:72px 24px 40px;}
+    .research-hero-sub{max-width:100%;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .flip-grid{grid-template-columns:1fr 1fr;}
+    .hero-stat-row{gap:0;}
+    .hero-stat{gap:5px;font-size:13px;}
+    .hero-stat:not(:first-child)::before{margin-right:8px;}
+    .hero-stat-num{font-size:28px;}
+    .hero-stat-num.smaller{font-size:19px;}
+    .signal-name{flex:0 0 140px;font-size:12px;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:none;overflow-y:visible;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{
+      position:relative;flex-direction:column;align-items:stretch;
+      width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;
+    }
+    .nav-trigger{
+      font-size:13px;width:100%;box-sizing:border-box;min-width:0;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:13px 4px;border-bottom:1px solid var(--card-line);
+      white-space:normal;text-align:left;
+    }
+    .dropdown{
+      position:static;box-shadow:none;background:var(--card);
+      margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;
+      opacity:1;visibility:hidden;transform:none;
+      max-height:0;overflow:hidden;transition:max-height .25s ease;
+    }
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    section{padding:44px 20px;}
+    .research-hero{padding:56px 20px 32px;}
+    .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
+    .hero-stat:not(:first-child)::before{display:none;}
+    .hero-stat-num{font-size:26px;}
+    .hero-stat-num.smaller{font-size:20px;}
+    .chart-card{padding:18px;max-width:none;margin-top:32px;}
+    .chart-card.chart-card-wide{padding:18px;max-width:none;}
+    .chart-caption{max-width:none;}
+    .bias-card{padding:16px 18px;}
+    .products-grid{grid-template-columns:1fr;}
+    .final-cta{padding:40px 24px;}
+    .final-cta .scan-box{max-width:none;}
+    .scan-box{flex-direction:column;border-radius:4px;}
+    .scan-box button{width:100%;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+    .method-grid{grid-template-columns:1fr;}
+    .flip-grid{grid-template-columns:1fr;}
+    .flip-grid.cols-2{grid-template-columns:1fr;max-width:none;}
+    .signal-name{flex:0 0 108px;font-size:11px;}
+    .signal-val{flex:0 0 54px;font-size:13px;}
+    .signal-tag{display:none;}
+    .col-chart-plot{gap:16px;height:170px;padding-top:30px;}
+    .col-chart-bar-wrap{width:80px;}
+    .col-chart-value{font-size:12px;}
+    .col-chart-label{width:80px;font-size:10.5px;}
+    .col-chart-labels{gap:16px;}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger active">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/how-ai-decides" class="dd-item"><span class="dd-title">How AI Decides</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products" class="dd-item"><span class="dd-title">All Products</span></a>
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="research-hero">
+  <div class="container">
+    <div class="kicker">Recommendation Intelligence Research&trade; &middot; Study #18</div>
+    <h1 class="page-title">Two months later, the model still <em>agrees with itself</em>.</h1>
+    <p class="research-hero-sub">Our earlier study found that a model's own recommendation last month explains 61.4% of what it recommends this month, more than store quality, brand fame, or web presence combined, measured over a 15-day window. We wanted to know if that holds over something longer and messier: six independently triggered runs, spread across two full months, not one clean before-and-after comparison. We tracked the same 50 shopping intents across 10 categories, from June 30 to August 26 2026, same model, same temperature, every time. In 86% of intents, the model named the exact same #1 brand in all six sweeps. For the seven that didn't fully agree, we doubled the sample size to find out whether we were looking at real change or ordinary noise.</p>
+    <div class="byline-note">Atom Foundry &middot; August 2026 &middot; Follow-up to <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>, part of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research&trade;</a> series</div>
+    <div class="hero-stat-row">
+      <div class="hero-stat"><b class="hero-stat-num" id="statLocked" data-target="86" data-suffix="%">86%</b><span>Intents with an unchanged #1, every sweep</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statIntents" data-target="50">50</b><span>Intents tracked, 10 categories</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statSweeps" data-target="6">6</b><span>Independent sweeps, June 30 &ndash; Aug 26</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statRecs" data-target="30170" data-comma="1">30,170</b><span>Recommendations analyzed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE THIS COMES FROM -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Where this comes from</div>
+    <h2 class="section-title">The first study measured 15 days. We wanted <em>two months</em></h2>
+    <p class="section-body">The Model Predicts Itself showed that June's recommendation position predicts July's at R&sup2; 61.4%, and that the ranking does not move across a 15-day window. Both of those measurements came from controlled, single comparisons: two snapshots pulled and lined up against each other. This study asks the same underlying question a rougher way, closer to how the system actually gets used: repeated, independently triggered calls to the same model, spread across two months, with no single "before and after" pair to lean on.</p>
+    <p class="section-body" style="margin-top:14px;">We picked 50 shopping intents across 10 categories, from action cameras to ashwagandha supplements, and asked gpt-4o-mini to name its top 10 picks for each, ten times per intent per sweep, temperature held at 0.7 throughout. We ran that sweep six separate times over eight weeks. Then we asked one blunt question, harsher than a correlation: is the #1 pick the exact same brand, every single time?</p>
+    <div class="method-box">
+      <div class="method-grid">
+        <div class="method-item">Model: <span>gpt-4o-mini, temperature 0.7</span></div>
+        <div class="method-item">Intents: <span>50, across 10 categories</span></div>
+        <div class="method-item">Sweeps: <span>6, June 30 &ndash; Aug 26 2026</span></div>
+        <div class="method-item">Span: <span>58 days</span></div>
+        <div class="method-item">Recommendations analyzed: <span>30,170</span></div>
+        <div class="method-item">Concordance rule: <span>same #1 brand, every sweep</span></div>
+      </div>
+      <div class="limits"><strong>A data issue we found and fixed.</strong> Two of the six sweeps briefly shared a single identifier with a same-day repeat run, which looked like conflated data until we traced every row back to its true execution timestamp and split them apart. Once separated, the two independent runs on those days agreed on the #1 pick for the large majority of intents, an additional replication within the same day, not just across weeks. The one disagreement we found this way, discussed below, turned out to be genuinely useful rather than a data quality problem.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE FINDING -->
+<section>
+  <div class="container">
+    <div class="kicker">The finding</div>
+    <h2 class="section-title">Locked in 43 of 50 intents</h2>
+    <p class="section-body">Across six sweeps and eight weeks, <strong>43 of 50 intents, 86%,</strong> returned the exact same #1 brand every single time. GoPro won "best action camera" in five of six sweeps at 10 out of 10 runs, and in the sixth at 1 out of 10, still first place. Lululemon, Levi's, Vital Proteins, Optimum Nutrition, and PetSafe never lost their #1 spot once, in any sweep, across two months.</p>
+    <div class="chart-card">
+      <div class="chart-card-title">Intents by outcome</div>
+      <div class="chart-card-sub">50 tracked intents, June 30 &ndash; August 26 2026</div>
+      <div class="col-chart" id="lockedChart">
+        <div class="col-chart-plot">
+          <div class="col-chart-bar-wrap">
+            <div class="col-chart-value" data-target="86" data-suffix="%">86%</div>
+            <div class="col-chart-value-r">43 of 50</div>
+            <div class="col-chart-bar" style="--h:94%;background:var(--orange);"></div>
+          </div>
+          <div class="col-chart-bar-wrap">
+            <div class="col-chart-value" data-target="14" data-suffix="%">14%</div>
+            <div class="col-chart-value-r">7 of 50</div>
+            <div class="col-chart-bar" style="--h:15.3%;background:var(--bar-gray);"></div>
+          </div>
+        </div>
+        <div class="col-chart-labels">
+          <div class="col-chart-label">Locked, same #1 every sweep</div>
+          <div class="col-chart-label">Contested, #1 changed at least once</div>
+        </div>
+      </div>
+    </div>
+    <div class="bias-card">
+      <strong>This is a stricter test than 61.4%.</strong> The original number was a continuous correlation, position tracking position across a 1 to 10 scale. This one asks a binary, harsher question: is it the exact same brand at #1, every single time, for two months? A softer, correlation-based version of this same dataset would likely score higher still. Measured this bluntly, it holds up at 86%.
+    </div>
+  </div>
+</section>
+
+<!-- THE SAMPLE-SIZE CHECK -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">The sample-size check</div>
+    <h2 class="section-title">Two of three "ties" turned out to be <em>nothing</em></h2>
+    <p class="section-body">Seven intents did not return the same #1 in every sweep. Three of them looked genuinely close: a near-tie in one 10-run sweep, not the kind of runaway win we saw everywhere else. Rather than call that "drift," we doubled the sample size, 20 runs instead of 10, and re-ran all three the same day to see whether the tie was real or just noise at a small sample.</p>
+    <div class="chart-card chart-card-wide">
+      <div class="chart-card-title">Position-1 share at 20 runs, three previously borderline intents</div>
+      <div class="chart-card-sub">Same day, same model, same temperature &middot; run to settle what a 10-run sample could not</div>
+      <div class="signal-chart" id="sampleChart">
+        <div class="signal-row">
+          <div class="signal-name">Plus-size activewear &middot; Athleta</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:60%;"></div></div>
+          <div class="signal-val standout" data-target="60" data-suffix="%">60%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Plus-size activewear &middot; Nike</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:25%;"></div></div>
+          <div class="signal-val" data-target="25" data-suffix="%">25%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Eye cream, dark circles &middot; Olay</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:50%;"></div></div>
+          <div class="signal-val standout" data-target="50" data-suffix="%">50%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Eye cream, dark circles &middot; Clinique</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:25%;"></div></div>
+          <div class="signal-val" data-target="25" data-suffix="%">25%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">Ceramic dinnerware &middot; Fiesta</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:50%;"></div></div>
+          <div class="signal-val standout" data-target="50" data-suffix="%">50%</div>
+          <div class="signal-tag">Still contested</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Ceramic dinnerware &middot; Corelle</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:40%;"></div></div>
+          <div class="signal-val" data-target="40" data-suffix="%">40%</div>
+        </div>
+      </div>
+    </div>
+    <div class="bias-card">
+      <strong>Two false alarms, one real split.</strong> At 20 runs, plus-size activewear resolved cleanly to Athleta and eye cream for dark circles resolved cleanly to Olay, both had simply hit an unlucky 10-run sample on an earlier sweep. Ceramic dinnerware did not resolve. Fiesta and Corelle split 50/40 even at double the sample size, the one intent in this dataset where the model itself does not appear to have settled on a favorite.
+    </div>
+  </div>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section>
+  <div class="container">
+    <div class="kicker">Why it matters</div>
+    <h2 class="section-title">Most categories are decided. A few are still <em>up for grabs</em></h2>
+    <p class="section-body">Put the two findings together and the practical takeaway splits in two. For the 86% of intents that are locked, daily monitoring buys you very little, the same conclusion the original study reached: there is nothing to catch because nothing is moving. But the 14% that are genuinely contested are exactly the opposite case. Those are the categories where the model has not settled, where a well-timed piece of content or a clearer product page has somewhere real to land, because the #1 spot is not already spoken for.</p>
+    <p class="section-body" style="margin-top:14px;">The practical filter is simple: before spending on visibility work for a category, check whether it is locked or contested first. Fighting for a spot GoPro or Lululemon has held for two straight months is a different bet than fighting for a spot that is already splitting 50/40.</p>
+  </div>
+</section>
+
+<!-- SUPPORTING EVIDENCE -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Supporting evidence</div>
+    <h2 class="section-title">Two more signs this is <em>structural</em></h2>
+    <div class="flip-grid cols-2">
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">1.6</span>
+              <span class="stat-flip-stack-mid">vs</span>
+              <span class="stat-flip-stack-num">7.4</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>Average position of category specialists like Lululemon, GoPro, and Optimum Nutrition, versus generalist retailers like Target and Amazon, which appear across more categories than anyone, 17 to 21, but average position 7.4 and rarely win #1.</p>
+          </div>
+        </div>
+      </div>
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num" style="color:var(--green);">2 of 3</span>
+              <span class="stat-flip-stack-mid">were noise</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>Borderline #1 finishes that looked like they might be shifting resolved into clear, stable winners once we doubled the sample size. Only ceramic dinnerware held up as a genuine, ongoing split.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- A NOTE ON #1 -->
+<section>
+  <div class="container">
+    <div class="kicker">A note on what #1 sometimes means</div>
+    <h2 class="section-title">Not every winner is a <em>company</em></h2>
+    <p class="section-body">The most consistent #1 across the ashwagandha-related intents was not a company at all. KSM-66 is a patented ashwagandha extract licensed by dozens of supplement brands, not a business you can buy from directly. For intents like that, there is no single competitor to outrank, because the winning name is an ingredient spec, not a retailer.</p>
+    <div class="method-box">
+      <p style="font-size:14.5px;color:var(--gray-700);line-height:1.7;">We flag it here rather than folding it into the 86%, since it changes what "winning the #1 spot" would even mean for a brand trying to compete in that category. There is nothing to out-market, no store to outrank; the fix is a formulation choice, not a content one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="score">
+  <div class="container">
+    <div class="final-cta">
+      <h2>Find out if your category is <em>locked or contested</em></h2>
+      <div class="final-cta-tag">Free AI Commerce Score&trade; in 10 seconds.</div>
+      <p>If your category is already decided, the fight is somewhere else. If it isn't, this is where you'd want to know.</p>
+      <div class="scan-box">
+        <input type="text" placeholder="Paste your store URL">
+        <button>Get My Free AI Score</button>
+      </div>
+      <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> Results in 10 seconds</div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED SERIES -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Keep reading</div>
+    <h2 class="section-title">The rest of the <em>research series</em></h2>
+    <p class="section-body" style="margin-bottom:24px;">This follows directly from the strongest number in the whole series. Read the original for the full method and the four null results it stands against.</p>
+    <div class="products-grid">
+      <a class="mini-card" href="/research/the-model-predicts-itself" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Study &middot; Part One</div>
+        <div class="mini-card-title">The Model Predicts Itself</div>
+        <div class="mini-card-body">June's position predicts July's at R&sup2; 61.4%, the strongest number in this series, and it does not drift for 15 days.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/mechanism-studies" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Studies</div>
+        <div class="mini-card-title">All studies in the series</div>
+        <div class="mini-card-body">Web search, brand fame, domain recognition, self justification, vocabulary, intent, and the model's own memory.</div>
+        <span class="mini-card-link">Browse the series<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/ai-recommendations-across-commerce-2026" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Flagship</div>
+        <div class="mini-card-title">The State of AI Recommendations Across Commerce 2026</div>
+        <div class="mini-card-body">20,000 recommendations, five categories. The result that started this whole series.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+    </div>
+    <p class="related-more"><a href="/research"><span class="nav-chevron chevron-l-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a></p>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="#">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>18</b> Public Studies</div>
+      <div><b data-stat="stores">66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div><span data-stat="stores">66,090</span> DTC stores analyzed &middot; avg score <span data-stat="avg-score">55</span>/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/products">Products</a>
+        <a href="/products/ai-commerce-score">AI Commerce Score</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/how-ai-decides">How AI Decides</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/recommendation-lock-in">Two Months Later, the Model Still Agrees With Itself</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/ai-signal">AI Traffic, Live</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms of Service</a>
+        <a href="/about">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) nav.classList.add('nav-compact');
+      else nav.classList.remove('nav-compact');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) { menuOpenScrollY = window.scrollY; } else { closeMenu(); }
+    });
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+        menuOpenScrollY = window.scrollY;
+      });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    let menuOpenScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      if (!nav.classList.contains('nav-mobile-open')) return;
+      if (Math.abs(window.scrollY - menuOpenScrollY) > 24) closeMenu();
+    }, { passive: true });
+  })();
+
+  function easeOutCubicShared(p){ return 1 - Math.pow(1 - p, 3); }
+  function animateValueEl(el, duration){
+    if (!el) return;
+    const target = Number(el.dataset.target) || 0;
+    const decimals = Number(el.dataset.decimals) || 0;
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const comma = el.dataset.comma === '1';
+    const start = performance.now();
+    function step(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = easeOutCubicShared(p);
+      const val = eased * target;
+      const formatted = comma ? Math.round(val).toLocaleString('en-US') : val.toFixed(decimals);
+      el.textContent = prefix + formatted + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  function observeReveal(el, onReveal){
+    if (!el) return;
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { onReveal(); io.unobserve(entry.target); }
+        });
+      }, { threshold: 0.25 });
+      io.observe(el);
+    } else {
+      onReveal();
+    }
+  }
+
+  (function(){
+    document.querySelectorAll('.hero-stat-num[data-target]').forEach(el => {
+      observeReveal(el, () => animateValueEl(el, 1100));
+    });
+  })();
+
+  (function(){
+    const chart = document.getElementById('lockedChart');
+    if (!chart) return;
+    observeReveal(chart, () => {
+      chart.classList.add('in-view');
+      chart.querySelectorAll('.col-chart-value[data-target]').forEach(v => animateValueEl(v, 1200));
+    });
+  })();
+
+  (function(){
+    const chart = document.getElementById('sampleChart');
+    if (!chart) return;
+    observeReveal(chart, () => {
+      chart.classList.add('in-view');
+      chart.querySelectorAll('.signal-val[data-target]').forEach(v => animateValueEl(v, 1200));
+    });
+  })();
+
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.stat-flip-card'));
+    if (!cards.length) return;
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      cards.forEach(card => {
+        card.addEventListener('click', () => { card.classList.toggle('is-flipped'); });
+      });
+    }
+  })();
+</script>
+<style>
+.aiw-root{position:fixed;bottom:22px;right:22px;z-index:2000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+.aiw-fab{position:relative;width:52px;height:52px;border-radius:14px;background:#0b0d0e;border:1px solid #262b2e;display:flex;align-items:center;justify-content:center;color:#5fe0af;cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,0.45);transition:transform .2s ease,box-shadow .2s ease;padding:0;}
+.aiw-fab:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.5);}
+.aiw-heart{width:22px;height:22px;}
+.aiw-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aiw-heart-pulse{stroke:#5fe0af;fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aiwHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aiwHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aiw-heart-pulse,.aiw-panel-dot{animation:none;}}
+.aiw-panel{position:absolute;bottom:64px;right:0;width:230px;background:#0b0d0e;border:1px solid #262b2e;border-radius:18px;padding:22px 20px 20px;box-shadow:0 34px 64px -20px rgba(0,0,0,0.6);transform-origin:bottom right;transform:scale(0.94) translateY(8px);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;}
+.aiw-root.is-open .aiw-panel{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
+.aiw-root.is-open .aiw-fab{color:#e8e8e8;}
+.aiw-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#565c60;font-size:18px;cursor:pointer;line-height:1;padding:2px;font-family:inherit;}
+.aiw-close:hover{color:#e8e8e8;}
+.aiw-panel-head{margin-bottom:20px;padding-right:18px;}
+.aiw-panel-title-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.aiw-panel-dot{width:6px;height:6px;border-radius:50%;background:#5fe0af;box-shadow:0 0 0 0 rgba(95,224,175,.6);animation:aiwDotPulse 2.4s infinite;flex-shrink:0;}
+@keyframes aiwDotPulse{70%{box-shadow:0 0 0 6px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
+.aiw-panel-title-main{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11.5px;font-weight:800;color:#f2f4f5;letter-spacing:.03em;line-height:1.3;}
+.aiw-panel-title-sub{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:10px;color:#868c91;letter-spacing:.03em;}
+.aiw-rings{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.aiw-ring-item{display:flex;align-items:center;gap:12px;text-align:left;}
+.aiw-ring-visual{position:relative;width:44px;height:44px;flex-shrink:0;}
+.aiw-ring-visual svg{width:100%;height:100%;transform:rotate(-90deg);}
+.aiw-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.aiw-ring-fill{fill:none;stroke:#5fe0af;stroke-width:5;stroke-linecap:round;stroke-dashoffset:106.81;transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.aiw-root.is-open .aiw-ring-fill{stroke-dashoffset:var(--offset);}
+.aiw-ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;font-weight:800;color:#f2f4f5;}
+.aiw-ring-label{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;color:#b4b8bc;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.aiw-note{font-size:10.5px;color:#565c60;line-height:1.5;margin:0 0 14px;}
+.aiw-link{display:block;text-align:center;background:#5fe0af;color:#080808;font-weight:700;font-size:12.5px;padding:10px;border-radius:9px;text-decoration:none;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;transition:background .15s;}
+.aiw-link:hover{background:#7ee9be;}
+@media(max-width:520px){
+  .aiw-root{bottom:16px;right:16px;}
+  .aiw-panel{width:calc(100vw - 32px);right:-6px;}
+}
+</style>
+<!-- AI_SIGNAL_WIDGET:START -->
+<div class="aiw-root" id="aiwRoot">
+  <button class="aiw-fab" id="aiwFab" aria-label="AI signal for atomfoundry.dev" aria-expanded="false" type="button">
+    <svg class="aiw-heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="aiw-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="aiw-heart-pulse" id="aiwHeartPulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="aiw-panel" id="aiwPanel" role="dialog" aria-label="AI signal for atomfoundry.dev">
+    <button class="aiw-close" id="aiwClose" aria-label="Close" type="button">&times;</button>
+    <div class="aiw-panel-head">
+      <div class="aiw-panel-title-row"><span class="aiw-panel-dot"></span><span class="aiw-panel-title-main">AI AGENT SNAPSHOT</span></div>
+      <div class="aiw-panel-title-sub">ATOM FOUNDRY.dev</div>
+    </div>
+    <div class="aiw-rings">
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:42.72"/>
+            </svg>
+            <div class="aiw-ring-value">3</div>
+          </div>
+          <div class="aiw-ring-label">Today</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:58.75"/>
+            </svg>
+            <div class="aiw-ring-value">6</div>
+          </div>
+          <div class="aiw-ring-label">Bots</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:10.68"/>
+            </svg>
+            <div class="aiw-ring-value">4m</div>
+          </div>
+          <div class="aiw-ring-label">Last seen</div>
+        </div>
+    </div>
+    <p class="aiw-note">Illustrative example &middot; single-site signal for atomfoundry.dev.</p>
+    <a href="/ai-signal" class="aiw-link">View full signals &rarr;</a>
+  </div>
+</div>
+<!-- AI_SIGNAL_WIDGET:END -->
+<script>
+(function(){
+  var root = document.getElementById('aiwRoot');
+  if(!root) return;
+  var fab = document.getElementById('aiwFab');
+  var closeBtn = document.getElementById('aiwClose');
+  var heart = document.getElementById('aiwHeartPulse');
+  function restartHeartbeat(){
+    if (!heart) return;
+    heart.style.animation = 'none';
+    void heart.getBBox();
+    heart.style.animation = '';
+  }
+  function setOpen(open){
+    root.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    restartHeartbeat();
+  }
+  fab.addEventListener('click', function(){ setOpen(!root.classList.contains('is-open')); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+  }
+  document.addEventListener('click', function(e){
+    if (root.classList.contains('is-open') && !root.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
+<!-- AIW_LIVE:START -->
+<script>
+(function(){
+  var ringsRoot = document.querySelector('.aiw-rings');
+  if (!ringsRoot) return;
+  var items = ringsRoot.querySelectorAll('.aiw-ring-item');
+  if (items.length < 3) return;
+  var todayValue = items[0].querySelector('.aiw-ring-value');
+  var todayFill  = items[0].querySelector('.aiw-ring-fill');
+  var botsValue  = items[1].querySelector('.aiw-ring-value');
+  var botsFill   = items[1].querySelector('.aiw-ring-fill');
+  var lastValue  = items[2].querySelector('.aiw-ring-value');
+  var lastFill   = items[2].querySelector('.aiw-ring-fill');
+  var noteEl = document.querySelector('.aiw-note');
+  var CIRC = 106.81;
+
+  function setFill(el, fraction){
+    if (!el) return;
+    var f = Math.max(0, Math.min(1, fraction || 0));
+    el.style.setProperty('--offset', (CIRC * (1 - f)).toFixed(2));
+  }
+  function relTime(iso){
+    if (!iso) return '—';
+    var diffMs = Date.now() - new Date(iso).getTime();
+    if (isNaN(diffMs)) return '—';
+    var mins = Math.max(0, Math.round(diffMs / 60000));
+    if (mins < 1) return 'now';
+    if (mins < 60) return mins + 'm';
+    var hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + 'h';
+    var days = Math.round(hrs / 24);
+    return days + 'd';
+  }
+
+  fetch('https://n8n-production-1d7c.up.railway.app/webhook/shop-ai-signal', { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ if (!r.ok) throw new Error('bad status'); return r.json(); })
+    .then(function(data){
+      var visits = Number(data.today_count) || 0;
+      var agents = Number(data.unique_agents) || 0;
+      var lastSeen = data.last_seen || null;
+      if (todayValue) todayValue.textContent = visits.toLocaleString('en-US');
+      setFill(todayFill, visits / 30);
+      if (botsValue) botsValue.textContent = String(agents);
+      setFill(botsFill, agents / 12);
+      if (lastValue) lastValue.textContent = relTime(lastSeen);
+      var minsAgo = lastSeen ? (Date.now() - new Date(lastSeen).getTime()) / 60000 : null;
+      setFill(lastFill, minsAgo == null ? 0 : (1 - Math.min(minsAgo / 120, 1)));
+      if (noteEl) noteEl.textContent = 'Live AI crawler activity on atomfoundry.dev.';
+    })
+    .catch(function(){
+      if (noteEl) noteEl.textContent = 'Live signal temporarily unavailable.';
+    });
+})();
+</script>
+<!-- AIW_LIVE:END -->
+<!-- SCAN_BOX_CONNECT:START -->
+<script>
+(function(){
+  function cleanDomain(v){
+    return (v || '').trim().replace(/^https?:\/\//i,'').replace(/\/.*$/,'').replace(/^www\./i,'');
+  }
+  document.querySelectorAll('.scan-box').forEach(function(box){
+    var input = box.querySelector('input');
+    var btn = box.querySelector('button');
+    if (!input || !btn) return;
+    function go(){
+      var domain = cleanDomain(input.value);
+      if (!domain) { input.focus(); return; }
+      window.location.href = '/scan.html?domain=' + encodeURIComponent(domain);
+    }
+    btn.addEventListener('click', go);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') go(); });
+  });
+})();
+</script>
+<!-- SCAN_BOX_CONNECT:END -->
+
+<!-- SITE_VISIT_TRACKER:START -->
+<script>
+(function(){
+  try {
+    if (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1') return;
+    var VID_KEY = 'af_vid';
+    var vid = localStorage.getItem(VID_KEY);
+    if (!vid) {
+      vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2));
+      localStorage.setItem(VID_KEY, vid);
+    }
+    var payload = JSON.stringify({
+      visitor_id: vid,
+      path: location.pathname,
+      referrer: document.referrer || '',
+      user_agent: navigator.userAgent || ''
+    });
+    var url = 'https://n8n-production-1d7c.up.railway.app/webhook/site-visit';
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+    } else {
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+</script>
+<!-- SITE_VISIT_TRACKER:END -->
+<!-- SITE_STATS_SYNC:START -->
+<script>
+(function(){
+  var STATS_URL = 'https://n8n-production-1d7c.up.railway.app/webhook/site-stats';
+  var CACHE_KEY = 'afSiteStats', CACHE_MS = 300000;
+  function apply(s){
+    if (!s || s.total_scanned == null) return;
+    var stores = Number(s.total_scanned).toLocaleString('en-US');
+    var avg = Math.round(Number(s.avg_score));
+    if (!isFinite(avg)) return;
+    document.querySelectorAll('[data-stat="stores"]').forEach(function(el){ el.textContent = stores; });
+    document.querySelectorAll('[data-stat="avg-score"]').forEach(function(el){ el.textContent = String(avg); });
+  }
+  var cached = null;
+  try { cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null'); } catch(e){}
+  if (cached && cached.s && (Date.now() - cached.t) < CACHE_MS) { apply(cached.s); return; }
+  fetch(STATS_URL, { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ return r.json(); })
+    .then(function(sd){
+      var s = Array.isArray(sd) ? sd[0] : (sd && sd.data ? sd.data[0] : sd);
+      apply(s);
+      try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), s: s })); } catch(e){}
+    })
+    .catch(function(){});
+})();
+</script>
+<!-- SITE_STATS_SYNC:END -->
+</body>
+</html>
