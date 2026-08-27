@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Agent Snapshot: See when AI agents visit your store</title>
-<meta name="description" content="AI Agent Snapshot shows you exactly when ChatGPT, Claude and Perplexity visit your store, which pages they read, and how often they come back.">
+<title>AI Agent Snapshot: See What AI Agents Do on Your Store</title>
+<meta name="description" content="AI Agent Snapshot shows what AI agents do on your store: which products they check, how they move through it, where they stop, and what they skip entirely.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://atomfoundry.dev/products/ai-agent-snapshot">
-<meta property="og:title" content="AI Agent Snapshot: See when AI agents visit your store">
-<meta property="og:description" content="AI agents are already visiting your store. Now you can see them, in real time.">
+<meta property="og:title" content="AI Agent Snapshot: See What AI Agents Do on Your Store">
+<meta property="og:description" content="AI agents are starting to interact with stores. Real agent activity. Not estimated AI traffic.">
 <meta property="og:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -47,7 +47,7 @@
       "@id": "https://atomfoundry.dev/products/ai-agent-snapshot#service",
       "name": "AI Agent Snapshot",
       "url": "https://atomfoundry.dev/products/ai-agent-snapshot",
-      "description": "Live detection of what AI shopping agents can currently discover, understand and verify about a store.",
+      "description": "Live detection of what AI shopping agents do on a store: what they read, the intent behind their visit, how they move through it, and where they stop.",
       "provider": { "@id": "https://atomfoundry.dev/#organization" }
     },
     {
@@ -55,7 +55,7 @@
       "@id": "https://atomfoundry.dev/products/ai-agent-snapshot#webpage",
       "url": "https://atomfoundry.dev/products/ai-agent-snapshot",
       "name": "AI Agent Snapshot: Atom Foundry",
-      "description": "Live detection of what AI shopping agents can currently discover, understand and verify about a store.",
+      "description": "Live detection of what AI shopping agents do on a store: what they read, the intent behind their visit, how they move through it, and where they stop.",
       "inLanguage": "en",
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
@@ -407,7 +407,7 @@ body.asn-space .ai-sitemap a:hover{color:#4ade80;}
 .asn-hero-card{background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:18px;padding:40px 44px;box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);}
 .asn-hero-number{font-family:var(--mono);font-size:22px;font-weight:900;color:#4ade80;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:14px;line-height:1.2;}
 .asn-badge{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:18px;}
-.asn-platform-note{font-size:14.5px;color:#8a8a8a;margin-top:4px;margin-bottom:26px;max-width:480px;line-height:1.6;}
+.asn-platform-note{font-size:15.5px;color:#8a8a8a;margin-top:4px;margin-bottom:26px;max-width:480px;line-height:1.6;}
 .asn-platform-note b{color:#e8e8e8;}
 h1.asn-h1{font-family:var(--serif);font-size:clamp(32px,5.4vw,50px);font-weight:800;line-height:1.12;letter-spacing:-0.02em;color:#fff;margin-bottom:12px;max-width:620px;}
 h1.asn-h1 .accent{color:#4ade80;}
@@ -415,10 +415,20 @@ h1.asn-h1 .accent{color:#4ade80;}
 .asn-hero-desc{font-size:15px;color:#83837f;line-height:1.7;max-width:480px;margin-bottom:26px;}
 .asn-hero-desc b{color:#fff;font-weight:800;}
 .asn-live-badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13.5px;color:#999;margin-bottom:0;}
-.asn-live-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,0.7);flex-shrink:0;}
 .asn-live-text{display:flex;flex-direction:column;line-height:1.4;}
 .asn-live-label{font-size:11.5px;letter-spacing:0.1em;color:#7a7a78;}
 .asn-live-badge a{color:#4ade80;font-weight:700;}
+.asn-live-badge-big{margin-top:14px;padding:16px 20px;background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.25);border-radius:4px;}
+.asn-live-badge-big .asn-live-label{font-size:12.5px;}
+.asn-live-badge-big .asn-live-text a{font-size:16px;}
+.asn-live-flow{display:inline-flex;align-items:center;gap:1px;margin-left:8px;color:#4ade80;}
+.asn-live-flow .nav-chevron{opacity:0.25;animation:asnLiveArrowSlide 1.8s ease-in-out infinite;}
+.asn-live-flow .nav-chevron:nth-child(1){animation-delay:0s;}
+.asn-live-flow .nav-chevron:nth-child(2){animation-delay:0.15s;}
+.asn-live-flow .nav-chevron:nth-child(3){animation-delay:0.3s;}
+.asn-live-flow .nav-chevron:nth-child(4){animation-delay:0.45s;}
+.asn-live-flow .nav-chevron:nth-child(5){animation-delay:0.6s;}
+@keyframes asnLiveArrowSlide{0%{opacity:0.2;transform:translateX(-2px) rotate(-90deg);}50%{opacity:1;transform:translateX(2px) rotate(-90deg);}100%{opacity:0.2;transform:translateX(-2px) rotate(-90deg);}}
 
 /* fly-in reveal: every section after the hero flies in on scroll, hero
    itself is excluded since it is already visible on load */
@@ -428,26 +438,32 @@ h1.asn-h1 .accent{color:#4ade80;}
 .asn-reveal.is-in .asn-reveal-item{opacity:1;transform:translateY(0);}
 
 /* GA4-for-AI framing */
-.asn-ga4{margin-top:40px;padding-top:76px;}
+.asn-ga4{margin-top:72px;padding-top:100px;}
 .asn-ga4-kicker{font-size:12.5px;letter-spacing:0.1em;color:#666;text-transform:uppercase;font-family:var(--mono);margin-bottom:14px;}
 h2.asn-ga4-title{font-family:var(--serif);font-size:clamp(26px,3.8vw,38px);font-weight:800;color:#fff;letter-spacing:-0.01em;margin-bottom:14px;max-width:600px;}
 h2.asn-ga4-title .accent{color:#4ade80;}
-.asn-ga4-desc{font-size:15.5px;color:#8a8a8a;line-height:1.7;max-width:600px;margin-bottom:30px;}
+.asn-ga4-desc{font-size:16.5px;color:#8a8a8a;line-height:1.7;max-width:600px;margin-bottom:14px;}
+.asn-ga4-note{font-size:13px;color:#5a5a58;line-height:1.6;max-width:600px;margin-bottom:30px;font-style:normal;}
+.asn-ga4-group-label{font-family:var(--mono);font-size:11px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin:26px 0 12px;}
 .asn-ga4-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;}
+.asn-ga4-grid-full{grid-template-columns:repeat(4,1fr);}
+.asn-ga4-grid-3{grid-template-columns:repeat(3,1fr);}
 .asn-ga4-item{background:rgba(10,10,10,0.82);padding:20px 18px;}
-.asn-ga4-item-label{font-family:var(--mono);font-size:11px;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;}
-.asn-ga4-item-desc{font-size:13.5px;color:#8a8a8a;line-height:1.5;}
-@media(max-width:900px){.asn-ga4-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:520px){.asn-ga4-grid{grid-template-columns:1fr;}}
+.asn-ga4-item-label{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:11px;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;}
+.asn-ga4-item-sub{font-size:9.5px;font-weight:700;color:#666;text-transform:none;letter-spacing:0.01em;}
+.asn-ga4-item-tag{font-family:var(--mono);font-size:9px;font-weight:800;color:#e0a233;background:rgba(224,162,51,0.12);border:1px solid rgba(224,162,51,0.3);border-radius:4px;padding:2px 6px;letter-spacing:0.04em;}
+.asn-ga4-item-desc{font-size:14.5px;color:#8a8a8a;line-height:1.5;}
+@media(max-width:900px){.asn-ga4-grid{grid-template-columns:1fr 1fr;}.asn-ga4-grid-full{grid-template-columns:1fr 1fr;}.asn-ga4-grid-3{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.asn-ga4-grid{grid-template-columns:1fr;}.asn-ga4-grid-full{grid-template-columns:1fr;}.asn-ga4-grid-3{grid-template-columns:1fr;}}
 
 /* live proof: browser mockup of the real store + floating agent panel */
-.asn-proof{margin:96px 0 8px;}
+.asn-proof{margin:150px 0 8px;}
 .asn-proof-note{font-size:13px;color:#666;margin-top:14px;}
 .asn-browser{width:80%;margin:0;background:#0c0c0c;border:1px solid #1e1e1e;border-radius:14px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,0.7);}
 @media(max-width:700px){.asn-browser{width:100%;}}
 .asn-browser-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid #1a1a1a;}
-.asn-browser-dot{width:9px;height:9px;border-radius:50%;background:#2a2a2a;}
-.asn-browser-url{margin-left:10px;font-size:12.5px;color:#666;background:#050505;border:1px solid #1a1a1a;border-radius:100px;padding:4px 12px;display:flex;align-items:center;gap:6px;}
+.asn-browser-dot{width:9px;height:9px;border-radius:2px;background:#2a2a2a;}
+.asn-browser-url{margin-left:10px;font-size:12.5px;color:#666;background:#050505;border:1px solid #1a1a1a;border-radius:4px;padding:4px 12px;display:flex;align-items:center;gap:6px;}
 .asn-browser-url svg{width:10px;height:10px;opacity:0.6;}
 .asn-browser-body{position:relative;background:#fff;}
 .asn-site-banner{text-align:center;font-size:11.5px;color:#555;padding:8px 20px;border-bottom:1px solid #eee;}
@@ -477,12 +493,12 @@ h2.asn-ga4-title .accent{color:#4ade80;}
 .asn-agent-page em{font-style:normal;color:#555;}
 
 /* concept: square + fanned dials, email mock */
-.asn-concept{margin:120px 0 8px;}
+.asn-concept{margin:170px 0 8px;}
 .asn-concept-card{max-width:620px;background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:32px 36px;box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);margin-bottom:56px;}
 .asn-concept-kicker{text-align:left;font-size:12.5px;letter-spacing:0.1em;color:#555;margin-bottom:8px;font-family:var(--mono);}
 h2.asn-concept-title{text-align:left;font-size:clamp(22px,3.2vw,26px);font-weight:800;color:#fff;letter-spacing:-0.01em;margin-bottom:12px;font-family:var(--serif);}
 .asn-concept-punch{text-align:left;font-size:16px;color:#e8e8e8;font-weight:700;line-height:1.6;max-width:440px;margin:0 0 16px;}
-.asn-concept-desc{text-align:left;font-size:14px;color:#7a7a78;line-height:1.7;max-width:520px;margin:0;}
+.asn-concept-desc{text-align:left;font-size:15.5px;color:#7a7a78;line-height:1.7;max-width:520px;margin:0;}
 .asn-concept-foot{text-align:center;font-size:14px;color:#666;margin-top:30px;}
 .asn-concept-demo{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
 .asn-demo-label{font-size:12px;letter-spacing:0.08em;color:#555;margin-bottom:16px;text-align:center;font-family:var(--mono);}
@@ -510,10 +526,10 @@ h2.asn-concept-title{text-align:left;font-size:clamp(22px,3.2vw,26px);font-weigh
 .asn-email-body b{color:#ccc;}
 
 /* what AI is doing: agent activity table + most visited pages */
-.asn-activity{margin-top:40px;padding-top:76px;}
+.asn-activity{margin-top:72px;padding-top:100px;}
 .asn-activity-kicker{font-size:12.5px;letter-spacing:0.1em;color:#666;text-transform:uppercase;font-family:var(--mono);margin-bottom:14px;}
 h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);font-weight:800;color:#fff;letter-spacing:-0.01em;margin-bottom:12px;max-width:560px;}
-.asn-activity-desc{font-size:14.5px;color:#8a8a8a;line-height:1.7;max-width:600px;margin-bottom:30px;}
+.asn-activity-desc{font-size:16px;color:#8a8a8a;line-height:1.7;max-width:600px;margin-bottom:30px;}
 .asn-activity-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:start;}
 .asn-activity-table-wrap{background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:6px 8px;overflow:hidden;}
 .asn-activity-table{width:100%;border-collapse:collapse;font-size:13px;}
@@ -524,8 +540,89 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
 .asn-activity-pages-wrap{background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:20px 22px;}
 .asn-activity-pages-label{font-family:var(--mono);font-size:12px;color:#666;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;}
 .asn-activity-page{font-family:var(--mono);font-size:12.5px;color:#e8e8e8;padding:9px 0;}
-.asn-activity-insight{font-size:15px;color:#8a8a8a;line-height:1.7;margin-top:12px;max-width:640px;}
+.asn-activity-insight{font-size:16px;color:#8a8a8a;line-height:1.7;margin-top:12px;max-width:640px;}
+.asn-activity-table td.asn-type-cell{white-space:nowrap;}
 @media(max-width:800px){.asn-activity-grid{grid-template-columns:1fr;}}
+
+/* ---------- shared section shell for the new behavior sections (Intent,
+   Journey, Attention/Skips, Drop off, Actions/Outcome) ---------- */
+.asn-behavior{margin-top:72px;padding-top:100px;}
+.asn-behavior-kicker{font-size:12.5px;letter-spacing:0.1em;color:#666;text-transform:uppercase;font-family:var(--mono);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+h2.asn-behavior-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);font-weight:800;color:#fff;letter-spacing:-0.01em;margin-bottom:12px;max-width:600px;}
+h2.asn-behavior-title .accent{color:#4ade80;}
+.asn-behavior-desc{font-size:16px;color:#8a8a8a;line-height:1.7;max-width:620px;margin-bottom:30px;}
+.asn-roadmap-pill{font-family:var(--mono);font-size:10px;font-weight:800;color:#e0a233;background:rgba(224,162,51,0.1);border:1px solid rgba(224,162,51,0.3);border-radius:3px;padding:3px 10px;text-transform:uppercase;letter-spacing:0.05em;}
+
+/* Agent Intent: chip grid + example callout */
+.asn-intent-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;}
+.asn-intent-chip{font-family:var(--mono);font-size:12.5px;color:#c8c8c4;background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.1);border-radius:3px;padding:9px 16px;}
+.asn-control-chip{color:#e0a233;border-color:rgba(224,162,51,0.3);background:rgba(224,162,51,0.06);}
+.asn-intent-example{background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:16px 20px;font-size:14.5px;color:#c8c8c4;line-height:1.65;max-width:640px;}
+.asn-intent-example b{color:#fff;}
+.asn-intent-example .weak{color:#666;text-decoration:line-through;}
+
+/* Agent Journey: step flow */
+.asn-journey-sublabel{font-family:var(--mono);font-size:11.5px;color:#666;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+.asn-journey-flow{display:flex;flex-direction:column;background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:4px 24px;max-width:560px;}
+.asn-journey-step{display:flex;align-items:center;gap:16px;padding:14px 0;position:relative;}
+.asn-journey-step:not(:last-child){border-bottom:1px dashed rgba(255,255,255,0.08);}
+.asn-journey-label{font-family:var(--mono);font-size:13.5px;color:#e8e8e8;font-weight:600;}
+.asn-journey-tag{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:#666;text-transform:uppercase;letter-spacing:0.04em;}
+
+/* Agent Attention + Skips */
+.asn-attn-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;}
+.asn-attn-card{background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:22px 24px;}
+.asn-attn-card-label{font-family:var(--mono);font-size:11.5px;color:#666;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:16px;}
+.asn-attn-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.asn-attn-row:last-child{border-bottom:none;}
+.asn-attn-row-name{font-size:13.5px;color:#e8e8e8;}
+.asn-attn-bar-wrap{flex:1;max-width:120px;height:6px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;margin:0 12px;}
+.asn-attn-bar-fill{height:100%;background:#4ade80;border-radius:2px;width:0%;transition:width 1s cubic-bezier(.16,1,.3,1);}
+.asn-behavior.is-in .asn-attn-bar-fill{width:var(--w);}
+.asn-attn-row-val{font-family:var(--mono);font-size:12.5px;color:#4ade80;font-weight:700;min-width:36px;text-align:right;}
+.asn-attn-skip .asn-attn-row-name{color:#8a8a8a;text-decoration:line-through;text-decoration-color:rgba(217,60,60,0.5);}
+.asn-attn-skip .asn-attn-row-val{color:#d93c3c;}
+.asn-attn-gap{margin-top:16px;background:rgba(224,162,51,0.06);border:1px solid rgba(224,162,51,0.2);border-radius:10px;padding:14px 16px;font-size:13px;color:#c8c8c4;line-height:1.6;}
+.asn-attn-gap b{color:#e0a233;}
+
+/* Drop off funnel */
+.asn-funnel{max-width:520px;}
+.asn-funnel-step{margin-bottom:14px;}
+.asn-funnel-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.asn-funnel-label{font-size:13.5px;color:#e8e8e8;font-weight:600;}
+.asn-funnel-pct{font-family:var(--mono);font-size:14px;color:#4ade80;font-weight:800;}
+.asn-funnel-track{height:10px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.asn-funnel-fill{height:100%;background:linear-gradient(90deg,#4ade80,#22c55e);border-radius:2px;width:0%;transition:width 1.1s cubic-bezier(.16,1,.3,1);}
+.asn-behavior.is-in .asn-funnel-fill{width:var(--w);}
+.asn-funnel-drop{font-family:var(--mono);font-size:11px;color:#555;margin-top:4px;}
+
+/* Actions / Outcome roadmap */
+.asn-read-decide-act{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:36px;}
+.asn-rda-col{background:rgba(10,10,10,0.82);padding:16px 20px;}
+.asn-rda-col-label{font-family:var(--mono);font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.asn-rda-col.read .asn-rda-col-label{color:#4ade80;}
+.asn-rda-col.decide .asn-rda-col-label{color:#4ade80;}
+.asn-rda-col.act .asn-rda-col-label{color:#e0a233;}
+.asn-rda-col-status{font-size:11px;color:#666;margin-bottom:10px;}
+.asn-rda-list{display:flex;flex-direction:column;gap:5px;}
+.asn-rda-list span{font-size:13px;color:#a8a8a4;line-height:1.3;}
+.asn-outcome-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:16px 18px;}
+.asn-outcome-step{font-family:var(--mono);font-size:12.5px;color:#8a8a8a;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:3px;padding:6px 14px;}
+.asn-outcome-arrow{color:#444;font-size:14px;}
+.asn-outcome-note{font-size:15.5px;color:#8a8a8a;line-height:1.6;margin-top:14px;max-width:600px;}
+.asn-outcome-note b{color:#e8e8e8;}
+@media(max-width:900px){.asn-attn-grid{grid-template-columns:1fr;}.asn-read-decide-act{grid-template-columns:1fr;}}
+
+/* Product-boundary clarification block */
+.asn-boundary{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;}
+.asn-boundary-col{background:rgba(10,10,10,0.82);padding:26px 26px;}
+.asn-boundary-col-label{font-family:var(--mono);font-size:11px;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
+.asn-boundary-col.other .asn-boundary-col-label{color:#8a8a8a;}
+.asn-boundary-col-title{font-size:15px;color:#fff;font-weight:700;margin-bottom:12px;}
+.asn-boundary-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.asn-boundary-tags span{font-family:var(--mono);font-size:11px;color:#8a8a8a;background:rgba(255,255,255,0.04);border-radius:3px;padding:4px 10px;}
+.asn-boundary-col a{font-size:13px;color:#4ade80;font-weight:700;}
+@media(max-width:800px){.asn-boundary{grid-template-columns:1fr;}}
 
 /* minimalist 30-day AI-visit trend, same glass panel + green accent as
    the rest of the space page */
@@ -541,12 +638,12 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
 
 /* closing CTA: strong statement in a glass panel, part of the same
    starfield rather than a flat opaque card */
-.asn-waitlist-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--maxw);margin:120px auto 0;align-items:stretch;}
-.asn-waitlist{margin-top:0;padding:48px 44px;max-width:640px;margin-left:auto;margin-right:auto;text-align:center;background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:18px;box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);display:flex;flex-direction:column;justify-content:center;width:100%;}
+.asn-waitlist-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:var(--maxw);margin:170px auto 0;align-items:stretch;}
+.asn-waitlist{margin-top:0;padding:32px 36px;max-width:640px;margin-left:auto;margin-right:auto;text-align:center;background:rgba(10,10,10,0.82);border:1px solid rgba(255,255,255,0.09);border-radius:18px;box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);display:flex;flex-direction:column;justify-content:center;width:100%;}
 @media(max-width:860px){.asn-waitlist-row{grid-template-columns:1fr;gap:20px;}}
-.asn-waitlist-headline{font-family:var(--serif);font-size:clamp(24px,3.4vw,34px);font-weight:800;color:#fff;letter-spacing:-0.01em;line-height:1.3;margin-bottom:22px;}
-.asn-waitlist-kicker{font-family:var(--mono);font-size:11px;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
-.asn-waitlist-subline{font-size:14.5px;color:#8a8a8a;line-height:1.6;max-width:440px;margin:0 auto 28px;}
+.asn-waitlist-headline{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-weight:800;color:#fff;letter-spacing:-0.01em;line-height:1.25;margin-bottom:14px;}
+.asn-waitlist-kicker{font-family:var(--mono);font-size:11px;font-weight:800;color:#4ade80;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+.asn-waitlist-subline{font-size:15px;color:#8a8a8a;line-height:1.55;max-width:440px;margin:0 auto 18px;}
 .asn-form{display:flex;gap:10px;max-width:420px;margin:0 auto;}
 .asn-form input{flex:1;background:#0f0f0f;border:1px solid #262626;border-radius:10px;padding:13px 16px;font-size:14px;color:#e8e8e8;font-family:inherit;}
 .asn-form input::placeholder{color:#555;}
@@ -554,7 +651,7 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
 .asn-form button{background:#4ade80;color:#080808;border:none;border-radius:10px;padding:13px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:transform .15s,background .15s;}
 .asn-form button:hover{background:#6ee89e;transform:translateY(-1px);}
 .asn-form-success{display:none;font-size:14px;color:#4ade80;padding:13px 0;font-family:var(--mono);}
-.asn-waitlist-tag{font-family:var(--mono);font-size:12.5px;color:#666;margin-top:20px;letter-spacing:0.04em;}
+.asn-waitlist-tag{font-family:var(--mono);font-size:12.5px;color:#666;margin-top:14px;letter-spacing:0.04em;}
 
 @media(max-width:900px){
   .asn-concept-demo{grid-template-columns:1fr;}
@@ -725,33 +822,43 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
 <div class="asn-hero">
   <div class="asn-hero-number">05 AI Agent Snapshot</div>
   <div class="asn-badge">Early access</div>
-  <h1 class="asn-h1"><span class="accent">AI agents</span> are already visiting your store.</h1>
-  <div class="asn-tagline">Now you can see them.</div>
+  <h1 class="asn-h1">See what <span class="accent">AI agents</span> do on your store or website.</h1>
+  <div class="asn-tagline">Real agent activity. Not estimated AI traffic.</div>
   <div class="asn-hero-card">
-    <p class="asn-hero-desc">AI Agent Snapshot shows you which AI agents visit your store, what they read, which pages they reach, how often they return, and when they were last seen. <b>Real detection. Not estimates.</b></p>
+    <p class="asn-hero-desc">AI Agent Snapshot shows who's visiting, what they're likely looking for, which pages and commerce endpoints they access, and how they move through your store. <b>Real detection. Not estimates.</b></p>
     <p class="asn-platform-note"><b>Launching as a Shopify app.</b> Built first for the stores where AI commerce is happening, coming to websites next.</p>
     <div class="asn-live-badge">
-      <span class="asn-live-dot"></span>
       <span class="asn-live-text">
         <span class="asn-live-label">LIVE ON OUR LAB SHOP, MINIMAL WEAR</span>
         <a href="https://founder.atomfoundry.dev" target="_blank" rel="noopener">founder.atomfoundry.dev</a>
+      </span>
+    </div>
+    <div class="asn-live-badge asn-live-badge-big">
+      <span class="asn-live-text">
+        <span class="asn-live-label">SEE PART OF AI AGENT SNAPSHOT, LIVE</span>
+        <a href="/ai-signal">atomfoundry.dev/ai-signal<span class="asn-live-flow"><span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
       </span>
     </div>
   </div>
 </div>
 
 <div class="asn-ga4 asn-reveal">
-  <div class="asn-ga4-kicker">The idea in one line</div>
-  <h2 class="asn-ga4-title">Think <span class="accent">Google Analytics</span>, but for AI agents.</h2>
-  <p class="asn-ga4-desc">GA4 shows you human traffic. AI Agent Snapshot shows you the traffic your existing analytics cannot see.</p>
-  <div class="asn-ga4-grid">
-    <div class="asn-ga4-item asn-reveal-item" style="--i:0"><div class="asn-ga4-item-label">Who</div><div class="asn-ga4-item-desc">Which AI agent visited: ChatGPT, Claude, Perplexity and more, identified by name, not just flagged as a generic bot.</div></div>
-    <div class="asn-ga4-item asn-reveal-item" style="--i:1"><div class="asn-ga4-item-label">Where</div><div class="asn-ga4-item-desc">Which pages it read on your store, down to the exact URL.</div></div>
-    <div class="asn-ga4-item asn-reveal-item" style="--i:2"><div class="asn-ga4-item-label">When</div><div class="asn-ga4-item-desc">The exact time of the visit, and how long ago the agent was last seen.</div></div>
-    <div class="asn-ga4-item asn-reveal-item" style="--i:3"><div class="asn-ga4-item-label">How</div><div class="asn-ga4-item-desc">Whether it browsed pages directly or pulled data through a feed.</div></div>
-    <div class="asn-ga4-item asn-reveal-item" style="--i:4"><div class="asn-ga4-item-label">Why</div><div class="asn-ga4-item-desc">The likely intent behind the visit, such as checking a product, a price or a policy.</div></div>
-    <div class="asn-ga4-item asn-reveal-item" style="--i:5"><div class="asn-ga4-item-label">What it viewed</div><div class="asn-ga4-item-desc">Which specific products, collections or policies it looked at.</div></div>
-    <div class="asn-ga4-item asn-reveal-item" style="--i:6"><div class="asn-ga4-item-label">What it did</div><div class="asn-ga4-item-desc">Whether it just read the page, or the visit was followed by a citation or recommendation signal.</div></div>
+  <div class="asn-ga4-kicker">What changed</div>
+  <h2 class="asn-ga4-title">AI agents aren't just visiting. They're <span class="accent">deciding</span>.</h2>
+  <p class="asn-ga4-desc">AI agents are starting to interact with stores. They search, retrieve, inspect products, check policies and access commerce capabilities. Most ecommerce analytics were built to understand humans. AI Agent Snapshot shows what AI agents do instead.</p>
+  <p class="asn-ga4-note">If you need the one-line comparison: think Google Analytics, but for AI agents. That's the mechanism. What matters is what it reveals.</p>
+  <div class="asn-ga4-group-label">Live today</div>
+  <div class="asn-ga4-grid asn-ga4-grid-full">
+    <div class="asn-ga4-item asn-reveal-item" style="--i:0"><div class="asn-ga4-item-label">Who</div><div class="asn-ga4-item-desc">Which agents are visiting: ChatGPT, Claude, Perplexity and more, identified by name.</div></div>
+    <div class="asn-ga4-item asn-reveal-item" style="--i:1"><div class="asn-ga4-item-label">Why <span class="asn-ga4-item-sub">Likely intent</span></div><div class="asn-ga4-item-desc">What they appear to be looking for, inferred from the agent's requests and behavior, not a claim about what it "thinks."</div></div>
+    <div class="asn-ga4-item asn-reveal-item" style="--i:2"><div class="asn-ga4-item-label">What</div><div class="asn-ga4-item-desc">Which pages, products, collections and commerce endpoints they access.</div></div>
+    <div class="asn-ga4-item asn-reveal-item" style="--i:3"><div class="asn-ga4-item-label">Journey</div><div class="asn-ga4-item-desc">How they move through the store, step by step, not just a list of pages.</div></div>
+  </div>
+  <div class="asn-ga4-group-label">Developing</div>
+  <div class="asn-ga4-grid asn-ga4-grid-full asn-ga4-grid-3">
+    <div class="asn-ga4-item asn-reveal-item" style="--i:4"><div class="asn-ga4-item-label">Attention</div><div class="asn-ga4-item-desc">Which parts of the store an agent's requests concentrate on, relative to everything else.</div></div>
+    <div class="asn-ga4-item asn-reveal-item" style="--i:5"><div class="asn-ga4-item-label">Skips</div><div class="asn-ga4-item-desc">What gets surfaced to an agent, a collection page, a comparison, but never followed up on.</div></div>
+    <div class="asn-ga4-item asn-reveal-item" style="--i:6"><div class="asn-ga4-item-label">Drop off</div><div class="asn-ga4-item-desc">Where in the store agent activity tends to fall off.</div></div>
   </div>
 </div>
 
@@ -852,9 +959,9 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
 </div>
 
 <div class="asn-activity asn-reveal">
-  <div class="asn-activity-kicker">What AI is doing</div>
-  <h2 class="asn-activity-title">Not just traffic. AI agent activity.</h2>
-  <p class="asn-activity-desc">Which agents keep coming back, how often, and what they are paying attention to on your store.</p>
+  <div class="asn-activity-kicker">AI agent activity feed</div>
+  <h2 class="asn-activity-title">Not just traffic. A record of what happened.</h2>
+  <p class="asn-activity-desc">Which agents keep coming back, how often, and which pages they're pulling from your store.</p>
   <div class="asn-activity-grid">
     <div class="asn-activity-table-wrap asn-reveal-item" style="--i:0">
       <table class="asn-activity-table">
@@ -919,11 +1026,203 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
   <p class="asn-activity-insight">AI is interested in this product. AI keeps reading our return policy. Signals like these can shape your entire AI commerce strategy.</p>
 </div>
 
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Agent Intent</div>
+  <h2 class="asn-behavior-title">It's not "ChatGPT visited 17 times." It's <span class="accent">why</span>.</h2>
+  <p class="asn-behavior-desc">Every AI agent visit has a likely intent behind it. Knowing what an agent was trying to do turns a raw visit count into something you can act on.</p>
+  <div class="asn-intent-grid asn-reveal-item" style="--i:0">
+    <span class="asn-intent-chip">Product discovery</span>
+    <span class="asn-intent-chip">Price checking</span>
+    <span class="asn-intent-chip">Product comparison</span>
+    <span class="asn-intent-chip">Shipping research</span>
+    <span class="asn-intent-chip">Return policy</span>
+    <span class="asn-intent-chip">Availability</span>
+    <span class="asn-intent-chip">Checkout</span>
+    <span class="asn-intent-chip">General brand research</span>
+  </div>
+  <div class="asn-intent-example asn-reveal-item" style="--i:1">
+    <span class="weak">ChatGPT visited 17 times.</span><br>
+    <b>ChatGPT came back 17 times to check these three products and the shipping policy.</b>
+  </div>
+</div>
+
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Agent Journey</div>
+  <h2 class="asn-behavior-title">Not a list of pages. A <span class="accent">path</span>.</h2>
+  <p class="asn-behavior-desc">The order an agent moves through your store tells you more than which pages it hit. It tells you what it was building toward, and where it stopped.</p>
+  <div class="asn-journey-sublabel">Shopping journey</div>
+  <div class="asn-journey-flow asn-reveal-item" style="--i:0">
+    <div class="asn-journey-step"><span class="asn-journey-label">Agent arrived</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">Opened collection</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">Opened Product A</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">Opened Product B</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">Checked shipping</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">Opened checkout</span></div>
+    <div class="asn-journey-step stopped"><span class="asn-journey-label">Stopped</span><span class="asn-journey-tag">No further activity</span></div>
+  </div>
+  <div class="asn-journey-sublabel" style="margin-top:24px;">Technical journey &middot; capability discovery</div>
+  <div class="asn-journey-flow asn-reveal-item" style="--i:1">
+    <div class="asn-journey-step"><span class="asn-journey-label">Claude retrieval</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">/.well-known/mcp.json</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">Capability check</span></div>
+    <div class="asn-journey-step"><span class="asn-journey-label">/api/ai/capabilities</span></div>
+    <div class="asn-journey-step stopped"><span class="asn-journey-label">/api/ai/status</span></div>
+  </div>
+  <p class="asn-behavior-desc" style="margin-top:18px;margin-bottom:0;">Classic ecommerce analytics doesn't show this second kind of journey at all. It's not a page view, it's a protocol handshake, an agent checking what a store lets it do before it does anything.</p>
+</div>
+
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Agent Attention <span class="asn-roadmap-pill">Developing</span></div>
+  <h2 class="asn-behavior-title">What gets looked at. What gets <span class="accent">skipped</span>.</h2>
+  <p class="asn-behavior-desc">An agent that requests a collection page but only follows up on 2 of 20 products is telling you something: those products were surfaced, the rest weren't picked up on. This is inferred from request patterns, not measured dwell time, and it's still developing.</p>
+  <div class="asn-attn-grid">
+    <div class="asn-attn-card asn-reveal-item" style="--i:0">
+      <div class="asn-attn-card-label">Agent attention, this visit</div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Product A &middot; followed up</span></div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Product B &middot; followed up</span></div>
+      <div class="asn-attn-row asn-attn-skip"><span class="asn-attn-row-name">Product C &middot; not followed up</span></div>
+      <div class="asn-attn-row asn-attn-skip"><span class="asn-attn-row-name">Product D &middot; not followed up</span></div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Product E &middot; never requested</span></div>
+    </div>
+    <div class="asn-attn-card asn-reveal-item" style="--i:1">
+      <div class="asn-attn-card-label">Requests by store area</div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Product A</span><span class="asn-attn-bar-wrap"><span class="asn-attn-bar-fill" style="--w:42%"></span></span><span class="asn-attn-row-val">42%</span></div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Product B</span><span class="asn-attn-bar-wrap"><span class="asn-attn-bar-fill" style="--w:31%"></span></span><span class="asn-attn-row-val">31%</span></div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Shipping</span><span class="asn-attn-bar-wrap"><span class="asn-attn-bar-fill" style="--w:12%"></span></span><span class="asn-attn-row-val">12%</span></div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Product C</span><span class="asn-attn-bar-wrap"><span class="asn-attn-bar-fill" style="--w:8%"></span></span><span class="asn-attn-row-val">8%</span></div>
+      <div class="asn-attn-row"><span class="asn-attn-row-name">Returns</span><span class="asn-attn-bar-wrap"><span class="asn-attn-bar-fill" style="--w:7%"></span></span><span class="asn-attn-row-val">7%</span></div>
+      <div class="asn-attn-gap">Attention gap: a store area can carry high business importance and still get almost no agent requests. <b>Returns</b> converts hesitant buyers, but agents request it least.</div>
+    </div>
+  </div>
+</div>
+
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Drop off <span class="asn-roadmap-pill">Developing</span></div>
+  <h2 class="asn-behavior-title">Not "how many visited." <span class="accent">Where do they stop.</span></h2>
+  <p class="asn-behavior-desc">A funnel view of the same visits shows where agent activity falls off, and by how much at each step.</p>
+  <div class="asn-funnel asn-reveal-item" style="--i:0">
+    <div class="asn-funnel-step">
+      <div class="asn-funnel-row"><span class="asn-funnel-label">Collection</span><span class="asn-funnel-pct">100%</span></div>
+      <div class="asn-funnel-track"><div class="asn-funnel-fill" style="--w:100%"></div></div>
+    </div>
+    <div class="asn-funnel-step">
+      <div class="asn-funnel-drop">&darr; 36%</div>
+      <div class="asn-funnel-row"><span class="asn-funnel-label">Product page</span><span class="asn-funnel-pct">64%</span></div>
+      <div class="asn-funnel-track"><div class="asn-funnel-fill" style="--w:64%"></div></div>
+    </div>
+    <div class="asn-funnel-step">
+      <div class="asn-funnel-drop">&darr; 33%</div>
+      <div class="asn-funnel-row"><span class="asn-funnel-label">Shipping</span><span class="asn-funnel-pct">31%</span></div>
+      <div class="asn-funnel-track"><div class="asn-funnel-fill" style="--w:31%"></div></div>
+    </div>
+    <div class="asn-funnel-step">
+      <div class="asn-funnel-drop">&darr; 19%</div>
+      <div class="asn-funnel-row"><span class="asn-funnel-label">Cart</span><span class="asn-funnel-pct">12%</span></div>
+      <div class="asn-funnel-track"><div class="asn-funnel-fill" style="--w:12%"></div></div>
+    </div>
+    <div class="asn-funnel-step">
+      <div class="asn-funnel-drop">&darr; 9%</div>
+      <div class="asn-funnel-row"><span class="asn-funnel-label">Checkout</span><span class="asn-funnel-pct">3%</span></div>
+      <div class="asn-funnel-track"><div class="asn-funnel-fill" style="--w:3%"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Actions &amp; Outcome <span class="asn-roadmap-pill">Roadmap</span></div>
+  <h2 class="asn-behavior-title">From <span class="accent">AI reads your store</span> to AI interacts with it.</h2>
+  <p class="asn-behavior-desc">As Shopify stores expose more of their functionality to AI agents as tools, not just pages, agents move from reading a store to acting on it: searching, filtering, adding to cart, checking out. This is where AI Agent Snapshot is going next.</p>
+  <div class="asn-read-decide-act">
+    <div class="asn-rda-col read asn-reveal-item" style="--i:0">
+      <div class="asn-rda-col-label">Read</div>
+      <div class="asn-rda-col-status">What the agent reads. Live.</div>
+      <div class="asn-rda-list"><span>Products</span><span>Collections</span><span>Policies</span><span>Pages</span><span>Commerce endpoints</span></div>
+    </div>
+    <div class="asn-rda-col decide asn-reveal-item" style="--i:1">
+      <div class="asn-rda-col-label">Decide</div>
+      <div class="asn-rda-col-status">What the agent appears to be evaluating. Live.</div>
+      <div class="asn-rda-list"><span>Intent</span><span>Comparisons</span><span>Attention</span><span>Journey</span></div>
+    </div>
+    <div class="asn-rda-col act asn-reveal-item" style="--i:2">
+      <div class="asn-rda-col-label">Act</div>
+      <div class="asn-rda-col-status">What the agent actually does. Roadmap.</div>
+      <div class="asn-rda-list"><span>Search product</span><span>Filter product</span><span>Add to cart</span><span>Update cart</span><span>Checkout</span></div>
+    </div>
+  </div>
+  <div class="asn-ga4-group-label" style="margin-top:0;">Outcome <span class="asn-roadmap-pill">Roadmap</span> &middot; did anything happen commercially?</div>
+  <div class="asn-outcome-flow asn-reveal-item" style="--i:3">
+    <span class="asn-outcome-step">Agent discovered product</span><span class="asn-outcome-arrow">&rarr;</span>
+    <span class="asn-outcome-step">Product selected</span><span class="asn-outcome-arrow">&rarr;</span>
+    <span class="asn-outcome-step">Cart created</span><span class="asn-outcome-arrow">&rarr;</span>
+    <span class="asn-outcome-step">Checkout started</span><span class="asn-outcome-arrow">&rarr;</span>
+    <span class="asn-outcome-step">Purchase</span>
+  </div>
+  <p class="asn-outcome-note">Once agent activity can be reliably linked to a commerce event, we can say something no traffic dashboard can: <b>these AI agents did not just visit your store. They tried to buy.</b></p>
+</div>
+
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Bot Classification</div>
+  <h2 class="asn-behavior-title">Not just an agent name. What kind, and what it's doing.</h2>
+  <p class="asn-behavior-desc">A user agent string tells you a request came from ChatGPT. Classification tells you whether it's a shopping agent comparing options, a crawler indexing pages, or something you haven't seen before.</p>
+  <div class="asn-intent-grid asn-reveal-item" style="--i:0">
+    <span class="asn-intent-chip">Shopping agent</span>
+    <span class="asn-intent-chip">Search agent</span>
+    <span class="asn-intent-chip">Research agent</span>
+    <span class="asn-intent-chip">Crawler</span>
+    <span class="asn-intent-chip">AI browser</span>
+    <span class="asn-intent-chip">Price agent</span>
+    <span class="asn-intent-chip">Unknown</span>
+  </div>
+  <div class="asn-reveal-item" style="--i:1;max-width:560px;">
+    <table class="asn-activity-table">
+      <thead><tr><th>Agent</th><th>Type</th><th>Behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Claude-Web</td><td class="asn-type-cell">Research agent</td><td>Researching</td></tr>
+        <tr><td>ChatGPT-User</td><td class="asn-type-cell">Shopping agent</td><td>Comparing</td></tr>
+        <tr><td>PerplexityBot</td><td class="asn-type-cell">Search agent</td><td>Crawling</td></tr>
+        <tr><td>Unknown</td><td class="asn-type-cell">Unknown</td><td>Testing</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Agent Control <span class="asn-roadmap-pill">Coming later</span></div>
+  <h2 class="asn-behavior-title">Detect. Classify. Understand. Then <span class="accent">control</span>.</h2>
+  <p class="asn-behavior-desc">You already get detect (who came), classify (what it is and does), and understand (why it came, what it's looking for). Control, what you allow an agent to do, is the next layer.</p>
+  <div class="asn-intent-grid asn-reveal-item" style="--i:0">
+    <span class="asn-intent-chip asn-control-chip">Allow</span>
+    <span class="asn-intent-chip asn-control-chip">Limit</span>
+    <span class="asn-intent-chip asn-control-chip">Block</span>
+    <span class="asn-intent-chip asn-control-chip">Rate limit</span>
+    <span class="asn-intent-chip asn-control-chip">Require verification</span>
+  </div>
+</div>
+
+<div class="asn-behavior asn-reveal">
+  <div class="asn-behavior-kicker">Where this fits</div>
+  <h2 class="asn-behavior-title">Your store, or the whole market.</h2>
+  <p class="asn-behavior-desc">AI Agent Snapshot and Recommendation Intelligence answer two different questions, at two different levels.</p>
+  <div class="asn-boundary asn-reveal-item" style="--i:0">
+    <div class="asn-boundary-col">
+      <div class="asn-boundary-col-label">AI Agent Snapshot</div>
+      <div class="asn-boundary-col-title">What AI agents do on your store.</div>
+      <div class="asn-boundary-tags"><span>Store level</span><span>Behavior</span><span>Activity</span><span>Intent</span><span>Journey</span><span>Attention</span><span>Actions</span></div>
+    </div>
+    <div class="asn-boundary-col other">
+      <div class="asn-boundary-col-label">Recommendation Intelligence</div>
+      <div class="asn-boundary-col-title">Why AI recommends your brand, or a competitor.</div>
+      <div class="asn-boundary-tags"><span>Market level</span><span>Prompts</span><span>Brands</span><span>Position</span><span>Recommendation share</span><span>Reasons</span><span>Blind spots</span></div>
+      <a href="/products/recommendation-intelligence">See Recommendation Intelligence &rarr;</a>
+    </div>
+  </div>
+</div>
+
 <div class="asn-waitlist-row">
 <div class="asn-waitlist asn-reveal">
-  <h2 class="asn-waitlist-headline">Your store has an AI audience.<br>You just can't see it yet.</h2>
+  <h2 class="asn-waitlist-headline">AI agents are starting to interact with stores.</h2>
   <div class="asn-waitlist-kicker">AI Agent Snapshot</div>
-  <p class="asn-waitlist-subline">See which AI systems are discovering, reading and evaluating your store.</p>
+  <p class="asn-waitlist-subline">They search, retrieve, inspect products, check policies and access commerce capabilities. See what they actually do, not just that they visited.</p>
   <form class="asn-form" data-source="products-ai-agent-snapshot-shopify">
     <input type="email" placeholder="you@yourstore.com" required autocomplete="email">
     <button type="submit">Get Early Access &rarr;</button>
@@ -932,15 +1231,15 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
   <div class="asn-waitlist-tag">Shopify &middot; Early Access</div>
 </div>
 <div class="asn-waitlist asn-reveal">
-  <h2 class="asn-waitlist-headline">Your website has an AI audience.<br>You just can't see it yet.</h2>
-  <div class="asn-waitlist-kicker">AI Agent Snapshot</div>
-  <p class="asn-waitlist-subline">See which AI systems are discovering, reading and evaluating your website.</p>
+  <h2 class="asn-waitlist-headline">AI agents are starting to interact with websites too.</h2>
+  <div class="asn-waitlist-kicker">AI Agent Snapshot for Websites</div>
+  <p class="asn-waitlist-subline">They search, retrieve, inspect products, check policies and access commerce capabilities. This is early access for the website version, not the Shopify app.</p>
   <form class="asn-form" data-source="products-ai-agent-snapshot-web">
     <input type="email" placeholder="you@yourwebsite.com" required autocomplete="email">
     <button type="submit">Get Early Access &rarr;</button>
   </form>
   <div class="asn-form-success">You're on the list. We'll be in touch.</div>
-  <div class="asn-waitlist-tag">Web &middot; Early Access</div>
+  <div class="asn-waitlist-tag">Website &middot; Early Access</div>
 </div>
 </div></div>
 <footer>
@@ -1006,7 +1305,7 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>18</b> Public Studies</div>
+      <div><b>20</b> Public Studies</div>
       <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -1045,6 +1344,8 @@ h2.asn-activity-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,32px);
         <a href="/research/the-fame-study">The Fame Study</a>
         <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
         <a href="/research/recommendation-lock-in">Two Months Later, the Model Still Agrees With Itself</a>
+        <a href="/research/candidate-evaluation">Hand It a Rating, and It Follows Every Single Time</a>
+        <a href="/research/cold-start">We Invented a Brand With Zero History. Reviews Got It Picked Anyway</a>
         <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
         <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
         <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
