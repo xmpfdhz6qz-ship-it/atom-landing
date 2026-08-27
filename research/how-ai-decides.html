@@ -602,12 +602,13 @@
     <h2 class="section-title">What does AI already know?</h2>
     <p class="section-body">Before a shopping question is ever asked, a language model already carries some notion of which brands exist and how they tend to be positioned. That prior knowledge comes from training, not from the live conversation, and it can shape an answer before retrieval or evaluation even begin.</p>
     <div class="sub-head">What we've found</div>
-    <p class="section-body">Brand prominence appears to matter. Our fame study found that public recognition explains part of recommendation behavior, while measured store quality explains almost none of it.</p>
+    <p class="section-body">Brand prominence appears to matter, a little. Wikipedia fame alone explains 1.2% of recommendation frequency. Widening to four public signals, cross-lingual reach, domain age, and recent media volume, raises that to just 11.2% combined, still far under the 61.4% the model's own past behavior explains about itself. Measured store quality explains almost none of it.</p>
     <div class="sub-head">What we don't know</div>
-    <p class="section-body">What exactly enters a model's memory, how strongly a brand is represented there, and how that internal representation shapes a recommendation later in the conversation.</p>
+    <p class="section-body">What exactly enters a model's memory, how strongly a brand is represented there, and how that internal representation shapes a recommendation later. Four easily-measurable public-footprint signals have now been ruled out as the main answer; the actual mechanism remains genuinely open.</p>
     <div class="layer-related">
       <div class="layer-related-label">Related research</div>
       <a href="/research/the-fame-study"><span class="lr-text">The Fame Study, Corrected</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/memory-source"><span class="lr-text">We Widened the Fame Signal Four Ways. It Barely Moved</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
     </div>
   </div>
@@ -663,14 +664,17 @@
     <div class="layer-window">
     <div class="layer-kicker-row">
       <div class="kicker">4 &middot; Candidacy</div>
-      <span class="hd-status emerging">Emerging</span>
+      <span class="hd-status measured">Measured</span>
     </div>
     <h2 class="section-title">Does your brand enter the consideration set?</h2>
     <p class="lede">A brand cannot be recommended if it never becomes a candidate.</p>
-    <p class="section-body">Getting considered and getting selected are different problems, governed by different things. Our full population study identified one store factor that consistently separates brands that are ever recommended from brands that never are, and it holds up under every check we ran. The open question is what else determines whether a brand enters the candidate set in the first place.</p>
+    <p class="section-body">Getting considered and getting selected are different problems, governed by different things. Our full population study identified one store factor that consistently separates brands that are ever recommended from brands that never are, and it holds up under every check we ran.</p>
+    <div class="sub-head">What we've found</div>
+    <p class="section-body">We went further and tested it causally. A brand with zero history, zero reviews, and zero press was invented from scratch and pitted against an entrenched category leader across 36 shopping intents. It won <strong>0 of 360 runs</strong>. Giving it a review score changed that immediately, it started winning <strong>53.1% of comparisons</strong>. Press mentions and sales-volume claims barely moved the needle, 1.9% and 0.3%.</p>
     <div class="layer-related">
       <div class="layer-related-label">Related research</div>
       <a href="/research/candidacy-vs-selection"><span class="lr-text">Candidacy vs Selection</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/cold-start"><span class="lr-text">We Invented a Brand With Zero History. Reviews Got It Picked Anyway</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
     </div>
   </div>
@@ -682,12 +686,18 @@
     <div class="layer-window">
     <div class="layer-kicker-row">
       <div class="kicker">5 &middot; Evaluation</div>
-      <span class="hd-status open">Open Research</span>
+      <span class="hd-status measured">Measured</span>
     </div>
     <h2 class="section-title">How does AI compare the candidates?</h2>
-    <p class="section-body">Once a handful of candidates are inside the consideration set, the model has to compare them somehow. By price? By quality signals? By reviews? By authority? By familiarity? By product fit? By evidence? By category relevance? By something we have not measured at all?</p>
-    <p class="lede" style="margin-top:16px;">We don't know yet.</p>
-    <p class="section-body">This is the biggest open gap in the decision path right now, and one of the questions the rest of this research program is built to close.</p>
+    <p class="section-body">Once a handful of candidates are inside the consideration set, the model has to compare them somehow. By price? By quality signals? By reviews? By authority? By familiarity? By product fit? By evidence? By category relevance?</p>
+    <div class="sub-head">What we've found</div>
+    <p class="section-body">We handed the model one comparison fact at a time between two genuinely close brands. A better star rating flipped the verdict <strong>160 of 160 runs, 100%</strong>, zero exceptions across 16 contested pairs. A longer, more specific spec list won <strong>81.9%</strong> of runs. A lower price and faster availability won only <strong>60.6%</strong>, barely above a coin flip.</p>
+    <div class="sub-head">What we don't know</div>
+    <p class="section-body">How these signals interact when they conflict, for example a cheaper product with a worse rating, and whether the same hierarchy holds across categories.</p>
+    <div class="layer-related">
+      <div class="layer-related-label">Related research</div>
+      <a href="/research/candidate-evaluation"><span class="lr-text">Hand It a Rating, and It Follows Every Single Time</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+    </div>
     </div>
   </div>
 </section>
@@ -810,8 +820,8 @@
       <div class="kt-card"><div class="kt-card-layer">Memory</div><div class="kt-card-know">Prominence and fame appear to matter more than measured store quality.</div><span class="hd-status emerging sm">Partially Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Retrieval</div><div class="kt-card-know">Search access can dramatically change which brand gets recommended.</div><span class="hd-status measured sm">Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Understanding</div><div class="kt-card-know">Semantic understanding of a brand can be measured directly.</div><span class="hd-status measured sm">Measured</span></div>
-      <div class="kt-card"><div class="kt-card-layer">Candidacy</div><div class="kt-card-know">Getting considered is a different problem from getting selected.</div><span class="hd-status emerging sm">Emerging</span></div>
-      <div class="kt-card"><div class="kt-card-layer">Evaluation</div><div class="kt-card-know">The mechanism for comparing candidates remains unclear.</div><span class="hd-status open sm">Open Research</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Candidacy</div><div class="kt-card-know">Zero-history brands lose every run until reviews appear, then they win over half.</div><span class="hd-status measured sm">Measured</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Evaluation</div><div class="kt-card-know">A better rating decides the comparison almost every time; price barely moves it.</div><span class="hd-status measured sm">Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Recommendation</div><div class="kt-card-know">We can measure who wins, and describe why they are described as winning.</div><span class="hd-status measured sm">Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Stability</div><div class="kt-card-know">Recommendation persistence across repeated runs can be measured.</div><span class="hd-status emerging sm">Emerging</span></div>
       <div class="kt-card"><div class="kt-card-layer">Confidence</div><div class="kt-card-know">Decision confidence remains largely unexplored.</div><span class="hd-status open sm">Open Research</span></div>
@@ -852,6 +862,14 @@
             <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Memory</span><span class="hd-status emerging sm">Partially Measured</span></div>
             <div class="mini-card-title">The Fame Study, Corrected</div>
             <div class="mini-card-body">Public fame explains a small share of recommendation, close to the noise floor.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/memory-source">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Memory</span><span class="hd-status emerging sm">Partially Measured</span></div>
+            <div class="mini-card-title">We Widened the Fame Signal Four Ways. It Barely Moved</div>
+            <div class="mini-card-body">Four public signals combined explain 11.2%, still far under the model's own 61.4% self-consistency.</div>
           </div>
           <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
         </a>
@@ -910,6 +928,28 @@
             <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Candidacy</span><span class="hd-status emerging sm">Emerging</span></div>
             <div class="mini-card-title">Candidacy vs Selection</div>
             <div class="mini-card-body">One store factor gets you in. It predicts nothing about who wins once you're there.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/cold-start">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Candidacy</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">We Invented a Brand With Zero History. Reviews Got It Picked Anyway</div>
+            <div class="mini-card-body">A brand with no evidence at all won 0 of 360 runs. Reviews were the one signal that changed that.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="rl-group">
+      <div class="rl-group-label">Evaluation</div>
+      <div class="products-grid">
+        <a class="mini-card" href="/research/candidate-evaluation">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Evaluation</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">Hand It a Rating, and It Follows Every Single Time</div>
+            <div class="mini-card-body">A better star rating flipped the verdict 160 of 160 times. Price barely moved it at all.</div>
           </div>
           <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
         </a>
@@ -1048,7 +1088,7 @@
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>18</b> Public Studies</div>
+      <div><b>21</b> Public Studies</div>
       <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -1087,6 +1127,9 @@
         <a href="/research/the-fame-study">The Fame Study</a>
         <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
         <a href="/research/recommendation-lock-in">Two Months Later, the Model Still Agrees With Itself</a>
+        <a href="/research/candidate-evaluation">Hand It a Rating, and It Follows Every Single Time</a>
+        <a href="/research/cold-start">We Invented a Brand With Zero History. Reviews Got It Picked Anyway</a>
+        <a href="/research/memory-source">We Widened the Fame Signal Four Ways. It Barely Moved</a>
         <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
         <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
         <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
@@ -1226,5 +1269,220 @@
 })();
 </script>
 <!-- SITE_STATS_SYNC:END -->
+<style>
+.aiw-root{position:fixed;bottom:22px;right:22px;z-index:2000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+.aiw-fab{position:relative;width:52px;height:52px;border-radius:14px;background:#0b0d0e;border:1px solid #262b2e;display:flex;align-items:center;justify-content:center;color:#5fe0af;cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,0.45);transition:transform .2s ease,box-shadow .2s ease;padding:0;}
+.aiw-fab:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.5);}
+.aiw-heart{width:22px;height:22px;}
+.aiw-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aiw-heart-pulse{stroke:#5fe0af;fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aiwHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aiwHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aiw-heart-pulse,.aiw-panel-dot{animation:none;}}
+.aiw-panel{position:absolute;bottom:64px;right:0;width:230px;background:#0b0d0e;border:1px solid #262b2e;border-radius:18px;padding:22px 20px 20px;box-shadow:0 34px 64px -20px rgba(0,0,0,0.6);transform-origin:bottom right;transform:scale(0.94) translateY(8px);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;}
+.aiw-root.is-open .aiw-panel{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
+.aiw-root.is-open .aiw-fab{color:#e8e8e8;}
+.aiw-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#565c60;font-size:18px;cursor:pointer;line-height:1;padding:2px;font-family:inherit;}
+.aiw-close:hover{color:#e8e8e8;}
+.aiw-panel-head{margin-bottom:20px;padding-right:18px;}
+.aiw-panel-title-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.aiw-panel-dot{width:6px;height:6px;border-radius:50%;background:#5fe0af;box-shadow:0 0 0 0 rgba(95,224,175,.6);animation:aiwDotPulse 2.4s infinite;flex-shrink:0;}
+@keyframes aiwDotPulse{70%{box-shadow:0 0 0 6px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
+.aiw-panel-title-main{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11.5px;font-weight:800;color:#f2f4f5;letter-spacing:.03em;line-height:1.3;}
+.aiw-panel-title-sub{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:10px;color:#868c91;letter-spacing:.03em;}
+.aiw-rings{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.aiw-ring-item{display:flex;align-items:center;gap:12px;text-align:left;}
+.aiw-ring-visual{position:relative;width:44px;height:44px;flex-shrink:0;}
+.aiw-ring-visual svg{width:100%;height:100%;transform:rotate(-90deg);}
+.aiw-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.aiw-ring-fill{fill:none;stroke:#5fe0af;stroke-width:5;stroke-linecap:round;stroke-dashoffset:106.81;transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.aiw-root.is-open .aiw-ring-fill{stroke-dashoffset:var(--offset);}
+.aiw-ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;font-weight:800;color:#f2f4f5;}
+.aiw-ring-label{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;color:#b4b8bc;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.aiw-note{font-size:10.5px;color:#565c60;line-height:1.5;margin:0 0 14px;}
+.aiw-link{display:block;text-align:center;background:#5fe0af;color:#080808;font-weight:700;font-size:12.5px;padding:10px;border-radius:9px;text-decoration:none;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;transition:background .15s;}
+.aiw-link:hover{background:#7ee9be;}
+@media(max-width:520px){
+  .aiw-root{bottom:16px;right:16px;}
+  .aiw-panel{width:calc(100vw - 32px);right:-6px;}
+}
+</style>
+<!-- AI_SIGNAL_WIDGET:START -->
+<div class="aiw-root" id="aiwRoot">
+  <button class="aiw-fab" id="aiwFab" aria-label="AI signal for atomfoundry.dev" aria-expanded="false" type="button">
+    <svg class="aiw-heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="aiw-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="aiw-heart-pulse" id="aiwHeartPulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="aiw-panel" id="aiwPanel" role="dialog" aria-label="AI signal for atomfoundry.dev">
+    <button class="aiw-close" id="aiwClose" aria-label="Close" type="button">&times;</button>
+    <div class="aiw-panel-head">
+      <div class="aiw-panel-title-row"><span class="aiw-panel-dot"></span><span class="aiw-panel-title-main">AI AGENT SNAPSHOT</span></div>
+      <div class="aiw-panel-title-sub">ATOM FOUNDRY.dev</div>
+    </div>
+    <div class="aiw-rings">
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:42.72"/>
+            </svg>
+            <div class="aiw-ring-value">3</div>
+          </div>
+          <div class="aiw-ring-label">Today</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:58.75"/>
+            </svg>
+            <div class="aiw-ring-value">6</div>
+          </div>
+          <div class="aiw-ring-label">Bots</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:10.68"/>
+            </svg>
+            <div class="aiw-ring-value">4m</div>
+          </div>
+          <div class="aiw-ring-label">Last seen</div>
+        </div>
+    </div>
+    <p class="aiw-note">Illustrative example &middot; single-site signal for atomfoundry.dev.</p>
+    <a href="/ai-signal" class="aiw-link">View full signals &rarr;</a>
+  </div>
+</div>
+<!-- AI_SIGNAL_WIDGET:END -->
+<script>
+(function(){
+  var root = document.getElementById('aiwRoot');
+  if(!root) return;
+  var fab = document.getElementById('aiwFab');
+  var closeBtn = document.getElementById('aiwClose');
+  var heart = document.getElementById('aiwHeartPulse');
+  function restartHeartbeat(){
+    if (!heart) return;
+    heart.style.animation = 'none';
+    void heart.getBBox();
+    heart.style.animation = '';
+  }
+  function setOpen(open){
+    root.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    restartHeartbeat();
+  }
+  fab.addEventListener('click', function(){ setOpen(!root.classList.contains('is-open')); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+  }
+  document.addEventListener('click', function(e){
+    if (root.classList.contains('is-open') && !root.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
+<!-- AIW_LIVE:START -->
+<script>
+(function(){
+  // Pulls real numbers for the AI signal widget from the shop_ai_visits log
+  // (via /webhook/shop-ai-signal) and replaces the static placeholder values
+  // baked into the markup above. Ring order in the DOM is fixed: Today,
+  // Bots, Last seen -- selected positionally, no id changes needed.
+  var ringsRoot = document.querySelector('.aiw-rings');
+  if (!ringsRoot) return;
+  var items = ringsRoot.querySelectorAll('.aiw-ring-item');
+  if (items.length < 3) return;
+  var todayValue = items[0].querySelector('.aiw-ring-value');
+  var todayFill  = items[0].querySelector('.aiw-ring-fill');
+  var botsValue  = items[1].querySelector('.aiw-ring-value');
+  var botsFill   = items[1].querySelector('.aiw-ring-fill');
+  var lastValue  = items[2].querySelector('.aiw-ring-value');
+  var lastFill   = items[2].querySelector('.aiw-ring-fill');
+  var noteEl = document.querySelector('.aiw-note');
+  var CIRC = 106.81;
+
+  function setFill(el, fraction){
+    if (!el) return;
+    var f = Math.max(0, Math.min(1, fraction || 0));
+    el.style.setProperty('--offset', (CIRC * (1 - f)).toFixed(2));
+  }
+  function relTime(iso){
+    if (!iso) return '\u2014';
+    var diffMs = Date.now() - new Date(iso).getTime();
+    if (isNaN(diffMs)) return '\u2014';
+    var mins = Math.max(0, Math.round(diffMs / 60000));
+    if (mins < 1) return 'now';
+    if (mins < 60) return mins + 'm';
+    var hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + 'h';
+    var days = Math.round(hrs / 24);
+    return days + 'd';
+  }
+
+  fetch('https://n8n-production-1d7c.up.railway.app/webhook/shop-ai-signal', { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ if (!r.ok) throw new Error('bad status'); return r.json(); })
+    .then(function(data){
+      var visits = Number(data.today_count) || 0;
+      var agents = Number(data.unique_agents) || 0;
+      var lastSeen = data.last_seen || null;
+      if (todayValue) todayValue.textContent = visits.toLocaleString('en-US');
+      setFill(todayFill, visits / 30);
+      if (botsValue) botsValue.textContent = String(agents);
+      setFill(botsFill, agents / 12);
+      if (lastValue) lastValue.textContent = relTime(lastSeen);
+      var minsAgo = lastSeen ? (Date.now() - new Date(lastSeen).getTime()) / 60000 : null;
+      setFill(lastFill, minsAgo == null ? 0 : (1 - Math.min(minsAgo / 120, 1)));
+      if (noteEl) noteEl.textContent = 'Live AI crawler activity on atomfoundry.dev.';
+    })
+    .catch(function(){
+      if (noteEl) noteEl.textContent = 'Live signal temporarily unavailable.';
+    });
+})();
+</script>
+<!-- AIW_LIVE:END -->
+<!-- SITE_VISIT_TRACKER:START -->
+<script>
+(function(){
+  try {
+    if (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1') return;
+    var VID_KEY = 'af_vid';
+    var vid = localStorage.getItem(VID_KEY);
+    if (!vid) {
+      vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2));
+      localStorage.setItem(VID_KEY, vid);
+    }
+    var payload = JSON.stringify({
+      visitor_id: vid,
+      path: location.pathname,
+      referrer: document.referrer || '',
+      user_agent: navigator.userAgent || ''
+    });
+    var url = 'https://n8n-production-1d7c.up.railway.app/webhook/site-visit';
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+    } else {
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+</script>
+<!-- SITE_VISIT_TRACKER:END -->
 </body>
 </html>
