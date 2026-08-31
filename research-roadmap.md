@@ -12,6 +12,8 @@ je souboj blízký, model umí použít reálná data, a ne stejně.**
 Vyřazené proměnné (nekorelují s frekvencí doporučení):
 - kvalita obchodu / AI Commerce Score — r≈0 (Candidacy vs Selection, 60 924 obchodů)
 - sláva značky (Wikipedia proxy) — vysvětlí 1,2 % (The Fame Study, opraveno, 872 značek)
+- širší veřejná stopa (Wikipedia + Wikidata + stáří domény + GDELT zmínky) — dohromady jen
+  11,2 %, žádný ze 4 signálů samostatně statisticky významný (Zdroj paměti, 95 značek)
 - znalost webu modelem — 75,9 % správných domén, ale nesouvisí se stabilitou
 
 Potvrzené proměnné (skutečně něco dělají):
@@ -49,31 +51,70 @@ prodejů (0,3 %) skoro nic nezmění. 1 940 volání modelu celkem. Publikováno
 jako Study #20: /research/cold-start.
 Data + skripty: `research-prep/cold-start/` (výsledky v `results.json`).
 
-**3. Zdroj paměti — DALŠÍ NA ŘADĚ**
+**3. Zdroj paměti — HOTOVO (2026-08-27)**
 Otázka: Co přesně tu paměť vytváří (širší otisk než jen Wikipedia)?
-Rozsah zúžen (2026-08-27, Daniel): jen OpenAI, bez cross-model srovnání —
-to je zaparkované jako navazující studie, až budou k dispozici
-Anthropic/Google klíče.
-Metoda: znovupoužije stejný closed-book baseline (50 promptů, žádné
-search, žádná injektovaná fakta) jako Volba kandidáta/Cold start, pak pro
-každou značku, co se v datech objevila, stáhne 4 volně dostupné signály
-bez API klíče — Wikipedia pageviews, počet jazykových verzí na
-Wikidatech, stáří domény (WHOIS), objem mediálních zmínek (GDELT).
-Korelace/regrese proti frekvenci doporučení, srovnání s 1,2% baseline z
-The Fame Study.
-Status: **PŘIPRAVENO K SPUŠTĚNÍ.** Kompletní balíček v
-`research-prep/zdroj-pameti/`: STUDY-DESIGN.md (hypotézy, design,
-statistika), phase1_prompts.json (stejných 50 promptů), run_study.py
-(otestováno --dry-run bez chyby, kroky phase1/aggregate/footprint),
-analyze_results.py (bootstrap CI + permutační test + kombinovaný regresní
-model), README.md (jak spustit, včetně zkratky na přeskočení Phase 1
-reuse ze dvou předchozích studií). Chybí jen OPENAI_API_KEY (+
-`pip3 install openai python-whois numpy`) a spustit `python3 run_study.py all`.
+Rozsah: jen OpenAI (gpt-4o), bez cross-model srovnání — to je teď
+nejsilnější kandidát na navazující studii (viz níže).
+Výsledek: žádný ze 4 volně dostupných signálů (Wikipedia pageviews,
+Wikidata sitelinks, stáří domény, GDELT mediální zmínky) není statisticky
+významný samostatně (p>0,05 u všech čtyř, 95 značek). Wikipedia samotná
+v této studii 2,3 % (konzistentní s 1,2 % z The Fame Study). Kombinovaný
+model ze všech čtyř signálů 11,2 % (95% CI 3,8–37,5 %, n=50), pořád
+hluboko pod 61,4 % z The Model Predicts Itself. Robustness-check na
+přísnějším prahu (MIN_WINS≥2, 75 značek) potvrdil stejný závěr menšími
+čísly (kombinovaně 6,1 %). Null hypotéza se nezamítá — širší veřejná
+stopa není mechanismus paměti. Publikováno jako Study #21:
+/research/memory-source.
+Data + skripty: `research-prep/zdroj-pameti/` (výsledky v `results.json`,
+MIN_WINS=1 běh; MIN_WINS=2 čísla jen v poznámkách, results.json byl
+přepsán druhým během).
 
-**Bonus track — doporučení → nákup (dlouhý horizont)**
+## Pokrytí decision path (stav k 2026-08-27)
+
+9 fází na /research/how-ai-decides, vážený odhad pokrytí (Measured=100 %,
+Partially Measured/Emerging=50 %, Open=0 %): **~67 %**.
+
+| # | Fáze | Status | Studie |
+|---|---|---|---|
+| 1 | Memory | Partially Measured | The Fame Study, Zdroj paměti |
+| 2 | Retrieval | Measured | Web Search vs AI Recommendations, 5× Category Reports |
+| 3 | Understanding | Measured | Search Changes the Vocabulary, AI Understanding™ |
+| 4 | Candidacy | Measured | Cold start, Candidacy vs Selection |
+| 5 | Evaluation | Measured | Volba kandidáta |
+| 6 | Recommendation | Measured | The Model Predicts Itself, The Model Confabulates, flagship 2026 |
+| 7 | Stability | Emerging | Two Months Later (lock-in), AI Knows Your Website |
+| 8 | Confidence | Emerging | The Model Hedges Most When It's Most Sure |
+| 9 | Purchase | Open | — |
+
+Nejslabší místa: Purchase má nula studií, Memory a Stability jsou jen
+částečné i po dvou/dvou studiích každá.
+
+## Další kandidáti na výzkum (2026-08-27)
+
+**A. Cross-model paměť (Memory, navazuje na Zdroj paměti)**
+Otázka: Je "paměť" univerzální napříč modely (GPT/Claude/Gemini), nebo
+idiosynkratická jedné laboratoři? Zaparkováno v designu Zdroje paměti jako
+limitace #5, čeká na Anthropic/Google API klíče. Levné znovupoužití
+stejného closed-book baseline, jen 3× místo 1×.
+
+**B. Recommendation Confidence (Confidence, nula studií zatím)**
+Otázka: Liší se jazyk doporučení podle jistoty (hedging: "jedna z možností"
+vs asertivní: "nejlepší volba"), a koreluje ta jistota se stabilitou
+(lock-in) nebo s tím, jestli agent doporučení skutečně použije? Levné —
+NLP klasifikace jazyka na existujících Phase 1 datech, žádné nové volání.
+
+**C. První Founder Lab RCT (Stability/Recommendation, posun z korelace na kauzalitu)**
+Otázka: Když cíleně změníme jeden signál na reálném kontrolovaném obchodě
+(např. přidáme recenze), pohne se doporučení skutečně, ne jen v párovém
+promptu? První skutečný experiment v sérii, dražší a pomalejší, ale
+odpovídá na otázku, kterou žádná observační studie nemůže: kauzalita, ne
+korelace. Přímo navazuje na poznámku k predikci níže.
+
+**D. Doporučení → nákup (Purchase, bonus track, dlouhý horizont)**
 Otázka: Vede doporučení k reálnému nákupu?
 Proč bonus/později: závisí na dostupnosti agentic commerce dat (ChatGPT
-Shopping apod.), zatím nemáme snadný způsob měření.
+Shopping apod.), zatím nemáme snadný způsob měření. AI Agent Snapshot
+(živý produkt) může časem dodat reálná data místo simulace.
 Status: zaparkováno, sledovat vývoj agentic commerce.
 
 ## Poznámka k predikci (2026-08-26)
@@ -82,4 +123,6 @@ Až budou hotové 1-3, program pravděpodobně přejde z pozorovacích/korelačn
 studií k příčinným experimentům na Founder Lab (vlastní kontrolovaný obchod) —
 tj. přestaneme jen měřit, co koreluje, a začneme cíleně měnit jeden signál
 najednou a měřit, jestli se doporučení skutečně pohne. To by byl první
-skutečný RCT v celé sérii.
+skutečný RCT v celé sérii. Aktualizace 2026-08-27: se 3 hotovými studiemi
+(Volba kandidáta, Cold start, Zdroj paměti) je tahle podmínka splněná —
+kandidát C výše je přesně tenhle krok.
