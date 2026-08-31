@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does. | Atom Foundry</title>
-<meta name="description" content="Four external signals tested against recommendation frequency all land near zero: store quality 0.7%, fame 1.2%, web traces 0.2%, intent within the recommended set 1.2%. One thing predicts 61.4%: what the model recommended last month. It does not drift for 15 days either.">
+<title>The Model Hedges Most When It's Most Sure | Atom Foundry</title>
+<meta name="description" content="Real internal confidence (token logprobs) is highest exactly where hedge language is most common. Correlation between the two: r=0.03. Seven independent methods, 2,900+ calls, GPT-4o, Claude Sonnet and Gemini, same result every time.">
 <meta name="robots" content="index, follow">
 <meta name="view-transition" content="same-origin">
-<link rel="canonical" href="https://atomfoundry.dev/research/the-model-predicts-itself">
-<meta property="og:title" content="Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.">
-<meta property="og:description" content="Store quality, fame, web traces, intent: four independent signals, all near zero. June position predicts July position at R squared 61.4%, the strongest number in this entire series. And it does not move for 15 days.">
+<link rel="canonical" href="https://atomfoundry.dev/research/recommendation-confidence">
+<meta property="og:title" content="The Model Hedges Most When It's Most Sure">
+<meta property="og:description" content="Hedged language and real model confidence are almost totally uncorrelated (r=0.03), and for the highest-confidence pick type they run backwards. Seven independent methods converge on the same answer.">
 <meta property="og:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -50,49 +50,49 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#webpage",
-      "url": "https://atomfoundry.dev/research/the-model-predicts-itself",
-      "name": "Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.",
-      "description": "Four external signals tested against recommendation frequency all land near zero: store quality 0.7%, fame 1.2%, web traces 0.2%, intent within the recommended set 1.2%. One thing predicts 61.4%: what the model recommended last month. It does not drift for 15 days either.",
+      "@id": "https://atomfoundry.dev/research/recommendation-confidence#webpage",
+      "url": "https://atomfoundry.dev/research/recommendation-confidence",
+      "name": "The Model Hedges Most When It's Most Sure",
+      "description": "Real internal confidence (token logprobs) is highest exactly where hedge language is most common. Correlation between the two: r=0.03. Seven independent methods, 2,900+ calls, GPT-4o, Claude Sonnet and Gemini, same result every time.",
       "inLanguage": "en",
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
-      "about": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#article" },
-      "mainEntity": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#dataset" },
-      "breadcrumb": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#breadcrumb" }
+      "about": { "@id": "https://atomfoundry.dev/research/recommendation-confidence#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/recommendation-confidence#dataset" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/research/recommendation-confidence#breadcrumb" }
     },
     {
       "@type": "Article",
-      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#article",
-      "headline": "Nothing About Your Brand Predicts Recommendation. The Model's Own Past Behavior Does.",
-      "description": "Every external signal tested in this series, store quality, fame, web traces, and intent, lands near zero. June recommendation position predicts July position at R squared 61.4%, Pearson, across 1,082 brand-intent pairs, and shows zero drift across a 15 day window.",
-      "datePublished": "2026-07-21",
+      "@id": "https://atomfoundry.dev/research/recommendation-confidence#article",
+      "headline": "The Model Hedges Most When It's Most Sure",
+      "description": "Seven independent methods (lexicon hedge classifier, blind LLM-judge rating, token logprobs, self-reported confidence, repetition stability, phrasing perturbation, cross-model replication) all measuring the same 16 fixed contested-pair scenarios. Verbal hedging correlates r=0.03 with real internal confidence, and is highest exactly where real confidence is highest.",
+      "datePublished": "2026-08-31",
       "author": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
-      "url": "https://atomfoundry.dev/research/the-model-predicts-itself",
+      "url": "https://atomfoundry.dev/research/recommendation-confidence",
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
-      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#webpage" },
-      "about": ["Recommendation Intelligence", "AI Commerce", "Recommendation Stability", "Generative Engine Optimization"]
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/recommendation-confidence#webpage" },
+      "about": ["Recommendation Confidence", "AI Commerce", "Recommendation Intelligence", "Generative Engine Optimization"]
     },
     {
       "@type": "Dataset",
-      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#dataset",
-      "name": "Does past model behavior predict future recommendation better than any external brand signal?",
-      "description": "Pearson correlation of June recommendation position and frequency against July position and frequency, 1,082 brand-intent pairs across the same 50 intents, plus a 15 day drift check and four external-signal correlations: store quality, public fame, web traces, and intent within the recommended set.",
+      "@id": "https://atomfoundry.dev/research/recommendation-confidence#dataset",
+      "name": "Does hedged vs. assertive language track a model's real confidence?",
+      "description": "Reuses the exact 16 fixed rating-signal, contested-pair scenarios from Candidate Evaluation's phase 3 (same fact_a/fact_b), then measures confidence seven independent ways: a hedge/booster lexicon classifier, a blind LLM-judge rating, OpenAI token logprobs on a constrained A/B response, self-reported 0-100 confidence, repetition stability across 10 runs, five phrasing perturbations of the same question, and replication across GPT-4o, Claude Sonnet 4.5 and Gemini.",
       "creator": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
-      "url": "https://atomfoundry.dev/research/the-model-predicts-itself",
-      "measurementTechnique": "Pearson correlation across independent time periods and datasets, plus repeated-measures drift comparison at 1, 14, and 15 day intervals",
-      "variableMeasured": ["Position Self-Correlation", "Frequency Self-Correlation", "Position to Frequency Cross-Correlation", "Drift at 15 Days", "Web Trace Correlation to Frequency"]
+      "url": "https://atomfoundry.dev/research/recommendation-confidence",
+      "measurementTechnique": "Cluster bootstrap 95% CI over intents with 10,000 resamples, permutation test for group differences, Pearson correlation for cross-method agreement",
+      "variableMeasured": ["Hedge Rate", "Confidence Gap (logprobs)", "Self-Reported Confidence", "Repetition Stability", "Phrasing Flip Rate", "Cross-Model Pick Agreement"]
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://atomfoundry.dev/research/the-model-predicts-itself#breadcrumb",
+      "@id": "https://atomfoundry.dev/research/recommendation-confidence#breadcrumb",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://atomfoundry.dev/research" },
         { "@type": "ListItem", "position": 3, "name": "Mechanism Studies", "item": "https://atomfoundry.dev/research/mechanism-studies" },
-        { "@type": "ListItem", "position": 4, "name": "The Model Predicts Itself", "item": "https://atomfoundry.dev/research/the-model-predicts-itself" }
+        { "@type": "ListItem", "position": 4, "name": "The Model Hedges Most When It's Most Sure", "item": "https://atomfoundry.dev/research/recommendation-confidence" }
       ]
     }
   ]
@@ -121,11 +121,6 @@
     font-size:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  /* Cross-document view transition: on browsers that support navigating
-     same-origin pages with the View Transitions API (Chromium 126+), the
-     incoming page rolls down over the outgoing one like a blind being
-     pulled down, instead of the default cross-fade. Unsupported browsers
-     just navigate normally — this is a pure progressive enhancement. */
   @media (prefers-reduced-motion: no-preference){
     ::view-transition-old(root){animation:none;}
     ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
@@ -146,7 +141,6 @@
   img{max-width:100%;display:block;}
   em{font-style:normal;}
 
-  /* ---------- NAV (shared component, identical to landing/research) ---------- */
   header.nav{
     position:sticky;top:0;z-index:1000;
     background:rgba(240,238,230,0.88);
@@ -220,7 +214,6 @@
   a.dd-item:hover .dd-title{color:var(--orange);}
   .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
 
-  /* ---------- SECTION GENERIC ---------- */
   section{padding:64px 24px;}
   section.alt{background:var(--off-white);}
   .container{max-width:var(--maxw);margin:0 auto;}
@@ -232,20 +225,18 @@
   .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:680px;}
   .section-body strong{color:var(--black);}
 
-  /* ---------- REPORT HERO ---------- */
   .research-hero{padding:88px 24px 48px;background:var(--cream);}
-  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:50%;margin-top:36px;}
+  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:56%;margin-top:36px;}
   .byline-note{font-size:12px;color:var(--gray-500);margin-top:16px;}
   .byline-note a{color:var(--orange);font-weight:700;}
 
-  /* ---------- HERO STAT ROW ---------- */
-  .hero-stat-row{display:flex;flex-wrap:nowrap;align-items:baseline;row-gap:14px;margin-top:52px;gap:0;}
+  .hero-stat-row{display:flex;flex-direction:column;row-gap:16px;margin-top:52px;}
+  .hero-stat-line{display:flex;flex-wrap:wrap;align-items:baseline;row-gap:12px;column-gap:0;}
   .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
   .hero-stat:not(:first-child)::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
   .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
   .hero-stat-num.smaller{font-size:30px;}
 
-  /* ---------- CHART CARD (shared shell) ---------- */
   .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;transition:transform .3s ease, box-shadow .3s ease;}
   .chart-card.chart-card-wide{max-width:940px;padding:36px 44px;}
   @media (hover:hover) and (pointer:fine){
@@ -254,7 +245,6 @@
   .chart-card-title{font-size:12px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:4px;}
   .chart-card-sub{font-size:12.5px;color:var(--gray-500);margin-bottom:18px;}
 
-  /* ---------- CALLOUT / PLAIN CARD ---------- */
   .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:680px;transition:transform .3s ease, box-shadow .3s ease;}
   @media (hover:hover) and (pointer:fine){
     .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
@@ -263,20 +253,21 @@
   .chart-caption{max-width:640px;margin:22px auto 0;font-size:15px;color:var(--gray-700);line-height:1.7;text-align:center;}
   .chart-caption strong{color:var(--black);}
 
-  /* ---------- PRODUCTS GRID / MINI-CARD (related series) ---------- */
   .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .products-grid.cols-4{grid-template-columns:repeat(4,1fr);}
   .mini-card{border-radius:var(--radius);padding:24px 22px;background:var(--card);display:flex;flex-direction:column;min-height:150px;transition:transform .3s ease, box-shadow .3s ease;}
   .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
+  .mini-card-eyebrow.method-label{font-family:var(--serif);font-size:18px;font-weight:900;letter-spacing:0.01em;margin-bottom:12px;}
   .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
   .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;flex:1;margin-bottom:12px;}
+  .mini-card-stat{font-size:13px;font-weight:800;color:var(--black);margin-bottom:4px;}
   .mini-card-link{margin-top:auto;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;}
   .mini-card:hover .mini-card-link{color:var(--orange);}
   .related-more{margin-top:18px;font-size:13.5px;color:var(--gray-700);}
   .related-more a{color:var(--orange);font-weight:700;}
   .related-more a:hover{text-decoration:underline;}
 
-  /* ---------- CTA BOX ---------- */
   .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
   .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
   .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
@@ -294,7 +285,6 @@
   .final-cta .scan-box input{padding:12px 18px;font-size:15px;}
   .final-cta .scan-box button{padding:12px 22px;font-size:14px;}
 
-  /* ---------- FOOTER (shared component) ---------- */
   footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
   .footer-inner{max-width:var(--maxw);margin:0 auto;}
   .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
@@ -319,11 +309,6 @@
   .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
   .ai-sitemap a:hover{color:var(--orange);}
 
-  /* ---------- STUDY PAGE ADD-ONS (this article only) ---------- */
-  .lede{font-size:18px;color:var(--gray-700);line-height:1.7;max-width:860px;margin-bottom:4px;font-weight:600;}
-  .noise-note{font-size:13px;color:var(--gray-500);margin-top:10px;}
-
-  /* method-box: re-themed version of the shared component. */
   .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
   @media (hover:hover) and (pointer:fine){
     .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
@@ -334,13 +319,10 @@
   .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
   .limits strong{color:var(--black);}
 
-  /* signal-chart: honest horizontal ranked bars, four near-invisible
-     external signals against one dominant internal one. The scale is
-     linear and shared, so the contrast is the point. */
   .signal-chart{margin-top:8px;}
   .signal-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
   .signal-row:last-child{margin-bottom:0;}
-  .signal-name{flex:0 0 200px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
+  .signal-name{flex:0 0 260px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
   .signal-name.standout{color:var(--black);font-weight:800;}
   .signal-track{flex:1;height:16px;background:var(--gray-300);border-radius:8px;overflow:hidden;position:relative;}
   .signal-fill{height:100%;border-radius:8px;width:0;transition:width 1.3s cubic-bezier(.16,.8,.4,1);background:var(--bar-gray);}
@@ -351,60 +333,13 @@
   .signal-chart.in-view .signal-val{opacity:1;}
   .signal-tag{flex:0 0 auto;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);background:var(--black);padding:3px 9px;border-radius:20px;opacity:0;transition:opacity .4s ease .5s;}
   .signal-chart.in-view .signal-tag{opacity:1;}
+  .signal-tag.tag-orange{background:var(--orange);}
 
-  /* col-chart: the standard bottom-up growing bar component used across
-     the series (fame study, ai knows your website, etc). */
-  .col-chart{margin-top:8px;}
-  .col-chart-plot{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:32px;height:210px;padding-top:34px;border-bottom:1px solid var(--card-line);}
-  .col-chart-bar-wrap{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;width:80px;flex:0 0 auto;}
-  .col-chart-value{font-family:var(--serif);font-weight:800;font-size:15px;color:var(--black);margin-bottom:6px;opacity:0;transition:opacity .3s ease;white-space:nowrap;}
-  .col-chart.in-view .col-chart-value{opacity:1;}
-  .col-chart-value-r{font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:8px;opacity:0;transition:opacity .3s ease .2s;}
-  .col-chart.in-view .col-chart-value-r{opacity:1;}
-  .col-chart-bar{width:100%;max-width:58px;border-radius:6px 6px 2px 2px;height:0;background:var(--orange);transition:height 1.2s cubic-bezier(.16,.8,.4,1);}
-  .col-chart.in-view .col-chart-bar{height:var(--h);}
-  .col-chart-labels{display:flex;justify-content:center;gap:32px;padding-top:12px;}
-  .col-chart-label{width:80px;text-align:center;font-size:12.5px;font-weight:700;color:var(--gray-700);line-height:1.3;}
-
-  /* drift-chart: the flat-line "nothing moves" chart — this is the one
-     to really make pop. A soft orange glow sits behind the line and its
-     points, a dashed noise-floor reference spans the full width so the
-     flatness reads instantly, and the whole thing draws itself in on
-     scroll. */
-  .drift-chart{margin-top:8px;}
-  .drift-svg{width:100%;height:auto;display:block;overflow:visible;}
-  .drift-grid-line{stroke:var(--card-line);stroke-width:1;stroke-dasharray:2 4;}
-  .drift-axis-label{fill:var(--gray-500);font-size:11px;font-family:var(--serif);font-weight:600;}
-  .drift-cat-label{fill:var(--gray-700);font-size:12px;font-weight:700;font-family:var(--serif);}
-  .drift-floor-line{stroke:var(--gray-500);stroke-width:1.5;stroke-dasharray:5 5;opacity:0;transition:opacity .6s ease .3s;}
-  .drift-chart.in-view .drift-floor-line{opacity:0.6;}
-  .drift-floor-label{fill:var(--gray-500);font-size:10px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;opacity:0;transition:opacity .6s ease .4s;}
-  .drift-chart.in-view .drift-floor-label{opacity:1;}
-  .drift-band{fill:var(--orange);opacity:0;transition:opacity .8s ease;}
-  .drift-chart.in-view .drift-band{opacity:0.08;}
-  .drift-line-group{opacity:0;transition:opacity .5s ease;filter:drop-shadow(0 0 6px rgba(254,106,3,0.5)) drop-shadow(0 0 18px rgba(254,106,3,0.25));}
-  .drift-chart.in-view .drift-line-group{opacity:1;}
-  .drift-path{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
-  .drift-point{fill:var(--orange);stroke:var(--cream);stroke-width:2.5;}
-  .drift-chart.in-view .drift-point{animation:driftPulse 2.8s ease-in-out infinite;}
-  .drift-point.p2{animation-delay:.2s !important;}
-  .drift-point.p3{animation-delay:.4s !important;}
-  .drift-point.p4{animation-delay:.6s !important;}
-  @keyframes driftPulse{
-    0%,100%{filter:drop-shadow(0 0 0 rgba(254,106,3,0));}
-    50%{filter:drop-shadow(0 0 9px rgba(254,106,3,0.9));}
-  }
-  .drift-jitter{fill:var(--gray-500);opacity:0;transition:opacity .5s ease .15s;}
-  .drift-chart.in-view .drift-jitter{opacity:1;}
-  .drift-value{font-family:var(--serif);font-weight:800;font-size:15px;fill:var(--black);opacity:0;transition:opacity .4s ease .6s;}
-  .drift-chart.in-view .drift-value{opacity:1;}
-
-  /* flip-grid / stat-flip-card: same hover-flip language as the Key
-     Findings cards on the research page. */
   .flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;}
   .flip-grid.cols-2{grid-template-columns:repeat(2,1fr);max-width:920px;gap:28px;margin:24px auto 0;}
-  .flip-grid.cols-2 .stat-flip-card{height:170px;}
-  .flip-grid.cols-2 .stat-flip-stack-num{font-size:32px;}
+  .flip-grid.cols-3{grid-template-columns:repeat(3,1fr);gap:22px;}
+  .flip-grid.cols-2 .stat-flip-card{height:190px;}
+  .flip-grid.cols-2 .stat-flip-stack-num{font-size:30px;}
   .flip-grid.cols-2 .stat-flip-face{padding:26px 32px;}
   .flip-grid.cols-2 .stat-flip-face-back p{font-size:14.5px;line-height:1.65;}
   .stat-flip-card{
@@ -440,21 +375,22 @@
   .stat-flip-stack-num{font-family:var(--serif);font-weight:800;font-size:26px;letter-spacing:-0.02em;line-height:1.15;}
   .stat-flip-stack-mid{font-size:12.5px;font-weight:700;color:var(--gray-500);letter-spacing:0.02em;}
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
+    .products-grid.cols-4{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
     .research-hero{padding:72px 24px 40px;}
     .research-hero-sub{max-width:100%;}
     nav.links{gap:14px;}
     .nav-trigger{font-size:12px;}
     .flip-grid{grid-template-columns:1fr 1fr;}
+    .flip-grid.cols-3{grid-template-columns:1fr 1fr;}
     .hero-stat-row{gap:0;}
     .hero-stat{gap:5px;font-size:13px;}
     .hero-stat:not(:first-child)::before{margin-right:8px;}
     .hero-stat-num{font-size:28px;}
     .hero-stat-num.smaller{font-size:19px;}
-    .signal-name{flex:0 0 140px;font-size:12px;}
+    .signal-name{flex:0 0 180px;font-size:12px;}
   }
   @media (max-width:680px){
     .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
@@ -493,6 +429,7 @@
     .chart-caption{max-width:none;}
     .bias-card{padding:16px 18px;}
     .products-grid{grid-template-columns:1fr;}
+    .products-grid.cols-4{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
     .scan-box{flex-direction:column;border-radius:4px;}
@@ -502,14 +439,10 @@
     .method-grid{grid-template-columns:1fr;}
     .flip-grid{grid-template-columns:1fr;}
     .flip-grid.cols-2{grid-template-columns:1fr;max-width:none;}
-    .signal-name{flex:0 0 108px;font-size:11px;}
+    .flip-grid.cols-3{grid-template-columns:1fr;}
+    .signal-name{flex:0 0 130px;font-size:11px;}
     .signal-val{flex:0 0 54px;font-size:13px;}
     .signal-tag{display:none;}
-    .col-chart-plot{gap:10px;height:170px;padding-top:30px;}
-    .col-chart-bar-wrap{width:52px;}
-    .col-chart-value{font-size:12px;}
-    .col-chart-label{width:52px;font-size:10.5px;}
-    .col-chart-labels{gap:10px;}
   }
 </style>
 </head>
@@ -594,19 +527,22 @@
   </div>
 </header>
 
-
 <!-- HERO -->
 <section class="research-hero">
   <div class="container">
-    <div class="kicker">Recommendation Intelligence Research™ · Study #7</div>
-    <h1 class="page-title">Nothing about your brand predicts recommendation. The model's <em>own past behavior</em> does.</h1>
-    <p class="research-hero-sub">Store quality explains 0.7% of who gets recommended. Public fame explains 1.2%. Web traces explain 0.2%. Intent, the one factor that separates recommended stores from the rest, explains 1.2% of frequency once you are already in. Four independent signals, four numbers within a rounding error of zero. Then we asked a different question: does what the model recommended last month predict what it recommends this month? That number is 61.4%, and it still has not moved after 15 days.</p>
-    <div class="byline-note">Atom Foundry · July 2026 · Part seven of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research™</a> series</div>
+    <div class="kicker">Recommendation Intelligence Research&trade; &middot; Study #22</div>
+    <h1 class="page-title">The model hedges most <em>when it's most sure.</em></h1>
+    <p class="research-hero-sub">Candidate Evaluation found that a better rating decides a contested pick almost every time. This study asks the next question: when the model explains that pick, does its language, hedged ("seems," "may be") versus assertive ("clearly," "significantly"), actually track how confident it really is? Seven independent methods test this on the same 16 fixed scenarios: a hedge/booster lexicon, a blind second-model judge, real token logprobs, self-reported confidence, repetition stability, five ways of phrasing the same question, and replication across GPT-4o, Claude Sonnet and Gemini. The answer is consistent across all seven: verbal hedging correlates r=0.03 with real internal confidence, and for the pick type that draws the most hedged language, real confidence is the highest of any signal tested.</p>
+    <div class="byline-note">Atom Foundry &middot; August 2026 &middot; Direct extension of <a href="/research/candidate-evaluation">Hand It a Rating, and It Follows Every Single Time</a>, answers the Confidence question raised on <a href="/research/how-ai-decides">How AI Decides</a>, part of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research&trade;</a> series</div>
     <div class="hero-stat-row">
-      <div class="hero-stat"><b class="hero-stat-num" id="statPairs" data-target="1082" data-comma="1">1,082</b><span>Brand-intent pairs, month to month</span></div>
-      <div class="hero-stat"><b class="hero-stat-num" id="statR2" data-target="61.4" data-decimals="1" data-suffix="%">61.4%</b><span>R² , position predicts position</span></div>
-      <div class="hero-stat"><b class="hero-stat-num" id="statWeak" style="color:var(--red);" data-target="0.2" data-decimals="1" data-suffix="%">0.2%</b><span>Weakest external signal, web traces</span></div>
-      <div class="hero-stat"><b class="hero-stat-num" id="statDrift" style="color:var(--green);" data-target="0">0 pts</b><span>Drift after 15 days</span></div>
+      <div class="hero-stat-line">
+        <div class="hero-stat"><b class="hero-stat-num" id="statCorr" data-target="0.03" data-decimals="2" data-prefix="r=">r=0.03</b><span>Hedge language vs. real confidence</span></div>
+      </div>
+      <div class="hero-stat-line">
+        <div class="hero-stat"><b class="hero-stat-num smaller" id="statHedge" data-target="11.2" data-decimals="1" data-suffix="%">11.2%</b><span>Hedge rate on the highest-confidence pick type</span></div>
+        <div class="hero-stat"><b class="hero-stat-num smaller" id="statAgree" data-target="100" data-suffix="%">100%</b><span>Picks agreeing across GPT-4o, Claude, Gemini</span></div>
+        <div class="hero-stat"><b class="hero-stat-num smaller" id="statMethods" data-target="7">7</b><span>Independent methods, one result</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -615,189 +551,228 @@
 <section class="alt">
   <div class="container">
     <div class="kicker">Where this comes from</div>
-    <h2 class="section-title">We ran out of external things to test</h2>
-    <p class="section-body">By this point in the series we had tested store quality, public fame, and how intent separates recommended stores from stores that never get picked. All three landed close to zero: 0.7%, 1.2%, and 1.2%. One layer was still untouched: web traces, meaning how visible a brand is across the open web, not just its own store.</p>
-    <p class="section-body" style="margin-top:14px;">We measured it using distinct domains mentioning the brand, whether the brand's own site turns up at all, and mentions on review sites, comparing our most reliably recommended brands, the 301-brand core that survives every model and search setting we test, against everything else.</p>
+    <h2 class="section-title">Candidate Evaluation answered <em>what</em>. This answers <em>how sure</em></h2>
+    <p class="section-body">How AI Decides names Confidence as Stage 9 of the decision path, open research at the time: "how certain is AI about the recommendation, and how much would the answer change with slightly different phrasing?" Candidate Evaluation had already shown that a better star rating decides a head-to-head comparison almost every time. That leaves an obvious question unanswered: when the model writes out its reasoning for a pick, does the language it reaches for, hedged phrasing like "seems" or "may be" versus assertive phrasing like "clearly" or "significantly", actually reflect how sure it is internally? Or is hedging just a writing habit, disconnected from what is really going on underneath?</p>
+    <p class="section-body" style="margin-top:14px;">To answer that cleanly, every method here reuses the exact same 16 fixed contested-pair scenarios from Candidate Evaluation's phase 3 run: the same brand_a/brand_b pairs, the same injected fact_a/fact_b, the same rating-signal setup where one brand has a strictly better rating. Nothing new is generated. Seven different measurement techniques are simply pointed at the identical underlying decisions, so every method's numbers are directly comparable row for row.</p>
     <div class="method-box">
       <div class="method-grid">
-        <div class="method-item">Distinct domains, core: <span>8.1</span></div>
-        <div class="method-item">Distinct domains, rest: <span>7.9</span></div>
-        <div class="method-item">Own site present, core: <span>58%</span></div>
-        <div class="method-item">Own site present, rest: <span>44%</span></div>
-        <div class="method-item">Review site mentions, core: <span>2.7</span></div>
-        <div class="method-item">Correlation to frequency: <span>r = 0.046, R² = 0.2%</span></div>
+        <div class="method-item">Fixed scenarios reused throughout: <span>16, identical facts every method</span></div>
+        <div class="method-item">Total calls across all 7 methods: <span>~2,900</span></div>
+        <div class="method-item">Primary model: <span>gpt-4o, temperature 0.7 (methods 1-6)</span></div>
+        <div class="method-item">Cross-model replication: <span>+ Claude Sonnet 4.5, Gemini 2.5 Flash (method 7)</span></div>
+        <div class="method-item">Ground truth for real confidence: <span>OpenAI token logprobs, constrained A/B response</span></div>
+        <div class="method-item">Independent check on the lexicon labels: <span>blind second-model (Claude) judge</span></div>
       </div>
-      <div class="limits"><strong>A handicap we are disclosing.</strong> The search API we used for this measurement rejects quoted phrase queries on its free tier, so every search ran unquoted, which is a looser and noisier match than we would prefer. Both groups took the same handicap, so the comparison between them still holds, but the absolute counts should be read as approximate.</div>
+      <div class="limits"><strong>Why reuse instead of regenerate.</strong> Every prior study in this series that changed the underlying facts also changed the decision, making cross-study comparison noisy. Holding the facts completely fixed and only changing the measurement technique isolates one question: does the language track confidence, independent of what the "right" pick even is.</div>
     </div>
   </div>
 </section>
 
-<!-- FOUR SIGNALS, FOUR ZEROS -->
+<!-- SEVEN METHODS -->
 <section>
   <div class="container">
-    <div class="kicker">Four signals, four zeros</div>
-    <h2 class="section-title">Every external layer we have tested lands in the <em>same place</em></h2>
-    <p class="section-body">Put the four correlations next to each other and the pattern is not subtle. Store quality, fame, web presence, and intent all sit within a point of zero. Then look at what happens when you stop asking about the brand entirely and ask about the model instead.</p>
-    <div class="chart-card chart-card-wide">
-      <div class="chart-card-title">R² against recommendation frequency, four external signals and one internal one</div>
-      <div class="chart-card-sub">Each bar is how much of recommendation frequency that signal explains on its own, drawn on one shared scale</div>
-      <div class="signal-chart" id="signalChart">
-        <div class="signal-row">
-          <div class="signal-name">Store quality</div>
-          <div class="signal-track"><div class="signal-fill" style="--w:1.1%;"></div></div>
-          <div class="signal-val" data-target="0.7" data-decimals="1" data-suffix="%">0.7%</div>
-        </div>
-        <div class="signal-row">
-          <div class="signal-name">Public fame</div>
-          <div class="signal-track"><div class="signal-fill" style="--w:1.8%;"></div></div>
-          <div class="signal-val" data-target="1.2" data-decimals="1" data-suffix="%">1.2%</div>
-        </div>
-        <div class="signal-row">
-          <div class="signal-name">Web traces</div>
-          <div class="signal-track"><div class="signal-fill" style="--w:0.3%;"></div></div>
-          <div class="signal-val" data-target="0.2" data-decimals="1" data-suffix="%">0.2%</div>
-        </div>
-        <div class="signal-row">
-          <div class="signal-name">Intent, within set</div>
-          <div class="signal-track"><div class="signal-fill" style="--w:1.8%;"></div></div>
-          <div class="signal-val" data-target="1.2" data-decimals="1" data-suffix="%">1.2%</div>
-        </div>
-        <div class="signal-row">
-          <div class="signal-name standout">Position, month to month</div>
-          <div class="signal-track"><div class="signal-fill standout" style="--w:94.5%;"></div></div>
-          <div class="signal-val standout" data-target="61.4" data-decimals="1" data-suffix="%">61.4%</div>
-          <div class="signal-tag">Internal signal</div>
-        </div>
+    <div class="kicker">Seven ways to ask the same question</div>
+    <h2 class="section-title">Lexicon, judge, logprobs, self-report, <em>repetition, phrasing, cross-model</em></h2>
+    <p class="section-body">Each method attacks a different weak point in the one before it. Together they triangulate on a single answer instead of resting on one technique's blind spots.</p>
+    <div class="products-grid cols-4" style="margin-top:28px;">
+      <div class="mini-card">
+        <div class="mini-card-eyebrow method-label">Method 1</div>
+        <div class="mini-card-title">Hedge lexicon</div>
+        <div class="mini-card-body">Regex word-boundary match against a hedge/booster word list, run across every prior study's free-text reasons.</div>
+        <div class="mini-card-stat">11.2% hedge rate, rating signal</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow method-label">Method 2</div>
+        <div class="mini-card-title">Blind LLM judge</div>
+        <div class="mini-card-body">Claude rates 50 anonymized texts hedged/neutral/assertive with no access to the lexicon labels.</div>
+        <div class="mini-card-stat">66% agreement with lexicon</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow method-label">Method 3</div>
+        <div class="mini-card-title">Token logprobs</div>
+        <div class="mini-card-body">Constrained A/B response, temperature 0, max_tokens=1. The actual probability gap the model assigns its own pick.</div>
+        <div class="mini-card-stat">Real, unfakeable confidence</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow method-label">Method 4</div>
+        <div class="mini-card-title">Self-report</div>
+        <div class="mini-card-body">Asked directly for a 0-100 confidence number alongside its pick, same prompts as method 3.</div>
+        <div class="mini-card-stat">r=0.345 vs. real logprobs</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow method-label">Method 5</div>
+        <div class="mini-card-title">Repetition stability</div>
+        <div class="mini-card-body">Does the model actually flip its pick across 10 repeated runs, and does that behavioral instability track hedge language?</div>
+        <div class="mini-card-stat">r=-0.09 to +0.11</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow method-label">Method 6</div>
+        <div class="mini-card-title">Phrasing perturbation</div>
+        <div class="mini-card-body">Same fixed facts, 5 different ways of asking (baseline, casual, formal, reversed, imperative).</div>
+        <div class="mini-card-stat">0/16 picks changed</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow method-label">Method 7</div>
+        <div class="mini-card-title">Cross-model</div>
+        <div class="mini-card-body">Identical prompts sent to GPT-4o, Claude Sonnet 4.5 and Gemini. Does the pattern hold outside one lab's house style?</div>
+        <div class="mini-card-stat">16/16 pick agreement</div>
+      </div>
+      <div class="mini-card" style="background:rgba(254,106,3,0.14);">
+        <div class="mini-card-eyebrow method-label">All seven, together</div>
+        <div class="mini-card-title">One consistent answer</div>
+        <div class="mini-card-body">Hedged vs. assertive language is not a reliable window into real model confidence, on any of the seven tests.</div>
       </div>
     </div>
-    <p class="chart-caption">Four independent brand signals land within one point of zero. Only the model's own past output clears sixty percent.</p>
   </div>
 </section>
 
-<!-- THE TEST -->
+<!-- THE CORE FINDING -->
 <section class="alt">
   <div class="container">
-    <div class="kicker">The test</div>
-    <h2 class="section-title">Ask the model what <em>it</em> did last time</h2>
-    <p class="section-body">We took June recommendation data and July recommendation data, two genuinely separate periods pulled from different tables, spanning a model change in between, and matched them on 1,082 brand-intent pairs built from the same 50 intents. Then we correlated June's position and frequency against July's, using Pearson correlation on the raw values.</p>
-    <div class="method-box">
-      <div class="method-grid">
-        <div class="method-item">Brand-intent pairs: <span>1,082</span></div>
-        <div class="method-item">Intents: <span>same 50, both periods</span></div>
-        <div class="method-item">Periods compared: <span>June vs July</span></div>
-        <div class="method-item">Method: <span>Pearson correlation</span></div>
-        <div class="method-item">Circularity: <span>different periods, different tables</span></div>
-        <div class="method-item">Model: <span>changed between periods</span></div>
-      </div>
-      <div class="limits"><strong>Why this is not circular.</strong> This is not the same measurement correlated with itself. June and July come from different collection runs, stored in different tables, spanning a change to the underlying model. If June still predicts July under those conditions, the thing being measured is more stable than the pipeline that measured it.</div>
-    </div>
-  </div>
-</section>
-
-<!-- THE FINDING -->
-<section>
-  <div class="container">
-    <div class="kicker">The finding</div>
-    <h2 class="section-title">The strongest number in this <em>entire series</em></h2>
-    <p class="section-body">June's position predicts July's position at <strong>r = 0.784, R² = 61.4%</strong>. June's frequency predicts July's frequency at <strong>r = 0.737, R² = 54.4%</strong>. And June's position predicts July's frequency at <strong>r = negative 0.565, R² = 31.9%</strong>, negative because a better position number, lower is better, lines up with a higher frequency, which is exactly what you would expect if position and frequency are two views of the same underlying stability.</p>
+    <div class="kicker">The core finding</div>
+    <h2 class="section-title">Hedging is highest <em>exactly where real confidence is highest</em></h2>
+    <p class="section-body">Candidate Evaluation tested three signal types: price, rating, and specs. The lexicon classifier (method 1) found the rating signal draws hedged language far more often than the other two, 11.2% of responses versus 2.5% for price and 3.1% for specs, a statistically significant gap (p=0.03 vs. price). The obvious reading is that the model is genuinely less sure when a rating is doing the deciding. Token logprobs (method 3), the actual probability gap between the chosen brand and the alternative, say the opposite: the rating signal has the <strong>highest</strong> real confidence of the three, not the lowest.</p>
     <div class="chart-card">
-      <div class="chart-card-title">How well June predicts July</div>
-      <div class="chart-card-sub">Pearson R², 1,082 brand-intent pairs, same 50 intents both periods</div>
-      <div class="col-chart" id="junJulChart">
-        <div class="col-chart-plot">
-          <div class="col-chart-bar-wrap">
-            <div class="col-chart-value" data-target="61.4" data-decimals="1" data-suffix="%">61.4%</div>
-            <div class="col-chart-value-r">r = 0.784</div>
-            <div class="col-chart-bar" style="--h:94.5%;background:var(--orange);"></div>
-          </div>
-          <div class="col-chart-bar-wrap">
-            <div class="col-chart-value" data-target="54.4" data-decimals="1" data-suffix="%">54.4%</div>
-            <div class="col-chart-value-r">r = 0.737</div>
-            <div class="col-chart-bar" style="--h:83.7%;background:var(--amber);"></div>
-          </div>
-          <div class="col-chart-bar-wrap">
-            <div class="col-chart-value" data-target="31.9" data-decimals="1" data-suffix="%">31.9%</div>
-            <div class="col-chart-value-r">r = -0.565</div>
-            <div class="col-chart-bar" style="--h:49.1%;background:var(--red);"></div>
-          </div>
+      <div class="chart-card-title">Hedge rate by signal type (method 1, lexicon)</div>
+      <div class="chart-card-sub">Cluster bootstrap 95% CI over 16 intents, 10,000 resamples</div>
+      <div class="signal-chart" id="signalChart1">
+        <div class="signal-row">
+          <div class="signal-name">Price &middot; p=1.0 (vs. rating)</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:2.5%;"></div></div>
+          <div class="signal-val" data-target="2.5" data-decimals="1" data-suffix="%">2.5%</div>
         </div>
-        <div class="col-chart-labels">
-          <div class="col-chart-label">Position → Position</div>
-          <div class="col-chart-label">Frequency → Frequency</div>
-          <div class="col-chart-label">Position → Frequency</div>
+        <div class="signal-row">
+          <div class="signal-name">Specs &middot; p=0.05 (vs. rating)</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:3.1%;"></div></div>
+          <div class="signal-val" data-target="3.1" data-decimals="1" data-suffix="%">3.1%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">Rating &middot; p=0.03 (vs. price)</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:11.2%;"></div></div>
+          <div class="signal-val standout" data-target="11.2" data-decimals="1" data-suffix="%">11.2%</div>
+          <div class="signal-tag tag-orange">Most hedged language</div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">Real confidence by signal type (method 3, token logprobs)</div>
+      <div class="chart-card-sub">Confidence gap = P(chosen) &minus; P(alternative), scaled &times;100 for display &middot; n=160 per signal</div>
+      <div class="signal-chart" id="signalChart2">
+        <div class="signal-row">
+          <div class="signal-name">Price &middot; mean self-report 80.0</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:82.3%;"></div></div>
+          <div class="signal-val" data-target="82.3" data-decimals="1" data-suffix="">82.3</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Specs &middot; mean self-report 80.8</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:88.2%;"></div></div>
+          <div class="signal-val" data-target="88.2" data-decimals="1" data-suffix="">88.2</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">Rating &middot; mean self-report 89.2</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:99.4%;"></div></div>
+          <div class="signal-val standout" data-target="99.4" data-decimals="1" data-suffix="">99.4</div>
+          <div class="signal-tag tag-orange">Highest real confidence</div>
         </div>
       </div>
     </div>
     <div class="bias-card">
-      <strong>Do not mix this with the 53.6% ceiling.</strong> That earlier number was Spearman, and Spearman's version of this same self-prediction test comes out at 91.3%, not 61.4%. So 61.4% is roughly two thirds of what is achievable by this measure, not further ahead of the ceiling than seems possible. Pearson and Spearman answer related but different questions and should never be reported as if they were the same statistic.
+      <strong>The signal that draws the most hedged language is the one the model is, in reality, most sure about.</strong> Row-level correlation across all 480 matched calls confirms this isn't a fluke of the group averages: hedge label correlates r=0.035 with the real logprobs confidence gap, and r=0.032 with the model's own self-reported confidence number. Both are statistically indistinguishable from zero. Even self-reported confidence, the model's own stated number, only weakly tracks its real internal signal (r=0.345), so the model is not fully able to introspect its own certainty either, and the words it chooses track that internal signal even less.
     </div>
   </div>
 </section>
 
-<!-- THE COMPANION FINDING -->
+<!-- IS THE LEXICON EVEN RIGHT -->
+<section>
+  <div class="container">
+    <div class="kicker">Before trusting any of these numbers</div>
+    <h2 class="section-title">Does hedging even mean what we think it means?</h2>
+    <p class="section-body">A hedge/booster word list is a blunt instrument, so before leaning on it, a second model (Claude) blind-rated 50 anonymized reasoning texts with no access to the lexicon's labels or word lists, just the raw text. The two only agreed on the exact three-way label (hedged / neutral / assertive) 66% of the time, and on the coarser hedged-vs-not distinction 76% of the time. Most of the disagreement traces to one specific failure mode: sentences that mix a hedge word and a booster word in the same sentence, which the lexicon scores as a false "neutral" tie, but a human or model reader would usually call assertive overall.</p>
+    <p class="section-body" style="margin-top:14px;">Separately, method 5 asks whether hedge language tracks something else entirely: real behavioral instability, whether the model actually picks a different brand across 10 repeated runs of the identical prompt. Across four separate datasets (50-brand and 16-intent recall runs, with and without injected facts), the correlation between hedge rate and how often the top pick actually changes ranges from &minus;0.09 to +0.11, essentially zero in every case.</p>
+    <div class="chart-caption"><strong>Read every hedge-rate percentage in this study as directional, not exact</strong> — the 66% inter-rater agreement is the honest error bar sitting underneath the lexicon method throughout.</div>
+  </div>
+</section>
+
+<!-- PHRASING -->
 <section class="alt">
   <div class="container">
-    <div class="kicker">The companion finding</div>
-    <h2 class="section-title">And it does not move for <em>15 days</em></h2>
-    <p class="section-body">A signal that predicts itself a month out is only useful if it also holds steady in between. We already knew that comparing the same sweep against itself produces about 44% turnover from ordinary noise, nothing to do with real change. We extended that same comparison out to 1 day apart, 14 days apart, and 15 days apart, on 234,283 scans across 57,242 domains.</p>
-    <div class="chart-card chart-card-wide">
-      <div class="chart-card-title">Percent of top picks that changed, by how far apart the two scans were</div>
-      <div class="chart-card-sub">Baseline is the same sweep compared with itself, three repeats shown as small points</div>
-      <div class="drift-chart" id="driftChart">
-        <svg class="drift-svg" viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Within-sweep baseline noise averages about 43.3 percent. One day apart is 44.6 percent, 14 days apart is 44.7 percent, 15 days apart is 44.4 percent, all indistinguishable from the baseline noise on a 0 to 100 percent scale">
-          <line class="drift-grid-line" x1="60" y1="20" x2="660" y2="20"/>
-          <line class="drift-grid-line" x1="60" y1="65" x2="660" y2="65"/>
-          <line class="drift-grid-line" x1="60" y1="110" x2="660" y2="110"/>
-          <line class="drift-grid-line" x1="60" y1="155" x2="660" y2="155"/>
-          <line class="drift-grid-line" x1="60" y1="200" x2="660" y2="200"/>
-          <text x="50" y="24" text-anchor="end" class="drift-axis-label">100%</text>
-          <text x="50" y="69" text-anchor="end" class="drift-axis-label">75%</text>
-          <text x="50" y="114" text-anchor="end" class="drift-axis-label">50%</text>
-          <text x="50" y="159" text-anchor="end" class="drift-axis-label">25%</text>
-          <text x="50" y="204" text-anchor="end" class="drift-axis-label">0%</text>
-
-          <rect class="drift-band" x="60" y="105.8" width="600" height="30"/>
-          <line class="drift-floor-line" x1="60" y1="120.8" x2="655" y2="120.8"/>
-          <text class="drift-floor-label" x="655" y="114" text-anchor="end">Noise floor · ~44%</text>
-
-          <circle class="drift-jitter" cx="118" cy="120.6" r="3"/>
-          <circle class="drift-jitter" cx="128" cy="121.2" r="3"/>
-          <circle class="drift-jitter" cx="138" cy="124.2" r="3"/>
-
-          <g class="drift-line-group">
-            <path class="drift-path" d="M140,122.06 L300,119.72 L460,119.54 L620,120.08"/>
-            <circle class="drift-point p1" cx="140" cy="122.06" r="6"/>
-            <circle class="drift-point p2" cx="300" cy="119.72" r="6"/>
-            <circle class="drift-point p3" cx="460" cy="119.54" r="6"/>
-            <circle class="drift-point p4" cx="620" cy="120.08" r="6"/>
-          </g>
-
-          <text class="drift-value" data-target="43.3" x="140" y="102" text-anchor="middle">43.3%</text>
-          <text class="drift-value" data-target="44.6" x="300" y="99.7" text-anchor="middle">44.6%</text>
-          <text class="drift-value" data-target="44.7" x="460" y="99.5" text-anchor="middle">44.7%</text>
-          <text class="drift-value" data-target="44.4" x="620" y="100.1" text-anchor="middle">44.4%</text>
-
-          <text class="drift-cat-label" x="140" y="224" text-anchor="middle">Same sweep</text>
-          <text class="drift-cat-label" x="300" y="224" text-anchor="middle">1 day apart</text>
-          <text class="drift-cat-label" x="460" y="224" text-anchor="middle">14 days apart</text>
-          <text class="drift-cat-label" x="620" y="224" text-anchor="middle">15 days apart</text>
-        </svg>
+    <div class="kicker">Ask it differently, does the hedge follow</div>
+    <h2 class="section-title">The decision is stable. <em>The wording isn't</em></h2>
+    <p class="section-body">The same 16 fixed facts were asked five different ways: a plain baseline, a casual tone, a formal tone, the brands listed in reversed order, and an imperative instruction. Across all 800 calls, <strong>0 of 16 intents changed their winning brand</strong> no matter which phrasing was used, the underlying decision is completely robust to how the question is asked. The hedge rate, however, moved by more than double depending on phrasing alone, nothing about the facts changed.</p>
+    <div class="chart-card">
+      <div class="chart-card-title">Hedge rate by phrasing (method 6), same facts, same pick every time</div>
+      <div class="chart-card-sub">5 phrasings &times; 16 intents &times; 10 runs = 800 calls, 0 pick flips</div>
+      <div class="signal-chart" id="signalChart3">
+        <div class="signal-row">
+          <div class="signal-name">Casual</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:6.9%;"></div></div>
+          <div class="signal-val" data-target="6.9" data-decimals="1" data-suffix="%">6.9%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Formal</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:7.5%;"></div></div>
+          <div class="signal-val" data-target="7.5" data-decimals="1" data-suffix="%">7.5%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Imperative</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:8.1%;"></div></div>
+          <div class="signal-val" data-target="8.1" data-decimals="1" data-suffix="%">8.1%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Reversed order</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:11.2%;"></div></div>
+          <div class="signal-val" data-target="11.2" data-decimals="1" data-suffix="%">11.2%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">Baseline</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:15.6%;"></div></div>
+          <div class="signal-val standout" data-target="15.6" data-decimals="1" data-suffix="%">15.6%</div>
+          <div class="signal-tag tag-orange">Most hedged phrasing</div>
+        </div>
       </div>
-      <p class="chart-caption">On a full 0 to 100% scale, four measurements spread across 15 days sit on top of one another, hugging the same noise floor as a sweep compared with itself.</p>
     </div>
-    <div class="bias-card">
-      <strong>Nothing moves in 15 days.</strong> The gap between the noise floor and every later measurement rounds to zero. Waiting longer between scans does not reveal drift because there is no drift to reveal in this window.
+  </div>
+</section>
+
+<!-- CROSS MODEL -->
+<section>
+  <div class="container">
+    <div class="kicker">Does it hold outside one lab</div>
+    <h2 class="section-title">GPT-4o, Claude and Gemini <em>agree on the pick, not the tone</em></h2>
+    <p class="section-body">The same 16 fixed scenarios were sent, unchanged, to GPT-4o, Claude Sonnet 4.5 and Gemini. Across 480 calls, every one of the 16 intents landed on the same majority pick across all three models, and within each model the pick barely moved across its own 10 runs (0% flip rate for GPT-4o and Claude, 1.2% for Gemini). That is strong evidence the injected facts themselves, not any single lab's quirks, are what drives the decision.</p>
+    <p class="section-body" style="margin-top:14px;">Self-reported confidence, though, has a distinct house style per provider: GPT-4o averages 87.9, Claude the most conservative at 78.8, Gemini the most confident at 91.4 with the widest spread (30 to 100). But the language pattern in each model's stated reason is nearly identical: assertive/boosted language dominates everywhere, 87.5% of GPT-4o's reasons, 93.8% of Claude's, 81.9% of Gemini's, with true hedge language rare across the board (0.6% to 1.9%). The confident-sounding tone isn't a GPT house style, it's close to universal.</p>
+    <div class="method-box">
+      <div class="method-grid">
+        <div class="method-item">Pick agreement across all 3 providers: <span>16/16 intents</span></div>
+        <div class="method-item">Within-model flip rate: <span>GPT-4o 0%, Claude 0%, Gemini 1.2%</span></div>
+        <div class="method-item">Self-reported confidence, mean: <span>GPT-4o 87.9, Claude 78.8, Gemini 91.4</span></div>
+        <div class="method-item">Assertive/boosted language in reasons: <span>82-94% across all 3 models</span></div>
+      </div>
+      <div class="limits"><strong>One caveat on this leg.</strong> Gemini ran on Gemini 2.5 Flash, not the Pro-tier model originally planned, after the Pro tier's free-tier quota (250 requests/day) was exhausted mid-run. So this is GPT-4o and Claude Sonnet, a mid-tier model, against a fast-tier Gemini, not three matched flagship models. The agreement result is, if anything, a more conservative finding given the tier mismatch.</div>
     </div>
   </div>
 </section>
 
 <!-- WHY IT MATTERS -->
-<section>
+<section class="alt">
   <div class="container">
     <div class="kicker">Why it matters</div>
-    <h2 class="section-title">This kills monitoring as a product, and tells you what to sell instead</h2>
-    <p class="section-body">Put the two findings together. Recommendation is not explained by anything measurable about the brand in the world, not its store, not its fame, not its web presence. It is explained, at 61.4%, by what the model already did last time. And that state does not drift for at least 15 days. That is not a weak signal buried in noise. It is a stable, self-consistent, internal property of the model, and external brand attributes barely touch it.</p>
-    <p class="section-body" style="margin-top:14px;">The practical consequence is blunt: there is nothing to monitor day to day, because nothing changes day to day. A single, well-timed scan tells you what will still be true weeks later. Continuous tracking would be selling reassurance about a number that was never going to move.</p>
+    <h2 class="section-title">Don't read the wording. <em>Read the facts it was given</em></h2>
+    <p class="section-body">Seven independent tests, four different confidence proxies, three different providers, and five different phrasings all land on the same place: how confident or hedged a model's language sounds is not a reliable signal of how confident it actually is. For a brand watching how AI describes it, "the AI clearly recommends us" and "the AI seems to lean toward us" are, on this evidence, not meaningfully different signals of real model conviction, both could be sitting on an internal confidence anywhere in the same range.</p>
+    <p class="section-body" style="margin-top:14px;">What did stay stable throughout: the actual pick. 0 of 16 decisions changed across five phrasings, and 16 of 16 agreed across three separate model providers. That is the practical takeaway for the rest of this series: the lever that moves a recommendation is the fact injected into the comparison (a rating, a price, a spec), not the tone the model happens to write in afterward, and not which provider is asked. Chasing "sound more confident" copy is chasing the wrong variable.</p>
+  </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section>
+  <div class="container">
+    <div class="kicker">What this doesn't prove</div>
+    <h2 class="section-title">This is <em>one signal class</em>, tested seven ways</h2>
+    <p class="section-body">Stating the limits up front. All seven methods hold the same variable fixed: a rating-signal, contested-pair scenario where one brand has a strictly better rating (reused from Candidate Evaluation's phase 3). Methods 5 through 7 do not repeat this design for the price or specs signal types, so the cross-model and phrasing-robustness findings are demonstrated for the rating signal specifically, not confirmed identically for every signal type in this series.</p>
+    <p class="section-body" style="margin-top:14px;">The lexicon classifier (method 1) that most of the headline percentages rest on only reaches 66% three-way agreement with an independent model judge, treat any single hedge-rate percentage as directional. Token logprobs, the one genuinely unfakeable confidence measure, are only available through OpenAI's API, Anthropic does not expose them and Gemini's availability is inconsistent across API versions, so methods 3's "real confidence" comparison is GPT-4o only; Claude and Gemini are represented only through self-report, which method 4 already shows is an imperfect proxy (r=0.345 vs. real logprobs). And Gemini's leg of method 7 ran on a Flash-tier model rather than the originally planned Pro-tier model, for the free-tier quota reason noted above.</p>
+    <div class="method-box">
+      <p style="font-size:14.5px;color:var(--gray-700);line-height:1.7;">Everything here is correlational and observational within a controlled prompt design, not a causal test on a real store. It measures how a model talks and how sure it internally is about a fixed, artificial comparison; it does not measure whether changing a real brand's language in the wild would change how AI recommends it. That causal question is the direct motivation for the Founder Lab experiments noted on the research roadmap.</p>
+    </div>
   </div>
 </section>
 
@@ -805,19 +780,18 @@
 <section class="alt">
   <div class="container">
     <div class="kicker">Supporting evidence</div>
-    <h2 class="section-title">Two more signs this is <em>structural</em>, not noisy</h2>
-    <div class="flip-grid cols-2">
+    <h2 class="section-title">Three more signs the pattern is <em>real, not noise</em></h2>
+    <div class="flip-grid cols-3">
       <div class="stat-flip-card">
         <div class="stat-flip-card-inner">
           <div class="stat-flip-face stat-flip-face-front">
             <div class="stat-flip-stack">
-              <span class="stat-flip-stack-num">28.5</span>
-              <span class="stat-flip-stack-mid">to</span>
-              <span class="stat-flip-stack-num">30.3</span>
+              <span class="stat-flip-stack-num">r=0.345</span>
+              <span class="stat-flip-stack-mid">Self-report vs. real confidence</span>
             </div>
           </div>
           <div class="stat-flip-face stat-flip-face-back">
-            <p>Top 3 brands' combined share of recommendations across 10 categories, coffee to food and snacks. A range of 1.8 points. The same concentration law holds everywhere we look.</p>
+            <p>Even the model's own stated 0-100 confidence number only weakly tracks its real internal signal (token logprobs). It doesn't fully know its own mind, so the words it chooses on top of that number track real confidence even less.</p>
           </div>
         </div>
       </div>
@@ -825,13 +799,25 @@
         <div class="stat-flip-card-inner">
           <div class="stat-flip-face stat-flip-face-front">
             <div class="stat-flip-stack">
-              <span class="stat-flip-stack-num" style="color:var(--red);">53.4</span>
-              <span class="stat-flip-stack-mid">vs</span>
-              <span class="stat-flip-stack-num" style="color:var(--red);">55.0</span>
+              <span class="stat-flip-stack-num">66%</span>
+              <span class="stat-flip-stack-mid">Independent judge agreement</span>
             </div>
           </div>
           <div class="stat-flip-face stat-flip-face-back">
-            <p>Total score, our most stable core brands versus everyone else recommended. The core has worse stores, not better, echoing the same reversal we found across the full population.</p>
+            <p>A second model (Claude), blind to the lexicon's labels, agreed on the exact hedge/neutral/assertive rating only 66% of the time on 50 sampled texts. Built into every hedge-rate number in this study as the honest error bar.</p>
+          </div>
+        </div>
+      </div>
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack" style="color:var(--green);">
+              <span class="stat-flip-stack-num" style="color:var(--green);">0/16 &rarr; 16/16</span>
+              <span class="stat-flip-stack-mid">Stable within, stable across</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>0 of 16 picks flipped across 5 phrasings of the same question, and all 16 stayed identical across GPT-4o, Claude Sonnet and Gemini. The decision is the stable part of this system; the wording around it isn't.</p>
           </div>
         </div>
       </div>
@@ -843,14 +829,14 @@
 <section id="score">
   <div class="container">
     <div class="final-cta">
-      <h2>Your store might already be <em>locked in</em>, one way or the other</h2>
-      <div class="final-cta-tag">Free AI Commerce Score™ in 10 seconds.</div>
-      <p>Since the signal that matters most is not your store attributes, this tells you where you actually stand.</p>
+      <h2>Stop reading tone. <em>Start reading facts</em></h2>
+      <div class="final-cta-tag">Free AI Commerce Score&trade; in 10 seconds.</div>
+      <p>If a model's confident-sounding language doesn't track its real confidence, a free scan is a faster way to find what actually moves a recommendation than parsing how AI describes you.</p>
       <div class="scan-box">
         <input type="text" placeholder="Paste your store URL">
         <button>Get My Free AI Score</button>
       </div>
-      <div class="scan-note">Free <span>·</span> No signup <span>·</span> Results in 10 seconds</div>
+      <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> Results in 10 seconds</div>
     </div>
   </div>
 </section>
@@ -860,28 +846,28 @@
   <div class="container">
     <div class="kicker">Keep reading</div>
     <h2 class="section-title">The rest of the <em>research series</em></h2>
-    <p class="section-body" style="margin-bottom:24px;">This is the strongest number in the whole series. Read the null results it stands against for full context.</p>
+    <p class="section-body" style="margin-bottom:24px;">This answers the Confidence question flagged on the decision map. Read the map for where it fits, or Candidate Evaluation for the original rating-signal decisions this study reuses.</p>
     <div class="products-grid">
+      <a class="mini-card" href="/research/how-ai-decides" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Decision Map</div>
+        <div class="mini-card-title">How AI Decides</div>
+        <div class="mini-card-body">The 10-stage decision path from Memory to Purchase, and the open gaps this study starts to close.</div>
+        <span class="mini-card-link">Read the map<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/candidate-evaluation" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Study</div>
+        <div class="mini-card-title">Hand It a Rating, and It Follows Every Single Time</div>
+        <div class="mini-card-body">The original rating-signal contested-pair decisions this study reuses unchanged, seven ways.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
       <a class="mini-card" href="/research/mechanism-studies" style="text-decoration:none;">
         <div class="mini-card-eyebrow">Mechanism Studies</div>
-        <div class="mini-card-title">All nine studies</div>
-        <div class="mini-card-body">Web search, brand fame, domain recognition, self justification, vocabulary, intent, and the model's own memory.</div>
+        <div class="mini-card-title">All studies in the series</div>
+        <div class="mini-card-body">Web search, brand fame, domain recognition, self justification, vocabulary, intent, memory, evaluation, cold start, memory source, and now confidence.</div>
         <span class="mini-card-link">Browse the series<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
       </a>
-      <a class="mini-card" href="/research/recommendation-lock-in" style="text-decoration:none;">
-        <div class="mini-card-eyebrow">Mechanism: Follow-up</div>
-        <div class="mini-card-title">Two Months Later, the Model Still Agrees With Itself</div>
-        <div class="mini-card-body">Same question, a longer and messier window. 86% of intents kept the same #1 across six sweeps.</div>
-        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-      </a>
-      <a class="mini-card" href="/research/ai-recommendations-across-commerce-2026" style="text-decoration:none;">
-        <div class="mini-card-eyebrow">Flagship</div>
-        <div class="mini-card-title">The State of AI Recommendations Across Commerce 2026</div>
-        <div class="mini-card-body">20,000 recommendations, five categories. The result that started this whole series.</div>
-        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-      </a>
     </div>
-    <p class="related-more"><a href="/research"><span class="nav-chevron chevron-l-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>All research</a> &nbsp;·&nbsp; <a href="/methodology">Methodology</a> &nbsp;·&nbsp; <a href="/vocabulary">Vocabulary</a></p>
+    <p class="related-more"><a href="/research"><span class="nav-chevron chevron-l-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a></p>
   </div>
 </section>
 <footer>
@@ -1009,7 +995,6 @@
 </footer>
 
 <script>
-  // Navbar compacts on scroll (same behavior as the rest of the site).
   (function(){
     const nav = document.querySelector('header.nav');
     if (!nav) return;
@@ -1025,7 +1010,6 @@
     onScroll();
   })();
 
-  // Mobile hamburger nav (same behavior as the rest of the site).
   (function(){
     const nav = document.querySelector('header.nav');
     const toggle = document.getElementById('navToggle');
@@ -1063,8 +1047,6 @@
     }, { passive: true });
   })();
 
-  // Shared eased count-up helper, reused by every animated number/value
-  // on this page (hero stats, signal bars, col-chart bars, drift chart).
   function easeOutCubicShared(p){ return 1 - Math.pow(1 - p, 3); }
   function animateValueEl(el, duration){
     if (!el) return;
@@ -1098,70 +1080,21 @@
     }
   }
 
-  // Hero stat count-up.
   (function(){
     document.querySelectorAll('.hero-stat-num[data-target]').forEach(el => {
       observeReveal(el, () => animateValueEl(el, 1100));
     });
   })();
 
-  // Signal chart (four near-zero bars, one dominant bar).
   (function(){
-    const chart = document.getElementById('signalChart');
-    if (!chart) return;
-    observeReveal(chart, () => {
-      chart.classList.add('in-view');
-      chart.querySelectorAll('.signal-val[data-target]').forEach(v => animateValueEl(v, 1200));
-    });
-  })();
-
-  // June-to-July col-chart.
-  (function(){
-    const chart = document.getElementById('junJulChart');
-    if (!chart) return;
-    observeReveal(chart, () => {
-      chart.classList.add('in-view');
-      chart.querySelectorAll('.col-chart-value[data-target]').forEach(v => animateValueEl(v, 1200));
-    });
-  })();
-
-  // Drift chart: the flat "nothing moves" line. Draws itself in with a
-  // stroke animation, fades in the noise-floor reference and shaded
-  // band, and counts up each value label.
-  (function(){
-    const chart = document.getElementById('driftChart');
-    if (!chart) return;
-    const path = chart.querySelector('.drift-path');
-    let len = 0;
-    if (path && path.getTotalLength) {
-      len = path.getTotalLength();
-      path.style.strokeDasharray = String(len);
-      path.style.strokeDashoffset = String(len);
-    }
-    observeReveal(chart, () => {
-      chart.classList.add('in-view');
-      if (path) {
-        requestAnimationFrame(() => {
-          path.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.16,.8,.4,1)';
-          path.style.strokeDashoffset = '0';
-        });
-      }
-      chart.querySelectorAll('.drift-value[data-target]').forEach(v => {
-        const target = Number(v.dataset.target) || 0;
-        const start = performance.now();
-        const duration = 1300;
-        function step(now){
-          const p = Math.min((now - start) / duration, 1);
-          const eased = easeOutCubicShared(p);
-          v.textContent = (eased * target).toFixed(1) + '%';
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
+    document.querySelectorAll('.signal-chart').forEach(chart => {
+      observeReveal(chart, () => {
+        chart.classList.add('in-view');
+        chart.querySelectorAll('.signal-val[data-target]').forEach(v => animateValueEl(v, 1200));
       });
     });
   })();
 
-  // Flip cards — hover-flip on desktop, tap-to-flip on touch.
   (function(){
     const cards = Array.from(document.querySelectorAll('.stat-flip-card'));
     if (!cards.length) return;
@@ -1305,10 +1238,6 @@
 <!-- AIW_LIVE:START -->
 <script>
 (function(){
-  // Pulls real numbers for the AI signal widget from the shop_ai_visits log
-  // (via /webhook/shop-ai-signal) and replaces the static placeholder values
-  // baked into the markup above. Ring order in the DOM is fixed: Today,
-  // Bots, Last seen -- selected positionally, no id changes needed.
   var ringsRoot = document.querySelector('.aiw-rings');
   if (!ringsRoot) return;
   var items = ringsRoot.querySelectorAll('.aiw-ring-item');
@@ -1328,9 +1257,9 @@
     el.style.setProperty('--offset', (CIRC * (1 - f)).toFixed(2));
   }
   function relTime(iso){
-    if (!iso) return '\u2014';
+    if (!iso) return '—';
     var diffMs = Date.now() - new Date(iso).getTime();
-    if (isNaN(diffMs)) return '\u2014';
+    if (isNaN(diffMs)) return '—';
     var mins = Math.max(0, Math.round(diffMs / 60000));
     if (mins < 1) return 'now';
     if (mins < 60) return mins + 'm';
