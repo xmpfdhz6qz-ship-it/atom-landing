@@ -241,6 +241,16 @@ h1 em{color:var(--orange);}
       </section>
     </div>
 
+    <div class="aisig-block" id="aisigBlockBots">
+      <div class="aisig-sub-label">Automated traffic &middot; not counted above</div>
+      <p class="aisig-sub-desc">Visits that behave like automated tools (monitors, crawlers) rather than people &mdash; kept separate from the human numbers above.<span class="aisig-cz">Návštěvy, co se chovají jako automatizované nástroje (monitoring, crawlery), ne jako lidé &mdash; oddělené od lidských čísel výše.</span></p>
+      <section class="aisig-readout">
+        <div class="aisig-cell"><div class="k">Bot pageviews</div><div class="v">0</div><div class="d">Every recorded automated pageview, ever.<span class="aisig-cz">Všechna zaznamenaná automatizovaná zobrazení.</span></div></div>
+        <div class="aisig-cell"><div class="k">Bot pageviews, today</div><div class="v">0</div><div class="d">Automated pageviews counted so far today.<span class="aisig-cz">Automatizovaná zobrazení za dnešek.</span></div></div>
+      </section>
+      <div class="aisig-feed" id="htBotFeed" style="margin-top:22px;"></div>
+    </div>
+
     <div class="aisig-block" id="aisigBlockSpectrum">
       <div class="aisig-sub-label">Device split</div>
       <p class="aisig-sub-desc">What visitors are browsing on: desktop, mobile or tablet.<span class="aisig-cz">Na čem návštěvníci prohlíží: počítač, mobil nebo tablet.</span></p>
@@ -483,6 +493,19 @@ window.AISIG_DATA_READY = (function(){
     }).join('');
   }
 
+  function buildBotFeed(rows){
+    var el = document.getElementById('htBotFeed');
+    if (!el) return;
+    if (!rows || !rows.length) {
+      el.innerHTML = '<div class="f"><span class="path" style="grid-column:1/-1;white-space:normal;overflow:visible;text-overflow:clip;">No automated traffic recorded yet. Zatím žádná automatizovaná návštěvnost.</span></div>';
+      return;
+    }
+    el.innerHTML = rows.map(function(r){
+      var ref = r.referrer ? r.referrer.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : 'Direct';
+      return '<div class="f"><span class="bot">' + esc(r.path) + '</span><span class="vid"></span><span class="aisig-tag">bot</span><span class="path">' + esc(ref) + '</span><span class="t">' + bothTime(r.visited_at) + '</span></div>';
+    }).join('');
+  }
+
   function sortRecentBy(mode){
     var rows = (window.HT_RECENT || []).slice();
     var pageVisits = window.HT_PAGE_VISITS || {};
@@ -578,6 +601,7 @@ window.AISIG_DATA_READY = (function(){
       var s = data.summary || {};
       var pages = data.top_pages || [], referrers = data.referrers || [], browsers = data.browsers || [];
       var os = data.os || [], devices = data.devices || [], trend = data.trend || [], recent = data.recent || [];
+      var sBots = data.summary_bots || {}, recentBots = data.recent_bots || [];
 
       var total = Number(s.total) || 0;
       var unique = Number(s.unique_visitors) || 0;
@@ -592,6 +616,11 @@ window.AISIG_DATA_READY = (function(){
       if (cells[3]) cells[3].textContent = String(Number(s.today_unique) || 0);
       if (cells[4]) cells[4].textContent = avgPages;
       if (cells[5]) cells[5].textContent = mobilePct + '%';
+
+      var botCells = document.querySelectorAll('#aisigBlockBots .aisig-cell .v');
+      if (botCells[0]) botCells[0].textContent = String(Number(sBots.total) || 0);
+      if (botCells[1]) botCells[1].textContent = String(Number(sBots.today) || 0);
+      buildBotFeed(recentBots);
 
       window.HT_RECENT = recent;
       window.HT_PAGE_VISITS = {};
