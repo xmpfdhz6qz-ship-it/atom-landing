@@ -11,4 +11,5 @@ export const ALLOWED_PRICES = {
   'price_1U68jP2WiU5desc46mAF6RKr': { name: 'AI Trust & Brand Pack', product: 'readiness-report' },
   'price_1U68ji2WiU5desc4gjejKqiR': { name: 'AI Visibility Re-Scan', product: 'readiness-report' },
   'price_1U68kL2WiU5desc4AwnHmtay': { name: 'Recommendation Intelligence', product: 'recommendation-intelligence' },
+  'price_1UBAQk2WiU5desc4xmCCCWgl': { name: 'Recommendation Snapshot — Unlock', product: 'report-unlock' },
 };
