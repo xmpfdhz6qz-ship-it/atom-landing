@@ -256,13 +256,23 @@
   @media (max-width:900px){
     .report-full-cta{grid-template-columns:1fr;padding:36px 28px;}
   }
-  .report-brand-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;background:var(--card);border-radius:8px;padding:22px 28px;margin-top:16px;}
-  .report-brand-cta p{font-size:14px;color:var(--gray-700);line-height:1.5;}
-  .report-brand-cta p strong{color:var(--black);}
-  .report-brand-cta a{flex-shrink:0;display:inline-block;background:var(--black);color:var(--white);padding:12px 22px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;transition:background .2s ease;}
-  .report-brand-cta a:hover{background:#000;}
+  .report-brand-cta{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:360px;background:var(--orange);border-radius:8px;padding:48px;margin-top:16px;}
+  .report-brand-cta-inner{position:relative;z-index:2;max-width:460px;text-align:center;}
+  .report-brand-cta-inner p{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:clamp(20px,2.6vw,26px);font-weight:700;color:var(--white);line-height:1.35;letter-spacing:-0.01em;margin-bottom:24px;}
+  .report-brand-cta-inner a{display:inline-block;background:var(--white);color:var(--black);padding:14px 28px;border-radius:4px;font-size:13.5px;font-weight:700;text-decoration:none;transition:background .2s ease,color .2s ease;}
+  .report-brand-cta-inner a:hover{background:var(--black);color:var(--white);}
+  .brand-cta-prompt{position:absolute;left:var(--x);bottom:-24px;color:rgba(255,255,255,0.5);font-size:12.5px;font-weight:600;white-space:nowrap;letter-spacing:0.01em;pointer-events:none;z-index:1;animation-name:brandCtaFloat;animation-timing-function:linear;animation-iteration-count:infinite;will-change:transform,opacity;}
+  @keyframes brandCtaFloat{
+    0%{transform:translateY(0);opacity:0;}
+    8%{opacity:0.55;}
+    88%{opacity:0.55;}
+    100%{transform:translateY(-400px);opacity:0;}
+  }
   @media (max-width:680px){
-    .report-brand-cta{flex-direction:column;align-items:flex-start;}
+    .report-brand-cta{padding:40px 24px;min-height:300px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .brand-cta-prompt{animation:none;opacity:0;}
   }
 
   .runlk-overlay{position:fixed;inset:0;z-index:5000;background:rgba(22,21,18,0.55);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .22s ease,visibility .22s;}
@@ -672,8 +682,26 @@
       </div>
     </div>
     <div class="report-brand-cta">
-      <p>Don't own Caraway? We run this same analysis for <strong>any brand</strong>, in any category. This report is about Caraway, but the next one could be about yours.</p>
-      <a href="/products/recommendation-intelligence">Get your brand analyzed</a>
+      <span class="brand-cta-prompt" style="--x:3%;animation-duration:19s;animation-delay:-1s;">best non-toxic cookware set under $300?</span>
+      <span class="brand-cta-prompt" style="--x:14%;animation-duration:23s;animation-delay:-9s;">top rated running shoes for flat feet?</span>
+      <span class="brand-cta-prompt" style="--x:24%;animation-duration:17s;animation-delay:-4s;">which skincare brand for sensitive skin?</span>
+      <span class="brand-cta-prompt" style="--x:34%;animation-duration:21s;animation-delay:-14s;">best eco-friendly dog bed under $100?</span>
+      <span class="brand-cta-prompt" style="--x:44%;animation-duration:18s;animation-delay:-6s;">budget laptop for college students?</span>
+      <span class="brand-cta-prompt" style="--x:54%;animation-duration:22s;animation-delay:-17s;">which mattress brand is actually worth it?</span>
+      <span class="brand-cta-prompt" style="--x:64%;animation-duration:16s;animation-delay:-2s;">best noise-cancelling headphones under $200?</span>
+      <span class="brand-cta-prompt" style="--x:74%;animation-duration:24s;animation-delay:-11s;">which meal kit service is healthiest?</span>
+      <span class="brand-cta-prompt" style="--x:84%;animation-duration:19s;animation-delay:-19s;">top rated air purifier for allergies?</span>
+      <span class="brand-cta-prompt" style="--x:92%;animation-duration:20s;animation-delay:-7s;">best budget smartwatch for fitness?</span>
+      <span class="brand-cta-prompt" style="--x:9%;animation-duration:25s;animation-delay:-21s;">which electric toothbrush is best?</span>
+      <span class="brand-cta-prompt" style="--x:19%;animation-duration:18s;animation-delay:-13s;">best stroller for city living?</span>
+      <span class="brand-cta-prompt" style="--x:39%;animation-duration:23s;animation-delay:-3s;">which coffee maker brand is reliable?</span>
+      <span class="brand-cta-prompt" style="--x:59%;animation-duration:17s;animation-delay:-16s;">which vitamin brand is trustworthy?</span>
+      <span class="brand-cta-prompt" style="--x:69%;animation-duration:21s;animation-delay:-8s;">top rated yoga mat for beginners?</span>
+      <span class="brand-cta-prompt" style="--x:79%;animation-duration:19s;animation-delay:-22s;">which cookware set is dishwasher safe?</span>
+      <div class="report-brand-cta-inner">
+        <p>Want to see how your brand stands with a Recommendation Intelligence analysis?</p>
+        <a href="/products/recommendation-intelligence">Get your brand analyzed</a>
+      </div>
     </div>
   </div>
 </section>
