@@ -191,6 +191,7 @@
   .mini-card{border-radius:var(--radius);padding:24px 22px;background:var(--card);display:flex;flex-direction:column;min-height:150px;transition:transform .3s ease, box-shadow .3s ease;}
   .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
+  .mini-card-num{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:30px;font-weight:800;color:var(--orange);margin-bottom:8px;line-height:1;}
   .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
   .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;flex:1;margin-bottom:12px;}
   .mini-card-link{margin-top:auto;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;}
@@ -200,12 +201,22 @@
   .reports-empty-title{font-family:var(--serif);font-size:20px;font-weight:800;margin-bottom:8px;}
   .reports-empty-body{font-size:14.5px;color:var(--gray-700);max-width:440px;margin:0 auto;line-height:1.6;}
 
-  .az-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px;}
-  .az-btn{border:1px solid var(--gray-300);background:var(--white);color:var(--gray-700);font-size:12px;font-weight:700;width:30px;height:30px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease;}
-  .az-btn.az-all{width:auto;padding:0 14px;}
-  .az-btn:hover:not(:disabled){border-color:var(--orange);color:var(--orange);}
+  .az-filter{display:flex;gap:6px;margin-bottom:16px;width:100%;}
+  .az-btn{flex:1 1 0;min-width:0;border:1px solid var(--gray-300);background:var(--white);color:var(--gray-700);font-size:12px;font-weight:700;height:38px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease;}
+  .az-btn.az-all{flex:1.4 1 0;}
+  .az-btn:hover:not(:disabled){background:var(--orange);border-color:var(--orange);color:#fff;}
   .az-btn.is-active{background:var(--black);border-color:var(--black);color:var(--white);}
   .az-btn:disabled{opacity:0.32;cursor:default;}
+  .az-note{font-size:12px;color:var(--gray-500);margin-bottom:16px;}
+  .niche-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .niche-btn{border:1px solid var(--gray-300);background:var(--white);color:var(--gray-700);font-size:12px;font-weight:700;padding:8px 16px;border-radius:999px;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease;}
+  .niche-btn:hover:not(:disabled){background:var(--orange);border-color:var(--orange);color:#fff;}
+  .niche-btn.is-active{background:var(--black);border-color:var(--black);color:var(--white);}
+  @media(max-width:640px){
+    .az-filter{flex-wrap:wrap;}
+    .az-btn{flex:1 1 30px;width:30px;height:30px;font-size:11px;}
+    .az-btn.az-all{flex:1 1 auto;width:auto;padding:0 14px;}
+  }
   .az-empty-note{font-size:13px;color:var(--gray-500);margin-bottom:24px;display:none;}
   .az-empty-note.is-visible{display:block;}
 
@@ -368,9 +379,9 @@
 <!-- HERO -->
 <section class="report-hero">
   <div class="container">
-    <div class="report-kicker">Atom Foundry Reports</div>
+    <div class="report-kicker">Recommendation Intelligence</div>
     <h1 class="report-hero-title">How AI recommends <em>real brands.</em></h1>
-    <p class="report-hero-sub">Free, public snapshots. We ask GPT-4o real buyer-intent questions in a brand's category, the kind a real shopper would type before buying, each one repeated 20 times to clear the noise floor, then publish exactly what came back. One brand, 20 buyer scenarios, 400 observations, no editing. The same measurement rigor behind our paid Recommendation Intelligence product, just one model instead of three, and a single snapshot instead of ongoing tracking.</p>
+    <p class="report-hero-sub">Free, public snapshots. We ask ChatGPT real buyer-intent questions in a brand's category, the kind a real shopper would type before buying, each one repeated 20 times to clear the noise floor, then publish exactly what came back. One brand, 20 buyer scenarios, 400 observations, no editing. The same measurement rigor behind our paid Recommendation Intelligence product, just one model instead of three, and a single snapshot instead of ongoing tracking.</p>
     <div class="byline-note">Atom Foundry &middot; Started September 2026 &middot; Part of the <a href="/research">Recommendation Intelligence Research&trade;</a> work</div>
   </div>
 </section>
@@ -382,21 +393,25 @@
     <h2 class="section-title">Every report follows the <em>same format</em></h2>
     <div class="products-grid">
       <div class="mini-card">
+        <div class="mini-card-num">01</div>
         <div class="mini-card-eyebrow">Prompts</div>
         <div class="mini-card-title">20 buyer scenarios, 400 observations</div>
         <div class="mini-card-body">The kind a real shopper types before buying, not generic brand questions. Each of the 20 best-of, comparison, budget, and use-case prompts is run 20 times to clear the noise floor.</div>
       </div>
       <div class="mini-card">
+        <div class="mini-card-num">02</div>
         <div class="mini-card-eyebrow">Model</div>
-        <div class="mini-card-title">GPT-4o, single model</div>
-        <div class="mini-card-body">These free snapshots measure one model at full observation depth. Our paid Recommendation Intelligence report checks GPT-4o, Claude and Gemini together, tracked on an ongoing basis.</div>
+        <div class="mini-card-title">ChatGPT, single model</div>
+        <div class="mini-card-body">These free snapshots measure one model at full observation depth. Our paid Recommendation Intelligence report checks ChatGPT, Claude and Gemini together, tracked on an ongoing basis.</div>
       </div>
       <div class="mini-card">
+        <div class="mini-card-num">03</div>
         <div class="mini-card-eyebrow">Findings</div>
         <div class="mini-card-title">2 to 3 key findings</div>
         <div class="mini-card-body">Not every observation, just what actually stood out: how often the brand came up, and who it got named alongside.</div>
       </div>
       <div class="mini-card">
+        <div class="mini-card-num">04</div>
         <div class="mini-card-eyebrow">Access</div>
         <div class="mini-card-title">Free, public, unedited</div>
         <div class="mini-card-body">No signup, no gate. Published as-is, findings and all, good or bad for the brand measured.</div>
@@ -410,9 +425,15 @@
   <div class="container">
     <div class="kicker">Reports</div>
     <h2 class="section-title">Every report we've <em>published</em></h2>
+    <p class="az-note">Browse by category, or jump straight to a brand by its first letter.</p>
+    <div class="niche-filter" id="nicheFilter" aria-label="Filter reports by category">
+      <button type="button" class="niche-btn is-active" data-niche="all">All categories</button>
+      <!-- Category buttons are generated by JS below, from each report card's data-niche. -->
+    </div>
     <div class="az-filter" id="azFilter" aria-label="Filter reports by brand name">
       <button type="button" class="az-btn az-all is-active" data-letter="all">All</button>
-      <!-- A-Z buttons are generated by JS below, disabled until a report starting with that letter exists -->
+      <!-- A-Z buttons are generated by JS below, disabled until a report starting with that letter exists.
+           Each letter is the first letter of the measured brand's name. -->
     </div>
     <p class="az-empty-note" id="azEmptyNote">No reports starting with that letter yet.</p>
     <div class="reports-empty" id="reportsEmpty">
@@ -420,15 +441,16 @@
       <p class="reports-empty-body">We're measuring the first brand now. Check back shortly, or follow Atom Foundry on LinkedIn to see each report as it goes live.</p>
     </div>
     <div class="products-grid" id="reportsGrid">
-      <a class="mini-card" href="/reports/caraway" data-brand="Caraway">
+      <a class="mini-card" href="/reports/caraway" data-brand="Caraway" data-niche="Kitchen & Cookware">
         <div class="mini-card-eyebrow">Kitchen & Cookware</div>
         <div class="mini-card-title">How AI recommends Caraway</div>
-        <div class="mini-card-body">Caraway ranks #2 of 18 brands GPT-4o names in this category, a 46% recommend rate across 400 observations.</div>
+        <div class="mini-card-body">Caraway ranks #2 of 18 brands ChatGPT names in this category, a 46% recommend rate across 400 observations.</div>
         <span class="mini-card-link">Read report</span>
       </a>
       <!-- Add each new report as a .mini-card here, in publish order, once live. The data-brand
-           attribute drives the A-Z filter above, so it must be set to the brand's display name:
-      <a class="mini-card" href="/reports/[brand-slug]" data-brand="[Brand Name]">
+           attribute drives the A-Z filter above and data-niche drives the category filter, so both
+           must be set to the brand's display name and category:
+      <a class="mini-card" href="/reports/[brand-slug]" data-brand="[Brand Name]" data-niche="[Category]">
         <div class="mini-card-eyebrow">[Category]</div>
         <div class="mini-card-title">How AI recommends [Brand]</div>
         <div class="mini-card-body">[One-line finding.]</div>
@@ -638,6 +660,7 @@
 (function(){
   var grid = document.getElementById('reportsGrid');
   var filterBar = document.getElementById('azFilter');
+  var nicheBar = document.getElementById('nicheFilter');
   var emptyNote = document.getElementById('azEmptyNote');
   var emptyState = document.getElementById('reportsEmpty');
   if (!grid || !filterBar) return;
@@ -645,10 +668,13 @@
   var cards = Array.prototype.slice.call(grid.querySelectorAll('.mini-card[data-brand]'));
   emptyState.style.display = cards.length === 0 ? '' : 'none';
 
-  var available = {};
+  var availableLetters = {};
+  var availableNiches = {};
   cards.forEach(function(card){
     var letter = (card.getAttribute('data-brand') || '').trim().charAt(0).toUpperCase();
-    if (letter) available[letter] = true;
+    if (letter) availableLetters[letter] = true;
+    var niche = (card.getAttribute('data-niche') || '').trim();
+    if (niche) availableNiches[niche] = true;
   });
 
   var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -658,15 +684,30 @@
     btn.className = 'az-btn';
     btn.textContent = letter;
     btn.dataset.letter = letter;
-    if (!available[letter]) btn.disabled = true;
+    if (!availableLetters[letter]) btn.disabled = true;
     filterBar.appendChild(btn);
   });
 
-  function applyFilter(letter){
+  if (nicheBar) {
+    Object.keys(availableNiches).sort().forEach(function(niche){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'niche-btn';
+      btn.textContent = niche;
+      btn.dataset.niche = niche;
+      nicheBar.appendChild(btn);
+    });
+  }
+
+  var activeLetter = 'all';
+  var activeNiche = 'all';
+
+  function applyFilter(){
     var matches = 0;
     cards.forEach(function(card){
       var cardLetter = (card.getAttribute('data-brand') || '').trim().charAt(0).toUpperCase();
-      var show = letter === 'all' || cardLetter === letter;
+      var cardNiche = (card.getAttribute('data-niche') || '').trim();
+      var show = (activeLetter === 'all' || cardLetter === activeLetter) && (activeNiche === 'all' || cardNiche === activeNiche);
       card.style.display = show ? '' : 'none';
       if (show) matches++;
     });
@@ -678,8 +719,20 @@
     if (!btn || btn.disabled) return;
     filterBar.querySelectorAll('.az-btn').forEach(function(b){ b.classList.remove('is-active'); });
     btn.classList.add('is-active');
-    applyFilter(btn.dataset.letter);
+    activeLetter = btn.dataset.letter;
+    applyFilter();
   });
+
+  if (nicheBar) {
+    nicheBar.addEventListener('click', function(e){
+      var btn = e.target.closest('.niche-btn');
+      if (!btn || btn.disabled) return;
+      nicheBar.querySelectorAll('.niche-btn').forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      activeNiche = btn.dataset.niche;
+      applyFilter();
+    });
+  }
 })();
 </script>
 <!-- AZ_FILTER:END -->
