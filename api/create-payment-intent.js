@@ -12,8 +12,8 @@ export default async function handler(req, res) {
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 'No items in cart' });
     }
-    if (!customer || !customer.email || !customer.storeUrl) {
-      return res.status(400).json({ error: 'Missing customer email or store URL' });
+    if (!customer || !customer.email) {
+      return res.status(400).json({ error: 'Missing customer email' });
     }
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRe.test(customer.email)) {
@@ -36,6 +36,14 @@ export default async function handler(req, res) {
       lineItems.push({ priceId: it.priceId, name: meta.name });
     }
 
+    // Store URL is required for store-audit style products, not for a report unlock.
+    if (product !== 'report-unlock' && !customer.storeUrl) {
+      return res.status(400).json({ error: 'Missing store URL' });
+    }
+    if (product === 'report-unlock' && !customer.reportSlug) {
+      return res.status(400).json({ error: 'Missing report slug' });
+    }
+
     let amountTotal = 0;
     const resolvedIds = [];
     for (const li of lineItems) {
@@ -53,6 +61,7 @@ export default async function handler(req, res) {
         customer_email: customer.email,
         customer_name: (customer.name || '').slice(0, 200),
         store_url: (customer.storeUrl || '').slice(0, 300),
+        report_slug: (customer.reportSlug || '').slice(0, 200),
         item_ids: resolvedIds.join(','),
       },
       automatic_payment_methods: { enabled: true },
