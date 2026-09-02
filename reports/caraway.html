@@ -1,40 +1,20 @@
-<!--
-  TEMPLATE — MASTER FILE, NOT LINKED ANYWHERE, NO VERCEL ROUTE.
-  To publish a new report:
-  1. Duplicate this file as /reports/[brand-slug].html (e.g. reports/wildgrain.html).
-  2. Replace every [BRACKETED] placeholder below with real data from the measurement,
-     including REPORT_SLUG in the <script> near the bottom (must match the vercel.json route
-     and the recommendation_reports.slug row in Postgres).
-  3. Remove this comment block and the noindex meta tag.
-  4. Add a vercel.json route: { "src": "/reports/[brand-slug]", "dest": "/reports/[brand-slug].html" }
-     (plus the trailing-slash variant, same dest).
-  5. Add a .mini-card entry to /reports/index.html.
-  6. Add the published URL to sitemap-pages.xml (individual reports ARE indexed, per Daniel
-     2026-09-02 — only the hub stays out of main nav).
-  7. Once a real Stripe price exists, swap REPORT_UNLOCK_PRICE_ID near the bottom script and
-     ALLOWED_PRICES in api/_lib/stripePrices.js.
-  Paywall: everything from Finding 2 onward is fetched from /api/report-access and rendered only
-  after a successful per-report unlock purchase, or an existing ?unlock=<token> in the URL. The
-  gated copy is never present in this file's HTML — it lives in Postgres (recommendation_reports.
-  gated_findings) so it can't be read via view-source before payment.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How AI Recommends [BRAND NAME] | Atom Foundry</title>
-<meta name="description" content="We asked GPT-4o 20 buyer-intent questions in the [NICHE] category and measured how often [BRAND NAME] came up, and who it got named alongside. Free, public snapshot from Atom Foundry.">
-<meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="https://atomfoundry.dev/reports/[BRAND-SLUG]">
-<meta property="og:title" content="How AI Recommends [BRAND NAME] | Atom Foundry">
-<meta property="og:description" content="20 buyer-intent prompts, one model, one brand. Here is exactly what GPT-4o recommended in the [NICHE] category.">
+<title>How AI Recommends Caraway | Atom Foundry</title>
+<meta name="description" content="We asked GPT-4o 20 buyer-intent questions in the kitchen cookware category and measured how often Caraway came up, and who it got named alongside. Free, public snapshot from Atom Foundry.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://atomfoundry.dev/reports/caraway">
+<meta property="og:title" content="How AI Recommends Caraway | Atom Foundry">
+<meta property="og:description" content="20 buyer-intent prompts, one model, one brand. Here is exactly what GPT-4o recommended in the kitchen cookware category.">
 <meta property="og:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
-<meta property="og:url" content="https://atomfoundry.dev/reports/[BRAND-SLUG]">
+<meta property="og:url" content="https://atomfoundry.dev/reports/caraway">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -64,13 +44,13 @@
     },
     {
       "@type": "Report",
-      "@id": "https://atomfoundry.dev/reports/[BRAND-SLUG]#report",
-      "name": "How AI Recommends [BRAND NAME]",
-      "url": "https://atomfoundry.dev/reports/[BRAND-SLUG]",
-      "datePublished": "[YYYY-MM-DD]",
+      "@id": "https://atomfoundry.dev/reports/caraway#report",
+      "name": "How AI Recommends Caraway",
+      "url": "https://atomfoundry.dev/reports/caraway",
+      "datePublished": "2026-09-02",
       "author": { "@id": "https://atomfoundry.dev/about#daniel-pokorny" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
-      "about": "[BRAND NAME]"
+      "about": "Caraway"
     }
   ]
 }
@@ -482,17 +462,17 @@
 <!-- HERO -->
 <section class="report-hero">
   <div class="container">
-    <div class="report-kicker">Recommendation Report No. [REPORT NUMBER] &middot; [Category]</div>
-    <h1 class="report-title">[BRAND NAME]</h1>
-    <p class="report-subtitle">How AI recommends brands in the [NICHE] category</p>
+    <div class="report-kicker">Recommendation Report No. 01 &middot; Kitchen & Cookware</div>
+    <h1 class="report-title">Caraway</h1>
+    <p class="report-subtitle">How AI recommends brands in the kitchen cookware category</p>
     <div class="report-stat-row">
-      <div class="report-stat"><div class="report-stat-num">[X]%</div><div class="report-stat-label">Recommend rate</div></div>
-      <div class="report-stat"><div class="report-stat-num">[Y]</div><div class="report-stat-label">Top rivals</div></div>
+      <div class="report-stat"><div class="report-stat-num">46%</div><div class="report-stat-label">Recommend rate</div></div>
+      <div class="report-stat"><div class="report-stat-num">#2</div><div class="report-stat-label">Category rank, of 18</div></div>
       <div class="report-stat"><div class="report-stat-num">400</div><div class="report-stat-label">Observations, GPT-4o</div></div>
     </div>
     <div class="report-rule"></div>
-    <p class="report-quote">&ldquo;[One-sentence pull-quote drawn straight from Finding 1, the single most concrete, citable line from the data.]&rdquo;</p>
-    <div class="report-byline">Atom Foundry &middot; [Month Year] &middot; Free public snapshot &middot; Part of the <a href="/reports">Recommendation Reports</a> series</div>
+    <p class="report-quote">&ldquo;Caraway is well-known for its non-toxic, ceramic-coated cookware that is free from harmful chemicals like PTFE, PFOA, and heavy metals.&rdquo;</p>
+    <div class="report-byline">Atom Foundry &middot; September 2026 &middot; Free public snapshot &middot; Part of the <a href="/reports">Recommendation Reports</a> series</div>
   </div>
 </section>
 
@@ -501,15 +481,15 @@
   <div class="container">
     <div class="kicker">Methodology</div>
     <h2 class="section-title">What we <em>actually asked</em></h2>
-    <p class="section-body">20 buyer-intent prompts in the [NICHE] category: best-of questions ("what's the best [product type] for [use case]"), comparison questions ("[BRAND] vs [competitor]"), budget-constrained questions ("[product type] under $[X]"), and use-case questions ("[product type] for [specific need]"). Each prompt sent to GPT-4o 20 times for 400 total observations, responses recorded exactly as returned.</p>
+    <p class="section-body">20 buyer-intent prompts in the kitchen cookware category: classic questions ("what's the best non-toxic cookware set under $300?"), and specific ones with real buying context ("I'm moving into a small apartment and need a non-toxic ceramic cookware set under $350 that's dishwasher safe, any recommendations?"). Each prompt sent to GPT-4o 20 times for 400 total observations, responses recorded exactly as returned.</p>
     <div class="method-box">
       <div class="method-grid">
-        <div class="method-item">Category <span>[NICHE]</span></div>
-        <div class="method-item">Brand measured <span>[BRAND NAME]</span></div>
+        <div class="method-item">Category <span>kitchen cookware</span></div>
+        <div class="method-item">Brand measured <span>Caraway</span></div>
         <div class="method-item">Prompts <span>20, buyer-intent</span></div>
         <div class="method-item">Repeats per prompt <span>20</span></div>
         <div class="method-item">Model <span>GPT-4o</span></div>
-        <div class="method-item">Date measured <span>[Month DD, YYYY]</span></div>
+        <div class="method-item">Date measured <span>September 2, 2026</span></div>
         <div class="method-item">Observations <span>400</span></div>
       </div>
       <div class="limits"><strong>Limits.</strong> This is a single-model snapshot, not an ongoing multi-method study. It measures GPT-4o only, on this date, at 400 observations. Our paid Recommendation Intelligence report checks GPT-4o, Claude and Gemini together, tracked on an ongoing basis.</div>
@@ -525,9 +505,15 @@
     <div class="products-grid">
       <div class="mini-card">
         <div class="mini-card-eyebrow">Finding 1</div>
-        <div class="mini-card-title">[FINDING 1 TITLE]</div>
-        <div class="mini-card-body">[Finding 1 body: one or two sentences on what the data showed, specific and factual.]</div>
-        <div class="mini-card-stat">[X]% of prompts</div>
+        <div class="mini-card-title">Caraway ranks #2 of 18 brands GPT-4o names in this category</div>
+        <div class="mini-card-body">Across all 400 observations, GPT-4o named Caraway 184 times, behind only GreenPan. When it's mentioned, it's almost always in the top two results (average position 1.7), and GPT-4o describes it the same way nearly every time: non-toxic ceramic coating, free of PTFE and PFOA, stylish design in a range of colors.</div>
+        <div class="mini-card-stat">46% recommend rate</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow">Strongest fit</div>
+        <div class="mini-card-title">Wins big on lifestyle and safety framing</div>
+        <div class="mini-card-body">Caraway hit a 100% recommend rate on four separate prompts: wedding registries, PFAS-free bakeware for a first apartment, scratch-resistant induction cookware, and buyers switching away from Teflon. On the wedding registry prompt, it was named first in all 20 runs.</div>
+        <div class="mini-card-stat">100% on 4 of 20 prompts</div>
       </div>
     </div>
   </div>
@@ -543,17 +529,17 @@
       <div class="reco-map">
         <div class="reco-map-ylab">Recommended more often &uarr;</div>
         <div class="reco-map-xlab">Appears in more buyer questions &rarr;</div>
-        <div class="reco-bubble" style="left:92%;bottom:96%;width:72px;height:72px;--i:0">[COMPETITOR 1]</div>
-        <div class="reco-bubble" style="left:86%;bottom:79%;width:67px;height:67px;--i:1">[COMPETITOR 2]</div>
-        <div class="reco-bubble" style="left:79%;bottom:86%;width:65px;height:65px;--i:2">[COMPETITOR 3]</div>
-        <div class="reco-bubble" style="left:66%;bottom:71%;width:58px;height:58px;--i:3">[COMPETITOR 4]</div>
-        <div class="reco-bubble" style="left:60%;bottom:60%;width:55px;height:55px;--i:4">[COMPETITOR 5]</div>
-        <div class="reco-bubble" style="left:47%;bottom:42%;width:48px;height:48px;--i:5">[COMPETITOR 6]</div>
-        <div class="reco-bubble you" style="left:33%;bottom:25%;width:50px;height:50px;--i:6">[BRAND NAME]</div>
+        <div class="reco-bubble" style="left:88%;bottom:90%;width:76px;height:76px;--i:0">GreenPan</div>
+        <div class="reco-bubble you" style="left:72%;bottom:74%;width:66px;height:66px;--i:1">Caraway</div>
+        <div class="reco-bubble" style="left:56%;bottom:58%;width:54px;height:54px;--i:2">Cuisinart</div>
+        <div class="reco-bubble" style="left:50%;bottom:52%;width:52px;height:52px;--i:3">T-fal</div>
+        <div class="reco-bubble" style="left:42%;bottom:44%;width:48px;height:48px;--i:4">Calphalon</div>
+        <div class="reco-bubble" style="left:28%;bottom:30%;width:42px;height:42px;--i:5">Rachael Ray</div>
+        <div class="reco-bubble" style="left:20%;bottom:22%;width:40px;height:40px;--i:6">Lodge</div>
       </div>
       <div class="reco-map-legend">
         <span><span class="reco-dot" style="background:var(--bar-gray);"></span>Competitors AI recommends</span>
-        <span><span class="reco-dot" style="background:var(--orange);"></span>[BRAND NAME]</span>
+        <span><span class="reco-dot" style="background:var(--orange);"></span>Caraway</span>
         <span>Bubble size = how many buyer questions the brand appears in</span>
       </div>
     </div>
@@ -581,7 +567,7 @@
           </div>
         </div>
         <div class="kicker">Why it matters</div>
-        <h2 class="section-title">What this means for <em>[BRAND NAME]</em></h2>
+        <h2 class="section-title">What this means for <em>Caraway</em></h2>
         <p class="section-body" id="reportWhyItMatters">More shoppers are asking AI assistants for buying advice before they ever open a search engine or a store&#39;s own website. Whether a brand comes up in that conversation, and who it gets named alongside, now shapes real purchase decisions the same way search rankings did a decade ago.</p>
       </div>
       <div class="report-unlock-overlay">
@@ -1097,7 +1083,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 (function(){
-  var REPORT_SLUG = '[BRAND-SLUG]';
+  var REPORT_SLUG = 'caraway';
   var REPORT_UNLOCK_PRICE_ID = 'price_1UBAQk2WiU5desc4xmCCCWgl';
   var STRIPE_PK = 'pk_live_51SuUxs2WiU5desc4Ac59pr7ygW2c7fZKSYAWdQPAqqnEHTZWLbAG7UsEo4FR0aqOvAqvz1W4J5cnzMDpSGZ4T4sP00bwlldVnh';
   var stripe = (typeof Stripe !== 'undefined') ? Stripe(STRIPE_PK) : null;
