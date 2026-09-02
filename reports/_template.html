@@ -304,6 +304,19 @@
   .related-more a{color:var(--orange);font-weight:700;}
   .related-more a:hover{text-decoration:underline;}
 
+  /* Positioning map -- unified with products/recommendation-intelligence.html, same class names on purpose. */
+  .reco-map-wrap{background:var(--off-white);border:1px solid var(--card-line);border-radius:14px;padding:22px 24px 16px;margin-top:20px;}
+  .reco-map{position:relative;height:340px;margin:8px 0 0;border-left:2px solid var(--card-line);border-bottom:2px solid var(--card-line);}
+  .reco-map-ylab{position:absolute;left:-4px;top:-24px;font-size:10.5px;color:var(--gray-700);font-weight:700;}
+  .reco-map-xlab{position:absolute;right:0;bottom:-24px;font-size:10.5px;color:var(--gray-700);font-weight:700;}
+  .reco-bubble{position:absolute;border-radius:50%;transform:translate(-50%,50%) scale(0.25);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:#fff;border:1.5px solid rgba(255,255,255,0.45);white-space:nowrap;background:rgba(132,126,109,0.88);box-shadow:0 8px 16px -6px rgba(22,21,18,0.35);opacity:0;transition:opacity .5s ease,transform .6s cubic-bezier(.34,1.56,.64,1);transition-delay:calc(var(--i,0) * 0.14s);}
+  .reco-bubble.you{background:var(--orange);box-shadow:0 0 0 4px rgba(254,106,3,0.16),0 8px 18px -6px rgba(254,106,3,0.5);}
+  .reco-map.is-in .reco-bubble{opacity:1;transform:translate(-50%,50%) scale(1);}
+  .reco-map-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:30px;font-size:11px;color:var(--gray-700);}
+  .reco-map-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .reco-dot{width:9px;height:9px;border-radius:50%;}
+  @media(max-width:680px){ .reco-map{height:300px;} }
+
   .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
   .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
   .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
@@ -514,6 +527,33 @@
         <div class="mini-card-title">[FINDING 1 TITLE]</div>
         <div class="mini-card-body">[Finding 1 body: one or two sentences on what the data showed, specific and factual.]</div>
         <div class="mini-card-stat">[X]% of prompts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POSITIONING MAP (free) -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Recommendation Positioning Map</div>
+    <h2 class="section-title">The category, <em>mapped</em></h2>
+    <p class="section-body">Higher means AI recommends the brand more often. Further right means it shows up across more buyer questions. The strong brands cluster top right.</p>
+    <div class="reco-map-wrap">
+      <div class="reco-map">
+        <div class="reco-map-ylab">Recommended more often &uarr;</div>
+        <div class="reco-map-xlab">Appears in more buyer questions &rarr;</div>
+        <div class="reco-bubble" style="left:92%;bottom:96%;width:72px;height:72px;--i:0">[COMPETITOR 1]</div>
+        <div class="reco-bubble" style="left:86%;bottom:79%;width:67px;height:67px;--i:1">[COMPETITOR 2]</div>
+        <div class="reco-bubble" style="left:79%;bottom:86%;width:65px;height:65px;--i:2">[COMPETITOR 3]</div>
+        <div class="reco-bubble" style="left:66%;bottom:71%;width:58px;height:58px;--i:3">[COMPETITOR 4]</div>
+        <div class="reco-bubble" style="left:60%;bottom:60%;width:55px;height:55px;--i:4">[COMPETITOR 5]</div>
+        <div class="reco-bubble" style="left:47%;bottom:42%;width:48px;height:48px;--i:5">[COMPETITOR 6]</div>
+        <div class="reco-bubble you" style="left:33%;bottom:25%;width:50px;height:50px;--i:6">[BRAND NAME]</div>
+      </div>
+      <div class="reco-map-legend">
+        <span><span class="reco-dot" style="background:var(--bar-gray);"></span>Competitors AI recommends</span>
+        <span><span class="reco-dot" style="background:var(--orange);"></span>[BRAND NAME]</span>
+        <span>Bubble size = how many buyer questions the brand appears in</span>
       </div>
     </div>
   </div>
@@ -769,6 +809,24 @@
       if (!nav.classList.contains('nav-mobile-open')) return;
       if (Math.abs(window.scrollY - menuOpenScrollY) > 24) closeMenu();
     }, { passive: true });
+  })();
+
+  (function(){
+    var maps = document.querySelectorAll('.reco-map');
+    if (!maps.length) return;
+    if (!('IntersectionObserver' in window)) {
+      maps.forEach(function(el){ el.classList.add('is-in'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    maps.forEach(function(el){ observer.observe(el); });
   })();
 </script>
 <!-- SCAN_BOX_CONNECT:START -->
