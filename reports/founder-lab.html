@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Recommendation Reports | Atom Foundry</title>
-<meta name="description" content="Free, public snapshots measuring how AI recommends real, named ecommerce brands. One brand, twenty buyer-intent prompts, published in full. Same measurement system behind our paid Recommendation Intelligence product.">
+<title>How AI Recommends Founder Lab | Atom Foundry</title>
+<meta name="description" content="We ran our own store through the same measurement we sell to brands: 20 buyer-intent prompts, ChatGPT, 400 observations. No paywall on this one, the full report, including the zero.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://atomfoundry.dev/reports">
-<meta property="og:title" content="AI Recommendation Reports | Atom Foundry">
-<meta property="og:description" content="Free, public snapshots measuring how AI recommends real, named ecommerce brands across buyer-intent prompts.">
+<link rel="canonical" href="https://atomfoundry.dev/reports/founder-lab">
+<meta property="og:title" content="How AI Recommends Founder Lab | Atom Foundry">
+<meta property="og:description" content="We turned our own Recommendation Report methodology on our own store. Full report, fully unlocked, no paywall.">
 <meta property="og:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
-<meta property="og:url" content="https://atomfoundry.dev/reports">
-<meta property="og:type" content="website">
+<meta property="og:url" content="https://atomfoundry.dev/reports/founder-lab">
+<meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -43,13 +43,14 @@
       "founder": { "@id": "https://atomfoundry.dev/about#daniel-pokorny" }
     },
     {
-      "@type": "CollectionPage",
-      "@id": "https://atomfoundry.dev/reports#webpage",
-      "url": "https://atomfoundry.dev/reports",
-      "name": "AI Recommendation Reports",
-      "description": "Free, public snapshots measuring how AI recommends real, named ecommerce brands across buyer-intent prompts.",
-      "inLanguage": "en",
-      "publisher": { "@id": "https://atomfoundry.dev/#organization" }
+      "@type": "Report",
+      "@id": "https://atomfoundry.dev/reports/founder-lab#report",
+      "name": "How AI Recommends Founder Lab",
+      "url": "https://atomfoundry.dev/reports/founder-lab",
+      "datePublished": "2026-09-03",
+      "author": { "@id": "https://atomfoundry.dev/about#daniel-pokorny" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "about": "Founder Lab"
     }
   ]
 }
@@ -167,8 +168,8 @@
   .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:14px;}
   .page-title{font-family:var(--serif);font-size:clamp(30px,4.8vw,54px);font-weight:800;letter-spacing:-0.02em;line-height:1.1;max-width:820px;margin-bottom:18px;}
   .page-title em{color:var(--orange);}
-  .section-title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:clamp(22px,3vw,32px);font-weight:700;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
-  .section-title em{color:var(--orange);font-style:normal;}
+  .section-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
+  .section-title em{color:var(--orange);}
   .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:680px;}
   .section-body strong{color:var(--black);}
 
@@ -177,49 +178,150 @@
   .byline-note{font-size:12px;color:var(--gray-500);margin-top:16px;}
   .byline-note a{color:var(--orange);font-weight:700;}
 
-  .report-hero{padding:80px 24px 56px;background:var(--cream);text-align:center;}
-  .report-hero .container{max-width:720px;}
-  .report-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--orange);margin-bottom:16px;}
-  .report-hero-title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:clamp(32px,5vw,50px);font-weight:700;letter-spacing:-0.01em;line-height:1.1;color:var(--black);margin-bottom:16px;}
-  .report-hero-title em{color:var(--orange);font-style:normal;}
-  .report-hero-sub{font-size:16px;color:var(--gray-700);line-height:1.7;max-width:560px;margin:0 auto;}
-  .report-hero .byline-note{margin-top:26px;}
-  @media (max-width:680px){ .report-hero{padding:56px 20px 40px;} }
+  .hero-stat-row{display:flex;flex-wrap:wrap;row-gap:16px;column-gap:0;margin-top:44px;align-items:baseline;}
+  .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:15px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
+  .hero-stat:not(:first-child)::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
+  .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:38px;letter-spacing:-0.02em;line-height:1;}
 
-  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-  .products-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .report-hero{padding:76px 24px 52px;background:var(--cream);text-align:center;}
+  .report-hero .container{max-width:760px;}
+  .report-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--orange);margin-bottom:16px;}
+  .report-title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:clamp(32px,5vw,48px);font-weight:700;letter-spacing:-0.01em;line-height:1.1;color:var(--black);margin-bottom:10px;}
+  .report-subtitle{font-size:15px;color:var(--gray-700);margin-bottom:30px;}
+  .report-stat-row{display:flex;justify-content:center;margin-bottom:26px;}
+  .report-stat{padding:0 26px;border-right:1px solid var(--gray-300);}
+  .report-stat:last-child{border-right:none;}
+  .report-stat-num{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:30px;font-weight:700;color:var(--black);line-height:1.1;}
+  .report-stat-label{font-size:10px;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.07em;margin-top:4px;}
+  .report-rule{height:1px;width:70%;margin:0 auto 22px;background:linear-gradient(90deg,transparent,var(--gray-300),transparent);}
+  .report-quote{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-style:italic;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:460px;margin:0 auto;}
+  .report-byline{font-size:12px;color:var(--gray-500);margin-top:26px;}
+  .report-byline a{color:var(--orange);font-weight:700;}
+  @media (max-width:680px){
+    .report-hero{padding:56px 20px 40px;}
+    .report-stat-row{flex-wrap:wrap;row-gap:16px;}
+    .report-stat{padding:0 16px;border-right:1px solid var(--gray-300);}
+  }
+
+  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-bottom:18px;}
+  .method-item{font-size:13.5px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--card-line);}
+  .method-item span{color:var(--black);font-weight:700;}
+  .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
+  .limits strong{color:var(--black);}
+  .report-prompt-list-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;}
+  .report-prompt-col-label{font-size:10.5px;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;}
+  .report-prompt-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .report-prompt-list li{position:relative;padding-left:16px;font-size:13px;color:var(--gray-700);line-height:1.5;}
+  .report-prompt-list li::before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:var(--orange);}
+  .report-prompt-locked{margin-top:6px;}
+  .report-prompt-locked li{opacity:.85;}
+  @media(max-width:680px){ .report-prompt-list-wrap{grid-template-columns:1fr;} }
+
+  .report-gated-zone{position:relative;}
+  .report-gated-tag{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:24px;}
+  .report-gated-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange);}
+  .report-gated-inner{filter:blur(7px);user-select:none;}
+  .report-gated-zone.is-unlocked .report-gated-inner{filter:none;user-select:auto;}
+  .report-unlock-overlay{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:40px;background:linear-gradient(180deg,rgba(240,238,230,0) 0%,rgba(240,238,230,0.6) 16%,rgba(240,238,230,0.97) 36%,var(--cream) 50%);}
+  .report-gated-zone.is-unlocked .report-unlock-overlay{display:none;}
+  .report-unlock-card{background:var(--white);border:1px solid var(--gray-300);border-radius:8px;padding:32px 34px;max-width:400px;width:100%;text-align:center;box-shadow:0 24px 48px -20px rgba(22,21,18,0.22);position:sticky;top:120px;}
+  .report-unlock-card h3{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:19px;font-weight:700;color:var(--black);margin-bottom:8px;}
+  .report-unlock-card p{font-size:13px;color:var(--gray-700);line-height:1.55;margin-bottom:18px;}
+  .report-unlock-price{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:26px;font-weight:700;color:var(--black);margin-bottom:16px;}
+  .report-unlock-btn{width:100%;border:none;background:var(--black);color:var(--white);padding:13px;border-radius:4px;font-size:13.5px;font-weight:700;cursor:pointer;transition:background .2s ease;}
+  .report-unlock-btn:hover{background:var(--orange);}
+  .report-unlock-divider{display:flex;align-items:center;gap:10px;margin:18px 0;font-size:11px;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.06em;}
+  .report-unlock-divider::before,.report-unlock-divider::after{content:"";flex:1;height:1px;background:var(--gray-300);}
+  .report-unlock-alt{display:block;font-size:13px;color:var(--black);font-weight:700;border:1px solid var(--gray-300);border-radius:4px;padding:11px;transition:border-color .2s ease,color .2s ease;}
+  .report-unlock-alt:hover{border-color:var(--orange);color:var(--orange);}
+  .report-unlock-note{font-size:11px;color:var(--gray-500);margin-top:14px;}
+  .report-unlock-error{color:var(--red);font-size:12px;margin-top:10px;min-height:1em;}
+
+  .report-full-cta{display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;background:var(--black);border-radius:8px;padding:44px 48px;color:var(--white);}
+  .report-full-cta-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:14px;}
+  .report-full-cta h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:clamp(20px,2.4vw,28px);font-weight:700;letter-spacing:-0.01em;line-height:1.25;margin-bottom:14px;}
+  .report-full-cta p{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.65;}
+  .report-full-includes{list-style:none;display:flex;flex-direction:column;gap:10px;margin:22px 0 26px;}
+  .report-full-includes li{position:relative;padding-left:18px;font-size:13.5px;color:rgba(255,255,255,0.85);line-height:1.5;}
+  .report-full-includes li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--orange);}
+  .report-full-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:20px;}
+  .report-full-price{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:32px;font-weight:700;color:var(--white);}
+  .report-full-price-note{font-size:11px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.04em;}
+  .report-full-btn{display:inline-block;background:var(--orange);color:var(--white);padding:14px 26px;border-radius:4px;font-size:13.5px;font-weight:700;text-decoration:none;transition:background .2s ease;}
+  .report-full-btn:hover{background:#e65f00;}
+  @media (max-width:900px){
+    .report-full-cta{grid-template-columns:1fr;padding:36px 28px;}
+  }
+  .report-brand-cta{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:360px;background:var(--orange);border-radius:8px;padding:48px;margin-top:16px;}
+  .report-brand-cta-inner{position:relative;z-index:2;max-width:460px;text-align:center;}
+  .report-brand-cta-inner p{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:clamp(20px,2.6vw,26px);font-weight:700;color:var(--white);line-height:1.35;letter-spacing:-0.01em;margin-bottom:24px;}
+  .report-brand-cta-inner a{display:inline-block;background:var(--white);color:var(--black);padding:14px 28px;border-radius:4px;font-size:13.5px;font-weight:700;text-decoration:none;transition:background .2s ease,color .2s ease;}
+  .report-brand-cta-inner a:hover{background:var(--black);color:var(--white);}
+  .brand-cta-prompt{position:absolute;left:var(--x);bottom:-24px;color:rgba(255,255,255,0.5);font-size:12.5px;font-weight:600;white-space:nowrap;letter-spacing:0.01em;pointer-events:none;z-index:1;animation-name:brandCtaFloat;animation-timing-function:linear;animation-iteration-count:infinite;will-change:transform,opacity;}
+  @keyframes brandCtaFloat{
+    0%{transform:translateY(0);opacity:0;}
+    8%{opacity:0.55;}
+    88%{opacity:0.55;}
+    100%{transform:translateY(-400px);opacity:0;}
+  }
+  @media (max-width:680px){
+    .report-brand-cta{padding:40px 24px;min-height:300px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .brand-cta-prompt{animation:none;opacity:0;}
+  }
+
+  .runlk-overlay{position:fixed;inset:0;z-index:5000;background:rgba(22,21,18,0.55);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .22s ease,visibility .22s;}
+  .runlk-overlay.is-open{opacity:1;visibility:visible;}
+  .runlk-modal{position:relative;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;background:var(--white);border-radius:12px;padding:30px 28px;box-shadow:0 40px 80px -20px rgba(0,0,0,0.4);}
+  .runlk-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:22px;line-height:1;color:var(--gray-500);cursor:pointer;padding:4px;}
+  .runlk-close:hover{color:var(--black);}
+  .runlk-title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:20px;font-weight:700;color:var(--black);margin-bottom:16px;}
+  .runlk-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:0 0 18px;font-weight:800;}
+  .runlk-total-row span:first-child{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-700);}
+  .runlk-total-row span:last-child{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:22px;color:var(--black);}
+  .runlk-label{display:block;font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:14px;}
+  .runlk-input{display:block;width:100%;margin-top:6px;padding:12px 14px;font-size:15px;font-family:inherit;border:1px solid var(--gray-300);border-radius:4px;background:var(--white);color:var(--black);}
+  .runlk-input:focus{outline:none;border-color:var(--orange);}
+  .runlk-error{font-size:13px;color:var(--red);margin-bottom:12px;min-height:0;}
+  .runlk-btn{width:100%;background:var(--black);color:var(--white);border:none;border-radius:4px;padding:13px 18px;font-size:13.5px;font-weight:700;cursor:pointer;transition:background .2s ease;}
+  .runlk-btn:hover{background:var(--orange);}
+  .runlk-btn:disabled{opacity:0.6;cursor:default;}
+  .runlk-back{display:block;width:100%;text-align:center;margin-top:12px;background:none;border:none;color:var(--gray-700);font-size:13px;font-weight:700;cursor:pointer;padding:6px;}
+  .runlk-back:hover{color:var(--black);}
+  #runlkPaymentElement{margin-bottom:18px;}
+  .runlk-step{display:none;}
+  .runlk-step.is-active{display:block;}
+
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .mini-card{border-radius:var(--radius);padding:24px 22px;background:var(--card);display:flex;flex-direction:column;min-height:150px;transition:transform .3s ease, box-shadow .3s ease;}
   .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
-  .mini-card-num{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:30px;font-weight:800;color:var(--orange);margin-bottom:8px;line-height:1;}
   .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
-  .mini-card-brand{color:var(--orange);}
   .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;flex:1;margin-bottom:12px;}
+  .mini-card-stat{font-size:13px;font-weight:800;color:var(--black);margin-bottom:4px;}
   .mini-card-link{margin-top:auto;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;}
   .mini-card:hover .mini-card-link{color:var(--orange);}
+  .related-more{margin-top:18px;font-size:13.5px;color:var(--gray-700);}
+  .related-more a{color:var(--orange);font-weight:700;}
+  .related-more a:hover{text-decoration:underline;}
 
-  .reports-empty{background:var(--card);border-radius:var(--radius);padding:48px 40px;text-align:center;}
-  .reports-empty-title{font-family:var(--serif);font-size:20px;font-weight:800;margin-bottom:8px;}
-  .reports-empty-body{font-size:14.5px;color:var(--gray-700);max-width:440px;margin:0 auto;line-height:1.6;}
-
-  .az-filter{display:flex;gap:6px;margin-bottom:16px;width:100%;}
-  .az-btn{flex:1 1 0;min-width:0;border:1px solid var(--gray-300);background:var(--white);color:var(--gray-700);font-size:12px;font-weight:700;height:38px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease;}
-  .az-btn.az-all{flex:1.4 1 0;}
-  .az-btn:hover:not(:disabled){background:var(--orange);border-color:var(--orange);color:#fff;}
-  .az-btn.is-active{background:var(--black);border-color:var(--black);color:var(--white);}
-  .az-btn:disabled{opacity:0.32;cursor:default;}
-  .az-note{font-size:12px;color:var(--gray-500);margin-bottom:16px;}
-  .niche-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
-  .niche-btn{border:1px solid var(--gray-300);background:var(--white);color:var(--gray-700);font-size:12px;font-weight:700;padding:8px 16px;border-radius:4px;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease;}
-  .niche-btn:hover:not(:disabled){background:var(--orange);border-color:var(--orange);color:#fff;}
-  .niche-btn.is-active{background:var(--black);border-color:var(--black);color:var(--white);}
-  @media(max-width:640px){
-    .az-filter{flex-wrap:wrap;}
-    .az-btn{flex:1 1 30px;width:30px;height:30px;font-size:11px;}
-    .az-btn.az-all{flex:1 1 auto;width:auto;padding:0 14px;}
-  }
-  .az-empty-note{font-size:13px;color:var(--gray-500);margin-bottom:24px;display:none;}
-  .az-empty-note.is-visible{display:block;}
+  /* Positioning map -- unified with products/recommendation-intelligence.html, same class names on purpose. */
+  .reco-map-wrap{background:var(--off-white);border:1px solid var(--card-line);border-radius:14px;padding:22px 24px 16px;margin-top:20px;}
+  .reco-map{position:relative;height:340px;margin:8px 0 0;border-left:2px solid var(--card-line);border-bottom:2px solid var(--card-line);}
+  .reco-map-ylab{position:absolute;left:-4px;top:-24px;font-size:10.5px;color:var(--gray-700);font-weight:700;}
+  .reco-map-xlab{position:absolute;right:0;bottom:-24px;font-size:10.5px;color:var(--gray-700);font-weight:700;}
+  .reco-bubble{position:absolute;border-radius:999px;transform:translate(-50%,50%) scale(0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;border:1.5px solid rgba(255,255,255,0.45);white-space:nowrap;background:rgba(132,126,109,0.88);box-shadow:0 8px 16px -6px rgba(22,21,18,0.35);opacity:0;transition:opacity .5s ease,transform .6s cubic-bezier(.34,1.56,.64,1);transition-delay:calc(var(--i,0) * 0.14s);}
+  .reco-bubble.you{background:var(--orange);box-shadow:0 0 0 4px rgba(254,106,3,0.16),0 8px 18px -6px rgba(254,106,3,0.5);}
+  .reco-map.is-in .reco-bubble{opacity:1;transform:translate(-50%,50%) scale(1);}
+  .reco-map-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:30px;font-size:11px;color:var(--gray-700);}
+  .reco-map-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .reco-dot{width:9px;height:9px;border-radius:50%;}
+  @media(max-width:680px){ .reco-map{height:300px;} }
 
   .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
   .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
@@ -269,6 +371,10 @@
     .research-hero-sub{max-width:100%;}
     nav.links{gap:14px;}
     .nav-trigger{font-size:12px;}
+    .hero-stat-row{gap:0;}
+    .hero-stat{gap:5px;font-size:13px;}
+    .hero-stat:not(:first-child)::before{margin-right:8px;}
+    .hero-stat-num{font-size:26px;}
   }
   @media (max-width:680px){
     .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
@@ -285,6 +391,9 @@
     .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
     section{padding:44px 20px;}
     .research-hero{padding:56px 20px 32px;}
+    .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
+    .hero-stat:not(:first-child)::before{display:none;}
+    .method-grid{grid-template-columns:1fr;}
     .products-grid{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
@@ -292,7 +401,6 @@
     .scan-box button{width:100%;}
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
-    .reports-empty{padding:36px 24px;}
   }
 </style>
 </head>
@@ -380,130 +488,235 @@
 <!-- HERO -->
 <section class="report-hero">
   <div class="container">
-    <div class="report-kicker">Recommendation Intelligence</div>
-    <h1 class="report-hero-title">How AI recommends <em>real brands.</em></h1>
-    <p class="report-hero-sub">Free, public snapshots. We ask ChatGPT real buyer-intent questions in a brand's category, the kind a real shopper would type before buying, each one repeated 20 times to clear the noise floor, then publish exactly what came back. One brand, 20 buyer scenarios, 400 observations, no editing. The same measurement rigor behind our paid Recommendation Intelligence product, just one model instead of three, and a single snapshot instead of ongoing tracking.</p>
-    <div class="byline-note">Atom Foundry &middot; Started September 2026 &middot; Part of the <a href="/research">Recommendation Intelligence Research&trade;</a> work</div>
+    <div class="report-kicker">Case Study &middot; Our Own Store, Founder Merch</div>
+    <h1 class="report-title">Founder Lab</h1>
+    <p class="report-subtitle">We ran our own store through the same Recommendation Report we sell to brands. This one has no paywall.</p>
+    <div class="report-stat-row">
+      <div class="report-stat"><div class="report-stat-num">0%</div><div class="report-stat-label">Recommend rate</div></div>
+      <div class="report-stat"><div class="report-stat-num">121</div><div class="report-stat-label">Everlane mentions instead</div></div>
+      <div class="report-stat"><div class="report-stat-num">400</div><div class="report-stat-label">Observations, ChatGPT</div></div>
+    </div>
+    <div class="report-rule"></div>
+    <p class="report-quote">Across all 400 observations on ChatGPT, Founder Lab was never named once. Everlane and Uniqlo answered these buyer questions instead, including the ones asking directly for a gift for a startup founder.</p>
+    <div class="report-byline">Atom Foundry &middot; September 2026 &middot; Full report, no paywall &middot; Part of the <a href="/reports">Recommendation Reports</a> series</div>
   </div>
 </section>
 
-<!-- WHAT A REPORT CONTAINS -->
+<!-- METHODOLOGY -->
 <section class="alt">
   <div class="container">
-    <div class="kicker">What's in a report</div>
-    <h2 class="section-title">Every report follows the <em>same format</em></h2>
+    <div class="kicker">Methodology</div>
+    <h2 class="section-title">What we <em>actually asked</em></h2>
+    <p class="section-body">20 buyer-intent prompts about minimalist gear and gifts for founders and entrepreneurs, 10 classic questions and 10 specific ones with real buying context. Each prompt sent to ChatGPT 20 times for 400 total observations, responses recorded exactly as returned. This is our own store, so nothing here is gated. All 20 prompts, below.</p>
+    <div class="report-prompt-list-wrap">
+      <div class="report-prompt-col">
+        <div class="report-prompt-col-label">Classic</div>
+        <ul class="report-prompt-list">
+          <li>What's a good minimalist trucker cap for entrepreneurs?</li>
+          <li>Which brand makes good streetwear for startup founders?</li>
+          <li>Best insulated water bottle for a busy entrepreneur?</li>
+          <li>What's a good minimalist beanie for winter?</li>
+          <li>Which brand makes good desk accessories for founders?</li>
+          <li>Best crewneck sweatshirt for working from home?</li>
+          <li>What's a good ceramic coffee mug for entrepreneurs?</li>
+          <li>Which brand makes minimalist fleece joggers?</li>
+          <li>Best gift for a startup founder?</li>
+          <li>What's a good minimalist streetwear brand for tech workers?</li>
+        </ul>
+      </div>
+      <div class="report-prompt-col">
+        <div class="report-prompt-col-label">Specific</div>
+        <ul class="report-prompt-list">
+          <li>I'm looking for a minimalist black trucker cap as a gift for a friend who just started a company, under $60, any recommendations?</li>
+          <li>I want a comfortable pair of fleece joggers for working from my home office, under $100, what should I get?</li>
+          <li>I need an insulated water bottle that keeps coffee hot all day at my desk, under $90, any suggestions?</li>
+          <li>Looking for a minimalist ceramic coffee mug with a motivational or entrepreneur-themed design, under $35, what do you recommend?</li>
+          <li>I want a crewneck sweatshirt that looks clean and minimal for a founder headshot or podcast appearance, under $150, any recommendations?</li>
+          <li>What's a good birthday gift for someone who just quit their job to start a business, under $100?</li>
+          <li>I'm building my personal brand as a founder and want subtle, minimalist merch I can wear on camera, any suggestions?</li>
+          <li>Looking for a beanie that looks professional but casual for cold office mornings, under $70, what should I get?</li>
+          <li>I want desk accessories that look minimal and premium for a home office setup, under $100, any recommendations?</li>
+          <li>What's a good self-care or reward gift for hitting a startup milestone, under $150?</li>
+        </ul>
+      </div>
+    </div>
+    <div class="method-box">
+      <div class="method-grid">
+        <div class="method-item">Category <span>founder and entrepreneur merch</span></div>
+        <div class="method-item">Brand measured <span>Founder Lab</span></div>
+        <div class="method-item">Prompts <span>20, buyer-intent</span></div>
+        <div class="method-item">Repeats per prompt <span>20</span></div>
+        <div class="method-item">Model <span>ChatGPT</span></div>
+        <div class="method-item">Date measured <span>September 3, 2026</span></div>
+        <div class="method-item">Observations <span>400</span></div>
+      </div>
+      <div class="limits"><strong>Limits.</strong> This is a single-model snapshot, not an ongoing multi-method study. It measures ChatGPT only, on this date, at 400 observations. Our own paid Recommendation Intelligence product checks ChatGPT, Claude and Gemini together, tracked on an ongoing basis, which is exactly why we are showing you the cheaper single-model version first, on ourselves.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINDINGS (free) -->
+<section>
+  <div class="container">
+    <div class="kicker">Findings</div>
+    <h2 class="section-title">What actually <em>stood out</em></h2>
     <div class="products-grid">
       <div class="mini-card">
-        <div class="mini-card-num">01</div>
-        <div class="mini-card-eyebrow">Prompts</div>
-        <div class="mini-card-title">20 buyer scenarios, 400 observations</div>
-        <div class="mini-card-body">The kind a real shopper types before buying, not generic brand questions. Each of the 20 best-of, comparison, budget, and use-case prompts is run 20 times to clear the noise floor.</div>
+        <div class="mini-card-eyebrow">Finding 1</div>
+        <div class="mini-card-title">Founder Lab was named zero times across all 400 observations</div>
+        <div class="mini-card-body">Not once, on any of the 20 prompts, classic or specific. That includes prompts asking directly for a gift for a startup founder, merch for building a personal brand on camera, and a reward for hitting a startup milestone, the exact audience Founder Lab is built for. ChatGPT simply does not have Founder Lab in its memory yet.</div>
+        <div class="mini-card-stat">0% recommend rate</div>
       </div>
       <div class="mini-card">
-        <div class="mini-card-num">02</div>
-        <div class="mini-card-eyebrow">Model</div>
-        <div class="mini-card-title">ChatGPT, single model</div>
-        <div class="mini-card-body">These free snapshots measure one model at full observation depth. Our paid Recommendation Intelligence report checks ChatGPT, Claude and Gemini together, tracked on an ongoing basis.</div>
-      </div>
-      <div class="mini-card">
-        <div class="mini-card-num">03</div>
-        <div class="mini-card-eyebrow">Findings</div>
-        <div class="mini-card-title">2 to 3 key findings</div>
-        <div class="mini-card-body">Not every observation, just what actually stood out: how often the brand came up, and who it got named alongside.</div>
-      </div>
-      <div class="mini-card">
-        <div class="mini-card-num">04</div>
-        <div class="mini-card-eyebrow">Access</div>
-        <div class="mini-card-title">Free, public, unedited</div>
-        <div class="mini-card-body">No signup, no gate. Published as-is, findings and all, good or bad for the brand measured.</div>
+        <div class="mini-card-eyebrow">What filled the gap</div>
+        <div class="mini-card-title">Two general minimalist brands answer almost every question in this category</div>
+        <div class="mini-card-body">Everlane (121 mentions) and Uniqlo (87 mentions) covered nearly every apparel prompt, both hit 100% on questions about fleece joggers and minimal streetwear. Yeti took the water bottle questions, Moleskine and Muji split the desk and gifting questions. ChatGPT reached for large, generic names instead of a small, specific one.</div>
+        <div class="mini-card-stat">208 combined Everlane + Uniqlo mentions</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- REPORTS GRID -->
-<section id="reports">
+<!-- POSITIONING MAP (free) -->
+<section class="alt">
   <div class="container">
-    <div class="kicker">Reports</div>
-    <h2 class="section-title">Every report we've <em>published</em></h2>
-    <p class="az-note">Browse by category, or jump straight to a brand by its first letter.</p>
-    <div class="niche-filter" id="nicheFilter" aria-label="Filter reports by category">
-      <button type="button" class="niche-btn is-active" data-niche="all">All categories</button>
-      <!-- Category buttons are generated by JS below, from each report card's data-niche. -->
+    <div class="kicker">Recommendation Positioning Map</div>
+    <h2 class="section-title">The category, <em>mapped</em></h2>
+    <p class="section-body">Higher means AI recommends the brand more often. Further right means it shows up across more buyer questions. The strong brands cluster top right.</p>
+    <div class="reco-map-wrap">
+      <div class="reco-map">
+        <div class="reco-map-ylab">Recommended more often &uarr;</div>
+        <div class="reco-map-xlab">Appears in more buyer questions &rarr;</div>
+        <div class="reco-bubble" style="left:80%;bottom:90%;font-size:15px;padding:11px 20px;--i:0">Everlane</div>
+        <div class="reco-bubble" style="left:70%;bottom:76%;font-size:14px;padding:10px 18px;--i:1">Uniqlo</div>
+        <div class="reco-bubble" style="left:20%;bottom:52%;font-size:12.5px;padding:8.5px 15px;--i:2">Yeti</div>
+        <div class="reco-bubble" style="left:50%;bottom:44%;font-size:12.5px;padding:8.5px 15px;--i:3">Moleskine</div>
+        <div class="reco-bubble" style="left:32%;bottom:28%;font-size:11.5px;padding:7px 13px;--i:4">Muji</div>
+        <div class="reco-bubble you" style="left:3%;bottom:3%;font-size:10px;padding:6px 11px;--i:5">Founder Lab</div>
+      </div>
+      <div class="reco-map-legend">
+        <span><span class="reco-dot" style="background:var(--bar-gray);"></span>Competitors AI recommends</span>
+        <span><span class="reco-dot" style="background:var(--orange);"></span>Founder Lab</span>
+        <span>Bubble size = how many buyer questions the brand appears in</span>
+      </div>
     </div>
-    <div class="az-filter" id="azFilter" aria-label="Filter reports by brand name">
-      <button type="button" class="az-btn az-all is-active" data-letter="all">All</button>
-      <!-- A-Z buttons are generated by JS below, disabled until a report starting with that letter exists.
-           Each letter is the first letter of the measured brand's name. -->
+  </div>
+</section>
+
+<!-- FINDINGS 2+3 + WHY IT MATTERS (fully open, our own store) -->
+<section class="alt">
+  <div class="container">
+    <div class="report-gated-tag">ChatGPT &middot; single-model snapshot &middot; nothing below is gated, this is our own store</div>
+    <div class="products-grid" style="margin-bottom:56px;margin-top:24px;">
+      <div class="mini-card">
+        <div class="mini-card-eyebrow">Finding 2</div>
+        <div class="mini-card-title">The gap holds across every prompt type, this isn't a wording problem</div>
+        <div class="mini-card-body">On some brands we measure, a blind spot only shows up on certain phrasings. Not here. Classic prompts and specific buyer-intent prompts, including ones written for exactly Founder Lab's audience like a gift for someone who just quit their job to start a business, both landed at 0%. The issue isn't how the question is asked, it's that ChatGPT has nothing in memory to draw on.</div>
+        <div class="mini-card-stat">0% classic, 0% specific</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-card-eyebrow">Finding 3</div>
+        <div class="mini-card-title">This is Day Zero for Founder Lab's own AI visibility</div>
+        <div class="mini-card-body">We built Recommendation Reports to measure other brands. This is what happens when we point the same measurement at ourselves. Zero recommendations across 400 observations is the honest starting line, and we're tracking it publicly as we apply our own product to our own store in the <a href="/research/founder-lab/log">Founder Lab log</a>.</div>
+        <div class="mini-card-stat">0 of 400 &middot; Day Zero</div>
+      </div>
     </div>
-    <p class="az-empty-note" id="azEmptyNote">No reports starting with that letter yet.</p>
-    <div class="reports-empty" id="reportsEmpty">
-      <div class="reports-empty-title">First report publishing soon.</div>
-      <p class="reports-empty-body">We're measuring the first brand now. Check back shortly, or follow Atom Foundry on LinkedIn to see each report as it goes live.</p>
+    <div class="kicker">Why it matters</div>
+    <h2 class="section-title">What this means for <em>Founder Lab</em></h2>
+    <p class="section-body">We sell brands a measurement of whether AI assistants recommend them. It would be strange to sell that without ever pointing it at ourselves. Founder Lab is a small, new store with no press, no reviews at scale and no history for a model to have learned from, so a zero here isn't a surprise, it's a baseline. What we do next, and whether that number moves, is the actual test of whether any of this works. That's the part we're not gating either.</p>
+  </div>
+</section>
+
+<!-- WHAT THE FULL PRODUCT INCLUDES (always visible, never gated) -->
+<section>
+  <div class="container">
+    <div class="report-full-cta">
+      <div>
+        <div class="report-full-cta-kicker">Go further</div>
+        <h2>Even the unlocked snapshot is one model, one day. The full Recommendation Intelligence report is a different product.</h2>
+        <p>Cross-model (ChatGPT, Claude, Gemini), tracked on an ongoing basis instead of a single snapshot, and a strategy built around what actually predicts a recommendation. Not a single chat transcript.</p>
+      </div>
+      <div>
+        <ul class="report-full-includes">
+          <li>Recommendation share and leaderboard</li>
+          <li>Positioning map by category</li>
+          <li>Language gap analysis</li>
+          <li>Blind spot buyer questions</li>
+          <li>Cross category benchmark</li>
+          <li>Three prioritized moves</li>
+        </ul>
+        <div class="report-full-price-row">
+          <div class="report-full-price">$999</div>
+          <div class="report-full-price-note">One time &middot; delivered in 24h</div>
+        </div>
+        <a href="/products/recommendation-intelligence" class="report-full-btn">See the full product</a>
+      </div>
     </div>
-    <div class="products-grid" id="reportsGrid">
-      <a class="mini-card" href="/reports/caraway" data-brand="Caraway" data-niche="Kitchen & Cookware">
-        <div class="mini-card-eyebrow">Kitchen & Cookware</div>
-        <div class="mini-card-title">How AI recommends <span class="mini-card-brand">Caraway</span></div>
-        <div class="mini-card-body">Caraway ranks #2 of 18 brands ChatGPT names in this category, a 46% recommend rate across 400 observations.</div>
-        <span class="mini-card-link">Read report</span>
-      </a>
-      <a class="mini-card" href="/reports/wild-one" data-brand="Wild One" data-niche="Pet Gear">
-        <div class="mini-card-eyebrow">Pet Gear</div>
-        <div class="mini-card-title">How AI recommends <span class="mini-card-brand">Wild One</span></div>
-        <div class="mini-card-body">Wild One ranks #3 of 17 brands ChatGPT names in this category, a 26% recommend rate across 400 observations.</div>
-        <span class="mini-card-link">Read report</span>
-      </a>
-      <a class="mini-card" href="/reports/peak-design" data-brand="Peak Design" data-niche="Tech & Travel Gear">
-        <div class="mini-card-eyebrow">Tech & Travel Gear</div>
-        <div class="mini-card-title">How AI recommends <span class="mini-card-brand">Peak Design</span></div>
-        <div class="mini-card-body">Peak Design ranks #1 of 14 brands ChatGPT names in this category, a 56% recommend rate across 400 observations.</div>
-        <span class="mini-card-link">Read report</span>
-      </a>
-      <a class="mini-card" href="/reports/topicals" data-brand="Topicals" data-niche="Skincare">
-        <div class="mini-card-eyebrow">Skincare</div>
-        <div class="mini-card-title">How AI recommends <span class="mini-card-brand">Topicals</span></div>
-        <div class="mini-card-body">Topicals was named zero times across 400 observations. CeraVe and The Ordinary answered nearly every question instead.</div>
-        <span class="mini-card-link">Read report</span>
-      </a>
-      <a class="mini-card" href="/reports/rumpl" data-brand="Rumpl" data-niche="Outdoor">
-        <div class="mini-card-eyebrow">Outdoor</div>
-        <div class="mini-card-title">How AI recommends <span class="mini-card-brand">Rumpl</span></div>
-        <div class="mini-card-body">Rumpl ranks #1 of 7 brands ChatGPT names in this category, a 73% recommend rate across 400 observations.</div>
-        <span class="mini-card-link">Read report</span>
-      </a>
-      <a class="mini-card" href="/reports/founder-lab" data-brand="Founder Lab" data-niche="Case Study">
-        <div class="mini-card-eyebrow">Case Study, our own store</div>
-        <div class="mini-card-title">How AI recommends <span class="mini-card-brand">Founder Lab</span></div>
-        <div class="mini-card-body">We ran our own store through this measurement. Zero recommendations across 400 observations, and this report has no paywall.</div>
-        <span class="mini-card-link">Read report</span>
-      </a>
-      <!-- Add each new report as a .mini-card here, in publish order, once live. The data-brand
-           attribute drives the A-Z filter above and data-niche drives the category filter, so both
-           must be set to the brand's display name and category:
-      <a class="mini-card" href="/reports/[brand-slug]" data-brand="[Brand Name]" data-niche="[Category]">
-        <div class="mini-card-eyebrow">[Category]</div>
-        <div class="mini-card-title">How AI recommends <span class="mini-card-brand">[Brand]</span></div>
-        <div class="mini-card-body">[One-line finding.]</div>
-        <span class="mini-card-link">Read report</span>
-      </a>
-      -->
+    <div class="report-brand-cta">
+      <span class="brand-cta-prompt" style="--x:3%;animation-duration:19s;animation-delay:-1s;">best non-toxic cookware set under $300?</span>
+      <span class="brand-cta-prompt" style="--x:14%;animation-duration:23s;animation-delay:-9s;">top rated running shoes for flat feet?</span>
+      <span class="brand-cta-prompt" style="--x:24%;animation-duration:17s;animation-delay:-4s;">which skincare brand for sensitive skin?</span>
+      <span class="brand-cta-prompt" style="--x:34%;animation-duration:21s;animation-delay:-14s;">best eco-friendly dog bed under $100?</span>
+      <span class="brand-cta-prompt" style="--x:44%;animation-duration:18s;animation-delay:-6s;">budget laptop for college students?</span>
+      <span class="brand-cta-prompt" style="--x:54%;animation-duration:22s;animation-delay:-17s;">which mattress brand is actually worth it?</span>
+      <span class="brand-cta-prompt" style="--x:64%;animation-duration:16s;animation-delay:-2s;">best noise-cancelling headphones under $200?</span>
+      <span class="brand-cta-prompt" style="--x:74%;animation-duration:24s;animation-delay:-11s;">which meal kit service is healthiest?</span>
+      <span class="brand-cta-prompt" style="--x:84%;animation-duration:19s;animation-delay:-19s;">top rated air purifier for allergies?</span>
+      <span class="brand-cta-prompt" style="--x:92%;animation-duration:20s;animation-delay:-7s;">best budget smartwatch for fitness?</span>
+      <span class="brand-cta-prompt" style="--x:9%;animation-duration:25s;animation-delay:-21s;">which electric toothbrush is best?</span>
+      <span class="brand-cta-prompt" style="--x:19%;animation-duration:18s;animation-delay:-13s;">best stroller for city living?</span>
+      <span class="brand-cta-prompt" style="--x:39%;animation-duration:23s;animation-delay:-3s;">which coffee maker brand is reliable?</span>
+      <span class="brand-cta-prompt" style="--x:59%;animation-duration:17s;animation-delay:-16s;">which vitamin brand is trustworthy?</span>
+      <span class="brand-cta-prompt" style="--x:69%;animation-duration:21s;animation-delay:-8s;">top rated yoga mat for beginners?</span>
+      <span class="brand-cta-prompt" style="--x:79%;animation-duration:19s;animation-delay:-22s;">which cookware set is dishwasher safe?</span>
+      <div class="report-brand-cta-inner">
+        <p>Want to see how your brand stands with a Recommendation Intelligence analysis?</p>
+        <a href="/products/recommendation-intelligence">Get your brand analyzed</a>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FINAL CTA -->
-<section class="alt">
+<section id="score">
   <div class="container">
     <div class="final-cta">
-      <h2>Want this for <em>your brand?</em></h2>
+      <h2>See your <em>own brand's</em> score</h2>
       <div class="final-cta-tag">Free AI Commerce Score&trade; in 10 seconds.</div>
-      <p>Start with a free score, or go straight to the paid Recommendation Intelligence report for full cross-model coverage and ongoing tracking.</p>
+      <p>This report measured one brand with one model. A free score takes 10 seconds and works for any store, no signup required.</p>
       <div class="scan-box">
         <input type="text" placeholder="Paste your store URL">
         <button>Get My Free AI Score</button>
       </div>
       <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> Results in 10 seconds</div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Keep exploring</div>
+    <h2 class="section-title">More from <em>Atom Foundry</em></h2>
+    <div class="products-grid">
+      <a class="mini-card" href="/reports" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Reports</div>
+        <div class="mini-card-title">All AI Recommendation Reports</div>
+        <div class="mini-card-body">Every free brand snapshot we've published, in one place.</div>
+        <span class="mini-card-link">Browse reports<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/products/recommendation-intelligence" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Product</div>
+        <div class="mini-card-title">Recommendation Intelligence</div>
+        <div class="mini-card-body">The full, paid version of this measurement: cross-model, ongoing, and specific to your brand.</div>
+        <span class="mini-card-link">See the product<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/founder-lab/log" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Founder Lab Log</div>
+        <div class="mini-card-title">Follow the Founder Lab story from here</div>
+        <div class="mini-card-body">This report is Day Zero. We're tracking what happens next as we apply our own product to our own store, in public.</div>
+        <span class="mini-card-link">Read the log<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
     </div>
   </div>
 </section>
@@ -685,88 +898,25 @@
       if (Math.abs(window.scrollY - menuOpenScrollY) > 24) closeMenu();
     }, { passive: true });
   })();
+
+  (function(){
+    var maps = document.querySelectorAll('.reco-map');
+    if (!maps.length) return;
+    if (!('IntersectionObserver' in window)) {
+      maps.forEach(function(el){ el.classList.add('is-in'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    maps.forEach(function(el){ observer.observe(el); });
+  })();
 </script>
-<!-- AZ_FILTER:START -->
-<script>
-(function(){
-  var grid = document.getElementById('reportsGrid');
-  var filterBar = document.getElementById('azFilter');
-  var nicheBar = document.getElementById('nicheFilter');
-  var emptyNote = document.getElementById('azEmptyNote');
-  var emptyState = document.getElementById('reportsEmpty');
-  if (!grid || !filterBar) return;
-
-  var cards = Array.prototype.slice.call(grid.querySelectorAll('.mini-card[data-brand]'));
-  emptyState.style.display = cards.length === 0 ? '' : 'none';
-
-  var availableLetters = {};
-  var availableNiches = {};
-  cards.forEach(function(card){
-    var letter = (card.getAttribute('data-brand') || '').trim().charAt(0).toUpperCase();
-    if (letter) availableLetters[letter] = true;
-    var niche = (card.getAttribute('data-niche') || '').trim();
-    if (niche) availableNiches[niche] = true;
-  });
-
-  var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  alphabet.forEach(function(letter){
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'az-btn';
-    btn.textContent = letter;
-    btn.dataset.letter = letter;
-    if (!availableLetters[letter]) btn.disabled = true;
-    filterBar.appendChild(btn);
-  });
-
-  if (nicheBar) {
-    Object.keys(availableNiches).sort().forEach(function(niche){
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'niche-btn';
-      btn.textContent = niche;
-      btn.dataset.niche = niche;
-      nicheBar.appendChild(btn);
-    });
-  }
-
-  var activeLetter = 'all';
-  var activeNiche = 'all';
-
-  function applyFilter(){
-    var matches = 0;
-    cards.forEach(function(card){
-      var cardLetter = (card.getAttribute('data-brand') || '').trim().charAt(0).toUpperCase();
-      var cardNiche = (card.getAttribute('data-niche') || '').trim();
-      var show = (activeLetter === 'all' || cardLetter === activeLetter) && (activeNiche === 'all' || cardNiche === activeNiche);
-      card.style.display = show ? '' : 'none';
-      if (show) matches++;
-    });
-    emptyNote.classList.toggle('is-visible', cards.length > 0 && matches === 0);
-  }
-
-  filterBar.addEventListener('click', function(e){
-    var btn = e.target.closest('.az-btn');
-    if (!btn || btn.disabled) return;
-    filterBar.querySelectorAll('.az-btn').forEach(function(b){ b.classList.remove('is-active'); });
-    btn.classList.add('is-active');
-    activeLetter = btn.dataset.letter;
-    applyFilter();
-  });
-
-  if (nicheBar) {
-    nicheBar.addEventListener('click', function(e){
-      var btn = e.target.closest('.niche-btn');
-      if (!btn || btn.disabled) return;
-      nicheBar.querySelectorAll('.niche-btn').forEach(function(b){ b.classList.remove('is-active'); });
-      btn.classList.add('is-active');
-      activeNiche = btn.dataset.niche;
-      applyFilter();
-    });
-  }
-})();
-</script>
-<!-- AZ_FILTER:END -->
 <!-- SCAN_BOX_CONNECT:START -->
 <script>
 (function(){
