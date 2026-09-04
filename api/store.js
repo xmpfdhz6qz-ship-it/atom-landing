@@ -186,6 +186,13 @@ export default async function handler(req, res) {
   const storeName = storeNameFromDomain(domain);
 
   let record = null;
+  // Tracks whether we actually got a clean answer from n8n ("no row for this
+  // domain") vs. couldn't ask at all (network error, non-2xx, bad JSON). Only
+  // the former is a confirmed "this isn't a real/scanned store" — the latter
+  // is a transient failure and must never be treated as a 404, or a brief
+  // n8n outage would deindex every already-scanned store page that happens
+  // to be crawled during the blip.
+  let fetchFailed = false;
   try {
     const r = await fetch(N8N_BASE + '/get-store?domain=' + encodeURIComponent(domain), {
       headers: { Accept: 'application/json' },
@@ -194,9 +201,12 @@ export default async function handler(req, res) {
       const data = await r.json();
       record = Array.isArray(data) ? data[0] : data && data.data ? data.data[0] : data;
       if (!record || !record.domain) record = null;
+    } else {
+      fetchFailed = true;
     }
   } catch (err) {
     console.error('store SSR fetch failed for ' + domain, err);
+    fetchFailed = true;
     record = null;
   }
 
@@ -249,10 +259,12 @@ export default async function handler(req, res) {
         '</head>',
         '<script type="application/ld+json" id="storeLd">' + jsonLd + '</script>\n</head>'
       );
-  } else {
-    // Domain not scanned yet (or the lookup failed) — still give crawlers an
-    // honest, specific title/description instead of the generic default,
-    // without inventing a score that doesn't exist.
+  } else if (fetchFailed) {
+    // Couldn't reach n8n / got a bad response — unknown state, not a
+    // confirmed absence. Serve the honest "not yet scanned"-style shell as a
+    // safe fallback rather than 404ing a domain that might actually be a
+    // fully scanned, indexed store. Never cached at the edge (see headers
+    // below) so this doesn't stick once n8n is back.
     const title = storeName + ': not yet scanned — Atom Foundry';
     const desc =
       'Atom Foundry has not scanned ' + domain + ' yet. Run a free scan to generate its AI Commerce Score report.';
@@ -269,17 +281,25 @@ export default async function handler(req, res) {
         '<link rel="canonical" href="https://atomfoundry.dev/store" id="canonicalLink">',
         '<link rel="canonical" href="' + escapeHtml(canonical) + '" id="canonicalLink">'
       );
+  } else {
+    // n8n answered cleanly and confirmed: no record for this domain. This is
+    // not a real store page and never will be unless someone runs a scan, so
+    // it gets a real 404 instead of a 200+noindex shell. The old behavior
+    // (200+noindex "not yet scanned" placeholder) is exactly what Search
+    // Console was flagging as soft-404s across ~258 URLs: pages that return
+    // success but have no real content, which Google crawls repeatedly
+    // instead of just dropping. A real 404 tells it to stop.
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(404).send('Not found. This store has not been scanned yet — run a free scan at https://atomfoundry.dev/scan.');
+    return;
   }
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
   if (!record) {
-    // No completed scan for this domain: the page still renders (it doubles
-    // as a lead-gen CTA for outreach targets), but there is no real content
-    // yet, so tell crawlers not to index it. Prevents soft-404 "not yet
-    // scanned" shells (arbitrary strings, hosting/DNS domains that were
-    // never real stores, etc.) from burning crawl budget or diluting the
-    // site with thin/duplicate content.
+    // Either genuinely unscanned-but-fetch-failed (handled above) — this
+    // header only applies to that fallback path now, since the confirmed-
+    // absent case already returned its own 404 response above.
     res.setHeader('X-Robots-Tag', 'noindex');
   }
   res.status(200).send(html);
