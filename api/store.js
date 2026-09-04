@@ -83,6 +83,36 @@ function normalizeDomain(raw) {
   return String(raw).toLowerCase().trim().replace(/^www\./, '');
 }
 
+// Hosting/DNS/registrar infrastructure that the discovery engine has picked
+// up as false-positive "stores" (e.g. websitehostserver.net, dreamhost.com,
+// ns1.inmotionhosting.com, hwclouds-dns.com). These were never candidates
+// for a real store page. Keep this list in sync with the equivalent check
+// in the "Normalize Discovered Stores" node (AI Readiness — Discovery
+// Engine V2, n8n) so junk domains stop entering stores_queue at the source
+// too; this is the render-time backstop for anything already queued or
+// linked to from elsewhere.
+const INFRA_PATTERNS = [/^ns\d*\./i, /^mx\d*\./i, /dns/i, /hosting/i];
+const INFRA_DOMAINS = new Set([
+  'websitehostserver.net',
+  'dreamhost.com',
+  'inmotionhosting.com',
+  'hwclouds-dns.com',
+  'godaddy.com',
+  'bluehost.com',
+  'hostgator.com',
+  'namecheap.com',
+  'domains.google',
+  'cloudflare.com',
+  'digitalocean.com',
+  'akamai.com',
+  'fastly.net',
+]);
+
+function isInfraDomain(domain) {
+  if (INFRA_DOMAINS.has(domain)) return true;
+  return INFRA_PATTERNS.some((p) => p.test(domain));
+}
+
 function buildJsonLd(domain, storeName, canonical, score) {
   return {
     '@context': 'https://schema.org',
@@ -140,6 +170,15 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('X-Robots-Tag', 'noindex');
     res.status(200).send(html);
+    return;
+  }
+
+  if (isInfraDomain(domain)) {
+    // Hosting/DNS/registrar domain, never a real store candidate. Real
+    // 404, not the 200+noindex "not yet scanned" shell, so this never
+    // becomes a soft-404 crawlers keep re-checking.
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(404).send('Not found.');
     return;
   }
 
