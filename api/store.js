@@ -138,6 +138,7 @@ export default async function handler(req, res) {
 
   if (!domain) {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.setHeader('X-Robots-Tag', 'noindex');
     res.status(200).send(html);
     return;
   }
@@ -233,5 +234,14 @@ export default async function handler(req, res) {
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
+  if (!record) {
+    // No completed scan for this domain: the page still renders (it doubles
+    // as a lead-gen CTA for outreach targets), but there is no real content
+    // yet, so tell crawlers not to index it. Prevents soft-404 "not yet
+    // scanned" shells (arbitrary strings, hosting/DNS domains that were
+    // never real stores, etc.) from burning crawl budget or diluting the
+    // site with thin/duplicate content.
+    res.setHeader('X-Robots-Tag', 'noindex');
+  }
   res.status(200).send(html);
 }
