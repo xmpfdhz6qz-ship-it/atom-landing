@@ -825,6 +825,16 @@ window.AISIG_DATA_READY = (function(){
       return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
     });
   }
+  // This page is public. It must never reveal which client stores AI reads
+  // through our own products — only atomfoundry.dev's own traffic. Any path
+  // under /store/ or /stores/ that names a real domain gets masked before
+  // it's ever rendered, everywhere a path label reaches the DOM.
+  function maskStorePath(path){
+    var s = String(path == null ? '' : path);
+    var m = s.match(/^\/stores?\/([^/?#]+)/i);
+    if (m && m[1] && /\./.test(m[1])) return '/stores/•••';
+    return s;
+  }
   function relTime(iso){
     if (!iso) return '—';
     var diffMs = Date.now() - new Date(iso).getTime();
@@ -907,10 +917,10 @@ window.AISIG_DATA_READY = (function(){
     }
     el.innerHTML = rows.map(function(r){
       if (kind === 'readiness') {
-        return '<div class="f f3"><span class="bot">' + esc(r.bot) + '</span><span class="path">' + esc(r.path) + '</span><span class="t">' + esc(relTime(r.created_at)) + '</span></div>';
+        return '<div class="f f3"><span class="bot">' + esc(r.bot) + '</span><span class="path">' + esc(maskStorePath(r.path)) + '</span><span class="t">' + esc(relTime(r.created_at)) + '</span></div>';
       }
       var type = r.bot_type || 'other';
-      var pathLabel = (r.path === '/') ? 'homepage' : r.path;
+      var pathLabel = (r.path === '/') ? 'homepage' : maskStorePath(r.path);
       return '<div class="f"><span class="bot">' + esc(r.bot) + '</span><span class="aisig-tag aisig-t-' + esc(type) + '">' + esc(type) + '</span><span class="path">' + esc(pathLabel) + '</span><span class="t">' + esc(relTime(r.created_at)) + '</span></div>';
     }).join('');
   }
@@ -936,7 +946,7 @@ window.AISIG_DATA_READY = (function(){
     var max = Math.max.apply(null, rows.map(function(r){ return Number(r.visits) || 0; }));
     el.innerHTML = rows.map(function(r){
       var w = max ? Math.round((Number(r.visits) || 0) / max * 100) : 0;
-      var label = (r.path === '/' ) ? '/ (homepage)' : r.path;
+      var label = (r.path === '/' ) ? '/ (homepage)' : maskStorePath(r.path);
       return '<div class="aisig-r" style="grid-template-columns:minmax(0,1.6fr) minmax(60px,1fr) 40px"><span class="who"><span class="nm">' + esc(label) + '</span></span>' +
         '<span class="aisig-track"><i style="width:' + w + '%"></i></span><span class="val">' + r.visits + '</span></div>';
     }).join('');
@@ -966,8 +976,9 @@ window.AISIG_DATA_READY = (function(){
     }
     var topPage = (data.top_pages || [])[0];
     if (topPage) {
-      var label = topPage.path === '/' ? 'The homepage' : esc(topPage.path);
-      items.push({ num: topPage.path === '/' ? 'Homepage' : topPage.path, text: 'is the most-read page, with ' + topPage.visits + ' reads and counting.' });
+      var topPagePath = maskStorePath(topPage.path);
+      var label = topPage.path === '/' ? 'The homepage' : esc(topPagePath);
+      items.push({ num: topPage.path === '/' ? 'Homepage' : topPagePath, text: 'is the most-read page, with ' + topPage.visits + ' reads and counting.' });
     }
     var total = Number(data.total_reads) || 0;
     var readiness = Number(data.readiness_queries) || 0;
