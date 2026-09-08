@@ -602,13 +602,15 @@
     <h2 class="section-title">What does AI already know?</h2>
     <p class="section-body">Before a shopping question is ever asked, a language model already carries some notion of which brands exist and how they tend to be positioned. That prior knowledge comes from training, not from the live conversation, and it can shape an answer before retrieval or evaluation even begin.</p>
     <div class="sub-head">What we've found</div>
-    <p class="section-body">Brand prominence appears to matter, a little. Wikipedia fame alone explains 1.2% of recommendation frequency. Widening to four public signals, cross-lingual reach, domain age, and recent media volume, raises that to just 11.2% combined, still far under the 61.4% the model's own past behavior explains about itself. Measured store quality explains almost none of it.</p>
+    <p class="section-body">Brand prominence appears to matter, a little. Wikipedia fame alone explains 1.2% of recommendation frequency. Widening to four public signals, cross-lingual reach, domain age, and recent media volume, raises that to just 11.2% combined, still far under the 61.4% the model's own past behavior explains about itself. Measured store quality explains almost none of it. A separate test asked directly what a model claims to know about a brand, then checked whether any of it shows up in a real recommendation: 83.6% of possessed facts never appear (95% CI 78.3-88.6%, n=1,392 fact checks across 9 brands). Knowing about a brand and using what it knows are two different things, and that gap does not shrink for brands that already win more often (r=-0.27, n=9). A causal follow-up tested whether that gap is fixable: inject one real, verified fact directly into context for 4 brands that barely get recommended today, as if retrieval had just succeeded. Average mention-rate lift across the cohort was 77.9 percentage points, but every brand showed the lift outpacing the rate the specific fact actually got cited, a Linkage Gap signature, more evidence the bottleneck is getting information in front of the model at generation time, not whether the model is capable of reasoning with it once it's there.</p>
     <div class="sub-head">What we don't know</div>
-    <p class="section-body">What exactly enters a model's memory, how strongly a brand is represented there, and how that internal representation shapes a recommendation later. Four easily-measurable public-footprint signals have now been ruled out as the main answer; the actual mechanism remains genuinely open.</p>
+    <p class="section-body">What exactly enters a model's memory, how strongly a brand is represented there, and why a possessed fact gets pulled into one generated answer but not another. Four easily-measurable public-footprint signals, and simple win-rate, have now been ruled out as the main answer; the actual retrieval-at-generation-time mechanism remains genuinely open. The fact-injection test simulates a successful retrieval step rather than measuring how often real retrieval actually surfaces the right fact, that's a separate, harder question.</p>
     <div class="layer-related">
       <div class="layer-related-label">Related research</div>
       <a href="/research/the-fame-study"><span class="lr-text">The Fame Study, Corrected</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
       <a href="/research/memory-source"><span class="lr-text">We Widened the Fame Signal Four Ways. It Barely Moved</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/possession-vs-deployment"><span class="lr-text">The Model Knows 6 Facts About Your Brand. It Uses One</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/fact-injection"><span class="lr-text">Give the Model the One Fact It's Missing. The Brand Goes From Invisible to Everywhere</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
     </div>
   </div>
@@ -670,11 +672,12 @@
     <p class="lede">A brand cannot be recommended if it never becomes a candidate.</p>
     <p class="section-body">Getting considered and getting selected are different problems, governed by different things. Our full population study identified one store factor that consistently separates brands that are ever recommended from brands that never are, and it holds up under every check we ran.</p>
     <div class="sub-head">What we've found</div>
-    <p class="section-body">We went further and tested it causally. A brand with zero history, zero reviews, and zero press was invented from scratch and pitted against an entrenched category leader across 36 shopping intents. It won <strong>0 of 360 runs</strong>. Giving it a review score changed that immediately, it started winning <strong>53.1% of comparisons</strong>. Press mentions and sales-volume claims barely moved the needle, 1.9% and 0.3%.</p>
+    <p class="section-body">We went further and tested it causally. A brand with zero history, zero reviews, and zero press was invented from scratch and pitted against an entrenched category leader across 36 shopping intents. It won <strong>0 of 360 runs</strong>. Giving it a review score changed that immediately, it started winning <strong>53.1% of comparisons</strong>. Press mentions and sales-volume claims barely moved the needle, 1.9% and 0.3%. A separate causal test manipulated hidden upstream context instead of store-side evidence: a single fabricated line in the system message, invisible to the shopper, claiming they'd just seen an ad for a brand. Candidacy jumped to 97-100% under nearly any hidden-context condition, but winner rate depended heavily on which one, topping out at 88% for the fabricated ad-exposure claim, ahead of a condition that combined that same claim with a real, verified product fact.</p>
     <div class="layer-related">
       <div class="layer-related-label">Related research</div>
       <a href="/research/candidacy-vs-selection"><span class="lr-text">Candidacy vs Selection</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
       <a href="/research/cold-start"><span class="lr-text">We Invented a Brand With Zero History. Reviews Got It Picked Anyway</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
+      <a href="/research/hidden-context"><span class="lr-text">Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
     </div>
   </div>
@@ -766,11 +769,12 @@
       <span class="hd-status emerging">Emerging</span>
     </div>
     <h2 class="section-title">Does the decision persist?</h2>
-    <p class="section-body">A model might recommend a brand today, but will it recommend the same brand again tomorrow, or even in the next run of the same question? We measure recommendation stability, position stability, whether the same winner keeps winning, and how much changes across repeated runs.</p>
+    <p class="section-body">A model might recommend a brand today, but will it recommend the same brand again tomorrow, in the next run of the same question, or even three questions later in the same conversation? We measure recommendation stability across two different axes: between sessions, whether the same winner keeps winning weeks apart, and within a single conversation, whether an early mention survives to the final answer.</p>
     <div class="sub-head">What we've found so far</div>
-    <p class="section-body">Early results show recommendation behavior can be more stable than expected, even in places where drift would seem likely. That stability is itself a variable we now factor into other studies.</p>
+    <p class="section-body">Between sessions, recommendation behavior is more stable than expected, even in places where drift would seem likely. Within a single conversation, it's much less stable: an explicitly favorable introduction survives to the final pick only 49.5% of the time across 200 four-turn conversations, ranging from 100% for the strongest brands down to 0% for the weakest, and a brand's real-world baseline recommend rate only loosely predicts which group it falls into.</p>
     <div class="layer-related">
       <div class="layer-related-label">Related research</div>
+      <a href="/research/multi-turn-displacement"><span class="lr-text">It Recommends You First. By Turn Four, It's Moved On</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
       <a href="/research/ai-knows-your-website"><span class="lr-text">AI Knows Your Website</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></a>
     </div>
     </div>
@@ -818,13 +822,13 @@
     <div class="kicker">11 &middot; What We Know, What We Don't</div>
     <h2 class="section-title">The map so far</h2>
     <div class="kt-grid">
-      <div class="kt-card"><div class="kt-card-layer">Memory</div><div class="kt-card-know">Prominence and fame appear to matter more than measured store quality.</div><span class="hd-status emerging sm">Partially Measured</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Memory</div><div class="kt-card-know">Prominence and fame appear to matter more than measured store quality; injecting a missing fact directly can lift mention rate 77.9pp.</div><span class="hd-status emerging sm">Partially Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Retrieval</div><div class="kt-card-know">Search access can dramatically change which brand gets recommended.</div><span class="hd-status measured sm">Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Understanding</div><div class="kt-card-know">Semantic understanding of a brand can be measured directly.</div><span class="hd-status measured sm">Measured</span></div>
-      <div class="kt-card"><div class="kt-card-layer">Candidacy</div><div class="kt-card-know">Zero-history brands lose every run until reviews appear, then they win over half.</div><span class="hd-status measured sm">Measured</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Candidacy</div><div class="kt-card-know">Zero-history brands lose every run until reviews appear; hidden ad-exposure framing alone can push winner rate to 88%.</div><span class="hd-status measured sm">Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Evaluation</div><div class="kt-card-know">A better rating decides the comparison almost every time; price barely moves it.</div><span class="hd-status measured sm">Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Recommendation</div><div class="kt-card-know">We can measure who wins, and describe why they are described as winning.</div><span class="hd-status measured sm">Measured</span></div>
-      <div class="kt-card"><div class="kt-card-layer">Stability</div><div class="kt-card-know">Recommendation persistence across repeated runs can be measured.</div><span class="hd-status emerging sm">Emerging</span></div>
+      <div class="kt-card"><div class="kt-card-layer">Stability</div><div class="kt-card-know">Stable between sessions, much less stable within one: only 49.5% of favorable introductions survive to a forced final pick.</div><span class="hd-status emerging sm">Emerging</span></div>
       <div class="kt-card"><div class="kt-card-layer">Confidence</div><div class="kt-card-know">Hedged language barely tracks real model confidence (r=0.03), and runs backwards for the most-confident pick type.</div><span class="hd-status emerging sm">Partially Measured</span></div>
       <div class="kt-card"><div class="kt-card-layer">Purchase</div><div class="kt-card-know">The relationship between recommendation and transaction remains open.</div><span class="hd-status open sm">Open Research</span></div>
     </div>
@@ -871,6 +875,22 @@
             <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Memory</span><span class="hd-status emerging sm">Partially Measured</span></div>
             <div class="mini-card-title">We Widened the Fame Signal Four Ways. It Barely Moved</div>
             <div class="mini-card-body">Four public signals combined explain 11.2%, still far under the model's own 61.4% self-consistency.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/possession-vs-deployment">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Memory</span><span class="hd-status emerging sm">Partially Measured</span></div>
+            <div class="mini-card-title">The Model Knows 6 Facts About Your Brand. It Uses One</div>
+            <div class="mini-card-body">83.6% of facts a model claims to know never appear in a real recommendation, uncorrelated with win rate.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/fact-injection">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Memory</span><span class="hd-status emerging sm">Partially Measured</span></div>
+            <div class="mini-card-title">Give the Model the One Fact It's Missing. The Brand Goes From Invisible to Everywhere</div>
+            <div class="mini-card-body">Injecting one real fact lifted mention rate 77.9pp on average, but lift consistently outpaced literal fact-usage.</div>
           </div>
           <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
         </a>
@@ -940,6 +960,14 @@
           </div>
           <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
         </a>
+        <a class="mini-card" href="/research/hidden-context">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Candidacy</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time</div>
+            <div class="mini-card-body">A fabricated ad-exposure claim in hidden context beat a combined brand+real-fact condition for winner-rate lift.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
       </div>
     </div>
 
@@ -989,6 +1017,14 @@
             <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Stability</span><span class="hd-status emerging sm">Emerging</span></div>
             <div class="mini-card-title">AI Knows Your Website</div>
             <div class="mini-card-body">Recall accuracy holds steady across recommendation stability bands.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/multi-turn-displacement">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Stability</span><span class="hd-status emerging sm">Emerging</span></div>
+            <div class="mini-card-title">It Recommends You First. By Turn Four, It's Moved On</div>
+            <div class="mini-card-body">49.5% of favorable brand introductions survive a 4-turn conversation. One brand with a solid baseline survived just 5% of the time.</div>
           </div>
           <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
         </a>
@@ -1097,7 +1133,7 @@
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>22</b> Public Studies</div>
+      <div><b>26</b> Public Studies</div>
       <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>

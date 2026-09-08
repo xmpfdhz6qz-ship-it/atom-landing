@@ -3,20 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Category Reports | Atom Foundry</title>
-<meta name="description" content="Five categories, one identical method: 20 high-intent prompts run 20 times each, 4,000 recommendations mapped to real AI Commerce Scores. Beauty, supplements, coffee, pets, and home and living all land on the same answer.">
+<title>Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time | Atom Foundry</title>
+<meta name="description" content="Same prompt, same brand, same model, only the hidden upstream context changes. Across 5 brands and 5 conditions, a fabricated 'you just saw an ad' claim moved winner rate more than any other condition tested, including a real product fact.">
 <meta name="robots" content="index, follow">
 <meta name="view-transition" content="same-origin">
-<link rel="canonical" href="https://atomfoundry.dev/research/category-reports">
-<meta property="og:title" content="Category Reports | Atom Foundry">
-<meta property="og:description" content="Five categories, one identical method, one repeated answer: recommendation frequency has no measurable relationship to how AI-ready a store is.">
+<link rel="canonical" href="https://atomfoundry.dev/research/hidden-context">
+<meta property="og:title" content="Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time">
+<meta property="og:description" content="5 brands, 5 hidden-context conditions, same prompt and model throughout. A fabricated ad-exposure claim alone produced the largest winner-rate lift of any condition tested, ahead of a real product fact.">
 <meta property="og:image" content="https://atomfoundry.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
-<meta property="og:url" content="https://atomfoundry.dev/research/category-reports">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -51,41 +50,55 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://atomfoundry.dev/research/category-reports#webpage",
-      "url": "https://atomfoundry.dev/research/category-reports",
-      "name": "Category Reports",
-      "description": "Five categories, one identical method: 20 high-intent prompts run 20 times each, 4,000 recommendations mapped to real AI Commerce Scores. Beauty, supplements, coffee, pets, and home and living all land on the same answer.",
+      "@id": "https://atomfoundry.dev/research/hidden-context#webpage",
+      "url": "https://atomfoundry.dev/research/hidden-context",
+      "name": "Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time",
+      "description": "Same prompt, same brand, same model, only the hidden upstream system-message context changes across 5 conditions. A fabricated ad-exposure claim produced the largest winner-rate lift of any condition tested.",
       "inLanguage": "en",
       "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
-      "mainEntity": { "@id": "https://atomfoundry.dev/research/category-reports#itemlist" }
+      "about": { "@id": "https://atomfoundry.dev/research/hidden-context#article" },
+      "mainEntity": { "@id": "https://atomfoundry.dev/research/hidden-context#dataset" },
+      "breadcrumb": { "@id": "https://atomfoundry.dev/research/hidden-context#breadcrumb" }
     },
     {
-      "@type": "ItemList",
-      "@id": "https://atomfoundry.dev/research/category-reports#itemlist",
-      "name": "Atom Foundry Category Reports",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "The State of AI Recommendations in Beauty", "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-beauty" },
-        { "@type": "ListItem", "position": 2, "name": "The State of AI Recommendations in Supplements", "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-supplements" },
-        { "@type": "ListItem", "position": 3, "name": "The State of AI Recommendations in Coffee", "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-coffee" },
-        { "@type": "ListItem", "position": 4, "name": "The State of AI Recommendations in Pets", "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-pets" },
-        { "@type": "ListItem", "position": 5, "name": "The State of AI Recommendations in Home & Living", "url": "https://atomfoundry.dev/research/state-of-ai-recommendations-home-living" }
-      ]
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/research/hidden-context#article",
+      "headline": "Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time",
+      "description": "5 brands, 5 hidden-context conditions manipulated via system message, one reused no-context control, ~375 new calls. Campaign-origin framing alone produced the largest winner-rate lift of any condition, ahead of a combined brand+feature condition.",
+      "datePublished": "2026-09-08",
+      "author": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/hidden-context",
+      "isPartOf": { "@id": "https://atomfoundry.dev/#website" },
+      "mainEntityOfPage": { "@id": "https://atomfoundry.dev/research/hidden-context#webpage" },
+      "about": ["Recommendation Intelligence", "AI Commerce", "Candidacy vs Selection", "Generative Engine Optimization"]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://atomfoundry.dev/research/hidden-context#dataset",
+      "name": "Does hidden upstream context change which brand an AI system recommends?",
+      "description": "5 brands, same real buyer-intent prompt and known-competitor detection method throughout. Only a hidden system-message context changes across 6 conditions: no context (reused control), brand-blind user intent, fabricated campaign/ad exposure, passive brand exposure, product-feature exposure, and a combined brand+feature condition.",
+      "creator": { "@id": "https://atomfoundry.dev/#organization" },
+      "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "url": "https://atomfoundry.dev/research/hidden-context",
+      "measurementTechnique": "gpt-4o system-message manipulation, deterministic substring brand detection (no LLM judge), cluster bootstrap CI, label-shuffle permutation test",
+      "variableMeasured": ["Candidacy Rate", "Winner Rate", "Condition Delta vs Control", "Baseline-Interaction Correlation"]
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://atomfoundry.dev/research/category-reports#breadcrumb",
+      "@id": "https://atomfoundry.dev/research/hidden-context#breadcrumb",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Atom Foundry", "item": "https://atomfoundry.dev" },
         { "@type": "ListItem", "position": 2, "name": "Research", "item": "https://atomfoundry.dev/research" },
-        { "@type": "ListItem", "position": 3, "name": "Category Reports", "item": "https://atomfoundry.dev/research/category-reports" }
+        { "@type": "ListItem", "position": 3, "name": "Mechanism Studies", "item": "https://atomfoundry.dev/research/mechanism-studies" },
+        { "@type": "ListItem", "position": 4, "name": "Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time", "item": "https://atomfoundry.dev/research/hidden-context" }
       ]
     }
   ]
 }
 </script>
 <style>
-
   :root{
     --white:#fdfcfa;
     --off-white:#f1efe8;
@@ -108,11 +121,6 @@
     font-size:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  /* Cross-document view transition: on browsers that support navigating
-     same-origin pages with the View Transitions API (Chromium 126+), the
-     incoming page rolls down over the outgoing one like a blind being
-     pulled down, instead of the default cross-fade. Unsupported browsers
-     just navigate normally — this is a pure progressive enhancement. */
   @media (prefers-reduced-motion: no-preference){
     ::view-transition-old(root){animation:none;}
     ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
@@ -214,12 +222,11 @@
   .page-title em{color:var(--orange);}
   .section-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
   .section-title em{color:var(--orange);}
-  .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:780px;}
+  .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:680px;}
   .section-body strong{color:var(--black);}
-  .section-body a{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:rgba(254,106,3,0.3);}
 
   .research-hero{padding:88px 24px 48px;background:var(--cream);}
-  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:60%;margin-top:36px;}
+  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:56%;margin-top:36px;}
   .byline-note{font-size:12px;color:var(--gray-500);margin-top:16px;}
   .byline-note a{color:var(--orange);font-weight:700;}
 
@@ -227,6 +234,7 @@
   .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
   .hero-stat:not(:first-child)::before{content:"·";margin-right:14px;color:var(--gray-300);font-weight:700;}
   .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;}
+  .hero-stat-num.smaller{font-size:30px;}
 
   .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;transition:transform .3s ease, box-shadow .3s ease;}
   .chart-card.chart-card-wide{max-width:940px;padding:36px 44px;}
@@ -235,87 +243,14 @@
   }
   .chart-card-title{font-size:12px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:4px;}
   .chart-card-sub{font-size:12.5px;color:var(--gray-500);margin-bottom:18px;}
-  .chart-legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:14px;padding-top:16px;border-top:1px solid var(--card-line);}
-  .legend-item{font-size:12px;color:var(--gray-700);display:flex;align-items:center;gap:6px;}
-  .legend-dot{width:10px;height:10px;border-radius:50%;}
 
-  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:780px;transition:transform .3s ease, box-shadow .3s ease;}
+  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:680px;transition:transform .3s ease, box-shadow .3s ease;}
   @media (hover:hover) and (pointer:fine){
     .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
   }
   .bias-card strong{color:var(--black);}
-
-  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
-  @media (hover:hover) and (pointer:fine){
-    .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
-  }
-  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-bottom:18px;}
-  .method-item{font-size:13.5px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--card-line);}
-  .method-item span{color:var(--black);font-weight:700;}
-  .metric-defs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
-  .metric-card{background:var(--white);border:1px solid var(--card-line);border-radius:var(--radius);padding:14px 16px;}
-  .metric-card h4{font-size:13px;color:var(--orange);font-weight:800;margin-bottom:6px;}
-  .metric-card p{font-size:12.5px;color:var(--gray-700);line-height:1.6;}
-  .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
-  .limits strong{color:var(--black);}
-
-  /* leaderboard: bare, "on the page" list — no boxed card. Rows slide
-     in one after another as they scroll into view. */
-  .leaderboard{width:100%;border-collapse:collapse;margin-top:24px;}
-  .leaderboard thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-500);font-weight:700;text-align:left;padding:0 10px 10px;border-bottom:2px solid var(--gray-300);}
-  .leaderboard thead th.lb-th-num{text-align:right;}
-  .leaderboard tbody tr.lb-row{opacity:0;transform:translateX(-18px);transition:opacity .5s ease, transform .5s cubic-bezier(.16,.8,.4,1);transition-delay:calc(var(--i) * 70ms);}
-  .leaderboard.in-view tbody tr.lb-row{opacity:1;transform:translateX(0);}
-  .leaderboard td{padding:12px 10px;border-bottom:1px solid var(--card-line);font-size:13.5px;vertical-align:middle;}
-  .lb-rank{color:var(--gray-500);font-weight:800;width:28px;}
-  .lb-brand{color:var(--black);font-weight:700;}
-  .lb-flag{font-size:9.5px;color:var(--gray-500);border:1px solid var(--gray-300);border-radius:100px;padding:1px 7px;margin-left:6px;font-weight:600;vertical-align:middle;white-space:nowrap;}
-  .lb-share{min-width:150px;}
-  .lb-share-val{display:block;font-size:13px;color:var(--black);font-weight:700;margin-bottom:5px;}
-  .lb-bar-track{display:block;height:5px;background:var(--gray-300);border-radius:999px;overflow:hidden;}
-  .lb-bar-fill{display:block;height:100%;border-radius:999px;width:0;background:var(--orange);transition:width 1.1s cubic-bezier(.16,.8,.4,1);transition-delay:calc(var(--i) * 70ms + .2s);}
-  .leaderboard.in-view .lb-bar-fill{width:var(--w);}
-  .lb-num{text-align:right;color:var(--gray-700);white-space:nowrap;}
-  .lb-score-cell{text-align:right;white-space:nowrap;}
-  .lb-score{font-weight:800;font-size:15px;}
-  .lb-score.off{color:var(--gray-500);}
-  .lb-zone{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:0.04em;margin-top:2px;}
-  .lb-zone.off{color:var(--gray-500);}
-
-  /* scatter-card: the bubble chart. Dots pop in with a springy stagger,
-     the grid fades in underneath, and each bubble grows a touch on
-     hover. */
-  .scatter-wrap{width:100%;}
-  .scatter-wrap svg{width:100%;height:auto;display:block;overflow:visible;}
-  .scatter-wrap .sc-tick{fill:var(--gray-500);font-size:11px;font-family:var(--serif);}
-  .scatter-wrap .sc-axis{fill:var(--gray-700);font-size:12px;font-weight:700;font-family:var(--serif);}
-  .scatter-wrap .sc-label{fill:var(--black);font-size:10.5px;font-weight:700;font-family:var(--serif);}
-  .scatter-gridlines{opacity:0;transition:opacity .9s ease;}
-  .scatter-card.in-view .scatter-gridlines{opacity:1;}
-  .scatter-dot{transform-box:fill-box;transform-origin:center;opacity:0;transition:r .2s ease, stroke-width .2s ease, opacity .2s ease;}
-  .scatter-card.in-view .scatter-dot{animation:bubblePop .65s cubic-bezier(.34,1.56,.64,1) forwards;animation-delay:calc(var(--i) * 45ms);}
-  @keyframes bubblePop{ from{opacity:0;transform:scale(0);} to{opacity:1;transform:scale(1);} }
-  .scatter-dot:hover{r:9;stroke-width:2.5;cursor:pointer;}
-  text.sc-label{opacity:0;transition:opacity .5s ease .6s;}
-  .scatter-card.in-view text.sc-label{opacity:1;}
-
-  /* mini synthesis table (home-living only) — small, static, no
-     animation needed, just clean typography. */
-  .mini-lb-table{width:100%;border-collapse:collapse;}
-  .mini-lb-table thead th{font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-500);font-weight:700;text-align:left;padding:8px 8px;border-bottom:2px solid var(--gray-300);}
-  .mini-lb-table thead th.num{text-align:right;}
-  .mini-lb-table td{padding:9px 8px;border-bottom:1px solid var(--card-line);font-size:13px;color:var(--gray-700);}
-  .mini-lb-table .mini-lb-brand{color:var(--black);font-weight:700;}
-  .mini-lb-table .mini-lb-num{text-align:right;}
-
-  /* stat-pair: two plain descriptive stat cards (on-index split). */
-  .stat-pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;max-width:780px;}
-  .stat-pair-card{background:var(--card);border-radius:var(--radius);padding:22px 24px;transition:transform .3s ease, box-shadow .3s ease;}
-  @media (hover:hover) and (pointer:fine){
-    .stat-pair-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
-  }
-  .stat-pair-big{font-family:var(--serif);font-size:32px;font-weight:800;color:var(--orange);line-height:1;}
-  .stat-pair-lbl{font-size:13.5px;color:var(--gray-700);margin-top:8px;line-height:1.55;}
+  .chart-caption{max-width:640px;margin:22px auto 0;font-size:15px;color:var(--gray-700);line-height:1.7;text-align:center;}
+  .chart-caption strong{color:var(--black);}
 
   .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .mini-card{border-radius:var(--radius);padding:24px 22px;background:var(--card);display:flex;flex-direction:column;min-height:150px;transition:transform .3s ease, box-shadow .3s ease;}
@@ -370,6 +305,84 @@
   .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
   .ai-sitemap a:hover{color:var(--orange);}
 
+  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-bottom:18px;}
+  .method-item{font-size:13.5px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--card-line);}
+  .method-item span{color:var(--black);font-weight:700;}
+  .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
+  .limits strong{color:var(--black);}
+
+  .cond-list{margin-top:18px;display:flex;flex-direction:column;gap:10px;}
+  .cond-row{display:flex;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--card-line);}
+  .cond-num{flex:0 0 22px;font-family:var(--serif);font-weight:800;color:var(--orange);font-size:14px;}
+  .cond-name{flex:0 0 200px;font-weight:800;font-size:14px;color:var(--black);}
+  .cond-desc{font-size:13.5px;color:var(--gray-700);line-height:1.55;}
+
+  .signal-chart{margin-top:8px;}
+  .signal-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  .signal-row:last-child{margin-bottom:0;}
+  .signal-name{flex:0 0 220px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
+  .signal-name.standout{color:var(--black);font-weight:800;}
+  .signal-track{flex:1;height:16px;background:var(--gray-300);border-radius:8px;overflow:hidden;position:relative;}
+  .signal-fill{height:100%;border-radius:8px;width:0;transition:width 1.3s cubic-bezier(.16,.8,.4,1);background:var(--bar-gray);}
+  .signal-fill.standout{background:var(--orange);box-shadow:0 0 14px rgba(254,106,3,0.55);}
+  .signal-chart.in-view .signal-fill{width:var(--w);}
+  .signal-val{flex:0 0 70px;text-align:right;font-family:var(--serif);font-weight:800;font-size:15px;color:var(--black);opacity:0;transition:opacity .4s ease .3s;}
+  .signal-val.standout{color:var(--orange);font-size:17px;}
+  .signal-chart.in-view .signal-val{opacity:1;}
+  .signal-tag{flex:0 0 auto;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);background:var(--black);padding:3px 9px;border-radius:20px;opacity:0;transition:opacity .4s ease .5s;}
+  .signal-chart.in-view .signal-tag{opacity:1;}
+  .signal-tag.tag-orange{background:var(--orange);}
+
+  .flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;}
+  .flip-grid.cols-2{grid-template-columns:repeat(2,1fr);max-width:920px;gap:28px;margin:24px auto 0;}
+  .flip-grid.cols-2 .stat-flip-card{height:190px;}
+  .flip-grid.cols-2 .stat-flip-stack-num{font-size:30px;}
+  .flip-grid.cols-2 .stat-flip-face{padding:26px 32px;}
+  .flip-grid.cols-2 .stat-flip-face-back p{font-size:14.5px;line-height:1.65;}
+  .stat-flip-card{
+    --flip-dir:180deg;
+    perspective:1400px;border-radius:var(--radius);height:220px;
+  }
+  .stat-flip-card:nth-child(even){--flip-dir:-180deg;}
+  .stat-flip-card-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .stat-flip-card.is-flipped .stat-flip-card-inner{transform:rotateY(var(--flip-dir));}
+  @media (hover:hover) and (pointer:fine){
+    .stat-flip-card:hover .stat-flip-card-inner{transform:rotateY(var(--flip-dir));}
+  }
+  .stat-flip-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:22px 20px;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .stat-flip-card.is-flipped .stat-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .stat-flip-card:hover .stat-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  }
+  .stat-flip-face-front{background:var(--card);}
+  .stat-flip-face-front::after{content:"";position:absolute;right:18px;bottom:16px;width:10px;height:10px;border-radius:2px;background:var(--orange);}
+  .stat-flip-face-back{background:rgba(254,106,3,0.14);transform:rotateY(180deg);text-align:left;align-items:flex-start;justify-content:center;}
+  .stat-flip-face-back p{font-size:13.5px;color:rgba(22,21,18,0.8);line-height:1.55;}
+  .stat-flip-stack{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .stat-flip-stack-num{font-family:var(--serif);font-weight:800;font-size:26px;letter-spacing:-0.02em;line-height:1.15;}
+  .stat-flip-stack-mid{font-size:12.5px;font-weight:700;color:var(--gray-500);letter-spacing:0.02em;}
+
+  .lift-wrap{position:relative;}
+  .lift-wrap svg{display:block;width:100%;height:auto;}
+  .lift-legend{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:16px;}
+  .lift-legend-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gray-700);font-weight:600;}
+  .lift-legend-dot{width:11px;height:11px;border-radius:50%;background:var(--gray-500);}
+  .lift-legend-dot.injected{background:var(--orange);box-shadow:0 0 8px rgba(254,106,3,0.5);}
+
   @media (max-width:900px){
     .products-grid{grid-template-columns:1fr 1fr;}
     .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
@@ -377,12 +390,14 @@
     .research-hero-sub{max-width:100%;}
     nav.links{gap:14px;}
     .nav-trigger{font-size:12px;}
+    .flip-grid{grid-template-columns:1fr 1fr;}
     .hero-stat-row{gap:0;}
     .hero-stat{gap:5px;font-size:13px;}
     .hero-stat:not(:first-child)::before{margin-right:8px;}
     .hero-stat-num{font-size:28px;}
-    .metric-defs{grid-template-columns:1fr;}
-    .stat-pair-grid{grid-template-columns:1fr;}
+    .hero-stat-num.smaller{font-size:19px;}
+    .signal-name{flex:0 0 160px;font-size:12px;}
+    .cond-name{flex:0 0 150px;}
   }
   @media (max-width:680px){
     .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
@@ -415,8 +430,10 @@
     .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
     .hero-stat:not(:first-child)::before{display:none;}
     .hero-stat-num{font-size:26px;}
+    .hero-stat-num.smaller{font-size:20px;}
     .chart-card{padding:18px;max-width:none;margin-top:32px;}
     .chart-card.chart-card-wide{padding:18px;max-width:none;}
+    .chart-caption{max-width:none;}
     .bias-card{padding:16px 18px;}
     .products-grid{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
@@ -426,87 +443,14 @@
     .footer-grid{grid-template-columns:1fr;gap:32px;}
     .footer-meta{flex-direction:column;align-items:flex-start;}
     .method-grid{grid-template-columns:1fr;}
-    .hide-mobile{display:none;}
-    .lb-share{min-width:100px;}
-    .leaderboard td{padding:10px 6px;font-size:12.5px;}
-    .lb-score{font-size:13px;}
+    .flip-grid{grid-template-columns:1fr;}
+    .flip-grid.cols-2{grid-template-columns:1fr;max-width:none;}
+    .signal-name{flex:0 0 120px;font-size:11px;}
+    .signal-val{flex:0 0 54px;font-size:13px;}
+    .signal-tag{display:none;}
+    .cond-row{flex-direction:column;gap:4px;}
+    .cond-name{flex:none;}
   }
-
-
-  /* category-flip-card: five equal-size portrait rectangles. Front face
-     is just the eyebrow + category name; back face is the stat blurb and
-     a corner arrow, same flip mechanism (and same nav-chevron icon) used
-     for the Key Findings cards on the research page. */
-  .category-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;padding:24px 0 4px;}
-  .category-flip-card{
-    --flip-dir:180deg;
-    display:block;text-decoration:none;perspective:1400px;
-    border-radius:var(--radius);height:300px;
-    opacity:0;transform:translateY(-18px);
-    transition:opacity .5s ease, transform .5s ease;
-  }
-  .category-flip-card.is-visible{opacity:1;transform:translateY(0);}
-  .category-flip-card:nth-child(even){--flip-dir:-180deg;}
-  .category-flip-inner{
-    position:relative;width:100%;height:100%;
-    transform-style:preserve-3d;
-    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
-  }
-  .category-flip-card.is-flipped .category-flip-inner{transform:rotateY(var(--flip-dir));}
-  @media (hover:hover) and (pointer:fine){
-    .category-flip-card:hover .category-flip-inner{transform:rotateY(var(--flip-dir));}
-  }
-  .category-flip-face{
-    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-    border-radius:var(--radius);padding:24px 22px;overflow:hidden;
-    display:flex;flex-direction:column;
-    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
-    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
-  }
-  .category-flip-card.is-flipped .category-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
-  @media (hover:hover) and (pointer:fine){
-    .category-flip-card:hover .category-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
-  }
-  .category-flip-face-front{background:var(--card);}
-  .category-flip-face-front::after{content:"";position:absolute;right:20px;bottom:18px;width:10px;height:10px;border-radius:2px;background:var(--orange);}
-  .category-flip-kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--orange);margin-bottom:12px;}
-  .category-flip-name{font-family:var(--serif);font-size:23px;font-weight:800;letter-spacing:-0.01em;color:var(--black);line-height:1.25;}
-  .category-flip-face-back{background:rgba(254,106,3,0.14);transform:rotateY(180deg);justify-content:space-between;}
-  .category-flip-body{font-size:14px;color:rgba(22,21,18,0.85);line-height:1.6;}
-  .category-flip-arrow{align-self:flex-end;width:16px;height:10px;color:var(--black);transform:rotate(-90deg);flex-shrink:0;}
-  .category-flip-arrow svg{display:block;width:100%;height:100%;}
-
-  /* synthesis table: warm card-tan background throughout, orange
-     uppercase headers with an orange underline, bold black category
-     names, bold r-value colored red only when the relationship is
-     notable (matches the reference design). */
-  .mini-lb-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;border-radius:var(--radius);overflow:hidden;background:var(--card);}
-  .mini-lb-table thead th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--orange);font-weight:800;text-align:left;padding:12px 14px;background:var(--card);border-bottom:2px solid var(--orange);}
-  .mini-lb-table thead th:nth-child(1){width:20%;}
-  .mini-lb-table thead th:nth-child(2),.mini-lb-table thead th:nth-child(3){width:11%;}
-  .mini-lb-table thead th:nth-child(4),.mini-lb-table thead th:nth-child(5){width:13%;}
-  .mini-lb-table thead th:nth-child(6){width:10%;}
-  .mini-lb-table thead th:nth-child(7){width:22%;}
-  .mini-lb-table td{padding:12px 14px;text-align:left;font-size:13.5px;color:var(--gray-700);border-bottom:1px solid rgba(254,106,3,0.18);background:var(--card);}
-  .mini-lb-table tbody tr:last-child td{border-bottom:none;}
-  .mini-lb-table .mini-lb-brand{color:var(--black);font-weight:700;}
-  .mini-lb-table .mini-lb-r-val{font-weight:800;color:var(--black);}
-  .mini-lb-table .mini-lb-r-val.is-notable{color:var(--red);}
-
-  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:780px;transition:transform .3s ease, box-shadow .3s ease;}
-  @media (hover:hover) and (pointer:fine){
-    .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
-  }
-  .bias-card strong{color:var(--black);}
-  @media (max-width:900px){
-    .category-grid{grid-template-columns:1fr 1fr;}
-  }
-  @media (max-width:680px){
-    .category-grid{grid-template-columns:1fr;padding:18px 2px 4px;}
-    .category-flip-card{height:230px;}
-    .mini-lb-table thead th, .mini-lb-table td{padding:9px 8px;font-size:12.5px;}
-  }
-
 </style>
 </head>
 <body>
@@ -593,101 +537,185 @@
 <!-- HERO -->
 <section class="research-hero">
   <div class="container">
-    <div class="kicker">Research / Category Reports</div>
-    <h1 class="page-title">Five categories, <em>one relationship</em></h1>
-    <p class="research-hero-sub">Beauty, supplements, coffee, pets, and home &amp; living: five categories, run through the identical method. 20 high-intent shopping prompts, 20 times each, 4,000 recommendations mapped to real AI Commerce Scores. Every single time, how often AI recommends a brand has little to no measurable relationship to how AI-ready its store is.</p>
+    <div class="kicker">Recommendation Intelligence Research&trade; &middot; Study #26</div>
+    <h1 class="page-title">Tell the model you saw an ad. <em>It recommends that brand 88% of the time.</em></h1>
+    <p class="research-hero-sub">Candidacy vs Selection showed that getting into a model's consideration set and winning inside it are two different games. This study manipulates what feeds that difference: the same real buyer question, the same brand, the same model, with only a single hidden line in the system message changing, something the shopper never sees and never said. Across 5 brands with weak real-world baselines and 5 different hidden-context conditions, a fabricated "you just saw an ad for this brand" claim moved winner rate further than any other condition tested, including a condition that combined the same claim with a real product fact.</p>
+    <div class="byline-note">Atom Foundry &middot; September 2026 &middot; Builds on <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a> and the possession/deployment framing from <a href="/research/possession-vs-deployment">The Model Knows 6 Facts About Your Brand. It Uses One</a>, part of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research&trade;</a> series</div>
     <div class="hero-stat-row">
-      <div class="hero-stat"><b class="hero-stat-num" id="statCats" data-target="5">5</b><span>Category studies</span></div>
-      <div class="hero-stat"><b class="hero-stat-num" id="statRecs" data-target="20000" data-comma="1">20,000</b><span>Recommendations captured</span></div>
-      <div class="hero-stat"><b class="hero-stat-num" id="statIntents" data-target="20">20</b><span>Prompts per category</span></div>
+      <div class="hero-stat"><b class="hero-stat-num" id="statWin" data-target="88" data-suffix="%">88%</b><span>Winner rate under fabricated ad-exposure claim</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statBrands" data-target="5">5</b><span>Brands tested</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statBaseline" data-target="22" data-suffix="%">22%</b><span>Baseline winner rate, no hidden context</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statCalls" data-target="475" data-comma="1">475</b><span>Observations, incl. reused control</span></div>
     </div>
   </div>
 </section>
 
-<!-- CATEGORY GRID -->
-<section>
-  <div class="container">
-    <div class="kicker">5 published category reports</div>
-    <h2 class="section-title">Same method, <em>five markets</em></h2>
-    <p class="section-body" style="margin-bottom:24px;">Each report holds the model, the prompt structure, and the scoring method constant, and changes only the category. The leaderboard and the frequency-vs-score chart look a little different every time. The relationship between them never does.</p>
-    <div class="category-grid" id="categoryGrid">
-      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-beauty">
-        <div class="category-flip-inner">
-          <div class="category-flip-face category-flip-face-front">
-            <div class="category-flip-kicker">Category</div>
-            <div class="category-flip-name">Beauty</div>
-          </div>
-          <div class="category-flip-face category-flip-face-back">
-            <p class="category-flip-body">4,000 recommendations, 238 brands. Frequency vs readiness r = +0.17.</p>
-            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-supplements">
-        <div class="category-flip-inner">
-          <div class="category-flip-face category-flip-face-front">
-            <div class="category-flip-kicker">Category</div>
-            <div class="category-flip-name">Supplements</div>
-          </div>
-          <div class="category-flip-face category-flip-face-back">
-            <p class="category-flip-body">4,000 recommendations, 371 brands. Frequency vs readiness r = &minus;0.015.</p>
-            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-coffee">
-        <div class="category-flip-inner">
-          <div class="category-flip-face category-flip-face-front">
-            <div class="category-flip-kicker">Category</div>
-            <div class="category-flip-name">Coffee</div>
-          </div>
-          <div class="category-flip-face category-flip-face-back">
-            <p class="category-flip-body">4,000 recommendations, 228 brands. Frequency vs readiness r = +0.019.</p>
-            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-pets">
-        <div class="category-flip-inner">
-          <div class="category-flip-face category-flip-face-front">
-            <div class="category-flip-kicker">Category</div>
-            <div class="category-flip-name">Pets</div>
-          </div>
-          <div class="category-flip-face category-flip-face-back">
-            <p class="category-flip-body">4,000 recommendations, 405 brands. Frequency vs readiness r = &minus;0.366.</p>
-            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-      <a class="report-card category-flip-card" href="/research/state-of-ai-recommendations-home-living">
-        <div class="category-flip-inner">
-          <div class="category-flip-face category-flip-face-front">
-            <div class="category-flip-kicker">Category</div>
-            <div class="category-flip-name">Home & Living</div>
-          </div>
-          <div class="category-flip-face category-flip-face-back">
-            <p class="category-flip-body">4,000 recommendations, 271 brands. Frequency vs readiness r = +0.108.</p>
-            <span class="category-flip-arrow"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- SYNTHESIS -->
+<!-- WHERE THIS COMES FROM -->
 <section class="alt">
   <div class="container">
-    <div class="kicker">Five niches, one pattern</div>
-    <h2 class="section-title">Five categories, and the answer never changed</h2>
-    <p class="section-body">Across beauty, supplements, coffee, pets, and now home and living, we have captured more than 20,000 recommendations and measured the same thing every time: the relationship between how often AI recommends a brand and how AI-ready its store is.</p>
-    <div class="chart-card" style="max-width:940px;">
-      <table class="mini-lb-table">
-        <thead><tr><th>Category</th><th>Recs</th><th>Brands</th><th>On-Index</th><th>Marketplace</th><th>r-value</th><th>Relationship</th></tr></thead>
-        <tbody><tr><td class="mini-lb-brand">Beauty</td><td>4,000</td><td>238</td><td>57.6%</td><td>0.4%</td><td class="mini-lb-r-val">+0.17</td><td>None</td></tr><tr><td class="mini-lb-brand">Supplements</td><td>4,000</td><td>371</td><td>33.5%</td><td>4.9%</td><td class="mini-lb-r-val">&minus;0.015</td><td>None</td></tr><tr><td class="mini-lb-brand">Coffee</td><td>4,000</td><td>228</td><td>49.8%</td><td>1.8%</td><td class="mini-lb-r-val">+0.019</td><td>None</td></tr><tr><td class="mini-lb-brand">Pets</td><td>4,000</td><td>405</td><td>19.8%</td><td>7.1%</td><td class="mini-lb-r-val is-notable">&minus;0.366</td><td>Weak negative</td></tr><tr><td class="mini-lb-brand">Home &amp; Living</td><td>4,000</td><td>271</td><td>~60%</td><td>~21%</td><td class="mini-lb-r-val">+0.108</td><td>None</td></tr></tbody>
-      </table>
+    <div class="kicker">Where this comes from</div>
+    <h2 class="section-title">Same prompt, same brand. <em>Only the hidden context changes</em></h2>
+    <p class="section-body">Candidacy vs Selection separated "getting into consideration" from "winning" across 60,924 real stores, but it was observational, not a controlled manipulation. This study takes the same two-stage measurement and turns it into an experiment: 5 brands with weak real-world recommend rates, the same already-published real buyer question per brand, the same model, and the same deterministic brand-detection method throughout. The only thing that changes is one line in the system message, invisible to the user, describing something that supposedly happened before this conversation started.</p>
+    <div class="cond-list">
+      <div class="cond-row"><div class="cond-num">1</div><div class="cond-name">No context (control)</div><div class="cond-desc">Reused from already-published data. No new calls.</div></div>
+      <div class="cond-row"><div class="cond-num">2</div><div class="cond-name">User intent</div><div class="cond-desc">Brand-blind. Only says the shopper wants a decisive, confident recommendation.</div></div>
+      <div class="cond-row"><div class="cond-num">3</div><div class="cond-name">Campaign origin</div><div class="cond-desc">Fabricated: "the user just saw an online advertisement for {brand}."</div></div>
+      <div class="cond-row"><div class="cond-num">4</div><div class="cond-name">Brand exposure</div><div class="cond-desc">Fabricated: "the user mentioned they've heard of {brand} before," no detail.</div></div>
+      <div class="cond-row"><div class="cond-num">5</div><div class="cond-name">Feature exposure</div><div class="cond-desc">Fabricated: "the user saw a product page mentioning" one real, verified fact about the brand.</div></div>
+      <div class="cond-row"><div class="cond-num">6</div><div class="cond-name">Brand + feature</div><div class="cond-desc">Conditions 3 and 5 combined: the ad claim plus the specific fact.</div></div>
     </div>
-    <div class="bias-card">Five categories, more than 20,000 recommendations, and <strong>not once</strong> is recommendation frequency meaningfully and positively related to store readiness. Three times the link is zero, once it is faintly negative, and here it is zero again. The conclusion is no longer a single finding, it is a replicated result: <strong>AI recommends from fame, not from store quality.</strong></div>
+    <div class="method-box">
+      <div class="method-grid">
+        <div class="method-item">Model: <span>gpt-4o throughout</span></div>
+        <div class="method-item">Brands: <span>5, deliberately weak-baseline</span></div>
+        <div class="method-item">New calls: <span>375 (5 brands &times; 5 conditions &times; 15 repeats)</span></div>
+        <div class="method-item">Reused control: <span>100 observations, no new calls</span></div>
+        <div class="method-item">Detection: <span>deterministic substring, no LLM judge</span></div>
+        <div class="method-item">Statistics: <span>cluster bootstrap CI, 10,000-reshuffle permutation test</span></div>
+      </div>
+      <div class="limits"><strong>None of these things actually happened.</strong> No user in this study really saw an ad or a product page; the claims are fabricated system-message context used to isolate the causal effect of upstream framing. Brand identities are anonymized throughout this page (Brand A-E) precisely because the conditions attribute fictional ad and campaign exposure to real businesses that never ran or received them.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE FINDING -->
+<section>
+  <div class="container">
+    <div class="kicker">The finding</div>
+    <h2 class="section-title">Every hidden-context condition moves the result. <em>One moves it most</em></h2>
+    <p class="section-body">Compared against the reused no-context control (22% winner rate, cohort-wide), all four brand-specific conditions produced a large, highly significant winner-rate lift (permutation test, 10,000 reshuffles, p&lt;0.0001 for all four). But the sizes are not close to equal, and the order doesn't match what a straightforward more-information-is-better hypothesis would predict.</p>
+    <div class="chart-card chart-card-wide">
+      <div class="chart-card-title">Winner rate by condition, cohort-wide</div>
+      <div class="chart-card-sub">Pooled equal-weight across 5 brands &middot; permutation p-value vs the no-context control shown per bar</div>
+      <div class="signal-chart" id="condChart">
+        <div class="signal-row">
+          <div class="signal-name">No context (control)</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:22%;"></div></div>
+          <div class="signal-val" data-target="22" data-suffix="%">22%</div>
+          <div class="signal-tag">Baseline</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">User intent, brand-blind</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:34.7%;"></div></div>
+          <div class="signal-val" data-target="34.7" data-decimals="1" data-suffix="%">34.7%</div>
+          <div class="signal-tag">p=0.0006</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Brand exposure, passive</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:61.3%;"></div></div>
+          <div class="signal-val" data-target="61.3" data-decimals="1" data-suffix="%">61.3%</div>
+          <div class="signal-tag">p&lt;0.0001</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Feature exposure, real fact</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:64%;"></div></div>
+          <div class="signal-val" data-target="64" data-suffix="%">64%</div>
+          <div class="signal-tag">p&lt;0.0001</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Brand + feature, combined</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:76%;"></div></div>
+          <div class="signal-val" data-target="76" data-suffix="%">76%</div>
+          <div class="signal-tag">p&lt;0.0001</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">Campaign origin, fabricated ad</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:88%;"></div></div>
+          <div class="signal-val standout" data-target="88" data-suffix="%">88%</div>
+          <div class="signal-tag tag-orange">Highest, p&lt;0.0001</div>
+        </div>
+      </div>
+    </div>
+    <div class="bias-card">
+      <strong>Campaign origin beats brand + feature combined.</strong> The pre-registered hypothesis expected effect size to scale with how concrete the injected context is, peaking at the combined brand+feature condition. Instead, a bare, fact-free claim that the shopper "just saw an ad" outperformed every other condition, including the one that added a real, verified product fact on top of it. Framing that implies prior exposure and intent moved the result more than the exposure being specific or true.
+    </div>
+  </div>
+</section>
+
+<!-- PER-BRAND PATTERN -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">The per-brand pattern</div>
+    <h2 class="section-title">Getting considered is easy. <em>Winning still depends on the brand</em></h2>
+    <p class="section-body">Candidacy tells a simple story: under any of the four brand-specific conditions, candidacy rate jumps to 97-100% for nearly every brand, regardless of how weak its real-world baseline is. Winner rate tells a messier one. Two brands convert candidacy into winning almost automatically, one brand is a genuine ceiling case with nothing left to move, and two brands get into consideration but keep losing to the same entrenched competitor, unless the context specifically frames prior ad exposure.</p>
+    <div class="chart-card chart-card-wide">
+      <div class="chart-card-title">Winner rate, no-context baseline vs. campaign-origin condition</div>
+      <div class="chart-card-sub">5 brands &middot; gray dot is the published no-context baseline, orange dot is the fabricated ad-exposure condition &middot; brands anonymized</div>
+      <div class="lift-wrap" id="liftWrap">
+        <svg id="liftSvg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="lift-legend">
+        <div class="lift-legend-item"><span class="lift-legend-dot"></span>No-context baseline (reused control)</div>
+        <div class="lift-legend-item"><span class="lift-legend-dot injected"></span>Campaign-origin condition, this study</div>
+      </div>
+    </div>
+    <div class="bias-card">
+      <strong>Two brands still barely move on winner rate under a passive or feature-only condition.</strong> One brand's winner rate goes from 0% at baseline to 100% candidacy but stays under 7% winner under passive brand-exposure or feature-exposure framing, then jumps to 87% specifically under the fabricated ad-exposure framing. A second, near-ceiling brand doesn't move at all under any condition, already winning 100% of the time at baseline, consistent with the exploratory pattern below: brands with more room to move, move more.
+    </div>
+  </div>
+</section>
+
+<!-- H4 -->
+<section>
+  <div class="container">
+    <div class="kicker">A secondary pattern</div>
+    <h2 class="section-title">Weaker brands get <em>more lift, not less</em></h2>
+    <p class="section-body">An exploratory, pre-registered check (n=5, not a confirmed test at this sample size) correlated each brand's real-world baseline recommend rate against how much hidden context lifted its candidacy and winner rate. Both correlations are negative and fairly strong: r=-0.63 for candidacy lift, r=-0.73 for winner lift. Brands that start further from the top have more room to move, and they move more, the same direction found in the multi-turn displacement study's brand-baseline correlation. The one near-ceiling brand in this cohort, already winning 100% of the time before any hidden context was added, shows zero measurable lift under any condition, a clean floor-and-ceiling illustration of the same pattern rather than a separate finding.</p>
+  </div>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Why it matters</div>
+    <h2 class="section-title">Candidacy is a switch. <em>Selection is a contest</em></h2>
+    <p class="section-body">This sharpens the Candidacy vs Selection distinction into something closer to a mechanism. Nearly any hidden context, even a brand-blind instruction to be more decisive, is enough to move a brand into the consideration set. What actually wins inside that set depends on something else, and this study's most notable result is that the something else responds more to framing that implies the shopper already has some relationship with the brand than to framing that supplies more concrete, truthful information about it. A fabricated claim of prior ad exposure outperformed a real product fact. That is worth sitting with, both as a research finding and as a reason to be careful about what "personalization" signals actually do once they reach a model's context window.</p>
+  </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section>
+  <div class="container">
+    <div class="kicker">What this doesn't prove</div>
+    <h2 class="section-title">One misclassification found, <em>disclosed and corrected</em></h2>
+    <p class="section-body">Stating the limits up front. Brand detection here uses the same deterministic, case-insensitive substring method as the original report data, for direct comparability, and uses no LLM judge at all, which removes self-grading bias entirely but trades it for this simpler method's own blind spot: a closed, pre-registered competitor list. A manual spot-check of 20 full responses across every condition found no errors. A second, targeted check of all 244 records where a brand was detected as the winner found exactly one real misclassification: in a brand-blind condition, a model response explicitly named a different, unlisted tool as its "top pick" ahead of the brand being tested, but because that unlisted tool wasn't on the brand's known-competitor list, the detector still marked the tracked brand as the winner. Correcting this single record moves that condition's cohort-wide winner rate from 36% to 34.7%, the number shown above; the correction does not change any statistical conclusion.</p>
+    <p class="section-body" style="margin-top:14px;">Five brands, deliberately selected for weak real-world baselines, not a representative cross-brand sample. The H4 baseline-interaction correlation and the ordering of the five conditions are both exploratory at n=5, reported as such, not as confirmed findings. One category mix, consumer ecommerce, one model, one prompt per brand. None of the fabricated exposure claims in this study describe anything that actually happened to any real user of any real brand; brand identities are anonymized throughout this page for that reason, on top of the series' general anonymization-by-default policy.</p>
+  </div>
+</section>
+
+<!-- SUPPORTING EVIDENCE -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Supporting evidence</div>
+    <h2 class="section-title">Two checks that the setup was <em>clean</em></h2>
+    <div class="flip-grid cols-2">
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">1 of 244</span>
+              <span class="stat-flip-stack-mid">Winner records misclassified</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>Every record where a brand was detected as the winner was screened for the closed-competitor-list blind spot. One real error found, in the brand-blind condition where the model is freest to name anything. Corrected in the reported numbers above.</p>
+          </div>
+        </div>
+      </div>
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num" style="color:var(--green);">4 of 4</span>
+              <span class="stat-flip-stack-mid">Brand-specific conditions p&lt;0.0001</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>Every brand-specific hidden-context condition produced a statistically significant winner-rate lift over the no-context control, on a 10,000-reshuffle permutation test, cohort-wide.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -695,18 +723,47 @@
 <section id="score">
   <div class="container">
     <div class="final-cta">
-      <h2>See where your store stands</h2>
-      <div class="final-cta-tag">Free AI Commerce Score across all 8 factors.</div>
-      <p>Find out exactly what AI agents see when they evaluate your store.</p>
+      <h2>What's the hidden context around <em>your own brand</em>?</h2>
+      <div class="final-cta-tag">Free AI Commerce Score&trade; in 10 seconds.</div>
+      <p>If a single fabricated line in a system message can move winner rate this much, it's worth knowing what a model already assumes about your brand before anyone asks it a question. A free scan is the fastest way to check.</p>
       <div class="scan-box">
         <input type="text" placeholder="Paste your store URL">
         <button>Get My Free AI Score</button>
       </div>
-      <div class="scan-note">Free <span>·</span> No signup <span>·</span> Results in 10 seconds</div>
+      <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> Results in 10 seconds</div>
     </div>
   </div>
 </section>
 
+<!-- RELATED SERIES -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Keep reading</div>
+    <h2 class="section-title">The rest of the <em>research series</em></h2>
+    <p class="section-body" style="margin-bottom:24px;">This study turns the observational Candidacy vs Selection split into a controlled manipulation, and sits alongside the series' other causal, context-manipulation studies.</p>
+    <div class="products-grid">
+      <a class="mini-card" href="/research/candidacy-vs-selection" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Study</div>
+        <div class="mini-card-title">Candidacy vs Selection</div>
+        <div class="mini-card-body">The observational version of this split, across the full 60,924-store population: intent match gets a store into the recommended set but explains almost none of what wins once it's there.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/fact-injection" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Study &middot; Study #25</div>
+        <div class="mini-card-title">Give the Model the One Fact It's Missing. The Brand Goes From Invisible to Everywhere</div>
+        <div class="mini-card-body">The other half of the causal picture: injecting a real fact directly into context, rather than a fabricated exposure claim, still lifts mention rate 77.9pp on average.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/mechanism-studies" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Studies</div>
+        <div class="mini-card-title">All studies in the series</div>
+        <div class="mini-card-body">Web search, brand fame, domain recognition, self justification, vocabulary, intent, memory, evaluation, cold start, confidence, possession vs deployment, multi-turn displacement, fact injection, and now hidden context.</div>
+        <span class="mini-card-link">Browse the series<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+    </div>
+    <p class="related-more"><a href="/research"><span class="nav-chevron chevron-l-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a></p>
+  </div>
+</section>
 <footer>
   <div class="footer-inner">
     <div class="footer-grid">
@@ -837,7 +894,6 @@
 </footer>
 
 <script>
-  // Navbar compacts on scroll (same behavior as the rest of the site).
   (function(){
     const nav = document.querySelector('header.nav');
     if (!nav) return;
@@ -853,7 +909,6 @@
     onScroll();
   })();
 
-  // Mobile hamburger nav (same behavior as the rest of the site).
   (function(){
     const nav = document.querySelector('header.nav');
     const toggle = document.getElementById('navToggle');
@@ -891,98 +946,105 @@
     }, { passive: true });
   })();
 
-  // Hero stat count-up.
-  (function(){
-    function easeOutCubic(p){ return 1 - Math.pow(1 - p, 3); }
-    function animateValueEl(el, duration){
-      if (!el) return;
-      const target = Number(el.dataset.target) || 0;
-      const comma = el.dataset.comma === '1';
-      const start = performance.now();
-      function step(now){
-        const p = Math.min((now - start) / duration, 1);
-        const eased = easeOutCubic(p);
-        const val = eased * target;
-        el.textContent = comma ? Math.round(val).toLocaleString('en-US') : Math.round(val).toString();
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
+  function easeOutCubicShared(p){ return 1 - Math.pow(1 - p, 3); }
+  function animateValueEl(el, duration){
+    if (!el) return;
+    const target = Number(el.dataset.target) || 0;
+    const decimals = Number(el.dataset.decimals) || 0;
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const comma = el.dataset.comma === '1';
+    const start = performance.now();
+    function step(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = easeOutCubicShared(p);
+      const val = eased * target;
+      const formatted = comma ? Math.round(val).toLocaleString('en-US') : val.toFixed(decimals);
+      el.textContent = prefix + formatted + suffix;
+      if (p < 1) requestAnimationFrame(step);
     }
-    document.querySelectorAll('.hero-stat-num[data-target]').forEach(el => {
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) { animateValueEl(el, 1100); io.unobserve(entry.target); }
-          });
-        }, { threshold: 0.4 });
-        io.observe(el);
-      } else {
-        animateValueEl(el, 1100);
-      }
-    });
-  })();
-
-  // The 5 category cards reveal top to bottom as the grid scrolls into
-  // view, same "hands off to the next" cascade used on the mechanism
-  // studies hub.
-  (function(){
-    const grid = document.getElementById('categoryGrid');
-    if (!grid) return;
-    const cards = Array.from(grid.querySelectorAll('.report-card'));
-    if (!cards.length) return;
-
-    function revealNext(i){
-      if (i >= cards.length) return;
-      const card = cards[i];
-      card.classList.add('is-visible');
-      let done = false;
-      function advance(){
-        if (done) return;
-        done = true;
-        card.removeEventListener('transitionend', onEnd);
-        revealNext(i + 1);
-      }
-      function onEnd(e){
-        if (e.target === card && e.propertyName === 'transform') advance();
-      }
-      card.addEventListener('transitionend', onEnd);
-      setTimeout(advance, 650);
-    }
-
+    requestAnimationFrame(step);
+  }
+  function observeReveal(el, onReveal){
+    if (!el) return;
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            revealNext(0);
-            io.unobserve(entry.target);
-          }
+          if (entry.isIntersecting) { onReveal(); io.unobserve(entry.target); }
         });
-      }, { threshold: 0.2 });
-      io.observe(grid);
+      }, { threshold: 0.25 });
+      io.observe(el);
     } else {
-      cards.forEach(card => card.classList.add('is-visible'));
+      onReveal();
     }
+  }
+
+  (function(){
+    document.querySelectorAll('.hero-stat-num[data-target]').forEach(el => {
+      observeReveal(el, () => animateValueEl(el, 1100));
+    });
   })();
 
-  // Category flip cards are real links, so on hover-capable devices the
-  // flip is purely a CSS hover effect and a click just follows the href.
-  // On touch, there is no hover: the first tap flips the card to reveal
-  // the stat, and a second tap follows the link, same pattern as the Key
-  // Findings cards on the research page.
   (function(){
-    const cards = Array.from(document.querySelectorAll('.category-flip-card'));
+    const chart = document.getElementById('condChart');
+    if (!chart) return;
+    observeReveal(chart, () => {
+      chart.classList.add('in-view');
+      chart.querySelectorAll('.signal-val[data-target]').forEach(v => animateValueEl(v, 1200));
+    });
+  })();
+
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.stat-flip-card'));
     if (!cards.length) return;
     const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (!canHover) {
       cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-          if (!card.classList.contains('is-flipped')) {
-            e.preventDefault();
-            card.classList.add('is-flipped');
-          }
-        });
+        card.addEventListener('click', () => { card.classList.toggle('is-flipped'); });
       });
     }
+  })();
+
+  (function(){
+    const wrap = document.getElementById('liftWrap');
+    const svg = document.getElementById('liftSvg');
+    if (!wrap || !svg) return;
+    function render(){
+      var W=700,H=400,padL=110,padR=50,padT=10,rowH=76;
+      var plotW=W-padL-padR;
+      var rows=[
+        {b:'Brand A', baseline:10, injected:100},
+        {b:'Brand B', baseline:0, injected:86.7},
+        {b:'Brand C', baseline:0, injected:100},
+        {b:'Brand D', baseline:0, injected:53.3},
+        {b:'Brand E', baseline:100, injected:100}
+      ];
+      function X(v){ return padL + (v/100)*plotW; }
+
+      var gridLines = [0,25,50,75,100].map(function(g){
+        var x = X(g).toFixed(1);
+        return '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+(rows.length*rowH)+'" stroke="rgba(22,21,18,0.08)" stroke-width="1"></line>'+
+          '<text x="'+x+'" y="'+(rows.length*rowH+18)+'" font-family="ui-monospace,Menlo,monospace" font-size="9" fill="rgba(22,21,18,0.42)" text-anchor="middle">'+g+'%</text>';
+      }).join('');
+
+      var content = '';
+      rows.forEach(function(r, i){
+        var y = padT + i*rowH + rowH/2 - 5;
+        var x1 = X(r.baseline), x2 = X(r.injected);
+        var deltaTxt = (r.injected - r.baseline === 0) ? 'no movement' : ('+' + Math.round((r.injected - r.baseline)*10)/10 + 'pp');
+        content += '<text x="4" y="'+(y+4)+'" font-family="Nunito,sans-serif" font-size="13" font-weight="800" fill="#161512">'+r.b+'</text>';
+        content += '<line x1="'+x1.toFixed(1)+'" y1="'+y+'" x2="'+x2.toFixed(1)+'" y2="'+y+'" stroke="#c9c2b2" stroke-width="2.5"></line>';
+        content += '<circle cx="'+x1.toFixed(1)+'" cy="'+y+'" r="5.5" fill="#938f81"></circle>';
+        content += '<text x="'+x1.toFixed(1)+'" y="'+(y+22)+'" font-family="ui-monospace,Menlo,monospace" font-size="10.5" fill="rgba(22,21,18,0.55)" text-anchor="middle">'+r.baseline+'%</text>';
+        content += '<circle cx="'+x2.toFixed(1)+'" cy="'+y+'" r="8.5" fill="#fe6a03" stroke="#f0eee6" stroke-width="2"></circle>';
+        content += '<text x="'+x2.toFixed(1)+'" y="'+(y-16)+'" font-family="Nunito,sans-serif" font-size="14" font-weight="800" fill="#fe6a03" text-anchor="middle">'+r.injected+'%</text>';
+        content += '<text x="'+x2.toFixed(1)+'" y="'+(y+26)+'" font-family="ui-monospace,Menlo,monospace" font-size="9.5" font-weight="700" fill="rgba(22,21,18,0.4)" text-anchor="middle">('+deltaTxt+')</text>';
+      });
+
+      svg.innerHTML = '<g transform="translate(0,'+padT+')">' + gridLines + '</g>' +
+        '<g transform="translate(0,'+padT+')">' + content + '</g>';
+    }
+    observeReveal(wrap, render);
   })();
 </script>
 <style>
@@ -1117,10 +1179,6 @@
 <!-- AIW_LIVE:START -->
 <script>
 (function(){
-  // Pulls real numbers for the AI signal widget from the shop_ai_visits log
-  // (via /webhook/shop-ai-signal) and replaces the static placeholder values
-  // baked into the markup above. Ring order in the DOM is fixed: Today,
-  // Bots, Last seen -- selected positionally, no id changes needed.
   var ringsRoot = document.querySelector('.aiw-rings');
   if (!ringsRoot) return;
   var items = ringsRoot.querySelectorAll('.aiw-ring-item');
@@ -1140,9 +1198,9 @@
     el.style.setProperty('--offset', (CIRC * (1 - f)).toFixed(2));
   }
   function relTime(iso){
-    if (!iso) return '\u2014';
+    if (!iso) return '—';
     var diffMs = Date.now() - new Date(iso).getTime();
-    if (isNaN(diffMs)) return '\u2014';
+    if (isNaN(diffMs)) return '—';
     var mins = Math.max(0, Math.round(diffMs / 60000));
     if (mins < 1) return 'now';
     if (mins < 60) return mins + 'm';
