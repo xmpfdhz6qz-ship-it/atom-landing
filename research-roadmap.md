@@ -510,3 +510,614 @@ roadmapy beze změny.
 Anthropic/Google/Perplexity API klíčích. Study #28 (Founder Lab field test)
 je další nová studie k navržení, jinak je roadmapa aktuálně vyčerpaná co do
 levných gpt-4o-only studií bez blokujících závislostí.
+
+## Nápad k zvážení (zatím neděláme) — Veřejný leaderboard, 2026-09-08
+
+Přišel cold-outreach email (growth-audit spam vedoucí na viberank.dev, ne
+relevantní důvěryhodný zdroj) s pár body. Většina byla buď nepřesná (nav
+už má dropdowny, pricing sekce už existuje, positioning kolem 55/100 stat
+už je hotový) nebo nízká priorita (PWA manifest — nedává smysl pro
+lead-gen marketingový web). Dva body byly reálné a stojí za zápis:
+
+1. **Product + FAQPage JSON-LD schema chybí** — ověřeno, homepage i
+   produktové stránky mají Organization/WebSite/OnlineStore schema, ale
+   žádnou Product ani FAQPage. Levný technický zásah, žádné riziko.
+
+2. **Veřejný, negovaný "live leaderboard"** — jediný genuinely nový nápad.
+   Aktuálně máme `benchmarks.html` (agregátní/anonymní srovnání podle
+   kategorie, žádná jména brandů) a `/reports/*` (jednotlivé stránky
+   s reálnými jmény brandů, ale hlavní zjištění gated za $129). Chybí
+   prostřední krok: jedna veřejná stránka typu `/rankings/kitchen-cookware`
+   se seřazenou tabulkou reálných jmen brandů vedle sebe (AI Commerce
+   Score / recommend rate), volně přístupná, bez emailu. Přesně tohle
+   dělá AIVO Meridian na `/ai-rankings/` — měsíčně přidávají kategorii,
+   čtvrtletně refreshují, každý řádek má gated "Get full report →" CTA.
+   Funguje jim to jako lead-gen i backlink magnet (brandy odkazují na
+   vlastní dobré umístění). Dala by se postavit nad daty, co už částečně
+   máme z `/reports/` (Caraway, Rumpl, Onyx Coffee Lab, Wild One, Topicals,
+   Branch, Boll & Branch, Bellroy, Peak Design, Founder Lab).
+
+   Daniel řekl 2026-09-08: zatím neděláme, jen si to ukládáme na později.
+
+## Finální odsouhlasené pořadí dalšího výzkumu (2026-09-16)
+
+Po plném auditu všech 22 studií (viz `research-audit-2026-09-16.md`) a
+diskuzi o tom, na kolika procentech jsme s pochopením celé věci (~65-70 %
+pokrytí decision path, ~40-50 % skutečné jistoty po započtení cross-model a
+real-world kauzality), Daniel odsouhlasil tohle pořadí. Founder Lab
+schválně na konci (Daniel: "founder lab nechame az na konec"), Purchase
+logicky hned za/s ním, protože potřebuje jeho reálná konverzní data.
+
+1. **Wave-1 cross-study korelační matice** — nulová cena, žádná nová API
+   volání, jen přeskládat existující čísla (Possession-Deployment,
+   Multi-turn Displacement, Fact Injection, Hidden Context, stejná kohorta
+   ~10 značek). Prošetřit anomálie Wild One a Zigpoll.
+2. **Nezávislý soudce (Claude) na studiích #23-26** — re-scoring existujících
+   dat, žádné nové generování. Kvantifikuje self-grading bias.
+3. **Rozbor kategorie Pets** — jediná kategorie se signifikantní (a
+   negativní, r=-0,366) korelací skóre vs frekvence. Marketplace-share
+   hypotéza čísla nepodporuje čistě, potřeba dedikovaný rozbor.
+4. **Cross-model paměť** — čeká na Anthropic + Google API klíč od Daniela.
+5. **Study #30 (cross-platform retrieval)** — sdílí sběr dat s bodem 4,
+   navíc Perplexity klíč, stejná vlna. (Přečíslováno z #28 na #29 po
+   publikaci Study #28 = Živý retrieval vs simulovaná injekce, 2026-09-11,
+   a znovu z #29 na #30 po publikaci Study #29 = Brand Legibility,
+   2026-09-11, viz sekce "Study #29" níže — obě tyhle studie
+   nepotřebovaly nové klíče a publikovaly se dřív, takže si vzaly volná
+   čísla v pořadí, jak vycházela.)
+6. **Skutečná míra vytažení faktu živým retrievalem — Study #28, hotovo a
+   publikováno (2026-09-11).** Most mezi Fact Injection (simulované) a
+   realitou, nepotřeboval nové klíče, viz sekce "Study #28" níže pro plné
+   výsledky.
+6b. **Brand Legibility → Candidacy → Selection — Study #29, hotovo a
+   publikováno (2026-09-11).** Testuje, jestli jasnější rámování reálných
+   faktů značky mění šanci na kandidaturu/výběr, viz sekce "Study #29"
+   níže pro plné výsledky.
+7. **Founder Lab field test (Study #31)** — na konci, jak Daniel odsouhlasil.
+   (Přečíslováno z #29 na #30 po Study #28, a znovu z #30 na #31 po
+   Study #29, stejný důvod jako bod 5.)
+8. **Purchase** — hned za/s Founder Labem, měřitelné až s jeho reálnými daty
+   v čase.
+
+## Nový projekt: SEO Ranking Factors vs AI Recommendation Factors (2026-09-09)
+
+Podnět: report 131 SEO specialistů (Aleyda Solis okruh) o tom, co podle nich
+v roce 2026 nejvíc ovlivňuje Google ranking. Top 3: Relevance/search intent
+57,1 %, Backlinks 54,8 %, Content quality 47,6 %. Uvnitř kategorií nejsilnější
+dílčí faktory: Search Intent Match +2,60, Trusted domains +2,47, Topical
+relevance +2,22, Original research/first-party data +2,19, naopak scaled
+AI-generated content -1,82.
+
+Důležité: je to expert survey, ne měření. Ukazuje co SEO experti věří že
+funguje pro Google, ne co skutečně mění výsledek. Přesně tenhle rozdíl
+(assumed vs measured) je jádro Atom pozice — Atom se ptá "co skutečně mění
+rozhodnutí AI", ne co si lidé myslí že funguje.
+
+**Nápad (Daniel odsouhlasil, chce uložit kvůli návaznosti na Founder Lab):**
+vzít top SEO předpoklady z reportu jako hotový seznam hypotéz a položit AI tu
+samou otázku — udělat řízené experimenty (jedna proměnná najednou), ne další
+observační/korelační studii. Přesně tenhle typ "změň jednu věc, přeměř, sleduj
+změnu" je metodologicky Founder Lab, takže tenhle projekt navazuje přímo na
+bod 7 výše (Founder Lab field test, Study #31) — dává smysl ho spustit až
+Founder Lab poběží, ne dřív, protože potřebuje stejnou živou/kontrolovanou
+infrastrukturu.
+
+Navržené páry hypotéz (SEO assumption → Atom experiment):
+- Search intent → mění intent-match recommendaci?
+- Trusted/topical backlinks → mění důvěryhodné/tematické zpětné odkazy
+  recommendaci?
+- Original research / first-party data → vybírá AI značku častěji, když má
+  vlastní research?
+- Content freshness → mění čerstvost obsahu recommendaci?
+- Topical authority → mění silnější tematická autorita výběr?
+- Brand signals → mění silnější brand recognition výběr?
+- Technical SEO → mění lepší technická dostupnost výběr?
+- Scaled AI-generated content → škodí recommendaci stejně jako údajně škodí
+  Google rankingu?
+
+Výstup by byla mapa: 🟢 platí pro Google i AI / 🟡 platí pro Google, u AI
+nejasné / 🔵 platí pro AI, ne zjevně pro Google / 🔴 na AI rozhodnutí nemá vliv.
+
+Marketingový úhel (ne kritika Aleydy/SEO, jen přidání vrstvy): "SEO experts
+have spent years identifying what they believe influences search rankings.
+We decided to test how many of those assumptions survive when the decision
+maker is AI."
+
+Status: uloženo, čeká na Founder Lab infrastrukturu (bod 7 výše). Zatím
+nezařazeno do číslovaného pořadí — navázat na něj až po Study #31.
+
+Daniel řekl 2026-09-16: "ano, souhlasim. zapis to a zacneme zitra."
+
+## Nový nápad: Accuracy + Depth beyond presence (2026-09-10)
+
+Podnět: LinkedIn komentář Marcose Viladomiu na Danielův příspěvek o 60 924
+obchodech / 599 v recommendation setu a chování AI botů. Marcos navrhuje dvě
+metriky nad rámec pouhé přítomnosti/viditelnosti: accuracy ("BAS" — Brand
+Accuracy Score) a depth ("CDI" — Content Depth Index). Jeho tvrzení: být
+zmíněný nestačí, záleží na tom, jestli AI o značce říká pravdivé věci
+(accuracy) a jak hluboko/kompletně ji popisuje (depth).
+
+Liší se od toho, co už máme (Possession-Deployment gap, Fact Injection) —
+tamto měří "použije AI fakt, když ho má k dispozici v promptu". Tohle měří
+"jak přesně a jak podrobně popíše značku sama od sebe, bez nápovědy/vloženého
+faktu".
+
+Navržený design (Daniel odsouhlasil 2026-09-10: "urcite to zapis a udelame
+to"):
+- **Accuracy měření:** nechat model popsat značku volně, closed-book (bez
+  search/retrievalu), porovnat tvrzení s reálnými fakty o značce — podíl
+  správných / smyšlených (confabulace) / zastaralých tvrzení.
+- **Depth měření:** počet a rozmanitost konkrétních atributů, které model o
+  značce zmíní bez vyzvání (cena, materiály, use case, srovnání s
+  konkurencí), poměřeno vůči tomu, kolik reálně existuje.
+
+Nevyžaduje nové API klíče, jde spustit na existující kohortě značek
+(Wave-1: Bellroy, Peak Design, Rumpl, Caraway, Onyx Coffee Lab, Branch,
+Boll & Branch, Wild One, Topicals, Zigpoll), stejně levné jako body 1-3 v
+odsouhlaseném pořadí výše. Zapadá do fáze Memory / Evaluation decision path.
+
+Status: uloženo, čeká na zařazení do pořadí. Vzhledem k nulové ceně a shodě s
+existující kohortou dává smysl zařadit brzy, podobně jako body 1-3.
+
+## Study #27 — Accuracy + Depth, postavená a publikovaná (2026-09-11)
+
+Znovupoužity closed-book claims z possession strany Study #23 (Possession vs
+Deployment), 9 Wave-1 brandů, 3 gpt-4o běhy sloučené do stabilních tvrzení,
+nulové nové API volání. Nové bylo jen ověření: každé z 40 tvrzení nezávisle
+zkontrolováno přes živé webové vyhledávání (vlastní stránka brandu, nezávislý
+tisk, retaileři), ne self-graded stejným modelem, který tvrzení vyprodukoval.
+
+Před publikací proběhla kontrola sitewide počítadla "26 Public Studies" na
+Danielovu žádost ("nam to vsude ukazuje 26 studii ale tohle je 25"). Ověřeno
+proti research-roadmap.md interní řadě Study #1-#26 (poslední Study #26 =
+Hidden Context, zdokumentováno v sekci "Oprava číslování" výše) a proti
+`llms.txt`/`mechanism-studies.html` obsahu — číslo 26 sedí přesně, žádná
+duplicita ani chyba nenalezena. Daniel po zeptání potvrdil: nová studie je
+#27, počítadlo jde na 27, ne na 25.
+
+**BAS (Brand Accuracy Score):** 34 ověřitelných tvrzení (6 čistě popisných
+tvrzení bez faktické podstaty vyřazeno z BAS, ponecháno jen pro CDI). 33 z 34
+potvrzeno (97,1 %). Jediné vyvrácené tvrzení: Bellroy cenové srovnání ("lower
+than Peak Design and Nomatic") — Bellroy Slim Sleeve $85-135 vs Nomatic
+vlajkové peněženky $19.99, tedy opak tvrzení. Důležitá oprava za pochodu:
+dřívější, méně důkladný průchod označil jako pravděpodobně smyšlené tvrzení
+Onyx Coffee Lab o solárních zařízeních a uhlíkově neutrální dopravě. Druhé,
+zdroj-po-zdroji ověření (vlastní stránka Onyx "In 2019, we invested in a
+solar energy system for our roastery", Arkansas Business citace zakladatelů
+"We operate our entire facility off of solar", vícleté uhlíkově-neutrální
+messaging) tenhle claim potvrdilo jako pravdivý. Oprava je zdokumentovaná na
+veřejné stránce, ne tiše přepsaná.
+
+**CDI (Content Depth Index):** vlastní 8-kategoriová taxonomie atributů
+(materiály, cena/pozicionování, udržitelnost, design/funkce, záruka,
+certifikace, business model, srovnání s konkurencí). Průměrně 61,1 % pokrytí
+(44 z 72 kategorie-brand párů), rozsah 25 % (Zigpoll) až 87,5 % (Bellroy).
+Udržitelnost se objevuje nevyžádaně u 8 z 9 brandů, záruka a certifikace jen
+u 3 z 9, i když jsou reálné a ověřitelné (Peak Design lifetime warranty,
+Caraway PTFE/PFOA-free certifikace).
+
+Publikováno jako `/research/accuracy-depth.html`, zapojeno všude — vercel.json,
+sitemap-pages.xml, llms.txt, `mechanism-studies.html` (nová karta), sitewide
+bump 26→27 Public Studies (148 souborů) a sitewide footer ai-sitemap link
+(147 souborů, ověřeno skriptem že vklad je uvnitř `<nav class="ai-sitemap">`
+bloku, ne do prvního náhodného výskytu odkazu na hidden-context v textu
+stránky — první verze skriptu tuhle chybu udělala na 2 místech, opraveno
+před publikací).
+
+Data + verifikace: `research-prep/accuracy-depth/verification.json`
+(strukturovaný výsledek, každé tvrzení se zdrojem a kategorií).
+
+**Přečíslování budoucích studií:** Study #27 (cross-platform retrieval) a
+Study #28 (Founder Lab field test) zmíněné výše v sekcích "Oprava číslování"
+a "Reakce na AIVO" posouvají o jednu: cross-platform retrieval je teď
+**Study #28**, Founder Lab field test je **Study #29**.
+
+## Nový nápad: Brand Legibility → Candidacy → Selection (2026-09-11)
+
+Podnět: hypotéza od Silvie (LinkedIn), navazuje na existující externí koncept
+"Brand Legibility" (jak dobře je značka pro AI rozpoznatelná, parsovatelná a
+přiřaditelná) a novější výzkum o tom, že category framing mění, které značky
+AI doporučuje. Daniel navrhuje mnohem konkrétnější, experimentální verzi,
+která to skutečně testuje místo jen popisuje.
+
+**Hypotéza:** Pokud AI rozumí značce jasněji a konzistentněji, je
+pravděpodobnější, že ji zařadí do správného consideration setu a nakonec ji
+doporučí. Klíčové je oddělit tři fáze, které přesně sedí na existující
+decision-path rámec: **Understanding → Candidacy → Selection.**
+
+**Navržený design (Daniel, 2026-09-11):**
+Vzít 30-50 reálných ecommerce brandů. Pro každou vytvořit tři kontrolované
+verze stejné evidence, beze změny faktů, jen hierarchie a framing:
+
+- **A. Clear / Legible** — jasně formulovaná identita a kategorie (např.
+  "Brand X is a premium running shoe brand focused on marathon runners and
+  long-distance road running").
+- **B. Ambiguous** — stejná fakta, ale rozvětvená do více směrů najednou
+  (běžecká obuv + lifestyle obuv + outdoor produkty, pro běžce, cestovatele
+  i běžné spotřebitele).
+- **C. Misaligned hierarchy** — fakticky správně, ale důraz/pořadí obrácené
+  (lifestyle footwear company, která mimochodem dělá i performance running
+  shoes).
+
+Důležité omezení, které si Daniel sám stanovil: nevymýšlet žádná nová fakta,
+pouze měnit framing a hierarchii existujících.
+
+**Test:** stejný model, stejný prompt (např. "I'm training for my first
+marathon. Which running shoe brands should I consider?"), stejné produkty,
+stejné podkladové informace. Jediná proměnná je, jak je identita značky
+strukturovaná.
+
+**Měřené vrstvy:**
+1. **Understanding** — umí AI správně říct, co značka je, pro koho je, v
+   jaké kategorii soutěží, jaký je hlavní use case.
+2. **Candidacy** — dostane se vůbec do consideration setu.
+3. **Correct consideration set** — je-li v setu, je proti správným
+   konkurentům, nebo proti špatné konkurenční skupině (značka může být
+   pochopena správně, ale zařazena do špatného konkurenčního rámce).
+4. **Selection** — vyhraje nakonec doporučení.
+
+**Counterfactual correction (silnější navazující krok):** Vzít značku, která
+prohrává kvůli špatnému consideration setu, změnit pouze framing identity na
+"Clear", a sledovat, jestli se změní vítěz. To by bylo silnější zjištění než
+prostá korelace legibility se skóre.
+
+**Propojení s existujícím výzkumem:** Přímo navazuje na Candidacy vs
+Selection (60 924 obchodů, 599 v recommendation setu, intent odděluje
+candidacy od non-candidacy, ale mezi 599 už skoro nevysvětluje vítěze) a na
+Volbu kandidáta (160 kontrolovaných head-to-head testů, rating 160/160,
+specs 81,9 %, cena 60,6 %) — spojuje jejich zjištění o tom, že konkrétní
+evidence mění vítěze, s novou otázkou, jestli samotná srozumitelnost/framing
+identity určuje, se kterými konkurenty je značka vůbec porovnávána.
+
+Postaví celý mechanismus: **Legibility → Candidacy → Evaluation →
+Selection.**
+
+Status: uloženo, čeká na zařazení do číslovaného pořadí. Až budou reálné
+výsledky, Daniel chce dát Silvii follow-up ve stylu "You gave us the
+hypothesis. We decided to test it."
+
+## Wave-1 cross-study korelační matice, hotovo (2026-09-11)
+
+Bod 1 z odsouhlaseného pořadí výše. Zero nových API volání, reuse dat ze 4
+už publikovaných studií (Possession vs Deployment, Multi-turn Displacement,
+Fact Injection, Hidden Context, stejná Wave-1 kohorta). Data + korelační
+matice v `research-prep/cross-study-matrix/matrix.json`.
+
+Korelační matice sama o sobě nedala nic nového publikovatelného: n=9 je
+málo, BAS má skoro nulovou varianci v týhle kohortě (8 z 9 brandů 100 %),
+takže korelace s BAS jsou tažené jedním bodem. Jediná smysluplná korelace
+(baseline recommend rate vs T4 survival, r=0,68) jen reprodukuje už
+publikované číslo z multi-turn-displacement.html (r=0,6817, p=0,048).
+
+Skutečný nález: Wild One a Zigpoll (v datech "Brand H" a "Brand J") jsou
+zrcadlové anomálie. Zigpoll se skoro nikdy nedostane do candidacy samo
+(1,2 % baseline, 25 % candidacy bez kontextu), ale jakmile se tam dostane
+jakoukoli podmínkou, vyhrává 100 %. Wild One se do candidacy dostane stejně
+snadno jako Zigpoll, ale i s plnou candidacy vyhrává jen 0-53 % podle
+podmínky, a ve vícetahové konverzaci přežije jen 5 % (vytlačen stejným
+konkurentem v 18 z 20 běhů). Zigpollův problém je čistě Candidacy, Wild
+Onein je čistě Selection.
+
+Na Danielovu žádost publikováno anonymně (Brand H / Brand J, stejná
+konvence jako multi-turn-displacement.html) jako nová sekce na
+`candidacy-vs-selection.html` ("Two brands, opposite anomalies"), ne jako
+nová Study # — je to syntéza starých dat, ne nová primární studie, takže se
+nepočítá do Public Studies počítadla.
+
+## Oprava chyby v soudci u Study #23, Possession vs Deployment (2026-09-11)
+
+Vzniklo jako vedlejší nález úkolu 344 (independent-judge re-score na
+studiích #23-26). Zjištěno: Hidden Context (#26) žádného LLM soudce nemá,
+detekce je čistě deterministický string-match (`brand_mentioned = name in
+mentioned_order`), takže self-grading bias se na ni netýká vůbec.
+Multi-turn Displacement (#24) a Fact Injection (#25) prošly nezávislou
+kontrolou 16 náhodných vzorků každá, 16 z 16 shoda, žádný problém.
+
+Possession vs Deployment (#23) měla skutečnou chybu. Na 16 náhodných
+vzorcích shoda jen 56 %, koncentrovaná u Boll & Branch. Protože je re-score
+zdarma (žádná nová generace odpovědí, jen nové soudcovské volání nad
+existujícím textem), prošla se celá populace pro tři značky: Boll & Branch
+(40 volání), soudce řekl "0 faktů použito" ve 27 případech, z toho 26 mělo
+v odpovědi jasný textový doklad faktu, který soudce nezapočítal (např. text
+doslova říká "GOTS certified organic cotton" a soudce vrátí prázdné pole).
+Bellroy 8 z 10, Caraway 9 z 14. Původní soudcovský prompt byl příliš
+striktní na parafráze, přestože instrukce k parafrázím výslovně obsahoval.
+
+Oprava: nový skript `research-prep/possession-vs-deployment/rescore_study.py`,
+per-fact yes/no formát místo jednoho volného seznamu, s konkrétními
+příklady toho, co se počítá jako shoda. Spuštěno Danielem lokálně (sandbox
+nemá vychozí přístup k api.openai.com), 360 nových volání, 0 nových
+generovaných odpovědí. Původní `judge_raw.json` zálohován jako
+`judge_raw_v1_backup.json`, každý řádek nového `judge_raw.json` má navíc
+pole `facts_used_v1` pro dohledatelnost.
+
+Dopad na publikovaná čísla, deployment rate z 16,4 % na 24,2 %, gap rate
+z 83,6 % na 75,8 % (95% CI 69,9-81,6 %). Korelace s recommend rate
+prakticky zmizela, z r=-0,27 (p=0,47) na r=-0,04 (p=0,91), pořád žádný
+vztah, jen silněji. Nejvýraznější posun po značkách: Boll & Branch
+14,4 % → 35,6 % (z podprůměru na nadprůměr), Branch 5,4 % → 20,7 % (přestal
+být extrémem), Rumpl 8,5 % → 23,0 %. Nová čísla teď skoro přesně sedí na
+nezávislé AIVO referenci (75,7 %), rozdíl 0,09 p.b. místo původních 7,9 p.b.
+
+Stránka `research/possession-vs-deployment.html` ještě nebyla nikde
+sdílená, takže opraveno přímo, žádné veřejné "correction" oznámení není
+potřeba. Sekce limitací a jedna z podpůrných flip-cards přepsané tak, aby
+popisovaly skutečně to, co se stalo (nalezená a opravená chyba v soudci),
+místo původního tvrzení o "3 of 3 manual spot-check, zero disagreements",
+které už neodpovídalo realitě. Dopočítáno i navazující: matice
+`research-prep/cross-study-matrix/matrix.json` používala staré
+deployment_rate_pct, přepočítány 4 korelace, které na deployment rate
+závisí (baseline_x_deploy, deploy_x_t4, deploy_x_bas, deploy_x_cdi).
+Sekce Wild One/Zigpoll na candidacy-vs-selection.html čísla z possession-
+deployment vůbec necituje, takže ta zůstala beze změny.
+
+Propsáno i do `research/mechanism-studies.html`, `research/index.html`,
+`research/how-ai-decides.html` a `llms.txt`, všude kde se citovalo staré
+83,6 % / 16,4 % / r=-0,27.
+
+## Návrh studie: Živý retrieval vs simulovaná injekce, hotovo (2026-09-12)
+
+Bod 6 z "Navržené pořadí" (body 4 a 5 zůstávají blokované na API klíčích od
+Daniela, tenhle nepotřebuje žádný nový). Design v
+`research-prep/live-retrieval/STUDY-DESIGN.md`, skript
+`research-prep/live-retrieval/run_study.py`, odzkoušený nasucho end-to-end
+(`--dry-run`, 800 search řádků, judge správně filtroval jen na zmíněné buňky,
+213 z toho pod cap 240).
+
+Otázka: Fact Injection (#25) simulovala úspěšný retrieval ruční injekcí faktu
+a ukázala průměrný lift 77,9 p.b. Tahle studie zjišťuje, kolik z toho stropu
+reálně naplní skutečně zapnutý web search, bez ruční injekce, se stejnými 4
+značkami, stejnými 20 prompty a stejnými fakty jako Fact Injection. Tři body
+na jedné ose: baseline (hotovo) → živý search (nové) → injected ceiling
+(hotovo).
+
+Technicky nové proti zbytku série: místo Chat Completions potřebuje OpenAI
+Responses API s `web_search_preview` toolem, aby šlo měřit i Discovery
+(najde search vůbec stránku s faktem, přes citace) zvlášť od Usage (použije
+ho v odpovědi, stejný judge přístup jako oprava possession-vs-deployment
+včera, per-fact yes/no s příklady parafráze, ne volný seznam).
+
+Odhad ~800-1050 nových volání, search-enabled volání dráž na token než plain
+chat completions. Čeká na Danielovo rozhodnutí, jestli spustit teď (lokálně,
+stejně jako possession-vs-deployment oprava, protože sandbox nemá přístup k
+api.openai.com).
+
+## Study #28 — Živý retrieval, reálná čísla a publikace (2026-09-11)
+
+Daniel spustil oba běhy lokálně (`research-prep/live-retrieval/`), stejný
+postup jako oprava possession-vs-deployment, protože sandbox nemá přístup k
+api.openai.com. `search` (800 volání), `judge` (33 řádků, jen zmíněné buňky),
+pak samostatný potvrzovací re-run `search --repeats 2 --out search_check.json`
+(160 dalších volání).
+
+**Hlavní zjištění, nečekané.** Napříč všemi 800 živými search voláními (4
+značky × 20 promptů × 10 opakování), pak znovu napříč samostatným 160voláním
+potvrzovacím re-runem (2 opakování/prompt, jiné seedy), model nikdy ani
+jednou nezavolal search nástroj (`web_search_preview`). **0 z 960 volání.**
+Nulové citace ve všech 960 odpovědích.
+
+Tak čistá nula vyžadovala aktivní podezření, ne rovnou psaní závěru — mohla
+stejně dobře znamenat "model se rozhodl nehledat" jako "bug v extrakci
+citací". Diagnostický skript (`diagnose_search.py`, 3 testovací prompty),
+spuštěný před tím, než šlo hlavnímu výsledku věřit, rozlišil obě možnosti:
+stejný model, stejný tool, stejná struktura volání, ale 2 ze 3 promptů
+přeformulované jako explicitně časově citlivé ("...right now in 2026") místo
+otevřené nákupní otázky. Dva z těch tří search reálně spustily, pokaždé s 10
+skutečnými citacemi. Tool funguje. Pro přesně tenhle styl otevřené nákupní
+otázky, použitý napříč celou touhle sérií, ho model prostě nikdy nepoužil.
+
+**Mention rate.** Se search prakticky nikdy nespuštěným je živá podmínka
+funkčně identická s baseline (obojí = odpověď z paměti). Brand D (pravé 0%
+baseline, Topicals) zůstal na 0 %. Ostatní tři šly mírně dolů, ne nahoru:
+Brand A/Zigpoll 1,25%→0,5%, Brand B/Branch 5,75%→2,5%, Brand C/Onyx Coffee
+Lab 16,5%→13,5% — v rámci běžného šumu mezi dvěma sběry, ne signál. "Realizovaný
+podíl stropu" ((live−baseline)/(injected−baseline)) vyšel u 3 ze 4 značek
+záporný (-0,8 %, -3,6 %, -3,8 %), u čtvrté přesně 0 %. Nikde blízko 96-97,5%
+stropu, který našla Fact Injection. Ze 33 buněk, kde model značku vůbec
+zmínil, použilo fakt 12 (36,4 %) — číslo reportované pro úplnost, ale příliš
+řídký vzorek a příliš odpojené od reálného search (žádná citace v žádné z
+těch 33 buněk) na to, aby to bylo bráno jako signál samo o sobě.
+
+Publikováno jako `/research/live-retrieval.html`, zapojeno všude — vercel.json,
+sitemap-pages.xml, llms.txt, `mechanism-studies.html` (nová karta),
+`research/index.html` (rotating window karta i finding-card flip karta;
+obojí chybělo u Study #27 při jeho dřívějším zapojení, při týhle příležitosti
+doplněno zpětně i pro Study #27), sitewide bump 27→28 Public Studies (149
+souborů) a sitewide footer ai-sitemap link (147 souborů). Značky
+anonymizované jako Brand A-D, stejné přiřazení jako na Fact Injection
+(A=Zigpoll, B=Branch, C=Onyx Coffee Lab, D=Topicals), žádná nová volba.
+
+**Přečíslování (druhé kolo).** Tahle studie publikuje dřív než cross-platform
+retrieval (pořád blokovaná na Perplexity klíči), takže si bere číslo **#28**
+jako první volná studie v pořadí, ne #29, jak by čekal seznam v sekci
+"Finální odsouhlasené pořadí" výše. Cross-platform retrieval se posouvá z
+#28 na **#29**, Founder Lab field test z #29 na **#30**. Opraveno v sekci
+"Finální odsouhlasené pořadí" výše a na všech místech v dokumentu, kde se
+dřívější čísla objevovala (řádek s "Founder Lab field test, Study #28" byl
+navíc už zastaralý z předchozího kola přečíslování, opraveno taky).
+
+## Study #29 — Brand Legibility → Candidacy → Selection, hotovo a publikováno (2026-09-11)
+
+Otázka: pomůže jasnější rámování vlastních reálných faktů značky jejím
+šancím na kandidaturu (model ji vůbec zmíní) a výběr (model ji dá na první
+místo)? Tři podmínky framing textu se stejnými reálnými fakty pro každou
+značku: clear (organizovaně, kategorie po kategorii), ambiguous (stejná
+fakta, náhodně proházená), misaligned (stejná fakta, matoucí přechody mezi
+tématy).
+
+**Kolo 1 (v1, flagship prompty).** 9 reálných, dobře známých značek,
+původní nákupní prompty. Candidacy 93,33 / 98,89 / 98,89 % napříč clear /
+ambiguous / misaligned, selection 86,67 / 92,22 / 94,44 %. 8 z 9 značek se
+posadily na strop ~100 % kandidatury bez ohledu na framing. Jedna výjimka
+(v kódu interně "caraway") na 40/90/90 % — jediná značka, kde framing
+skutečně něco měnil.
+
+**Kolo 2 (v2, těžší prompty).** Hypotéza: strop je tím, že původní prompty
+byly moc snadné. Nahrazeny za těžší, konkurenčnější nákupní otázky, stejné
+značky. Candidacy 92,22 / 100 / 100 %, selection 80 / 88,89 / 90 %. Stejný
+vzor, 8 z 9 na stropu, stejná výjimka na 30/100/100 %. Těžší prompty strop
+nerozbily.
+
+**Kolo 3 (v3, jmenovaní reální konkurenti).** Hypotéza: model nemá ve všech
+třech podmínkách skutečnou konkurenční volbu, protože nejsou v promptu
+jmenovaní konkrétní soupeři. Nový mechanismus: system message jmenuje
+skutečné reálné konkurenty značky vedle jejího framing textu, stejná řada
+konkurentů ve všech třech podmínkách, mění se jen framing. Candidacy 93,33 /
+94,44 / 98,89 %, selection 88,89 / 92,22 / 92,22 %. Stejná výjimková značka
+tady dala nejčistší, nejdramatičtější výsledek: candidacy 40/50/90 %,
+selection 10/50/80 % — čím jasnější framing, tím HŮŘ, přesně opačně než
+původní hypotéza čekala. 70procentní swing (10 % → 80 % selection),
+opačným směrem.
+
+**Otázka od Daniela: "co takhle to zkusit u jiných značek, ne u těch co
+máme, protože to jsou dost známé značky?"** Vlastní Danielův nápad, přímo
+otestovaný. Vyhledány 3 reálné, ale málo známé malé značky (ověřeno, že se
+neobjevují v žádném "nejlepší značka" žebříčku, na rozdíl od všech 9
+původních), reálná fakta, reální konkurenti. Stejný v3 mechanismus. Výsledek:
+100 % candidacy, 100 % selection, ve všech třech podmínkách, u všech 3
+značek. Sláva/známost značky odmítnuta jako vysvětlení stropu.
+
+**Rozhodující diagnostický test.** Pokud sláva/známost není důvod, co když
+je to existence značky v tréninkových datech vůbec? Vymyšlená, plně
+fiktivní značka (keramické nádobí), vymyšlená fakta, vymyšlení konkurenti —
+značka nemá a nemůže mít žádnou historii, kterou by model znal. Stejný
+mechanismus. Výsledek: 100 % candidacy, 100 % selection, ve všech třech
+podmínkách. I neexistující značka narazila na stejný strop. Rozhodující
+potvrzení: strop je vlastnost struktury promptu (značka popsaná v kontextu
+těsně před odpovídající kategorickou otázkou skoro automaticky vede k
+doporučení), ne vlastnost slávy značky nebo její přítomnosti v trénovacích
+datech.
+
+**Celkově napříč pěti koly.** 1 997 reálných API volání. 12 ze 13 značek
+(9 originál + 3 obskurní + 1 fiktivní) zůstalo na nebo blízko 100% stropu
+kandidatury bez ohledu na framing. Jediná výjimka je reálná, ale její
+pozice na trhu je v přímém napětí s testovacím nákupním promptem
+(středně-prémiový produkt vs. rozpočtově omezená otázka) — a u ní jasnější
+framing snižoval, ne zvyšoval, šanci na doporučení.
+
+Publikováno jako `/research/brand-legibility.html`, anonymizováno (žádná
+konkrétní jména značek ani konkurentů, jen kategorie), text zjednodušen do
+prosté angličtiny na Danielovu žádost. Zapojeno všude — vercel.json,
+sitemap-pages.xml, llms.txt, `mechanism-studies.html` (nová karta),
+`research/index.html` (rotating window karta i finding-card flip karta),
+sitewide bump 28→29 Public Studies (149 souborů) a sitewide footer
+ai-sitemap link (148 souborů).
+
+**Přečíslování (třetí kolo).** Tahle studie publikuje dřív než cross-platform
+retrieval (pořád blokovaná na Perplexity klíči), takže si bere číslo **#29**
+jako první volná studie v pořadí. Cross-platform retrieval se posouvá z #29
+na **#30**, Founder Lab field test z #30 na **#31**. Opraveno v sekci
+"Finální odsouhlasené pořadí" výše a na všech místech v dokumentu, kde se
+dřívější čísla objevovala.
+
+## Nový nápad: Tvar promptu — délka, typ věty, úvodní slovo (2026-09-11)
+
+Podnět: Danielova otázka, jestli by šlo systematicky otestovat, jak moc
+tvar dotazu kupujícího (ne fakta o značce, ale forma otázky samotné) mění
+doporučení. Zásadně jiná osa než cokoliv dosud testované — všechny
+dosavadní studie měnily informace o ZNAČCE (framing, skrytý kontext,
+recenze, reklama, jmenovaní konkurenti). Tahle by měnila DOTAZ, se stejnými
+značkami a stejnou kategorií.
+
+**Otázka:** Mění se to, kterou značku model doporučí (nebo jestli ji vůbec
+zmíní), jen podle toho, JAK se kupující zeptá — délka, typ věty, úvodní
+slovo — i když se ptá na úplně to samé?
+
+**Rozměry (faktory):**
+1. **Délka** (5 úrovní): 1 slovo ("sneakers") → 2 slova ("running shoes")
+   → 3-4 slova ("best running shoes") → celá otázka (~8-12 slov) → detailní
+   odstavec s kontextem (~30+ slov, rozpočet, use case).
+2. **Typ věty** (4 úrovně): otázka ("What's the best running shoe?"),
+   příkaz ("Recommend a running shoe."), potřeba/tvrzení ("I need running
+   shoes."), holé klíčové slovo ("running shoes").
+3. **Úvodní slovo/fráze** (5-6 úrovní): "What/Which...", "Best...",
+   "I need...", "Looking for...", "Can you recommend...", "Show me...".
+4. Kategorie/značka jako replikace (3-5 značek), ne jako další faktor —
+   drží se konstantní fakta o značce, mění se jen dotaz.
+
+**Jak na to prakticky, ne hrubou silou.** Doslova 10 000 ručně psaných
+unikátních vět není potřeba ani praktické — většina by byla jen kosmetická
+obměna, ne skutečně nová informace. Místo toho šablonový generátor:
+{délka} × {typ věty} × {opener} = 5 × 4 × 6 = 120 unikátních kombinací.
+Kříženo s 3-5 značkami/kategoriemi pro replikaci = 360-600 unikátních
+promptů. Každý puštěný vícekrát (5-10 opakování) kvůli šumu = 1 800-6 000
+reálných API volání. To je srovnatelný řád jako předchozí studie v týhle
+sérii (800-2 000 volání), jen o dost víc, a klidně jde škálovat blíž
+Danielově představě 10 000, pokud bude chtít.
+
+**Co by se měřilo:** candidacy rate (zmíní značku vůbec) a selection rate
+(dá ji na první místo) podle délky/typu věty/openeru. Buď se ukáže, že je
+model vůči tvaru dotazu stabilní (užitečné zjištění samo o sobě — "nezáleží
+jak se zeptáš"), nebo že se odpověď mění jen podle formy otázky, což by byla
+silná zpráva o tom, jak moc na doporučení záleží styl psaní kupujícího
+(hlasové vyhledávání jedním slovem vs. detailní chat dotaz).
+
+Status: navrženo, čeká na rozhodnutí o rozsahu (pilot vs. plný běh) a na
+zařazení do pořadí. Nespuštěno.
+
+**Rozšíření designu (Daniel, 2026-09-11):** potvrdil směr — testovat od
+jednoho slova až po celou větu/odstavec, a "typ věty" myslet doslova
+gramaticky: oznamovací, rozkazovací, tázací. Otázka "napadá tě ještě něco?"
+přinesla tyhle další úhly, taky zapsané pro pozdější rozhodnutí:
+
+- **Styl psaní / interpunkce.** Otazník vs. bez něj, velká písmena vs.
+  malá, čistý text vs. běžné psací chyby/překlepy (jak lidi opravdu píšou
+  do vyhledávání nebo jak to vyjede přepis hlasu).
+- **"Persona" dotazu.** Google-styl (holá klíčová slova, "running shoes
+  buy cheap"), chat-styl (konverzačně, "hey what's a good running shoe"),
+  hlasový asistent styl (dlouhé, bez interpunkce, jak vyjede přepis řeči).
+  Silná osa, protože přímo mapuje, jak lidi dnes různé AI nástroje používají.
+- **Počet a pozice omezení v dotazu.** Kolik podmínek kupující naskládá
+  (rozpočet, velikost, účel, barva) a jestli je dá na začátek nebo konec
+  věty.
+- **Otevřená vs. uzavřená otázka.** "What's the best running shoe?"
+  (otevřená) vs. "Is Brand X good for running?" (ano/ne) vs. "Is Brand X or
+  Brand Y better?" (srovnávací).
+- **Naléhavost/emoce.** Neutrální dotaz vs. naléhavý ("I desperately need
+  running shoes for a marathon tomorrow!").
+- **Napříč víc AI modely.** Jestli se efekt (pokud existuje) liší mezi
+  GPT/Claude/Gemini/Perplexity. Váže se na už navrženou cross-model studii
+  (Kandidát A v seznamu výše), blokovanou na Anthropic/Google klíčích od
+  Daniela — dává smysl spojit sběr dat do jedné vlny, ne dělat dvakrát.
+- **Demografie/generace pisatele (Daniel, 2026-09-11).** Mění se
+  doporučení podle toho, kdo se ptá — žena, muž, mladá žena, starší muž?
+  Dvě odlišné cesty, jak to testovat, s různými riziky:
+  1. **Přímé přiznání v dotazu** — "As a 65-year-old man, what's a good
+     running shoe?" — kontrolované, jasně měřitelné, ale je to umělé,
+     lidi takhle v reálu nepíšou.
+  2. **Odvozeno ze stylu psaní** — generačně/gender kódovaný způsob psaní
+     (mladí: zkratky, emoji, neformální slang; starší generace: celé věty,
+     formálnější tón) bez toho, aby se identita řekla napřímo — blíž
+     realitě, propojuje se s osou "persona dotazu" a "styl psaní" výše.
+  Tohle je citlivější téma než zbytek studie — pokud by se ukázal reálný
+  rozdíl v doporučeních podle vnímaného pohlaví/věku pisatele, je to
+  v podstatě nález o zaujatosti (bias) doporučovacího systému, ne jen
+  o stylu promptu. Má to reportovat opatrně a věcně, se stejnou úrovní
+  disclaimeru jako zbytek webu (žádné senzacechtivé závěry z malého
+  vzorku), ale je to legitimní a hodnotná otázka — přidáno do designu.
+
+Pořád nespuštěno, jen rozšířený design pro budoucí rozhodnutí o rozsahu.
+
+**Finální design (Daniel, 2026-09-11): "udělej mi mapu."** Sepsaný do
+`research-prep/prompt-shape/STUDY-DESIGN.md` — dvě oddělené vrstvy místo
+jedné obří kombinatoriky:
+
+- **Vrstva A (mechanická, neutrální):** délka (5) × typ věty (3,
+  oznamovací/rozkazovací/tázací) = 15 kombinací.
+- **Vrstva B (persony, hlavní vrstva):** 7 archetypů pisatele — neutrální
+  baseline, Google-styl, hlasový asistent, mladá žena, mladý muž, starší
+  žena, starší muž — každý s 8 rotujícími šablonami, aby nešlo o artefakt
+  jedné věty.
+- Sdílená mechanika: 4 značky recyklované ze Study #29 (fakta beze změny),
+  stejný system-message mechanismus jako zbytek série.
+- Odhad: Vrstva A 480 volání + Vrstva B 224 volání = **~704 volání** pro
+  první kolo, škálovatelné výš v druhém kole.
+- Měří se candidacy rate, selection rate, a nově "persona-brand afinita"
+  — drží se nějaký styl blíž konkrétní značce napříč všemi 4 značkami?
+- Metodologická poznámka zapsaná přímo do designu: persony jsou náš psaný
+  text podle běžných konvencí registru, ne tvrzení o tom, jak skutečně
+  píšou reálné skupiny lidí — nález je o reakci modelu na STYL, ne
+  ověřené demografické chování. Psát o tom opatrně, věcně, bez přehánění,
+  pokud se ukáže signál.
+
+Nespuštěno, čeká na Danielovo "pilot" nebo "naplno".
