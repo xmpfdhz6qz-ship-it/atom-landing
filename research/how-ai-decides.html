@@ -602,7 +602,7 @@
     <h2 class="section-title">What does AI already know?</h2>
     <p class="section-body">Before a shopping question is ever asked, a language model already carries some notion of which brands exist and how they tend to be positioned. That prior knowledge comes from training, not from the live conversation, and it can shape an answer before retrieval or evaluation even begin.</p>
     <div class="sub-head">What we've found</div>
-    <p class="section-body">Brand prominence appears to matter, a little. Wikipedia fame alone explains 1.2% of recommendation frequency. Widening to four public signals, cross-lingual reach, domain age, and recent media volume, raises that to just 11.2% combined, still far under the 61.4% the model's own past behavior explains about itself. Measured store quality explains almost none of it. A separate test asked directly what a model claims to know about a brand, then checked whether any of it shows up in a real recommendation: 83.6% of possessed facts never appear (95% CI 78.3-88.6%, n=1,392 fact checks across 9 brands). Knowing about a brand and using what it knows are two different things, and that gap does not shrink for brands that already win more often (r=-0.27, n=9). A causal follow-up tested whether that gap is fixable: inject one real, verified fact directly into context for 4 brands that barely get recommended today, as if retrieval had just succeeded. Average mention-rate lift across the cohort was 77.9 percentage points, but every brand showed the lift outpacing the rate the specific fact actually got cited, a Linkage Gap signature, more evidence the bottleneck is getting information in front of the model at generation time, not whether the model is capable of reasoning with it once it's there.</p>
+    <p class="section-body">Brand prominence appears to matter, a little. Wikipedia fame alone explains 1.2% of recommendation frequency. Widening to four public signals, cross-lingual reach, domain age, and recent media volume, raises that to just 11.2% combined, still far under the 61.4% the model's own past behavior explains about itself. Measured store quality explains almost none of it. A separate test asked directly what a model claims to know about a brand, then checked whether any of it shows up in a real recommendation: 75.8% of possessed facts never appear (95% CI 69.9-81.6%, n=1,392 fact checks across 9 brands). Knowing about a brand and using what it knows are two different things, and that gap does not shrink for brands that already win more often (r=-0.04, n=9). A causal follow-up tested whether that gap is fixable: inject one real, verified fact directly into context for 4 brands that barely get recommended today, as if retrieval had just succeeded. Average mention-rate lift across the cohort was 77.9 percentage points, but every brand showed the lift outpacing the rate the specific fact actually got cited, a Linkage Gap signature, more evidence the bottleneck is getting information in front of the model at generation time, not whether the model is capable of reasoning with it once it's there.</p>
     <div class="sub-head">What we don't know</div>
     <p class="section-body">What exactly enters a model's memory, how strongly a brand is represented there, and why a possessed fact gets pulled into one generated answer but not another. Four easily-measurable public-footprint signals, and simple win-rate, have now been ruled out as the main answer; the actual retrieval-at-generation-time mechanism remains genuinely open. The fact-injection test simulates a successful retrieval step rather than measuring how often real retrieval actually surfaces the right fact, that's a separate, harder question.</p>
     <div class="layer-related">
@@ -882,7 +882,7 @@
           <div class="mini-card-main">
             <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Memory</span><span class="hd-status emerging sm">Partially Measured</span></div>
             <div class="mini-card-title">The Model Knows 6 Facts About Your Brand. It Uses One</div>
-            <div class="mini-card-body">83.6% of facts a model claims to know never appear in a real recommendation, uncorrelated with win rate.</div>
+            <div class="mini-card-body">75.8% of facts a model claims to know never appear in a real recommendation, uncorrelated with win rate.</div>
           </div>
           <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
         </a>
@@ -965,6 +965,14 @@
             <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Candidacy</span><span class="hd-status measured sm">Measured</span></div>
             <div class="mini-card-title">Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time</div>
             <div class="mini-card-body">A fabricated ad-exposure claim in hidden context beat a combined brand+real-fact condition for winner-rate lift.</div>
+          </div>
+          <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
+        </a>
+        <a class="mini-card" href="/research/brand-legibility">
+          <div class="mini-card-main">
+            <div class="mini-card-tags"><span class="mini-card-eyebrow">Mechanism Study &middot; Candidacy</span><span class="hd-status measured sm">Measured</span></div>
+            <div class="mini-card-title">We Described One Brand to the Model, Real or Invented. It Recommended That Brand Anyway.</div>
+            <div class="mini-card-body">Clearer framing barely moved candidacy for 12 of 13 brands, even a fully invented one hit the same near-100% ceiling.</div>
           </div>
           <span class="mini-card-link"><span class="lr-text">Read report</span><span class="flow-arrows"><span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span></span>
         </a>
@@ -1133,7 +1141,7 @@
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>26</b> Public Studies</div>
+      <div><b>29</b> Public Studies</div>
       <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -1176,6 +1184,9 @@
         <a href="/research/cold-start">We Invented a Brand With Zero History. Reviews Got It Picked Anyway</a>
         <a href="/research/memory-source">We Widened the Fame Signal Four Ways. It Barely Moved</a>
         <a href="/research/recommendation-confidence">The Model Hedges Most When It's Most Sure</a>
+        <a href="/research/accuracy-depth">The Model Is Almost Never Wrong About Your Brand. It Just Doesn't Say Much</a>
+        <a href="/research/live-retrieval">The Model Had Real Web Search. It Never Once Reached for It.</a>
+        <a href="/research/brand-legibility">We Described One Brand to the Model, Real or Invented. It Recommended That Brand Anyway.</a>
         <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
         <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
         <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
