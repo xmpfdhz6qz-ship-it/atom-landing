@@ -1120,4 +1120,456 @@ jedné obří kombinatoriky:
   ověřené demografické chování. Psát o tom opatrně, věcně, bez přehánění,
   pokud se ukáže signál.
 
-Nespuštěno, čeká na Danielovo "pilot" nebo "naplno".
+**Postavený skript (2026-09-12).** Daniel vybral tuhle studii jako další
+na spuštění ze seznamu kandidátů. `research-prep/prompt-shape/brands.json`
+(4 značky zkopírované ze Study #29 — 3 obskurní reálné + 1 fiktivní,
+stejná fakta, stejní jmenovaní konkurenti) a
+`research-prep/prompt-shape/run_study.py` (`grid-a` = Vrstva A, 480
+volání; `personas` = Vrstva B, 224 volání; stejný mechanismus jako
+Study #29 candidacy-multi — system message nese fakta + jmenované
+konkurenty, jméno testované značky nikdy není v user promptu). Vrstva A
+generovaná programově z pár ručně napsaných polí na značku (`bare_kw`,
+`qualified_kw`, `topic`, `detail_context`), ne 60 ručně psaných vět.
+Candidacy/selection se čtou přímo z textu odpovědi (stejná heuristika
+jako zbytek série), žádný samostatný judge krok není potřeba. Odzkoušeno
+nasucho (`--dry-run`), čísla sedí přesně na 480 + 224 = 704. Čeká na
+Danielovo spuštění lokálně (`OPENAI_API_KEY`, sandbox nemá přístup k
+api.openai.com, stejně jako u předchozích studií).
+
+**Persony podložené reálným výzkumem (2026-09-12).** Daniel se zeptal,
+jestli existuje výzkum na to, jak lidé v různých věkových kategoriích
+píšou — ano, existuje. Sociolingvistický výzkum generačních rozdílů v
+digitální komunikaci: starší generace čtou tečku na konci věty jako
+jasnou/formální (71 % lidí nad 50), Gen Z ji vynechává a bere ji jako
+chladnou/pasivně-agresivní, místo toho víc používá vykřičníky pro
+nadšení. Emoji: 68 % Gen Z je běžně používá i v práci, u 50+ jen 36 %,
+starší uživatelé je navíc častěji špatně interpretují. Existuje i
+akademická literatura (Thurlow 2002, "Generation Txt?"; textisms a
+generačně podmíněná CMC variace). Podle toho upravené
+`young_woman`/`young_man` šablony v `run_study.py` (méně teček, víc
+vykřičníků/emoji, lehce, ne karikatura) — `older_woman`/`older_man` už
+byly v souladu, beze změny. Zdroje a plné znění poznámky:
+`research-prep/prompt-shape/STUDY-DESIGN.md`. Skript znovu odzkoušen
+nasucho, čísla beze změny (480 + 224 = 704).
+
+**Reálná data, Daniel spustil (2026-09-12).** `grid_a_raw.json` (480
+řádků) a `personas_raw.json` (224 řádků). Candidacy je skoro všude na
+stropu ~97-100 % (očekávané, sedí s celou sérií), ale **selection rate
+se hýbe silně a staticky signifikantně** — na rozdíl od většiny
+předchozích framing/atribuce studií v sérii, tohle je skutečný nález,
+ne null.
+
+*Vrstva A — typ věty (pooled napříč značkami a délkami):* oznamovací
+95,6 % vs. rozkazovací 86,9 % vs. tázací 74,4 % (χ²=29,65, p<0,00001).
+Oznamovací věta vyhrává o 21 procentních bodů nad tázací, při identických
+faktech a identické značce.
+
+*Vrstva A — délka (pooled napříč značkami a typy):* bez čistého
+monotónního trendu — L1 bare 91,7 %, L2 qualified 83,3 %, L3 "best X"
+frázování 65,6 % (nejhorší!), L4 celá přirozená otázka 100 % (strop),
+L5 odstavec 87,5 % (χ²=50,85, p<0,00001). Nejhorší je krátké
+"best X" frázování, ne extrémy délky — kontraintuitivní a stojí za
+zdůraznění.
+
+*Vrstva A — 15 buněk (interakce délka × typ):* silná interakce
+(χ²=167,97, p<0,000001) — např. L3_best_phrase × question = 28,1 %
+(nejhorší buňka celé mřížky), zatímco L1_bare × question = 100 % a
+L4_full_question × question = 100 %. Efekt typu věty NENÍ konstantní
+napříč délkami.
+
+*Vrstva B — persony (pooled napříč značkami):* older_man 96,9 % (nejlíp)
+až google_style 68,8 % (nejhůř) — rozptyl 28 procentních bodů
+(χ²=14,60, p=0,024, signifikantní). Pořadí: older_man > neutral_baseline
+≈ voice_assistant ≈ young_woman (90,6 %) > older_woman (87,5 %) >
+young_man (78,1 %) > google_style (68,8 %).
+
+*Vrstva B — persona-brand afinita:* reálný signál, ne jen jednotná
+kvalita značky. Příklad: bodyartforms má nejnižší celkovou selection
+rate (76,8 %), ale u older_woman a young_woman skáče na 100 % — u
+jiných person (google_style, voice_assistant) je naopak podprůměrná.
+To je přesně ten typ nálezu (persona × značka interakce), který dělá
+tuhle studii hodnotnou.
+
+**Hlubší analýza + nezávislý re-check (Daniel, 2026-09-12) — DŮLEŽITÁ
+OPRAVA.** Na Danielovu žádost dvě věci před psaním stránky:
+
+1. *Logistická regrese s brand jako kontrolní proměnnou* (grid_a i
+   personas): efekt typu věty + délky přežívá kontrolu na značku beze
+   změny (LR test p<0,00000001), efekt persony taky (LR test p=0,024,
+   skoro identické s prostým χ² testem) — značkové rozdíly efekt
+   nevysvětlují, jsou to nezávislé, aditivní efekty. (Poznámka: plný
+   model s L4_full_question měl konvergenční varování kvůli kvazi-
+   separaci — ta buňka je 100/100 ve všech značkách, koeficient pro ni
+   není interpretovatelný, ale omnibus LR test zůstává platný.)
+
+2. *Nezávislý re-check mechanické `position` heuristiky* (byla to jen
+   `idx < 15 % délky textu`, ne skutečné čtení pořadí). Ruční čtení
+   vzorku odpovědí odhalilo reálnou chybu: model často začíná
+   odpovědí úvodní větou ("The best X depends on...") PŘED číslovaným
+   seznamem — testovaná značka byla často opravdu **"1." v seznamu**
+   (skutečný vítěz), ale protože její první zmínka padla až za
+   úvodní větou, stará heuristika ji mylně označila jako prohru.
+   Napsán přesnější re-score (`grid_a_rescored.json`,
+   `personas_rescored.json`): hledá první číslovanou položku
+   seznamu a kontroluje značku v ní, a když seznam není, porovnává
+   pořadí první zmínky značky vs. jmenovaných konkurentů. Shoda se
+   starou heuristikou jen **85,4 %** napříč 704 řádky.
+
+   **Výsledek přepočtu — efekt typu věty se OTOČIL:** stará
+   heuristika: oznamovací 95,6 % > rozkazovací 86,9 % > tázací
+   74,4 %. Nová: **tázací 87,5 % > oznamovací 82,5 % > rozkazovací
+   76,2 %** (χ²=6,91, p=0,032 — pořád signifikantní, ale opačný
+   směr). Hlavní "declarative vyhrává" nález ze starého skórování
+   byl artefakt vadné heuristiky, ne reálný efekt — nesmí se
+   publikovat v původní podobě.
+
+**Skutečný LLM judge místo heuristiky (Daniel, 2026-09-12).** Daniel:
+"chci to udelat dobre, jestli potrebujeme dalsi data tak pojd dame
+dalsi data" — pravidlový re-score výše je pořád jen o málo lepší
+heuristika, ne skutečný nezávislý úsudek. Přidán do `run_study.py`
+příkaz `judge` — posílá každou odpověď s zmíněnou značkou na gpt-4o
+jako skutečného soudce (`WINNER_JUDGE_SYSTEM`: značka je vítěz, pokud
+je "1." v číslovaném seznamu, nebo jasně vedoucí doporučení, nebo
+jediná jmenovaná značka bez konkurence; jinak ne), stejný
+`_parse_json_loose` vzor jako zbytek série. Výstup má pole
+`llm_is_winner` navíc k původnímu `position` (to zůstává v datech pro
+transparentnost, ale `llm_is_winner` je číslo, kterému se má věřit).
+Odzkoušeno nasucho na obou souborech (480 + 224 řádků, formát sedí).
+Čeká na Daniela:
+
+```
+cd research-prep/prompt-shape
+python3 run_study.py judge --in grid_a_raw.json --out grid_a_judged.json
+python3 run_study.py judge --in personas_raw.json --out personas_judged.json
+```
+
+**FINÁLNÍ VÝSLEDKY — skutečný LLM judge, Daniel spustil (2026-09-12).**
+`grid_a_judged.json` a `personas_judged.json`. Shoda judge se starou
+heuristikou 90,1 % (grid) / 90,5 % (personas) — o dost vyšší než shoda
+mého pravidlového re-score (85,4 %), což ukazuje, že i ten pravidlový
+re-score byl sám o sobě nedokonalý. `llm_is_winner` je číslo, kterému
+se věří, a je to teď třetí, ne druhé kolo přepočtu — pro každé zjištění
+se srovnávají všechny tři metody (stará heuristika / pravidlový
+re-score / LLM judge), aby bylo vidět, co je robustní a co bylo jen
+artefakt konkrétní metody skórování.
+
+*Typ věty — nekonzistentní přes metody, ale signifikantní ve finální:*
+stará heuristika: oznamovací 95,6 % > rozkazovací 86,9 % > tázací
+74,4 %. Pravidlový re-score: tázací 87,5 % > oznamovací 82,5 % >
+rozkazovací 76,2 %. **LLM judge (finální): oznamovací 98,8 % >
+tázací 93,8 % > rozkazovací 91,2 %** (χ²=9,11, p=0,011). LLM judge se
+vrací ke směru staré heuristiky (oznamovací nahoře), ale nesouhlasí s
+pořadím zbylých dvou, a hlavně — rozptyl je mnohem menší (7,6 b.b.,
+ne 21 b.b.). Závěr: oznamovací věta má mírnou, ale skutečnou výhodu;
+původní "21bodový rozdíl" byl nadhodnocený artefakt vadné heuristiky.
+
+*Délka — nejrobustnější nález, stejný směr ve VŠECH TŘECH metodách:*
+L3 "best X" frázování je nejslabší buňka podle staré heuristiky
+(65,6 %), pravidlového re-score (69,8 %) I LLM judge (84,4 %) — jediný
+nález, který se nezměnil napříč žádnou metodou skórování. L4 (celá
+přirozená otázka) je na stropu 100 % ve všech třech. LLM judge:
+L1 99,0 %, L2 97,9 %, L3 **84,4 % (nejslabší)**, L4 100 %, L5 91,7 %
+(χ²=32,29, p=0,000002). Tohle je nález, který jde s klidným svědomím
+publikovat.
+
+*Persony — google_style konzistentně nejslabší napříč všemi třemi
+metodami.* LLM judge: voice_assistant/young_woman/older_woman/
+older_man všechny na stropu 100 %, neutral_baseline 93,8 %, young_man
+90,6 %, **google_style 84,4 % (nejslabší)** (χ²=17,38, p=0,008).
+Google-styl holých klíčových slov ("best ceramic dinnerware cheap")
+funguje hůř než jakýkoliv jiný registr, včetně neformálního mladého
+psaní — konzistentní přes všechny tři metody skórování.
+
+*Persona-brand "afinita" — slabší nález, než se zdálo předtím.* Pod
+LLM judge je matice skoro celá na stropu kromě bodyartforms (75–100 %
+napříč personami) a google_style (88 % napříč značkami) — vypadá to
+spíš jako dva ADITIVNÍ hlavní efekty (bodyartforms je obecně slabší
+značka, google_style je obecně slabší persona), ne jako silná
+interakce persona×značka, jak naznačovala data pod starou heuristikou.
+Čestnější formulace pro stránku: "afinita" není tak silný nález, jak
+se zdálo po prvním kole.
+
+*Logistická regrese s kontrolou na značku (LLM judge ground truth):*
+typ věty + délka přežívají kontrolu na brand (LR test p<0,00000001),
+persona taky (LR test p=0,003) — oba efekty jsou nezávislé na
+brandových rozdílech.
+
+**Shrnutí pro publikaci:** délka (L3 "best X" slabý, plná otázka na
+stropu) je nejrobustnější a nejsilnější nález, jde rovnou na stránku.
+Persona (google_style slabý) taky robustní přes všechny tři metody.
+Typ věty je reálný, ale mírnější, než se zdálo (oznamovací mírně nad
+ostatními, ne dramaticky). Persona-brand afinita se má na stránce
+prezentovat opatrněji než původně plánováno — spíš jako pozorování
+("bodyartforms/google_style byly nejslabší napříč měřením") než jako
+"objevili jsme interakci styl×značka".
+
+   Efekt délky přežívá v podobném tvaru (χ²=38,87, p<0,000001,
+   L3_best_phrase pořád slabší, L4 pořád strop 100 %). Efekt persony
+   taky přežívá (χ²=16,77, p=0,010), pořadí se mírně posunulo
+   (older_man/older_woman/young_woman nahoře, google_style/young_man
+   dole), ale směr zůstal stejný. Persona-brand afinita (bodyartforms
+   slabý napříč personami kromě young_woman) potvrzena i po přepočtu.
+
+   **Závěr pro publikaci:** délka a persona jsou reálné, robustní
+   nálezy přežívající nezávislý re-check. Typ věty (oznamovací vs.
+   rozkazovací vs. tázací) NENÍ spolehlivý nález ve své původní podobě
+   — bude potřeba buď hlásit s opravenými čísly (tázací vyhrává, ne
+   oznamovací), nebo případně re-scorovat celý dataset ještě jednou
+   skutečným LLM judge (sandbox nemá přístup k api.openai.com, čeká na
+   Daniela), než se cokoliv o typu věty napíše na veřejnou stránku.
+
+Čeká na Danielovo rozhodnutí o dalším kroku (hlubší analýza / psaní
+stránky).
+
+## Nový nápad: Kdo tvrzení říká — claim-attribution (2026-09-12)
+
+Vzniklo z LinkedIn komentáře (John Michaels, reakce na Danielův komentář
+pod cizím článkem o AI SEO): *"Not just on the website but across the
+ecosystem. Where else and who is backing your claims. Not your
+marketing but real claims..."* Bez metodologie a bez čísel z jeho
+strany, ale testovatelné tvrzení stejným mechanismem jako zbytek série.
+
+**Research question:** mění se selection rate (kdo vyhraje přímé
+srovnání se zavedeným konkurentem), když je identický fakt o značce
+rámovaný jako (a) self-claim/marketing první osobou, (b) neutrální
+popis bez zdroje, nebo (c) zdánlivě potvrzený nezávislou třetí stranou
+— při stejné délce a stejném informačním obsahu?
+
+**Metodologická poznámka:** Brand Legibility (Study #29) už ukázala, že
+candidacy rate pro pojmenované značky je skoro vždy na stropu ~100 %
+nezávisle na framingu. Proto se měří primárně **winner rate** v přímém
+hlava-nehlava srovnání (formát Cold Start/Hidden Context), ne candidacy.
+
+**Design:** 4 značky (recyklované ze Study #29, 3 obskurní reálné + 1
+fiktivní) × 4 podmínky (bez faktu / self-claim / neutrální / třetí
+strana) × 20 nákupních záměrů × 5 opakování = **1 600 volání.** Fakt
+vkládaný do skrytého kontextu stejným mechanismem jako Fact Injection a
+Hidden Context, žádné jméno testované značky v user promptu, stejný
+judge přístup jako zbytek série.
+
+**Tři možné výsledky:** (1) atribuce nehraje roli, hraje roli jen
+přítomnost faktu — vyvrací Michaelsovu tezi; (2) třetí strana vítězí
+nad self-claim — potvrzuje ji, silný nález; (3) nekonzistentní/obrácený
+výsledek napříč značkami — signál, že efekt závisí na něčem dalším.
+
+Plný design: `research-prep/claim-attribution/STUDY-DESIGN.md`.
+
+Otevřená rozhodnutí pro Daniela: zúžit vzorek (1 600 volání je nad
+obvyklým rozsahem 800–2 000, ale ne extrémně), stačí 3 rámy atribuce
+nebo přidat rozlišení typu třetí strany ve druhém kole, které přesně 4
+značky použít.
+
+Nespuštěno. Čeká na Danielovo "pilot" nebo "naplno".
+
+## Nový nápad: Generický AI hlas vs. distinctivní lidský hlas — voice-authenticity (2026-09-12)
+
+Zpřesňuje bod **#356** ze seznamu ("specificity A/B study"), který tam
+ležel jen jako název bez designu. Podnět: LinkedIn post Nimry Shabbir —
+tvrdí, že lidé bezpečně poznají generický, "duší prázdný" AI text a
+přeskočí ho, zatímco čím dál víc věří AI úsudku o tom, KOHO doporučit.
+To je pozorování o lidech (vyžadovalo by survey), otočené na
+testovatelnou otázku o modelu: pozná/zohlední MODEL tentýž rozdíl při
+rozhodování, koho doporučit?
+
+**Research question:** mění se selection rate, když jsou identická,
+ověřená fakta o značce napsaná ve třech registrech — holá fakta bez
+hlasu, generický AI/korporátní buzzword text, nebo distinctivní
+konkrétní lidský text — při stejném informačním obsahu?
+
+**Metodologická poznámka:** stejná jako u claim-attribution — měří se
+primárně winner rate kvůli ceiling efektu na candidacy zjištěnému u
+Brand Legibility.
+
+**Design:** 4 značky (recyklované ze Study #29/claim-attribution) × 3
+registry (bare facts / generic AI voice / distinctive voice) × 20
+nákupních záměrů × 5 opakování = **1 200 volání.** Distinctive voice =
+doslovný "clear" framing ze Study #29 (žádná nová fakta), generic AI
+voice = nový přepis týchž faktů do korporátních frází, bare facts =
+telegrafický výčet. Konkrétní příklad (Colored Organics) ve všech třech
+registrech je v designu.
+
+**Tři možné výsledky:** (1) žádný rozdíl mezi registry — vyvrací
+aplikaci Nimřina pozorování na model; (2) distinctivní hlas vítězí nad
+generickým — potvrzuje ji, silný nález; (3) neočekávaný/obrácený
+výsledek — model preferuje stručnost/neutralitu před jakýmkoliv
+"prodejním" tónem.
+
+Plný design: `research-prep/voice-authenticity/STUDY-DESIGN.md`.
+
+Otevřená rozhodnutí pro Daniela: souhlasí s navrženým tónem generic/
+bare příkladu na Colored Organics, napsat zbylé 3 značky stejně,
+stačí 3 registry nebo přidat 4., zúžit 1 200 volání?
+
+Nespuštěno. Čeká na Danielovo "pilot" nebo "naplno".
+
+## Prompt-shape publikováno jako Study #30 a zapojeno po celém webu (2026-09-12)
+
+Daniel schválil obsah `research/prompt-shape.html` po dvou kolech úprav
+(šířka hero-stat-row na šířku navbaru, odstranění všech pomlček z textu,
+zjednodušená angličtina, zdroje k personám hned u prvního výskytu v
+sekci "Where this comes from" i podrobně u nálezu). Přiřazeno číslo
+**Study #30** (poslední bylo brand-legibility #29). Zapojeno stejným
+způsobem jako každá předchozí studie:
+
+- `vercel.json` — routy `/research/prompt-shape` a `/research/prompt-shape/`.
+- `sitemap-pages.xml` — nový `<url>` záznam.
+- `llms.txt` — nový bullet v Research sekci + oprava zastaralého
+  "19 reports and counting" na "30 reports and counting".
+- `research/mechanism-studies.html` — nová karta ve gridu studií.
+- `research/index.html` — nová karta v rotujícím Mechanism Studies
+  panelu + nový finding-card (data-key="28") ve flip-grid sekci.
+- `research/how-ai-decides.html` — nová `.mini-card` ve skupině
+  "Candidacy" v Research Library + nový odkaz v `.layer-related` bloku
+  sekce "4 · Candidacy" (hlavní obsah stránky, ne jen knihovna).
+- Sitewide footer `.ai-sitemap` blok — odkaz na prompt-shape přidán do
+  všech **150 živých stránek** (skript, ne ručně; kotva = přesný text
+  odkazu na brand-legibility, vloženo hned za něj). Vynechána záměrně
+  interní stará zrcadlová složka `new-web/` uvnitř `atom-landing-main 4`
+  (120 souborů, zaseknutá na "18 Public Studies" a chybí jí i
+  brand-legibility odkaz — už předtím nebyla součástí žádného
+  sitewide kroku, není live web, netýká se tohoto zapojení).
+- Sitewide "Public Studies" counter — bump na **30** ve všech 150
+  živých souborech (včetně vlastní stránky prompt-shape.html).
+
+Ověřeno skriptem: 146 souborů dostalo nový odkaz, 4 ho už měly
+(mechanism-studies.html, research/index.html, how-ai-decides.html mají
+odkaz v hlavním obsahu i v patičce, prompt-shape.html má vlastní
+sebe-odkaz), 0 souborů bez kotvy k ruční kontrole, 0 souborů bez vzoru
+Public Studies. Tag-balance kontrola (div/section/a/span) prošla na
+vzorku 10 klíčových souborů po skriptu beze změny.
+
+## Claim-attribution — postaven run_study.py, čeká na Danielův reálný běh (2026-09-12)
+
+Daniel zvolil claim-attribution jako další studii a chtěl ji "od a až do
+z... kompletně" — vznikla z LinkedIn komentáře Johna Michaelse ("kdo
+stojí za tvým tvrzením... ne marketing, ale reálná tvrzení ve struktuře,
+kterou LLM hledá"). Cíl: zjistit, jestli se selection rate (vyhraje
+přímé srovnání s konkurentem) mění podle toho, JAK je fakt o značce
+podaný — jako vlastní tvrzení (self-claim), neutrální popis bez zdroje,
+nebo jako potvrzení nezávislou třetí stranou — i když fakt samotný,
+jeho délka a obsah zůstávají identické. Kontrolní podmínka "bez faktu"
+navíc replikuje základní Cold Start/Fact Injection nález (mění vůbec
+přítomnost faktu něco).
+
+Postaveno v `research-prep/claim-attribution/`:
+
+- `brands.json` — 4 značky recyklované ze Study #29 (framings_obscure.json:
+  Colored Organics, BodyArtForms, Barbaro Mojo) a Study #30's fiktivní
+  kontroly (Hearthloom) — žádná nová fakta, jen přeformulovaný stejný
+  fakt do first-person/third-person páru pro každou značku. Každá značka
+  má JEDEN pevný, zavedený konkurenta (ne 3 jmenované jako u Study
+  #29/#30) — Finn + Emma, Painful Pleasures, Gindo's, Kilnmere — a 20
+  nákupních záměrů.
+- `run_study.py` — mechanika: hlava-nehlava vynucené srovnání (stejný
+  vzorec jako Cold Start a Hidden Context), fakt vkládaný do SYSTÉMOVÉ
+  zprávy (ne do user promptu — stejný mechanismus jako Hidden Context/
+  Fact Injection), user prompt jmenuje jen konkurenta ("What's the best
+  X? I'm already considering {konkurent}..."), testovaná značka se v
+  user promptu nikdy nejmenuje. 4 podmínky × 4 značky × 20 záměrů × 5
+  opakování = 1 600 volání. **Reálný LLM judge (gpt-4o, temperature=0)
+  zabudovaný od začátku** — ne mechanická heuristika — přesně podle
+  poučení ze Study #30 (Prompt Shape), kde mechanická heuristika třikrát
+  selhala a otočila hlavní nález. Judge klasifikuje winner jako
+  target/competitor/neither/both z textu odpovědi.
+- Otestováno `python run_study.py all --dry-run` v sandboxu — celý
+  pipeline (run → judge → analyze) proběhl čistě, 1 600 řádků, žádné
+  chyby. Syntetická dry-run data smazána, aby nepletla reálný běh.
+
+Čeká na Daniela: spustit `python run_study.py all` lokálně s
+`OPENAI_API_KEY` (sandbox nemá přístup k api.openai.com), pak výsledky
+znovu analyzovat s plnou přísností, postavit `research/claim-attribution.html`,
+ukázat Danielovi před zapojením, pak zapojit všude (vercel.json, sitemap,
+llms.txt, mechanism-studies.html, research/index.html, how-ai-decides.html,
+patička, Public Studies bump na 31).
+
+## Claim-attribution — reálná data, stránka postavena, čeká na schválení (2026-09-12)
+
+Daniel spustil `python3 run_study.py all` lokálně, 1 600 reálných volání
++ 1 600 judge volání proběhlo čistě (0 parse failures). Výsledek je
+opačný, než tvrdil John Michaels:
+
+- **Self-claim vyhrává nejvíc: 65.2%.** Třetí strana: 43.2%. Neutrální
+  (bez zdroje): 23.0%. Bez faktu vůbec: 0.2%.
+- Každý rozdíl je vysoce signifikantní (self-claim vs. třetí strana
+  z=6.25, třetí strana vs. neutrální z=6.08, neutrální vs. bez faktu
+  z=10.04, všechny p&lt;0.0001; pooled &chi;&sup2;=419.70, df=3).
+  Pořadí self-claim &gt; třetí strana &gt; neutrální drží ve všech 4
+  značkách nezávisle (per-brand &chi;&sup2; 52 až 168, všechny
+  signifikantní samy o sobě).
+- BodyArtForms je výrazně slabší napříč všemi podmínkami (strop 24 %
+  místo 71-85 % u ostatních 3) — vysvětleno ruční kontrolou skutečných
+  odpovědí: v piercing kategorii má gpt-4o silné vlastní znalosti
+  konkurenčních značek (Neometal, Anatometal, Industrial Strength),
+  které soutěží o pozornost mnohem víc než u ostatních 3 obskurních/
+  fiktivních značek.
+- Poctivě přiznaný confound: self-claim rám je zároveň nejkonkrétnější
+  formulace ("on {brand}'s own website...") — může se částečně měřit
+  "zní to jako skutečný popis produktu", ne čistě atribuce samotná.
+  Uvedeno na stránce v sekci "What this doesn't prove".
+- Menší datová anomálie u Barbaro Mojo (4 z 1600 řádků): model občas
+  echoval frázi z injektovaného faktu ("Every Barbaro Mojo hot
+  sauce...") jako by to bylo jméno značky — judge to správně
+  nezapočítal jako čistou výhru. Zdokumentováno na stránce, netýká se
+  platnosti hlavního nálezu.
+
+Postaveno `research/claim-attribution.html` (Study #31), stejný design
+systém jako zbytek série. Čeká na Danielovo schválení než se zapojí
+sitewide (vercel.json, sitemap, llms.txt, mechanism-studies.html,
+research/index.html, how-ai-decides.html, patička, Public Studies bump
+na 31).
+
+## Claim-attribution — round 2 (word-count-matched), kombinovaná data, zapojeno sitewide (2026-09-12)
+
+Daniel chtěl studii "zabetonovat" — najít slabinu a buď ji vyvrátit,
+nebo potvrdit. Nezávislá kontrola odhalila skutečný confound v round 1:
+self-claim wrapper byl o 9-12 slov delší než holý fakt, third_party o
+8 slov delší, neutral 0 slov navíc. Round 1 tedy částečně měřil délku
+zprávy, ne čistě atribuci.
+
+**Náprava:** `run_study_v2.py`, nový seed, wrappery přepsané na stejný
+počet slov (do 1 slova rozdílu) napříč všemi 3 podmínkami atribuce,
+stejný third-person `neutral_fact` string všude. Daniel spustil 1 600
+dalších reálných volání + 1 600 judge volání, opět čistě (0 parse
+failures). Round 2 samostatně: self-claim 69.8 %, third-party 59.0 %,
+neutral 37.8 %, bez faktu 0.0 %. Efekt drží i s vyváženou délkou.
+
+**Kombinovaná analýza (oba rounds, n=200 na buňku místo 100):**
+
+- Self-claim 67.5 %, third-party 51.1 %, neutral 30.4 %, bez faktu
+  0.1 %. Každé z 800 srovnání je vysoce signifikantní (z=6.67 / 8.45 /
+  16.83, pooled &chi;&sup2;=866.67, df=3).
+- Logistická regrese (statsmodels, kontrola na značku, round a počet
+  slov zprávy) potvrzuje: podmínka zůstává drtivě signifikantní
+  (p=7.4&times;10&#8315;&sup1;&sup2;&sup4;), zatímco vlastní efekt
+  počtu slov po kontrole přestává být signifikantní (p=0.35). Délka
+  byla reálná věc ke kontrole, ale neřídí nález.
+- Split-half kontrola (run_idx 0-1 vs. 2-4 v rámci každé podmínky)
+  nenašla žádný časový drift v API (všechny rozdíly &lt;1pp).
+- Per-brand na round 2 samostatně je šum vyšší než v round 1 (u 2 ze 4
+  značek přesné pořadí self-claim &gt; third-party &gt; neutral
+  přesně nedrží, colored-organics má malý nesignifikantní obrat third
+  vs. neutral, p=0.39). Po sečtení obou rounds (n=200) drží pořadí
+  a obě klíčová srovnání jsou signifikantní ve všech 4 značkách
+  zvlášť.
+
+**Verdikt pro Michaelse:** na konkrétní testované tvrzení (self-claim
+vs. třetí strana) neměl pravdu, model preferuje, když si to řekne
+značka sama, ne třetí strana. Jeho širší intuice "jakýkoli zdroj je
+lepší než žádný" byla ale potvrzená — třetí strana jasně poráží
+neutrální tvrzení bez zdroje (51.1 % vs. 30.4 %).
+
+Stránka `research/claim-attribution.html` přepsána na kombinovaná
+čísla (67.5/51.1/30.4, 3 200 volání, nová sekce "Making Sure It
+Holds" vysvětlující confound a regresi). Daniel schválil po dvou
+kolech oprav (rozbitý exponent v otočné kartě, anonymizace Michaelse
+na "J.M." na veřejné stránce).
+
+**Zapojeno sitewide (main 4):** vercel.json (2 routes), llms.txt,
+sitemap-pages.xml, research/mechanism-studies.html (report-card),
+research/index.html (report-card + finding-card, data-key 29),
+research/how-ai-decides.html (Evaluation layer — related research
+link + mini-card, ne Candidacy), patička `.ai-sitemap` na 147 dalších
+živých stránkách + vlastní odkaz na claim-attribution.html opraven ze
+starých čísel (65%/43%) na 67.5%/51.1%, Public Studies bump 30 &rarr;
+31 na 152 stránkách. `new-web/` podsložka (zastaralá kopie, mimo
+routing) vědomě vynechána.
