@@ -1573,3 +1573,386 @@ link + mini-card, ne Candidacy), patička `.ai-sitemap` na 147 dalších
 starých čísel (65%/43%) na 67.5%/51.1%, Public Studies bump 30 &rarr;
 31 na 152 stránkách. `new-web/` podsložka (zastaralá kopie, mimo
 routing) vědomě vynechána.
+
+## Nový nápad: Vágní vs. konkrétní PDP/pricing specifikace, pdp-specificity (2026-09-12)
+
+Zpřesňuje bod **#356** z jiného úhlu než voice-authenticity. Podnět:
+LinkedIn komentář Kristine Estigoy pod founders-reality-check postem —
+tvrdí, že čím konkrétnější jsou features/benefits/claims na pricing a
+PDP stránkách, tím větší šance na AI doporučení. Daniel na to veřejně
+odpověděl, že to otestujeme, takže tohle je design, co ten slib plní.
+
+**Research question:** mění se selection rate, když je o produktu k
+dispozici stejné množství textu ve formátu PDP/pricing stránky, ale
+jednou jako vágní marketingové tvrzení bez čísel a podruhé jako
+konkrétní specifikace (přesné rozměry, materiály, ceny, záruky)?
+
+**Rozdíl od voice-authenticity:** ta mění REGISTR/HLAS (holá fakta /
+generický AI tón / distinctivní lidský tón) při stejné hloubce faktů.
+Tahle studie mění HLOUBKU/KONKRÉTNOST samotných tvrzení. Jde napsat
+distinctivním hlasem, ale pořád vágně na čísla, a naopak, jsou to dvě
+nezávislé osy.
+
+**Design:** 4 značky (recyklované ze Study #29/claim-attribution/
+voice-authenticity) x 3 podmínky (bez claims / vágní / konkrétní) x 20
+nákupních záměrů x 5 opakování = **1 200 volání.** Stejná fakta v obou
+verzích, mění se jen forma, číslo/specifikace vs. vágní přídavné jméno.
+
+Plný design: `research-prep/pdp-specificity/STUDY-DESIGN.md`.
+
+Otevřená rozhodnutí pro Daniela: spojit s voice-authenticity do
+jednoho faktoriálního designu (3 registry x 2 úrovně konkrétnosti)
+místo dvou samostatných 1 200volání studií, souhlasí s navrženým tónem
+vágní/konkrétní přepisu na příkladu Colored Organics, zúžit sample
+size?
+
+**Update (2026-09-13): naplno proběhly 3 kola, 3 600 volání, publikováno jako
+Study #32 — `research/pdp-specificity.html`.**
+
+Kolo 1 (původní 4 značky, 1 200 volání): specifické tvrzení vyhrálo nad
+vágním v poolovaném součtu (62.8 % vs. 54.2 %, no_claims 0 %), ale
+Colored Organics (organické dětské oblečení) šlo opačným směrem
+(93 % vágní vs. 83 % konkrétní).
+
+Kolo 2 (přesná replikace, nové API seedy, 1 200 volání): poolovaný efekt
+se replikoval téměř identicky (63.0 % vs. 54.0 %), Colored Organics
+reverzoval znovu (94 % vágní vs. 87 % konkrétní). Kontrola na word count
+(specifické verze byly o 7 až 20 slov delší) potvrdila, že efekt není
+jen délka textu (p=0.0005 po kontrole, word count sám p=0.24).
+Test interakce brand x specificity přes obě kola (LR=35.87, df=3,
+p<0.0001) potvrdil, že heterogenita mezi značkami je reálná, ne jen šum
+ze 4 nekorigovaných testů.
+
+Kolo 3 (4 nové značky, zvolené záměrně 2 a 2 na ose trust/safety
+sensitive vs. čistě funkční, 1 200 volání): Wild One a Primally Pure
+(trust) vs. Bellroy a Zigpoll (funkční). Wild One reverzoval významně
+(87 % vágní vs. 74 % konkrétní, p=0.02), Zigpoll zlepšil se významně
+(85 % vs. 96 %, p=0.008). Bellroy a Primally Pure byly už u stropu
+(99 až 100 % v obou podmínkách u obou), takže tam nebyl prostor cokoliv
+zjistit.
+
+**Finální spojená analýza (všech 8 značek, 2 400 volání, po 600 na
+buňku):** funkční kategorie (Barbaro Mojo, Hearthloom, Bellroy, Zigpoll)
+68.8 % vágní na 84.5 % konkrétní, zisk 15.7 bodu, p<0.0001. Trust
+kategorie (Colored Organics, BodyArtForms, Wild One, Primally Pure)
+65.2 % vágní na 60.7 % konkrétní, ztráta 4.5 bodu (samotný trust pokles
+není signifikantní na této velikosti vzorku, ale interakce
+category_type x specificity je, LR=39.26, df=1, p<0.0001).
+
+**Verdikt:** Kristine měla pravdu jen zčásti. Konkrétnost pomáhá
+spolehlivě ve funkčních kategoriích, ale ve značkách, kde je hlavní
+věcí důvěra a bezpečnost, konkrétnost buď nepomáhá, nebo skutečně
+škodí. 0 ze 4 trust značek ukázalo signifikantní zlepšení, 3 ze 4
+funkčních značek ano.
+
+## Nový nápad: Services vertikála (terapeuti, lokální služby) — samostatný kanál (2026-09-14)
+
+Podnět: LinkedIn vlákno s Amiya M. (zakladatelka Findable Therapist),
+která popsala vlastní pozorování u terapeutů — v jejím pole je kandidátů
+tak málo, že "projít do užšího výběru" je většina bitvy, na rozdíl od
+přeplněného e-commerce, kde vyhrává až samotná selekce. Nezávisle na tom
+se Daniela na to samé (jestli umíme změřit AI doporučení u služeb)
+zeptal i jiný člověk. Dva nezávislé podněty na stejnou mezeru je dost
+silný signál, že jde o vlastní vertikálu, ne jen o odpověď v komentáři.
+
+**Proč je to jiné od dosavadní série:** celá dosavadní série (Volba
+kandidáta, Cold Start, Brand Legibility, Claim Attribution,
+pdp-specificity, Winner vs Loser návrh) běží na e-commerce značkách s
+jasným produktem, cenou a recenzemi. Služby (terapeuti, právníci,
+řemeslníci, lokální poskytovatelé) mají jinou strukturu dat: NAP
+konzistence (jméno/adresa/telefon) napříč weby a adresáři, licence a
+certifikace místo specifikací, recenze mají jinou váhu a menší objem,
+a hlavně, podle Amiyina pozorování, výrazně méně kandidátů vůbec projde
+do prvního gate.
+
+**Otevřené otázky pro design:** replikovat existující Candidacy/Evaluation
+metodiku na nové kategorii (terapeuti, právníci, řemeslníci) místo
+e-commerce značek, nebo cíleně přidat cross-source konzistenci (stejný
+popis napříč weby/adresáři vs. nekonzistentní) jako nový faktor, který
+dosavadní série vůbec netestovala. Pravděpodobně vyžaduje i test s
+live search zapnutým, protože NAP konzistence dává smysl hlavně jako
+retrieval signál, ne jako signál z paměti modelu.
+
+Status: nápad, čeká na design. Feeds novou mezeru, kterou zatím
+/research/how-ai-decides vůbec nepokrývá (celá mapa je postavená na
+produktových značkách).
+
+## Nový nápad: Audit statistické síly napříč vlastní sérií (2026-09-14)
+
+Podnět: LinkedIn post Agnes Kaczmarek (Marketing Enigma AI), cituje
+akademický preprint "The Dice Roll Method" (arXiv, 3.9.2026, reanalýza
+cca 190 000 pozorování), který tvrdí, že i 5 pozorování může být jen
+exploratory evidence, ne spolehlivý závěr, a že počet opakování musí
+být kalibrovaný na konkrétní use case, ne fixní napříč vším.
+
+**Proč se nás to týká přímo:** velká část dosavadní série (Cold Start,
+Claim Attribution, pdp-specificity, Brand Legibility) běží na 5
+opakováních na buňku. Recommendation Confidence studie testovala jinou
+věc, jestli hedging modelu koreluje s reálnou jistotou, ne jestli je
+náš vlastní počet opakování statisticky dostatečný. Zatím nemáme
+vlastní audit vlastní metodiky na tohle konkrétní kritérium, a právě
+jsme veřejně citovali paper, který ho pojmenovává.
+
+**Co by se mělo změřit:** power analýza napříč existujícími studiemi,
+kolik opakování by bylo skutečně potřeba pro naměřenou velikost efektu,
+aby výsledek nebyl jen exploratory podle vlastního citovaného kritéria.
+Konkrétní kandidáti na doběhnutí vyšším n: BodyArtForms null výsledek
+(pdp-specificity), hraniční p-hodnoty (cena v Volbě kandidáta, p=0,055).
+
+Status: nápad, čeká na prioritizaci. Není nová studie o novém tématu,
+je to audit rigoróznosti stávající série, přímý důsledek vlastního
+požadavku na "neprůstřelnost" každé studie.
+
+## Winner vs Loser — run_study.py napsaný, čeká na Danielův reálný běh (2026-09-14)
+
+Design v `research-prep/winner-vs-loser/STUDY-DESIGN.md` byl zabetonovaný
+(pre-registrované H1/H2/H3/Null, povinná round 2 replikace na novém seedu,
+confound checky naplánované předem, korekce na mnohonásobné testování
+jedním LR testem místo sedmi, no file-drawer, sekce o síle testu). Teď
+napsané a dry-run ověřené: `run_study.py` (kolo 1) + `run_study_v2.py`
+(kolo 2, `--compare`), 4 značky x 8 podmínek (rating x specificita x
+formát) x 20 záměrů x 5 opakování = 3 200 volání na kolo, 6 400 celkem.
+
+Dry-run (simulovaná data, ne reálná) prošel čistě na obou kolech, 0/3200
+parse failures na kolo, LR test se spočítal bez chyby. `analyze` teď
+automaticky počítá i všechny confound checky ze sekce 7, word count podle
+formátu, stropové/podlahové efekty po buňce, position bias, "follows the
+rating" rate, a jeden LR test na celý model jako primární důkaz.
+
+Čeká se na Danielův reálný běh přes jeho vlastní terminál a
+OPENAI_API_KEY, stejně jako u každé předchozí studie v sérii.
+
+## Winner vs Loser hotovo, publikováno jako Study #33 (2026-09-15)
+
+Oba běhy proběhly naostro (Daniel, vlastní OPENAI_API_KEY), 6 400 volání
+celkem, 0/6400 parse failures. Podle vlastního pre-registrovaného
+pravidla (efekt musí držet směr i signifikanci zvlášť v obou kolech,
+ne jen v poolovaných datech) se potvrdily jen dva ze čtyř nálezů.
+
+Potvrzeno: rating rozhoduje o vítězi 90.8 % případů bez ohledu na
+zbylé dva faktory (99.2 % vs 17.6 % podle úrovně ratingu, replikováno
+skoro identicky v obou kolech). Specificita má menší, ale reálný
+samostatný efekt (55.5 % vs 61.3 %, p<0.001 v obou kolech zvlášť).
+
+Nepotvrzeno: interakce kategorie x specificita (hlavní nález z
+pdp-specificity) a hlavní efekt formátu zprávy oba selhaly v testu
+zvlášť po kole (p=0.063/0.328 pro interakci, p=0.2515/0.1511 pro
+formát), i když poolovaná data vypadala hraničně signifikantně —
+přesně ten typ pasti, na který bylo pre-registrované pravidlo
+postavené.
+
+Stránka `/research/winner-vs-loser` hotová a zapojená všude: vercel.json,
+sitemap-pages.xml, llms.txt, footer ai-sitemap odkaz na 153 stránkách,
+karta v mechanism-studies.html i research/index.html (report-card +
+rotating finding-card), mini-card + Related research odkaz v
+how-ai-decides.html Evaluation vrstvě, status bonus sekce "Winner vs
+Loser" tam povýšen z "Active Research" na "Partially Measured" (tři
+z jedenácti kandidátních signálů teď reálně změřené, zbytek otevřený).
+Public Studies počítadlo 32 → 33 všude.
+
+## Purchase konečně navrženo, ne zaparkováno (2026-09-14)
+
+Podnět: LinkedIn post Christian Rich (Azoma, agentic commerce) o Meta's
+Muse/Clark asistentovi, co reálně živě prochází Amazon a dokončí nákup
+kartáčku bez zásahu člověka. Jeden anekdotický příklad s motivovaným
+rámováním (sám dělá byznys na agentic commerce), ale ukazuje, že agentic
+checkout je nasazený, ne hypotetický. Daniel se rozhodl Purchase mezeru
+už nenechávat na konec, řešíme ji teď, ne až po Founder Lab RCT.
+
+Design v `research-prep/purchase-measurement/STUDY-DESIGN.md`: observační
+audit existujících dat Founder Labu, ne nový experiment, žádná nová AI
+volání. Rozdělit provoz na lidský / známý AI crawler bot / AI-referral
+session, spočítat conversion rate po třídě, srovnat s lidskou
+návštěvností. Pre-registrované H1 (AI provoz existuje a konvertuje), H2
+(jde rozeznat agentic checkout od AI-assisted lidského nákupu), Null
+(zatím nic měřitelného, objem příliš malý nebo nový, publikovatelné jako
+první reálná baseline stejně jako pozitivní nález).
+
+Blokováno na 3 technických otázkách pro Daniela (loguje se referrer u
+site_visits, existuje tabulka/webhook s dokončenými objednávkami
+spárovatelná se session, jak dlouho tracking běží a jaký je objem), ne na
+API klíči. Jakmile bude jasno, jde se rovnou na pull skript, žádné GPT
+volání to nepotřebuje.
+
+**Update (2026-09-15): zastaveno na startu.** Daniel odpověděl — Founder
+Lab nemá zatím ani jedinou dokončenou objednávku. Bez jediné konverze
+nejde počítat žádný conversion rate, ani nulový nález by nebyl
+informativní (nejde odlišit "AI provoz nekonvertuje" od "nikdo zatím
+nekonvertuje"). Purchase se teď dělat nebude. Design v
+`research-prep/purchase-measurement/STUDY-DESIGN.md` zůstává hotový a
+čeká, dokud Founder Lab nebude mít reálné objednávky, na kterých se dá
+něco měřit.
+
+## Authority — Study #34, hotovo, obě kola reálně proběhla (2026-09-15)
+
+Design v `research-prep/authority-signal/STUDY-DESIGN.md`: přímé
+pokračování Winner vs Loser (Study #33), testuje Authority, další
+kandidátní signál ze seznamu na how-ai-decides bonus sekci. Dvě fáze,
+aby ratingova dominance (99 % vs 18 %) nepřehlušila slabší signál dřív,
+než ho vůbec uvidíme: Fáze 1 měří Authority samotnou (metodika Volby
+kandidáta, čisté číslo srovnatelné s hierarchií rating/specificita/cena),
+Fáze 2 kříží Authority x rating 2x2 (metodika Winner vs Loser), aby šlo
+oddělit hlavní efekt od interakce s ratingem.
+
+Napsané a dry-run ověřené: `run_study.py` (kolo 1) + `run_study_v2.py`
+(kolo 2, `--compare`). Fáze 1: 4 značky x 2 podmínky x 20 záměrů x 5
+opakování = 800 volání. Fáze 2: 4 značky x 4 podmínky x 20 záměrů x 5
+opakování = 1 600 volání. 2 400 volání na kolo, 4 800 celkem. Dry-run
+prošel čistě na obou kolech, 0/4800 parse failures, LR test (fáze 2) i
+binomický test (fáze 1) se spočítaly bez chyby.
+
+Pre-registrované H1 (Authority sama posune verdikt), H2 (přežije proti
+ratingu, ale slaběji, víc když je s ratingem v konfliktu než když s ním
+souhlasí), Null (Authority je šum). Povinná round 2 replikace, žádný
+file-drawer, word-count poznámka (authority přidává větu, tedy délku
+navíc ze své podstaty, ne confound co se dá odstranit).
+
+Daniel spustil obě kola naostro přes vlastní terminál a OPENAI_API_KEY.
+0/4 800 parse failures napříč oběma koly. Výsledky:
+
+Fáze 1 (Authority samotná, bez ratingu): kolo 1 85,5 % (p=9,47e-99),
+kolo 2 84,8 % (p=3,30e-94), kombinovaně 85,2 %. Per-brand kombinovaně:
+barbaro-mojo 64,5 %, colored-organics 81,3 %, hearthloom 96,8 %,
+bodyartforms 98,0 % — není to čistě trust vs. funkční rozdělení
+(barbaro-mojo i hearthloom jsou obě "funkční" kategorie, přesto úplně
+jiná čísla), pořadí značek identické v obou kolech.
+
+Fáze 2 (Authority x rating 2x2): rating sám o sobě 100,0 % / 10,8 %
+kombinovaně (prakticky beze změny oproti Winner vs Loser). Authority
+sama (pooled marginal) jen 56,1 % / 54,6 %, rozdíl ~1,5 bodu. Když
+Authority souhlasí se silnějším ratingem, žádný samostatný efekt vidět
+není (obě buňky na stropu/podlaze, 100,0 %/9,2 % v obou kolech). Když
+Authority jde proti ratingu (na slabší značku), zvedne ji z 10,8 % na
+12,3 % kombinovaně — reálný, stejnosměrný, ale téměř zanedbatelný
+posun v obou kolech. Stejná velikost efektu (~1,5–1,6 bodu) se ukázala
+i na opačné straně: značka se silnějším ratingem, která navíc dostane
+Authority, jde z 89,2 % na 90,8 %. LR test (fáze 2, plný model vs.
+null): kolo 1 LR=1651,07, kolo 2 LR=1659,81, oba p≈0 — ale prakticky
+celou tu sílu dodává rating (koeficient ~29,6), ne Authority
+(koeficient jen 0,29–0,34). 14 z 16 fáze-2 buněk označeno jako
+strop/podlaha v obou kolech, identická sada obě kola.
+
+Verdikt: Authority je sama o sobě silný signál, silnější než
+specificita (81,9 %), druhý nejsilnější po ratingu — ale jakmile je
+rating v místnosti, Authority se z nezávislé páky mění téměř v šum,
+ještě víc než Format ve Winner vs Loser.
+
+Stránka `research/authority-signal.html` (Study #34) postavena,
+odeslána Danielovi ke kontrole, po zpětné vazbě opravena (badge
+spacing v prompt-table, stale title/og/JSON-LD headline, přesná
+formulace "unchanged from Winner vs Loser" nahrazena přesnějším
+popisem). Daniel schválil, sitewide zapojeno (2026-09-16): vercel.json,
+sitemap-pages.xml, llms.txt, research/mechanism-studies.html
+(report-card + footer link), research/index.html (report-card +
+finding-card data-key=32 + footer link), research/how-ai-decides.html
+(Evaluation mini-card, Related research link, bonus "Winner vs The
+Loser" section paragraph updated s Authority výsledky), a sitewide
+footer ai-sitemap odkaz + bump 33→34 Public Studies napříč všemi 155
+živými stránkami (stará nepoužívaná `new-web/` podsložka a
+`atomfoundry-redesign.html` vynechány, stejně jako u předchozích
+studií). Do winner-vs-loser.html přidán dodatek s odkazem na
+pokračování.
+
+## Guinea pig pro services vertikálu: Cassio Oliveira (2026-09-15)
+
+LinkedIn vlákno s Cassio Oliveira (Fractional Chief Health Officer /
+executive health coach pro zakladatele, 15+ let, 8 zemí). Reagoval na
+Danielovo zjištění o web search (77 % změna doporučení) otázkou, jestli
+stejná dynamika platí i pro službu bez product page. Daniel mu nabídl
+změření, kde stojí proti konkurenci v AI doporučeních — Cassio řekl ano.
+
+Dal 4 reálné dotazy, jak by ho jeho kupující reálně hledal (ne jak by se
+sám popsal):
+- fractional chief health officer
+- executive health coach for founders
+- who can help a CEO fix their energy and sleep
+- health advisor for business owners over 40
+
+Vlastní pozorování, které stojí za zapsání: pracuje v angličtině,
+portugalštině a francouzštině, brazilský a evropský trh se prý chovají
+úplně jinak. Tvrdí, že stejný dotaz ve třech jazycích nedá jen jiný
+překlad doporučení, ale úplně jinou sadu doporučených. To je proměnná,
+kterou žádná naše dosavadní e-commerce studie nemá (jazyk/trh jako
+faktor vedle rating/specificity/format).
+
+Status: zatím nic neměříme. Cassio je zapsaný jako dobrovolný guinea pig
+pro services vertikálu (viz task #405, services vertikála — terapeuti /
+lokální služby, navržena dřív z podnětu Amiya M.). Až se na tu studii
+dostane řada, jeho 4 dotazy jsou hotový vstupní materiál a
+cross-language/market dynamika je silný kandidát na druhý faktor v
+designu, ne jen bonus poznámka.
+
+## Brand familiarity — Study #35, hotovo, obě kola reálně proběhla (2026-09-16)
+
+Daniel vybral z nabídnutých možností (Brand familiarity / Stability vrstva
+/ Confidence audit / services vertikála) přímé pokračování stejné rodiny
+studií po Authority — další netestovaný kandidátní signál ze seznamu na
+how-ai-decides bonus sekci "Winner vs The Loser" (4 z 11 tagů teď
+změřené: rating, specificity, format, authority).
+
+Design v `research-prep/brand-familiarity/STUDY-DESIGN.md`: signál =
+samostatně tvrzená, nikým neatribuovaná šíře uznávaná popularita/známost
+("It is one of the most recognized and widely trusted [category] brands
+among [audience]."), záměrně odlišná od Authority (žádný jmenovaný třetí
+subjekt) i od claim-attribution (žádná změna atribuce, jen jiný obsah
+tvrzení). Stejná dvoufázová metodika jako Authority: Fáze 1 měří
+familiarity samotnou (metodika Volby kandidáta), Fáze 2 kříží familiarity
+x rating 2x2 (metodika Winner vs Loser). Stejné 4 značky, stejné
+target_plain_claim/competitor_claim (beze změny z Authority), nový
+familiarity_fact per značku (15-17 slov, srovnatelná délka s Authority's
+authority_fact).
+
+Vzorek stejný jako Authority: Fáze 1 = 800 volání/kolo, Fáze 2 = 1 600
+volání/kolo, 2 400/kolo, 4 800 celkem přes 2 povinná kola. Pre-registrované
+H1 (familiarity sama posune verdikt, očekávaně slabší než Authority's
+85,2 %), H2 (přežije proti ratingu, ale slaběji, víc v konfliktu než v
+souhlasu), Null (familiarity je šum, samo o sobě publikovatelný nález —
+odliší "tvrzení o popularitě" od "konkrétní zmínka od třetí strany").
+
+Napsané a dry-run ověřené: `run_study.py` (kolo 1, SEED=20260917) +
+`run_study_v2.py` (kolo 2, SEED=20260924, `--compare`). Oba běhy prošly
+čistě, 0/4 800 simulovaných parse failures, LR test i binomický test se
+spočítaly bez chyby, `--compare` blok funguje.
+
+Daniel spustil obě kola naostro. 0/4 800 parse failures napříč oběma
+koly.
+
+**Fáze 1 (familiarity samotná):** kolo 1 80,6 % (p=8,97e-72), kolo 2
+78,9 % (p=1,95e-63), kombinovaně 79,8 % — silný signál, blízko
+specificitě (81,9 %), o něco slabší než Authority (85,2 %). Per-brand
+kombinovaně: barbaro-mojo 53,5 % (identicky v obou kolech, nejslabší
+reakce ze všech značek/signálů dosud měřených), bodyartforms 96,8 %,
+colored-organics 87,0 %, hearthloom 81,8 %.
+
+**Fáze 2 (familiarity x rating 2x2):** rating sám 99,8 %/11,2 %
+kombinovaně, beze změny. Familiarity sama (pooled marginal) jen
+55,6 %/55,4 % — rozdíl kombinovaně 0,2 bodu (kolo 1 0,4 b, kolo 2 přesně
+0,0 b). Menší než Authority's 1,5 bodu. Rozpad podle shody s ratingem:
+když familiarity souhlasí se silnějším ratingem, žádný efekt (obě buňky
+prakticky na stropu/podlaze v obou kolech). Když familiarity jde proti
+ratingu, zvedne slabší značku z ~11,2 % na ~11,7 % kombinovaně (+0,6 b
+kolo 1, +0,4 b kolo 2) — směr konzistentní v obou kolech, ale velikost
+efektu je v řádu šumu při n=400/buňku. LR test (fáze 2, plný model vs.
+null): kolo 1 LR=1621,71, kolo 2 LR=1605,73, oba p≈0, ale koeficient
+familiarity samotné je v obou kolech minimální (0,08-0,10) — sílu testu
+táhne skoro výhradně rating. 14 z 16 buněk na stropu/podlaze, identická
+sada v obou kolech.
+
+**Verdikt (obě kola replikují směr i významnost, per pre-registrované
+pravidlo):** H1 potvrzeno — familiarity sama je silný signál (~79,8 %).
+H2 nepotvrzeno — jakmile je v modelu rating, efekt familiarity je
+statisticky neodlišitelný od nuly. Čistší, ostřejší verze "spolknuto
+ratingem" příběhu než Authority, kde malý ~1,5bodový efekt v obou kolech
+přece jen přežil. Zajímavý kontrast mezi studiemi: pojmenovaná zmínka od
+třetí strany si proti ratingu drží drobnou, ale reálnou a opakovanou
+výhodu; holé, nijak nepodložené tvrzení o vlastní popularitě ne.
+
+Stránka `research/brand-familiarity.html` postavená, ukázaná Danielovi
+a schválená ("dej vsude prosim"). Sitewide zapojeno 2026-09-15:
+vercel.json, sitemap-pages.xml, llms.txt, mechanism-studies.html,
+research/index.html (report-card + finding-card data-key 33),
+how-ai-decides.html (mini-card v Evaluation vrstvě, Related research
+odkaz, aktualizovaný úvodní odstavec bonus sekce), sitewide footer
+ai-sitemap odkaz na 155 živých stránkách, sitewide bump Public Studies
+34→35. Addendum na winner-vs-loser.html rozšířen o Study #35 vedle
+Study #34.
