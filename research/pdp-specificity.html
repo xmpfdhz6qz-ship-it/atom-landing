@@ -64,6 +64,7 @@
     {
       "@type": "Article",
       "@id": "https://atomfoundry.dev/research/pdp-specificity#article",
+      "identifier": { "@type": "PropertyValue", "propertyID": "DOI", "value": "10.5281/zenodo.22776560" },
       "headline": "Specific Claims Add 15.7 Points in Spec Driven Categories. They Cost Nearly 5 in Trust Driven Ones.",
       "description": "8 brands, 3 conditions (no claims, vague, specific) of the identical underlying facts, 20 purchase intents each, 5 repeats, run across 3 independent rounds, 3,600 calls total, same model throughout. Round 3 added 4 new brands chosen deliberately to test a trust versus functional category axis. Across all 8 brands combined, specificity adds 15.7 points in purely functional categories and costs close to 5 points in trust and safety sensitive ones.",
       "datePublished": "2026-09-13",
@@ -77,6 +78,7 @@
     {
       "@type": "Dataset",
       "@id": "https://atomfoundry.dev/research/pdp-specificity#dataset",
+      "identifier": { "@type": "PropertyValue", "propertyID": "DOI", "value": "10.5281/zenodo.22776560" },
       "name": "Does rewriting vague brand language into concrete, PDP style claims change AI recommendation rate, and does that depend on the category?",
       "description": "8 brands (4 original, 4 added in round 3), one fixed established competitor each, 20 purchase intents, 3 conditions (no claims, vague, specific) of an identical underlying set of real facts per brand, 5 repeats per cell, run across 3 independent rounds, with round 3's 4 new brands chosen 2 and 2 across a trust versus functional category axis.",
       "creator": { "@id": "https://atomfoundry.dev/#organization" },
@@ -229,6 +231,10 @@
   .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:56%;margin-top:36px;}
   .byline-note{font-size:12px;color:var(--gray-500);margin-top:16px;}
   .byline-note a{color:var(--orange);font-weight:700;}
+  .doi-citation{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--gray-500);}
+  .doi-badge-img{height:16px;width:auto;border-radius:3px;flex-shrink:0;display:block;}
+  .doi-citation a{color:var(--orange);font-weight:700;font-family:ui-monospace,"SF Mono",Menlo,monospace;}
+  .doi-citation a:hover{text-decoration:underline;}
 
   .hero-stat-row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;row-gap:20px;column-gap:18px;margin-top:52px;width:100%;max-width:100%;}
   .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:16px;color:var(--black);letter-spacing:-0.01em;font-weight:800;flex:0 1 auto;max-width:100%;white-space:nowrap;}
@@ -575,6 +581,7 @@
     <h1 class="page-title">Specific claims add 15.7 points when a category is pure specs. <em>They cost nearly 5 points when the category is about trust.</em></h1>
     <p class="research-hero-sub">This study started as a reply to a specific theory: the more concrete you are on your pricing and product pages, real certifications, sizes, materials, dollar amounts, the more an AI system will recommend you over generic marketing language. We tested it three times. Round one found concrete claims beating vague ones overall, but one brand quietly moved backward. Round two replicated the entire design from scratch and the same brand moved backward again. Round three added four new brands, chosen deliberately, two in categories where trust and safety are most of the sale, two in categories that are pure specs, to find out why. Across all eight brands combined, the pattern is clean: concreteness helps, reliably, in functional categories. In categories where trust is the real product, it stops helping, and can cost you instead.</p>
     <div class="byline-note">Atom Foundry &middot; September 2026 &middot; Origin: a LinkedIn comment from K.E. under Daniel's Founder's Reality Check post. Reuses brand facts and framing from <a href="/research/brand-legibility">Brand Legibility</a> and <a href="/research/claim-attribution">Claim Attribution</a>, plus real Atom Foundry findings for <a href="/reports/wild-one">Wild One</a>, <a href="/reports/bellroy">Bellroy</a>, and <a href="/reports/zigpoll">Zigpoll</a>, part of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research&trade;</a> series</div>
+    <div class="doi-citation"><img src="/images/research/zenodo-logo.png" alt="Zenodo" class="doi-badge-img"><span>Cite this study:</span> <a href="https://doi.org/10.5281/zenodo.22776560" target="_blank" rel="noopener">10.5281/zenodo.22776560</a></div>
     <div class="hero-stat-row">
       <div class="hero-stat"><b class="hero-stat-num smaller" id="statFunc" style="min-width:2.4em;" data-target="15.7" data-decimals="1" data-prefix="+" data-suffix=" pts">+15.7 pts</b><span>Specific claim gain, functional</span></div>
       <div class="hero-stat"><b class="hero-stat-num smaller" id="statTrust" style="min-width:2.3em;" data-target="4.5" data-decimals="1" data-prefix="&minus;" data-suffix=" pts">&minus;4.5 pts</b><span>Specific claim cost, trust</span></div>
@@ -940,6 +947,7 @@
     <div class="kicker">What this doesn't prove</div>
     <h2 class="section-title">One model, one axis, <em>honestly narrowed</em></h2>
     <p class="section-body">This study used one model, gpt-4o, and one system message injection mechanism, across three independent rounds. It has not been tested on other models or on live web search. The trust versus functional axis was tested with 2 brands on each side, not an exhaustive survey of every possible category, and 2 of the 4 round 3 brands (Bellroy, Primally Pure) were already so close to 100 percent recommended in both conditions that there was little room left to detect a difference for those two specifically, even though their direction still matched the overall pattern. Most responses in every condition, in rounds 1 and 2 especially, picked some other brand entirely rather than the target or its named competitor, so this measures how much a given version of a brand's claims pulls selection toward that brand, not a clean two way contest. Round 3's brands also carried a real word count difference between vague and specific claims, and while specificity held up after controlling for it, that is a design detail worth fixing in any follow up round rather than something to gloss over.</p>
+    <div class="bias-card wide" style="margin-top:20px;"><strong>Update:</strong> specificity was picked up as a factor to test head to head against authority, familiarity, and format in Study #37, <a href="/research/signal-hierarchy">Two Signals Get You Most of the Way There. A Third Barely Helps, and Format Doesn't Move It at All</a>, with rating removed entirely. Specificity came out as the strongest single marginal contributor of the four.</div>
   </div>
 </section>
 
@@ -1051,7 +1059,7 @@
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>35</b> Public Studies</div>
+      <div><b>38</b> Public Studies</div>
       <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -1107,6 +1115,9 @@
         <a href="/research/winner-vs-loser">Give It the Better Rating, and It Wins 91% of the Time</a>
         <a href="/research/authority-signal">Mention It Was Featured Somewhere, and It Wins 85% of the Time. Bring In a Rating, and It Nearly Disappears.</a>
         <a href="/research/brand-familiarity">Claim the Brand Is Widely Known, and It Wins 80% of the Time. Bring In a Rating, and the Edge Is Nearly Gone.</a>
+        <a href="/research/source-stability">The Cited Source Changes. The Winner Almost Never Does.</a>
+        <a href="/research/signal-hierarchy">Two Signals Get You Most of the Way There. A Third Barely Helps, Format Doesn't Move It at All.</a>
+        <a href="/research/structured-markup">We Turned the Same Facts Into Bullets. The Model Cited Fewer of Them.</a>
         <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
         <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
         <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
