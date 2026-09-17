@@ -186,3 +186,46 @@ promptu). Čtyři nové, levné analýzy (A–D výše) by šly udělat bez nov�
 volání nebo s minimálními náklady, a už teď ukazují na dvě konkrétní
 značkové anomálie (Wild One, Zigpoll) a jednu kategorijní anomálii (Pets),
 co stojí za formální rozbor.
+
+---
+
+## UPDATE (2026-09-16, po +8 studiích)
+
+Od tohoto auditu přibylo 8 studií: Accuracy + Depth (#27), Live Retrieval
+(#28), Brand Legibility (#29), PDP Specificity (#32), Winner vs Loser (#33),
+Authority Signal (#34), Brand Familiarity (#35), Source Stability (#36).
+Původní odhad (~65-70 % pokrytí decision path, ~40-50 % skutečná jistota)
+je zastaralý. Aktualizovaný odhad:
+
+**~75-80 % pokrytí decision path, ~50-55 % skutečná jistota.** Rozdíl mezi
+těmi dvěma čísly je pořád podstata problému, ne detail.
+
+Po fázích: Retrieval, Understanding, Candidacy, Evaluation, Recommendation,
+Stability, Confidence — všech 7 má status "měřeno", Evaluation je teď
+znatelně zesílená (rating, specificita, authority, familiarity, čtyři
+studie na sebe navazující, ne jedna izolovaná). Memory je pořád jen
+"částečně měřeno" — self-konzistence (61,4 %) drtivě vyhrává nad vnějšími
+signály (0,2-11,2 %), ale CO v modelu tu paměť vytváří ("the wall") pořád
+nevíme. Purchase pořád nula, Founder Lab nemá jedinou objednávku.
+
+Dvě z původních sedmi mezer (Část 2) se mezitím zaplnily: post-hoc
+kauzalita "vítěze" má teď tři dedikované studie (winner-vs-loser,
+authority-signal, brand-familiarity) místo jen confabulace-nálezu, a
+skutečná míra vytažení faktu živým retrievalem je změřená dvakrát
+(live-retrieval — 0/960 invokací bez recency cue, 2/3 s ním — a source-
+stability, co dál ukázala, že i s live search zapnutým je vítěz stabilní
+~90 % napříč 8 kategoriemi, zatímco citovaný zdroj se mění mnohem víc).
+
+Zbylých pět mezer se nezměnilo vůbec: Purchase (nula), cross-model
+platnost (skoro všechno gpt-4o, cross-model paměť i cross-platform
+retrieval pořád čekají na API klíče), skutečná kauzalita v reálném světě
+(Founder Lab field test pořád nespuštěný, schválně na konci fronty), a
+mechanismus paměti ("the wall") pořád neznámý. Self-grading riziko klesá u
+novějších studií (lepší LLM-judge extrakce, povinná 2kolová replikace), ale
+u starších čtyř kauzálních studií (#23-26) zůstává nemitigované mimo malé
+ruční spot-checky.
+
+Shrnutí: šířka pokrytí solidně roste s každou další studií, hloubka
+(cross-model, real-world kauzalita) zůstává stejně omezená jako na začátku
+auditu. To je přesně to, co drží skutečnou jistotu výrazně níž, než by
+naznačoval počet studií na webu (36).

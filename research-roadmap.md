@@ -1956,3 +1956,295 @@ odkaz, aktualizovaný úvodní odstavec bonus sekce), sitewide footer
 ai-sitemap odkaz na 155 živých stránkách, sitewide bump Public Studies
 34→35. Addendum na winner-vs-loser.html rozšířen o Study #35 vedle
 Study #34.
+
+## Audit statistické síly — Study #406, hotovo (2026-09-15)
+
+Plné znění: `research-audit-statisticka-sila-2026-09-15.md`. Podnět: vlastní
+veřejná citace paperu "The Dice Roll Method" (arXiv:2609.04047), který
+pojmenovává přesně tohle riziko u repeated-query LLM měření.
+
+Metodika: cluster-permutation test (klastrováno na úrovni intentu, ne
+jednotlivého callu) přepočítaný zpětně na existující raw data Authority
+Signal a Brand Familiarity, stejná metoda, jakou už dřív v sérii používaly
+Volba kandidáta / Cold Start / Multi-turn Displacement. Žádná nová API
+volání.
+
+**Hlavní claimy v pořádku:** Authority 85,2 % a Brand familiarity 79,8 %
+(samotný signál, Fáze 1) přežily i mnohem přísnější klastrovaný test —
+95% CI zůstávají daleko od 50% šumu, i při 80–160 nezávislých klastrech
+místo 800–1600 jednotlivých callů.
+
+**Oprava nutná:** věta výše ("malý ~1,5bodový efekt v obou kolech přece
+jen přežil") **neplatí**. Cluster-permutation přepočet na 80 klastrech na
+kolo dává p=0,548 (kolo 1) a p=0,605 (kolo 2) pro Authority na
+znevýhodněné straně — statisticky nerozeznatelné od šumu, přestože směr
+je v obou kolech kladný. Brand Familiarity svůj vlastní (menší) zbytkový
+efekt už správně označila jako neprůkazný ("H2 not confirmed") — Authority
+Signal stránka ho naopak prezentuje jako potvrzený. Kontrast mezi
+studiemi tedy neplatí tak, jak je teď publikovaný na
+`authority-signal.html` / `brand-familiarity.html` / bonus sekci
+`how-ai-decides.html`: obě studie ve skutečnosti ukazují totéž — silný
+samotný signál, žádný prokázaný zbytkový vliv proti ratingu.
+
+Status: audit hotový. Daniel zvolil zdarma variantu — kopie opravena
+2026-09-15 na `authority-signal.html` (meta description, OG, JSON-LD,
+hero stat label, oba shrnující bias-cards, tabulkové flagy, supporting
+evidence flip card), `brand-familiarity.html` (srovnávací pasáž a
+"Where this comes from" úvod), `how-ai-decides.html` (bonus sekce) a
+`llms.txt` (oba entries, Authority i Brand familiarity). Nová formulace:
+oba residuální efekty (Authority +1,5pp, Familiarity +0,2/+0,4pp) jsou
+popsané jako malé, směrově konzistentní, ale statisticky neprůkazné —
+žádný z nich není prezentovaný jako "real, confirmed" efekt. Doměřování
+na víc intentů zůstává volitelné, nevyžádané.
+
+## Source stability — Study #354, design hotový, čeká na schválení (2026-09-15)
+
+Plné znění: `research-prep/source-stability/STUDY-DESIGN.md`. Zatímco se
+čeká na Cassiovu odpověď (services vertikála, task #405), Daniel zvolil
+tenhle kandidát ze zbylých dvou neblokovaných (druhý byl structured markup
+vs plain prose, #358).
+
+Otázka: mění se citovaný zdroj (doména z reálné web search citace) spolu
+s vítězem napříč opakováními stejného dotazu, nebo je vítěz stabilní/
+nestabilní nezávisle na tom, jaký zdroj search zrovna najde? Navazuje na
+Live Retrieval (#28, jak spolehlivě search vůbec funguje) a na Two Months
+Later / Recommendation Lock-in (stabilita doporučení v čase).
+
+Klíčová designová rozhodnutí, promítnutá přímo z předchozích lekcí:
+recency-cued fráze ve všech promptech ("right now in 2026"), protože
+Live Retrieval's `diagnose_search.py` ukázal, že jinak se search
+nespolehlivě zapíná; otevřené doporučovací prompty na reálné konkurenční
+kategorie (ne nucený výběr mezi dvěma jmény, ne syntetické značky ze
+zbytku série, protože živý search potřebuje reálný obsah k nalezení);
+a cluster-permutation test na úrovni intentu jako PRIMÁRNÍ evidence od
+první verze `analyze_results.py`, ne až jako dodatečná oprava — přímé
+poučení z dnešního auditu #406.
+
+Otevřené body, na kterých design čeká na Daniela: (1) potvrdit/upravit
+navržený seznam kategorií (sluchátka, robotický vysavač, meal kit,
+mechanická klávesnice — všechny zvolené jako "víc než jeden věrohodný
+vítěz", ne monopolní trh), (2) souhlas s tím, že se nejdřív pustí malý
+pilotní běh (20-30 volání) ověřující invocation rate nové fráze, než se
+commitne plný design na 320-400 volání.
+
+Status: Daniel odsouhlasil navržené 4 kategorie beze změny a potvrdil
+pilot nejdřív. `pilot_search.py` proběhl reálně 2026-09-15: **20/20 (100 %)
+invocation rate** napříč všemi 4 pilotovanými kategoriemi — recency-cued
+fráze funguje spolehlivě. Vedlejší zjištění z pilota: citovaná sada domén
+je u některých kategorií (headphones) prakticky identická napříč
+opakováními, u jiných (meal_kit) se reálně mění — dobrý signál, že bude
+co měřit, ne strop ani podlaha předem.
+
+Rozšířeno na 8 kategorií (přidány electric_toothbrush, air_fryer,
+gaming_mouse, bluetooth_speaker). Napsané a dry-run ověřené: `run_study.py`
+(search + judge na vytažení top_brand z volného textu přes LLM, protože
+zde na rozdíl od zbytku série není vítěz daný nuceným výběrem ze dvou
+jmen) a `analyze_results.py`. Klíčové poučení z auditu #406 zabudované
+od první verze: primární evidence je cluster-permutation test na úrovni
+kategorie (8 nezávislých klastrů), ne nezklastrovaný test na jednotlivé
+páry volání — žádná dodatečná oprava, rovnou správně.
+
+Metrika: pro každou kategorii, u párů opakování s vysokým překryvem
+citovaných domén (Jaccard &ge; 0,5) vs nízkým, rozdíl v P(stejná top
+značka). Kladný a průkazný rozdíl = zdroj řídí výsledek (H1). Rozdíl
+blízko nule = vítěz je na zdroji do značné míry nezávislý (H2).
+
+Čeká se na Danielův reálný běh, 2 nezávislá kola (80 volání na kolo,
+160 celkem na search krok, plus judge volání navíc).
+
+Status: Daniel spustil reálně obě kola 2026-09-15 (search + judge,
+80 volání/kolo, 0 low-confidence judge extrakcí v obou kolech). Primární
+evidence (cluster-permutation, jednotka = kategorie): kolo 1 n=6
+kategorií, průměrný diff +10,8pp, 95% CI [0,0; +24,0]pp, p=0,501; kolo 2
+n=6, průměrný diff +5,0pp, CI [0,0; +15,0]pp, p=1,000; kombinovaně n=12,
+průměrný diff +7,9pp, CI [0,0; +16,5]pp, p=0,248. Žádný z testů není
+průkazný na obvyklé hladině — **podporuje H2** (vítěz je do značné míry
+nezávislý na tom, jaký zdroj search zrovna najde), ne H1.
+
+Deskriptivně silnější podpora H2: v 5 z 6 kategorií v obou kolech je
+winner_stability 80-100 % (model dokola vybírá stejnou značku), zatímco
+source_stability (identická sada domén napříč páry) je mnohem nižší
+(2-49 %) — vítěz je stabilní, i když se citovaný zdroj mění opakování od
+opakování. Jediná výjimka je meal_kit: nízká winner_stability (40 %/60 %)
+a jediná kategorie s reálně kladným diffem v obou kolech nezávisle
+(+39,3pp / +30,0pp) — zajímavý signál, ale je to 1 z 6 klastrů, primární
+test ho správně nepřeceňuje.
+
+Limitace k řešení před stavbou stránky: gaming_mouse vypadl z analýzy
+(`not enough usable/varied data`) v OBOU kolech nezávisle, robot_vacuum a
+headphones vypadly po jednom kole — efektivní n je tedy 6, ne 8, na kolo.
+Potřeba diagnostikovat, jestli je to gaming_mouse specifická vlastnost
+(např. search vždy vrátí buď identickou, nebo vždy zcela odlišnou sadu
+domén, takže není co srovnávat), než se to napíše do limitací stránky.
+
+Další krok: čeká na Danielovo rozhodnutí, jestli nejdřív prošetřit
+gaming_mouse anomálii, nebo rovnou stavět research page s H2 jako hlavním
+zjištěním a meal_kit jako open question.
+
+Gaming_mouse anomálie vyšetřena přímo na reálných judged datech (Daniel
+vložil `judged_r1.json`/`judged_r2.json` řádky pro tuhle kategorii):
+párový Jaccard mezi všemi 45 dvojicemi opakování byl v obou kolech ≥ 0,5,
+takže "low overlap" koš byl v obou kolech prázdný a `analyze_results.py`
+korektně vrátil `None` podle už navrženého defenzivního chování
+(`if not high or not low: return None`). Není to bug — je to nejextrémnější
+reálný datový bod pro H2 v celém datasetu (vítěz i zdroj drží skoro
+dokonale, výběr domén se prakticky vůbec nemění mezi opakováními).
+S tímhle vysvětlením se přešlo rovnou ke stavbě stránky.
+
+**Status: postaveno a nasazeno (2026-09-15).** `research/source-stability.html`
+(Study #36 ve veřejném číslování) hotová a zapojená sitewide: `vercel.json`,
+`sitemap-pages.xml`, `llms.txt`, karta na `research/mechanism-studies.html`,
+záznam v rotujícím okně i flip-card kartě na `research/index.html`, sitewide
+bump "35 → 36 Public Studies" (157 souborů) a footer `.ai-sitemap` odkaz
+přidaný na 156 stránkách. Hlavní zjištění na stránce: winner stability ~90 %
+napříč 8 kategoriemi, zatímco source stability (identická sada citovaných
+domén) je mnohem nižší a proměnlivější; kombinovaný cluster-permutation diff
++7,9pp, CI [0,0; +16,5]pp, p=0,248 — prezentováno čestně jako neprůkazné
+(podporuje H2). meal_kit vyzdvižen jako jediná výjimka a jediný skutečně
+otevřený bod. gaming_mouse vysvětlení (extrémní stabilita, ne bug) je součástí
+stránky. Otevřeno: rozhodnutí o `robots.txt` `Disallow: /report` pravidle,
+které pravděpodobně blokuje i `/reports` (a tedy všech 10+ report stránek)
+zůstává na Danielovi, netýká se téhle study.
+
+## Nový nápad: Hierarchie sekundárních signálů + kategorie jako moderátor authority/familiarity (2026-09-16)
+
+Podnět: LinkedIn diskuze pod "5 e-commerce founders" postem. Mansoor Ali se
+zeptal, jestli third-party authority a relevance fungují konzistentně, když
+AI vybírá mezi podobnými značkami, a v odpovědi navrhl hypotézu, že skutečná
+výzva možná není jeden silný signál, ale konzistentní mix signálů, co se
+navzájem posilují. Taky se ptal, jak se to liší napříč odvětvími.
+
+Odpověď z existujících dat (Winner vs Loser) hypotézu o "mixu" spíš
+nepodpořila — tři signály naskládané najednou (rating, specificita, formát)
+se neposilovaly rovnoměrně, rating rozhodl 90,8 % bez ohledu na zbytek. Ale
+to je jen hierarchie proti ratingu, nikdy jsme netestovali sekundární
+signály (specificita, formát, authority, familiarity) proti sobě navzájem
+bez ratingu v místnosti.
+
+**Návrh A: Hierarchie mezi sekundárními signály, bez ratingu.** Máme čtyři
+signály, co všechny prohrávají proti ratingu podobným způsobem
+(authority 85,2 % → 1,5pp, familiarity 79,8 % → 0,2pp, specificita menší
+ale replikovaný efekt). Nikdy netestované proti sobě navzájem. Otázka: když
+rating chybí nebo je vyrovnaný, vyhrává authority nad specificitou?
+Familiarity nad authority? Existuje jedna univerzální hierarchie signálů,
+nebo se to mezi páry signálů liší nepředvídatelně (což by podpořilo
+Mansoorovu intuici o "mixu" líp, než odpověď, co jsme mu dali)?
+
+**Návrh B: Moderuje kategorie i authority a familiarity, ne jen
+specificitu?** PDP Specificity je jediná studie, co testovala, jestli se
+efekt signálu obrací podle typu kategorie (funkční vs. důvěra-založená) —
++15,7pp funkční, -4,5pp důvěra-založená, obrácené znaménko. Nikdy
+neověřeno, jestli totéž platí pro authority nebo familiarity, co by
+intuitivně mohly být v kategoriích jako zdraví/bezpečnost ještě silnější
+než ve funkčních.
+
+Obě dvě jde spojit do jednoho designu, levné, recyklují stejné značky a
+metodiku (forced two-way choice, LLM judge) ze Winner vs Loser/Authority
+Signal/Brand Familiarity/PDP Specificity kohorty. Status: nápad zapsaný,
+design zatím nenavržený, čeká na Danielovo rozhodnutí o prioritě vůči
+zbylé frontě (cross-model, cross-platform, Founder Lab, SEO Ranking
+Factors).
+
+## Signal Hierarchy — Study #37, postaveno a nasazeno (2026-09-17)
+
+Synthesis studie: authority, familiarity, specificita a formát testované
+proti sobě navzájem a v kombinaci, rating úplně vyřazený z porovnání. 12 z
+16 možných kombinací signálů (baseline, všech 6 párů, všechny 4 triple bez
+jednoho signálu, plný stack), 4 značky, 20 purchase intentů, 5 opakování,
+2 nezávislá kola (9 600 volání celkem). Specificita nejsilnější samostatný
+marginální přispěvatel k plnému stacku (+3,25pp kombinovaně), authority a
+familiarity těsně za ní a mění pořadí podle toho, jestli se díváš na
+samostatný main effect nebo marginální přínos k plnému stacku. Formátův
+vlastní marginální přínos se zaokrouhlí na nulu v obou kolech zvlášť
+(-0,2pp pak 0,0pp). Dva signály dohromady už dosahují 96-100% winner rate
+ve většině párů, přidání třetího nebo čtvrtého přidává jen pár bodů navíc
+(saturace, ne sčítání).
+
+Zapojeno sitewide: `vercel.json`, `sitemap-pages.xml`, `llms.txt`, karta na
+`research/mechanism-studies.html`, záznam v rotujícím okně i flip-card
+kartě na `research/index.html`, sitewide bump "36 → 37 Public Studies" a
+footer `.ai-sitemap` odkaz přidaný napříč weby. Continued-in dodatek
+přidán na `winner-vs-loser.html`.
+
+## Structured Markup vs Plain Prose — Study #38 (task #358), postaveno a nasazeno (2026-09-17)
+
+Třetí a nejpřímější test formátového signálu v sérii, tentokrát na jiném
+výstupu: ne kdo vyhraje nucené srovnání, ale kolik z injektovaných faktů se
+model rozhodne citovat a kolik konkrétní slovní zásoby použije, když je
+otázka otevřená a jednoznačková (single-brand, žádné forced two-way
+choice). Recykluje injection mechaniku z Fact Injection / Hidden Context
+(system-message "Additional context retrieved for this query: {brand}").
+Jeden binární faktor: stejná 3 fakta na značku (specific_claim,
+authority_fact, familiarity_fact — plný stack obsah z Signal Hierarchy AFSM
+podmínky) buď jako plynulý odstavec, nebo jako odrážkový seznam. Dvě
+outcome metriky: citation rate (LLM judge, gpt-4o teplota=0, 3 judge
+volání na odpověď) a vocabulary lift (deterministický substring match proti
+5 předregistrovaným charakteristickým výrazům na značku).
+
+4 značky, 2 podmínky, 20 purchase intentů, 5 opakování, 2 nezávislá kola
+(1 600 volání, 4 800 judge volání celkem). Primární statistika: párový
+t-test na cluster-level průměrech (80 clusterů = 4 značky x 20 intentů,
+každý zprůměrovaný přes 5 opakování).
+
+**Výsledek: obrácený efekt vůči H1, replikovaný nezávisle v obou kolech.**
+
+## Category as moderator of authority/familiarity — design hotový, čeká na naostro (2026-09-17)
+
+"Návrh B" z 16.9. nápadu (Hierarchie sekundárních signálů + kategorie jako
+moderátor), druhá půlka po Signal Hierarchy (Návrh A, Study #37). PDP
+Specificity je jediná studie v sérii, co testovala, jestli se efekt signálu
+obrací podle kategorie (+15,7pp funkční, -4,5pp důvěra-založená, χ²=39,26,
+p<0,0001). Authority a Familiarity byly obě měřené na stejných 4 značkách
+(2 funkční, 2 důvěra), ale žádná z nich nikdy nerozdělila svůj vlastní
+výsledek podle kategorie, obě reportovaly jen jedno pooled číslo.
+
+Design: 8 značek (4 funkční — Barbaro Mojo, Hearthloom, Bellroy, Zigpoll;
+4 důvěra — Colored Organics, BodyArtForms, Wild One, Primally Pure), žádný
+rating v místnosti (rating by obojí přehlušil stejně jako ve Winner vs
+Loser). Na značku 4 podmínky: signal_type (authority/familiarity) x
+signal_level (target_has/competitor_has). Původní 4 značky recyklují
+byte-identické authority_fact/familiarity_fact ze Studie #34/#35. Nové 4
+(Bellroy, Zigpoll, Wild One, Primally Pure, recyklované z PDP Specificity
+kola 3) dostaly nově napsané plain_claim páry (word-count matched, 12/12,
+12/12, 13/13, 12/12) a nové authority_fact/familiarity_fact věty ve stejném
+rozsahu délky jako originál (13-17 slov).
+
+8 značek x 4 podmínky x 20 intentů x 5 opakování = 3 200 volání na kolo,
+6 400 celkem přes 2 nezávislá kola. Primární statistika: dva LR testy
+(interakce kategorie x signal_level), jeden pro authority, jeden pro
+familiarity, samostatně. Hypotézy explicitně obousměrné: buď moderace jde
+stejným směrem jako specificita (funkční > důvěra), nebo opačným směrem
+(sociální důkaz váží víc, když je v sázce bezpečnost — důvěra > funkční),
+nebo žádná interakce (specificitin nález by pak byl specifický pro
+konkrétnost, ne obecná vlastnost důvěra-kategorií).
+
+`run_study.py` + `run_study_v2.py` napsané, dry-run ověřený end-to-end na
+obě kola (0/6400 judge parse failures kombinovaně). Nespuštěno naostro.
+Čeká na Danielovo "pilot" nebo "naplno" a vlastní OPENAI_API_KEY.
+Structured format necituje víc faktů ani nepoužívá víc specifické slovní
+zásoby než prose — cituje míň a používá míň. Kolo 1: citation rate prose
+65,3 % vs. structured 59,5 % (-5,83pp, p=0,0003), vocabulary lift prose
+67,7 % vs. structured 64,5 % (-3,25pp, p=0,0044). Kolo 2 nezávisle: citation
+rate prose 63,8 % vs. structured 59,2 % (-4,67pp, p=0,0011), vocabulary
+lift prose 68,9 % vs. structured 64,4 % (-4,50pp, p<0,0001). Obě metriky,
+oba směry, oba p-hodnoty drží v obou kolech zvlášť — podle no-file-drawer
+pravidla série jde o potvrzený nález, ne round-1 náhodu. Word count prose
+vs. structured skoro identický (145,1 vs. 141,3 kombinovaně), structured
+byl pokud vůbec, tak kratší — vylučuje "delší odpověď cituje víc" confound
+v opačném směru. Brand mention rate obě podmínky u stropu (99,8-100 %),
+takže rozdíl v citaci není jen tím, že by structured odpovědi méně často
+jmenovaly značku vůbec.
+
+Třetí null/obrácený nález pro formátový signál v řadě (po Winner vs Loser
+a Signal Hierarchy), první, co měří citation fidelity a vocabulary reuse
+místo výběru vítěze. Přímo protiřečí běžné GEO radě "strukturuj obsah do
+odrážek, aby ho AI citovala".
+
+**Status: postaveno a nasazeno jako samostatná stránka (2026-09-17)** dle
+Danielova rozhodnutí ("samostatna stranka"). `research/structured-markup.html`
+zapojeno sitewide: `vercel.json`, `sitemap-pages.xml`, `llms.txt`, karta na
+`research/mechanism-studies.html`, karta i flip-card na `research/index.html`,
+sitewide bump "37 → 38 Public Studies" (159 souborů) a footer `.ai-sitemap`
+odkaz přidaný na 158 stránkách. Continued-in dodatky přidány na
+`winner-vs-loser.html` a `signal-hierarchy.html`. DOI zatím chybí, čeká na
+Daniela až ho vytvoří na Zenodo.
