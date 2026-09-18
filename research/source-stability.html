@@ -83,6 +83,7 @@
       "description": "8 real consumer product categories, open-ended best-of-category prompts with explicit recency cues, sent to gpt-4o via the Responses API with the web_search_preview tool. 10 repeats per category per round, 2 independent rounds (160 search calls, 160 judge calls, 320 total). For each category, repeat pairs are split by whether their cited-domain sets overlap highly (Jaccard >= 0.5) or not, and the difference in P(same winning brand) between the two groups is the primary measure, cluster-bootstrapped and permutation-tested across categories.",
       "creator": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "license": "https://atomfoundry.dev/terms-of-service",
       "url": "https://atomfoundry.dev/research/source-stability",
       "measurementTechnique": "gpt-4o Responses API with the web_search_preview tool for live search and citations, gpt-4o LLM judge extraction of the top-named brand from free-text responses, Jaccard similarity of cited-domain sets between repeat pairs within a category, cluster-permutation test (independent unit = category) as primary evidence, cluster-bootstrap confidence interval",
       "variableMeasured": ["Winner Stability by Category", "Source (Citation Domain) Stability by Category", "P(Same Winner | High Domain Overlap) minus P(Same Winner | Low Domain Overlap)", "Search Invocation Rate"]

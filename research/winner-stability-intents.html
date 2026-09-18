@@ -83,6 +83,7 @@
       "description": "8 real consumer product categories, same as Source Stability, each with 3 differently phrased questions carrying the same buying intent (recency-cued, same price/time anchor, different syntax). 5 repeats per phrasing per round, 2 independent rounds (240 live search calls via the Responses API with web_search_preview, 240 judge calls). For each category, pairs of calls are split by whether they share the same phrasing or use two different phrasings, and the difference in P(same winning brand) between the two groups is the primary measure, cluster-bootstrapped and permutation-tested across categories (independent unit = category).",
       "creator": { "@id": "https://atomfoundry.dev/#organization" },
       "publisher": { "@id": "https://atomfoundry.dev/#organization" },
+      "license": "https://atomfoundry.dev/terms-of-service",
       "url": "https://atomfoundry.dev/research/winner-stability-intents",
       "measurementTechnique": "gpt-4o Responses API with the web_search_preview tool for live search, gpt-4o LLM judge extraction of the top-named brand from free-text responses (identical judge prompt to Source Stability), cluster-permutation test (independent unit = category) as primary evidence, cluster-bootstrap confidence interval",
       "variableMeasured": ["Winner Stability by Category", "P(Same Winner | Same Phrasing) minus P(Same Winner | Different Phrasing)", "Search Invocation Rate", "Incumbent vs. Open Category Split"]
