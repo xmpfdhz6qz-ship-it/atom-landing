@@ -2188,7 +2188,35 @@ každý zprůměrovaný přes 5 opakování).
 
 **Výsledek: obrácený efekt vůči H1, replikovaný nezávisle v obou kolech.**
 
-## Category as moderator of authority/familiarity — design hotový, čeká na naostro (2026-09-17)
+Structured format necituje víc faktů ani nepoužívá víc specifické slovní
+zásoby než prose — cituje míň a používá míň. Kolo 1: citation rate prose
+65,3 % vs. structured 59,5 % (-5,83pp, p=0,0003), vocabulary lift prose
+67,7 % vs. structured 64,5 % (-3,25pp, p=0,0044). Kolo 2 nezávisle: citation
+rate prose 63,8 % vs. structured 59,2 % (-4,67pp, p=0,0011), vocabulary
+lift prose 68,9 % vs. structured 64,4 % (-4,50pp, p<0,0001). Obě metriky,
+oba směry, oba p-hodnoty drží v obou kolech zvlášť — podle no-file-drawer
+pravidla série jde o potvrzený nález, ne round-1 náhodu. Word count prose
+vs. structured skoro identický (145,1 vs. 141,3 kombinovaně), structured
+byl pokud vůbec, tak kratší — vylučuje "delší odpověď cituje víc" confound
+v opačném směru. Brand mention rate obě podmínky u stropu (99,8-100 %),
+takže rozdíl v citaci není jen tím, že by structured odpovědi méně často
+jmenovaly značku vůbec.
+
+Třetí null/obrácený nález pro formátový signál v řadě (po Winner vs Loser
+a Signal Hierarchy), první, co měří citation fidelity a vocabulary reuse
+místo výběru vítěze. Přímo protiřečí běžné GEO radě "strukturuj obsah do
+odrážek, aby ho AI citovala".
+
+**Status: postaveno a nasazeno jako samostatná stránka (2026-09-17)** dle
+Danielova rozhodnutí ("samostatna stranka"). `research/structured-markup.html`
+zapojeno sitewide: `vercel.json`, `sitemap-pages.xml`, `llms.txt`, karta na
+`research/mechanism-studies.html`, karta i flip-card na `research/index.html`,
+sitewide bump "37 → 38 Public Studies" (159 souborů) a footer `.ai-sitemap`
+odkaz přidaný na 158 stránkách. Continued-in dodatky přidány na
+`winner-vs-loser.html` a `signal-hierarchy.html`. DOI zatím chybí, čeká na
+Daniela až ho vytvoří na Zenodo.
+
+## Category as moderator of authority/familiarity — hotovo, obě kola reálně proběhla (2026-09-18)
 
 "Návrh B" z 16.9. nápadu (Hierarchie sekundárních signálů + kategorie jako
 moderátor), druhá půlka po Signal Hierarchy (Návrh A, Study #37). PDP
@@ -2218,33 +2246,89 @@ stejným směrem jako specificita (funkční > důvěra), nebo opačným směrem
 nebo žádná interakce (specificitin nález by pak byl specifický pro
 konkrétnost, ne obecná vlastnost důvěra-kategorií).
 
-`run_study.py` + `run_study_v2.py` napsané, dry-run ověřený end-to-end na
-obě kola (0/6400 judge parse failures kombinovaně). Nespuštěno naostro.
-Čeká na Danielovo "pilot" nebo "naplno" a vlastní OPENAI_API_KEY.
-Structured format necituje víc faktů ani nepoužívá víc specifické slovní
-zásoby než prose — cituje míň a používá míň. Kolo 1: citation rate prose
-65,3 % vs. structured 59,5 % (-5,83pp, p=0,0003), vocabulary lift prose
-67,7 % vs. structured 64,5 % (-3,25pp, p=0,0044). Kolo 2 nezávisle: citation
-rate prose 63,8 % vs. structured 59,2 % (-4,67pp, p=0,0011), vocabulary
-lift prose 68,9 % vs. structured 64,4 % (-4,50pp, p<0,0001). Obě metriky,
-oba směry, oba p-hodnoty drží v obou kolech zvlášť — podle no-file-drawer
-pravidla série jde o potvrzený nález, ne round-1 náhodu. Word count prose
-vs. structured skoro identický (145,1 vs. 141,3 kombinovaně), structured
-byl pokud vůbec, tak kratší — vylučuje "delší odpověď cituje víc" confound
-v opačném směru. Brand mention rate obě podmínky u stropu (99,8-100 %),
-takže rozdíl v citaci není jen tím, že by structured odpovědi méně často
-jmenovaly značku vůbec.
+`run_study.py` + `run_study_v2.py` spuštěny naostro Danielem (vlastní
+OPENAI_API_KEY), 2026-09-18. 0/6400 judge parse failures kombinovaně přes
+obě kola.
 
-Třetí null/obrácený nález pro formátový signál v řadě (po Winner vs Loser
-a Signal Hierarchy), první, co měří citation fidelity a vocabulary reuse
-místo výběru vítěze. Přímo protiřečí běžné GEO radě "strukturuj obsah do
-odrážek, aby ho AI citovala".
+**Výsledek: efekt jde OPAČNÝM směrem než specificita, replikovaný nezávisle
+v obou kolech.**
 
-**Status: postaveno a nasazeno jako samostatná stránka (2026-09-17)** dle
-Danielova rozhodnutí ("samostatna stranka"). `research/structured-markup.html`
-zapojeno sitewide: `vercel.json`, `sitemap-pages.xml`, `llms.txt`, karta na
-`research/mechanism-studies.html`, karta i flip-card na `research/index.html`,
-sitewide bump "37 → 38 Public Studies" (159 souborů) a footer `.ai-sitemap`
-odkaz přidaný na 158 stránkách. Continued-in dodatky přidány na
-`winner-vs-loser.html` a `signal-hierarchy.html`. DOI zatím chybí, čeká na
-Daniela až ho vytvoří na Zenodo.
+Authority: overall follows-the-signal rate kolo 1 = 69,9 %, kolo 2 = 69,4 %.
+Funkční: kolo 1 = 65,4 %, kolo 2 = 64,9 %. Důvěra: kolo 1 = 74,5 %, kolo 2 =
+74,0 %. Category x signal_level LR test: kolo 1 LR=461,93 p=8,49e-100, kolo
+2 LR=433,11 p=1,49e-93.
+
+Familiarity: overall kolo 1 = 67,2 %, kolo 2 = 66,9 %. Funkční: kolo 1 =
+60,0 %, kolo 2 = 60,4 %. Důvěra: kolo 1 = 74,4 %, kolo 2 = 73,5 %. LR test:
+kolo 1 LR=381,87 p=1,87e-82, kolo 2 LR=380,2 p=4,30e-82.
+
+Oba signály, oba směry, obě p-hodnoty drží v obou kolech zvlášť, podle
+no-file-drawer pravidla série jde o potvrzený nález. Směr je opačný než u
+PDP Specificity (+15,7pp funkční, -4,5pp důvěra): tam specificita pomáhala
+funkčním kategoriím a škodila důvěra-kategoriím, tady autorita i
+familiarity signál pomáhají VÍC důvěra-kategoriím než funkčním (H2 z
+designu, "sociální důkaz váží víc, když je v sázce bezpečnost", potvrzeno
+H1 zamítnuto). Position bias check (target named first vs. second):
+69,2 % vs. 67,5 %, malý rozdíl, nic co by zpochybnilo hlavní nález. 14
+buněk (ze 64) flagováno jako ceiling/floor v obou kolech, konzistentně
+stejné buňky, očekávané u menších podmínek.
+
+**Status: postaveno a nasazeno jako samostatná stránka (2026-09-18)** dle
+Danielova rozhodnutí ("dal bych to jako samostatnou stranku"). Publikovaná
+jako Study #39, `research/category-fit.html`. Zapojeno sitewide:
+`vercel.json`, `sitemap-pages.xml`, `llms.txt`, karta na
+`research/mechanism-studies.html`, karta i rotující finding-card na
+`research/index.html`, sitewide bump "38 → 39 Public Studies" (160
+souborů) a footer `.ai-sitemap` odkaz přidaný napříč weby. Continued-in
+dodatky přidány na `pdp-specificity.html`, `authority-signal.html` a
+`brand-familiarity.html`. DOI: 10.5281/zenodo.22832667 (přidáno
+2026-09-18, `.doi-citation` blok v hero + `identifier` pole na Article
+i Dataset v JSON-LD).
+
+## Winner stability across varied intents (not just identical repeat) — Study #40 (2026-09-18)
+
+Vzniklo z výměny na LinkedIn pod postem Vurala Cifciho: Daniel citoval Source
+Stability (research/source-stability.html) jako důkaz, že vítěz zůstává
+stabilní (~90 %) i když se citovaný zdroj mění (2,2-80 %). Vural namítl
+datem od SparkToro (pod 1 % šance na stejný seznam dvakrát) a argumentoval,
+že stabilita hlavně drží tam, kde je incumbent už zavedený.
+
+Mezera: Source Stability studie testovala pouze opakování IDENTICKÉ otázky
+(stejný prompt, 10x, per kategorie). Netestovala, jestli vítěz zůstává
+stabilní i napříč RŮZNĚ formulovanými dotazy se stejným záměrem ve stejné
+kategorii. To je jiný typ variance (cross-intent, ne test-retest).
+
+Design: stejných 8 kategorií jako Source Stability, 3 formulace se stejným
+záměrem na kategorii (what's the best / which X should I buy / can you
+recommend), 5 opakování na formulaci, 2 nezávislá kola (240 search volání,
+240 judge volání). Primární test: P(stejný vítěz | stejná formulace) vs.
+P(stejný vítěz | jiná formulace), cluster-permutation test na úrovni
+kategorie.
+
+**Reálné výsledky (obě kola, Daniel spustil vlastním OPENAI_API_KEY):**
+Kolo 1: mean diff +2.2pp, 95% CI [0.0, +6.2]pp, p=0.499 (neprůkazné).
+Kolo 2: mean diff +4.0pp, 95% CI [0.0, +9.3]pp, p=0.245 (neprůkazné).
+Kombinovaně (16 category-clusterů): +3.1pp, 95% CI [+0.4, +6.4]pp, p=0.063
+(na hraně, ale ne pod 0.05). Podle no-file-drawer pravidla (finding musí
+držet v obou kolech zvlášť) toto NENÍ průkazný efekt formulace, což
+potvrzuje Danielovo tvrzení silněji, ne Vuralovu námitku: přeformulování
+otázky vítěze spolehlivě nerozhodilo.
+
+5 z 8 kategorií mělo rozdíl na nule nebo blízko ní v obou kolech nezávisle
+(robot_vacuum, air_fryer, gaming_mouse, bluetooth_speaker, headphones).
+Sekundárně: incumbent kategorie (winner stability >= 90 %, tato studie
+vlastní pooled čísla) měly průměrný rozdíl +0.1pp, open kategorie (meal_kit,
+mechanical_keyboard, electric_toothbrush) +8.0pp, ale žádná ze 3 open
+kategorií tento rozdíl nedržela konzistentně mezi koly (meal_kit 0.0→20.0pp,
+mechanical_keyboard 0.0→9.3pp, electric_toothbrush 16.2→2.7pp opačným
+směrem) — orientační pozorování, ne potvrzený nález.
+
+**Status: postaveno a nasazeno jako samostatná stránka
+(research/winner-stability-intents.html, Study #40), propojená s
+source-stability.html obousměrně ("continued in" dodatek tam, "direct
+follow-up" v hero na nové stránce). Sitewide wiring hotové (vercel.json,
+sitemap, llms.txt, mechanism-studies.html, research/index.html rotující
+okno i reports grid, footer ai-sitemap všude, Public Studies 39→40).
+Vural dostal krátkou zprávu s výsledky. DOI: 10.5281/zenodo.22833586
+(přidáno 2026-09-18, `.doi-citation` blok v hero + `identifier` pole na
+Article i Dataset v JSON-LD).**
