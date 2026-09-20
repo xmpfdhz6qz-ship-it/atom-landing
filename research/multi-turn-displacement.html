@@ -1044,7 +1044,7 @@
     const svg = document.getElementById('decaySvg');
     if (!wrap || !svg) return;
     function render(){
-      var W=680,H=260,padT=16,padB=34,padL=8,padR=8;
+      var W=680,H=260,padT=34,padB=34,padL=8,padR=8;
       var stages=['T1 · Explicit intro','T2 · Open question','T3 · Narrowing','T4 · Forced pick'];
       var ours=[100,32.5,59,49.5];
       var ref=[95.7,null,null,12.7];
@@ -1058,8 +1058,8 @@
       var refLine = 'M' + X(0).toFixed(1)+','+Y(ref[0]).toFixed(1) + ' L' + X(3).toFixed(1)+','+Y(ref[3]).toFixed(1);
       var gridLines = [0,25,50,75,100].map(function(g){
         var y=Y(g).toFixed(1);
-        return '<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="rgba(22,21,18,0.1)" stroke-width="1"></line>' +
-          '<text x="0" y="'+(Number(y)-3)+'" font-family="ui-monospace,Menlo,monospace" font-size="9" fill="rgba(22,21,18,0.4)">'+g+'%</text>';
+        var label = g===100 ? '' : '<text x="0" y="'+(Number(y)-3)+'" font-family="ui-monospace,Menlo,monospace" font-size="9" fill="rgba(22,21,18,0.4)">'+g+'%</text>';
+        return '<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="rgba(22,21,18,0.1)" stroke-width="1"></line>' + label;
       }).join('');
       var xLabels = stages.map(function(s,i){
         return '<text x="'+X(i).toFixed(1)+'" y="'+(H-8)+'" font-family="Nunito,sans-serif" font-size="10.5" font-weight="700" fill="rgba(22,21,18,0.55)" text-anchor="middle">'+s+'</text>';
