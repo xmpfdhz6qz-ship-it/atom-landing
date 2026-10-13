@@ -434,25 +434,9 @@
     grid-auto-rows:172px;grid-auto-flow:dense;gap:16px;margin-top:28px;
   }
   @media (min-width:901px){
-    .findings-grid .finding-card:nth-child(1){grid-column:span 2;grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(4){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(5){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(7){grid-column:span 2;}
-    .findings-grid .finding-card:nth-child(8){grid-column:span 2;grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(10){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(11){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(13){grid-column:span 2;}
-    .findings-grid .finding-card:nth-child(15){grid-column:span 2;grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(16){grid-column:span 2;grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(22){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(23){grid-column:span 2;}
-    .findings-grid .finding-card:nth-child(24){grid-column:span 2;grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(27){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(30){grid-column:span 2;grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(33){grid-column:span 2;}
-    .findings-grid .finding-card:nth-child(35){grid-column:span 2;grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(37){grid-row:span 2;}
-    .findings-grid .finding-card:nth-child(38){grid-column:span 2;}
+    /* repeating 16-card rhythm: big squares (2x2), wide rectangles (2x1), small squares (1x1) */
+    .findings-grid .finding-card:nth-child(16n+1),.findings-grid .finding-card:nth-child(16n+14){grid-column:span 2;grid-row:span 2;}
+    .findings-grid .finding-card:nth-child(16n+6),.findings-grid .finding-card:nth-child(16n+9){grid-column:span 2;}
   }
   .finding-card{
     --flip-dir:180deg;
@@ -503,15 +487,16 @@
   }
   .finding-tier1 .finding-face-back{background:rgba(254,106,3,0.55);}
   .finding-title{font-family:var(--serif);font-weight:800;font-size:16px;line-height:1.32;letter-spacing:-0.01em;color:inherit;}
-  .finding-tier1 .finding-face-front .finding-title{font-size:19px;font-weight:700;line-height:1.28;}
-  .finding-face-back .finding-title{font-size:18px;margin-bottom:9px;line-height:1.3;}
-  .finding-body{font-size:15px;color:rgba(22,21,18,0.8);line-height:1.5;}
+  .finding-tier1 .finding-face-front .finding-title{font-size:23px;font-weight:900;line-height:1.22;}
+  .finding-face-back{padding:16px 18px;}
+  .finding-face-back .finding-title{font-size:15px;margin-bottom:6px;line-height:1.25;}
+  .finding-body{font-size:13px;color:rgba(22,21,18,0.8);line-height:1.4;}
   /* "View Study" + arrow sit together as one compact unit in the bottom
      right corner, not stretched across the card */
   .finding-view{
-    display:flex;align-items:center;gap:6px;
-    align-self:flex-end;margin-top:12px;flex-shrink:0;
-    font-size:13.5px;font-weight:700;color:var(--black);white-space:nowrap;
+    display:flex;align-items:center;justify-content:flex-end;gap:6px;
+    width:100%;align-self:stretch;margin-top:8px;flex-shrink:0;text-align:right;
+    font-size:12.5px;font-weight:700;color:var(--black);white-space:nowrap;
   }
   .finding-view .nav-chevron{transform:rotate(-90deg);color:var(--black);flex-shrink:0;}
 
@@ -840,6 +825,7 @@
        give the back face more room since it's a single column now */
     .findings-grid{grid-template-columns:1fr;grid-auto-rows:220px;}
     .finding-face{padding:20px;}
+    .finding-face-back{padding:16px 18px;}
     .topics-grid{grid-template-columns:1fr;}
     .final-cta{padding:40px 24px;}
     .final-cta .scan-box{max-width:none;}
@@ -1855,7 +1841,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/phrasing-stability-by-signal" data-key="39">
+      <a class="finding-card" href="/research/phrasing-stability-by-signal" data-key="39">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Rating recommendations don't move when you reword the question. Price recommendations do.</div></div>
           <div class="finding-face finding-face-back">
@@ -1867,7 +1853,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/negative-reputation-candidacy" data-key="40">
+      <a class="finding-card" href="/research/negative-reputation-candidacy" data-key="40">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">A bad rating barely touches candidacy. It wrecks the final round.</div></div>
           <div class="finding-face finding-face-back">
@@ -1879,7 +1865,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/sponsored-tag-penalty" data-key="41">
+      <a class="finding-card" href="/research/sponsored-tag-penalty" data-key="41">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Mark the listing sponsored, and it loses 18.4 points in a head-to-head pick.</div></div>
           <div class="finding-face finding-face-back">
@@ -1891,7 +1877,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/query-conditional-defense" data-key="42">
+      <a class="finding-card" href="/research/query-conditional-defense" data-key="42">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Match the sponsored listing to the search term, and the penalty overshoots by 21 points.</div></div>
           <div class="finding-face finding-face-back">
@@ -1903,7 +1889,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/source-rank-position" data-key="43">
+      <a class="finding-card" href="/research/source-rank-position" data-key="43">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Rank first in the cited source, and the model always agrees. Fourth place wins 1.2% of the time.</div></div>
           <div class="finding-face finding-face-back">
@@ -1915,7 +1901,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/cold-start-dose-response" data-key="44">
+      <a class="finding-card" href="/research/cold-start-dose-response" data-key="44">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Under 4.1 stars, the model ignores an unknown brand. At 4.9 stars it picks it 85% of the time.</div></div>
           <div class="finding-face finding-face-back">
@@ -1927,7 +1913,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/source-rank-brand-prior" data-key="45">
+      <a class="finding-card" href="/research/source-rank-brand-prior" data-key="45">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">In a Ranked Source, the Higher-Ranked Brand Wins 100% of the Time, Even Against the Model's Favorite.</div></div>
           <div class="finding-face finding-face-back">
@@ -1939,7 +1925,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/press-with-facts" data-key="46">
+      <a class="finding-card" href="/research/press-with-facts" data-key="46">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Press Coverage Moves the Model Only When It Answers the Exact Question Asked. Generic: 1.9%. Matching: 80.6%.</div></div>
           <div class="finding-face finding-face-back">
@@ -1951,7 +1937,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/classification-candidacy" data-key="47">
+      <a class="finding-card" href="/research/classification-candidacy" data-key="47">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Describe a Company by Its Side Feature and It Falls Off the AI Shortlist: 82.8% to 24.0%. The Model Still Names Its Category Correctly.</div></div>
           <div class="finding-face finding-face-back">
@@ -1963,7 +1949,7 @@
           </div>
         </div>
       </a>
-      <a class="finding-card finding-tier1" href="/research/review-recency" data-key="48">
+      <a class="finding-card" href="/research/review-recency" data-key="48">
         <div class="finding-card-inner">
           <div class="finding-face finding-face-front"><div class="finding-title">Reviews Four Years Old Count as No Reviews at All: 0%. Five Hundred Fresh Ones Beat Thirty Thousand Old Ones, 72.8% to 1.4%.</div></div>
           <div class="finding-face finding-face-back">
@@ -3181,5 +3167,32 @@
 })();
 </script>
 <!-- SITE_VISIT_TRACKER:END -->
+<script>
+/* Auto-fit: make every finding card tall enough that its back face (title, text and the
+   "View Study" + arrow in the bottom-right corner) is never clipped, at any screen width. */
+(function(){
+  function fit(){
+    var grid=document.querySelector('.findings-grid'); if(!grid) return;
+    var cards=grid.querySelectorAll('.finding-card');
+    cards.forEach(function(c){c.style.gridRow='';});
+    cards.forEach(function(c){
+      var back=c.querySelector('.finding-face-back'); if(!back) return;
+      var m=(getComputedStyle(c).gridRowEnd||'').match(/span\s+(\d+)/);
+      var n=m?parseInt(m[1],10):1, guard=0;
+      while(guard++<8){
+        c.style.gridRow='span '+n;
+        if(back.scrollHeight<=back.clientHeight+1) break;
+        n++;
+      }
+    });
+  }
+  var t; function later(){clearTimeout(t); t=setTimeout(fit,120);}
+  document.addEventListener('DOMContentLoaded',fit);
+  window.addEventListener('load',fit);
+  window.addEventListener('resize',later);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+})();
+</script>
 </body>
 </html>
