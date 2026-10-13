@@ -325,6 +325,11 @@
   .method-item span{color:var(--black);font-weight:700;}
   .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
   .limits strong{color:var(--black);}
+  .sr-table-wrap{overflow-x:auto;margin-top:24px;}
+  .sr-table{width:100%;border-collapse:collapse;font-size:14px;}
+  .sr-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-700);padding:10px 12px;border-bottom:1px solid var(--card-line);}
+  .sr-table td{padding:12px;border-bottom:1px solid var(--card-line);color:var(--gray-700);vertical-align:top;line-height:1.5;}
+  .sr-table td:first-child{color:var(--black);font-weight:600;}
 
   .signal-chart{margin-top:8px;}
   .signal-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
@@ -545,12 +550,10 @@
     <div class="doi-citation"><img src="/images/research/zenodo-logo.png" alt="Zenodo" class="doi-badge-img"><span>Cite this study:</span> <a href="https://doi.org/10.5281/zenodo.22818169" target="_blank" rel="noopener">10.5281/zenodo.22818169</a></div>
     <div class="hero-stat-row">
       <div class="hero-stat-line">
-        <div class="hero-stat"><b class="hero-stat-num" id="statCorr" data-target="0.03" data-decimals="2" data-prefix="r=">r=0.03</b><span>Hedge language vs. real confidence</span></div>
-      </div>
-      <div class="hero-stat-line">
-        <div class="hero-stat"><b class="hero-stat-num smaller" id="statHedge" data-target="11.2" data-decimals="1" data-suffix="%">11.2%</b><span>Hedge rate on the highest-confidence pick type</span></div>
-        <div class="hero-stat"><b class="hero-stat-num smaller" id="statAgree" data-target="100" data-suffix="%">100%</b><span>Picks agreeing across GPT-4o, Claude, Gemini</span></div>
-        <div class="hero-stat"><b class="hero-stat-num smaller" id="statMethods" data-target="7">7</b><span>Independent methods, one result</span></div>
+        <div class="hero-stat"><b class="hero-stat-num" id="statCorr" data-target="0.03" data-decimals="2" data-prefix="r=">r=0.03</b><span>Hedging vs. real confidence</span></div>
+        <div class="hero-stat"><b class="hero-stat-num smaller" id="statHedge" data-target="11.2" data-decimals="1" data-suffix="%">11.2%</b><span>Hedge rate, top-confidence picks</span></div>
+        <div class="hero-stat"><b class="hero-stat-num smaller" id="statAgree" data-target="100" data-suffix="%">100%</b><span>Agreement across 3 models</span></div>
+        <div class="hero-stat"><b class="hero-stat-num smaller" id="statMethods" data-target="7">7</b><span>Independent methods</span></div>
       </div>
     </div>
   </div>
@@ -782,6 +785,7 @@
     <div class="method-box">
       <p style="font-size:14.5px;color:var(--gray-700);line-height:1.7;">Everything here is correlational and observational within a controlled prompt design, not a causal test on a real store. It measures how a model talks and how sure it internally is about a fixed, artificial comparison; it does not measure whether changing a real brand's language in the wild would change how AI recommends it. That causal question is the direct motivation for the Founder Lab experiments noted on the research roadmap.</p>
     </div>
+    <div class="bias-card wide" style="margin-top:20px;"><strong>Update:</strong> the price and specs gap flagged above is now closed, for the phrasing-stability leg specifically. Continued in Study #41, <a href="/research/phrasing-stability-by-signal">Rating Recommendations Don't Move When You Reword the Question. Price Recommendations Do.</a> The rating-signal result on this page does not generalize: price picks flipped in 7 of 16 intents (significant, p=0.0225), specs in 2 of 16 (not significant at this sample size).</div>
   </div>
 </section>
 
@@ -831,6 +835,32 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ADDENDUM: LOGPROB GAP VS STABILITY -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Addendum · October 2026</div>
+    <h2 class="section-title">Internal confidence predicts <em>reproducibility</em>. Not always correctness</h2>
+    <p class="section-body">Hedge language told us nothing about confidence (r=0.03). Does the model's internal confidence, the logprob gap between its top two options, tell us anything? We joined the logprob replay to the free-text Candidate Evaluation runs (480 matched runs: 16 intents × 3 signals × 10 runs, GPT-4o, no new API calls) and checked whether a wider gap predicts that the free-text pick matches the logprob pick, and that it follows the better-supported fact.</p>
+    <div class="sr-table-wrap">
+      <table class="sr-table">
+        <thead><tr><th>Logprob gap</th><th>Runs</th><th>Free-text agrees with logprob pick</th><th>Free-text follows better fact</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; 0.90</td><td>102</td><td>64.7%</td><td>64.7%</td></tr>
+          <tr><td>0.90 – 0.99</td><td>63</td><td>79.4%</td><td>68.3%</td></tr>
+          <tr><td>0.99 – 0.999</td><td>48</td><td>95.8%</td><td>72.9%</td></tr>
+          <tr><td>&ge; 0.999</td><td>267</td><td>98.5%</td><td>91.4%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-body" style="margin-top:20px;">Overall, the gap predicts agreement between the two methods with AUC 0.855 (permutation p = 0.0005). Part of that is signal type: rating picks are near-certain (gap ≈ 1.0) and 100% stable, while price is the least confident. Inside single signals the effect holds for agreement (specs AUC 0.852, price 0.706, both p = 0.0005). For following the better fact it holds for specs (AUC 0.675, p = 0.004) but <strong>not for price</strong> (AUC 0.515, p = 0.77): price picks follow the better fact about 60% of the time at any confidence level.</p>
+    <div class="bias-card">
+      <strong>What this means:</strong> real internal confidence tells you how reproducible an answer is, which hedge language does not. It does not guarantee the answer is the one the evidence supports. A confident price pick can still ignore the better price.
+    </div>
+    <p class="section-body" style="margin-top:20px;">Two further checks on the same 480 runs found nothing. Vocabulary concreteness (numbers and spec terms versus impression words in the stated reason) does not track the logprob gap once signal type is held fixed: price ρ = −0.02 (p = 0.79), specs ρ = 0.12 (p = 0.13). And the model did not hedge more in trust-sensitive categories (pets, food, wellness) than in functional ones: 4.3% versus 6.7% of reasons (p = 0.34, 16 intents, low power, so a small effect cannot be ruled out). What the model says about its pick, in hedges or in specifics, still tells you little about how sure it is.</p>
+    <p class="limits"><strong>Limits:</strong> one model (GPT-4o), 16 contested intents, forced-letter choice at temperature 0, replay of existing runs. Agreement between two measurements of the same model is not independent validation.</p>
   </div>
 </section>
 
@@ -942,7 +972,7 @@
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>40</b> Public Studies</div>
+      <div><b>50</b> Public Studies</div>
       <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -1007,6 +1037,15 @@
         <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
         <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
         <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/negative-reputation-candidacy">A Bad Rating Barely Touches Candidacy. It Wrecks the Final Round.</a>
+        <a href="/research/sponsored-tag-penalty">Mark the Listing Sponsored, and It Loses 18.4 Points in a Head-to-Head Pick</a>
+        <a href="/research/query-conditional-defense">Match the Sponsored Listing to the Search Term, and the Penalty Overshoots by 21 Points</a>
+        <a href="/research/source-rank-position">Rank First in the Cited Source, and the Model Always Agrees. Fourth Place Wins 1.2% of the Time.</a>
+        <a href="/research/cold-start-dose-response">Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time.</a>
+        <a href="/research/source-rank-brand-prior">In a Ranked Source, the Higher-Ranked Brand Wins 100% of the Time, Even Against the Model's Favorite.</a>
+        <a href="/research/press-with-facts">Press Coverage Moves the Model Only When It Answers the Exact Question Asked. Generic: 1.9%. Matching: 80.6%.</a>
+        <a href="/research/classification-candidacy">Describe a Company by Its Side Feature and It Falls Off the AI Shortlist: 82.8% to 24.0%. The Model Still Names Its Category Correctly.</a>
+        <a href="/research/review-recency">Reviews Four Years Old Count as No Reviews at All: 0%. Five Hundred Fresh Ones Beat Thirty Thousand Old Ones, 72.8% to 1.4%.</a>
         <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
         <a href="/founder-lab">Founder Lab</a>
         <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>

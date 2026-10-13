@@ -416,6 +416,11 @@
   .method-item span{color:var(--black);font-weight:700;}
   .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
   .limits strong{color:var(--black);}
+  .sr-table-wrap{overflow-x:auto;margin-top:24px;}
+  .sr-table{width:100%;border-collapse:collapse;font-size:14px;}
+  .sr-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-700);padding:10px 12px;border-bottom:1px solid var(--card-line);}
+  .sr-table td{padding:12px;border-bottom:1px solid var(--card-line);color:var(--gray-700);vertical-align:top;line-height:1.5;}
+  .sr-table td:first-child{color:var(--black);font-weight:600;}
 </style>
 </head>
 <body>
@@ -591,6 +596,35 @@
   </div>
 </section>
 
+<!-- ADDENDUM: STATED VS REVEALED -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Addendum · October 2026</div>
+    <h2 class="section-title">Does the reason at least <em>name</em> what moved the pick?</h2>
+    <p class="section-body">Everything above shows the reasons are never reused. A fair follow-up is whether they at least mention the thing that actually moved the pick. We re-read the one-sentence reasons already stored from five of our controlled studies, with no new model calls, counted how often each signal is named, and set that beside how much the signal moved the pick.</p>
+    <div class="sr-table-wrap">
+      <table class="sr-table">
+        <thead>
+          <tr><th>Signal</th><th>Study</th><th>Effect on the pick</th><th>Named in the reason</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sponsored label</td><td>#43</td><td>&minus;18.4 pts (74.2% &rarr; 55.8%)</td><td>1.0% of replies (4 of 400)</td></tr>
+          <tr><td>Authority, alone</td><td>#34</td><td>+71 pts (93.2% vs 22.2%)</td><td>47% to 65%, depending on the word list</td></tr>
+          <tr><td>Authority, next to a rating</td><td>#34</td><td>about zero, within noise</td><td>27% to 36% when it agrees with the pick</td></tr>
+          <tr><td>Familiarity, next to a rating</td><td>#35</td><td>+0.2 pts</td><td>55%</td></tr>
+          <tr><td>Rating</td><td>#33, #34, #35</td><td>decides the pick 91% to 99% of the time</td><td>68% to 86%</td></tr>
+          <tr><td>Rank in a cited source</td><td>#45</td><td>100% / 1.2% / 0% at rank 1 / 4 / 15</td><td>99% to 100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="section-body" style="margin-top:22px;">The reasons track what is explicit and prominent in the prompt, a source's ranking or a rating number, more than what actually decides. The one hidden driver in these data, the sponsored label, is almost never named: the pick moves 18.4 points while the label appears in 1% of replies, and the replies that lose are explained with plausible reasons about the competitor's focus. Signals that no longer changed anything, authority or familiarity next to a rating, are still cited in a quarter to a half of replies as decoration.</p>
+    <div class="bias-card">
+      <strong>What this adds:</strong> a reason that mentions a signal is not evidence the signal mattered, and a reason that omits one is not evidence it did not. Which signals move the pick has to be read from controlled experiments, not from the model's own explanation.
+    </div>
+    <div class="limits"><strong>Method limits.</strong> Keyword matching counts a mention, not a cause, and each reply is a single sentence with one or two reasons, so mention rates are a floor. Results move with the word list: authority is named in 47% of replies with a narrow list and 65% with a broader one. A spot-check found 3 of the 4 sponsored-label mentions were genuinely about the label. Four brands, gpt-4o, and the pick itself is judged by gpt-4o.</div>
+  </div>
+</section>
+
 <!-- FINAL CTA -->
 <section id="score">
   <div class="container">
@@ -699,7 +733,7 @@
       </div>
     </div>
     <div class="footer-stats-row">
-      <div><b>40</b> Public Studies</div>
+      <div><b>50</b> Public Studies</div>
       <div><b data-stat="stores">66,090</b> Stores</div>
       <div><b>40,000+</b> Recommendations</div>
       <div><b>1,490</b> Brands</div>
@@ -760,10 +794,20 @@
         <a href="/research/structured-markup">We Turned the Same Facts Into Bullets. The Model Cited Fewer of Them.</a>
         <a href="/research/category-fit">Authority Adds 9 Points in Trust Categories. Familiarity Adds 14.</a>
         <a href="/research/winner-stability-intents">Reword the Question Three Ways. The Winner Mostly Stays the Same.</a>
+        <a href="/research/phrasing-stability-by-signal">Rating Recommendations Don't Move When You Reword the Question. Price Recommendations Do.</a>
         <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
         <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
         <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
         <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/negative-reputation-candidacy">A Bad Rating Barely Touches Candidacy. It Wrecks the Final Round.</a>
+        <a href="/research/sponsored-tag-penalty">Mark the Listing Sponsored, and It Loses 18.4 Points in a Head-to-Head Pick</a>
+        <a href="/research/query-conditional-defense">Match the Sponsored Listing to the Search Term, and the Penalty Overshoots by 21 Points</a>
+        <a href="/research/source-rank-position">Rank First in the Cited Source, and the Model Always Agrees. Fourth Place Wins 1.2% of the Time.</a>
+        <a href="/research/cold-start-dose-response">Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time.</a>
+        <a href="/research/source-rank-brand-prior">In a Ranked Source, the Higher-Ranked Brand Wins 100% of the Time, Even Against the Model's Favorite.</a>
+        <a href="/research/press-with-facts">Press Coverage Moves the Model Only When It Answers the Exact Question Asked. Generic: 1.9%. Matching: 80.6%.</a>
+        <a href="/research/classification-candidacy">Describe a Company by Its Side Feature and It Falls Off the AI Shortlist: 82.8% to 24.0%. The Model Still Names Its Category Correctly.</a>
+        <a href="/research/review-recency">Reviews Four Years Old Count as No Reviews at All: 0%. Five Hundred Fresh Ones Beat Thirty Thousand Old Ones, 72.8% to 1.4%.</a>
         <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
         <a href="/founder-lab">Founder Lab</a>
         <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>

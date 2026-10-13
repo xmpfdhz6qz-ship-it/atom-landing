@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time. | Atom Foundry</title>
+<meta name="description" content="36 product intents, 11 conditions, 3,960 runs (gpt-4o). An unknown brand against the category's default pick: 0.0% selection at 3.8 stars, 2.2% at 4.1, 18.1% at 4.4, 62.5% at 4.7, 84.7% at 4.9 (500 reviews). Review count amplifies: 4.7 stars with 5 reviews wins 2.8%, with 25 reviews 22.2%, with 100 reviews 52.5%. Rating alone: 26.4%. Review count alone: 2.5%.">
+<meta name="robots" content="index, follow">
+<meta name="view-transition" content="same-origin">
+<link rel="canonical" href="https://atomfoundry.dev/research/cold-start-dose-response">
+<meta property="og:title" content="Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time.">
+<meta property="og:description" content="A new brand needs a rating before the model will consider it, and enough reviews for the model to trust it. Rating alone 26.4%, count alone 2.5%, both 62.5%.">
+<meta property="og:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://atomfoundry.dev/og-image.png">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://atomfoundry.dev/#organization",
+      "name": "Atom Foundry",
+      "url": "https://atomfoundry.dev",
+      "description": "Atom Foundry measures how AI search engines, Apple Intelligence, and LLM shopping agents see, evaluate, trust, and recommend digital merchants.",
+      "sameAs": [
+        "https://www.instagram.com/atom_foundry/",
+        "https://www.tiktok.com/@atomfoundry",
+        "https://www.linkedin.com/in/daniel-atomfoundry",
+        "https://x.com/atomfoundryai",
+        "https://www.youtube.com/@atomfoundry"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atomfoundry.dev/#website",
+      "url": "https://atomfoundry.dev",
+      "name": "Atom Foundry",
+      "publisher": {
+        "@id": "https://atomfoundry.dev/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://atomfoundry.dev/research/cold-start-dose-response#webpage",
+      "url": "https://atomfoundry.dev/research/cold-start-dose-response",
+      "name": "Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time.",
+      "description": "36 product intents, 11 conditions, 3,960 runs (gpt-4o). An unknown brand against the category's default pick: 0.0% selection at 3.8 stars, 2.2% at 4.1, 18.1% at 4.4, 62.5% at 4.7, 84.7% at 4.9 (500 reviews). Review count amplifies: 4.7 stars with 5 reviews wins 2.8%, with 25 reviews 22.2%, with 100 reviews 52.5%. Rating alone: 26.4%. Review count alone: 2.5%.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://atomfoundry.dev/#website"
+      },
+      "publisher": {
+        "@id": "https://atomfoundry.dev/#organization"
+      },
+      "about": {
+        "@id": "https://atomfoundry.dev/research/cold-start-dose-response#article"
+      },
+      "mainEntity": {
+        "@id": "https://atomfoundry.dev/research/cold-start-dose-response#dataset"
+      },
+      "breadcrumb": {
+        "@id": "https://atomfoundry.dev/research/cold-start-dose-response#breadcrumb"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://atomfoundry.dev/research/cold-start-dose-response#article",
+      "headline": "Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time.",
+      "description": "36 product intents, 11 conditions, 3,960 runs (gpt-4o). An unknown brand against the category's default pick: 0.0% selection at 3.8 stars, 2.2% at 4.1, 18.1% at 4.4, 62.5% at 4.7, 84.7% at 4.9 (500 reviews). Review count amplifies: 4.7 stars with 5 reviews wins 2.8%, with 25 reviews 22.2%, with 100 reviews 52.5%. Rating alone: 26.4%. Review count alone: 2.5%.",
+      "datePublished": "2026-10-06",
+      "author": {
+        "@id": "https://atomfoundry.dev/#organization"
+      },
+      "publisher": {
+        "@id": "https://atomfoundry.dev/#organization"
+      },
+      "url": "https://atomfoundry.dev/research/cold-start-dose-response",
+      "isPartOf": {
+        "@id": "https://atomfoundry.dev/#website"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://atomfoundry.dev/research/cold-start-dose-response#webpage"
+      },
+      "about": [
+        "Recommendation Intelligence",
+        "AI Commerce",
+        "Cold Start",
+        "Review Signals",
+        "Generative Engine Optimization"
+      ]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://atomfoundry.dev/research/cold-start-dose-response#dataset",
+      "name": "How much review evidence does an unknown brand need before an AI model will pick it over the category's default?",
+      "description": "36 dominant-incumbent intents from Cold Start, 11 conditions, 10 runs each (3,960 gpt-4o runs). The newcomer's evidence was varied in fixed doses: review count 5 to 2,500 at 4.7 stars, rating 3.8 to 4.9 stars at 500 reviews, rating only, count only. Forced two-way comparison against the incumbent, cluster bootstrap over intents.",
+      "creator": {
+        "@id": "https://atomfoundry.dev/#organization"
+      },
+      "publisher": {
+        "@id": "https://atomfoundry.dev/#organization"
+      },
+      "license": "https://atomfoundry.dev/terms-of-service",
+      "url": "https://atomfoundry.dev/research/cold-start-dose-response",
+      "measurementTechnique": "Controlled prompt injection of one fixed review fact for a fictional newcomer, forced two-way choice against an entrenched incumbent, exact brand match on the model's JSON answer, cluster bootstrap and permutation tests over intents",
+      "variableMeasured": [
+        "Newcomer selection rate",
+        "Review rating dose",
+        "Review count dose"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://atomfoundry.dev/research/cold-start-dose-response#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Atom Foundry",
+          "item": "https://atomfoundry.dev"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Research",
+          "item": "https://atomfoundry.dev/research"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mechanism Studies",
+          "item": "https://atomfoundry.dev/research/mechanism-studies"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time.",
+          "item": "https://atomfoundry.dev/research/cold-start-dose-response"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --white:#fdfcfa;
+    --off-white:#f1efe8;
+    --gray-100:#fbfaf7;
+    --gray-300:#e6e2d6;
+    --gray-500:#938f81;
+    --gray-700:#4a463c;
+    --black:#161512;
+    --cream:#f0eee6;
+    --orange:#fe6a03;
+    --green:#1D9E75;
+    --amber:#e0a233;
+    --red:#d93c3c;
+    --bar-gray:#847e6d;
+    --card:#e3dacc;
+    --card-line:rgba(22,21,18,0.09);
+    --radius:4px;
+    --maxw:1440px;
+    --serif:"Nunito","Inter",sans-serif;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @media (prefers-reduced-motion: no-preference){
+    ::view-transition-old(root){animation:none;}
+    ::view-transition-new(root){animation:fl-roll-reveal .65s cubic-bezier(.65,0,.35,1) both;}
+  }
+  @keyframes fl-roll-reveal{
+    from{clip-path:inset(0 0 100% 0);}
+    to{clip-path:inset(0 0 0 0);}
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Nunito","Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    color:var(--black);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  em{font-style:normal;}
+
+  header.nav{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(240,238,230,0.88);
+    backdrop-filter:saturate(160%) blur(16px);
+    -webkit-backdrop-filter:saturate(160%) blur(16px);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:22px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:32px;
+    transition:padding .6s cubic-bezier(.65,0,.35,1);
+  }
+  header.nav.nav-compact .nav-inner{padding-top:12px;padding-bottom:12px;}
+  .nav-brand{display:flex;align-items:center;}
+  .logo{display:flex;align-items:center;transition:opacity .25s ease;}
+  .logo:hover{opacity:0.8;}
+  .logo-word-wrap{height:30px;display:flex;align-items:center;overflow:hidden;}
+  .logo-word{font-family:"Anton","Nunito",sans-serif;font-weight:400;font-size:30px;letter-spacing:-0.01em;line-height:1;white-space:nowrap;}
+  .logo-word .atom{color:var(--black);white-space:nowrap;}
+  .logo-word .foundry{color:var(--orange);white-space:nowrap;margin-left:2px;}
+  .logo-word .tail{display:inline-block;overflow:hidden;white-space:nowrap;max-width:200px;vertical-align:top;transition:max-width .6s cubic-bezier(.65,0,.35,1);}
+  header.nav.nav-compact .logo-word .tail{max-width:0;}
+
+  nav.links{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:flex-end;row-gap:10px;}
+  .nav-item{position:relative;display:flex;align-items:center;}
+  .nav-trigger{
+    font-size:13px;font-weight:700;color:var(--black);
+    text-transform:uppercase;letter-spacing:0.07em;
+    position:relative;padding:4px 2px;white-space:nowrap;
+    text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;
+    transition:color .2s ease, text-decoration-color .2s ease;
+  }
+  .nav-trigger.strong{color:var(--orange);}
+  .nav-trigger.active{color:var(--orange);text-decoration-color:var(--orange);}
+  .nav-chevron{
+    display:inline-flex;width:10px;height:7px;margin-left:6px;
+    vertical-align:middle;color:currentColor;
+    transition:transform .2s ease;
+  }
+  .nav-chevron svg{display:block;width:100%;height:100%;}
+  .nav-chevron.chevron-r{transform:rotate(-90deg);}
+  .nav-chevron.chevron-r-pre{margin-left:0;margin-right:6px;transform:rotate(-90deg);}
+  .nav-chevron.chevron-l-pre{margin-left:0;margin-right:6px;transform:rotate(90deg);}
+  .nav-item:focus-within .nav-chevron{transform:rotate(180deg);}
+  @media (hover:hover) and (pointer:fine){
+    .nav-trigger:hover{color:var(--orange);text-decoration-color:var(--orange);}
+    .nav-item:hover .nav-chevron{transform:rotate(180deg);}
+    .nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  }
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;margin-right:-10px;background:none;border:none;padding:0;cursor:pointer;flex-shrink:0;}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--black);transition:transform .25s ease, opacity .2s ease;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(2){opacity:0;}
+  header.nav.nav-mobile-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .dropdown{
+    position:absolute;top:100%;left:0;margin-top:6px;
+    background:var(--cream);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    box-shadow:0 24px 48px -22px rgba(22,21,18,0.28);
+    padding:12px;width:max-content;max-width:300px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:1100;
+  }
+  .dropdown.dropdown-right{left:auto;right:0;}
+  .nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+  .dd-item{display:block;padding:9px 12px;border-radius:4px;text-decoration:none;transition:background .15s ease;}
+  a.dd-item:hover{background:rgba(22,21,18,0.06);}
+  a.dd-item:hover .dd-title{color:var(--orange);}
+  .dd-title{display:block;font-size:13px;font-weight:800;color:var(--black);text-transform:none;letter-spacing:0;}
+
+  section{padding:64px 24px;}
+  section.alt{background:var(--off-white);}
+  .container{max-width:var(--maxw);margin:0 auto;}
+  .kicker{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--orange);margin-bottom:14px;}
+  .page-title{font-family:var(--serif);font-size:clamp(28px,4.6vw,52px);font-weight:800;letter-spacing:-0.02em;line-height:1.12;max-width:900px;margin-bottom:18px;}
+  .page-title em{color:var(--orange);}
+  .section-title{font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:14px;}
+  .section-title em{color:var(--orange);}
+  .section-body{font-size:16px;color:var(--gray-700);line-height:1.75;max-width:860px;}
+  .section-body strong{color:var(--black);}
+
+  .research-hero{padding:88px 24px 48px;background:var(--cream);}
+  .research-hero-sub{font-size:17px;color:var(--gray-700);line-height:1.7;max-width:58%;margin-top:36px;}
+  .byline-note{font-size:12px;color:var(--gray-500);margin-top:16px;}
+  .byline-note a{color:var(--orange);font-weight:700;}
+  .doi-citation{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--gray-500);}
+  .doi-badge-img{height:16px;width:auto;border-radius:3px;flex-shrink:0;display:block;}
+  .doi-citation a{color:var(--orange);font-weight:700;font-family:ui-monospace,"SF Mono",Menlo,monospace;}
+  .doi-citation a:hover{text-decoration:underline;}
+
+  .hero-stat-row{display:flex;flex-wrap:wrap;align-items:baseline;row-gap:14px;margin-top:52px;gap:0;}
+  .hero-stat{display:flex;align-items:baseline;gap:8px;font-family:var(--serif);font-size:17px;color:var(--black);letter-spacing:-0.01em;font-weight:800;white-space:nowrap;}
+  .hero-stat:not(:first-child)::before{content:"\00b7";margin-right:14px;color:var(--gray-300);font-weight:700;}
+  .hero-stat-num{font-family:var(--serif);font-weight:800;color:var(--orange);font-size:44px;letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;}
+  .hero-stat-num.smaller{font-size:30px;}
+  .hero-stat-num.green{color:var(--green);}
+
+  .chart-card{background:var(--card);border-radius:var(--radius);padding:32px;max-width:720px;margin:40px auto 0;transition:transform .3s ease, box-shadow .3s ease;}
+  .chart-card.chart-card-wide{max-width:940px;padding:36px 44px;}
+  @media (hover:hover) and (pointer:fine){
+    .chart-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .chart-card-title{font-size:12px;color:var(--gray-700);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:4px;}
+  .chart-card-sub{font-size:12.5px;color:var(--gray-500);margin-bottom:18px;}
+
+  .bias-card{background:var(--card);border-radius:var(--radius);padding:20px 24px;margin-top:20px;font-size:15px;color:var(--gray-700);line-height:1.7;max-width:860px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .bias-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .bias-card strong{color:var(--black);}
+  .bias-card.wide{max-width:940px;}
+
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .mini-card{border-radius:var(--radius);padding:24px 22px;background:var(--card);display:flex;flex-direction:column;min-height:150px;transition:transform .3s ease, box-shadow .3s ease;}
+  .mini-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  .mini-card-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--orange);margin-bottom:10px;}
+  .mini-card-title{font-family:var(--serif);font-size:17px;font-weight:800;letter-spacing:-0.01em;line-height:1.3;margin-bottom:8px;}
+  .mini-card-body{font-size:13.5px;color:var(--gray-700);line-height:1.6;flex:1;margin-bottom:12px;}
+  .mini-card-link{margin-top:auto;font-size:13px;font-weight:700;color:var(--black);transition:color .2s ease;}
+  .mini-card:hover .mini-card-link{color:var(--orange);}
+  .related-more{margin-top:18px;font-size:13.5px;color:var(--gray-700);}
+  .related-more a{color:var(--orange);font-weight:700;}
+  .related-more a:hover{text-decoration:underline;}
+
+  .scan-box{width:100%;margin:24px 0 0;background:var(--white);border:1px solid var(--gray-300);border-radius:var(--radius);padding:8px;display:flex;gap:8px;box-shadow:0 6px 16px rgba(0,0,0,0.04);transition:box-shadow .3s ease, border-color .3s ease;}
+  .scan-box:focus-within{border-color:var(--orange);box-shadow:0 6px 16px rgba(255,106,26,0.12);}
+  .scan-box input{flex:1;border:none;outline:none;padding:14px 16px;font-size:16px;font-family:inherit;border-radius:4px;color:var(--black);background:transparent;}
+  .scan-box input::placeholder{color:var(--gray-500);}
+  .scan-box button{border:none;background:var(--black);color:var(--white);padding:14px 26px;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .25s ease, transform .2s ease;}
+  .scan-box button:hover{background:var(--orange);transform:translateY(-1px);}
+  .scan-note{margin-top:14px;font-size:13px;color:var(--gray-500);}
+  .scan-note span{margin:0 8px;}
+  .final-cta{text-align:center;background:var(--card);color:var(--black);border-radius:var(--radius);padding:48px 56px;}
+  .final-cta h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;}
+  .final-cta h2 em{color:var(--orange);}
+  .final-cta .final-cta-tag{font-size:15px;font-weight:600;color:var(--gray-700);margin-bottom:14px;}
+  .final-cta p{color:var(--gray-700);max-width:520px;margin:0 auto 28px;font-size:15px;}
+  .final-cta .scan-box{max-width:640px;margin:0 auto;padding:6px;}
+  .final-cta .scan-box input{padding:12px 18px;font-size:15px;}
+  .final-cta .scan-box button{padding:12px 22px;font-size:14px;}
+
+  footer{padding:72px 24px 0;border-top:1px solid var(--gray-300);}
+  .footer-inner{max-width:var(--maxw);margin:0 auto;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 0.85fr 0.85fr 0.85fr 0.85fr 0.85fr;gap:24px;padding-bottom:48px;}
+  .footer-brand-col .logo-word{margin-bottom:14px;}
+  .footer-brand-col .footer-tagline-text{font-size:13.5px;font-weight:700;color:var(--black);line-height:1.5;max-width:240px;margin-bottom:12px;}
+  .footer-brand-col p{font-size:13px;color:var(--gray-500);line-height:1.6;max-width:280px;margin-bottom:18px;}
+  .footer-stats-row{display:flex;flex-wrap:wrap;gap:10px 28px;padding:24px 0;border-top:1px solid var(--gray-300);font-size:13px;color:var(--gray-700);}
+  .footer-stats-row b{color:var(--black);font-weight:700;}
+  .footer-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray-500);margin-bottom:16px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col a{font-size:13.5px;color:var(--gray-700);transition:color .2s ease;}
+  .footer-col a:hover{color:var(--orange);}
+  .footer-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--gray-500);border-top:1px solid var(--gray-300);padding:24px 0;}
+  .social-row{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;}
+  .social-row a{color:var(--gray-500);transition:color .25s ease;}
+  .social-row a:hover{color:var(--orange);}
+  .social-row a.strong{font-weight:800;color:var(--black);}
+  .social-row a.strong:hover{color:var(--orange);}
+  .ai-sitemap{border-top:1px solid var(--gray-300);margin-top:8px;padding:20px 0 4px;}
+  .ai-sitemap-inner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;}
+  .ai-sitemap-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-500);margin-right:4px;font-family:ui-monospace,Menlo,monospace;}
+  .ai-sitemap a{font-size:12px;color:var(--gray-700);transition:color .2s ease;}
+  .ai-sitemap a:hover{color:var(--orange);}
+
+  .method-box{background:var(--card);border-radius:var(--radius);padding:28px 32px;margin-top:20px;transition:transform .3s ease, box-shadow .3s ease;}
+  @media (hover:hover) and (pointer:fine){
+    .method-box:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(22,21,18,0.25);}
+  }
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-bottom:18px;}
+  .method-item{font-size:13.5px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--card-line);}
+  .method-item span{color:var(--black);font-weight:700;}
+  .limits{font-size:13px;color:var(--gray-700);line-height:1.7;margin-top:18px;padding-top:16px;border-top:1px solid var(--card-line);}
+  .limits strong{color:var(--black);}
+
+  .signal-chart{margin-top:8px;}
+  .signal-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;}
+  .signal-row:last-child{margin-bottom:0;}
+  .signal-name{flex:0 0 140px;font-size:13.5px;font-weight:700;color:var(--gray-700);}
+  .signal-name.standout{color:var(--black);font-weight:800;}
+  .signal-track{flex:1;height:16px;background:var(--gray-300);border-radius:8px;overflow:hidden;position:relative;}
+  .signal-fill{height:100%;border-radius:8px;width:0;transition:width 1.3s cubic-bezier(.16,.8,.4,1);background:var(--bar-gray);}
+  .signal-fill.standout{background:var(--green);}
+  .signal-chart.in-view .signal-fill{width:var(--w);}
+  .signal-val{flex:0 0 70px;text-align:right;font-family:var(--serif);font-weight:800;font-size:15px;color:var(--black);opacity:0;transition:opacity .4s ease .3s;}
+  .signal-val.standout{color:var(--green);font-size:17px;}
+  .signal-chart.in-view .signal-val{opacity:1;}
+  .signal-tag{flex:0 0 auto;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--white);background:var(--black);padding:3px 9px;border-radius:20px;opacity:0;transition:opacity .4s ease .5s;}
+  .signal-chart.in-view .signal-tag{opacity:1;}
+  .signal-tag.tag-green{background:var(--green);}
+  .signal-tag.tag-red{background:var(--red);}
+
+  .prompt-table-wrap{margin-top:24px;overflow-x:auto;}
+  .prompt-table{width:100%;border-collapse:separate;border-spacing:0 8px;min-width:680px;}
+  .prompt-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:0.07em;color:var(--gray-500);font-weight:700;padding:0 14px 8px;}
+  .prompt-table td{background:var(--card);padding:14px;vertical-align:top;}
+  .prompt-table td:first-child{border-top-left-radius:var(--radius);border-bottom-left-radius:var(--radius);font-family:var(--serif);font-weight:800;color:var(--black);font-size:13px;white-space:nowrap;padding-right:20px;}
+  .prompt-table td:last-child{border-top-right-radius:var(--radius);border-bottom-right-radius:var(--radius);}
+  .prompt-table .ptxt{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:12.5px;color:var(--gray-700);line-height:1.5;}
+  .prompt-table td.cell-flagged{box-shadow:inset 0 0 0 1.5px var(--green);position:relative;}
+  .prompt-table td.cell-flag-wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 14px;}
+  .cell-flag{display:inline-block;flex-shrink:0;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 8px;border-radius:20px;color:var(--white);background:var(--amber);}
+
+  .flip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;}
+  .stat-flip-card{
+    --flip-dir:180deg;
+    perspective:1400px;border-radius:var(--radius);height:220px;
+  }
+  .stat-flip-card:nth-child(even){--flip-dir:-180deg;}
+  .stat-flip-card-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .stat-flip-card.is-flipped .stat-flip-card-inner{transform:rotateY(var(--flip-dir));}
+  @media (hover:hover) and (pointer:fine){
+    .stat-flip-card:hover .stat-flip-card-inner{transform:rotateY(var(--flip-dir));}
+  }
+  .stat-flip-face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:var(--radius);padding:22px 20px;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    box-shadow:0 2px 6px -4px rgba(22,21,18,0.1);
+    transition:box-shadow 1.9s cubic-bezier(.16,.8,.4,1);
+  }
+  .stat-flip-card.is-flipped .stat-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  @media (hover:hover) and (pointer:fine){
+    .stat-flip-card:hover .stat-flip-face{box-shadow:0 26px 46px -20px rgba(22,21,18,0.4);}
+  }
+  .stat-flip-face-front{background:var(--card);}
+  .stat-flip-face-front::after{content:"";position:absolute;right:18px;bottom:16px;width:10px;height:10px;border-radius:2px;background:var(--orange);}
+  .stat-flip-face-back{background:rgba(254,106,3,0.14);transform:rotateY(180deg);text-align:left;align-items:flex-start;justify-content:center;}
+  .stat-flip-face-back p{font-size:13.5px;color:rgba(22,21,18,0.8);line-height:1.55;}
+  .stat-flip-stack{display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .stat-flip-stack-num{font-family:var(--serif);font-weight:800;font-size:24px;letter-spacing:-0.02em;line-height:1.15;}
+  .stat-flip-stack-mid{font-size:12.5px;font-weight:700;color:var(--gray-500);letter-spacing:0.02em;}
+
+  @media (max-width:900px){
+    .products-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:36px 24px;}
+    .research-hero{padding:72px 24px 40px;}
+    .research-hero-sub{max-width:100%;}
+    nav.links{gap:14px;}
+    .nav-trigger{font-size:12px;}
+    .flip-grid{grid-template-columns:1fr 1fr;}
+    .hero-stat-row{gap:0;}
+    .hero-stat{gap:5px;font-size:13px;}
+    .hero-stat:not(:first-child)::before{margin-right:8px;}
+    .hero-stat-num{font-size:28px;}
+    .hero-stat-num.smaller{font-size:19px;}
+  }
+  @media (max-width:680px){
+    .nav-inner{flex-wrap:wrap;align-items:flex-start;gap:0;padding:14px 20px;}
+    header.nav.nav-compact .nav-inner{padding-top:10px;padding-bottom:10px;}
+    .logo-word{font-size:24px;}
+    .logo-word .tail{max-width:160px;}
+    .nav-toggle{display:flex;}
+    nav.links{display:none;flex-direction:column;align-items:stretch;width:100%;order:3;margin-top:14px;gap:0;row-gap:0;justify-content:flex-start;max-height:none;overflow-y:visible;}
+    header.nav.nav-mobile-open nav.links{display:flex;}
+    .nav-item{
+      position:relative;flex-direction:column;align-items:stretch;
+      width:100%;flex:0 0 auto;min-width:0;box-sizing:border-box;
+    }
+    .nav-trigger{
+      font-size:13px;width:100%;box-sizing:border-box;min-width:0;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding:13px 4px;border-bottom:1px solid var(--card-line);
+      white-space:normal;text-align:left;
+    }
+    .dropdown{
+      position:static;box-shadow:none;background:var(--card);
+      margin-top:0;padding:0;width:100%;max-width:none;box-sizing:border-box;
+      opacity:1;visibility:hidden;transform:none;
+      max-height:0;overflow:hidden;transition:max-height .25s ease;
+    }
+    .nav-item.dd-open .dropdown{visibility:visible;max-height:600px;padding:10px 4px;}
+    .nav-item.dd-open .nav-chevron{transform:rotate(180deg);}
+    section{padding:44px 20px;}
+    .research-hero{padding:56px 20px 32px;}
+    .hero-stat-row{flex-direction:column;align-items:flex-start;row-gap:14px;}
+    .hero-stat:not(:first-child)::before{display:none;}
+    .hero-stat{white-space:normal;}
+    .hero-stat-num{font-size:26px;}
+    .hero-stat-num.smaller{font-size:20px;}
+    .chart-card{padding:18px;max-width:none;margin-top:32px;}
+    .chart-card.chart-card-wide{padding:18px;max-width:none;}
+    .bias-card{padding:16px 18px;}
+    .products-grid{grid-template-columns:1fr;}
+    .final-cta{padding:40px 24px;}
+    .final-cta .scan-box{max-width:none;}
+    .scan-box{flex-direction:column;border-radius:4px;}
+    .scan-box button{width:100%;}
+    .footer-grid{grid-template-columns:1fr;gap:32px;}
+    .footer-meta{flex-direction:column;align-items:flex-start;}
+    .method-grid{grid-template-columns:1fr;}
+    .flip-grid{grid-template-columns:1fr;}
+    .signal-name{flex:0 0 100px;font-size:11px;}
+    .signal-val{flex:0 0 54px;font-size:13px;}
+    .signal-tag{display:none;}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="/" class="logo">
+        <span class="logo-word-wrap">
+          <span class="logo-word">
+            <span class="atom">A<span class="tail">TOM</span></span><span class="foundry">F<span class="tail">OUNDRY</span></span>
+          </span>
+        </span>
+      </a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="links" id="navLinks">
+      <div class="nav-item">
+        <a href="/research" class="nav-trigger active">Research<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/research" class="dd-item"><span class="dd-title">Research</span></a>
+          <a href="/research/ai-recommendations-across-commerce-2026" class="dd-item"><span class="dd-title">Flagship</span></a>
+          <a href="/research/how-ai-decides" class="dd-item"><span class="dd-title">How AI Decides</span></a>
+          <a href="/research/mechanism-studies" class="dd-item"><span class="dd-title">Mechanism Studies</span></a>
+          <a href="/research/category-reports" class="dd-item"><span class="dd-title">Category Reports</span></a>
+          <a href="/founder-lab" class="dd-item"><span class="dd-title">Founder Lab</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/framework" class="nav-trigger">Framework<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/framework" class="dd-item"><span class="dd-title">Overview</span></a>
+          <a href="/framework/7-layers" class="dd-item"><span class="dd-title">The 7 Layers</span></a>
+          <a href="/framework/ai-commerce-graph" class="dd-item"><span class="dd-title">AI Commerce Graph&trade;</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/methodology" class="nav-trigger">Methodology<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/methodology" class="dd-item"><span class="dd-title">AI Commerce Score&trade; Methodology v3.1</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/stores" class="nav-trigger">Stores<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/stores" class="dd-item"><span class="dd-title">Stores analyzed</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/vocabulary" class="nav-trigger">Learn<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/vocabulary" class="dd-item"><span class="dd-title">Terms &amp; Definitions</span></a>
+          <a href="/vocabulary/learn" class="dd-item"><span class="dd-title">Learn Guides</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/products" class="nav-trigger">Products<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown">
+          <a href="/products" class="dd-item"><span class="dd-title">All Products</span></a>
+          <a href="/products/ai-commerce-score" class="dd-item"><span class="dd-title">AI Commerce Score&trade;</span></a>
+          <a href="/products/ai-commerce-audit" class="dd-item"><span class="dd-title">AI Readiness Report</span></a>
+          <a href="/products/ai-monitoring" class="dd-item"><span class="dd-title">AI Monitoring</span></a>
+          <a href="/products/recommendation-intelligence" class="dd-item"><span class="dd-title">Recommendation Intelligence</span></a>
+          <a href="/products/ai-agent-snapshot" class="dd-item"><span class="dd-title">AI Agent Snapshot</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/founders-reality-check" class="nav-trigger strong">Founder's Reality Check<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/founders-reality-check" class="dd-item"><span class="dd-title">Check</span></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="/about" class="nav-trigger">About<span class="nav-chevron"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <div class="dropdown dropdown-right">
+          <a href="/about" class="dd-item"><span class="dd-title">Atom Foundry</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="research-hero">
+  <div class="container">
+    <div class="kicker">Recommendation Intelligence Research&trade; &middot; Study #46</div>
+    <h1 class="page-title">Under 4.1 stars, the model ignores an unknown brand. At 4.9 stars it picks it <em>85% of the time</em>.</h1>
+    <p class="research-hero-sub">Cold Start showed that an unknown brand wins 0 of 360 comparisons with no evidence and 53.1% with a review score. It did not say how much review evidence is enough. We varied the dose in fixed steps: review count from 5 to 2,500 at 4.7 stars, and rating from 3.8 to 4.9 stars at 500 reviews. The rating is the lever, and it has a threshold. The review count decides whether the model believes the rating.</p>
+    <div class="byline-note">Atom Foundry &middot; October 2026 &middot; Direct follow-up to <a href="/research/cold-start">Cold Start</a>, part of the <a href="/research/ai-recommendations-across-commerce-2026">Recommendation Intelligence Research&trade;</a> series</div>
+    <div class="hero-stat-row">
+      <div class="hero-stat"><b class="hero-stat-num" id="statTop" data-target="84.7" data-decimals="1" data-suffix="%">84.7%</b><span>4.9 stars, 500 reviews</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statFew" data-target="2.8" data-decimals="1" data-suffix="%">2.8%</b><span>4.7 stars, only 5 reviews</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statScore" data-target="26.4" data-decimals="1" data-suffix="%">26.4%</b><span>Score only, no count</span></div>
+      <div class="hero-stat"><b class="hero-stat-num smaller" id="statCount" data-target="2.5" data-decimals="1" data-suffix="%">2.5%</b><span>500 reviews, no score</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE THIS COMES FROM -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Where this comes from</div>
+    <h2 class="section-title">Cold Start said <em>that</em> reviews open the door. Not <em>how many</em></h2>
+    <p class="section-body">In Cold Start, a fictional brand paired against an entrenched incumbent was chosen 0 of 360 times with no evidence. Add a review score and it rose to 53.1%. Press coverage (1.9%) and sales volume (0.3%) did almost nothing. But the review fact in that study mixed a random rating (4.4 to 4.9 stars) with a random count (300 to 2,500 reviews). It could not say which part did the work, or where the threshold sits for a brand with a thinner record.</p>
+    <p class="section-body" style="margin-top:14px;">That is the question a new brand actually has: how many reviews, at what rating, before the model considers it at all. We wrote the hypotheses down before running: rating and count each raise the selection rate monotonically, a threshold exists below which the effect is near zero, and the combination outperforms either part alone. The alternative was that the model only reads "has reviews", and the dose does not matter.</p>
+  </div>
+</section>
+
+<!-- THE TEST -->
+<section>
+  <div class="container">
+    <div class="kicker">The test</div>
+    <h2 class="section-title">One review line, <em>eleven doses</em></h2>
+    <p class="section-body">Same setup as Cold Start Phase 3: the 36 intents where one brand already dominates the model's open answers, each paired with an invented newcomer for the category. The newcomer gets one fact line. The incumbent gets a neutral line, "an established, widely available brand," with no rating, so the effect is isolated to the newcomer's evidence. Brand order is randomized per run. Unlike Cold Start, the doses are fixed, not randomized, so each one is measured cleanly.</p>
+    <div class="method-box">
+      <div class="method-grid">
+        <div class="method-item">Model: <span>gpt-4o, temperature 0.7</span></div>
+        <div class="method-item">Intents: <span>36 dominant-incumbent intents from Cold Start</span></div>
+        <div class="method-item">Count arm: <span>5, 25, 100, 500, 2,500 reviews at 4.7 stars</span></div>
+        <div class="method-item">Rating arm: <span>3.8, 4.1, 4.4, 4.7, 4.9 stars at 500 reviews</span></div>
+        <div class="method-item">Components: <span>4.7 stars with no count; 500 reviews with no score</span></div>
+        <div class="method-item">Calls: <span>3,960 (36 intents &times; 11 conditions &times; 10 runs)</span></div>
+        <div class="method-item">Scoring: <span>exact brand match on the model's answer, no judge</span></div>
+        <div class="method-item">Unparseable answers: <span>0 of 3,960</span></div>
+      </div>
+      <div class="limits"><strong>Statistics.</strong> Cluster bootstrap over intents (runs inside one intent are not independent), permutation tests against zero and between neighbouring doses (Bonferroni-corrected), Spearman trend per arm. Every number on this page is in the study's results file.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE RESULT: RATING -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">The result: rating</div>
+    <h2 class="section-title">Nothing happens below 4.1 stars. Then it <em>climbs steeply</em></h2>
+    <p class="section-body">At 500 reviews, the newcomer wins 0.0% of picks at 3.8 stars and 2.2% at 4.1 (not distinguishable from zero, p = 0.12). The effect starts at 4.4 stars (18.1%), reaches 62.5% at 4.7 and 84.7% at 4.9. Each step from 4.1 upward is significant (p &le; 0.0016). The rating arm trend is Spearman 0.82.</p>
+    <div class="chart-card chart-card-wide" style="margin-top:24px;">
+      <div class="chart-card-title">Newcomer selection rate by rating</div>
+      <div class="chart-card-sub">36 intents &middot; 360 runs per condition &middot; 500 reviews on every bar</div>
+      <div class="signal-chart" id="ratingChart">
+        <div class="signal-row">
+          <div class="signal-name">3.8 stars</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:0.0%;"></div></div>
+          <div class="signal-val" data-target="0.0" data-decimals="1" data-suffix="%">0.0%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">4.1 stars</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:2.2%;"></div></div>
+          <div class="signal-val" data-target="2.2" data-decimals="1" data-suffix="%">2.2%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">4.4 stars</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:18.1%;"></div></div>
+          <div class="signal-val" data-target="18.1" data-decimals="1" data-suffix="%">18.1%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">4.7 stars</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:62.5%;"></div></div>
+          <div class="signal-val" data-target="62.5" data-decimals="1" data-suffix="%">62.5%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">4.9 stars</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:84.7%;"></div></div>
+          <div class="signal-val standout" data-target="84.7" data-decimals="1" data-suffix="%">84.7%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bias-card wide"><strong>The model treats the rating as a gate, not a slope.</strong> Between 4.1 and 4.7 stars the selection rate goes from 2.2% to 62.5%. A newcomer at 4.1 stars looks the same as one with no evidence. A newcomer at 4.9 beats the category's default in 85 of 100 comparisons, on a single review line.</div>
+  </div>
+</section>
+
+<!-- THE RESULT: COUNT -->
+<section>
+  <div class="container">
+    <div class="kicker">The result: review count</div>
+    <h2 class="section-title">The count tells the model whether to <em>believe the rating</em></h2>
+    <p class="section-body">At 4.7 stars, five reviews win 2.8% of picks. Twenty-five reviews win 22.2%, one hundred win 52.5%, five hundred win 62.5%. Beyond that the effect flattens: 2,500 reviews (67.5%) is not significantly different from 500 (p = 0.39). The biggest gain sits between 25 and 100 reviews.</p>
+    <div class="chart-card chart-card-wide" style="margin-top:24px;">
+      <div class="chart-card-title">Newcomer selection rate by review count</div>
+      <div class="chart-card-sub">36 intents &middot; 360 runs per condition &middot; 4.7 stars on every bar</div>
+      <div class="signal-chart" id="countChart">
+        <div class="signal-row">
+          <div class="signal-name">5 reviews</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:2.8%;"></div></div>
+          <div class="signal-val" data-target="2.8" data-decimals="1" data-suffix="%">2.8%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">25 reviews</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:22.2%;"></div></div>
+          <div class="signal-val" data-target="22.2" data-decimals="1" data-suffix="%">22.2%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">100 reviews</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:52.5%;"></div></div>
+          <div class="signal-val" data-target="52.5" data-decimals="1" data-suffix="%">52.5%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">500 reviews</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:62.5%;"></div></div>
+          <div class="signal-val" data-target="62.5" data-decimals="1" data-suffix="%">62.5%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">2,500 reviews</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:67.5%;"></div></div>
+          <div class="signal-val standout" data-target="67.5" data-decimals="1" data-suffix="%">67.5%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bias-card wide"><strong>A 4.7 rating built on 5 reviews is worth almost nothing.</strong> The same 4.7 with 100 reviews is a coin flip against the incumbent. The model discounts a rating by its sample size, which is what a careful human reader would also do.</div>
+  </div>
+</section>
+
+<!-- COMPONENTS -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Score versus count</div>
+    <h2 class="section-title">The count alone does <em>nothing</em>. The score alone gets halfway</h2>
+    <p class="section-body">Giving the model only the count ("500 verified reviews", no score) wins 2.5%, no different from no evidence (p = 0.061). Giving it only the score ("4.7 stars", no count) wins 26.4%. Both together win 62.5%. The combination beats either part alone (p = 0.0004 for both comparisons).</p>
+    <div class="chart-card chart-card-wide" style="margin-top:24px;">
+      <div class="chart-card-title">Newcomer selection rate by evidence components</div>
+      <div class="chart-card-sub">36 intents &middot; 360 runs per condition</div>
+      <div class="signal-chart" id="componentChart">
+        <div class="signal-row">
+          <div class="signal-name">Review count only (500 reviews, no score)</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:2.5%;"></div></div>
+          <div class="signal-val" data-target="2.5" data-decimals="1" data-suffix="%">2.5%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Score only (4.7 stars, no count)</div>
+          <div class="signal-track"><div class="signal-fill" style="--w:26.4%;"></div></div>
+          <div class="signal-val" data-target="26.4" data-decimals="1" data-suffix="%">26.4%</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name standout">Score + count (4.7 stars, 500 reviews)</div>
+          <div class="signal-track"><div class="signal-fill standout" style="--w:62.5%;"></div></div>
+          <div class="signal-val standout" data-target="62.5" data-decimals="1" data-suffix="%">62.5%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bias-card wide"><strong>A review score is the lever. The review count is what makes the lever work.</strong> Neither can be skipped. A count of reviews without a rating does not register, and a rating without a count is only half believed.</div>
+  </div>
+</section>
+
+<!-- FULL TABLE -->
+<section>
+  <div class="container">
+    <div class="kicker">All conditions</div>
+    <h2 class="section-title">Every dose, <em>with its confidence interval</em></h2>
+    <div class="prompt-table-wrap">
+      <table class="prompt-table">
+        <thead>
+          <tr><th>Newcomer's evidence</th><th>Selection rate</th><th>95% CI (bootstrap over intents)</th></tr>
+        </thead>
+        <tbody>
+<tr><td>4.7 stars, 5 reviews</td><td class="ptxt">2.8%</td><td class="ptxt">0.6&ndash;5.3%</td></tr>
+<tr><td>4.7 stars, 25 reviews</td><td class="ptxt">22.2%</td><td class="ptxt">13.1&ndash;32.5%</td></tr>
+<tr><td>4.7 stars, 100 reviews</td><td class="ptxt">52.5%</td><td class="ptxt">40.3&ndash;65.0%</td></tr>
+<tr><td>4.7 stars, 500 reviews (shared point of both arms)</td><td class="ptxt">62.5%</td><td class="ptxt">51.1&ndash;73.6%</td></tr>
+<tr><td>4.7 stars, 2,500 reviews</td><td class="ptxt">67.5%</td><td class="ptxt">55.0&ndash;79.2%</td></tr>
+<tr><td>3.8 stars, 500 reviews</td><td class="ptxt">0.0%</td><td class="ptxt">0.0&ndash;0.0%</td></tr>
+<tr><td>4.1 stars, 500 reviews</td><td class="ptxt">2.2%</td><td class="ptxt">0.3&ndash;4.7%</td></tr>
+<tr><td>4.4 stars, 500 reviews</td><td class="ptxt">18.1%</td><td class="ptxt">9.2&ndash;28.1%</td></tr>
+<tr><td>4.9 stars, 500 reviews</td><td class="ptxt">84.7%</td><td class="ptxt">75.6&ndash;92.5%</td></tr>
+<tr><td>4.7 stars only, no count</td><td class="ptxt">26.4%</td><td class="ptxt">15.6&ndash;38.3%</td></tr>
+<tr><td>500 reviews only, no score</td><td class="ptxt">2.5%</td><td class="ptxt">0.6&ndash;5.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bias-card wide">Thresholds, using the rule "first dose where the lower confidence bound is above zero and the rate is at least 10%": <strong>25 reviews</strong> in the count arm (22.2%, CI 13.1&ndash;32.5) and <strong>4.4 stars</strong> in the rating arm (18.1%, CI 9.2&ndash;28.1). The result agrees with Cold Start, whose random doses (4.4 to 4.9 stars, 300 to 2,500 reviews) gave 53.1%.</div>
+  </div>
+</section>
+
+<!-- WHY IT MATTERS -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Why it matters</div>
+    <h2 class="section-title">A new brand does not need fame. It needs <em>a rating the model can trust</em></h2>
+    <p class="section-body">Across this series, public fame explains almost nothing about what the model recommends, and the model's own past behaviour explains a lot. That leaves new brands with a narrow door: verifiable evidence in the model's context. This study sizes the door. In these tests the entry price was a rating of at least 4.4 stars backed by a few dozen reviews, and the effect grows with both. Press coverage and sales volume did not substitute for it.</p>
+    <p class="section-body" style="margin-top:14px;">For a small brand this changes the order of work. Collecting the first 25 to 100 reviews and keeping the rating above 4.4 is worth more, in these tests, than anything that raises awareness without producing a verifiable score. And the review score has to be visible where the model reads it, not only on a page it never fetches.</p>
+  </div>
+</section>
+
+<!-- LIMITATIONS -->
+<section>
+  <div class="container">
+    <div class="kicker">Limitations</div>
+    <h2 class="section-title">What this does <em>not</em> establish</h2>
+    <div class="flip-grid">
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">Fictional brands</span>
+              <span class="stat-flip-stack-mid">synthetic reviews</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>The newcomer is an invented brand and the review facts are written into the prompt. This tests how the model weighs a described review record, not how it reads real review pages.</p>
+          </div>
+        </div>
+      </div>
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">Incumbent has no rating</span>
+              <span class="stat-flip-stack-mid">neutral line only</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>The incumbent got no score, to isolate the newcomer's evidence. A real incumbent has its own rating and reviews, so real-world selection rates for a newcomer will be lower than these.</p>
+          </div>
+        </div>
+      </div>
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">Rating and count decoupled</span>
+              <span class="stat-flip-stack-mid">artificially</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>4.7 stars on 5 reviews is rare in reality. Separating the two shows which does what, but some combinations (high rating, tiny count) are cleaner in the lab than in a real marketplace.</p>
+          </div>
+        </div>
+      </div>
+      <div class="stat-flip-card">
+        <div class="stat-flip-card-inner">
+          <div class="stat-flip-face stat-flip-face-front">
+            <div class="stat-flip-stack">
+              <span class="stat-flip-stack-num">36 intents, 1 model</span>
+              <span class="stat-flip-stack-mid">categories differ</span>
+            </div>
+          </div>
+          <div class="stat-flip-face stat-flip-face-back">
+            <p>Everything is gpt-4o on one set of intents. At 100 reviews the newcomer's rate ranges from 30% (electronics) to 70% (home) by category; the sample is too small to say whether that spread is real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="score">
+  <div class="container">
+    <div class="final-cta">
+      <h2>How does AI see your store's <em>review evidence</em>?</h2>
+      <div class="final-cta-tag">Free AI Commerce Score&trade; in 10 seconds.</div>
+      <p>See whether your ratings and review counts are visible in a way AI models can read before you spend on awareness.</p>
+      <div class="scan-box">
+        <input type="text" placeholder="Paste your store URL">
+        <button>Get My Free AI Score</button>
+      </div>
+      <div class="scan-note">Free <span>&middot;</span> No signup <span>&middot;</span> Results in 10 seconds</div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED SERIES -->
+<section class="alt">
+  <div class="container">
+    <div class="kicker">Explore the series</div>
+    <h2 class="section-title">More <em>mechanism studies</em></h2>
+    <p class="section-body" style="margin-bottom:24px;">The studies this one builds on.</p>
+    <div class="products-grid">
+      <a class="mini-card" href="/research/cold-start" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Study &middot; Study #20</div>
+        <div class="mini-card-title">Cold Start</div>
+        <div class="mini-card-body">The study this one extends: an unknown brand against an entrenched incumbent, with no evidence, then with reviews, press or sales volume.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/candidate-evaluation" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Study &middot; Study #19</div>
+        <div class="mini-card-title">Candidate Evaluation</div>
+        <div class="mini-card-body">When two known brands are close, the better-rated one wins. This study asks how much rating a newcomer needs to get into that contest.</div>
+        <span class="mini-card-link">Read report<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+      <a class="mini-card" href="/research/mechanism-studies" style="text-decoration:none;">
+        <div class="mini-card-eyebrow">Mechanism Studies</div>
+        <div class="mini-card-title">All studies</div>
+        <div class="mini-card-body">Every mechanism test in the Recommendation Intelligence Research series, in one place.</div>
+        <span class="mini-card-link">Browse the series<span class="nav-chevron chevron-r"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+      </a>
+    </div>
+    <p class="related-more"><a href="/research"><span class="nav-chevron chevron-l-pre"><svg viewBox="0 0 16 10" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M2 2L8 8L14 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>All research</a> &nbsp;&middot;&nbsp; <a href="/methodology">Methodology</a> &nbsp;&middot;&nbsp; <a href="/vocabulary">Vocabulary</a></p>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <div class="logo-word"><span class="atom">ATOM</span><span class="foundry">FOUNDRY</span></div>
+        <p class="footer-tagline-text">Understand why AI recommends one brand over another.</p>
+        <p>The global infrastructure mapping how AI search engines and shopping agents see, evaluate, and recommend digital merchants.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/atom_foundry/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@atomfoundry" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.linkedin.com/in/daniel-atomfoundry" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/atomfoundryai" target="_blank" rel="noopener">X</a>
+          <a href="https://www.youtube.com/@atomfoundry" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://medium.com/@Atom_Foundry" target="_blank" rel="noopener">Medium</a>
+          <a href="https://dev.to/atom_foundry" target="_blank" rel="noopener">Dev.to</a>
+          <a href="https://www.indiehackers.com/atomfoundryai" target="_blank" rel="noopener">Indie Hackers</a>
+          <a href="https://founder.atomfoundry.dev/" target="_blank" rel="noopener" class="strong">Founder Lab</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Research</div>
+        <a href="/research/ai-recommendations-across-commerce-2026">Flagship Report</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/founder-lab">Founder Lab</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Framework</div>
+        <a href="/framework">Framework Overview</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph&trade;</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/stores">Stores</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Products</div>
+        <a href="/products/ai-commerce-score">AI Commerce Score&trade;</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="/about">About</a>
+        <a href="mailto:support@atomfoundry.dev">Contact</a>
+        <a href="/privacy-policy">Privacy</a>
+        <a href="/terms-of-service">Terms</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Knowledge Base</div>
+        <a href="/vocabulary">Research Library</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/vocabulary">Vocabulary</a>
+        <a href="/vocabulary/learn">Learn</a>
+        <a href="/research">AI Commerce Intelligence</a>
+        <a href="/benchmarks">Benchmarks</a>
+      </div>
+    </div>
+    <div class="footer-stats-row">
+      <div><b>50</b> Public Studies</div>
+      <div><b data-stat="stores">66,090</b> Stores</div>
+      <div><b>40,000+</b> Recommendations</div>
+      <div><b>1,490</b> Brands</div>
+    </div>
+    <div class="footer-meta">
+      <div><span data-stat="stores">66,090</span> DTC stores analyzed &middot; avg score <span data-stat="avg-score">55</span>/100 &middot; &copy; 2026 Atom Foundry</div>
+    </div>
+    <nav class="ai-sitemap" aria-label="Site directory">
+      <div class="ai-sitemap-inner">
+        <span class="ai-sitemap-label">Explore</span>
+        <a href="/">Home</a>
+        <a href="/framework">AI Commerce Intelligence Framework</a>
+        <a href="/framework/7-layers">The 7 Layers</a>
+        <a href="/framework/ai-commerce-graph">AI Commerce Graph</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/products">Products</a>
+        <a href="/products/ai-commerce-score">AI Commerce Score</a>
+        <a href="/products/ai-commerce-audit">AI Readiness Report</a>
+        <a href="/products/ai-monitoring">AI Monitoring</a>
+        <a href="/products/recommendation-intelligence">Recommendation Intelligence</a>
+        <a href="/products/ai-agent-snapshot">AI Agent Snapshot</a>
+        <a href="/stores">Store database</a>
+        <a href="/benchmarks">Category benchmarks</a>
+        <a href="/vocabulary">AI Commerce Vocabulary</a>
+        <a href="/vocabulary/learn">AI Commerce University</a>
+        <a href="/research">Research</a>
+        <a href="/research/ai-recommendations-across-commerce-2026">The State of AI Recommendations Across Commerce 2026</a>
+        <a href="/research/how-ai-decides">How AI Decides</a>
+        <a href="/research/mechanism-studies">Mechanism Studies</a>
+        <a href="/research/category-reports">Category Reports</a>
+        <a href="/research/state-of-ai-recommendations-beauty">State of AI Recommendations: Beauty</a>
+        <a href="/research/state-of-ai-recommendations-coffee">State of AI Recommendations: Coffee</a>
+        <a href="/research/state-of-ai-recommendations-home-living">State of AI Recommendations: Home &amp; Living</a>
+        <a href="/research/state-of-ai-recommendations-pets">State of AI Recommendations: Pets</a>
+        <a href="/research/state-of-ai-recommendations-supplements">State of AI Recommendations: Supplements</a>
+        <a href="/research/the-fame-study">The Fame Study</a>
+        <a href="/research/the-model-predicts-itself">The Model Predicts Itself</a>
+        <a href="/research/recommendation-lock-in">Two Months Later, the Model Still Agrees With Itself</a>
+        <a href="/research/candidate-evaluation">Hand It a Rating, and It Follows Every Single Time</a>
+        <a href="/research/cold-start">We Invented a Brand With Zero History. Reviews Got It Picked Anyway</a>
+        <a href="/research/memory-source">We Widened the Fame Signal Four Ways. It Barely Moved</a>
+        <a href="/research/recommendation-confidence">The Model Hedges Most When It's Most Sure</a>
+        <a href="/research/possession-vs-deployment">The Model Knows 6 Facts About Your Brand. It Uses One</a>
+        <a href="/research/multi-turn-displacement">It Recommends You First. By Turn Four, It's Moved On</a>
+        <a href="/research/fact-injection">Give the Model the One Fact It's Missing. The Brand Goes From Invisible to Everywhere</a>
+        <a href="/research/hidden-context">Tell the Model You Saw an Ad. It Recommends That Brand 88% of the Time</a>
+        <a href="/research/accuracy-depth">The Model Is Almost Never Wrong About Your Brand. It Just Doesn't Say Much</a>
+        <a href="/research/live-retrieval">The Model Had Real Web Search. It Never Once Reached for It.</a>
+        <a href="/research/brand-legibility">We Described One Brand to the Model, Real or Invented. It Recommended That Brand Anyway.</a>
+        <a href="/research/prompt-shape">Ask Like You're Googling It, and the AI Recommends the Brand 15.6 Points Less</a>
+        <a href="/research/claim-attribution">Say It Yourself, and the Model Picks You 67.5% of the Time. A Third Party Only Gets 51.1%.</a>
+        <a href="/research/pdp-specificity">Specific Claims Add 15.7 Points in Spec Driven Categories. They Cost Nearly 5 in Trust Driven Ones.</a>
+        <a href="/research/winner-vs-loser">Give It the Better Rating, and It Wins 91% of the Time</a>
+        <a href="/research/authority-signal">Mention It Was Featured Somewhere, and It Wins 85% of the Time. Bring In a Rating, and It Nearly Disappears.</a>
+        <a href="/research/brand-familiarity">Claim the Brand Is Widely Known, and It Wins 80% of the Time. Bring In a Rating, and the Edge Is Nearly Gone.</a>
+        <a href="/research/source-stability">The Cited Source Changes. The Winner Almost Never Does.</a>
+        <a href="/research/signal-hierarchy">Two Signals Get You Most of the Way There. A Third Barely Helps, Format Doesn't Move It at All.</a>
+        <a href="/research/structured-markup">We Turned the Same Facts Into Bullets. The Model Cited Fewer of Them.</a>
+        <a href="/research/category-fit">Authority Adds 9 Points in Trust Categories. Familiarity Adds 14.</a>
+        <a href="/research/winner-stability-intents">Reword the Question Three Ways. The Winner Mostly Stays the Same.</a>
+        <a href="/research/phrasing-stability-by-signal">Rating Recommendations Don't Move When You Reword the Question. Price Recommendations Do.</a>
+        <a href="/research/web-search-changes-ai-recommendations">Web Search vs AI Recommendations</a>
+        <a href="/research/ai-confabulates-its-reasons">The Model Confabulates</a>
+        <a href="/research/ai-knows-your-website">AI Knows Your Website</a>
+        <a href="/research/candidacy-vs-selection">Candidacy vs Selection</a>
+        <a href="/research/negative-reputation-candidacy">A Bad Rating Barely Touches Candidacy. It Wrecks the Final Round.</a>
+        <a href="/research/sponsored-tag-penalty">Mark the Listing Sponsored, and It Loses 18.4 Points in a Head-to-Head Pick</a>
+        <a href="/research/query-conditional-defense">Match the Sponsored Listing to the Search Term, and the Penalty Overshoots by 21 Points</a>
+        <a href="/research/source-rank-position">Rank First in the Cited Source, and the Model Always Agrees. Fourth Place Wins 1.2% of the Time.</a>
+        <a href="/research/cold-start-dose-response">Under 4.1 Stars, the Model Ignores an Unknown Brand. At 4.9 Stars It Picks It 85% of the Time.</a>
+        <a href="/research/source-rank-brand-prior">In a Ranked Source, the Higher-Ranked Brand Wins 100% of the Time, Even Against the Model's Favorite.</a>
+        <a href="/research/press-with-facts">Press Coverage Moves the Model Only When It Answers the Exact Question Asked. Generic: 1.9%. Matching: 80.6%.</a>
+        <a href="/research/classification-candidacy">Describe a Company by Its Side Feature and It Falls Off the AI Shortlist: 82.8% to 24.0%. The Model Still Names Its Category Correctly.</a>
+        <a href="/research/review-recency">Reviews Four Years Old Count as No Reviews at All: 0%. Five Hundred Fresh Ones Beat Thirty Thousand Old Ones, 72.8% to 1.4%.</a>
+        <a href="/research/search-changes-the-vocabulary">Search Changes the Vocabulary</a>
+        <a href="/founder-lab">Founder Lab</a>
+        <a href="/research/founder-lab/day-zero">Founder Lab Day Zero</a>
+        <a href="/research/founder-lab/log">Founder Lab Log</a>
+        <a href="/founders-reality-check">Founder's Reality Check</a>
+        <a href="/ai-signal">AI Traffic, Live</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-of-service">Terms of Service</a>
+        <a href="/about">About</a>
+        <a href="/reports">AI Recommendation Reports</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    const nav = document.querySelector('header.nav');
+    if (!nav) return;
+    let ticking = false;
+    function onScroll(){
+      if (window.scrollY > 40) nav.classList.add('nav-compact');
+      else nav.classList.remove('nav-compact');
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    });
+    onScroll();
+  })();
+
+  (function(){
+    const nav = document.querySelector('header.nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    if (!nav || !toggle || !links) return;
+    function closeMenu(){
+      nav.classList.remove('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.querySelectorAll('.nav-item.dd-open').forEach(item => item.classList.remove('dd-open'));
+    }
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('nav-mobile-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) { menuOpenScrollY = window.scrollY; } else { closeMenu(); }
+    });
+    links.querySelectorAll('.nav-item').forEach(item => {
+      const trigger = item.querySelector('.nav-trigger');
+      const dropdown = item.querySelector('.dropdown');
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        if (window.innerWidth > 680) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = item.classList.contains('dd-open');
+        links.querySelectorAll('.nav-item.dd-open').forEach(other => other.classList.remove('dd-open'));
+        item.classList.toggle('dd-open', !isOpen);
+        menuOpenScrollY = window.scrollY;
+      });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    let menuOpenScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      if (!nav.classList.contains('nav-mobile-open')) return;
+      if (Math.abs(window.scrollY - menuOpenScrollY) > 24) closeMenu();
+    }, { passive: true });
+  })();
+
+  (function(){
+    function easeOutCubic(p){ return 1 - Math.pow(1 - p, 3); }
+    function animateVal(el, duration){
+      const target = Number(el.dataset.target) || 0;
+      const decimals = Number(el.dataset.decimals) || 0;
+      const suffix = el.dataset.suffix || '';
+      const start = performance.now();
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = easeOutCubic(p);
+        el.textContent = (eased * target).toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    function reveal(chart){
+      chart.classList.add('in-view');
+      chart.querySelectorAll('.signal-val').forEach(v => animateVal(v, 1200));
+    }
+    document.querySelectorAll('.signal-chart').forEach(chart => {
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => { if (entry.isIntersecting) { reveal(entry.target); io.unobserve(entry.target); } });
+        }, { threshold: 0.2 });
+        io.observe(chart);
+      } else { reveal(chart); }
+    });
+  })();
+
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.stat-flip-card'));
+    if (!cards.length) return;
+    const canHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      cards.forEach(card => {
+        card.addEventListener('click', () => { card.classList.toggle('is-flipped'); });
+      });
+    }
+  })();
+
+  (function(){
+    function easeOutCubic(p){ return 1 - Math.pow(1 - p, 3); }
+    function animateNumber(el, target, decimals, duration, prefix, suffix, comma){
+      if (!el) return;
+      const start = performance.now();
+      function step(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = easeOutCubic(p);
+        const val = eased * target;
+        const formatted = comma ? Math.round(val).toLocaleString('en-US') : val.toFixed(decimals);
+        el.textContent = (prefix || '') + formatted + (suffix || '');
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    function observeAndRun(el, fn){
+      if (!el) return;
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => { if (entry.isIntersecting) { fn(); io.unobserve(entry.target); } });
+        }, { threshold: 0.4 });
+        io.observe(el);
+      } else { fn(); }
+    }
+    const statTop = document.getElementById('statTop');
+    const statFew = document.getElementById('statFew');
+    const statScore = document.getElementById('statScore');
+    const statCount = document.getElementById('statCount');
+    observeAndRun(statTop, () => animateNumber(statTop, Number(statTop.dataset.target), 1, 1000, '', '%', false));
+    observeAndRun(statFew, () => animateNumber(statFew, Number(statFew.dataset.target), 1, 1000, '', '%', false));
+    observeAndRun(statScore, () => animateNumber(statScore, Number(statScore.dataset.target), 1, 1000, '', '%', false));
+    observeAndRun(statCount, () => animateNumber(statCount, Number(statCount.dataset.target), 1, 1000, '', '%', false));
+  })();
+</script>
+<style>
+.aiw-root{position:fixed;bottom:22px;right:22px;z-index:2000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+.aiw-fab{position:relative;width:52px;height:52px;border-radius:14px;background:#0b0d0e;border:1px solid #262b2e;display:flex;align-items:center;justify-content:center;color:#5fe0af;cursor:pointer;box-shadow:0 14px 30px -10px rgba(0,0,0,0.45);transition:transform .2s ease,box-shadow .2s ease;padding:0;}
+.aiw-fab:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(0,0,0,0.5);}
+.aiw-heart{width:22px;height:22px;}
+.aiw-heart-base{stroke:rgba(95,224,175,0.22);fill:none;}
+.aiw-heart-pulse{stroke:#5fe0af;fill:none;stroke-dasharray:10 42;stroke-dashoffset:0;animation:aiwHeartSweep 1.6s linear infinite;filter:drop-shadow(0 0 3px rgba(95,224,175,0.7));}
+@keyframes aiwHeartSweep{
+  0%{stroke-dashoffset:0;}
+  22%{stroke-dashoffset:-4;}
+  26%{stroke-dashoffset:-11;}
+  29%{stroke-dashoffset:-13;}
+  33%{stroke-dashoffset:-26;}
+  37%{stroke-dashoffset:-28;}
+  41%{stroke-dashoffset:-36;}
+  45%{stroke-dashoffset:-39;}
+  72%{stroke-dashoffset:-45;}
+  100%{stroke-dashoffset:-52;}
+}
+@media(prefers-reduced-motion:reduce){.aiw-heart-pulse,.aiw-panel-dot{animation:none;}}
+.aiw-panel{position:absolute;bottom:64px;right:0;width:230px;background:#0b0d0e;border:1px solid #262b2e;border-radius:18px;padding:22px 20px 20px;box-shadow:0 34px 64px -20px rgba(0,0,0,0.6);transform-origin:bottom right;transform:scale(0.94) translateY(8px);opacity:0;pointer-events:none;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .28s ease;}
+.aiw-root.is-open .aiw-panel{transform:scale(1) translateY(0);opacity:1;pointer-events:auto;}
+.aiw-root.is-open .aiw-fab{color:#e8e8e8;}
+.aiw-close{position:absolute;top:14px;right:14px;background:none;border:none;color:#565c60;font-size:18px;cursor:pointer;line-height:1;padding:2px;font-family:inherit;}
+.aiw-close:hover{color:#e8e8e8;}
+.aiw-panel-head{margin-bottom:20px;padding-right:18px;}
+.aiw-panel-title-row{display:flex;align-items:center;gap:7px;margin-bottom:6px;}
+.aiw-panel-dot{width:6px;height:6px;border-radius:50%;background:#5fe0af;box-shadow:0 0 0 0 rgba(95,224,175,.6);animation:aiwDotPulse 2.4s infinite;flex-shrink:0;}
+@keyframes aiwDotPulse{70%{box-shadow:0 0 0 6px rgba(95,224,175,0);}100%{box-shadow:0 0 0 0 rgba(95,224,175,0);}}
+.aiw-panel-title-main{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11.5px;font-weight:800;color:#f2f4f5;letter-spacing:.03em;line-height:1.3;}
+.aiw-panel-title-sub{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:10px;color:#868c91;letter-spacing:.03em;}
+.aiw-rings{display:flex;flex-direction:column;gap:14px;margin-bottom:16px;}
+.aiw-ring-item{display:flex;align-items:center;gap:12px;text-align:left;}
+.aiw-ring-visual{position:relative;width:44px;height:44px;flex-shrink:0;}
+.aiw-ring-visual svg{width:100%;height:100%;transform:rotate(-90deg);}
+.aiw-ring-track{fill:none;stroke:rgba(255,255,255,0.1);stroke-width:5;}
+.aiw-ring-fill{fill:none;stroke:#5fe0af;stroke-width:5;stroke-linecap:round;stroke-dashoffset:106.81;transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1);}
+.aiw-root.is-open .aiw-ring-fill{stroke-dashoffset:var(--offset);}
+.aiw-ring-value{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;font-weight:800;color:#f2f4f5;}
+.aiw-ring-label{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;font-size:11px;color:#b4b8bc;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+.aiw-note{font-size:10.5px;color:#565c60;line-height:1.5;margin:0 0 14px;}
+.aiw-link{display:block;text-align:center;background:#5fe0af;color:#080808;font-weight:700;font-size:12.5px;padding:10px;border-radius:9px;text-decoration:none;font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;transition:background .15s;}
+.aiw-link:hover{background:#7ee9be;}
+@media(max-width:520px){
+  .aiw-root{bottom:16px;right:16px;}
+  .aiw-panel{width:calc(100vw - 32px);right:-6px;}
+}
+</style>
+<!-- AI_SIGNAL_WIDGET:START -->
+<div class="aiw-root" id="aiwRoot">
+  <button class="aiw-fab" id="aiwFab" aria-label="AI signal for atomfoundry.dev" aria-expanded="false" type="button">
+    <svg class="aiw-heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="aiw-heart-base" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="aiw-heart-pulse" id="aiwHeartPulse" d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="aiw-panel" id="aiwPanel" role="dialog" aria-label="AI signal for atomfoundry.dev">
+    <button class="aiw-close" id="aiwClose" aria-label="Close" type="button">&times;</button>
+    <div class="aiw-panel-head">
+      <div class="aiw-panel-title-row"><span class="aiw-panel-dot"></span><span class="aiw-panel-title-main">AI AGENT SNAPSHOT</span></div>
+      <div class="aiw-panel-title-sub">ATOM FOUNDRY.dev</div>
+    </div>
+    <div class="aiw-rings">
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:42.72"/>
+            </svg>
+            <div class="aiw-ring-value">3</div>
+          </div>
+          <div class="aiw-ring-label">Today</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:58.75"/>
+            </svg>
+            <div class="aiw-ring-value">6</div>
+          </div>
+          <div class="aiw-ring-label">Bots</div>
+        </div>
+        <div class="aiw-ring-item">
+          <div class="aiw-ring-visual">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+              <circle class="aiw-ring-track" cx="22" cy="22" r="17"/>
+              <circle class="aiw-ring-fill" cx="22" cy="22" r="17" stroke-dasharray="106.81" style="--offset:10.68"/>
+            </svg>
+            <div class="aiw-ring-value">4m</div>
+          </div>
+          <div class="aiw-ring-label">Last seen</div>
+        </div>
+    </div>
+    <p class="aiw-note">Illustrative example &middot; single-site signal for atomfoundry.dev.</p>
+    <a href="/ai-signal" class="aiw-link">View full signals &rarr;</a>
+  </div>
+</div>
+<!-- AI_SIGNAL_WIDGET:END -->
+<script>
+(function(){
+  var root = document.getElementById('aiwRoot');
+  if(!root) return;
+  var fab = document.getElementById('aiwFab');
+  var closeBtn = document.getElementById('aiwClose');
+  var heart = document.getElementById('aiwHeartPulse');
+  function restartHeartbeat(){
+    if (!heart) return;
+    heart.style.animation = 'none';
+    void heart.getBBox();
+    heart.style.animation = '';
+  }
+  function setOpen(open){
+    root.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    restartHeartbeat();
+  }
+  fab.addEventListener('click', function(){ setOpen(!root.classList.contains('is-open')); });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+  }
+  document.addEventListener('click', function(e){
+    if (root.classList.contains('is-open') && !root.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
+<!-- AIW_LIVE:START -->
+<script>
+(function(){
+  var ringsRoot = document.querySelector('.aiw-rings');
+  if (!ringsRoot) return;
+  var items = ringsRoot.querySelectorAll('.aiw-ring-item');
+  if (items.length < 3) return;
+  var todayValue = items[0].querySelector('.aiw-ring-value');
+  var todayFill  = items[0].querySelector('.aiw-ring-fill');
+  var botsValue  = items[1].querySelector('.aiw-ring-value');
+  var botsFill   = items[1].querySelector('.aiw-ring-fill');
+  var lastValue  = items[2].querySelector('.aiw-ring-value');
+  var lastFill   = items[2].querySelector('.aiw-ring-fill');
+  var noteEl = document.querySelector('.aiw-note');
+  var CIRC = 106.81;
+
+  function setFill(el, fraction){
+    if (!el) return;
+    var f = Math.max(0, Math.min(1, fraction || 0));
+    el.style.setProperty('--offset', (CIRC * (1 - f)).toFixed(2));
+  }
+  function relTime(iso){
+    if (!iso) return '—';
+    var diffMs = Date.now() - new Date(iso).getTime();
+    if (isNaN(diffMs)) return '—';
+    var mins = Math.max(0, Math.round(diffMs / 60000));
+    if (mins < 1) return 'now';
+    if (mins < 60) return mins + 'm';
+    var hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + 'h';
+    var days = Math.round(hrs / 24);
+    return days + 'd';
+  }
+
+  fetch('https://n8n-production-1d7c.up.railway.app/webhook/shop-ai-signal', { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ if (!r.ok) throw new Error('bad status'); return r.json(); })
+    .then(function(data){
+      var visits = Number(data.today_count) || 0;
+      var agents = Number(data.unique_agents) || 0;
+      var lastSeen = data.last_seen || null;
+      if (todayValue) todayValue.textContent = visits.toLocaleString('en-US');
+      setFill(todayFill, visits / 30);
+      if (botsValue) botsValue.textContent = String(agents);
+      setFill(botsFill, agents / 12);
+      if (lastValue) lastValue.textContent = relTime(lastSeen);
+      var minsAgo = lastSeen ? (Date.now() - new Date(lastSeen).getTime()) / 60000 : null;
+      setFill(lastFill, minsAgo == null ? 0 : (1 - Math.min(minsAgo / 120, 1)));
+      if (noteEl) noteEl.textContent = 'Live AI crawler activity on atomfoundry.dev.';
+    })
+    .catch(function(){
+      if (noteEl) noteEl.textContent = 'Live signal temporarily unavailable.';
+    });
+})();
+</script>
+<!-- AIW_LIVE:END -->
+<!-- SCAN_BOX_CONNECT:START -->
+<script>
+(function(){
+  function cleanDomain(v){
+    return (v || '').trim().replace(/^https?:\/\//i,'').replace(/\/.*$/,'').replace(/^www\./i,'');
+  }
+  document.querySelectorAll('.scan-box').forEach(function(box){
+    var input = box.querySelector('input');
+    var btn = box.querySelector('button');
+    if (!input || !btn) return;
+    function go(){
+      var domain = cleanDomain(input.value);
+      if (!domain) { input.focus(); return; }
+      window.location.href = '/scan.html?domain=' + encodeURIComponent(domain);
+    }
+    btn.addEventListener('click', go);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') go(); });
+  });
+})();
+</script>
+<!-- SCAN_BOX_CONNECT:END -->
+
+<!-- SITE_VISIT_TRACKER:START -->
+<script>
+(function(){
+  try {
+    if (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1') return;
+    var VID_KEY = 'af_vid';
+    var vid = localStorage.getItem(VID_KEY);
+    if (!vid) {
+      vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2));
+      localStorage.setItem(VID_KEY, vid);
+    }
+    var payload = JSON.stringify({
+      visitor_id: vid,
+      path: location.pathname,
+      referrer: document.referrer || '',
+      user_agent: navigator.userAgent || ''
+    });
+    var url = 'https://n8n-production-1d7c.up.railway.app/webhook/site-visit';
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+    } else {
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function(){});
+    }
+  } catch (e) {}
+})();
+</script>
+<!-- SITE_VISIT_TRACKER:END -->
+<!-- SITE_STATS_SYNC:START -->
+<script>
+(function(){
+  var STATS_URL = 'https://n8n-production-1d7c.up.railway.app/webhook/site-stats';
+  var CACHE_KEY = 'afSiteStats', CACHE_MS = 300000;
+  function apply(s){
+    if (!s || s.total_scanned == null) return;
+    var stores = Number(s.total_scanned).toLocaleString('en-US');
+    var avg = Math.round(Number(s.avg_score));
+    if (!isFinite(avg)) return;
+    document.querySelectorAll('[data-stat="stores"]').forEach(function(el){ el.textContent = stores; });
+    document.querySelectorAll('[data-stat="avg-score"]').forEach(function(el){ el.textContent = String(avg); });
+  }
+  var cached = null;
+  try { cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null'); } catch(e){}
+  if (cached && cached.s && (Date.now() - cached.t) < CACHE_MS) { apply(cached.s); return; }
+  fetch(STATS_URL, { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ return r.json(); })
+    .then(function(sd){
+      var s = Array.isArray(sd) ? sd[0] : (sd && sd.data ? sd.data[0] : sd);
+      apply(s);
+      try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), s: s })); } catch(e){}
+    })
+    .catch(function(){});
+})();
+</script>
+<!-- SITE_STATS_SYNC:END -->
+</body>
+</html>
