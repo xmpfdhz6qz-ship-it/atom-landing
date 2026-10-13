@@ -2,26 +2,31 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": ".",
+  "functions": {
+    "api/static-log.js": {
+      "includeFiles": "{robots.txt,llms.txt,sitemap-pages.xml}"
+    }
+  },
   "routes": [
     {
       "src": "/robots.txt",
-      "dest": "/robots.txt"
+      "dest": "/api/static-log?f=robots.txt"
     },
     {
       "src": "/llms.txt",
-      "dest": "/llms.txt"
+      "dest": "/api/static-log?f=llms.txt"
     },
     {
       "src": "/sitemap-pages.xml",
-      "dest": "/sitemap-pages.xml"
+      "dest": "/api/static-log?f=sitemap-pages.xml"
     },
     {
       "src": "/sitemap-stores-(\\d+)\\.xml",
-      "dest": "https://n8n-production-1d7c.up.railway.app/webhook/sitemap-stores?page=$1"
+      "dest": "/api/static-log?stores=$1"
     },
     {
       "src": "/sitemap.xml",
-      "dest": "https://n8n-production-1d7c.up.railway.app/webhook/sitemap"
+      "dest": "/api/static-log?f=sitemap.xml"
     },
     {
       "src": "/api/ai/status",
@@ -318,6 +323,66 @@
     {
       "src": "/research/winner-stability-intents/",
       "dest": "/research/winner-stability-intents.html"
+    },
+    {
+      "src": "/research/phrasing-stability-by-signal",
+      "dest": "/research/phrasing-stability-by-signal.html"
+    },
+    {
+      "src": "/research/phrasing-stability-by-signal/",
+      "dest": "/research/phrasing-stability-by-signal.html"
+    },
+    {
+      "src": "/research/negative-reputation-candidacy",
+      "dest": "/research/negative-reputation-candidacy.html"
+    },
+    {
+      "src": "/research/negative-reputation-candidacy/",
+      "dest": "/research/negative-reputation-candidacy.html"
+    },
+    {
+      "src": "/research/sponsored-tag-penalty",
+      "dest": "/research/sponsored-tag-penalty.html"
+    },
+    {
+      "src": "/research/sponsored-tag-penalty/",
+      "dest": "/research/sponsored-tag-penalty.html"
+    },
+    {
+      "src": "/research/query-conditional-defense",
+      "dest": "/research/query-conditional-defense.html"
+    },
+    {
+      "src": "/research/query-conditional-defense/",
+      "dest": "/research/query-conditional-defense.html"
+    },
+    {
+      "src": "/research/source-rank-position",
+      "dest": "/research/source-rank-position.html"
+    },
+    {
+      "src": "/research/cold-start-dose-response",
+      "dest": "/research/cold-start-dose-response.html"
+    },
+    {
+      "src": "/research/source-rank-brand-prior",
+      "dest": "/research/source-rank-brand-prior.html"
+    },
+    {
+      "src": "/research/press-with-facts",
+      "dest": "/research/press-with-facts.html"
+    },
+    {
+      "src": "/research/classification-candidacy",
+      "dest": "/research/classification-candidacy.html"
+    },
+    {
+      "src": "/research/review-recency",
+      "dest": "/research/review-recency.html"
+    },
+    {
+      "src": "/research/source-rank-position/",
+      "dest": "/research/source-rank-position.html"
     },
     {
       "src": "/research/founder-lab-day-zero",
@@ -1161,6 +1226,10 @@
     {
       "src": "/the-problem-with-building-alone",
       "dest": "/the-problem-with-building-alone.html"
+    },
+    {
+      "src": "/the-work-nobody-asked-me-to-do",
+      "dest": "/the-work-nobody-asked-me-to-do.html"
     },
     {
       "src": "/products",

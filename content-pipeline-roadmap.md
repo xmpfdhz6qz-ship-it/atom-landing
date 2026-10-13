@@ -94,3 +94,98 @@ tvář, žádné screen recording). Canva Pro už má, návod jak to tam postavi
 Scénář na 2 minuty = cca 260-300 slov. Postup: napsat scénář pro jednu studii
 jako vzor, Daniel to jednou proklikne v Canvě, pak opakovat pro zbytek
 archivu (26 studií).
+
+## Fronta hotových příspěvků k publikaci
+
+Hotové, schválené drafty, které čekají na zveřejnění (LinkedIn, pokud není
+uvedeno jinak). Po publikaci sem doplnit datum/odkaz.
+
+### "Zero demand signal" / Bakery Paradox reakce (2026-09-25) — status: čeká na publikaci
+
+Reakce na dev.to článek "The Bakery Paradox: Why Current AI Agents Keep
+Walking Away From Your APIs" (MCP/agentic tooling, viz research-roadmap.md
+kandidát "Silent Candidacy Drop" ze stejného dne). Propojuje autorem
+popsaný "zero demand signal" problém (agent tiše odejde, když statické
+schéma neodpovídá zúženému požadavku) s naším Study #32 (PDP Specificity).
+
+Text (anglicky, k publikaci beze změny nebo s drobnou úpravou):
+
+We measure why AI models pick one brand over another. A dev.to post this
+week gave a sharper name to something we already see in the data: the
+"zero demand signal" problem.
+
+The setup is simple. A user asks an AI agent for something slightly off
+the standard menu, low sugar, under a certain price, a specific variant.
+If the product data isn't structured enough to answer that exact ask, the
+agent doesn't negotiate. It just walks away. No error, no log, nothing.
+The business never learns it lost the sale.
+
+We found the product version of this in our PDP Specificity study. Vague
+product pages get picked less often. Concrete ones with real specs and
+variants get picked more. What the article adds is a sharper reason why:
+at the exact moment a user narrows the ask, an underspecified brand
+doesn't just lose, it can disappear from consideration entirely.
+
+As agentic commerce becomes real, structured, negotiable product data
+stops being a nice-to-have SEO detail. It becomes the thing that decides
+whether an agent even keeps you in the running.
+
+## Strategie: GASP framework aplikovaný na nás (2026-09-28)
+
+Vzniklo z LinkedIn postu Diandry Escobar (Distinctiva.io, content
+agentura): klientka s 200 spojeními a nula posty udělala první příspěvek
+100K+ impresí (330 reakcí, 82 komentářů, 20 reposty, reální kupující v
+komentářích), první měsíc s agenturou 1M impresí. Jejich framework GASP,
+čtyři kbelíky obsahu, každý s jedním úkolem:
+
+- **Growth** — dosah, nové oči. Silný, podložený názor ("hot take") do
+  vlastního oboru, ne storytelling/cringe post.
+- **Authority** — důkaz, důvěra.
+- **Sales** — konverze.
+- **Personal** — člověk za značkou.
+
+Jejich klíčové pozorování: hot take dělá dvě věci najednou, silný názor
+cizí lidi vtáhne, schopnost ho podložit je pak přesvědčí. "Too niche"
+je výmluva, ne skutečná bariéra, specifický názor v úzkém oboru se hůř
+kopíruje než obecný.
+
+**Proč je tohle pro nás obzvlášť silné, ne jen zajímavý cizí framework:**
+klientka v jejich příkladu měla na podložení hot takeu jen roky
+zkušeností v oboru. My máme k dispozici 42 publikovaných studií s
+tvrdými čísly, tedy přesně ten typ "authority" podklad pod hot take, jen
+o úroveň výš (data místo anekdoty). Growth-bucket obsah pro nás by měl
+systematicky brát nejvíc kontraintuitivní, nejvíc proti-narativní nález
+z archivu a formátovat ho jako názor napřed, důkaz pod tím, ne opačně
+(studie napřed, závěr na konci, jak to děláme teď).
+
+**Navrhovaný vzorec pro Growth posty z archivu:** 1) najít nález, který
+protiřečí tomu, co si obor myslí (Negative Reputation dnes je učebnicový
+příklad, protiřečí Jairo Guerrerově tezi i obecné intuici "špatná pověst
+= AI tě vyřadí"), 2) napsat ho jako přímé tvrzení, ne jako "we found
+that...", 3) až pak čísla jako důkaz, 4) jedna věta na konec, co to
+znamená pro čtenáře.
+
+**První kandidát na Growth post podle tohohle vzorce, hotový draft
+(2026-09-28), čeká ve frontě na publikaci:**
+
+We ran a test this week that surprised us.
+
+Everyone assumes a brand with a bad reputation gets quietly filtered
+out by AI before it's ever mentioned. We tested that directly on 4 real
+brands: neutral reputation vs. a bad one (low rating, real complaint).
+
+Candidacy didn't drop. It went up, 39% to 54.5%.
+
+What collapsed was the final pick. Put head to head against a named
+competitor, win rate fell from 83.5% to 24.3%.
+
+A bad reputation doesn't stop you from showing up in AI's answer. It
+just guarantees you lose every time it matters.
+
+Status: draft schválený, čeká na publikaci. Navazuje na
+research-roadmap.md "Negative Reputation / Shortlist Suppression —
+finální výsledek (2026-09-28)" a publikovanou stránku
+`research/negative-reputation-candidacy.html`. Do budoucna: použít
+tenhle vzorec (kontraintuitivní nález → tvrzení → čísla → dopad) jako
+opakovatelnou šablonu pro Ideation/Hooks krok z Claude Code content
+pipeline sekce výše, místo řešení úhlu od nuly u každé studie.

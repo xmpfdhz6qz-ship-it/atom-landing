@@ -2332,3 +2332,2524 @@ okno i reports grid, footer ai-sitemap všude, Public Studies 39→40).
 Vural dostal krátkou zprávu s výsledky. DOI: 10.5281/zenodo.22833586
 (přidáno 2026-09-18, `.doi-citation` blok v hero + `identifier` pole na
 Article i Dataset v JSON-LD).**
+
+## Dva kandidáti na Study #41+ z výměny s Albertem Barberisem (2026-09-19)
+
+Vzniklo z LinkedIn diskuze pod Albertovým (CEO AndromedAI) postem o AI
+traffic napříč retail sektory. Daniel okomentoval, že "structured" může
+znamenat dvě různé věci, které netáhnou stejným směrem: schema.org JSON-LD
+(neviditelná metadata) prý pomáhá citaci, ale Structured Markup studie
+(Study #38) ukázala, že viditelné bullety místo prózy citaci naopak
+snižují, se stejnými fakty. Alberto odpověděl vyhýbavě ("depends on
+several factors"), přidal ale dva konkrétní body, které jdou přímo
+testovat a zatím je nemáme:
+
+1. Strukturování produktových dat pomáhá, "not necessarily through
+   JSON-LD, clear on-page attributes matter too."
+2. Kromě "attribute coverage" je potřeba i "intent coverage": co produkt
+   je, pro koho je, správná klíčová slova, což AI prý sama vždy neodvodí.
+
+**Kandidát A — Neviditelná JSON-LD data vs. viditelné bullety vs. próza
+(tříramenný test).** Structured Markup (Study #38) srovnávala jen
+viditelné bullety vs. prózu na stránce, nikdy netestovala skutečná
+schema.org JSON-LD data samostatně. Design: stejné fakty, tři varianty
+na stránku — (a) čistá próza bez markupu, (b) próza + JSON-LD structured
+data v pozadí (Product/Offer schema), (c) viditelné bullety bez JSON-LD.
+Měří citation fidelity a vocabulary reuse stejnou metodikou jako Study
+#38. Přímo testuje Albertovo tvrzení "invisible metadata helps citation",
+které jsme sami nikdy neizolovali od formátu viditelného textu.
+
+**Kandidát B — Intent coverage jako samostatná proměnná.** PDP
+Specificity (Study #32) testovala vague vs. concrete specs, ne
+persona/use-case framing. Design: stejný produkt, stejné specs, jen
+přidat/odebrat explicitní větu typu "built for X, used for Y" (kdo je
+cílovka, k čemu produkt slouží), nezávisle na specifičnosti faktů.
+Testuje přímo Albertovo tvrzení, že AI si "pro koho a k čemu" sama vždy
+neodvodí.
+
+Oba by šly navázat na tuhle LinkedIn výměnu jako hook ("po diskuzi jsme
+to otestovali"). Status: uloženo jako kandidáti na Study #41/#42, zatím
+nezařazeno do číslovaného pořadí, design (kategorie, počet volání,
+statistika) čeká na rozpracování, až Daniel řekne který jde první.
+
+## 19 kandidátů na doplnění pěti slabých sekcí decision path (2026-09-19)
+
+Podnět: vizuální timeline všech 36 studií podle data a fáze (viz widget
+"atom_foundry_studies_timeline") ukázala, že poslední měsíc jde skoro
+všechen výzkum do Evaluation (9 studií) a Recommendation & Stability
+(7), zatímco pět dalších fází zůstává tenkých: Confidence (1), Retrieval
+(2), Understanding (2), Memory (4), Candidacy (5). Daniel: "udelame
+vsechny" — všech 19 kandidátů níže jde do fronty, číslování a pořadí se
+doplní, až se začnou postupně stavět.
+
+Metoda: pro každou sekci přečteny reálné meta description a section-body
+texty všech existujících studií v ní (ne jen mini-card popisky), aby
+návrhy skutečně navazovaly na to, co už změřeno, a neduplikovaly to.
+
+### Confidence (dnes 1 studie: Recommendation Confidence, #22)
+
+Recommendation Confidence zjistila, že hedge jazyk v odpovědi (slova typu
+"seems"/"may be" vs. "clearly") vůbec neodpovídá reálné vnitřní jistotě
+modelu (token logprobs), r=0,03, potvrzeno 7 nezávislými metodami, 3
+poskytovateli (GPT-4o, Claude Sonnet, Gemini), 5 frázováními. Ale úplně
+celý design stojí na jednom scénáři: rating rozhoduje spor mezi dvěma
+blízkými brandy (recyklováno z Candidate Evaluation fáze 3). Price a
+specs signály se nikdy netestovaly.
+
+1. **Zopakovat pro price a specs signály.** Přímo přiznané omezení
+   studie samotné ("Methods 5 through 7 do not repeat this design for
+   the price or specs signal types"). Nejlevnější, nejcitelnější
+   rozšíření.
+2. **Predikuje logprob-jistota stabilitu doporučení?** Propojit s Winner
+   Stability Intents (#40) a Source Stability (#36) — drží vysoko-jistá
+   doporučení líp přes přeformulování/opakování než nízko-jistá? Data z
+   části existují, jde hlavně o novou analýzu, ne nutně nový sběr.
+3. **Genuinní remíza, ne rating-rozhodnutý spor.** Všech 7 metod testovalo
+   scénář, kde JE jasný rozhodující signál (rating). Netestováno: co dělá
+   hedge jazyk / logprob gap, když opravdu není co rozhodnout.
+4. **Hedguje model víc v důvěra-kategoriích?** Přímá vazba na Category
+   Fit (#39) — authority/familiarity už tam mají opačný efekt podle
+   kategorie, konfidence-jazyk se dosud nekontroloval stejně.
+
+### Retrieval (dnes 2 studie: Web Search Rewrites 77%, #1; Live Retrieval, #28)
+
+Web Search Rewrites zjistilo, že vynucené search on/off mění 77 %
+doporučení (50 nákupních promptů, jeden model). Live Retrieval dalo
+stejnému modelu reálný search nástroj k volnému použití na stejný styl
+otevřených nákupních otázek — model ho nepoužil ani jednou z 960 volání.
+Diagnostika potvrdila, že nástroj funguje, jen ne pro tenhle styl
+promptu. Napětí mezi oběma studiemi (search evidentně věc mění, ale
+model si o něj sám neřekne) zůstává nevysvětlené.
+
+1. **Jaký prompt styl model donutí sáhnout po search sám.** Live
+   Retrieval skončila na nule pro otevřené nákupní otázky. Netestováno:
+   explicitní signály čerstvosti ("nejnovější X v 2026"), přímé srovnání
+   cen, nebo formulace nutící ověření faktu.
+2. **Vynucený search a Accuracy+Depth pokrytí.** Accuracy+Depth měřilo
+   61,1% CDI pokrytí bez search vůbec. Zapnutí search by mohlo tuhle
+   mezeru zavřít, přímý most Retrieval → Understanding.
+3. **Cross-platform retrieval (Perplexity/Claude vs. GPT).** Dlouho
+   zaparkovaný kandidát, blokovaný na Anthropic/Google/Perplexity
+   klíčích, restatováno jako priorita v týhle sekci.
+4. **Koreluje dobrovolné použití search s tím, že se doporučení
+   skutečně změní**, stejně jako to dělá vynucené on/off? I vzácné
+   případy dobrovolného volání (pokud existují napříč kategoriemi) by šly
+   post-hoc srovnat.
+
+### Understanding (dnes 2 studie: Search Changes the Vocabulary, #5; Accuracy + Depth, #27)
+
+Search Changes the Vocabulary: se zapnutým search model jmenuje
+ingredience a specifikace, s vypnutým jen dojmy, na stejných 50
+promptech jako Study #1. Accuracy + Depth: model je téměř nikdy věcně
+špatně (33/34 tvrzení potvrzeno, 97,1 %), ale nevyžádaně pokryje jen
+61,1 % reálných atributů napříč 8 kategoriemi, nerovnoměrně — udržitelnost
+zmíní 8 z 9 brandů, záruku/certifikaci jen 3 z 9, i když existují a jsou
+ověřitelné.
+
+1. **Fact-injection styl přímo na podpokryté CDI kategorie.** Vzít
+   záruku/certifikaci konkrétních brandů, vložit je do kontextu stejně
+   jako Fact Injection (#25), sledovat, jestli je model pak skutečně
+   použije nevyžádaně.
+2. **Predikuje hloubka popisu (CDI), kdo vyhraje doporučení?**
+   Accuracy+Depth měřilo kvalitu popisu, ne jestli souvisí s výsledkem.
+   Reuse existující kohorty, žádná nová fakta.
+3. **"Search mění slovník" rozdělené na funkční vs. důvěra-kategorie.**
+   Přímá vazba na Category Fit (#39), replikace původních 50 promptů s
+   kategorie-split analýzou.
+4. **Konkrétnost slovníku vs. token-logprob jistota.** Hedge slova v
+   Confidence studii selhala jako signál skutečné jistoty (r=0,03).
+   Možná je konkrétnost slovníku (ingredience/specs vs. dojmy) lepší
+   proxy, netestováno.
+
+### Memory (dnes 4 studie: The Fame Study, #2; Memory Source, #21; Possession vs Deployment, #23; Fact Injection, #25)
+
+Veřejná sláva/stopa (Wikipedia, Wikidata, stáří domény, GDELT) vysvětlí
+dohromady jen 11,2 % frekvence doporučení, žádný signál samostatně
+významný. Vlastní minulé chování modelu vysvětlí 61,4 % (The Model
+Predicts Itself) — co přesně ten rozdíl tvoří, zůstává největší
+nevyřešenou otázkou celé série. Possession vs Deployment: 75,8 % faktů,
+co model tvrdí že o brandu zná, se nikdy nepoužije v reálném
+doporučení. Fact Injection: vložení JEDNOHO ověřeného faktu dá průměrně
++77,9pp.
+
+1. **Cross-model paměť.** Pořád nejvyšší priorita v týhle sekci, čeká na
+   Anthropic/Google API klíč od Daniela, levné znovupoužití stejného
+   closed-book baseline.
+2. **Dose-response fact injection: 0/1/3/6 faktů.** Fact Injection
+   testovala jen jeden vložený fakt. Křivka s víc fakty najednou by
+   ukázala, jestli se possession-deployment mezera zavírá lineárně, nebo
+   má práh/diminishing returns.
+3. **Possession rate podle stáří/zavedenosti značky.** Zná model novější
+   značky hůř (possession), nebo je jen nenasazuje (deployment)? Rozlišuje
+   dvě různé příčiny téhož symptomu, vazba na Cold Start (#20).
+4. **Pořadí/salience uvnitř 6 possessed faktů.** Používá se spíš první
+   fakt, co model vybaví, než šestý? Testovalo by mechanismus uvnitř
+   samotné paměťové reprezentace, ne jen její obsah.
+
+### Candidacy (dnes 5 studií: Candidacy vs Selection, #6; Cold Start, #20; Hidden Context, #26; Brand Legibility, #29; Prompt Shape, #30)
+
+Jeden faktor z AI Commerce Score odlišuje 599 kdy-doporučených obchodů
+od 60 325 nikdy-nedoporučených, přežije kontrolu na kategorii, cirkularitu
+i vlastnictví obchodu, ale ten samý faktor uvnitř skupiny už nic
+nepredikuje (dostat se do hry vs. vyhrát ji řídí různé věci). Cold Start:
+značka bez historie prohraje 0 z 360 běhů bez důkazu, recenze otevřou
+dveře na 53,1 %, PR a objem prodejů skoro nic. Hidden Context: fiktivní
+"viděl jsi reklamu na X" tvrzení hýbe vítězem víc než cokoliv jiného
+testovaného, včetně reálného produktového faktu. Brand Legibility: jasnost
+framingu identity brandu skoro vůbec nehraje roli, jakmile jsou fakta v
+kontextu, 12 z 13 brandů (včetně vymyšleného) narazí na stejný strop bez
+ohledu na framing. Prompt Shape: jak kupující formuluje otázku, mění
+výsledek, bare-keyword prohrává s přirozeným jazykem konzistentně ve
+dvou nezávislých kolech.
+
+1. **Founder Lab: kauzálně změnit "ten jeden faktor" z Candidacy vs
+   Selection.** Posun z korelace na kauzalitu na reálném kontrolovaném
+   obchodě, přímo navazuje na dávno zaparkovaný RCT plán (kandidát C ze
+   sekce "Další kandidáti na výzkum" výše).
+2. **Hidden Context rozšíření: fiktivní "viděl reklamu" na OBOU stranách
+   srovnání najednou.** Vyhraje živější/novější fikce, nebo se efekty
+   vyruší? Nejpřekvapivější nález série, dosud testovaný jen
+   jednostranně.
+3. **Cold Start dose-response: kolik recenzí stačí.** 1 vs. 10 vs. 100
+   recenzí pro značku bez historie, hledá práh, ne jen binární
+   ano/ne z původní studie.
+4. **Brand Legibility odveta: framing dvou legible brandů proti sobě.**
+   Původní test měl konkurenty bez vlastních faktů. Co když má framing
+   soupeř stejně čitelná fakta, vrátí se efekt při skutečné konkurenci?
+
+Status: všech 19 kandidátů schváleno k realizaci ("udelame vsechny",
+Daniel 2026-09-19). Číslování (Study #41 a dál) a pořadí realizace se
+přiřadí postupně, jak se budou stavět, stejným vzorcem jako celá
+dosavadní série (STUDY-DESIGN.md → run_study.py → dry-run → Danielovo
+reálné spuštění → analyze_results.py → publikace).
+
+## Founder Lab multi-choice faktoriál — verze A (rychlá, simulovaná) a verze B (živá, kauzální) (2026-09-19)
+
+Daniel: "urcite zacneme a, to b tak at je v road mape". Vzniklo z otázky,
+jestli umíme simulovat volbu mezi 5 e-shopy (Founder Lab + 4 reální
+konkurenti) a postupně měnit faktory u Founder Labu, abychom zjistili,
+který nese nejvíc váhy, nebo jestli je to kombinace.
+
+**Verze B (živá, kauzální, zaparkovaná na později):** až verze A ukáže
+vítězný faktor/kombinaci, implementovat ho doopravdy na živém
+founderlab.com (ne textová injekce, ale skutečná změna stránky), počkat
+na reindex, přeměřit reálné chování AI. To je ten dávno plánovaný
+"Founder Lab field test" (kandidát C), teď s konkrétním, datově
+podloženým prvním krokem místo obecného "zkusíme něco změnit".
+
+**Verze A** — plný design viz konverzace 2026-09-19, shrnutí: Founder
+Lab (dnes 0% recommend rate, potvrzeno v reports/founder-lab.html jako
+baseline bez historie/recenzí) proti 4 reálným konkurentům v 5-way
+multi-choice promptu, místo dosavadních pairwise srovnání. Fáze 0
+(baseline replicate v multi-choice), Fáze 1 (rating check, dominuje i
+mimo pár?), Fáze 2 (frakční faktoriál zbylých signálů s ratingem
+vypnutým, stejná logika jako Signal Hierarchy, ale na Founder Labu
+konkrétně a v multi-choice formátu misto pairwise). Status: design
+schválen, čeká na rozpracování STUDY-DESIGN.md.
+
+## Founder Lab multi-choice faktoriál — plný design verze A (2026-09-19, doplněno)
+
+Daniel: "zapis to cele prosim do road mapy... jsem zvedavy jak to dopadne
+a zda se postupnym pridavani ruznych faktoru do founder lab... zacne ai
+doporucovat." Plné znění designu, jak byl odsouhlasený v konverzaci
+2026-09-19, aby se k němu dalo vrátit bez nutnosti znovu procházet chat.
+
+### Výchozí bod
+
+Founder Lab je jediný brand v celé sérii, který máme jako živý obchod s
+nulovou historií, potvrzeno v reports/founder-lab.html: 0 doporučení z
+400 pozorování (20 buyer-intent promptů o minimalistickém vybavení a
+dárcích pro zakladatele, 10 klasických a 10 s konkrétním kontextem,
+každý poslaný ChatGPT 20krát). Ze stejného reportu už víme, koho model
+sahá misto Founder Labu: Everlane a Uniqlo na oblečení (fleece joggers,
+streetwear), Yeti na lahve na vodu, Moleskine a Muji na desk a gifting
+otázky. Návrh pětice pro multi-choice test: Founder Lab + Everlane +
+Uniqlo + Yeti + Moleskine/Muji, protože je to reálná, už jednou změřená
+konkurence, ne vymyšlená.
+
+Kategorie Founder Labu je napůl funkční (oblečení, gear) a napůl důvěra
+(dárky, gifting), takže dopředu neumíme s jistotou říct, kterým směrem
+se u něj projeví specificita popisu (Category Fit ukázal, že specificita
+pomáhá ve funkčních kategoriích a škodí v důvěra kategoriích). To je
+sám o sobě zajímavý vedlejší výstup studie.
+
+### Proč ne prosté "jeden faktor za druhým" (staircase)
+
+Kdyby se faktory přidávaly čistě postupně a nikdy neodebíraly (kolo 1
+rating, kolo 2 rating plus authority, kolo 3 rating plus authority plus
+specificita...), nejde rozlišit, jestli zlepšení ve třetím kole patří
+specificitě samotné, nebo kombinaci se vším, co už bylo přidané dřív.
+Signal Hierarchy (#37) přesně tohle řešil frakčním faktoriálem, tady
+navrhuju stejnou logiku, jen škálovanou na skutečnou 5-way volbu místo
+párového souboje.
+
+### Fáze 0, baseline v multi-choice formátu
+
+Zopakovat baseline, ale novým způsobem, jedním promptem, kde model vybírá
+mezi všemi 5 brandy najednou (dosud jsme dělali jen pairwise nebo otevřený
+recall, multi-choice s 5 opcemi najednou je metodicky nové). Cíl: ověřit,
+že Founder Lab i v tomto formátu prohrává 0 nebo blízko 0, aby další kola
+měla srovnatelný start.
+
+### Fáze 1, kontrola ratingu
+
+Přidat Founder Labu jen rating/recenze, nic jiného, a zjistit, jestli
+rating dominuje stejně silně jako v párovém srovnání (Candidate
+Evaluation #19 to nikdy netestoval mimo pár). Očekávání: rating
+pravděpodobně hodně posune, ale možná ne se stejnou silou jako 1 na 1,
+protože teď soutěží proti 4 brandům najednou.
+
+### Fáze 2, faktoriál, jádro studie
+
+Rating se záměrně vypne (stejně jako u Signal Hierarchy), aby nesmázl
+ostatní signály, a zkříží se těchto 5 faktorů na Founder Labu: authority
+(zmínka třetí stranou), familiarity claim, specificita popisu produktu,
+formát (bullety vs. próza), hidden context (fiktivní "uživatel viděl
+reklamu na Founder Lab", nejsilnější nález celé série, #26). Plný
+faktoriál pro 5 faktorů by byl 32 podmínek, moc drahé. Signal Hierarchy
+zvládl 4 faktory na 12 podmínkách (frakční faktoriál), návrh je podobně
+redukovaná sada, zhruba 12 až 16 podmínek, prioritizovaná podle toho, co
+už víme že má sílu (specificita a hidden context na první místo).
+
+Analýza: logistická regrese na Founder Lab win rate s hlavními efekty i
+interakcemi, LR test pro každý faktor zvlášť a pro kombinace, stejná
+metoda jako Signal Hierarchy. Výstup: buď jeden jasně nejsilnější faktor,
+nebo konkrétní kombinace, která funguje víc než součet jednotlivých
+částí.
+
+### Rozsah
+
+Signal Hierarchy měl 9 600 volání na 4 faktory ve 2 kolech. 5-way volba
+je dražší na jedno volání než pairwise (víc kontextu, víc tokenů), takže
+očekávaný rozpočet je podobný nebo mírně nižší, řádově tisíce volání,
+přesné číslo se doladí až po potvrzení počtu podmínek a kol.
+
+### Co je potřeba k rozjezdu
+
+Danielův vlastní API klíč pro reálný běh (stejný postup jako u
+předchozích studií), pak STUDY-DESIGN.md a run_study.py analogicky k
+dosavadní sérii. Status: design schválen, čeká na Danielův čas
+("az budu mit cas tak zacneme"), zatím nezahájeno.
+
+### Verze B, zaparkovaná
+
+Až verze A ukáže vítězný faktor nebo kombinaci, implementovat ho
+doopravdy na živém founderlab.com (skutečná změna stránky, ne textová
+injekce do promptu), počkat na reindex, přeměřit reálné chování AI.
+
+## Nový kandidát: Brand Staleness / doznívání brandu v paměti modelu (2026-09-19)
+
+Vzniklo z LinkedIn komentáře Tima de Rosena (CEO, AIVO) pod postem Brand
+Finance "When Brands Go Dark" (-9% average annual fall in Brand Strength
+po tom, co brand přestane být viditelný na trhu). Tim se ptá, jestli síla
+brandu nedoznívá jen v hlavách lidí, ale i uvnitř AI modelů, a jestli by
+stálo za to otestovat, jestli se stejné zpoždění (consideration a
+knowledge přežívají awareness) projevuje i v tom, co modely říkají.
+
+Otázka: když brand v realitě doopravdy zanikne nebo přestane být aktivní
+k určitému datu, jak dlouho ho AI modely ještě doporučují, jako by
+existoval nebo byl aktivní. Tohle je nová osa, kterou v celé sérii
+nemáme, dosud testujeme jen "je brand doporučen teď, s danými signály",
+ne jak dlouho zůstává v paměti modelu poté, co v realitě zmizí.
+
+Navržený postup, bez čekání let na přirozený rozpad: využít, že různé
+modely mají různá data ořezu (knowledge cutoff), což funguje jako
+přirozený časostroj. Najít reálné brandy, co doopravdy zanikly nebo
+přestaly být aktivní k přesně známému datu, a stejnou closed-book i
+buying otázku pustit napříč modely s různým cutoff. Model s cutoff před
+zánikem by měl brand pořád tlačit jako živý, model s cutoff dlouho po
+zániku by ho měl přestat doporučovat, pokud model fakt zapomíná mrtvé
+značky. Pokud ho i dlouho po zániku pořád silně doporučuje, potvrzuje to
+Timovu hypotézu o reziduální hodnotě/zpoždění v modelové paměti.
+
+Metodicky nejblíž Possession vs Deployment (#23) a Memory Source (#21),
+jen s časem/cutoff jako novou nezávislou proměnnou, což jsme takhle
+nikdy netestovali. Status: schváleno k zapsání ("urcite to zapis do road
+mapy", Daniel 2026-09-19), číslování a realizace zatím nepřiřazeny.
+
+## Wave-2 scale-up: deploy_rate vs t4_survival, skripty hotové (2026-09-19)
+
+Navazuje na CDI-vs-výsledek null nález výše. Vybráno 21 nových reálných
+brandů (10 funkčních, 11 důvěra-citlivých), design a skripty napsané a
+end-to-end ověřené na dry-run (research-prep/wave2-survival-scaleup/).
+Plný běh je 3 fáze: baseline (8 400 volání, jen nových 21), possession vs
+deployment a multi-turn displacement (obojí na všech 30 brandech, cca
+4 350 volání), celkem cca 12 750 volání, víc než Signal Hierarchy (9 600).
+Status: čeká na Daniela, vlastní API klíč a čas, "chci to plne... kdyz
+neco delame tak poradne" (Daniel 2026-09-19). Přesné příkazy do terminálu
+dané Danielovi přímo v chatu.
+
+## Wave-2 scale-up, výsledky (2026-09-20)
+
+Plný běh dokončen (baseline 8 400 volání na 21 nových brandech, plus
+possession/deployment a multi-turn/T4 na všech 30, minus Cotopaxi s 0%
+baseline, tedy n=29 s oběma metrikami).
+
+**Hlavní hypotéza se nepotvrdila.** deploy_rate vs t4_survival: Pearson
+r=-0,028 (p=0,885), Spearman r=+0,129 (p=0,505), prakticky nula. Při n=9 to
+vypadalo na r=-0,543, byl to šum, stejný vzorec jako u CDI dřív. Ověřeno i
+citlivostním testem (vyhození Nutrafol a Zigpoll jako extrémů), výsledek
+zůstává null (r=0,076, p=0,705).
+
+**Vedlejší nález, mnohem silnější, než jsme čekali.** baseline_recommend_pct
+vs t4_survival_pct: Pearson r=+0,527 (p=0,0033), Spearman r=+0,557
+(p=0,0017), na n=29. Tohle replikuje a posiluje už publikovaný nález na
+multi-turn-displacement.html (původně r=0,68, p=0,048 na n=10), teď na
+třikrát větším vzorku s mnohem nižší p-hodnotou. Vztah drží ve stejném
+směru i po rozdělení na funkční (n=15, r=0,479, p=0,071) a důvěra-citlivé
+(n=14, r=0,591, p=0,026) kategorie zvlášť, není to tažené jednou skupinou.
+Zapsáno jako Update přímo na multi-turn-displacement.html.
+
+**Zajímavá výjimka, stojí za další pohled.** Několik brandů se od
+celkového trendu výrazně odchýlilo oběma směry. Ridge Wallet (85,5%
+baseline, jen 10% T4 survival) a Olly (74% baseline, 0% T4 survival) mají
+silná čísla na startu, ale v delší konverzaci se rychle ztratí. Naopak
+Kopari (0,5% baseline, 50% T4 survival) a Onyx Coffee Lab (16,5% baseline,
+50% T4 survival) jsou skoro nikdy organicky nedoporučené, ale jakmile je
+někdo výslovně zmíní, drží se docela dobře. Tohle je jiná osa než
+Candidacy vs Selection (#6), spíš "dostat se do rozhovoru" vs "udržet se v
+rozhovoru", a mohl by z toho být další kandidát na studii, proč Ridge/Olly
+ztrácí půdu pod nohama a co dělá Kopari/Onyx odolnější, i když start mají
+mnohem slabší.
+
+**Bonus, slabší vztah.** baseline vs deploy_rate: Spearman r=+0,435
+(p=0,018, signifikantní), Pearson r=+0,252 (p=0,188, není). Spíš pořadový
+vztah než přímo lineární, opačný směr než původní hypotéza o "kompenzaci"
+(že brandy s málo znalostmi nasadí vyšší podíl toho, co mají), tady to
+vypadá spíš, že viditelnější brandy mají i o něco vyšší deploy rate.
+
+Status: hlavní null výsledek zapsán zde, replikace zapsána jako Update na
+multi-turn-displacement.html, Ridge/Olly vs Kopari/Onyx odchylka čeká na
+rozhodnutí, jestli se z ní udělá samostatný kandidát na příští studii.
+
+## Nový kandidát: Fragile vs. Resilient Candidacy (2026-09-20)
+
+Vzniklo z Wave-2 scale-up výsledků. Zjištění: baseline recommend rate a
+T4 survival spolu silně korelují (r=0,53, p=0,003, n=29), ale pár brandů
+se od tohoto trendu odchyluje dramaticky oběma směry.
+
+Fragilní skupina, silný start, rychlý kolaps: Ridge Wallet (85,5%
+baseline, 10% T4 survival), Olly (74% baseline, 0% T4 survival).
+Odolná skupina, slabý start, drží se jakmile je řeč o nich: Kopari (0,5%
+baseline, 50% T4 survival), Onyx Coffee Lab (16,5% baseline, 50% T4
+survival).
+
+Otázka: co dělá baseline sílu "křehkou" (zmizí, jakmile se v konverzaci
+objeví konkurence) versus "odolnou" (drží i bez silného baseline, jakmile
+je brand jednou zmíněný)? Možné hypotézy: (a) křehká síla je tažená
+povrchovými signály, jménem/rozpoznáním, bez skutečné substantivní
+diferenciace, co by obstála proti konkurentům v navazujících tazích, (b)
+odolnost souvisí s užší, méně přeplněnou konkurenční nikou, míň
+konkurentů na vytlačení, (c) rozdíl je v hloubce possessed facts,
+odolné brandy mají konkrétnější, těžší k přebití fakta, (d) souvislost s
+funkční vs. důvěra-citlivou kategorií je smíšená (Ridge je funkční,
+Olly důvěra-citlivý; Kopari důvěra-citlivý, Onyx funkční), takže kategorie
+samotná to nevysvětluje, potřeba víc případů.
+
+Fáze 0, zero nových volání: máme už teď transkripty T1 až T4 i possessed
+facts pro tyhle 4 brandy z Wave-2 běhu (conversations_raw.json,
+possessed_facts.json v research-prep/wave2-survival-scaleup/), takže
+první krok je kvalitativní čtení, co přesně v T2/T3 způsobí, že Ridge a
+Olly ztratí půdu, zatímco Kopari a Onyx drží, než se utrácí za nové
+volání.
+
+Fáze 1, pokud fáze 0 najde vzorec: rozšířit na víc odchylných brandů z
+celé 29-30 kohorty (identifikovat další podle |baseline - t4| gap), a
+navrhnout kontrolovaný test hypotézy, co vzejde z fáze 0.
+
+Status: schváleno k zapsání jako plnohodnotný kandidát ("zapis to do
+road mapy jako plnohodnotneho kandidata", Daniel 2026-09-20), číslování a
+realizace zatím nepřiřazeny.
+
+## Fragile vs. Resilient Candidacy — Fáze 0 výsledek (2026-09-25)
+
+Nejlevnější krok ve frontě, spuštěno jako první: nulová nová API volání,
+jen kvalitativní čtení existujících T1-T4 transkriptů a possessed facts
+z Wave-2 běhu (`research-prep/wave2-survival-scaleup/conversations_raw.json`,
+`possessed_facts.json`, `t4_judge_raw.json`) pro Ridge Wallet, Olly
+(fragilní skupina), Kopari, Onyx Coffee Lab (odolná skupina). Vzorek
+3-4 běhy na brand.
+
+**Zjištění:** Ridge prohrává ve všech vzorkovaných bězích (3/3), pokaždé
+proti jinému, ale vždy "kompletnějšímu" konkurentovi (Bellroy, Secrid) v
+okamžiku, kdy se model v T3/T4 přesune od popisu k přímému srovnání a
+finální volbě. Olly je extrémnější, prohrává pokaždé se stejným
+konkurentem (SmartyPants), model ho konzistentně popisuje jako
+"comprehensive formulation" oproti Ollyho užšímu zaměření na chuť.
+
+Kopari a Onyx jsou smíšené (nevyhrávají pokaždé), ale ve vyhraných
+bězích model explicitně cituje úzké, těžko kopírovatelné tvrzení jako
+rozhodující faktor: u Kopari "specializace na 100% kokosový olej", u
+Onyx "vítězství v U.S. Barista Championship, transparentní sourcing
+přímo od farmářů". V prohraných bězích je to vždy proti konkurentovi s
+ještě užším/osobnějším příběhem (Onyx prohrává s Tim Wendelboe, jméno
+jednotlivce-experta, ne značka).
+
+**Vzorec:** není to o celkové síle brandu, Ridge a Olly mají mnohem
+vyšší baseline recommend rate než Kopari a Onyx. Je to o typu possessed
+facts. Ridge a Olly mají obecná, kategorii-sdílená fakta (materiály,
+cena, RFID blokace, chuť gumídek), která sdílí prakticky každý
+konkurent v kategorii, takže v přímém T3/T4 srovnání nemají čím vyhrát,
+model sáhne po konkurentovi s širší/úplnější nabídkou. Kopari a Onyx
+mají úzké, vlastnitelné tvrzení (jeden ingredient, jedno konkrétní
+ocenění/postup), co model umí použít jako rozlišovací kotvu, i když
+jim to samo o sobě nedává vysoký baseline povědomí.
+
+Tohle je ostřejší verze hypotézy (c) z původního designu: ne "hloubka"
+possessed facts obecně, ale jestli je fakt sdílený napříč celou
+kategorií, nebo je to úzké vlastnitelné tvrzení, co obstojí v přímém
+srovnání.
+
+**Fáze 1 (navrženo, nespuštěno):** rozšířit na víc brandů z celé 29-30
+kohorty (identifikovat další podle |baseline - t4| gap), klasifikovat
+nejsilnější possessed fact každého brandu jako "kategorie-sdílený" vs.
+"úzce vlastnitelný" (LLM klasifikátor nebo ruční kódování), a testovat
+přímo, jestli tahle klasifikace predikuje t4_survival_pct líp než
+samotný baseline_recommend_pct. Nová API volání jen na klasifikaci
+faktů, žádný nový sběr transkriptů, protože T1-T4 data pro celou
+kohortu už existují.
+
+Status: Fáze 0 hotová, kvalitativní vzorec nalezen a zapsán zde. Fáze 1
+čeká na Danielovo rozhodnutí, jestli pokračovat rozšířením na celou
+kohortu.
+
+## Fragile vs. Resilient Candidacy — Fáze 1, opravený nález (2026-09-25)
+
+Rozšířeno na 8 fragilních (Ridge, Olly, Caraway, Beam, Boll & Branch,
+Mother Dirt, Wild One, Away, vybráno podle největší |baseline - t4|
+mezery) a 8 odolných (Bellroy, Kopari, Peak Design, Allbirds, Onyx
+Coffee Lab, Solo Stove, Branch, Rumpl) brandů, ~30 T3/T4 textů přečteno.
+Pořád nulová nová API volání, jen čtení existujících transkriptů.
+
+**Nejdřív pokus o klasifikaci possessed facts na "kategorie-sdílený vs.
+úzce vlastnitelný" napříč celou kohortou (29 brandů) — nepotvrdilo se.**
+Bellroy, brand co v každém vzorkovaném běhu poráží Ridge, má stejně
+obecné possessed facts jako Ridge samotný (slim design, certifikovaná
+kůže, záruka), přesto t4=100 %. Beam má naopak dost specifické possessed
+facts (nano-emulsifikace, pojmenovaný "Dream Powder"), přesto t4=0 %.
+Tahle klasifikace se na širší vzorek nepřenáší, buď je to šum malého
+původního vzorku (4 brandy), nebo `possessed_facts.json` (fixní seznam
+3-6 položek) nezachycuje to, co model skutečně použije v živé
+konverzaci.
+
+**Opravená, lépe podložená hypotéza, z přečtení T3/T4 textů napříč
+16 brandy:** rozhodující není typ possessed factu, ale jestli model o
+brandu mluví jako o "generalistickém, vyváženém lídrovi kategorie", nebo
+jako o "specialistovi na jednu věc". Napříč fragilní skupinou model
+displacuje testovaný brand pokaždé stejným jazykovým schématem u
+vítězného konkurenta: "comprehensive", "wide range", "broad appeal",
+"balance of [3+ kritérií]", "reputation". Stejné schéma se ale objevuje
+i u odolné skupiny, když vyhrává samotný testovaný brand (Bellroy "wide
+audience... balance of style, functionality, sustainability", Peak
+Design "versatility... quality, innovation, sustainability", podobně
+Rumpl, Allbirds, Solo Stove).
+
+Rozdíl není v typu faktů, je v tom, jestli model brand vnímá jako toho,
+kdo "umí všechno najednou" (generalista), nebo jako specialistu na
+jednu vlastnost (Ridge = jen minimalistický design/RFID, Kopari = jen
+kokosový olej, Onyx = jen kávová expertíza, Branch = jen ergonomie pro
+malé firmy). Specialisté vyhrávají jen částečně (Kopari/Onyx/Branch
+50-75 %), protože vyhrávají jen když se otázka zúží na jejich
+specializaci, ale prohrávají proti generalističtějšímu konkurentovi,
+jakmile se otázka rozšíří na univerzální "jedna finální volba".
+
+**Fáze 2 (navrženo, vyžaduje nová volání, ne zadarmo):** přímý kauzální
+test místo jen pozorovaného vzorce, injektovat do systémového kontextu
+explicitní "positioned as the versatile, does-everything-well market
+leader" vs. "positioned as the focused specialist" framing pro stejný
+brand/kategorii (recyklovatelná injection mechanika z Fact Injection
+#25/Hidden Context #26 rodiny), měřit, jestli framing samo o sobě flipne
+T4 survival rate nezávisle na skutečných possessed facts.
+
+Status: Fáze 1 hotová, opravený nález zapsán zde (nahrazuje slabší
+verzi hypotézy z Fáze 0). Fáze 2 čeká na Danielovo rozhodnutí, jestli
+je hodnota testu dost vysoká na nová API volání.
+
+## Tři noví kandidáti z LinkedIn feedu (2026-09-21)
+
+Vzniklo z jednoho dne procházení feedu (Zhao Hanbo/Nile post o AI commerce
+attribution, Jairo Guerrero post o mentions jako KPI, Aleyda Solís post o
+machine-readable transactional info podle business modelu). Daniel: "chci
+opravdu udelat studii na vse co nam postupne kousicek po kousicku odkryje
+karty" — všechny tři jdou do fronty jako plnohodnotní kandidáti, design a
+číslování zatím nerozpracované.
+
+### Kandidát: Placená AI reklama vs. organické doporučení
+
+Zhao Hanbo (Nile) publikoval vlastní zjištění: napříč 3 602 ChatGPT ad
+placementy a 91 párovaných dvojicích značka-se-stejnou-otázkou (ad
+zapnutá/vypnutá), koupě placementu posunula rate, se kterou model značku
+jmenuje v textu odpovědi, jen o -0,3pp — v podstatě žádný efekt. Jejich
+závěr: ad slot (co koupíš) a recommendation slot (co si vysloužíš) jsou dva
+oddělené systémy.
+
+Tohle je přímo testovatelné naší vlastní metodikou (LLM judge, forced/open
+recommendation stejně jako Winner vs Loser a Authority Signal), místo
+spoléhání na cizí číslo. Otázka: mění se rate, se kterou model značku
+zmíní/doporučí v otevřené nebo nucené otázce, podle toho, jestli má značka
+v systémovém kontextu injektovaný signál "paid placement active" vs. bez
+něj? Dalo by se navrhnout jako rozšíření existující injection mechaniky
+(Fact Injection/Hidden Context) o nový typ signálu, spend/placement, vedle
+už testovaných rating/authority/familiarity/specificita/formát.
+
+Otevřené: jak simulovat "koupená reklama" v injektovaném kontextu
+věrohodně, bez skutečného přístupu k ChatGPT Ads API. Buď jako čistě
+observační replikace na existujících nebo nových prompt párech, nebo jako
+otevřená limitace, že se testuje jen korelace signálu se selection rate, ne
+skutečný ad-buying efekt.
+
+### Kandidát: Potlačení na úrovni shortlistu vs. finálního výběru u negativní reputace
+
+Jairo Guerrero v komentářové diskuzi tvrdil, že AI odfiltruje "špatné
+aktéry" ještě dřív, než dojde ke zmínce, takže negativní zmínky jsou
+vzácné, a že mention samotný je dost dobré proxy pro úspěch. Náš vlastní
+rámec (60 325 obchodů, jen 599 v jakémkoli recommended setu, faktory pro
+shortlist a faktory pro finální výběr se z velké části liší) tohle
+zpochybňuje, ale nikdy jsme netestovali negativní signál/reputaci jako
+samostatnou proměnnou v tomhle rámci — celá Winner vs Loser/Authority/
+Familiarity/Signal Hierarchy kohorta testovala pozitivní signály proti
+sobě nebo proti ratingu, ne otázku "brání špatná reputace vůbec dostat se
+do zmínky, nebo jen prohrát finále".
+
+Otázka: když značka nese negativní signál (nízký rating, negativní
+recenze/pověst) vs. neutrální/bez signálu, mění se (a) candidacy rate
+(objeví se vůbec v seznamu možností, metodika Volba kandidáta/Brand
+Legibility), nebo jen (b) winner rate v přímém srovnání (metodika Winner
+vs Loser)? Pokud negativní signál škodí hlavně (a), podporuje to Jairovu
+tezi o pre-filtrování. Pokud škodí hlavně (b) a značka se do seznamu
+dostává normálně, je to jiný mechanismus, než jaký popsal.
+
+Levné rozšíření existující metodiky a značek, recyklovatelné ze stejné
+kohorty (4-8 značek, forced/open choice, LLM judge).
+
+## Negative Reputation / Shortlist Suppression — finální výsledek (2026-09-28)
+
+Reálný běh (1 600 chat volání, 800 judge volání na Sondě B, `negative-
+reputation-candidacy/run_study.py`). Výsledek je **opak Jairovy teze**,
+ne jen "nepotvrzeno".
+
+**Headline (cluster mean přes 4 brandy, neutral mínus negative):**
+- Candidacy rate: 39,0 % → 54,5 %, tedy **-15,5pp** (negativní signál
+  candidacy nesnižuje, v průměru ji zvyšuje)
+- Selection/winner rate: 83,5 % → 24,3 %, tedy **59,2pp propad**
+
+Negativní reputace téměř vůbec neblokuje, jestli se značka objeví v
+odpovědi na otevřenou otázku. Škodí zásadně až ve chvíli, kdy je značka
+postavená do přímého souboje se jmenovaným konkurentem. To je přesně
+opačný mechanismus, než jaký popsal Jairo Guerrero (pre-filtrování na
+úrovni shortlistu) — data ukazují, že k žádnému pre-filtrování na
+candidacy vrstvě nedochází, negativní signál rozhoduje až finále.
+
+**Per-brand rozpad (candidacy / winner rate, neutral → negative):**
+
+| Brand | Candidacy neutral | Candidacy negative | Winner neutral | Winner negative |
+|---|---|---|---|---|
+| Barbaro Mojo | 23,0 % | 62,0 % | 97,0 % | 30,0 % |
+| BodyArtForms | 26,0 % | 16,0 % | 100,0 % | 56,0 % |
+| Colored Organics | 80,0 % | 86,0 % | 41,0 % | 0,0 % |
+| Hearthloom | 27,0 % | 54,0 % | 96,0 % | 11,0 % |
+
+Selection rate propadá u všech 4 brandů bez výjimky, u tří z nich
+dramaticky (Barbaro Mojo -67pp, Hearthloom -85pp, Colored Organics až na
+0 %). Candidacy naopak stoupá u 3 ze 4 brandů (Barbaro Mojo +39pp,
+Hearthloom +27pp, Colored Organics +6pp, už z vysokého neutral základu
+80 %) a klesá jen u BodyArtForms (-10pp). Pracovní interpretace nárůstu
+candidacy: injektovaný negativní kontext dává modelu o značce navíc
+konkrétní, živý text (rating, počet recenzí, stížnost), což může fungovat
+jako salience/priming efekt na zmínění značky v otevřené odpovědi, i když
+je ten kontext negativní — model si značku "pamatuje" silněji, jen ji pak
+v přímém srovnání nedoporučí. Tohle je interpretace, ne prokázaný
+mechanismus, otevřený navazující krok by testoval, jestli stejný nárůst
+candidacy nastává i u čistě neutrálního (ne negativního) doplňujícího
+faktu stejné délky.
+
+**Limitace (potvrzené z pre-registered plánu):** 4 brandy/malý vzorek,
+syntetická negativní reputace psaná jedním výzkumníkem (disclosed),
+Sonda A a Sonda B nejsou stejná domácnost dat (popisné srovnání, ne
+formální interakční test), jeden model/jedno kolo, self-grading riziko na
+Sondě B mitigované recyklovaným `WINNER_JUDGE_SYSTEM`.
+
+Status: hotovo, reálná čísla k dispozici, `results.json` zapsaný v
+`research-prep/negative-reputation-candidacy/`. Rozhodnutí o formě
+publikace (nová stránka, nebo addendum na existující — nejbližší
+tematicky `candidacy-vs-selection.html`) čeká na Daniela.
+
+### Kandidát: Machine-readable hloubka podle business modelu (rozšíření #405)
+
+Aleyda Solís rozdělila, co má být "decision-ready explicit" podle šesti
+business modelů: ecommerce (cena/dostupnost/varianty/recenze), SaaS
+(pricing/plan differences/limits/integrace), services (ideal-fit klienti/
+proces/deliverables), local business (hodiny/booking/lokální recenze),
+marketplaces & travel (dostupnost/podmínky/kdo plní transakci), finance &
+regulated (eligibility/poplatky/regulace).
+
+V roadmapě zatím existuje jen úzký services-vertical kandidát (#405,
+terapeuti/lokální služby). Aleydino rozdělení je širší taxonomie, ne jen
+jedna vertikála — otevírá otázku, jestli se efekt "explicit decision-ready
+fact" (v naší sérii nejblíž PDP Specificity, Study #32, vague vs. concrete
+specs) liší podle typu byznysu stejně jako se lišil podle funkční vs.
+důvěra-kategorie u Category Fit (Study #39, opačné znaménko).
+
+Návrh: až se dostane na řadu #405, použít Aleydinu taxonomii jako kostru
+pro výběr kategorií/značek napříč aspoň 3-4 modely (ne jen services), a
+měřit, jestli "specificity efekt" drží stejně silně a stejným směrem ve
+SaaS/finance/marketplace, jako drží ve funkčních e-commerce kategoriích,
+nebo se otáčí jako u důvěra-kategorií.
+
+Status: všichni tři kandidáti zapsáni, design nerozpracovaný, čekají na
+Danielovo rozhodnutí o pořadí vůči zbylé frontě (cross-model, cross-
+platform, Founder Lab, SEO Ranking Factors, Fragile vs. Resilient
+Candidacy).
+
+## Nový kandidát: Content Gap Capture (2026-09-21)
+
+Vzniklo z LinkedIn postu Malte Landwehra (Peec AI). Jejich vlastní data:
+od přechodu na GPT-5.6 vidí výrazně víc pricing stránek v citovaných
+zdrojích, i u obecných dotazů typu "Which CRM should I buy?". Dvě
+zjištění: (1) 23 % cenových informací se necituje z primární pricing
+stránky značky, ale ze sekundárního obsahu (tiskové zprávy, blog, help
+center), (2) 3 % cenových informací se cituje přímo z pricing stránky
+konkurenta o dané značce (Gusto má pricing stránky o Ripplingu a
+BambooHR, Capsule CRM o Pipedrivu a Monday).
+
+Bod (1) se nepřímo kryje s vlastním nálezem Structured Markup studie
+(#38, prose citovaná ochotněji než bullet/tabulkový formát) — jiný typ
+faktu (cena místo obecných specs), stejný mechanismus. Bod (2) je nový a
+netestovaný: co se stane, když vlastní sekundární obsah k transakčnímu
+faktu chybí a existuje obsah třetí strany/konkurenta, co ten fakt o
+značce popisuje.
+
+**Otázka:** Když značka nemá na vlastním webu žádné sekundární potvrzení
+transakčního faktu (cena, plán, dostupnost) mimo primární stránku,
+zvyšuje se pravděpodobnost, že model použije/cituje jako zdroj obsah
+třetí strany nebo konkurenta, co ten fakt o značce zmiňuje? A pokud se
+vlastní sekundární obsah (FAQ, blog s cenou napsanou prózou) přidá,
+vytlačí to tu cizí citaci?
+
+**Design:** recyklovatelná injection mechanika ze stejné rodiny jako
+Fact Injection/Hidden Context, nová proměnná: přítomnost/nepřítomnost
+"vlastního sekundárního zdroje" v kontextu vedle "cizího zdroje o stejném
+faktu". Žádný nový aparát, recyklované značky a judge přístup ze zbytku
+série.
+
+Status: zapsáno jako plnohodnotný kandidát ("zapis do road mapy",
+Daniel 2026-09-21), design nerozpracovaný, číslování zatím nepřiřazeno.
+
+## Nový kandidát: Position Stability (2026-09-21)
+
+Vzniklo z LinkedIn výměny pod postem Thaylise Nakamoto o nestabilitě citací
+napříč AI enginy. Daniel do diskuze přidal vlastní zjištění ze Source
+Stability (#36): vítěz drží stabilní ~90 % napříč opakováními, i když se
+citovaný zdroj mění call od callu. Thaylise na to navázala nezávislým
+zjištěním z vlastního experimentu: když je značka zmíněná, její průměrná
+pozice v odpovědi se mezi enginy hýbe jen ~0,1 místa za den. Tři nezávislá
+měření (jeho Source Stability, její position tracking, i Winner Stability
+Intents #40 o stabilitě vítěze napříč přeformulováním) teď ukazují na
+stejný vzorec z různých úhlů: citace churnují, ale kdo vyhraje a kde se v
+odpovědi objeví, oboje drží mnohem stabilněji.
+
+**Otázka:** Když se značka objeví v doporučení napříč opakováními nebo
+přeformulováním stejného záměru, zůstává stabilní i její POZICE v
+odpovědi (první zmíněná, druhá, třetí...), podobně jako zůstává stabilní
+samotný vítěz? Tohle je třetí vrstva stability vedle "kdo vyhraje" a
+"jaký zdroj se cituje", kterou série zatím nikdy netestovala přímo
+vlastní metodikou.
+
+**Design:** recyklovatelná metodika ze stejné rodiny jako Source
+Stability / Winner Stability Intents (otevřené doporučovací prompty na
+reálné kategorie, opakování + reformulace záměru, cluster-permutation
+test na úrovni kategorie), jen s novou outcome metrikou: pozice/rank
+značky v seznamu nebo odpovědi místo binárního vítěz/prohra. Žádný nový
+aparát, jen nová proměnná k měření na už fungujícím designu.
+
+Status: HOTOVO, reálné výsledky zapsané níže v sekci "Position
+Stability — reálná čísla, hotovo (2026-09-24)" a jako addendum na
+`source-stability.html` a `winner-stability-intents.html`. Tato
+záhlavní sekce zůstává jen jako záznam původního zadání.
+
+## Position Stability — reálná čísla, hotovo (2026-09-24)
+
+Nejlevnější kandidát ve frontě, spuštěno jako první: žádná nová search
+data, jen sekundární extrakce nad `response_text`, co už existoval v
+Source Stability a Winner Stability Intents (`research-prep/
+position-stability/`).
+
+**Metodika:** LLM extrakce (gpt-4o-mini, text-only, bez search) pořadí
+značek zmíněných v každé odpovědi, 400 záznamů napříč 16 kategorie-koly
+(8 kategorií × 2 kola ze Source Stability, 8 kategorií × 2 kola ze
+Winner Stability Intents), 0 parse failures. Dvě metriky na úrovni
+kategorie: position drift (průměrná absolutní odchylka pozice značky od
+její mediánové pozice) a párová rank korelace (Spearman mezi společnými
+značkami ve dvou odpovědích), obojí testováno permutačním testem proti
+náhodně zamíchanému pořadí.
+
+**Výsledek:** H1 potvrzena jasně. Průměrný position drift napříč všemi
+16 kategorie-koly jen 0,254 místa, průměrná rank korelace 0,82. Všech 16
+kategorie-kol prošlo permutačním testem s p=0,0 (0/2000 náhodných
+zamíchání dosáhlo tak nízkého driftu jako reálná data), ne jen v
+průměru. Source Stability data (identický prompt) o něco stabilnější
+než Winner Stability Intents (přeformulované doty), dvě kategorie
+(gaming_mouse, bluetooth_speaker v source-stability) měly drift přesně
+0,0 a korelaci 1,0. Dvě slabší výjimky, pořád významné, ale výrazně pod
+zbytkem: source-stability/meal_kit (drift 0,57, korelace 0,50) a
+winner-stability-intents/bluetooth_speaker (drift 0,749, korelace
+0,164).
+
+**Závěr:** pozice v odpovědi je třetí nezávislá vrstva stability vedle
+"kdo vyhraje" (Source Stability, Winner Stability Intents) a "jaký zdroj
+se cituje" (Source Stability), a drží stejně silně. Přímé datové
+potvrzení nezávislého zjištění Thaylise Nakamoto (~0,1 místa za den).
+
+Zapsáno jako addendum na `source-stability.html` a
+`winner-stability-intents.html` (2026-09-24), ne jako samostatná
+stránka, protože jde o sekundární analýzu existujících dat, ne
+prospektivně navržený sběr. Skripty (`extract_positions.py`,
+`analyze_positions.py`) a plný breakdown v `research-prep/
+position-stability/results.json`.
+
+## Nový kandidát: Sponsored tag penalty + query-conditional obrana (2026-09-22)
+
+Vzniklo z LinkedIn postu Juozase Kaziukėnase (zakladatel Marketplace
+Pulse) — opakovaně žádal Meta Muse vybrat z Walmart výsledků na "aaa
+batteries" (8 sponzorovaných listingů, dvě řady, víc než má Amazon).
+Muse žádný sponzorovaný listing nikdy nezařadil do shortlistu, i když
+je podle screenshotu v prohlížeči evidentně viděl. Cituje k tomu "What
+Is Your AI Agent Buying? Evaluation, Biases, Model Dependence, &
+Emerging Implications for Agentic E-Commerce" (Allouah, Besbes,
+Figueroa, Kanoria, Kumar; ACM Web Conference 2026; arXiv:2508.02630):
+agenti konzistentně penalizují sponsored tag a odměňují platformní
+endorsement, síla efektu i position bias pod tím se ale výrazně liší
+napříč providery a verzemi modelů.
+
+Tohle přímo rozšiřuje už zapsaného kandidáta "Placená AI reklama vs.
+organické doporučení" (Zhao Hanbo/Nile, výše, 2026-09-21) — ten měřil
+prakticky nulový efekt (-0,3pp) na ChatGPT ad placementech. Allouah et
+al. měří napříč více modely aktivní negativní efekt, ne nulový. Dvě
+různá zjištění ke stejné otázce, stojí za to je otestovat vedle sebe
+vlastní metodikou, ne se spolehnout na jedno nebo druhé cizí číslo.
+
+**Otázka 1 (rozšíření Zhao Hanbo kandidáta):** Mění injektovaný signál
+"sponsored/paid placement" selection rate stejnou metodikou jako Fact
+Injection/Hidden Context — a je efekt nulový (jako u Zhao Hanbo dat)
+nebo negativní (jako u Allouah et al.), napříč našimi vlastními
+modely/kategoriemi?
+
+**Otázka 2 (nová, z papíru, dosud nikde v roadmapě nenavržená):** Paper
+navíc ukazuje, že prodejci můžou penalizaci obejít pomocí
+query-conditional úprav popisu (popis produktu se mění podle
+konkrétního dotazu, ne je statický). Zvýší cílená úprava popisu podle
+typu dotazu selection rate u produktu se sponsored signálem zpátky na
+úroveň bez penalizace, nebo jen částečně?
+
+**Design:** Otázka 1 recykluje injection mechaniku z Fact Injection
+(#25)/Hidden Context (#26) — nový typ signálu vedle
+rating/authority/familiarity/specificita/formát. Otázka 2 potřebuje
+nový design: pár popisů (statický vs. query-conditional) pro stejný
+produkt se sponsored signálem, měřit rozdíl v selection rate mezi
+oběma verzemi.
+
+**Otázka 1 — design hotový, čeká na reálný běh (2026-09-28).** Jeden
+faktor, dvě úrovně (organic/sponsored) na cílovém brandu, konkurent
+vždy organic. 4 brandy recyklované byte-identicky z
+`winner-vs-loser/brands.json`, jen `vague_claim` (bez ratingu, bez
+specificity/formátu, ať zůstane sponsored signál izolovaný). Forced
+two-way, stejný `WINNER_JUDGE_SYSTEM` judge prompt beze změny. 800 chat
++ 800 judge = 1 600 volání. `research-prep/sponsored-tag-penalty/
+run_study.py`, `STUDY-DESIGN.md`. Ověřeno na `--dry-run` (800/800, 0
+judge parse failures). Otázka 2 (query-conditional obrana) zůstává
+otevřená, samostatný navazující krok.
+
+## Sponsored Tag Penalty — finální výsledek Otázky 1 (2026-09-28)
+
+Reálný běh (800 chat + 800 judge volání, 0 judge parse failures).
+Výsledek podporuje Allouah et al. (aktivní negativní efekt), ne Zhao
+Hanbo (skoro nula).
+
+**Headline (cluster mean přes 4 brandy):**
+- Organic: 74,2 % winner rate
+- Sponsored: 55,8 % winner rate
+- **Sponsored tag penalty: 18,4pp**, reálný a směrem k Allouah et al.,
+  ne k Zhao Hanbo. Stejný text popisující brand, jediný rozdíl je
+  nálepka "This listing is marked as a Sponsored result" místo
+  "This is a standard search result", a model tu značku voli o 18,4pp
+  méně často ve forced two-way srovnání.
+
+**Per-brand rozpad (organic → sponsored, penalty):**
+
+| Brand | Organic | Sponsored | Penalty |
+|---|---|---|---|
+| BodyArtForms | 100,0 % | 97,0 % | 3,0pp |
+| Barbaro Mojo | 71,0 % | 62,0 % | 9,0pp |
+| Hearthloom | 88,0 % | 60,0 % | 28,0pp |
+| Colored Organics | 38,0 % | 4,0 % | 34,0pp |
+
+Penalizace drží směrem u všech 4 brandů bez výjimky (nikdy neobrátí
+znaménko), ale velikost silně kolísá. BodyArtForms má malý efekt
+částečně proto, že je už na organic straně skoro na stropu (100 %),
+takže má málo prostoru klesnout, ceiling efekt stejný typ, jaký se řeší
+u Winner vs Loser. Colored Organics má naopak nejnižší organic základnu
+(38 %) a propadá až skoro na podlahu (4 %), tam je penalizace
+nejdramatičtější, ale i nejblíž floor efektu na sponsored straně.
+
+**Position bias check:** target named first 66,8 % vs. second 63,4 %,
+malý rozdíl, ne hlavní vysvětlení efektu.
+
+**Limitace (potvrzené z pre-registered plánu):** 4 brandy/malý vzorek,
+simulovaný sponsored tag přes system-prompt text (ne reálné UI/API
+žádné platformy), jeden model/jedno kolo, ceiling/floor efekty u dvou
+ze čtyř brandů znamenají, že cluster mean 18,4pp je ovlivněný právě
+těmito dvěma extrémy (Colored Organics a Hearthloom táhnou průměr nahoru,
+BodyArtForms a Barbaro Mojo dolů) — širší kohorta by pomohla ověřit, jestli
+18,4pp drží i mimo tenhle konkrétní 4-brand vzorek. Otázka 2
+(query-conditional obrana) zůstává otevřená.
+
+Status: hotovo, reálná čísla k dispozici, `results.json` zapsaný v
+`research-prep/sponsored-tag-penalty/`. **Publikováno (2026-09-28) jako
+veřejná Study #43** (`/research/sponsored-tag-penalty.html`) a zapojeno
+všude v `atom-landing-main 4`: karta v `research/mechanism-studies.html`,
+report-card + finding-card (`data-key="41"`) v `research/index.html`,
+cross-link na `negative-reputation-candidacy.html` a zpět, `sitemap-pages.xml`,
+sitewide bump 42→43 Public Studies (166 souborů) a footer `ai-sitemap`
+odkaz (164 souborů).
+
+Status: zapsáno jako plnohodnotný kandidát ("zapis to urcite do mapy",
+Daniel 2026-09-22), design nerozpracovaný, číslování nepřiřazeno. Čeká
+ve frontě vedle Zhao Hanbo kandidáta a zbylé fronty.
+
+## Otázka 2 — Query-Conditional Defense, design hotový (2026-09-28)
+
+Přímé pokračování Otázky 1 výše. `research-prep/query-conditional-defense/
+STUDY-DESIGN.md` + `run_study.py` napsané a dry-run ověřené (0 judge parse
+failures). Testuje, jestli query-conditional popis (echo hledaného
+termínu zpátky do sponsored listingu) obnoví selection rate zpátky k
+organické úrovni (74,2 %), zůstane na úrovni statického sponsored popisu
+(55,8 %), nebo skončí někde mezi tím.
+
+**Chytré znovupoužití dat:** podmínka `static` je definičně identická s
+`sponsored` podmínkou z Otázky 1, takže se čte přímo z
+`sponsored-tag-penalty/judged.json` — 0 nových volání na tuhle část. Nové
+je jen 400 chat + 400 judge volání na `query_conditional` podmínku,
+**celkem 800 nových volání, poloviční cena Otázky 1.**
+
+Status: design hotový, dry-run ověřený, čeká na Danielovo skutečné
+spuštění (`export OPENAI_API_KEY=... && python run_study.py all` v
+`research-prep/query-conditional-defense/`).
+
+## Otázka 2 — Query-Conditional Defense, reálná čísla (2026-09-28, večer)
+
+Daniel spustil `run_study.py all` naostro (400 nových chat + 400 nových
+judge volání, 0 judge parse failures). Ruční spot-check 5 náhodných
+`colored-organics` odpovědí proti syrovému `response_text` — všech 5 sedí,
+model doslova píše důvod typu "because they specifically highlight being
+built for shoppers seeking X", tedy skutečně reaguje na tu query-matching
+větu, ne na artefakt. Ověřeno taky, že věta "This listing is marked as a
+Sponsored result." zůstala v systémové zprávě beze změny (žádný bug, co by
+ji omylem smazal).
+
+**Výsledek není obnova, je to přestřelení.**
+
+| Podmínka | Winner rate (cluster mean) |
+|---|---|
+| static (sponsored, beze změny, reused z Otázky 1) | 55,8 % |
+| organic (referenční strop z Otázky 1, žádná penalizace) | 74,2 % |
+| **query_conditional (nové)** | **95,2 %** |
+
+Query-conditional popis nejenom smazal 18,4pp penalizaci, dostal se
+**214,1 % nad rámec organic-static gapu** — recovery +39,4pp, model teď
+preferuje sponsored+query-matched listing MÍC, než preferoval čistě
+organic listing bez query matche vůbec.
+
+**Per-brand rozpad (static → query_conditional, recovery):**
+
+| Brand | Static | Query-conditional | Recovery |
+|---|---|---|---|
+| Barbaro Mojo | 62,0 % | 100,0 % | 38,0pp |
+| BodyArtForms | 97,0 % | 100,0 % | 3,0pp |
+| Colored Organics | 4,0 % | 83,0 % | 79,0pp |
+| Hearthloom | 60,0 % | 98,0 % | 38,0pp |
+
+BodyArtForms má malý recovery jen proto, že byl už v static na stropu
+(97 %). Colored Organics (nejhorší v static, 4 %) má největší recovery
+(+79pp) — ale i tady je to skok, ne postupné škálování, což naznačuje, že
+jde spíš o silný binární signál ("tahle věta je tu / není tu"), ne o
+spojitou míru relevance.
+
+**Position bias (jen query_conditional):** target named first 98,4 % vs.
+second 92,6 %, malý rozdíl, ne hlavní vysvětlení.
+
+**Interpretace, poctivě:** tohle NENÍ důkaz, že "query-conditional obrana
+funguje proti sponsored penalizaci" v tom smyslu, že by jen neutralizovala
+negativní signál. Je to spíš stejný vzorec jako Fragile vs. Resilient
+Candidacy fáze 2 (jakákoli sebejistá kontextová claim zvedá výsledek silně,
+nezávisle na směru) a Authority Signal/Fact Injection — jedna jasná věta o
+relevanci k přesnému hledanému termínu je natolik silný signál, že
+přebije rozdíl mezi organic a sponsored úplně. **Otevřená limitace, kterou
+tenhle běh nerozlišuje:** neotestovali jsme query-conditional popis NA
+organic listingu (bez sponsored tagu vůbec) — nevíme, jestli by 95,2 %
+bylo stejné, vyšší, nebo nižší, tedy jestli je tenhle lift specifický pro
+"kompenzaci" sponsored penalizace, nebo by udělal to samé i bez ní. Bez
+téhle kontrolní podmínky nejde odlišit "obrana proti penalizaci" od
+"query-matching je obecně silný signál, sponsored/organic je vedlejší".
+
+Status: hotovo, reálná čísla k dispozici, `results.json` zapsaný v
+`research-prep/query-conditional-defense/`. Otevřený návazný krok
+(nezapsaný jako číslovaný kandidát): 4. podmínka `organic +
+query-conditional` k rozlišení obrany od obecného efektu. Rozhodnutí o
+formě publikace (samostatná stránka vs. addendum na Sponsored Tag
+Penalty) čeká na Daniela.
+
+## Nový kandidát: Source Rank Position vs. Named-Candidacy / Selection (2026-09-28)
+
+Vzniklo z LinkedIn komentáře Olgy Vainshtok pod jejím vlastním AEO-audit
+postem ("Five AI engines can describe this company perfectly, but none of
+them recommend it"). V odpovědi na náš komentář (propojující její nález s
+Possession vs Deployment gapem) doplnila vlastní pozorování: samotná
+zmínka ve zdroji nestačí, záleží i na POZICI uvnitř toho zdroje. Firma z
+jejího auditu byla 4. ze 17 v "Brand alternatives" roundupu na relevantní
+doméně, aktualizovaném 3 měsíce zpátky, a přesto ji žádný z pěti
+testovaných enginů nejmenoval.
+
+Nejbližší existující práce: Ghost Citation (2026-09-25, nepublikováno)
+měří citace→jmenovaná zmínka konverzi uvnitř JEDNÉ odpovědi (49,9 %
+named/50,1 % ghost), ale ne pozici značky uvnitř samotného citovaného
+zdroje. Position Stability (addendum na Source Stability) měří pozici
+značky V ODPOVĚDI modelu, ne pozici uvnitř zdroje, který model čte. Ani
+jedno není totéž, co Olga popisuje — skutečná mezera.
+
+**Otázka:** Mění pozice cílové značky uvnitř citovaného syntetického
+zdroje (1. místo vs. 4. z 17 vs. 15. z 17) pravděpodobnost, že značka
+bude (a) vůbec jmenována (candidacy proxy), (b) vyhraje forced two-way
+srovnání proti jmenovanému konkurentovi (selection)?
+
+**Design:** system-prompt text popisuje syntetický 17-pozicový roundup
+zdroj (přesně Olgino reálné číslo), konkurent vždy na pozici 2, zbylých
+15 pozic generické anonymizované placeholdery ("Other Brand N", žádná
+reálná jména), cílový brand na pozici 1/4/15 podle podmínky. Reuse
+4-brand kohorty z `winner-vs-loser/brands.json`, stejný `WINNER_JUDGE_SYSTEM`
+judge prompt beze změny. 4 brandy × 3 podmínky × 20 intentů × 5 opakování
+= 1 200 chat + 1 200 judge = **2 400 volání celkem** (dražší než Otázka 1,
+protože 3 podmínky místo 2, ale ve stejném řádu jako Negative Reputation).
+
+`research-prep/source-rank-position/STUDY-DESIGN.md` + `run_study.py`
+napsané a dry-run ověřené (0 judge parse failures, 1200/1200 řádků na
+run i judge proběhlo čistě).
+
+Status: design hotový, dry-run ověřený, čeká na schválení a reálné
+spuštění ("udelej z toho studii a dej to do road mapy", Daniel
+2026-09-28).
+
+## Source Rank Position, reálná čísla a publikace jako Study #45 (2026-09-28)
+
+Daniel spustil `run_study.py` naostro vlastním API klíčem. 1 200/1 200
+chat volání, 1 200/1 200 judge volání, **0 judge parse failures**.
+
+Spot-check: 5 náhodných řádků z `judged.json` (po jednom z každé
+podmínky + extra z `colored-organics`) proti `response_text` a
+`judge_raw_text` — všechny sedí, model doslova zdůvodňuje výběr pozicí
+ve zdroji ("because it is ranked higher in the roundup"), ne obsahem
+značky. Cluster-mean čísla v `results.json` přepočítána nezávisle
+přímo z `judged.json` (jak cluster mean přes 4 brandy, tak pooled
+n=1200 rate) — shoda na desetinné místo ve všech třech podmínkách.
+
+**Selection rate** (`llm_winner == target`, cluster mean přes 4
+brandy):
+
+- rank_1 (pozice 1 z 17): **100,0 %** (n=400)
+- rank_4 (pozice 4 z 17, přesně Olgin reálný případ): **1,2 %** (n=400)
+- rank_15 (pozice 15 z 17): **0,0 %** (n=400)
+
+rank_1 minus rank_15 = 100,0pp. Top (rank_1) vs. zbytek (průměr rank_4
++ rank_15) = 99,4pp.
+
+**Candidacy rate** (`target_mentioned`, cluster mean):
+
+- rank_1: **100,0 %**
+- rank_4: **40,0 %**
+- rank_15: **35,2 %**
+
+**Klíčové zjištění:** dvě různé věci reagují na pozici úplně jinak.
+Candidacy (být vůbec zmíněný v odpovědi) klesá jen mírně a zůstává
+docela stabilní i na 15. místě (100 % → 40 % → 35,2 %). Selection (být
+vybraný jako vítěz) je prakticky binární přepínač vázaný na 1. místo
+(100 % → 1,2 % → 0 %). Jinými slovy: být ve zdroji nestačí a skoro
+nezávisí na pozici, ale vyhrát srovnání závisí skoro výhradně na tom,
+jestli je značka na 1. místě zdroje. Přesně potvrzuje Olgin postřeh —
+4. místo z 17 je z pohledu "vyhrát srovnání" prakticky k ničemu (1,2 %),
+i když model o značce ještě ví (40 % candidacy).
+
+Position-in-question kontrolní proměnná (jméno cíle první vs. druhé ve
+větě otázky, odlišné od testované position-in-source proměnné): 31,5 %
+(n=559) vs. 35,7 % (n=641) — malý, čistý rozdíl vedle síly hlavního
+efektu, potvrzuje že jde skutečně o pozici ve zdroji, ne o pořadí jmen
+v otázce.
+
+Per-brand rozpad selection rate (`per_brand_selection_by_condition` v
+`results.json`): rank_1 100 % na všech 4 brandech beze zbytku;
+rank_4 0 % na 3 ze 4 brandů, jen barbaro-mojo 5 %; rank_15 čistá 0 %
+na všech 4. Efekt je tedy extrémně konzistentní napříč brandy, ne
+tažený jedním outlierem.
+
+Rozhodnutí (viz Daniel, 2026-09-28): samostatná studie, ne addendum k
+Ghost Citation nebo Position Stability — ani jedna neřeší přesně tuhle
+otázku (pozici uvnitř citovaného zdroje jako nezávislou proměnnou) a
+síla efektu (čistý 100 %→1,2 %→0 % skok) si zaslouží vlastní nadpis.
+Zařazeno jako **Studie #45**, stránka `research/source-rank-position.html`
+postavená a poslaná k review před sitewide wiringem (stejný postup
+jako #43/#44).
+
+## Study #41 — Phrasing Stability by Signal (price/specs extension), reálná čísla a publikace (2026-09-22)
+
+Nejlevnější, nejcitelnější kandidát z fronty Confidence sekce: Method 6
+(phrasing-perturbation stability) z Recommendation Confidence (#22) byl
+navržen a spuštěn jen na rating signálu, vlastní limitations sekce té
+stránky to výslovně přiznává ("Methods 5 through 7 do not repeat this
+design for the price or specs signal types"). Tohle je nejlevnější
+rozšíření z fronty, protože recykluje 100% existující infrastruktury,
+jen se přepne filtr signálu na stejném zdrojovém CSV.
+
+**Design:** identických 16 kontestovaných záměrů z phase3_raw.csv
+(Volba kandidáta), stejných 5 frází (baseline/casual/formal/
+reversed/imperative), stejných 10 běhů na frázi — jediná změna je
+`signal=price` / `signal=specs` místo `signal=rating` při filtrování
+fixních fact_a/fact_b párů. gpt-4o, teplota 0.7. 1 600 volání celkem
+(800 price + 800 specs). Daniel spustil oba běhy naostro vlastním
+API klíčem (`run_method6_price_specs.py --signal price` a `--signal
+specs`).
+
+**Výsledek:** rating (publikováno) 0 z 16 záměrů změnilo vítěze napříč
+frázováním. Specs 2 z 16 (12,5 %), price 7 z 16 (43,8 %). Cluster-
+permutation test (jednotka = záměr, n=16 na signál, 10 000 permutací,
+Bonferroni korekce ×3 pro tři porovnání):
+
+- price vs. rating: +43,8pp, p=0,0075 → p_adj=0,0225 (**signifikantní**)
+- specs vs. rating: +12,5pp, p=0,4936 → p_adj=1,0 (nesignifikantní)
+- price vs. specs: +31,2pp, p=0,1137 → p_adj=0,341 (nesignifikantní)
+
+Vedlejší, kontraintuitivní zjištění: hedge rate (Hyland lexikon) jde
+přesně opačným směrem než flip rate — rating (nejstabilnější signál)
+hedguje nejvíc (nejvyšší fráze 15,6 %), price (nejméně stabilní)
+hedguje nejmíň (nejvyšší fráze jen 3,8 %). Potvrzuje to, co
+Recommendation Confidence už našla uvnitř rating signálu samotného:
+hedge language nekopíruje reálnou stabilitu výběru, a teď to platí i
+napříč typy signálu.
+
+Honest caveat zapsaný přímo do limitations sekce nové stránky: 3 z 9
+celkových flipů (2 price, 1 specs) procházejí přes alespoň jednu
+přesnou 5-5 remízu v 10 bězích, kterou stejné pravidlo majority-pick
+(nezměněné z publikovaného Method 6) řeší nahodile podle pořadí
+vložení. Specs výsledek (2/16, p_adj=1,0) čten jako "nedetekováno při
+této velikosti vzorku", ne jako "vyvráceno".
+
+Publikováno jako Study #41,
+`research/phrasing-stability-by-signal.html`. Continued-in addendum
+přidán do `recommendation-confidence.html#limitations`. Sitewide
+wiring hotový: vercel.json, sitemap-pages.xml, llms.txt,
+mechanism-studies.html + research/index.html (mini-card i finding-card
+rotující okno), footer ai-sitemap napříč 164 stránkami, Public Studies
+40→41 napříč stejnými stránkami. DOI/Zenodo upload zatím neproveden,
+stránka jede bez `.doi-citation` bloku dokud Daniel neudělá Zenodo
+upload stejně jako u předchozích studií (#449 vzor).
+
+## Nový kandidát: Source type jako moderátor Authority efektu (2026-09-23)
+
+Vzniklo z LinkedIn postu Randa Fishkina (SparkToro/Zero-Click Marketing):
+mezi pěti body zmiňuje, že 85 % zmínek značek v AI odpovědích pochází od
+třetích stran, ne z webu značky samotné, a že publishery/press jsou
+zdaleka nejsilnější zdroj (ne recenzní weby nebo adresáře obecně).
+
+Authority Signal (#34) už testovala obecnou "zmínku od třetí strany"
+(disclosed-synthetic, bez rozlišení typu zdroje) a našla samostatný
+efekt 85,2 % — nápadně blízko Fishkinovu číslu, i když měří dvě různé
+věci (frekvence zmínek v realitě vs. síla efektu na výběr v testu).
+
+**Otázka:** Liší se síla third-party-mention efektu podle typu zdroje?
+Konkrétně: zmínka v press/publisher článku vs. recenzní web vs.
+adresář/directory vs. fórum/diskuze, stejná injektovaná fakta, mění se
+jen to, kdo/co je uváděno jako zdroj zmínky.
+
+**Design:** recykluje přesně metodiku Authority Signal — fáze 1
+izoluje source_type samostatně (candidate-evaluation styl), fáze 2
+kříží nejsilnější source_type proti ratingu (winner-vs-loser styl,
+2x2). Jediná změna oproti #34: source_type má víc než 2 úrovně
+(publisher/press, review site, directory, forum) místo binárního
+zmíněno/nezmíněno.
+
+Status: zapsáno jako plnohodnotný kandidát ("ok, souhlas, zapis do
+road mapy", Daniel 2026-09-23), design nerozpracovaný, číslování
+nepřiřazeno.
+
+## Nový kandidát: Stabilita vítěze podle stáří/zralosti kategorie (2026-09-23)
+
+Vzniklo z LinkedIn diskuze pod postem Nitina Kumara (sdílejícího studii
+Metrisque) — Lian Pham (Co-Founder @ TeleSuite, Metrisque - AI
+Visibility) se přímo zeptala na metodiku naší ~90% winner-stability
+studie (Source Stability, Study #354) a vznesla konkrétní hypotézu:
+
+Podle jejich vlastních dat stabilita drží v "ustálených" kategoriích,
+ale rozpadá se v "mladých"/nových kategoriích. Konkrétní příklad, který
+uvedla: "Observability" dává napříč modely skoro identické žebříčky,
+zatímco "Beauty" dává seznamy skoro bez společného průniku.
+
+Naše Source Stability studie zatím testovala jen: jeden model, opakované
+prompty s odstupem několika dní, majoritní pick jako "vítěz" — ne napříč
+modely, ne rozdělené podle stáří/zralosti kategorie.
+
+**Otázka:** Je stabilita vítěze (winner stability) moderovaná tím, jak
+"ustálená" je kategorie/produktový segment v datech modelu (proxy: stáří
+kategorie, objem obsahu o ní, konsenzus napříč zdroji), podobně jako u
+Category Fit studie (#39) pro authority/familiarity efekt?
+
+**Design (návrh):** vybrat páry kategorií kontrastní na "zralost" (např.
+zavedená kategorie s dlouhou historií vs. nová/trendová kategorie),
+opakovat identické prompty pro každou v čase (stejná metodika jako
+Source Stability), měřit rozptyl vítěze uvnitř kategorie. Volitelně
+přidat cross-model rozměr (stejný prompt, více modelů) jako druhou osu,
+protože to byla druhá část jejího dotazu.
+
+Status: HOTOVO, reálné výsledky zapsané níže v sekci "Stabilita vítěze
+podle stáří/zralosti kategorie — reálná čísla, hotovo (2026-09-24)" a
+jako addendum na `source-stability.html` a `winner-stability-intents.
+html`. Tato záhlavní sekce zůstává jen jako záznam původního zadání.
+
+**Follow-up:** Lian Pham v komentářích sama nabídla porovnat poznámky,
+až studii spustíme ("Happy to compare notes if you run it"). Až bude
+hotová, napsat jí přímo (DM), ne jen odpovědět v komentářích, cíl je
+navázat reálný kontakt s Metrisque, ne jen si vyměnit čísla veřejně.
+
+## Stabilita vítěze podle stáří/zralosti kategorie — reálná čísla, hotovo (2026-09-24)
+
+Spuštěno naostro (Daniel, vlastní OPENAI_API_KEY), 8 kategorií (4
+established: wireless_earbuds, running_shoes, drip_coffee_maker,
+laptop_backpack; 4 young: ai_wearable_pendant, creatine_gummies,
+smart_ring_sleep, ebike_conversion_kit) × 10 opakování × 2 nezávislá
+kola, identická metodika jako Source Stability (gpt-4o, Responses API s
+web_search_preview, LLM-judge extrakce top_brand). 160 search volání +
+160 judge volání celkem. Skripty a plný breakdown v `research-prep/
+category-maturity-stability/` (`run_study.py`, `analyze_results.py`,
+`results.json`).
+
+**Výsledek:** H1 (Lianina hypotéza) směrově potvrzena, těsně pod
+konvenční hranicí významnosti. Kombinovaně napříč oběma koly (8
+kategorie-kol na skupinu): established průměr 88,5 % winner stability,
+young průměr 59,2 %, rozdíl +29,3pp, cluster-permutation p=0,052.
+Po kolech zvlášť: kolo 1 established 90,3 % vs. young 57,2 % (p=0,264),
+kolo 2 established 86,7 % vs. young 61,1 % (p=0,371) — jednotlivá kola
+sama o sobě neprůkazná (malý vzorek, n=4 na skupinu), kombinovaný
+výsledek na hraně.
+
+Established kategorie byly skoro všechny na 100 % (wireless_earbuds/
+Sony, drip_coffee_maker/Technivorm, laptop_backpack/Timbuk2), jedinou
+výjimkou running_shoes (47–61 %, Nike vs. ASICS se přetahují). U young
+kategorií to nebylo jednotné: smart_ring_sleep drželo 100 % (Oura
+kategorii úplně ovládá, i když je "mladá"), zatímco creatine_gummies
+(27–29 %, 4 různé značky napříč koly) a ai_wearable_pendant (36–53 %)
+byly nejnestabilnější v celé studii.
+
+**Závěr:** není to čistě "mladá kategorie = nestabilní". Je to spíš, jestli
+i mladá kategorie už má jasného lídra (smart_ring_sleep/Oura ano,
+creatine_gummies ne). Stáří kategorie koreluje se stabilitou, ale
+mechanismus je přítomnost/nepřítomnost jasného vítěze, ne věk sám o
+sobě — přímo v duchu Category Fit (#39) zjištění o moderátorech.
+
+Zapsáno jako druhý addendum na `source-stability.html` a
+`winner-stability-intents.html` (2026-09-24). Další krok: DM Lian Pham
+s reálnými čísly (viz follow-up výše).
+
+## Nový kandidát: Ghost Citation jako předstupeň Candidacy (2026-09-24)
+
+Vzniklo z LinkedIn vlákna se Semrush (viz komunikace výše) a jejich
+navazující studie "Why 62% of AI citations don't lead to brand mentions"
+(Semrush + Kevin Indig, červen 2026, 3 981 pozorování napříč 115 prompty,
+4 AI enginy, 14 zemí). Jejich klíčové číslo: 62 % citací je "ghost
+citation" (Indigův termín), model použije stránku jako zdroj, ale nikdy
+nezmíní jméno značky v textu odpovědi. Jen 13,2 % je citace + zmínka
+zároveň, 25,1 % je zmínka bez citace.
+
+Semrush a Indig měří jen citace vs. zmínka, k samotnému doporučení/
+výběru (co měří celá naše série, Candidacy vs Selection #6, Brand
+Legibility #29) se vůbec nedostávají. To je mezera přímo pod tím, co
+sami už máte, ne duplicita.
+
+**Otázka:** Je "ghost citation" (citovaný, ale nezmíněný) slabší
+předstupeň candidacy než "plná zmínka" (citace + jméno)? Konkrétně: u
+značek, co se v odpovědi objeví jen jako ghost citation, je
+pravděpodobnost, že se objeví v shortlistu/candidacy setu na navazující
+otázku (Volba kandidáta / Brand Legibility metodika), nižší než u
+značek s plnou zmínkou? Pokud ano, je citace bez zmínky měřitelně
+slabší signál než citace se zmínkou, ne jen jiná kategorie.
+
+**Design:** recyklovatelná extrakce ze stejné rodiny jako Position
+Stability, LLM extrakce (ghost citation vs. plná zmínka vs. jen zmínka
+bez citace) nad existujícím `response_text` z otevřených
+recommendation studií, co mají search zapnutý a citace zaznamenané
+(Source Stability, Live Retrieval #28), zkřížit s tím, jestli se stejná
+značka objevila v navazujícím forced-choice/candidacy testu na stejnou
+kategorii. Případně nová fáze: cíleně injektovat "cited-only" vs.
+"cited-and-named" kontext (rodina Fact Injection/Hidden Context) a
+měřit rozdíl v selection rate přímo.
+
+Status: zapsáno jako plnohodnotný kandidát ("cokoliv te napadne z toho
+co jsem ti poslal udelat studii tak prosim do toho", Daniel 2026-09-24),
+design nerozpracovaný, číslování nepřiřazeno.
+
+## Ghost Citation — finální výsledek (2026-09-25)
+
+Design se přerámoval oproti původnímu zápisu výše, viz
+`research-prep/ghost-citation/STUDY-DESIGN.md` pro detail. Live
+Retrieval (#28) nemohl posloužit jako druhý zdroj dat, jeho `citations`
+pole je prázdné na všech 800 řádcích (zdokumentovaná limitace té
+studie se ukázala jako reálný problém). Jediný zdroj dat je Source
+Stability, oba kola (`judged_r1.json` + `judged_r2.json`), 160
+search-enabled odpovědí napříč 8 kategoriemi spotřebního zboží, každá
+s reálnými citacemi a už extrahovaným vítězem (`top_brand`).
+
+Otázka se zúžila z "citace domény značky napříč webem → zmínka
+značky" (Semrush měří tohle) na "citace uvnitř JEDNÉ odpovědi →
+povýšení na jmenovaného kandidáta v TÉ samé odpovědi" (naše data na tu
+první otázku nemají strukturu, spotřební kategorie s roundup citacemi,
+ne B2B značky s vlastní doménou).
+
+**Reálné výsledky** (160 volání, LLM extrakce na `judged_r1.json` +
+`judged_r2.json`, 1 576 citací celkem):
+
+Celkově: 49,9 % citací "named" (jasně vázaná na konkrétní jmenovaný
+produkt v textu), 50,1 % "ghost" (citovaný zdroj bez jmenovaného
+produktu, na který by šlo přiřadit). To je pozoruhodně blízko
+Semrushovu číslu (62 % ghost citation), i když jde o jinou metodiku a
+jinou definici "ghost" — u nás v rámci jedné odpovědi, u nich napříč
+webem. Shoda řádu velikosti (přibližně polovina až dvě třetiny citací
+nikdy nekonvertuje na jmenovanou zmínku) je sama o sobě zajímavá,
+protože jde o nezávislé potvrzení stejného typu jevu na jiném datasetu
+a jiné metodice.
+
+Po kategoriích je docela rozptyl: headphones nejnižší ghost rate
+(31,7 %), mechanical_keyboard nejvyšší (58,9 %), zbytek (air_fryer,
+bluetooth_speaker, electric_toothbrush, gaming_mouse, meal_kit,
+robot_vacuum) mezi 50-54 %. Žádný zjevný společný jmenovatel mezi
+headphones a zbytkem kategorií na první pohled, stálo by za doplnění
+v budoucnu.
+
+**Sanity check na existující metodiku:** vítězná značka (`top_brand`,
+už dřív extrahovaná pro Source Stability) je v 98,1 % případů (157/160)
+klasifikovaná jako "named", jen 1,9 % (3/160) jako "ghost". To je
+uklidňující potvrzení, že existující Source Stability judge pipeline
+je spolehlivá — vítěz je téměř vždy skutečně jmenovaný, ne jen
+ghost-citovaný. Těch 3 nesouhlasných případů stojí za ruční spot-check
+před publikací, stejná mitigace jako u předchozích studií.
+
+Popisně: průměr 9,85 citace na odpověď, 4,91 jmenovaných produktů na
+odpověď, tedy v průměru 49,8 % toho, co model procitoval, se skutečně
+povýší na jmenovaného kandidáta v dané odpovědi.
+
+**Poctivá limitace (z designu, potvrzeno):** tohle je užší otázka než
+původní Semrush srovnání, měří se konverze uvnitř jedné odpovědi, ne
+citace domény značky napříč webem. Cross-reference s odděleným
+candidacy/forced-choice testem na stejných kategoriích (Fáze 2 z
+původního návrhu) se nekonala, žádný existující dataset nesdílí
+kategorie/značky se Source Stability. Self-grading riziko: stejný
+model dělal extrakci jako generoval odpovědi v části série.
+
+Status: hotovo, reálná čísla k dispozici. Rozhodnutí o formě publikace
+čeká na Daniela — nejpřirozenější místo je addendum na
+`research/source-stability.html`, protože recykluje přesně tu samou
+data (stejná role jako Category Maturity Stability addendum tamtéž).
+
+## Nový kandidát: Query délka/struktura vs. selection rate (2026-09-24)
+
+Vzniklo ze stejné Semrush/Indig studie. Jejich zjištění: krátké
+konverzační dotazy dávají 30-50x víc brand mentions než dlouhé
+strukturované dotazy (rozsah promptů 16-98 znaků, průměr ~60). Krátký
+dotaz jako "Should I lease or buy a car for my business?" skoro vždy
+zmíní značku, delší přeformulovaná verze stejné otázky skoro nikdy, i
+když vyvolá víc citací.
+
+Tohle je blízko naší vlastní Prompt Shape studii (#356), ale Indigovo
+číslo (30-50x) je řádově dramatičtější než cokoliv, co jsme dosud
+naměřili na fázi frázování/formulace. Otázka, jestli měří to samé, nebo
+jestli je "délka/struktura dotazu" jiná proměnná než "frázování stejné
+délky" (baseline/casual/formal/reversed/imperative), co testuje
+Phrasing Stability by Signal (#41).
+
+**Otázka:** Platí stejný dramatický rozdíl (krátký konverzační vs.
+dlouhý strukturovaný dotaz na stejný záměr) i pro finální selection
+rate/vítěze, ne jen pro to, jestli se značka vůbec zmíní? Nebo je efekt
+specifický pro "zmínku" jako měkčí metriku a na tvrdší metrice
+(vyhraje/prohraje) se ztrácí, podobně jako hedge language nekopíruje
+skutečnou stabilitu výběru (Recommendation Confidence, Study #41)?
+
+**Design:** recyklovatelná metodika ze stejné rodiny jako Prompt Shape/
+Phrasing Stability, nová proměnná vedle existujících frázových
+variant: pár dotazů na stejný záměr, jeden krátký/konverzační, jeden
+dlouhý/strukturovaný, stejné kategorie a značky jako existující
+kohorta, LLM judge na selection rate.
+
+Status: zapsáno jako plnohodnotný kandidát ("cokoliv te napadne z toho
+co jsem ti poslal udelat studii tak prosim do toho", Daniel 2026-09-24),
+design nerozpracovaný, číslování nepřiřazeno.
+
+## Nový kandidát: Personalizace přebíjí populační doporučení? (2026-09-25)
+
+Vzniklo z LinkedIn postu Christiana Riche (Founding US GTM @ Azoma,
+Agentic Commerce Optimization for CPG). Jeho tvrzení: viditelnost je
+"vanity metric" v agentic commerce, protože jakmile hyper-personalizovaný
+asistent (Meta Muse) vykonává nákup za konkrétního uživatele, na obecné
+viditelnosti/share-of-voice nezáleží. Podle něj byl "agentic discovery"
+(share of voice) jen dočasný předkrm, skutečný agentic commerce už běží,
+a jediné, co má smysl měřit, je "agentic readiness framework" na úrovni
+brandu (Azoma's 5C's), ne populační doporučovací rate.
+
+Tohle je jiný, ostřejší claim než obvyklá SEO/citace-vs-mention debata,
+kterou vyvracíte běžně (viz Semrush vlákno). Christian netvrdí, že
+recommendation je lepší metrika než visibility, jako to říkáte vy,
+tvrdí, že i recommendation měřená napříč populací (co model doporučí
+"obecnému" uživateli na daný prompt, přesně metodika celé vaší série)
+přestane platit, jakmile agent personalizuje výstup podle konkrétního
+uživatele. To je přímá výzva metodickému základu celé série, ne jen
+SEO crowd argumentu.
+
+**Otázka:** Když se do promptu/systémového kontextu injektuje
+uživatelsky specifický signál (historie nákupů, stated preference,
+loajalita ke značce, cenová citlivost), flipne to vítěze silněji, než
+to dělají dosavadní testované signály (rating, authority, familiarity,
+specificita)? Pokud ano, podporuje to Christianovu tezi, že populační
+recommendation rate je zastaralá metrika ve světě personalizovaných
+agentů. Pokud vítěz zůstává překvapivě stabilní i s injektovaným
+personalizačním kontextem, podobně jako drží stabilní přes Source/
+Position Stability navzdory měnícím se zdrojům, je to naopak silný
+protipříklad k jeho tezi.
+
+**Design:** recyklovatelná injection mechanika ze stejné rodiny jako
+Fact Injection (#25)/Hidden Context (#26)/Sponsored tag kandidát, nová
+proměnná vedle rating/authority/familiarity/specificita/formát/sponsored:
+"user persona context" (2-4 kontrastní persony na kategorii, např.
+"loajální zákazník značky X" vs. "cenově citlivý nováček" vs. "eco-
+conscious kupující"), stejné kategorie/značky jako existující kohorta,
+LLM judge na selection rate, cluster-permutation test (jednotka =
+kategorie). Otevřená limitace: injektovaná persona v promptu je pořád
+simulace, ne skutečná agentní personalizace přes user memory/historii,
+jak to dělá reálný Meta Muse, takže jde o test citlivosti na
+personalizační signál, ne přímou repliku produkčního agenta.
+
+Status: zapsáno jako plnohodnotný kandidát ("chci dat odpoved, ze my
+se touto otazkou jiz zabirame... zapis to a at je to tam poradne",
+Daniel 2026-09-25), design nerozpracovaný, číslování nepřiřazeno.
+
+## Nový kandidát: Silent Candidacy Drop (2026-09-25)
+
+Vzniklo z dev.to článku "The Bakery Paradox: Why Current AI Agents Keep
+Walking Away From Your APIs" (MCP/agentic tooling autor, bez konkrétního
+jména). Jádro článku: dnešní MCP servery vystavují statický seznam
+nástrojů (příklad autora: pekárna s tabulí menu). Když AI agent chce
+něco, co se přesně neshoduje se žádným nadefinovaným schématem (dort
+s méně cukrem a extra kakaem), agent to nezkusí vyjednat, prostě potichu
+odejde. Firma transakci ztratí a nedostane žádný signál proč. Autor to
+nazývá "zero demand signal" problém a navrhuje řešení: dynamic capability
+negotiation (`request_capability`), kdy agent pošle serveru, co přesně
+potřebuje a proč, a server na místě vytvoří dočasné schéma nástroje.
+
+Tohle je stejný jev, který už částečně měříme, jen na jiné vrstvě a bez
+tohoto rámce. Study #32 (PDP Specificity) ukázal, že konkrétní vs vágní
+detaily na product page mění, jestli model značku vůbec vybere. Tenhle
+článek dává tomu jevu ostřejší formulaci: nejde jen o to, že model
+"vybírá méně" u vágních stránek, model se u konkrétního, zúženého
+požadavku uživatele (cenový strop, dietní omezení, konkrétní varianta)
+může značky potichu vzdát úplně, přestože by značka na obecnější verzi
+stejného promptu byla kandidátem. To je přesně ten typ ztráty, kterou
+firma nevidí a nemá jak se o ní dozvědět.
+
+**Otázka:** Když se do promptu přidá konkrétní, zužující omezení (cena,
+dietní/technické omezení, specifická varianta produktu), roste míra, s
+jakou model značku úplně vynechá ze zvažovaných kandidátů (na rozdíl od
+toho, že ji zvažuje a nevybere), a mění se tahle míra podle toho, jestli
+possessed_facts/product page obsahují strukturovaná data k té konkrétní
+variantě, nebo ne? Jinými slovy: bere v agentic kontextu (schopnost
+negociovat, ne jen doporučit) strukturovanost dat ještě větší roli než
+ve stávajících studiích specificity a markupu?
+
+**Design:** recyklovatelná metodika, dvě vrstvy vedle sebe: (1) rozšíření
+possession-vs-deployment mechaniky o "narrow constraint" prompty (např.
+"pod $40, bez [alergen/materiál]" vs. obecný "doporuč mi X"), měření
+jestli je brand vůbec zmíněn (candidacy) ne jen jestli vyhraje
+(selection); (2) k tomu párové porovnání brandů se strukturovanými
+product-page daty k dané konkrétní variantě (recyklace metodiky Study
+#38 Structured Markup) vs. brandů, které mají jen obecné possessed
+facts bez variant. Cluster-permutation test, jednotka = kategorie.
+Otevřená limitace: bez skutečného MCP/tool-calling prostředí jde o
+simulaci "silent walk-away" přes chat completion rozhraní (žádná
+odmítnutá tool-call, jen chybějící zmínka), ne přímou repliku
+agentního tool-selection chování popsaného v článku.
+
+Status: zapsáno jako plnohodnotný kandidát ("ano, urcite", Daniel
+2026-09-25), design nerozpracovaný, číslování nepřiřazeno. Souvisí s
+už čekajícím kandidátem "Machine-readable depth by business model"
+(#341/roadmapa 2026-09-21) — tenhle článek mu dává konkrétnější
+zdůvodnění a časování (agentic commerce/MCP nabírá na síle právě teď).
+
+## Fragile vs. Resilient Candidacy — Fáze 2, finální výsledek (2026-09-25)
+
+Daniel spustil naostro (`t4run`, `t4judge`, `analyze_results.py`),
+8 brandů x 2 framingy x 8 běhů, 128 čtyřtahových konverzací + 128 judge
+volání.
+
+**Primární hypotéza (z Fáze 1): NEPOTVRZENO.** Rozdíl generalist minus
+specialist framing napříč 8 brandy je +1.6pp v průměru, paired t-test
+t=+0.314, p=0.7627 — naprosto neprůkazné, čistý šum. 4 z 8 brandů měly
+vyšší přežití při generalist framingu, 2 při specialist, 2 remíza.
+Kausální test tedy nepotvrdil, že by "generalista vs specialista"
+jazykový rámec sám o sobě byl pákou, která rozhoduje o T4 survival.
+Pozorovaná korelace z Fáze 0/1 (brandy popisované jako "comprehensive/
+versatile" přežívaly víc než brandy popisované jako úzcí specialisté)
+se jako přímá kauzalita nepotvrdila — když se ten samý jazykový rámec
+injektuje uměle, směr framingu na výsledek prakticky nemá vliv.
+
+**Vedlejší, nečekaný a mnohem silnější nález:** obě podmínky (generalist
+i specialist) systematicky zvedly T4 survival oproti přirozenému
+baseline (bez injekce) u téměř všech brandů, a to zhruba stejně silně:
+
+| brand | natural | generalist | specialist |
+|---|---|---|---|
+| Olly | 0% | 25% | 50% |
+| Cotopaxi | 0% | 0% | 12.5% |
+| Beam | 0% | 75% | 62.5% |
+| Ridge | 10% | 37.5% | 25% |
+| Kopari | 50% | 87.5% | 87.5% |
+| Onyx Coffee Lab | 50% | 87.5% | 75% |
+| Bellroy | 100% | 100% | 100% |
+| Peak Design | 100% | 100% | 87.5% |
+
+Průměrný lift oproti natural baseline: generalist +25.3pp, specialist
++23.75pp — prakticky identický lift bez ohledu na směr framingu. Jinými
+slovy, nezáleží na tom, JAK je brand v system message popsaný
+(all-rounder vs specialista), záleží na tom, že je popsaný vůbec, nějakým
+sebejistým "for context: X je široce uznávaný jako..." tvrzením. To je
+svým tvarem blízké Authority Signal (#34) a Fact Injection (#25) nálezům
+(jedna nezávislá/autoritativní zmínka mimo vlastní stránky brandu silně
+posouvá výsledek), jen aplikované na framing/positioning claim, ne na
+konkrétní faktický claim.
+
+**Poctivá limitace:** natural baseline pochází z jiného sběru dat
+(wave2-survival-scaleup, jiný běh/datum/teplotní draw), takže srovnání
+injected vs natural není čistě párové v rámci jedné session — část
+rozdílu může být šum mezi různými běhy, ne čistě efekt injekce. Velikost
+posunu u několika brandů (Olly 0%→50%, Beam 0%→75%) je ale příliš velká
+na to, aby šlo jen o šum, takže je to reálný, byť ne dokonale
+kontrolovaný signál.
+
+**Závěr a uzavření kandidáta:** Fragile vs. Resilient Candidacy jako
+původně formulovaná hypotéza (generalist framing = páka na přežití) je
+uzavřená s poctivým nulovým výsledkem — nepotvrdila se. Zároveň fáze 2
+odhalila jiný, silnější a užitečnější nález (jakákoli sebejistá
+kontextová "endorsement" injekce zvedá přežití bez ohledu na směr), který
+zapadá do stejné rodiny jako Authority Signal/Fact Injection, ale
+testovaný přes framing/positioning claim místo faktického tvrzení. Tenhle
+vedlejší nález stojí za zvážení jako samostatný budoucí kandidát
+("Framing Injection jako obecný lift, ne směrový lever") s pořádnou
+kontrolní podmínkou (stejná session, no-injection arm vedle obou
+framingů, ne separátní dataset), pokud o něj bude zájem.
+
+Status: Fáze 0-2 hotové, kandidát uzavřen (Daniel: "ano, pojdme to
+dodelat at to z te road mapy mizi", 2026-09-25). Rozhodnutí o veřejné
+stránce/publikaci čeká na Daniela — jde o poctivý nulový výsledek u
+původní hypotézy plus zajímavý vedlejší nález, ne o čistou pozitivní
+studii k publikaci beze změny rámce.
+
+## Nový kandidát: Recommendation vs. Commitment (uzavírá Purchase, fáze 9) (2026-09-28)
+
+Vzniklo z LinkedIn postu Juozase Kaziukėnase (Marketplace Pulse, stejný
+autor jako Sponsored Tag Penalty kandidát) o Instinct, osobním AI
+nákupním agentovi. Klíčová čísla z postu (zdroj: rozhovor s Noah Shinnem,
+CEO Instinct, na podcastu Invest Like the Best): Instinct už zprostředkoval
+**1 miliardu dolarů** v agentic commerce transakčním objemu, **50 %**
+z toho je cestování, a **do 3 týdnů používání má 40 % uživatelů**
+sdílenou osobní kreditku s agentem. Kaziukėnas glosuje, že Meta Muse
+(zdarma distribuce miliardám uživatelů, podle něj lepší produkt) tohle
+číslo pravděpodobně vynásobí 10×, a že OpenAI prý taky pracuje na
+vlastním personal agentovi.
+
+**Proč to není jen zajímavá zpráva, ale skutečná mezera v naší vlastní
+roadmapě:** Purchase je fáze 9 z 9 v `how-ai-decides` decision path a
+jediná **úplně otevřená, nula studií**, viz "Pokrytí decision path" výše.
+Poznámka u ní z 2026-08-27 řekla doslova, že čeká na dostupnost agentic
+commerce dat, protože "zatím nemáme snadný způsob měření." Tenhle post
+je konkrétní, čerstvý důkaz, že agenti už reálně dokončují nákupy v
+miliardovém měřítku, ne jen v laboratorních testech — což znamená, že
+otázka "říká AI jméno brandu" vs. "AI ten brand reálně koupí" teď jde
+otestovat i naší vlastní metodikou, bez čekání na Instinct/Muse data.
+
+**Otázka:** Když se dá modelu k dispozici skutečná akce (tool call na
+"koupit"/"objednat"), ne jen prostor napsat textovou odpověď, shoduje se
+brand, který model *pojmenuje* jako doporučení, s brandem, který si
+model *vybere*, když musí závazně zavolat nástroj a dokončit transakci?
+Je "říct" a "udělat" stejná věc, nebo se rozcházejí — stejně jako se
+rozcházela candidacy a selection (Candidacy vs Selection), possession a
+deployment (Possession vs Deployment #23), citace a jmenovaná zmínka
+(Ghost Citation)? Tohle je poslední, dosud netestovaný krok v tom samém
+vzorci, co běží celou sérií: verbální výstup modelu často neodpovídá
+tomu, co model se stejnou informací skutečně udělá, když má k dispozici
+akci místo věty.
+
+**Design:** recyklovaná forced two-way metodika (stejná 4-brand kohorta
+z `winner-vs-loser/brands.json`, stejný `vague_claim`, stejní
+konkurenti, 20 intentů), dvě paralelní podmínky na STEJNÉM promptu a
+STEJNÉM systémovém kontextu, jediný rozdíl je nástroj, co má model
+k dispozici:
+
+- **text_only** (baseline, recyklovatelné z existujících studií nebo
+  levně dorunuto) — model odpoví na "Between {a} and {b}, which is the
+  better choice for {intent}?" volným textem, jako celá dosavadní série.
+- **tool_commit** (nové) — model dostane přesně dva nástroje,
+  `purchase(brand="{a}")` a `purchase(brand="{b}")`, se systémovou
+  instrukcí, že musí zavolat přesně jeden, žádná textová odpověď se
+  nepočítá. Měří se, které jméno je předané jako argument.
+
+Srovnání: shoda/neshoda mezi tím, co `text_only` pojmenuje jako vítěze a
+co `tool_commit` reálně "koupí" pro STEJNOU dvojici brand/intent/run
+(párované srovnání, ne jen dva nezávislé cluster means). Hlavní
+statistika: **commitment flip rate** — v kolika % párů se tool-call
+volba liší od textové volby.
+
+**Sample size:** 4 brandy × 20 intentů × 5 opakování × 2 podmínky = 800
+volání, žádný samostatný judge krok potřeba pro `tool_commit` větev
+(argument nástroje je strukturovaná odpověď, ne text k soudcování) —
+jen `text_only` větev potřebuje `WINNER_JUDGE_SYSTEM` jako obvykle.
+Levnější než většina studií v sérii.
+
+**Limitace (disclosed předem):**
+1. **Simulovaný tool-calling, ne reálná agentic commerce infrastruktura**
+   (žádné skutečné platby, žádné reálné API objednávek) — testuje, jestli
+   samotná přítomnost závazné akce mění výběr modelu, ne přímou repliku
+   Instinct/Muse pipeline.
+2. **4 brandy, malý vzorek**, stejná kohorta jako celá tahle rodina studií.
+3. **Binární "musí vybrat jeden" force** může sám o sobě změnit chování
+   (demand characteristics nutit rozhodnutí), ne čistě izolovat efekt
+   "akce vs. text" — pre-registered jako otevřená limitace, ne skrytá.
+4. Nezachytává druhý zajímavý bod z postu (že se chování uživatele mění
+   v čase/po týdnech používání) — to je otázka o lidech, ne o modelu,
+   mimo rozsah naší metodiky.
+
+**Proč tohle uzavřít jako prioritu:** je to jediná fáze z 9 v decision
+path, co má dnes nula studií, návrh nevyžaduje nové API klíče ani čekání
+na Founder Lab, a přímo navazuje na stejný "řekne vs. udělá" vzorec, co
+je nosným zjištěním prakticky celé série (Ghost Citation, Possession vs
+Deployment, Candidacy vs Selection).
+
+Status: zapsáno jako plnohodnotný kandidát ("urcite to zapis do road
+mapy... se vsemi detaily", Daniel 2026-09-28), design nerozpracovaný do
+`STUDY-DESIGN.md`/`run_study.py` (jen popsaný zde), číslování
+nepřiřazeno, čeká na zařazení do pořadí a schválení stavby.
+
+## Provozní: bot scraping na `/webhook/get-store`, zablokováno (2026-09-30)
+
+Daniel si všiml, že n8n workflow "AI Readiness — Get Store" (endpoint
+za "Get My Free AI Score" scan boxem na webu) běží podezřele často,
+víc exekucí za minutu, než by odpovídalo reálnému lidskému provozu.
+
+**Zjištění:** opakující se automatizovaný scraping, ne reální
+uživatelé. Dva jasné signály v hlavičkách požadavků:
+
+- `user-agent: "node"` — doslova defaultní User-Agent Node.js
+  fetch/http klienta, žádný prohlížeč tohle neposílá.
+- Druhá varianta požadavku předstírala prohlížeč, ale hlásila
+  `Chrome/153.0.0.0` — verze, co v září 2026 reálně neexistuje,
+  typický spoofnutý User-Agent.
+
+Requesty přicházely z AWS IP rozsahů (`44.220.244.188`,
+`3.238.65.191`, měnící se), systematicky procházely různé domény
+(`flojak.com`, `godsword.org`, `hairtamin.com`...) přes GET dotaz na
+`?domain=`. Workflow dělá jen `SELECT` proti tabulce
+`ai_readiness_scans` (žádné nové skórování, žádné volání AI modelu),
+ale pokud doména v DB existovala, endpoint vracel **celý uložený
+záznam** (total_score, všechny dílčí skóre, `main_leak`, `quick_fix`
+atd.) jako čistý JSON. Potvrzeno přímo v exekuci: `hairtamin.com`
+dostal 200 a reálná data ještě před opravou. Jde tedy o exfiltraci
+už naměřených, proprietárních dat po doménách, ne o náklad za výpočet.
+
+**Oprava:** do workflow přidány dva nové nody mezi "Webhook GET" a
+"Extract Domain":
+
+- **Detect Bot** (Code node) — označí request jako `isBot: true`,
+  pokud `user-agent` je `"node"`, prázdný, nebo IP je na seznamu
+  (`44.220.244.188` zatím jediná pevně blokovaná).
+- **Block Bot?** (IF node) — `isBot === true` → nový **Respond 403**
+  node (žádný DB dotaz, žádná data ven), jinak pokračuje beze změny
+  do "Extract Domain" → "Fetch from DB" → "Found?" → 200/404.
+
+Upravený workflow (`AI Readiness — Get Store (bot-blocked).json`)
+naimportován Danielem, potvrzeno v produkci: stejný bot, jiná AWS IP
+(`3.238.65.191`), doména `hairtamin.com` → `isBot: true` → 403,
+žádná data neunikla. Bot dál zkouší (IP se střídá), ale je teď
+zablokovaný na úrovni user-agentu, což je stabilnější signál než
+jedna konkrétní IP.
+
+**Otevřené a nedořešené:**
+
+1. Nevíme, jak dlouho scraping běžel před odhalením ani kolik domén
+   stihl přes 200 odpovědi stáhnout, Daniel se rozhodl to cíleně
+   nezjišťovat ("ani radeji nechci vedet jak dlouho to dela").
+2. Ochrana je zatím jen na tomhle jednom webhooku
+   (`/webhook/get-store`). Žádná systematická kontrola napříč
+   ostatními veřejnými n8n webhooky (scan trigger, site-stats-sync,
+   ai-signal apod.) zatím neproběhla.
+3. Obrana je založená na jednoduchých signálech (user-agent string,
+   pevný seznam IP). Sofistikovanější bot s reálným prohlížečovým
+   fingerprintem (validní Chrome verze, plné `sec-ch-ua` hlavičky,
+   rotující reziduální/residential IP) by tudy prošel beze změny.
+4. Volitelně navržené, zatím nepostavené: logovací větev (Sheets/
+   Slack) pro zablokované pokusy, aby šlo sledovat objem/frekvenci
+   scrapingu v čase bez nutnosti procházet n8n exekuce ručně, Daniel
+   zatím řekl "zatím to takto nechame" (2026-09-30).
+
+**Návrh dalšího kroku (nový úkol, ne prioritizovaný):** provést
+stejný audit user-agent/IP signálů napříč všemi veřejně dostupnými
+webhooky (ne jen get-store), a zvážit plošnější ochranu (rate limiting
+podle IP/ASN, případně jednoduchý token/nonce z frontendu místo
+otevřeného GET), aby se nemuselo řešit každý endpoint jednotlivě a
+zvlášť pokaždé, když se najde nový scraping pattern.
+
+## Nový kandidát: Copy Relevance × Site/Page Relevance (interakce) (2026-09-30)
+
+Vzniklo z LinkedIn diskuze pod Query-Conditional Defense (#44) s
+Mansoorem Ali. Náš komentář vysvětlil, že 95,2 % vs. 74,2 % izoluje
+výhradně **query-to-copy relevance** (popis sponsorovaného listingu
+echuje přesný search term), zatímco web/stránka/kontext zdroje byly
+schválně drženy konstantní. Mansoor na to navázal přesnou otázkou:
+"whether that relevance comes from the site, the specific page, the
+query, or the relationship between all three" a pak, po vysvětlení,
+ještě ostřeji: jestli se efekt copy relevance replikuje i tehdy, když
+je samotný zdroj (web/stránka) už sám o sobě vysoce relevantní k
+dotazu, tedy jestli jde o **nezávislé, sčítající se signály**, nebo
+jestli jeden z nich **dominuje** a druhý se stává irelevantním.
+
+**Odkud to je a proč je to skutečná mezera:** Query-Conditional
+Defense (#44) testovala jen jednu proměnnou (copy relevance) na jednom
+fixním, generickém zdroji. Nikdy jsme netestovali, co se stane, když
+se zdroj samotný stane proměnnou vedle copy relevance, jestli se
+efekty kombinují aditivně, nebo jde o interakci, kde jeden signál
+překryje druhý (podobný vzorec interakce, jaký Signal Hierarchy #16
+našla mezi authority/familiarity/specificity, jen aplikovaný na
+tenhle konkrétní pár proměnných poprvé).
+
+**Otázka:** Mění se velikost efektu copy relevance (query-matched vs.
+static popis) podle toho, jestli je zdroj/stránka, ze kterého model
+čerpá, sama o sobě vysoce relevantní k dotazu, nebo generická? Jde o
+dva nezávislé, sčítající se signály, nebo jeden dominuje?
+
+**Design — 2×2, reuse dvou už existujících podmínek:**
+
+1. generický zdroj × statický popis — **reuse** ze Sponsored Tag
+   Penalty (#43), 0 nových volání
+2. generický zdroj × query-matched popis — **reuse** z
+   Query-Conditional Defense (#44), 0 nových volání
+3. vysoce relevantní zdroj (stránka/kontext tematicky přesně sedící
+   k dotazu) × statický popis — **nová podmínka**
+4. vysoce relevantní zdroj × query-matched popis — **nová podmínka**
+
+Stejná 4-brand kohorta (Colored Organics, BodyArtForms, Barbaro Mojo,
+Hearthloom), stejných 20 reálných buyer intentů, stejný
+`WINNER_JUDGE_SYSTEM` judge prompt beze změny, forced two-way
+srovnání.
+
+**Statistika:** hlavní porovnání 2×2 (main effect copy relevance,
+main effect site/page relevance, a interakční term mezi nimi).
+Analogicky k Signal Hierarchy, primární otázka je, jestli je součet
+samostatných efektů (1→2 a 1→3) blízký kombinovanému efektu (1→4),
+nebo jestli 4. podmínka saturuje pod tímhle součtem (jeden signál
+dominuje) nebo ho naopak přestřelí (super-aditivní efekt, podobný
+tomu, co #44 samo našlo vs. organický baseline).
+
+**Sample size:** jen 2 nové podmínky (3 a 4) potřebují nová data,
+4 brandy × 20 intentů × 5 opakování × 2 podmínky = **800 nových chat
+volání + 800 nových judge volání = 1 600 nových volání celkem**,
+podmínky 1 a 2 se recyklují beze změny ze stávajících `judged.json`
+souborů (stejná konvence jako celá tahle rodina studií).
+
+**Limitace (disclosed předem):**
+1. 4 brandy, malý vzorek, stejná kohorta jako celá série.
+2. "Vysoce relevantní zdroj" je definovaný přes system-prompt popis,
+   ne přes reálný web/live retrieval, stejné omezení jako #43/#44.
+3. Jen 2×2 (4 podmínky) — nezachycuje spojitou škálu "jak relevantní
+   je zdroj", jen binární kontrast generický/vysoce relevantní.
+4. Podmínky 1 a 2 pocházejí z jiných původních běhů (#43 a #44), ne
+   ze stejné jedné session jako nové podmínky 3 a 4, stejné omezení,
+   jaké už #44 samo přiznává u své static-sponsored podmínky.
+
+Status: zapsáno jako plnohodnotný kandidát ("jo, zapis to do road
+mapy", Daniel 2026-09-30), design nerozpracovaný do
+`STUDY-DESIGN.md`/`run_study.py` (jen popsaný zde), číslování
+nepřiřazeno, čeká na zařazení do pořadí a schválení stavby.
+
+## Nový kandidát: Vlastní nákupní AI agent pro Founder Lab (2026-09-30)
+
+Podnět: Daniel četl dev.to článek o stavbě prvního AI agenta přes AWS
+Bedrock AgentCore (zákaznický support agent s order trackingem,
+refundy, Knowledge Base, memory, code interpreterem a browser
+toolem) a zeptal se, jestli by něco podobného dávalo smysl pro Atom
+Foundry. Po rozboru padlo, že přímá replikace (order tracking/
+refundy/loyalty) nesedí — Atom Foundry nemá checkout ani cart
+("not a storefront, no checkout or cart", viz `llms.txt` capabilities
+endpoint) — ale Daniel navrhl vlastní, jinou verzi: **vlastní nákupní
+AI agent, co skutečně prochází a nakupuje, ne jen odpovídá na
+prompty.**
+
+**Účel (Daniel, 2026-09-30):** primárně Founder Lab. Místo čekání na
+dávkové API volání přes `run_study.py`/gpt-4o batch scripty po každé
+změně na kontrolovaném obchodě, agent by běžel průběžně proti
+Founder Labu a dal rychlou zpětnou vazbu hned po zásahu (schema
+markup, recenze, cena, cokoli se mění v RCT sérii). Až budou z
+Founder Labu reálná data / ověřený vzorec, stejný agent by se
+nasadil i na jiné eshopy a značky mimo Founder Lab — potenciální
+posun směrem k produktu blízkému AI Agent Snapshot, jen měřícímu
+agentic shopping chování (browsing, porovnávání, rozhodování), ne jen
+frekvenci doporučení ve statickém chatu.
+
+**Proč je to jiná osa měření, ne duplicita existující práce:**
+všechny dosavadní studie v sérii (#19-#26 a dál) jsou statický chat
+completion — jeden prompt, jedna odpověď, žádné víckrokové
+prohlížení ani tool use. Vlastní nakupující agent, co fakticky
+prochází Founder Lab jako by nakupoval (hledá, porovnává, rozhoduje
+se za běhu), je nová osa, kterou zatím nikdo z téhle série netestoval
+— blízké tomu, o čem psal Richard Crone (agentic commerce, agent
+jako "wallet") i Stuart Forrest (OpenAI vlastní index/crawler) v
+LinkedIn diskuzích, které Daniel řešil paralelně tentýž den.
+
+**Klíčová metodologická past, na kterou je potřeba dát pozor:**
+vlastní agent není totéž co ChatGPT Shopping, Perplexity nebo
+Gemini — je to jeden konkrétní model + vlastní tool-calling logika.
+Jako rychlý interní dev signál ("změnila se rozhodovací tendence
+agenta po tomhle zásahu") je to v pořádku. Prezentovat jeho výstupy
+jako "takhle se chová AI" bez ověření proti reálným modelům by ale
+byla přesně ta chyba, kterou Atom Foundry jinde kritizuje (assumed
+vs. measured — viz sekce "SEO Ranking Factors vs AI Recommendation
+Factors" výše). Řešení, levné a v souladu se stávající metodologií:
+periodicky stejný test pustit i přes skutečné gpt-4o/Claude/
+Perplexity a měřit korelaci mezi verdiktem vlastního agenta a
+verdiktem reálných modelů — kalibrace, ne jen vlastní bublina.
+
+**Technický přístup — levně, ale ať dělá co je potřeba (Daniel,
+2026-09-30):** ne AWS AgentCore/Bedrock/Lambda/IAM stack z článku —
+navržený pro enterprise ecommerce support, těžká infrastruktura na
+velikost, co Atom Foundry nepotřebuje. Místo toho lehčí stack nad
+existující infrastrukturou (n8n + Postgres + OpenAI API, stejně jako
+zbytek research pipeline):
+
+- **Reasoning model:** gpt-4o nebo Claude s tool-use/function
+  calling, stejný vzorec jako Volba kandidáta/Cold start/Fact
+  Injection atd. — žádný nový vendor lock-in.
+- **Browser tool:** headless browser (Playwright/Puppeteer) napojený
+  jako n8n Code node nebo jednoduchá HTTP tool layer, ne AgentCore
+  Browser Tool ani Bedrock Gateway.
+- **Cíl akce agenta:** na Founder Lab obchodě projít nákupní
+  rozhodování end-to-end (najít produkt, porovnat možnosti, vybrat,
+  zdůvodnit) a zalogovat výsledek strukturovaně (Postgres, stejná
+  tabulka-styl jako `ai_readiness_scans`), aby šlo před/po srovnání
+  dělat stejným způsobem jako u ostatních RCT studií v sérii.
+- **Memory/Knowledge Base:** nepotřeba v prvním kroku — Founder Lab
+  je jeden kontrolovaný obchod, ne multi-tenant support systém jako v
+  článku. Případně relevantní až ve fázi "nasadit na jiné eshopy",
+  kde by se hodila znalostní báze o tom, co už se na které značce
+  testovalo.
+
+**Navazuje na:** Founder Lab field test (Study #31, poslední bod v
+odsouhlaseném pořadí z 2026-09-16) — tenhle agent je infrastruktura,
+která Study #31 dělá rychlejší a levnější k iteraci, ne samostatná
+paralelní studie. Dává smysl stavět těsně před/současně s tím, jak se
+Founder Lab RCT rozjíždí, ne jako samostatný předřazený projekt.
+
+**Limitace (disclosed předem, stejná disciplína jako zbytek série):**
+1. Vlastní agent = proxy, ne ground truth pro chování reálných AI
+   shopping asistentů, dokud není kalibrovaný proti nim (viz past
+   výše).
+2. Agentic/browsing chování se může lišit model od modelu stejně
+   jako se liší static recommendation chování (Study #28 cross-
+   platform retrieval už tohle naznačila u jiné osy) — jedna
+   reasoning-model volba nebude reprezentovat celou kategorii.
+3. Browser automation na živém, měnícím se Founder Lab obchodě je
+   křehčí než uzavřené chat-completion studie — potřeba počítat s
+   údržbou (změny DOM, layoutu) jinak, než u čistě textových studií.
+
+Status: zapsáno jako plnohodnotný kandidát ("necham si tebou
+doporucit... zapis to prosim do roadmapy", Daniel 2026-09-30), design
+nerozpracovaný do `STUDY-DESIGN.md`/kódu, čeká na zařazení do pořadí
+(navrhovaně: těsně před/se startem Study #31 Founder Lab field test).
+
+## Zjištění: atomfoundry.dev má 35,6 tis. neindexovaných stránek v GSC, dominantní příčina je kvalita, ne crawl frekvence (2026-10-01)
+
+Podnět: Daniel narazil na LinkedIn post Cyruse Shepharda sdílející
+studii Adama Genta ("The 190-Day Indexing Rule", Indexing Insight,
+1,4M URL/18 webů) — pokud Googlebot stránku nekrawluje ~130-190 dní,
+roste šance, že ji Google vyřadí z indexu nebo ji "zapomene" úplně
+(URL is unknown to Google). Daniel se zeptal, jestli tohle ohrožuje
+atomfoundry.dev. Prošli jsme to společně přímo v Google Search
+Console účtu pro `atomfoundry.dev`.
+
+**Strukturální kontext (zjištěno z repa před nahlédnutím do GSC):**
+`sitemap-pages.xml` obsahuje 2 680 URL, z toho 2 516 (94 %) jsou
+jednotlivé store detail stránky (`/store/{domain}`) — web je
+dominantně programmatic SEO na velkém počtu podobně strukturovaných,
+nízko-aktualizovaných stránek. Přesně tenhle typ obsahu je
+nejnáchylnější k problémům popsaným v tom postu.
+
+**Reálná data z GSC (Přehled, stav k 21.09.26):**
+- **31 798 indexovaných stránek vs. 35 579 (zaokrouhleno 35,6 tis.)
+  neindexovaných** — víc než polovina celkového počtu URL, které
+  Google o webu ví, není v indexu.
+- **Statistiky procházení (Nastavení → Statistiky procházení), okno
+  cca 03.07.–21.09.26:** 84,4 tis. celkových požadavků o procházení,
+  1,47 mld. stažených dat, průměrná doba odezvy 120 ms. Graf ukazuje
+  dvě výrazné špičky (~9 tis. požadavků/den) v polovině a na konci
+  července — pravděpodobně vlna objevování po submitnutí sitemapy s
+  tisíci store stránkami — a pak pád crawl aktivity prakticky na
+  nulu od začátku srpna, s drobným oživením začátkem září.
+- **Podle účelu: 90 % požadavků je "Nalezení" (objevování nových
+  URL), jen 10 % je "Aktualizace" (re-crawl už známých stránek).**
+  Google tedy drtivě upřednostňuje hledání nového obsahu před
+  ověřováním, jestli starý obsah pořád platí/je relevantní.
+- Podle typu Googlebota: 99 % Chytrý telefon. Podle odpovědi: 100 %
+  OK (200), žádné technické problémy se serverem (stav hostitelského
+  serveru: bez problémů za posledních 90 dní).
+
+**Rozpad "Proč stránky nejsou indexovány" (Indexování → Stránky,
+poslední aktualizace 21.09.26, 10 důvodů celkem):**
+
+| Důvod | Zdroj | Stránky |
+|---|---|---|
+| Procházeno – momentálně neindexováno | Systémy Google | **31 529** |
+| Objeveno – momentálně neindexováno | Systémy Google | 3 545 |
+| Falešné 404 | Web | 252 |
+| Blokováno souborem robots.txt | Web | 109 |
+| Duplicitní stránka bez kanonické verze vybrané uživatelem | Web | 77 |
+| Vyloučeno značkou noindex | Web | 25 |
+| Nenalezeno (404) | Web | 23 |
+| Alternativní stránka se správnou značkou kanonické stránky | Web | 12 |
+| Duplicitní stránka, Google zvolil jinou kanonickou stránku | Systémy Google | 6 |
+| Stránka s přesměrováním | Web | 1 |
+
+**Klíčový závěr, ověřený proti hypotéze z LinkedIn postu:** drtivá
+většina (31 529 z 35,6 tis., ~89 %) spadá do kategorie "Procházeno –
+momentálně neindexováno" — tedy Google stránku **navštívil,
+vyhodnotil, a aktivně se rozhodl ji nezařadit do indexu.** To je
+**kvalitativní rozhodnutí, ne důsledek nedostatečné crawl
+frekvence.** Mechanismus z postu (stránka byla dřív indexovaná,
+přestala se crawlovat, Google ji po 130-190 dnech "zapomněl") by se
+projevil hlavně v kategorii "Objeveno – momentálně neindexováno"
+(capacity/crawl-budget problém) — ta je ale desetkrát menší (3 545).
+Takže hypotéza "ohrožuje nás 190denní pravidlo" se **nepotvrdila
+jako hlavní příčina** — reálný problém je jiný, i když příbuzný:
+**scale/thin-content problém typický pro programmatic SEO.** Při
+tisících podobně strukturovaných store stránek Google usuzuje, že
+velká část nepřináší dost unikátní hodnotu na zařazení do indexu,
+nezávisle na tom, jak často by je crawloval znovu.
+
+**Podpůrný signál pro stejný závěr:** 90/10 poměr Nalezení/Aktualizace
+v crawl statistikách znamená, že Google tráví drtivou většinu crawl
+kapacity objevováním nových URL, ne re-crawlováním starých — což by
+samo o sobě bylo rizikové pro 190denní scénář, ale protože dominantní
+down-stream příčina je "Procházeno – momentálně neindexováno" (ne
+"nedostatečně crawlováno"), ukazuje to, že Google kapacitu na
+re-crawl/re-evaluaci těchto stránek má a využívá ji, jen se
+rozhoduje proti indexaci.
+
+**Doporučení (zapsáno, nerealizováno):**
+1. Zvýšit vnímanou jedinečnost jednotlivých store stránek (víc
+   unikátního textu/kontextu na stránku, ne jen číselné skóre a
+   faktorový rozpad ve stejné šabloně).
+2. Silnější interní prolinkování z vysoko-hodnotných stránek
+   (homepage, research, benchmarks) na nejslabší/nejméně navštěvované
+   store stránky.
+3. Zvážit konsolidaci nebo noindex u nejslabších/nejméně
+   hodnotných store stránek místo snahy mít indexovaných všech 60k+
+   — běžný kompromis u programmatic SEO na téhle škále.
+4. Následný krok k ověření: rozkliknout kategorii "Procházeno –
+   momentálně neindexováno" v GSC a zjistit, jestli jde primárně o
+   store stránky (očekávaný/potvrzující výsledek), nebo je mezi nimi
+   signifikantní podíl jiného typu obsahu (neočekávaný, vyžadoval by
+   zvláštní vyšetření).
+
+Status: zjištění zapsáno, doporučení nerealizovaná, čeká na
+rozhodnutí o prioritě vůči zbytku roadmapy.
+
+## Nový kandidát: SKU-level lock-in vs. brand-level lock-in (2026-10-01)
+
+Podnět: LinkedIn diskuze pod postem Zhao Hanbo o 11denním poločasu
+rozpadu AI citací (Profound, 883k stránek). Napsali jsme komentář
+porovnávající jeho číslo s naším Recommendation Lock-in zjištěním
+(86% stabilita #1 brandu přes 6 sweepů za 2 měsíce) — vysvětlili jsme
+rozdíl tím, že on měří rozpad jednotlivé citované stránky, my měříme
+stabilitu toho, která **značka** vyhrává celkově, a obojí může platit
+zároveň (podkladové stránky/citace rotují, zatímco úsudek modelu "kdo
+je nejlepší v kategorii" zůstává stabilní, protože se opírá víc o
+vlastní minulý vzorec modelu než o čerstvost jedné stránky). Zhao
+Hanbo na to reagoval a položil přesnou, dosud nezodpovězenou otázku:
+**"Curious whether you see the same stability at the product/SKU
+level, or mainly at the brand level?"**
+
+**Proč je to reálná mezera:** Recommendation Lock-in (Two Months
+Later) měřila stabilitu výhradně na úrovni **značky** (#1 brand napříč
+50 nákupními intenty, 6 sweepů). Nikdy jsme netestovali, jestli stejná
+stabilita platí i na úrovni konkrétního **produktu/SKU** uvnitř té
+značky. Odpověděli jsme mu upřímně, že nemáme data, jen odhad
+("SKU-level stability bude pravděpodobně nižší, protože konkrétní
+produkt lze vyměnit za novější model nebo lépe hodnocenou alternativu
+od stejné značky, aniž by se pohnula celková pozice značky") —
+otestovat to je logický další krok.
+
+**Otázka:** Je stabilita doporučení (lock-in) na úrovni jednotlivého
+produktu/SKU stejně silná jako na úrovni značky, nebo je nižší —
+tedy mění model doporučený konkrétní produkt častěji, než mění
+doporučenou značku jako celek?
+
+**Hypotéza (předregistrovaná zde, před sběrem dat):** SKU-level
+lock-in < brand-level lock-in. Důvod: v rámci jedné značky existuje
+víc blízkých substitutů (různé modely/varianty), které můžou mezi
+sebou soutěžit a měnit pořadí, aniž by to ovlivnilo, jestli značka
+jako celek zůstává #1 volbou kategorie.
+
+**Navržený design — reuse infrastruktury Two Months Later/Recommendation
+Lock-in:** stejných 50 nákupních intentů, stejný mechanismus 6
+nezávislých sweepů přes delší časové okno (replikovat ~2 měsíce), ale
+tentokrát zaznamenávat nejen doporučenou **značku**, ale i konkrétní
+**doporučený produkt/model/SKU** v odpovědi (tam, kde ho model
+jmenuje). Srovnat: (a) % shoda #1 značky napříč sweepy (replikace
+stávajícího 86% čísla jako baseline), (b) % shoda #1 konkrétního
+produktu napříč sweepy — u stejných intentů, stejné kohorty.
+
+**Limitace (disclosed předem):**
+1. Ne všechny kategorie/odpovědi jmenují konkrétní produkt/model —
+   u obecnějších kategorií (např. "nejlepší obchod s oblečením") SKU
+   úroveň nemusí dávat smysl, je potřeba vybrat kategorie/intenty, kde
+   model typicky jmenuje konkrétní produkt, ne jen značku.
+2. Vyžaduje nové sweepy přes delší okno (2 měsíce), ne jednorázový
+   běh — nejde to urychlit beze změny designu (na rozdíl od
+   gpt-4o-only studií, co šly postavit a vyhodnotit hned).
+3. Je to přímá reakce na cizí otázku (Zhao Hanbo), ne vlastní interní
+   prioritizovaný nápad — stojí za zvážení, jestli to zapadá do
+   pořadí, nebo jde o samostatný vedlejší projekt.
+
+Status: zapsáno jako kandidát ("co dalsi studie do road mapy",
+Daniel 2026-10-01), vzniklo přímo z LinkedIn výměny se Zhao Hanbo,
+design nerozpracovaný do `STUDY-DESIGN.md`/kódu, čeká na zařazení do
+pořadí.
+
+## Nový kandidát: Content Archetype × Citation (2026-10-05)
+
+Podnět: LinkedIn post Anny York (Citation School), "15 content
+archetypes that get you into AI answers" — Tier 1 citation-winning
+formáty (definice, srovnání, otázky, seznamy, frameworky, původní
+výzkum, statistiky, how-to, problém-řešení, myth-busting) a Tier 2
+authority formáty (trendy, case studies, zákulisí, selhání s
+ponaučením, názory). Tvrzení: formát obsahu určuje, co AI cituje.
+Nemáme k tomu žádná vlastní data — naše studie měří výběr
+produktu/značky, ne citace podle formátu obsahu.
+
+**Otázka:** Mění při zachování stejných faktů formát obsahu
+(archetyp), jak často ho model cituje a použije jeho fakta, nebo
+rozhoduje obsah (fakta, rating) a forma je druhořadá?
+
+**Navržený design:**
+- ~50 záměrů, pro každý stejný obsah napsaný v 6–8 archetypech
+  (definice, srovnání, FAQ, seznam, how-to, case study, názor).
+  Fakta, délka a značka konstantní, mění se jen forma.
+- Měřit podíl citací a podíl použití faktu z dané verze, 10 běhů na
+  variantu.
+- Kontroly: náhodné střídání pozice dokumentu (jinak měříme pořadí,
+  ne formát), paired baseline s identickým obsahem pro noise floor
+  (stejná metoda jako Candidate Evaluation, noise floor 11,2 %).
+- Reuse infrastruktury Candidate Evaluation / Source Rank Position.
+
+**Možné výsledky (obojí publikovatelné):** formát záleží, nebo
+rozhodují fakta a forma ne — druhé by potvrdilo dosavadní linii
+(rating 160/160, specs 81,9 %, price 60,6 %).
+
+**Limitace (disclosed předem):**
+1. Laboratorní test na gpt-4o s umělými stránkami, ne měření
+   reálného webu. Netvrdit "takhle cituje ChatGPT", jen "takhle se
+   chová model při tomto výběru".
+2. Pozor na záměnu formátu a délky/hustoty faktů — nutné párovat.
+3. Je to reakce na cizí post, ne vlastní prioritizovaný nápad.
+
+**Související menší kandidáti ze stejného dne:**
+- Vladimir Fedorov (ShelfSignal): test "existující politika obchodu
+  vedle produktu" = varianta Fact Injection, metodu už máme.
+- Amazon Branded Conversations (newsletter J. Lambadjieva) navazuje
+  na Hidden Context (vymyšlená expozice reklamě měla největší efekt).
+
+Status: zapsáno jako kandidát (Daniel 2026-10-05), design
+nerozpracovaný do `STUDY-DESIGN.md`/kódu, čeká na zařazení do
+pořadí.
+
+## Nový kandidát: 3 studie k tomu, JAK AI rozhoduje (podnět: AIVO "Brand Valuation" článek, 2026-10-05)
+
+Podnět: článek AIVO Journal "Your Brand Valuation Prices a Customer
+Who Is Leaving the Room" (5. 10. 2026). Tvrzení: metody oceňování
+značek (Interbrand, Brand Finance, Kantar BrandZ, mentální
+dostupnost) předpokládají lidského rozhodovatele. AIVO uvádí 2 160
+konverzací o výběru banky (fintechy 1 345 doporučení vs. tradiční
+banky 452, Mercury 383), 87,3 % značek přítomných brzy v konverzaci
+je před finálním doporučením vytlačeno a navrhuje metriku "Brand
+Alpha" (doporučení vs. tržní podíl). Ověřeno jen z článku, jejich
+metodika nezkontrolována.
+
+**Cíl zařazení (Daniel 2026-10-05):** ne další varianty stejných
+testů, ale studie, které nám pomůžou blíže pochopit mechanismus
+rozhodování AI. Proto jsou designy záměrně jiné než dosavadní
+head-to-head Fact Injection (flip rate proti noise floor 11,2 %).
+
+### 1. Heritage vs. Evidence: směnný kurz (exchange rate)
+**Otázka:** Jakou "cenu" má v rozhodnutí modelu dědictví značky
+(věk, velikost, rozsah) oproti důkazům a kolik důkazů ho vyváží?
+**Design (nový, ne single-factor flip):** konfliktní páry, kde
+značka A vede v dědictví a B v důkazu (rating). Dědictví se zvyšuje
+po stupních (založeno 2017 → 2000 → 1950 → 1890; počet poboček),
+rating rozdíl se mění po stupních. Výstup: dose-response křivka a
+"směnný kurz" (o kolik ratingu se musí A zhoršit, aby ji B porazila
+při daném dědictví) a prahový bod, kde se vítěz otáčí.
+**Co nám to řekne:** jestli dědictví vůbec něco váží, nebo jen
+slouží jako rozstřel při shodě důkazů. Testuje přímo AIVO tvrzení
+"stoletá značka prohraje s fintechem" a rozšiřuje Fame study (1,2 %),
+která měřila slávu, ne konkrétní signály dědictví.
+
+### 2. Stakes × Evidence: váhový profil podle sázky kategorie
+**Otázka:** Mění se relativní váha signálů (rating, cena, specs,
+dědictví, regulace/záruky) podle toho, jak vysoká je sázka
+v kategorii (boty/audio vs. banky/pojištění)?
+**Design (nový, ne opakování Candidate Evaluation):** místo
+jednoho flip rate na faktor odhadnout z konfliktních voleb
+(conjoint-like) váhový profil signálů pro každou kategorii zvlášť a
+porovnat nízkou vs. vysokou sázku. Opírat se o odhalené volby, ne o
+modelem uváděné důvody (Confabulation: 29 633 důvodů, 26 812
+unikátních, vysvětlení nejsou spolehlivá).
+**Co nám to řekne:** jestli je naše pořadí důkazů (rating 160/160,
+specs 81,9 %, price 60,6 %) obecné, nebo specifické pro e-commerce.
+Spojuje Semrush YMYL zjištění (jiné zdroje u peněz/zdraví) s AIVO
+výsledkem u bank.
+
+### 3. Multi-turn Displacement: kdy a čím je kandidát vytlačen
+**KOREKCE (2026-10-05, kontrola roadmapy):** Study #24 (`research/multi-turn-displacement.html`, "It Recommends You First. By Turn Four, It's Moved On") už vícekolové vytlačení měří, s neutrálními doplňujícími otázkami, které značku nejmenují. Tento kandidát je tedy z velké části duplicita. Zůstává jen užší varianta: *jaký typ omezující podmínky (cena, region, funkce, důvěra) značku vytlačí*. Do počtu otevřených studií se nezapočítává, dokud není přeformulován.
+**Otázka:** Kdy v konverzaci kandidát vypadne a který typ doplňující
+podmínky uživatele ho vytlačí?
+**Design:** vícekolové konverzace, v každém kole přidat jednu
+omezující podmínku (cena, region, funkce, důvěra) a zaznamenat po
+kolech, kdo je #1 a kdo vypadl; vyhodnotit podle typu podmínky.
+**Před zápisem do pořadí ověřit překryv** se Silent Candidacy Drop a
+Fragile vs. Resilient Candidacy (zda byly vícekolové). Pokud ano,
+je to jen rozšíření, ne nová studie.
+
+**Vyhnout se:** replikaci Brand Alpha (doporučení vs. tržní podíl):
+potřebuje reálná tržní data, která nemáme, a je blízko Memory Source
+(R² 11,2 %, 50 značek, CI 3,8–37,5 %).
+
+**Limitace (obecně):** gpt-4o, syntetická zadání, ne reálné
+asistenty. Netvrdit "takhle rozhodují ChatGPT/Gemini", jen "takhle se
+chová model při tomto výběru". Dědictví a stakes je nutné
+operacionalizovat opatrně, aby se nemíchaly s délkou/hustotou
+textu.
+
+Status: zapsáno jako tři kandidáti (Daniel 2026-10-05), design
+nerozpracovaný do `STUDY-DESIGN.md`/kódu, čeká na zařazení do
+pořadí. Doporučené pořadí: 1 → 2 → 3.
+
+## Závěrečný kandidát: Brand Playbook, syntéza všech studií (2026-10-05)
+
+Podnět: Daniel (2026-10-05): "až budeme mít hotové všechny studie,
+projít je všechny, udělat příklady z každé a sestavit jasný návod,
+co a jak udělat, aby byla značka co nejvíce doporučovaná, na základě
+studií."
+
+**Formát:** pro každou studii jeden řádek: zjištění → páka →
+konkrétní krok pro značku → štítek jistoty (silný / střední / slabý).
+Příklady z dnešních studií: rating otočil vítěze 160/160 (sbírat a
+zveřejňovat hodnocení), Cold Start (bez důkazu 0/360, s review
+skóre 53,1 %, PR 1,9 %, prodeje 0,3 %: dodat strojově čitelný
+důkaz, nespoléhat na PR), Lock-in (86 % stejná #1: vstup je těžší
+než udržení), Possession vs Deployment (75,8 % známých faktů se
+nepoužije: fakta musí být ve formě, kterou model využije).
+
+**Řazení kroků:** podle síly účinku a replikace, ne podle
+studií.
+
+**Pravidla poctivosti (zapsat předem):**
+1. Všechno je z testů na gpt-4o a syntetických zadání, žádné tvrzení
+   typu "takto vás ChatGPT doporučí". Každý krok má štítek jistoty.
+2. Pokud se studie neshodují, ukázat to, neschovat.
+3. Playbook je hypotéza k ověření na reálném brandu, ideálně případ
+   před/po (např. Founder Lab).
+
+Závislost: čeká na dokončení tří kandidátů z AIVO podnětu
+(Heritage vs. Evidence, Stakes × Evidence, Multi-turn Displacement)
+a ostatních rozpracovaných studií.
+
+Status: zapsáno jako závěrečný kandidát, nic nerozpracováno.
+
+
+## PŘEHLED: otevřené studie a kandidáti (kontrola 2026-10-05)
+
+Účel: jedno místo, kde je vidět, co ještě není postavené. Vzniklo
+kontrolou všech sekcí roadmapy proti reálně publikovaným studiím v
+`research/` (publikovány #1–7, #18–45; chybějící čísla 8–17 nejsou
+v tomto přehledu řešena). Stavy jsou odvozené ze statusů sekcí a ze
+souborů, ne z jednotného registru, proto je dobré přehled při každé
+nové studii aktualizovat.
+
+### A. Volné kandidáty z LinkedIn výměn a podnětů (12)
+1. Content Gap Capture (2026-09-21)
+2. Source type jako moderátor Authority efektu (2026-09-23)
+3. Ghost Citation jako předstupeň Candidacy (2026-09-24)
+4. Query délka/struktura vs. selection rate (2026-09-24)
+5. Personalizace přebíjí populační doporučení? (2026-09-25)
+6. Silent Candidacy Drop (2026-09-25), souvisí s Machine-readable depth
+7. Recommendation vs. Commitment (uzavírá Purchase, fáze 9) (2026-09-28)
+8. Copy Relevance × Site/Page Relevance (2026-09-30), úkol #28
+9. SKU-level vs. brand-level lock-in (2026-10-01), slib Zhao Hanbo
+10. Content Archetype × Citation (2026-10-05)
+11. Heritage vs. Evidence, směnný kurz (2026-10-05)
+12. Stakes × Evidence, váhový profil podle sázky (2026-10-05)
+
+### B. Dva kandidáti z výměny s Albertem Barberisem (2026-09-19), oba otevřené
+13. A: neviditelné JSON-LD vs. viditelné bullety vs. próza (v žádné studii se JSON-LD netestovalo)
+14. B: Intent coverage ("pro koho a k čemu") jako samostatná proměnná
+
+### C. Kandidáti decision path ze 2026-09-19 (19 otevřených; hotový je jediný, Confidence #1 = Study #41)
+Upozornění: záhlaví sekce uvádí "19", vypsaných položek je 20 (hotová
++ 19 otevřených). Rozdíl nevyřešen. K1 se může překrývat s Founder Lab
+multi-choice faktoriálem (sekce 2026-09-19), ověřit před realizací.
+
+Confidence (3 otevřené)
+- C2 HOTOVO (2026-10-06): Confidence predicts stability, addendum na #22
+- C3 Genuinní remíza, ne rating-rozhodnutý spor
+- C4 HOTOVO (2026-10-06): nulový výsledek, nepublikováno
+
+Retrieval (4)
+- R1 Jaký prompt styl model donutí sáhnout po search sám (navazuje na Live Retrieval #28)
+- R2 Vynucený search a Accuracy+Depth pokrytí
+- R3 Cross-platform retrieval (Perplexity/Claude vs. GPT), dříve blokováno na API klíčích
+- R4 Koreluje dobrovolné použití search se změnou doporučení
+
+Understanding (4)
+- U1 Fact-injection styl na podpokryté CDI kategorie
+- U2 Predikuje hloubka popisu (CDI), kdo vyhraje doporučení?
+- U3 "Search mění slovník" rozdělené na funkční vs. důvěra-kategorie
+- U4 HOTOVO (2026-10-06): nulový výsledek, nepublikováno
+
+Memory (4)
+- M1 Cross-model paměť (nejvyšší priorita sekce), dříve blokováno na API klíčích Anthropic/Google
+- M2 Dose-response fact injection: 0/1/3/6 faktů
+- M3 Possession rate podle stáří/zavedenosti značky
+- M4 Pořadí/salience uvnitř 6 possessed faktů
+
+Candidacy (4)
+- K1 Founder Lab: kauzálně změnit "ten jeden faktor" z Candidacy vs Selection
+- K2 Hidden Context rozšíření: fiktivní "viděl reklamu" na obou stranách
+- K3 HOTOVO (2026-10-06): Cold Start Dose-Response, nepublikováno
+- K4 Brand Legibility odveta: framing dvou legible brandů proti sobě
+
+### D. Mimo čisté studie
+- Vlastní nákupní AI agent pro Founder Lab (produktový experiment)
+- Brand Playbook, závěrečná syntéza (čeká na dokončení ostatních)
+- Multi-turn Displacement: přeformulovat na "typ omezující podmínky" (Study #24 už existuje), nepočítá se
+
+### Součet
+- Studie: 12 (A) + 2 (B) + 19 (C) = **33** (+1 přidán 2026-10-06: Evidence → Recommendation Conversion = **34**)
+- Plus Founder Lab agent a Brand Playbook = **36 položek**
+
+### K ověření
+- Stav "Founder Lab multi-choice faktoriál, verze A (simulovaná) a B (živá)" (sekce 2026-09-19): z kontroly nepoznat, zda je hotová.
+- Zda cross-model / cross-platform stále blokují chybějící API klíče.
+- Číslování: dvě stránky nesou "Study #43" (`sponsored-tag-penalty`, `query-conditional-defense`), druhá má být #44.
+- Mnoho položek v C jsou levné analýzy nad existujícími daty, skutečná pracnost je nižší než počet.
+
+
+## Nový kandidát: Evidence → Recommendation Conversion (2026-10-06)
+
+Podnět: odpověď Semrushe pod naším komentářem k jejich AI Visibility
+Index mini-studii (YMYL): "citations and brand mentions often move
+independently, so the next layer really is understanding what turns
+sourced evidence into an actual brand recommendation." Veřejně
+převzali náš rámec (další vrstva = co mění důkaz v doporučení).
+
+**Co už máme a co zůstalo otevřené:** Ghost Citation (hotovo,
+2026-09-25) změřil konverzi citace na jmenovaný produkt uvnitř jedné
+odpovědi (49,9 % named / 50,1 % ghost, vítěz named v 98,1 %). Fáze 2
+původního návrhu, propojení citace s oddělenou volbou kandidáta, se
+nekonala (žádný dataset nesdílel kategorie/značky). Zůstává tedy
+nezodpovězená otázka, co z důkazu v citovaném zdroji dělá skutečný
+výběr.
+
+**Otázka:** Za jakých podmínek se důkaz obsažený v citovaném zdroji
+promění v to, že model značku doporučí?
+
+**Design (nový, ne další head-to-head flip):** dosud jsme fakta
+vkládali přímo do promptu (Fact Injection, Winner vs Loser). Tady je
+důkaz uvnitř "citovaného zdroje" a mění se vlastnosti zdroje:
+- **Korroborace:** 1 zdroj vs. 3 nezávislé zdroje se stejným tvrzením
+  (dosud netestováno).
+- **Konflikt:** jeden zdroj značku chválí, druhý ne.
+- **Typ zdroje a forma tvrzení:** brand-owned vs. recenzent vs.
+  komunita; číslo vs. přídavné jméno.
+- **Jmenování:** zdroj jmenuje značku v nadpisu vs. jen uvnitř textu
+  (původní "cited-only vs cited-and-named").
+Výstup: funnel důkaz v kontextu → jmenovaný → vybraný na stejných
+bězích, dose-response podle počtu a shody zdrojů.
+
+**Hypotézy (předregistrováno zde, před sběrem dat):**
+1. Korroborace zvyšuje konverzi víc než typ zdroje.
+2. Konflikt snižuje konverzi víc, než odpovídá průměru obou zdrojů.
+
+**Limitace (disclosed předem):**
+1. gpt-4o, syntetické "zdroje" vložené do kontextu, ne reálný
+   retrieval. Live Retrieval (#28) ukázal, že model s search
+   nástrojem při otevřených nákupních otázkách nesáhl po searchi
+   ani jednou z 960 volání, proto se důkaz dodává do kontextu.
+2. Self-grading riziko, pokud extrakci dělá stejný model.
+3. Nepřekrývat se Claim Attribution (#31) a Source Rank Position
+   (#45): ověřit před realizací, ať se neměří totéž.
+
+Souvisí: Ghost Citation (Fáze 2), Possession vs Deployment (#23),
+Source Stability (#36), Fact Injection (#25).
+
+Status: zapsáno jako plnohodnotný kandidát (Daniel 2026-10-06),
+design nerozpracovaný do `STUDY-DESIGN.md`/kódu, čeká na zařazení do
+pořadí.
+
+## Rozpracováno: Signal Effect Ladder (2026-10-06)
+
+Studie bez nových API volání (re-analýza uložených dat), první z pěti
+(pořadí 1 → 2 → 3 → 4 → 5 podle přehledu). První průchod hotový z
+publikovaných čísel: `research-prep/signal-effect-ladder/LADDER.md`
+(čtyři pásma: rozhodující / silné samo, mizí vedle ratingu / střední /
+zanedbatelné). Zbývá přepočet z `results.json` na jednotnou míru a
+jistota u každého řádku. Podklad pro Brand Playbook.
+
+**Aktualizace 2026-10-06 (ověření Signal Effect Ladder):** přepočet z
+`results.json` našel dvě nepřesnosti v publikovaných formulacích:
+(1) Candidate Evaluation (#19): 160/160, 81,9 %, 60,6 % jsou
+"follows the numbers" (výběr značky s lepším faktem), ne flip rate;
+skutečný flip rate je 50,0 / 41,9 / 26,9 % (noise floor 11,2 %),
+price je v noise; (2) Memory Source (#21): kombinovaný R² 11,2 % je
+na 50 značkách (CI 3,8–37,5 %), ne na 95. Detaily v
+`research-prep/signal-effect-ladder/LADDER.md`. K rozhodnutí: opravit
+formulace na stránkách a v LinkedIn postu.
+
+**Opraveno v main 4 (2026-10-06):** formulace "flipped the verdict 160 of
+160" nahrazena "decided the pick in 160 of 160 runs" (candidate-evaluation,
+how-ai-decides, cold-start, index, mechanism-studies, llms.txt; v JSON-LD
+popisu candidate-evaluation oddělen follows rate 160/160, 81,9 %, 60,6 %
+od flip rate specs 41,9 % a price 26,9 %). Memory Source (#21): souhrny a
+llms.txt upřesněny na "up to 95 brands", kombinovaný R² 11,2 % na 50
+značkách (CI 3,8-37,5 %); tělo stránky to už uvádělo správně. LinkedIn post
+a ostatní nezměněno.
+
+## Hotovo: Heterogenita efektů po značkách (studie bez API volání, 2026-10-06)
+
+Druhá z pěti studií bez nových volání. Re-analýza `results.json` ze 14
+studií se stejnými 4 značkami: `research-prep/heterogeneity-by-brand/`
+(`analyze.py`, `results.json`, `FINDINGS.md`). Hlavní nálezy: směr efektů
+platí u všech 4 značek, ale velikost se liší 3× až 25× (sponzorovaná
+penalizace 3 až 34 b., query-conditional 3 až 79 b.); dva případy bez
+konzistentního směru (negativní reputace a candidacy: bodyartforms −10 b.;
+claim attribution u bodyartforms nízko ve všech podmínkách); pořadí značek
+napříč metrikami se shoduje jen tak, jak by dalo náhodou (33,8 % vs 33,3 %),
+tedy žádná obecná "citlivost značky". Doporučení: publikovat rozmezí vedle
+průměrů a doplnit značky s různou výchozí hodnotou.
+
+**Opraveno v main 4 (2026-10-06, po studii Heterogenita):** na stránkách
+#43 (sponsored-tag-penalty), #44 (query-conditional-defense) a #42
+(negative-reputation-candidacy) doplněno rozmezí po značkách do meta
+popisů, JSON-LD a úvodního textu (penalizace 3 až 34 b., obnova 3 až 79 b.);
+u #42 upřesněno, že candidacy vzrostla u 3 ze 4 značek (bodyartforms
+−10 b.), také v how-ai-decides, index a llms.txt. Per-brand tabulky na
+stránkách už rozmezí i výjimku uváděly, doplněny byly jen souhrny.
+
+## Hotovo: Stated vs. revealed reasons (studie bez API volání, 2026-10-06)
+
+Třetí z pěti studií bez nových volání (`research-prep/stated-vs-revealed/`:
+`analyze.py`, `results.json`, `FINDINGS.md`). Klíčová zjištění: sponzorovaný
+štítek je skrytý řidič (efekt −18,4 b., model ho jmenuje v 1,0 % odpovědí);
+autorita samotná rozhoduje (rozdíl 71 b.), ale pojmenována je jen v 47 až 65 %;
+vedle ratingu je zmínka autority/familiarity dekorace (27 % / 55 % zmínek při
+efektu kolem nuly); pozice ve zdroji je jmenována v 99 až 100 % a odpovídá
+efektu. Vzorec: uvedené důvody sledují nápadnost v promptu, ne příčinu.
+Publikační forma zatím nerozhodnuta (addendum k Confabulation #4 nebo samostatně).
+
+**Publikováno (2026-10-06):** Stated vs. revealed reasons jako addendum
+na `research/ai-confabulates-its-reasons.html` (Study #4): sekce
+"Does the reason at least name what moved the pick?" s tabulkou (sponsored
+1,0 %, autorita 47-65 %, rating 68-86 %, pozice ve zdroji 99-100 %), závěrem a
+metodickými limitacemi; věta přidána i do záznamu Confabulation v
+`llms.txt`. Nová číslovaná studie ani karta v indexu nevznikla.
+
+## Hotovo: Confidence predicts stability (2026-10-06)
+Logprob gap predikuje shodu free-text vs. logprob volby (AUC 0,855, p 0,0005; uvnitř specs 0,852, price 0,706). Predikuje "následuje lepší fakt" jen u specs (AUC 0,675), u price ne (0,515, p 0,77). Rating bez variance. Detail: research-prep/confidence-predicts-stability/FINDINGS.md. Publikováno: addendum na research/recommendation-confidence.html + llms.txt.
+
+## Rozpracováno: Own crawl logs (2026-10-06)
+ai_visits: 1 226 návštěv AI botů (8. 7.–6. 10.), 0 na /llms.txt a /robots.txt. Test curl GPTBot ukázal, že tyto cesty obcházely middleware (logovala se jen `/`), takže nula NENÍ publikovatelná. Oprava lokálně: api/static-log.js + routes ve vercel.json (čeká na deploy a ověření curl testem). Sběr reálných dat začne po deployi; vyhodnotit za 4–6 týdnů. Vedlejší nález: meta-externalagent chodí na /products/null (rozbitý odkaz).
+
+## Hotovo: C4 Hedging podle kategorie (2026-10-06)
+Nulový výsledek. Hedged share trust 4,3 % vs. functional 6,7 % (p 0,34, varianta B p 0,33), logprob gap 0,896 vs. 0,903 (p 0,86). 16 intentů, nízká síla; rozdíl mezi signály (rating hedguje nejvíc) je větší než mezi kategoriemi. Detail: research-prep/hedging-by-category/FINDINGS.md. Nepublikováno.
+
+## Hotovo: U4 Konkrétnost slovníku vs. logprob jistota (2026-10-06)
+Nulový výsledek. Sdruženě ρ 0,45, ale jde o confound typu signálu (rating reasony citují "rating", gap ≈ 1). Uvnitř price/specs ρ −0,02 / 0,12 (p 0,79 / 0,13); rating 0,23 pravděpodobně artefakt lexikonu a délky. Jazyk (hedging ani konkrétnost) jistotu modelu neodráží, interní logprob ano. Detail: research-prep/vocab-concreteness/FINDINGS.md. Nepublikováno.
+
+Publikováno (2026-10-06): null kontroly C4 (hedging podle kategorie) a U4 (konkrétnost slovníku) přidány jako odstavec do addenda na research/recommendation-confidence.html + llms.txt. /products/null: v našem kódu zdroj nenalezen (viz kontrola níže).
+
+## Připraveno: K3 Cold Start Dose-Response (2026-10-06)
+research-prep/cold-start-dose-response/ (STUDY-DESIGN.md, run_study.py, analyze_results.py). 11 podmínek (počet recenzí 5–2 500 při 4,7★; hodnocení 3,8–4,9★ při 500 recenzích; jen skóre; jen počet) × 36 intentů × 10 běhů = 3 960 volání gpt-4o, fixní dávky bez jitteru. Dry-run prošel (pipeline + analýza). Čeká na spuštění s OpenAI klíčem: `python run_study.py run` (resumable), pak `python analyze_results.py`.
+
+## Hotovo: K3 Cold Start Dose-Response (2026-10-06)
+3 960 běhů. Hodnocení je páka: 3,8★ 0 %, 4,1★ 2,2 %, 4,4★ 18,1 %, 4,7★ 62,5 %, 4,9★ 84,7 % (při 500 recenzích). Počet je zesilovač: 5 recenzí 2,8 %, 25 22,2 %, 100 52,5 %, 500 62,5 %, 2 500 67,5 % (500 vs. 2 500 nevýznamné, p 0,39). Jen skóre 26,4 %, jen počet 2,5 %, kombinace 62,5 %. 4,7★ s 5 recenzemi jen 2,8 %: model malý vzorek diskontuje. Detail: research-prep/cold-start-dose-response/FINDINGS.md. Nepublikováno; návrh: addendum ke Cold Start (#20) nebo samostatná studie (čeká na schválení).
+
+## Publikováno (připraveno k deployi): Study #46 Cold Start Dose-Response (2026-10-06)
+Stránka research/cold-start-dose-response.html. Napojeno: vercel.json route, sitemap-pages.xml, llms.txt (záznam + "46 studies"), karta v research/mechanism-studies.html (+ hero "36 studies"), report-card + finding-card (data-key 44) v research/index.html, odkaz + mini-card v research/how-ai-decides.html, footer odkaz ve 167 dalších HTML (vč. root, reports, vocabulary, products, framework, benchmarks, stores, research), "Public Studies" 45 → 46 na 169 stránkách + "46 studies measuring…" / "46 public studies" v textech. Nezasaženo: new-web/, research-prep/, _pages/ (zastaralé kopie).
+
+## Nové kandidáti z LinkedIn výměny Hufford / Lily Ray (2026-10-06)
+
+Zdroj: post Brendana Huffordа (AEO, analýza 250 nejcitovanějších stránek napříč klienty za 90 dní, Profound) a komentář Lily Ray (citovaný žebříček často nevede k doporučení značky, která ho napsala; v jejích testech na Googlu je značka vynechána přes 80 % případů, citace podporuje konkurenci). Hufford: u dvou klientů, oba hodně citovaní, je zavedený lídr jmenován v 47 % odpovědí, nováček ve 2 % ("leaders keep leading"). Rada: "napiš si žebříček, na kterém budeš", zkontroluj top 25 citovaných stránek (homepage, FAQ, About, alternatives, pricing).
+
+### 1. Source Rank × Brand Prior (nová volání, ~1 000–1 500 gpt-4o)
+Otázka: když je nováček (fiktivní značka z Cold Start) ve zdroji na 1. místě a zavedený incumbent níž, vyhraje pozice, nebo paměť modelu? Design: 17pozicový žebříček z Study #45; podmínky: nováček na 1. / 2. / 4. místě, incumbent na zbylém (a případně varianta s nováčkovým ratingem ≥ 4,4★ z #46). 36 dominantních intentů z Cold Start × podmínky × 10 běhů. Měří se selection a named-candidacy zvlášť. Odpovídá přímo na spor "leaders keep leading" (Hufford: 47 % vs 2 %) vs. "rozhoduje pozice ve zdroji" (#45: 100 / 1,2 / 0 %). Limit: syntetický zdroj, jeden model.
+
+### 2. Autor zdroje: vendor-written vs. nezávislý žebříček (nová volání, podobný rozsah)
+Otázka: rozlišuje model, kdo žebříček napsal? Stejný obsah a pořadí, podepsáno nezávislou redakcí vs. dodavatelem (včetně cílové značky samotné). Spojit s existujícím kandidátem A2 (Source type jako moderátor Authority efektu). Testuje Hufford radu "napiš si žebříček" a Lilyino pozorování, že citace často slouží konkurenci.
+
+### 3. Vlastní logy: které typy stránek AI boti načítají (bez volání)
+Z ai_visits (1 226 návštěv 8. 7.–6. 10., po deployi opravy static-log i /llms.txt, /robots.txt, sitemapy) rozložení cest podle typu (homepage, FAQ, About, produkt, studie, store stránky) a bota. Doplněk ke studii 5. Malý vzorek, bez inference o citacích v odpovědích.
+
+### Neměřitelné nyní
+Google vs. ChatGPT placený/přihlášený účet (Lily), citace FAQ/pricing/alternatives stránek v reálném retrievalu (Live Retrieval #28 měřilo 0 z 960, bez přístupu k platformám).
+
+## PLÁN: Audit mezer po dokončení všech plánovaných studií (zapsáno 2026-10-06)
+
+Pravidlo: až budou hotové všechny studie z roadmapy (viz "PŘEHLED: otevřené studie a kandidáti" a nové kandidáty z 2026-10-06), neděláme okamžitě další. Nejdřív celé dosavadní portfolio projdeme ze všech stran a z toho určíme, kde je díra. Další studie vznikají z nalezených mezer, ne z náhodných podnětů.
+
+Jak audit provést (osnova):
+1. Matice "co jsme změřili": proměnná (signál, kontext, zdroj, dotaz, kategorie, značka) × fáze rozhodnutí (kandidatura, selection, stabilita, jistota) × model/platforma. Prázdné buňky jsou kandidáti na mezeru.
+2. Slabá místa metody napříč sérií: stejné 4 značky (obecnost), jeden model (gpt-4o), syntetická fakta a fiktivní značky, forced two-way proti otevřeným dotazům, žádný živý retrieval, žádné multi-turn. U každého zjistit, které závěry na tom stojí.
+3. Replikace a konzistence: závěry, které stojí na jediném měření nebo na malém n (např. 16 intentů, 36 klastrů), a ty, které se mezi studiemi nepotvrdily nebo si odporují (rating vs. cena, uvedené důvody vs. skutečné příčiny, jazyk vs. interní jistota).
+4. Výhrady z vnějšku: kritiky a protipříklady z LinkedIn výměn (platformy, personalizace, Google vs. ChatGPT, lidé vs. model, např. ReFiBuy human study), které jsme zatím nemohli změřit.
+5. Pro značky: projít Brand Playbook a ověřit, že každé doporučení má pod sebou studii, a které doporučení stojí jen na jedné.
+6. Výstup: seznam mezer seřazený podle dopadu na rozhodnutí značky a podle proveditelnosti, z něj nové studie.
+
+Vstupy, které se mají projít: cross-study-matrix/matrix.json, Signal Effect Ladder, Heterogeneita po značkách, Stated vs. revealed, Confidence predicts stability, Cold Start Dose-Response, Brand Playbook, všechny roadmap sekce "Neměřitelné nyní".
+
+## Nový kandidát: Rozštěpená entita / Entity Fragmentation (2026-10-07)
+
+Zdroj: LinkedIn post Sayeda Sadikha Nawaje Aliho (duplicitní Google Business Profiles zubní kliniky, recenze a fotky rozpůlené mezi dvěma záznamy). Přímá data nemáme; Daniel mu slíbil, že dá vědět, až budou.
+
+Otázka: ztratí firma při doporučování, když se její recenze rozdělí mezi dva duplicitní záznamy, a o kolik?
+
+Design (navazuje na K3 Cold Start Dose-Response, stejných 36 intentů, fiktivní nováček proti incumbentovi, gpt-4o, 10 běhů): A) jeden záznam 4,7★ / 100 recenzí (reference, v K3 52,5 %); B) dva záznamy se stejným názvem, každý 4,7★ / 50 recenzí; C) jeden záznam 4,7★ / 50 recenzí (kontrola samotného menšího počtu); D) dva záznamy se stejným názvem a konfliktními údaji (jiná adresa, 4,3★ vs. 4,5★). A vs. B = cena rozštěpení; B vs. C = penalizuje model duplicitu nad samotný menší počet; D = vliv konfliktních faktů. Odhad 1 400–1 800 volání.
+
+Limity předem: fiktivní značky, syntetické recenze, jeden model, forced two-way; neměří Google ani lokální pack, jen zacházení s rozštěpenými daty v kontextu.
+
+Status: zapsáno, nerealizováno. Spadá pod audit mezer po dokončení plánovaných studií.
+
+## Nový kandidát: Klasifikace → kandidatura / Classification → Candidacy (2026-10-07)
+
+Zdroj: LinkedIn post Silvie Stolarcikové (QIVO Global), "AI Classification Audit": AI podle webu, LinkedInu, starého PR a katalogů rozhodne, co firma je a do jaké kategorie patří, a z toho vzniká shortlist ("firmu neztratíte v dealu, nikdy do něj nevstoupíte"). Její 20minutový audit (5 kroků, skóre podle počtu neshod) je sebehodnocení, ne měření. Teze (klasifikace určuje kandidaturu, "identity coherence je příčina") je věrohodná, ale netestovaná.
+
+Otázka: předpovídá kategorie, do které model firmu zařadí při otevřeném dotazu ("co je X, do jaké kategorie patří"), zda se firma objeví v odpovědích na dotaz kupujícího na její skutečnou kategorii?
+
+Design (nová volání, rozsah určit podle počtu značek): reálné značky s jasnou kategorií (různá známost, včetně malých); fáze 1: otevřená klasifikace každé značky (bez nápovědy kategorie), vyhodnocení shody se skutečnou kategorií LLM judge; fáze 2: dotaz kupujícího na skutečnou kategorii (bez jména značky), měření, zda se značka objeví (candidacy) a zda je vybrána (selection); analýza: shoda klasifikace vs. candidacy, kontrola známosti značky jako konfounderu (Fame Study: známost sama vysvětluje málo, ale model's own memory hodně). Cluster přes značky, permutační test.
+
+Souvislé výsledky: Brand Legibility (kvalita popisu v promptu candidacy skoro nemění, jakmile jsou fakta v kontextu; týká se popisu v promptu, ne naučené klasifikace), Candidacy vs Selection, AI Knows Your Website (75,9 %), Possession vs Deployment (75,8 % faktů nepoužito).
+
+Limity předem: jeden model (gpt-4o) bez živého retrievalu, klasifikace z paměti modelu, ne z aktuálního webu; výběr značek ovlivní výsledek; "shoda klasifikace" závisí na definici kategorie a judge.
+
+Status: zapsáno, nerealizováno. Spadá pod audit mezer po dokončení plánovaných studií. Slib: komentář pro Silvii až bude mít data (zatím žádný).
+
+## Nový kandidát: B2B / Procurement doména (výběr dodavatele agentem) (2026-10-07)
+
+Zdroj: LinkedIn post Tima de Rosena (AIVO), který sdílí 90denní plán BCG (Alex Baxter) pro agentický procurement: pilot na tail-spend + paralelně diagnostika pěti nepřímých kategorií. Tim: jakmile agenti povedou shortlisting dodavatelů end-to-end, výsledek dodavatele závisí na tom, jak ho vyhodnotí stroj, který nikdy nepotká; kupující dostane explicitní rozhodovací logiku, prodávající "bránu, kterou nevidí"; tvrdí, že rozdíly ve výběru jsou "už materiální" (bez čísel, jde o propagaci AIVO).
+
+Mezera: všechny naše studie měří B2C produktová doporučení (rating, cena, specifika, značky z e-commerce). Nemáme žádná data o výběru dodavatele v B2B procurementu (jiné signály: certifikace, reference, cena za kontrakt, SLA, kapacita, compliance).
+
+Otázka: platí mechanismy z naší série (model sleduje ověřitelný důkaz v kontextu, pozice ve zdroji rozhoduje, stabilita doporučení, prahy důkazu z K3) i při výběru dodavatele pro firemní nákup, a které signály jsou tam rozhodující?
+
+Design (nápad, nerozpracováno): forced two-way výběr dodavatele pro 20–30 B2B kategorií (nepřímé nákupy: IT služby, logistika, kancelářské potřeby, SaaS), fiktivní vs. zavedený dodavatel; signály: certifikace/reference/cena/SLA/hodnocení; opakování pro stabilitu; reuse designu K3 a Source Rank × Brand Prior. Limity předem: jeden model, fiktivní dodavatelé, syntetické důkazy, žádný skutečný procurement workflow.
+
+Status: zapsáno, nerealizováno. Spadá pod audit mezer po dokončení plánovaných studií. Souvisí s Cronovým rámcem (routing = verified context × eligibility × preference × economic offer × execution certainty) a s CommerceAgentBench (exekuce agentů, 61,7 %).
+
+## Připraveno: Source Rank × Brand Prior (2026-10-07)
+research-prep/source-rank-x-brand-prior/ (STUDY-DESIGN.md, run_study.py, analyze_results.py). Pozice nováčka ve zdroji (N1/N4/N15, incumbent na 2.; I1 incumbent 1., nováček 2.) × důkaz (žádný vs. 4,7★/500 recenzí) = 8 podmínek × 36 intentů × 10 běhů = 2 880 volání gpt-4o. Hypotézy zapsány předem (H1 pozice přebije paměť, H2 paměť přebije pozici, H3 jako #45, H4 důkaz a pozice se sčítají). Dry-run prošel. Čeká na spuštění s OpenAI klíčem.
+
+## Hotovo: Source Rank × Brand Prior (2026-10-07)
+2 880 běhů. Úplně binární: nováček na 1. místě zdroje 100 % (bez důkazu i s 4,7★/500 recenzemi), na 4. a 15. místě 0 % (i s důkazem), incumbent na 1. místě = nováček 0 %. Model cituje pořadí ve zdroji u ~99–100 % odpovědí, rating/recenze u <1 %. Pozice přebila paměťový prior (vyvrací "leaders keep leading" v tomto designu) i důkaz (v K3 stejné 4,7★/500 dalo 62,5 % bez zdroje). Strop 100/0 je limit: zdroj v system promptu s pokynem "Use this source if it's relevant", sousední pozice netestovány, forced two-way, jeden model. Detail: research-prep/source-rank-x-brand-prior/FINDINGS.md. Nepublikováno. Návazné testy (pokyn, sousední pozice, spolehlivost zdroje, konflikt zdroj vs. důkaz) zapsány ve FINDINGS.
+
+## Source Rank × Brand Prior v2 (robustness) — připraveno ke spuštění
+Skripty: research-prep/source-rank-x-brand-prior/run_study_v2.py, analyze_results_v2.py, STUDY-DESIGN-v2.md (dry-run OK, 8 400 volání, 25 podmínek). Testuje: bez instrukce, zdroj v user zprávě, nedůvěryhodný/sponzorovaný zdroj, pořadí vs. rating konflikt, gradient pozic, reálné značky. Po výsledcích: FINDINGS, stránka Study #47 + wiring (46→47).
+
+## Nový kandidát: Press s fakty vs. generický press (z výměny s Mansoor Ali)
+Hypotéza (Mansoor Ali, LinkedIn): hodnota třetí strany není v existenci zmínky, ale v informaci, kterou model může ověřit a použít (zdroj spojující značku s kategorií / use case / schopností).
+Máme: Cold Start (#46) press 1,9 % vs. review score 53,1 %; Fact Injection +77,9 pp. Neměřeno: press zmínka nesoucí konkrétní fakta vs. generická zmínka.
+Návrh: Cold Start geometrie (fiktivní nováček vs. incumbent, 36 intentů × 10 běhů), podmínky: žádný důkaz / generický press ("featured in X") / press s kategorií a use case / press s ověřitelnými čísly (specs, cena) / rating (kotva). Čistý kontrast generický vs. s fakty. Žádný slib veřejně; zmínit jen "may come back with numbers" pokud Daniel zvolí.
+Souvisí: Source authorship (A2), Copy Relevance (#28), Mansoor Ali čeká na výsledky Copy Relevance.
+**PŘIPOMENOUT DANIELOVI po dokončení: poslat výsledky Mansoor Ali (LinkedIn, slíbeno veřejně v komentáři: "I'll add it to our roadmap and run it, then share the results here").**
+
+## Source Rank × Brand Prior v2 — HOTOVO (FINDINGS-v2.md)
+Instrukce/umístění/zdroj nevadí; žádný gradient (vyšší pozice vyhrává vždy, i 1 vs 2); reálné značky stejně; blog bez efektu, "sponsored" štítek −22 pp; rank 1 + 3,4★ stále 86 %, rank 4 + 4,9★ 1,7 %. Zbývá kontrola v3 (neřazený seznam, run_study_v3_control.py, 1 440 volání) a volitelně replikace na druhém modelu → pak Study #47.
+
+## Publikováno (připraveno k deployi): Study #47 Source Rank × Brand Prior
+research/source-rank-brand-prior.html. Kontrola v3 (neřazený seznam 0,8 %) uzavřela námitku "první v seznamu". Napojeno: route (vercel.json), sitemap-pages.xml, llms.txt, footer link (168 stránek), počty 46→47, mechanism-studies (37 studií), index (report-card + finding-card data-key 45), how-ai-decides. Zbývá: deploy (commit/push), případně replikace na druhém modelu.
+
+## Později: Zenodo nová verze k #22 (Recommendation Confidence)
+Doplnit odkaz na follow-up Phrasing Stability by Signal (ceny se při přeformulování mění, rating ne) a addendum o logprob gap (AUC 0,855). LinkedIn příspěvek o #22 zůstává beze změny (shodný se Zenodem).
+
+## Pozorování: Founder Lab (founder.atomfoundry.dev) — bingbot chodí jen na home
+Widget "Agent activity" (8. 10. 2026): 1 unikátní bot (bingbot, typ SEARCH), návštěvy jen na `home` (před 16 h, 1 d, 8 d, 9 d, 22 d). Žádné produktové stránky, žádní AI boti (GPTBot / ClaudeBot / PerplexityBot).
+Co ověřit: Bing Webmaster Tools (sitemap odeslán? kolik URL zaindexováno?), IndexNow, robots.txt Shopify obchodu (blokuje produktové cesty?), sitemap Founder Labu.
+Souvislost: Bing index slouží jako zdroj pro některé AI vyhledávače (ChatGPT search ho využívá, ne výlučně). Neindexované produkty = nemají odkud být načteny. Testovací obchod pro měření bot návštěv (Study 5 / own crawl logs).
+
+## Hotovo: Signal Effect Ladder (2026-10-08), studie 1 z 5 bez API volání
+`research-prep/signal-effect-ladder/LADDER-FINAL.md` + `ladder_final.json` + `build_ladder.py`: 40 řádků (signál x studie) na jednotné míře (pp nad vlastním baseline signálu, z uložených results*.json), s cluster-CI tam, kde existuje (36 intentů), a jistotou Strong/Medium/Weak (replikace x šířka). Hlavní zjištění: pozice ve zdroji a rating s dostatkem recenzí jsou nejsilnější a nejlépe podložené (±100 pp, replikováno přes 36 intentů); autorita/familiarita samy 65-85 % follow, ale vedle ratingu mizí; formát ≈ 0 nebo záporný; press 1,9 % a objem 0,3 %. Nejslabší důkazy (nepoužít jako páteř playbooku bez replikace): Hidden Context (5 značek, široký CI), Fact Injection (4 ručně vybrané značky). Nepublikováno jako stránka; podklad pro Brand Playbook. Další z pěti: viz přehled.
+**Později (Daniel 2026-10-08):** Signal Effect Ladder publikovat jako samostatnou syntézní stránku v research/ (označit "Synthesis", nepočítat do čísla studií, odkaz z how-ai-decides); nepoužít Weak řádky (Hidden Context, Fact Injection) bez označení; zdůraznit nesrovnatelnost "follows" řádků. Zatím nic nedělat.
+
+## Připraveno: Press with Facts vs. Generic Press (2026-10-08)
+research-prep/press-with-facts/ (STUDY-DESIGN.md s předregistrovanými H1-H4, run_study.py, analyze_results.py; dry-run OK, 2 160 volání, 6 podmínek: none / press_generic / press_fit / press_facts / press_fit_facts / review_direct). Slib Mansoor Ali: po dokončení mu poslat výsledky.
+
+## Hotovo: Press with Facts (2026-10-08), FINDINGS.md
+generic press 1,9 % (= none, replikuje Cold Start); press s fit na přesný dotaz 80,6 %; press s fakty (4,7★/500) 52,8 % ≈ přímé recenze 51,9 %; fit+fakty 96,9 %. H2 vyvrácena (fit přidal +78,6 pp, čekali jsme málo). Caveat: "top choice for přesný dotaz" je blízké přímému doporučení, ne neutrální relevance. Doporučená kontrola před publikací: press jen na úrovni kategorie / sousedního use case. **PŘIPOMENOUT: poslat výsledky Mansoor Ali (veřejný slib).**
+**Kontrola k Press with Facts (2026-10-08):** run_extra.py (1 080 volání: press_category, press_adjacent, press_offtopic), analyze_results.py upraven (`python3 analyze_results.py press_raw.csv press_extra_raw.csv`). Po doběhnutí: FINDINGS, stránka Study #48 + wiring (47→48), odpověď Mansoor Ali.
+
+## Publikováno (připraveno k deployi): Study #48 Press with Facts (2026-10-08)
+research/press-with-facts.html. Kontrola: category-level 15,0 %, adjacent use case 0,0 %, off-topic 0,0 % (exact query 80,6 %) = efekt je o shodě s položeným dotazem. Napojeno: route, sitemap, llms.txt, footer (169 stránek), počty 47→48, mechanism-studies (38), index (data-key 46), how-ai-decides. **PŘIPOMENOUT: odpověď Mansoor Ali (komentář připravit s kompletním obrazem včetně kontroly).**
+
+## Publikováno (připraveno k deployi): Founder's Reality Check #12 "The Work Nobody Asked Me to Do." (2026-10-08)
+the-work-nobody-asked-me-to-do.html; napojeno: hub (JSON-LD ListItem 12, bublina Entry 012, view-transition, footer), #11 (Next entry + footer), #10 (footer), vercel.json route, sitemap-pages.xml.
+
+## Kandidát: Review Recency (zdroj: Mikko Rekola post, 12. 10. 2026)
+- Tvrzení k ověření: "LLM i agenti preferují čerstvé recenze; 30 000 recenzí z let 2020–2022 váží míň než nedávné." Zatím NEMÁME data (v komentáři přiznáno: "haven't tested it yet").
+- Design (navazuje na Cold Start #46): fixní hodnocení a počet recenzí, mění se jen stáří: bez data / 3 měsíce / 1 rok / 3 roky; případně stejné skóre starší vs. mladší u konkurenta. Metoda jako ostatní: gpt-4o, forced choice, cluster bootstrap přes intenty, permutační testy, Bonferroni.
+- Omezení k uvedení na stránce: recenze jsou text v promptu, testujeme reakci modelu na zmínku o stáří, ne způsob, jakým reálný agent řadí/filtruje recenze.
+- Pozn.: komentář pod Mikkovým postem nic neslibuje; studie je volitelná.
+
+## Classification → Candidacy: design hotový (2026-10-12)
+Složka `research-prep/classification-candidacy/` (STUDY-DESIGN.md, run_study.py, analyze_results.py; dry-run ověřen). Nový design místo čistě pozorovacího: 10 vymyšlených B2B SaaS firem, cílová firma soutěží s 11 konkurenty o shortlist 3 (šance 25 %); podmínky core_clear / secondary_dominant / hierarchy_explicit (stejná fakta, jiná váha) + kontrola no_target; měří se inclusion a klasifikace (judge). ~1,200 volání. Důvod: Brand Legibility narazil na strop (firma bez konkurence ~100 %). Status: čeká na spuštění Danielem.
+
+## Nápad: Repeat Retrieval (zdroj: Mariia Skula post, 12. 10. 2026)
+- Pozorování: ChatGPT načetl tutéž stránku dvakrát v jedné session (jednou s UTM chatgpt.com, jednou bez). Mariia z toho usuzuje, že se vrací ke zdrojům, které už vyhodnotil, a že opakované načtení vede k doporučení. Je to jedno pozorování, ne vzorec; alternativy: stejná stránka vrácená více podotazy (fan-out), dvě komponenty (search vs. open).
+- K ověření: (1) jak často se stejná URL opakuje napříč podotazy v jedné session, (2) zda opakovaně načtená stránka častěji vede k doporučení značky, (3) co ji opakuje (shoda s podotazy vs. "důvěra"). Vyžaduje živé vyhledávání / logy fan-out, ne closed-book gpt-4o design; navazuje na Live Retrieval a Web Search Rewrites.
+- Nezměřeno, v komentáři přiznáno ("we haven't tracked repeat retrieval itself"). Status: nápad, nerealizováno.
+
+## Téma k návratu: Jak se dostat k zákazníkům, ne k oboru (2026-10-12)
+Podnět: post Diandry Escobar (publikum, které čte vs. publikum, které platí). Pozorování: většina reakcí na komentáře Daniela jsou GEO/SEO konzultanti a lidé z oboru (Semrush, Peec, agentury); kupující Atom Foundry jsou majitelé e-shopů a značek. Nejsou k tomu data, jde o marketingovou úvahu.
+Nápady k rozpracování:
+1. Jazyk kupujícího: "AI doporučuje vašeho konkurenta a vy nevíte proč" místo R²/bootstrap; studie jen jako důkaz.
+2. Kde jsou kupující: komentovat u e-commerce/founder lidí (Svenson, Rekola, Shopify prostředí), ne jen u GEO nástrojů.
+3. Vstup pro zákazníka: scan/audit webu ("koho AI doporučuje místo vás") jako první krok, studie jako důvěryhodnost.
+4. Vlastní posty zakončovat výzvou pro majitele značek; připravit 2–3 posty z posledních studií psané pro majitele e-shopů bez žargonu.
+5. Měřit, odkud chodí první konverzace (DM, scan, návštěvy) a podle toho přesunout čas.
+Status: zapsáno, k návratu.
+
+## Classification → Candidacy: výsledky v1–v3 (2026-10-14)
+- v1 (10 kat.): core 100 / secondary-dominant 73 / hierarchy-explicit 74 %.
+- v2 (20 kat., konkurenti stejně bohatí, klasifikace výběrem z možností): core_clear 82.8, secondary_dominant 24.0, hierarchy_explicit 27.5 % (−58.8 pp, p_bonf 0.0003; explicit hierarchy −3.5 pp n.s.); klasifikace jádra 100 % ve všech podmínkách → misklasifikace není mechanismus.
+- v3 (1 800 volání): core_clear 87.7, secondary_first_core_heavy 59.0, balanced_core_first 61.0, core_first_secondary_heavy 45.0, secondary_dominant 27.7, template_twin (základ) 50.0 %. Váha: −42.7 pp (core-first); pořadí: −28.7 pp (core-heavy) / +17.3 pp (secondary-heavy). core_clear vs twin +37.7 (p 0.009); secondary_dominant vs twin −22.3 (p_bonf 0.31, n.s.). Základ není 25 % (twin 50 %), úrovně neinterpretovat, jen rozdíly.
+- Závěr: AI zařadí firmu správně, ale na shortlist ji dá, když jádro vede a tvoří většinu textu; deklarace kategorie nepomáhá. Status: čeká na publikaci jako Study #49; slib Silvii (komentář s čísly) stále otevřený.
+
+## Study #49 Classification → Candidacy publikováno a zapojeno (2026-10-14)
+Stránka `research/classification-candidacy.html`; zapojeno: footer (172 stránek), počet studií 49 (174 stránek), mechanism-studies (karta + "39 studies"), research/index (karta + finding-card data-key 47), how-ai-decides (odkaz + mini-karta), llms.txt (+ "49 studies and counting"), sitemap-pages.xml, vercel.json. K nasazení: commit/push. Dále: komentář pro Silvii s čísly po nasazení.
+
+## Připraveno: Review Recency (2026-10-15)
+Složka `research-prep/review-recency/` (STUDY-DESIGN.md, run_study.py, analyze_results.py; dry-run ověřen). 12 podmínek (nedatované, čerstvé, staré 4 roky, rozložené, smíšené, 30 000 starých vs. nedatovaných, čerstvé malé, pokles/zlepšení hodnocení za poslední 3 měsíce), 4 320 volání. Podnět Mikko Rekola. Status: čeká na spuštění Danielem.
+
+## Hotovo: Review Recency (2026-10-15), 4 320 volání
+Výsledky (selection nováčka): baseline_undated 50.8, recent_all 72.8 (+21.9, p_bonf 0.0009), old_all 0.0 (−50.8), mixed_mostly_old (450 starých + 50 čerstvých) 0.0, spread (rovnoměrně 5 let) 60.8 (+10.0, n.s. p 0.15), old_large (30 000 starých) 1.4 vs undated_large 71.1 (−69.7), recent_all (500) vs old_large (30 000) +71.4, recent_small (40) 36.9 vs undated_small 22.5 (+14.4, p 0.0099), decline (4.7★ celkově, 3.8★ za 3 měsíce) 2.5 (−48.3), improve (3.8★ celkově, 4.7★ za 3 měsíce) 10.6 vs low_undated 0.0 (+10.6, p 0.0045). Mikkovo tvrzení potvrzeno. Limity: relativní data v promptu, jeden model, fiktivní značky; staré recenze fungují jako "žádný důkaz" (0 %), ale může jít i o čtení "nic nového = neaktivní značka". Status: čeká na rozhodnutí o publikaci (Study #50). Mikko Rekola slíbil "data later this month", možná jiný zdroj.
