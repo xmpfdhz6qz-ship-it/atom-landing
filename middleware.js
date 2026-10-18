@@ -25,11 +25,11 @@ export const config = {
 };
 
 // bot -> type. retrieval = answering a user right now; training = parametric memory.
-const RETRIEVAL = /^(OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|Claude-Web|Claude-User|DuckAssistBot|YouBot)$/i;
+const RETRIEVAL = /^(OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|Claude-Web|Claude-User|Claude-SearchBot|DuckAssistBot|YouBot)$/i;
 const TRAINING  = /^(GPTBot|ClaudeBot|anthropic-ai|CCBot|Google-Extended|Applebot-Extended|Bytespider|meta-externalagent|cohere-ai)$/i;
 const SEARCH    = /^(Applebot|Amazonbot|Diffbot|Timpibot)$/i;
 
-const AI_BOTS = /(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-Web|Claude-User|anthropic-ai|PerplexityBot|Perplexity-User|Google-Extended|Applebot-Extended|Applebot|Amazonbot|CCBot|Bytespider|meta-externalagent|cohere-ai|YouBot|Diffbot|Timpibot|DuckAssistBot)/i;
+const AI_BOTS = /(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-Web|Claude-User|Claude-SearchBot|anthropic-ai|PerplexityBot|Perplexity-User|Google-Extended|Applebot-Extended|Applebot|Amazonbot|CCBot|Bytespider|meta-externalagent|cohere-ai|YouBot|Diffbot|Timpibot|DuckAssistBot)/i;
 
 function botType(bot) {
   if (RETRIEVAL.test(bot)) return 'retrieval';
